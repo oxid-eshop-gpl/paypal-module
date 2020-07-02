@@ -1,0 +1,15 @@
+# Autodetect text files and force the use of LF line endings
+* text=auto eol=lf
+.gitattributes export-ignore
+.gitignore export-ignore
+*.gif binary
+*.jpg binary
+*.png binary
+*.ico binary
+*.phar binary
+*.eot binary
+*.ttf binary
+*.woff binary
+*.woff2 binary
+*.doc binary
+*.docx binary

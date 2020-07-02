@@ -1,0 +1,63 @@
+#git ignore file
+#everything that should not be stored in git because it is generated or specific to the person using it
+#
+#entries starting with / are absolute and ignored only if they start exactly like defined
+#entries NOT starting with / are ignored everywhere no matter if they are located in a subdirectory or at root level
+
+.idea
+.DS_Store
+
+# Docker stuff
+/.env
+/data
+
+# Inventory files
+/ansible/local_dev
+
+# Files to imports
+/import/
+
+# Oxideshop
+/oxideshop/vendor/
+/oxideshop/source/migration/data/
+/oxideshop/source/admin/
+/oxideshop/source/log/
+/oxideshop/source/tmp/
+/oxideshop/source/cache/
+/oxideshop/source/Setup/
+/oxideshop/source/*
+!/oxideshop/source/.htaccess
+!/oxideshop/source/config.inc.php
+
+# Package and files installed by composer
+/oxideshop/.ide-helper.php
+/oxideshop/.phpstorm.meta.php/
+/oxideshop/source/modules/b2b/
+/oxideshop/source/modules/oxps/genericimporter
+/oxideshop/source/modules/oxps/modulesconfig
+/oxideshop/source/modules/oxcom/moduleinternals
+/oxideshop/source/modules/oe
+
+#/oxideshop/source/Application/views/wave_child/node_modules/
+/oxideshop/source/Application/views/wave/
+/oxideshop/source/Application/views/admin/
+
+# Codeception generated and report files
+.env
+/codeception/tests/_output/*
+!/codeception/tests/_output/.gitkeep
+/codeception/tests/_support/_generated/*
+
+# PHPUnit code coverage reports
+/**/[Tt]ests/[Rr]eports/
+
+# Pictures
+oxideshop/source/out/pictures/generated
+oxideshop/source/out/pictures/master
+oxideshop/source/out/pictures/ddmedia
+
+# Other generated files
+.db-init-log
+.phpstorm-oxid.meta.php
+oxideshop/source/index.html
+oxideshop/source/styleguide/

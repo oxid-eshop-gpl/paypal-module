@@ -1,0 +1,91 @@
+{
+  "name": "infrastructure/template-project",
+  "type": "project",
+  "description": "template-project",
+  "license": [
+    "GPL-3.0-only",
+    "proprietary"
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://b2b-edition.packages.oxid-esales.com"
+    },
+    {
+      "type": "composer",
+      "url": "https://internal-modules-repo.oxid-esales.com/"
+    },
+    {
+      "type": "composer",
+      "url": "https://enterprise-edition.packages.oxid-esales.com/"
+    },
+    {
+      "type": "path",
+      "url": "source/modules/oxps/*"
+    }
+  ],
+  "require": {
+    "oxid-community/moduleinternals": "^3.0@alpha",
+    "oxid-esales/b2b-module": "^3.2",
+    "oxid-esales/oxideshop-ce": "6.3.6",
+    "oxid-esales/oxideshop-composer-plugin": "2.0.*",
+    "oxid-esales/oxideshop-db-views-generator": "^1.2",
+    "oxid-esales/oxideshop-demodata-ce": "^6.0",
+    "oxid-esales/oxideshop-demodata-installer": "^1.1",
+    "oxid-esales/oxideshop-doctrine-migration-wrapper": "^2.1",
+    "oxid-esales/oxideshop-ee": "6.2.3",
+    "oxid-esales/oxideshop-pe": "6.2.2",
+    "oxid-esales/oxideshop-unified-namespace-generator": "^2.0.1",
+    "oxid-esales/wave-theme": "^1.2",
+    "oxid-professional-services/genericimporter": "1.0.10",
+    "oxid-professional-services/oxid-console": "^6.0@beta",
+    "oxid-professional-services/oxid-modules-config": "^6.1@beta",
+    "ddoe/visualcms-module": "3.3.2"
+  },
+  "require-dev": {
+    "alfredbez/oxid-dump-autoload": "^0.1.0",
+    "codeception/codeception": "^2.5",
+    "oxid-esales/oxideshop-ide-helper": "^v3.1.2",
+    "oxid-esales/testing-library": "^6",
+    "psr/log": "^1.1",
+    "squizlabs/php_codesniffer": "3.*",
+    "vlucas/phpdotenv": "^3.0",
+    "phpstan/phpstan": "0.12"
+  },
+  "autoload-dev": {
+    "files": [
+      "compatibility.php"
+    ]
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "@oe:ide-helper:generate"
+    ],
+    "repositories": {
+      "0": {
+        "type": "composer",
+        "url": "https://internal-modules-repo.oxid-esales.com/"
+      },
+      "1": {
+        "type": "composer",
+        "url": "https://enterprise-edition.packages.oxid-esales.com/"
+      }
+    }
+  },
+  "autoload": {
+    "psr-4": {
+    }
+  },
+  "config": {
+    "sort-packages": true,
+    "gitlab-domains": [
+      "psgit.oxid-esales.com",
+      "internal-modules-repo.oxid-esales.com"
+    ],
+    "preferred-install": {
+      "*": "dist"
+    }
+  }
+}
