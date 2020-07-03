@@ -1,0 +1,22 @@
+stages:
+- build
+- test
+
+#based on https://docs.gitlab.com/ee/ci/docker/using_kaniko.html
+#to avoid privileged runner
+build-containers:
+  stage: build
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  tags:
+    - docker
+  script:
+    - echo "Building the php image"
+    - set -o allexport; source $CI_PROJECT_DIR/.env-dist; set +o allexport
+    - /kaniko/executor --context $CI_PROJECT_DIR/docker/php --dockerfile $CI_PROJECT_DIR/docker/php/Dockerfile --no-push
+
+run-static-analysis:
+    stage: test
+    image: koalaman/shellcheck-alpine
+    script: shellcheck **/*.sh
