@@ -1,0 +1,6 @@
+---
+deployment_root: "/var/www/oxid/"
+releases_path: "{{ deployment_root }}/releases"
+release_target_path: "current"
+deploy:
+  pictures: true

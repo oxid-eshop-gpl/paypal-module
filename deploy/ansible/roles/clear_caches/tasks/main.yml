@@ -1,0 +1,6 @@
+---
+- name: Clear OXID file cache
+  command: vendor/bin/oxid cache:clear
+  args:
+    chdir: "{{ target_vendor_path }}/../"
+

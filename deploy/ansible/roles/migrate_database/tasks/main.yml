@@ -1,0 +1,6 @@
+---
+- name: Run database migrations
+  command: "bin/oe-eshop-db_migrate migrations:migrate"
+  args:
+    chdir: "{{ target_vendor_path }}"
+  run_once: true

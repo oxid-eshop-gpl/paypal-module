@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d7dab79c55e0bf3983b883a10f1d2944",
+    "content-hash": "a9ac65d4d9675cd103b1bf95ea309f3d",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1648,41 +1648,6 @@
                 "themes"
             ],
             "time": "2019-11-15T15:48:50+00:00"
-        },
-        {
-            "name": "oxid-professional-services/genericimporter",
-            "version": "1.0.10",
-            "source": {
-                "type": "git",
-                "url": "git@psgit.oxid-esales.com:modules/oxps-generic-import-framework.git",
-                "reference": "3ea53cdebc5503512bab4f3de9423b1d464141f4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://internal-modules-repo.oxid-esales.com/dist.php?id=277&ref=1.0.10",
-                "reference": "3ea53cdebc5503512bab4f3de9423b1d464141f4"
-            },
-            "type": "oxideshop-module",
-            "extra": {
-                "oxideshop": {
-                    "target-directory": "oxps/genericimporter"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "OxidProfessionalServices\\GenericImporter\\": "../../../source/modules/oxps/genericimporter"
-                }
-            },
-            "license": [
-                "proprietary"
-            ],
-            "description": "Generic importer framework for OXID",
-            "keywords": [
-                "data import",
-                "genericimporter",
-                "modules",
-                "oxid"
-            ]
         },
         {
             "name": "oxid-professional-services/lib-shop-switcher",

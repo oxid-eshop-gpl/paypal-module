@@ -1,0 +1,5 @@
+---
+deploy:
+  pictures: false
+oxid:
+  environment_name: "{{ env }}"

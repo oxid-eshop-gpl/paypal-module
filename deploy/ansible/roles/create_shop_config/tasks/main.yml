@@ -1,0 +1,18 @@
+---
+- name: Create config.inc.php
+  local_action:
+    module: template
+    src: "{{ role_path }}/files/config.inc.php.j2"
+    dest: "{{ build_root_path }}/oxideshop/source/config.inc.php"
+    mode: 0444
+  run_once: true
+  tags: configuration
+
+- name: Create .htaccess
+  local_action:
+    module: template
+    src: "{{ role_path }}/files/htaccess.j2"
+    dest: "{{ build_root_path }}/oxideshop/source/.htaccess"
+    mode: 0440
+  run_once: true
+  tags: configuration

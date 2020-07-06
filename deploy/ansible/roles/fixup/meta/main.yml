@@ -1,0 +1,7 @@
+---
+dependencies:
+    - migrate_database
+    - update_views
+    - import_config
+    - fix_states
+    - clear_caches
