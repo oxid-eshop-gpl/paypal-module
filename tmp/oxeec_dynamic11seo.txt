@@ -1,1 +1,0 @@
-a:1:{s:7:"content";a:2:{s:32:"31747f16d1198d55026c032fc2371824";s:36:"en/rss/OXID-eShop-5/Top-of-the-shop/";s:32:"420567ed2a77e040a0492156db624d75";s:44:"en/rss/OXID-eShop-5/Recent-products-in-shop/";}}
