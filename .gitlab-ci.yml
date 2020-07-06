@@ -27,7 +27,7 @@ deploy_stage:
     name: stage
     url: https://pp.oxidps.de/
   only:
-    - master
+    - develop
   variables:
     ANSIBLE_INVENTORY: staging
 
