@@ -11,6 +11,8 @@ GeneralShopSettings:
         - b2bscheduledorders
         - b2bserviceproducts
         - b2bservices
+        - ddoevisualcms
+        - oxps/paypal
         - psr_logger
     aHomeCountry:
         - 8f241f11096877ac0.98748826
@@ -23,10 +25,19 @@ GeneralShopSettings:
             baseId: 1
             active: '1'
             sort: '2'
+    aLanguageSSLURLs:
+        - ''
+        - ''
+    aLanguageURLs:
+        - ''
+        - ''
     aModules:
         OxidEsales\B2BModule\ApprovalProcedure\Controller\DetailsController:
             - OxidEsales\B2BModule\BulkOrders\Controller\ApprovalProcedureDetailsController
             - OxidEsales\B2BModule\ScheduledOrders\Controller\ApprovalDetailsController
+        OxidEsales\B2BModule\Basket\Service\EditService:
+            - OxidEsales\B2BModule\ApprovalProcedure\Service\BasketService
+            - OxidEsales\B2BModule\ServiceProducts\Service\EditService
         OxidEsales\Eshop\Application\Controller\Admin\NavigationController:
             - OxidEsales\B2BModule\Services\Controller\Admin\NavigationController
             - OxidCommunity\ModuleInternals\Controller\Admin\NavigationController
@@ -71,10 +82,10 @@ GeneralShopSettings:
             - OxidEsales\B2BModule\Budget\Core\ViewConfig
             - OxidEsales\B2BModule\BuyingAgent\Core\ViewConfig
             - OxidEsales\B2BModule\Services\Core\ViewConfig
+            - OxidEsales\VisualCmsModule\Core\ViewConfig
     aModuleVersions:
-        genericimporter: 1.0.10
-        moduleinternals: 2.0.0.0
-        oxps/modulesconfig: 6.0.0
+        moduleinternals: '3.0'
+        oxps/modulesconfig: 6.1.0
     aNrofCatArticles:
         - '10'
         - '20'
@@ -163,7 +174,11 @@ GeneralShopSettings:
     sShopVar: false
     sTagList: '1153227019'
     sZoomImageSize: '450*450'
-module: {  }
+module:
+    ddoevisualcms:
+        iDefaultWidgetSize: '1'
+        iGridSize: '12'
+        iGridsterSize: '6'
 theme: {  }
 oxshops:
     OXPARENTID: '0'
