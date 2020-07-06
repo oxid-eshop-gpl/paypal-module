@@ -62,3 +62,5 @@ oxideshop/source/out/pictures/ddmedia
 oxideshop/source/index.html
 oxideshop/source/styleguide/
 /tmp/
+!/oxideshop/source/modules/oxps/paypal/
+oxideshop/source/modules/oxps/amazonpay/resources/node_modules/
