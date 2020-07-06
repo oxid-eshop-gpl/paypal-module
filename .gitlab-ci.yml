@@ -1,22 +1,68 @@
-stages:
-- build
-- test
+#stages:
+#  - test
+#  - deploy
+#
+#cache:
+#  # https://docs.gitlab.com/ee/ci/caching/#sharing-caches-across-different-branches
+#  key: one-key-to-rule-them-all
+#  paths:
+#    - .cache/
+#
+#.build_and_deploy: &build_and_deploy
+#  stage: deploy
+#  image: oxidprojects/oxid-apache-php:php7.2
+#  before_script:
+#    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )'
+#    - eval $(ssh-agent -s)
+#    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+#    - mkdir -p ~/.ssh
+#    - chmod 700 ~/.ssh
+#  script:
+#    - ANSIBLE_CONFIG=deploy/ansible.cfg ansible-playbook -i deploy/ansible/inventories/hosts.ini -e npm_config_cache=${CI_PROJECT_DIR}/. -e COMPOSER_HOME=${CI_PROJECT_DIR}/.cache/composer deploy/ansible/playbook.yml -l $ANSIBLE_INVENTORY
 
-#based on https://docs.gitlab.com/ee/ci/docker/using_kaniko.html
-#to avoid privileged runner
-build-containers:
-  stage: build
-  image:
-    name: gcr.io/kaniko-project/executor:debug
-    entrypoint: [""]
-  tags:
-    - docker
-  script:
-    - echo "Building the php image"
-    - set -o allexport; source $CI_PROJECT_DIR/.env-dist; set +o allexport
-    - /kaniko/executor --context $CI_PROJECT_DIR/docker/php --dockerfile $CI_PROJECT_DIR/docker/php/Dockerfile --no-push
-
-run-static-analysis:
-    stage: test
-    image: koalaman/shellcheck-alpine
-    script: shellcheck **/*.sh
+#deploy_stage:
+#  <<: *build_and_deploy
+#  when: always
+#  environment:
+#    name: stage
+#    url: https://amazon.oxidps.de/
+#  only:
+#    - master
+#  variables:
+#    ANSIBLE_INVENTORY: staging
+#
+#ci_tests:
+#  stage: test
+#  image: oxidprojects/oxid-apache-php:php7.2
+#  only:
+#    - merge_requests
+#  before_script:
+#    - mysql -u $MYSQL_USER -h db -p$MYSQL_PASSWORD $MYSQL_DATABASE < "docker/db-dump/initial-data.sql"
+#    - composer config -g cache-dir "$(pwd)/.composer-cache"
+#  script:
+#    - cd oxideshop && composer install --no-ansi --no-interaction --no-progress
+#    - vendor/bin/oe-eshop-db_views_generate
+#    - vendor/bin/oe-eshop-unified_namespace_generator
+#    - vendor/bin/oe-eshop-db_migrate migrations:migrate > /dev/null
+#    - vendor/bin/oe-eshop-db_views_generate
+#    - vendor/bin/oxid config:import --env=development
+#    - vendor/bin/runtests
+#    - vendor/bin/phpcs --standard=PSR12 --ignore=*/translations/*,*/views/*,*.min.js,*.min.css source/modules/oxps/amazonpay
+#  services:
+#    - name: mysql:5.7
+#      alias: db
+#  cache:
+#    key:
+#      files:
+#        - oxideshop/composer.json
+#    paths:
+#      - .composer-cache/
+#  variables:
+#    GIT_SUBMODULE_STRATEGY: normal
+#    MYSQL_DATABASE: oxid
+#    MYSQL_USER: oxid
+#    MYSQL_PASSWORD: oxid
+#    MYSQL_ROOT_PASSWORD: root
+#    MYSQL_HOST: db
+#  after_script:
+#    - cat source/log/oxideshop.log
