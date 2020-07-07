@@ -1,0 +1,34 @@
+- name: Send slack notification
+  slack:
+    token: "{{ slack_token }}"
+    channel: "{{ slack_channel }}"
+    attachments:
+      - text: "eShop deployed from Gitlab CI\n"
+        color: "#39932A"
+        fields:
+          - title: "Environment"
+            value: "{{ CI_ENVIRONMENT_NAME }}"
+            short: true
+          - title: "Git branch/tag"
+            value: "{{ CI_COMMIT_REF_NAME }}"
+            short: true
+          - title: "Hosts"
+            value: "{{ ansible_play_hosts|join(', ') }}"
+            short: false
+          - title: "Git commit hash"
+            value: "{{ CI_COMMIT_SHA }}"
+            short: false
+          - title: "Deploying user"
+            value: "{{ GITLAB_USER_EMAIL }} (id:{{ GITLAB_USER_ID }})"
+            short: true
+          - title: "CI Runner"
+            value: "{{ CI_RUNNER_DESCRIPTION }}"
+            short: true
+          - title: "Last commit message"
+            value: "{{ GIT_LAST_COMMIT_MSG }}"
+            short: false
+          - title: "Pipeline"
+            value: "{{ CI_PROJECT_URL }}/pipelines/{{ CI_PIPELINE_ID }}"
+            short: false
+  delegate_to: localhost
+  run_once: true

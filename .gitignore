@@ -61,3 +61,6 @@ oxideshop/source/out/pictures/ddmedia
 .phpstorm-oxid.meta.php
 oxideshop/source/index.html
 oxideshop/source/styleguide/
+/tmp/
+!/oxideshop/source/modules/oxps/paypal/
+oxideshop/source/modules/oxps/paypal/resources/node_modules/

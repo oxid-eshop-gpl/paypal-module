@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e57fe595fb3f747ed40ec8f8d7e73c63",
+    "content-hash": "a9ac65d4d9675cd103b1bf95ea309f3d",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1650,41 +1650,6 @@
             "time": "2019-11-15T15:48:50+00:00"
         },
         {
-            "name": "oxid-professional-services/genericimporter",
-            "version": "1.0.10",
-            "source": {
-                "type": "git",
-                "url": "git@psgit.oxid-esales.com:modules/oxps-generic-import-framework.git",
-                "reference": "3ea53cdebc5503512bab4f3de9423b1d464141f4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://internal-modules-repo.oxid-esales.com/dist.php?id=277&ref=1.0.10",
-                "reference": "3ea53cdebc5503512bab4f3de9423b1d464141f4"
-            },
-            "type": "oxideshop-module",
-            "extra": {
-                "oxideshop": {
-                    "target-directory": "oxps/genericimporter"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "OxidProfessionalServices\\GenericImporter\\": "../../../source/modules/oxps/genericimporter"
-                }
-            },
-            "license": [
-                "proprietary"
-            ],
-            "description": "Generic importer framework for OXID",
-            "keywords": [
-                "data import",
-                "genericimporter",
-                "modules",
-                "oxid"
-            ]
-        },
-        {
             "name": "oxid-professional-services/lib-shop-switcher",
             "version": "1.1.5",
             "source": {
@@ -1797,6 +1762,48 @@
                 "oxconfig"
             ],
             "time": "2020-06-23T12:55:58+00:00"
+        },
+        {
+            "name": "oxid-professional-services/paypal",
+            "version": "0.0.1",
+            "dist": {
+                "type": "path",
+                "url": "source/modules/oxps/paypal",
+                "reference": "987c0ace43b4135a7c5d02fa879b3604769d7562"
+            },
+            "archive": {
+                "exclude": [
+                    "/resources"
+                ]
+            },
+            "require": {
+                "ext-json": "*"
+            },
+            "type": "oxideshop-module",
+            "extra": {
+                "oxideshop": {
+                    "blacklist-filter": [
+                        "resources/**/*",
+                        "resources/**/*."
+                    ],
+                    "target-directory": "oxps/paypal"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "OxidProfessionalServices\\PayPal\\": "."
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "description": "PayPal module for OXID",
+            "keywords": [
+                "modules",
+                "oxid",
+                "pay",
+                "paypal"
+            ]
         },
         {
             "name": "phpmailer/phpmailer",
@@ -4053,16 +4060,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v4.5.0",
+            "version": "v4.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "53c2753d756f5adb586dca79c2ec0e2654dd9463"
+                "reference": "c346bbfafe2ff60680258b631afb730d186ed864"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/53c2753d756f5adb586dca79c2ec0e2654dd9463",
-                "reference": "53c2753d756f5adb586dca79c2ec0e2654dd9463",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/c346bbfafe2ff60680258b631afb730d186ed864",
+                "reference": "c346bbfafe2ff60680258b631afb730d186ed864",
                 "shasum": ""
             },
             "require": {
@@ -4101,7 +4108,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2020-06-03T07:24:19+00:00"
+            "time": "2020-07-02T17:12:47+00:00"
         },
         {
             "name": "oxid-esales/mink-selenium-driver",

@@ -1,0 +1,6 @@
+---
+- name: Fix OXID module states
+  command: vendor/bin/oxid fix:states -a
+  args:
+    chdir: "{{ target_vendor_path }}/../"
+  run_once: true
