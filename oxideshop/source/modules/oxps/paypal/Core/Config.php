@@ -19,19 +19,44 @@
  * @link      http://www.oxid-esales.com
  * @copyright (C) OXID eSales AG 2003-2020
  */
-$sLangName = 'English';
 
-$aLang = [
-    'charset'                        => 'UTF-8',
-    'paypal'                         => 'Paypal',
-    'OXPS_PAYPAL_CONFIG'             => 'Configuration',
-    'OXPS_PAYPAL_GENERAL'            => 'General',
-    'OXPS_PAYPAL_CREDENTIALS'        => 'Credentials',
-    'OXPS_PAYPAL_OPMODE'             => 'Operation Mode',
-    'OXPS_PAYPAL_OPMODE_PROD'        => 'Production',
-    'OXPS_PAYPAL_OPMODE_SANDBOX'     => 'Sandbox',
-    'HELP_OXPS_PAYPAL_OPMODE'        => 'To configure and test Paypal, use Sandbox (test). When you\'re ready
-        to receive real transactions, switch to Production (live).',
-    'OXPS_PAYPAL_PUBKEY'             => 'Public Key',
-    'HELP_OXPS_PAYPAL_PUBKEY'        => 'Your public Key for the integration is shown here.',
-];
+namespace OxidProfessionalServices\PayPal\Core;
+
+use OxidEsales\Eshop\Core\Exception\StandardException;
+use OxidEsales\Eshop\Core\Registry;
+
+/**
+ * Class Config
+ */
+class Config
+{
+    /**
+     * Checks if module configurations are valid
+     *
+     * @throws StandardException
+     */
+    public function checkHealth(): void
+    {
+        if (
+            !$this->getPublicKey()
+        ) {
+            throw oxNew(StandardException::class);
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSandbox(): bool
+    {
+        return (bool)Registry::getConfig()->getConfigParam('blPaypalSandboxMode');
+    }
+
+    /**
+     * @return string
+     */
+    public function getPublicKey(): string
+    {
+        return Registry::getConfig()->getConfigParam('sPaypalPubKey');
+    }
+}

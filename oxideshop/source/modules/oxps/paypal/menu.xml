@@ -2,7 +2,7 @@
 <OX>
     <OXMENU id="NAVIGATION_ESHOPADMIN">
         <MAINMENU id="oxps_paypal">
-            <SUBMENU id="OXPS_PAYPAL_CONFIG" cl=""/>
+            <SUBMENU id="OXPS_PAYPAL_CONFIG" cl="PaypalConfigController"/>
         </MAINMENU>
     </OXMENU>
 </OX>
