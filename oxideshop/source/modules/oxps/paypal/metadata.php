@@ -47,12 +47,12 @@ $aModule = [
         'PaypalConfigController' => PaypalConfigController::class,
     ],
     'templates' => [
-        'amazonconfig.tpl' => 'oxps/paypal/views/admin/tpl/paypalconfig.tpl',
+        'paypalconfig.tpl' => 'oxps/paypal/views/admin/tpl/paypalconfig.tpl',
     ],
-    'events' => array(
+    'events' => [
         'onActivate' => '',
         'onDeactivate' => ''
-    ),
+    ],
     'blocks' => [
         [
             'template' => 'headitem.tpl',
@@ -62,6 +62,9 @@ $aModule = [
     ],
     'settings' => [
         ['name' => 'blPaypalSandboxMode', 'type' => 'bool', 'value' => 'false', 'group' => null],
-        ['name' => 'sPaypalPubKey', 'type' => 'str', 'value' => '', 'group' => null]
+        ['name' => 'sPaypalClientId', 'type' => 'str', 'value' => '', 'group' => null],
+        ['name' => 'sPaypalClientSecret', 'type' => 'str', 'value' => '', 'group' => null],
+        ['name' => 'sPaypalSandboxClientId', 'type' => 'str', 'value' => '', 'group' => null],
+        ['name' => 'sPaypalSandboxClientSecret', 'type' => 'str', 'value' => '', 'group' => null]
     ]
 ];

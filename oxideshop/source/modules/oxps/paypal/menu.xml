@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <OX>
     <OXMENU id="NAVIGATION_ESHOPADMIN">
-        <MAINMENU id="oxps_paypal">
+        <MAINMENU id="paypal">
             <SUBMENU id="OXPS_PAYPAL_CONFIG" cl="PaypalConfigController"/>
         </MAINMENU>
     </OXMENU>

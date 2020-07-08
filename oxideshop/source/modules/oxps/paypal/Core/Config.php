@@ -38,7 +38,7 @@ class Config
     public function checkHealth(): void
     {
         if (
-            !$this->getPublicKey()
+            false
         ) {
             throw oxNew(StandardException::class);
         }
@@ -49,14 +49,38 @@ class Config
      */
     public function isSandbox(): bool
     {
-        return (bool)Registry::getConfig()->getConfigParam('blPaypalSandboxMode');
+        return (bool) Registry::getConfig()->getConfigParam('blPaypalSandboxMode');
     }
 
     /**
      * @return string
      */
-    public function getPublicKey(): string
+    public function getClientId(): string
     {
-        return Registry::getConfig()->getConfigParam('sPaypalPubKey');
+        return (string) Registry::getConfig()->getConfigParam('sPaypalClientId');
+    }
+
+    /**
+     * @return string
+     */
+    public function getClientSecret(): string
+    {
+        return (string) Registry::getConfig()->getConfigParam('sPaypalClientSecret');
+    }
+
+    /**
+     * @return string
+     */
+    public function getSandboxClientId(): string
+    {
+        return (string) Registry::getConfig()->getConfigParam('sPaypalSandboxClientId');
+    }
+
+    /**
+     * @return string
+     */
+    public function getSandboxClientSecret(): string
+    {
+        return (string) Registry::getConfig()->getConfigParam('sPaypalSandboxClientSecret');
     }
 }
