@@ -13,7 +13,7 @@
 - name: "Deploy"
   hosts: all
   gather_facts: no
-  remote_user: oxid
+  remote_user: www-data
   vars_files:
     - vars/default.yml
     - [~/.personal_ansible_vm.yml, vars/empty.yml]
