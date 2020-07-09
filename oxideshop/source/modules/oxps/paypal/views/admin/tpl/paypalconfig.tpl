@@ -20,8 +20,8 @@
                 <option value="sandbox" [{if $config->isSandbox()}]selected[{/if}]>
                     [{oxmultilang ident="OXPS_PAYPAL_OPMODE_SANDBOX"}]
                 </option>
-                <option value="prod" [{if !$config->isSandbox()}]selected[{/if}]>
-                    [{oxmultilang ident="OXPS_PAYPAL_OPMODE_PROD"}]
+                <option value="live" [{if !$config->isSandbox()}]selected[{/if}]>
+                    [{oxmultilang ident="OXPS_PAYPAL_OPMODE_LIVE"}]
                 </option>
             </select>
             <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_OPMODE"}]</span>
@@ -32,7 +32,7 @@
         <div class="form-group">
             <label for="client-id">[{oxmultilang ident="OXPS_PAYPAL_CLIENT_ID"}]</label>
             <div class="controls">
-                <textarea id="client-id" name="conf[sPaypalClientId]">[{$config->getClientId()}]</textarea>
+                <input type="text" class="form-control" id="client-id" name="conf[sPaypalClientId]" value="[{$config->getClientId()}]" />
                 <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_CLIENT_ID"}]</span>
             </div>
         </div>
@@ -40,7 +40,7 @@
         <div class="form-group">
             <label for="client-secret">[{oxmultilang ident="OXPS_PAYPAL_CLIENT_SECRET"}]</label>
             <div class="controls">
-                <textarea id="client-secret" name="conf[sPaypalClientSecret]">[{$config->getClientSecret()}]</textarea>
+                <input type="text" class="form-control" id="client-secret" name="conf[sPaypalClientSecret]" value="[{$config->getClientSecret()}]" />
                 <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_CLIENT_SECRET"}]</span>
             </div>
         </div>
@@ -50,7 +50,7 @@
         <div class="form-group">
             <label for="client-sandbox-id">[{oxmultilang ident="OXPS_PAYPAL_CLIENT_ID"}]</label>
             <div class="controls">
-                <textarea id="client-sandbox-id" name="conf[sPaypalSandboxClientId]">[{$config->getSandboxClientId()}]</textarea>
+                <input type="text" class="form-control" id="client-sandbox-id" name="conf[sPaypalSandboxClientId]" value="[{$config->getSandboxClientId()}]" />
                 <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_SANDBOX_CLIENT_ID"}]</span>
             </div>
         </div>
@@ -58,7 +58,7 @@
         <div class="form-group">
             <label for="client-sandbox-secret">[{oxmultilang ident="OXPS_PAYPAL_CLIENT_SECRET"}]</label>
             <div class="controls">
-                <textarea id="client-sandbox-secret" name="conf[sPaypalSandboxClientSecret]">[{$config->getSandboxClientSecret()}]</textarea>
+                <input type="text" class="form-control" id="client-sandbox-secret" name="conf[sPaypalSandboxClientSecret]" value="[{$config->getSandboxClientSecret()}]" />
                 <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_SANDBOX_CLIENT_SECRET"}]</span>
             </div>
         </div>

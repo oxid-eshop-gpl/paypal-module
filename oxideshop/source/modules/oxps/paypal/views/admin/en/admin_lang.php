@@ -28,7 +28,7 @@ $aLang = [
     'OXPS_PAYPAL_GENERAL'            => 'General',
     'OXPS_PAYPAL_CREDENTIALS'        => 'Credentials',
     'OXPS_PAYPAL_OPMODE'             => 'Operation Mode',
-    'OXPS_PAYPAL_OPMODE_PROD'        => 'Production',
+    'OXPS_PAYPAL_OPMODE_LIVE'        => 'Live',
     'OXPS_PAYPAL_OPMODE_SANDBOX'     => 'Sandbox',
     'OXPS_PAYPAL_CLIENT_ID'          => 'Client ID',
     'OXPS_PAYPAL_CLIENT_SECRET'      => 'Secret',
@@ -37,13 +37,11 @@ $aLang = [
     'OXPS_PAYPAL_ERR_CONF_INVALID'   =>
         'One or more configuration values are either not set or incorrect. Please double check them.<br>
         <b>Module inactive.</b>',
-    'OXPS_PAYPAL_CONF_VALID'      => 'Configuration values OK.<br><b>Module is active</b>',
+    'OXPS_PAYPAL_CONF_VALID'         => 'Configuration values OK.<br><b>Module is active</b>',
     'HELP_OXPS_PAYPAL_CLIENT_ID'     => 'Client ID for live mode.',
     'HELP_OXPS_PAYPAL_CLIENT_SECRET' => 'Secret for live mode.',
     'HELP_OXPS_PAYPAL_SANDBOX_CLIENT_ID'     => 'Client ID for sandbox mode.',
     'HELP_OXPS_PAYPAL_SANDBOX_CLIENT_SECRET' => 'Secret for sandbox mode.',
     'HELP_OXPS_PAYPAL_OPMODE'        => 'To configure and test Paypal, use Sandbox (test). When you\'re ready
-        to receive real transactions, switch to Production (live).',
-    'OXPS_PAYPAL_PUBKEY'             => 'Public Key',
-    'HELP_OXPS_PAYPAL_PUBKEY'        => 'Your public Key for the integration is shown here.',
+        to receive real transactions, switch to Production (live).'
 ];

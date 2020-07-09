@@ -25,7 +25,7 @@ namespace OxidProfessionalServices\PayPal\Controller\Admin;
 use OxidEsales\Eshop\Application\Controller\Admin\AdminController;
 use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidEsales\Eshop\Core\Registry;
-use OxidProfessionalServices\Paypal\Core\Config;
+use OxidProfessionalServices\PayPal\Core\Config;
 
 /**
  * Controller for admin > Paypal/Configuration page
