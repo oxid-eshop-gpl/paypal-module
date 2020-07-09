@@ -29,6 +29,11 @@ fi
 # by adding a explicits entry to hosts file
 echo 127.0.0.1 ${DOMAIN} >> /etc/hosts
 
+echo AuthType Basic >>source/.htaccess
+echo AuthName \"Passwortgeschützter Bereich\" >>source/.htaccess
+echo AuthUserFile /var/www/web/.htpasswd >>source/.htaccess
+echo Require valid-user >>source/.htaccess
+
 #check if db container is ready
 function waitForDB(){
     while ! mysql -h ${MYSQL_HOST} -u ${MYSQL_USER} -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} -e 'SHOW GLOBAL STATUS LIKE "Uptime"' --connect_timeout=2; do sleep 5; echo "DB not ready"; done
