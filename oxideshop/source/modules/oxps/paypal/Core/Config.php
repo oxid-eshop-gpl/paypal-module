@@ -38,8 +38,18 @@ class Config
     public function checkHealth(): void
     {
         if (
-            false
+            (
+                !$this->isSandbox() &&
+                !$this->getClientId() &&
+                !$this->getClientSecret()
+            ) ||
+            (
+                $this->isSandbox() &&
+                !$this->getSandboxClientId() &&
+                !$this->getSandboxClientSecret()
+            )
         ) {
+
             throw oxNew(StandardException::class);
         }
     }

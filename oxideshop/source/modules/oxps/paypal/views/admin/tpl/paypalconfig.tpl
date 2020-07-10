@@ -27,6 +27,13 @@
             <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_OPMODE"}]</span>
         </div>
 
+        <h2>[{oxmultilang ident="OXPS_PAYPAL_CREDENTIALS"}]</h2>
+
+        <p class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_CREDENTIALS"}]</p>
+
+        <p><a target="_blank" data-paypal-onboard-complete="onboardedCallbackLive" href="https://www.paypal.com/bizsignup/partner/entry?partnerId=PEZFKJQZVYEE6&product=ppcp&integrationType=FO&features=PAYMENT,REFUND&partnerClientId=AS35dAZbp8yCgjz7UQ0FAzQ_x1ennj5nT8C5-arVcqaLuxCJhBYvbuz4afGt1Ql-wOqso6wPN01aAS_B&returnToPartnerUrl=https://www.google.com&partnerLogoUrl=https://www.google.com&displayMode=minibrowser&sellerNonce=ARhK2xC8xSvNRphchskRddPDH2rWnc-F2yPl03oP_Hbi13fUDvNnTB5tiy0ct" data-paypal-button="PPLtBlue">[{oxmultilang ident="OXPS_PAYPAL_LIVE_BUTTON_CREDENTIALS"}]</a></p>
+        <p><a target="_blank" data-paypal-onboard-complete="onboardedCallbackSandbox" href="https://www.sandbox.paypal.com/bizsignup/partner/entry?partnerId=PEZFKJQZVYEE6&product=ppcp&integrationType=FO&features=PAYMENT,REFUND&partnerClientId=AS35dAZbp8yCgjz7UQ0FAzQ_x1ennj5nT8C5-arVcqaLuxCJhBYvbuz4afGt1Ql-wOqso6wPN01aAS_B&returnToPartnerUrl=https://www.google.com&partnerLogoUrl=https://www.google.com&displayMode=minibrowser&sellerNonce=ARhK2xC8xSvNRphchskRddPDH2rWnc-F2yPl03oP_Hbi13fUDvNnTB5tiy0ct" data-paypal-button="PPLtBlue">[{oxmultilang ident="OXPS_PAYPAL_SANDBOX_BUTTON_CREDENTIALS"}]</a></p>
+
         <h3>[{oxmultilang ident="OXPS_PAYPAL_LIVE_CREDENTIALS"}]</h3>
 
         <div class="form-group">

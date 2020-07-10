@@ -32,12 +32,18 @@ $aLang = [
     'OXPS_PAYPAL_OPMODE_SANDBOX'     => 'Sandbox',
     'OXPS_PAYPAL_CLIENT_ID'          => 'Client ID',
     'OXPS_PAYPAL_CLIENT_SECRET'      => 'Secret',
+    'OXPS_PAYPAL_CREDENTIALS'        => 'API Anmeldeinformationen',
     'OXPS_PAYPAL_LIVE_CREDENTIALS'   => 'Live API Anmeldeinformationen',
-    'OXPS_PAYPAL_SANDBOX_CREDENTIALS'=> 'Sandbox API Anmeldeinformationen',
+    'OXPS_PAYPAL_SANDBOX_CREDENTIALS'        => 'Sandbox API Anmeldeinformationen',
+    'OXPS_PAYPAL_LIVE_BUTTON_CREDENTIALS'    => 'Anmeldung Händler Paypal-Integration (Live)',
+    'OXPS_PAYPAL_SANDBOX_BUTTON_CREDENTIALS' => 'Anmeldung Händler Paypal-Integration (Sandbox)',
     'OXPS_PAYPAL_ERR_CONF_INVALID'   =>
         'Ein oder mehrere Konfigurationswerte sind entweder nicht festgelegt oder falsch. Bitte überprüfen Sie sie noch einmal.<br>
         <b>Modul inaktiv.</b>',
     'OXPS_PAYPAL_CONF_VALID'         => 'Konfigurationswerte OK.<br><b>Modul ist aktiv</b>',
+    'HELP_OXPS_PAYPAL_CREDENTIALS'   =>
+        'Wenn Sie die API Anmeldeinformationen bereits vorleigen haben, können Sie sie direkt eingeben.<br>
+        Alternativ nutzen Sie einen der folgenden Links um die API Anmeldeinformationen für den Live oder den Sandbox-Modus zu erzeugen.',
     'HELP_OXPS_PAYPAL_CLIENT_ID'     => 'Client ID des Live-Account für live-Modus',
     'HELP_OXPS_PAYPAL_CLIENT_SECRET' => 'Secret des Live-Account für live-Modus',
     'HELP_OXPS_PAYPAL_SANDBOX_CLIENT_ID'     => 'Client ID des Sandbox-Account für Sandbox-Modus',
