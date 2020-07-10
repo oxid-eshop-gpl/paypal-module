@@ -1,0 +1,17 @@
+{
+    "name": "oxid-professional-services/paypal-client",
+    "description": "",
+    "type": "library",
+    "require": {
+        "guzzlehttp/guzzle": "^6.5",
+        "phpunit/phpunit": "^7.5",
+        "symfony/console": "^4.4",
+        "psr/log": "^1.1",
+        "league/oauth2-client": "^2.4",
+        "ext-json": "^1.5"
+    },
+    "autoload": {
+    "psr-4": {
+        "OxidProfessionalServices\\PayPal\\Api\\": "src"
+    }}
+}
