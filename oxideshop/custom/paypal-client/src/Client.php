@@ -131,4 +131,16 @@ class Client
     public function isAuthenticated() {
         return isset($this->tokenResponse['access_token']);
     }
+
+    /**
+     * @return bool|string
+     */
+    public function getAccessToken()
+    {
+        if(!$this->isAuthenticated()) {
+            return false;
+        }
+
+        return $this->tokenResponse['access_token'];
+    }
 }
