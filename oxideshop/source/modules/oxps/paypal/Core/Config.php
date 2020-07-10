@@ -93,4 +93,88 @@ class Config
     {
         return (string) Registry::getConfig()->getConfigParam('sPaypalSandboxClientSecret');
     }
+
+    /**
+     * This ClientId is public. The only function is to create
+     * a basiclly AccessToken,  Which one is needed to generate
+     * the request for the merchant ClientId.
+     * For this purpose, this ClientId is unencrypted, here as part
+     * of this open Source Module
+     *
+     * @return string
+     */
+    public function getLiveOxidClientId(): string
+    {
+        return "AQPFC4NJr-nIiumTXvyfHFJLK-RlWAcv9D0zAc4OWiKiQXyXnJZ7Lw1E2h6O2mtceJf5kWflplieijnK";
+    }
+
+    /**
+     * This ClientId is public. The only function is to create
+     * a basiclly AccessToken,  Which one is needed to generate
+     * the request for the merchant ClientId and Secret.
+     * For this purpose, this ClientId is unencrypted, here as part
+     * of this open Source Module
+     *
+     * @return string
+     */
+    public function getSandboxOxidClientId(): string
+    {
+        return "AS-lHBWs8cudxxonSeQ1eRbdn1Nr-7baqAURRNJnIuP-PPQFzFF1XkjDYV3NG3M6O75st2D98DOil4Vd";
+    }
+
+    /**
+     * This PartnerId is public. The only function is to create
+     * a basiclly AccessToken,  Which one is needed to generate
+     * the request for the merchant ClientId and Secret.
+     * For this purpose, this ClientId is unencrypted, here as part
+     * of this open Source Module
+     *
+     * @return string
+     */
+    public function getLiveOxidPartnerId(): string
+    {
+        return "FULA6AY33UTA4";
+    }
+
+    /**
+     * This PartnerId is public. The only function is to create
+     * a basiclly AccessToken,  Which one is needed to generate
+     * the request for the merchant ClientId and Secret.
+     * For this purpose, this PartnerId is unencrypted, here as part
+     * of this open Source Module
+     *
+     * @return string
+     */
+    public function getSandboxOxidPartnerId(): string
+    {
+        return "LRCHTG6NYPSXN";
+    }
+
+    /**
+     * This Secret is public. The only function is to create
+     * a basiclly AccessToken,  Which one is needed to generate
+     * the request for the merchant ClientId and Secret.
+     * For this purpose, this ClientId is unencrypted, here as part
+     * of this open Source Module
+     *
+     * @return string
+     */
+    public function getLiveOxidSecret(): string
+    {
+        return "FULA6AY33UTA4";
+    }
+
+    /**
+     * This Secret is public. The only function is to create
+     * a basiclly AccessToken,  Which one is needed to generate
+     * the request for the merchant ClientId and Secret.
+     * For this purpose, this PartnerId is unencrypted, here as part
+     * of this open Source Module
+     *
+     * @return string
+     */
+    public function getSandboxOxidSecret(): string
+    {
+        return "LRCHTG6NYPSXN";
+    }
 }

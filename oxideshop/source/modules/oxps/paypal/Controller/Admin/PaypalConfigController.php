@@ -61,6 +61,39 @@ class PaypalConfigController extends AdminController
     }
 
     /**
+     * Template Getter: Get a Link for SignUp the Live Merchant Integration
+     *
+     * @return string
+     */
+    public function getLiveSignUpMerchantIntegrationLink()
+    {
+        // https://www.paypal.com/bizsignup/partner/entry?partnerId=PEZFKJQZVYEE6&product=ppcp&integrationType=FO&features=PAYMENT,REFUND&partnerClientId=AS35dAZbp8yCgjz7UQ0FAzQ_x1ennj5nT8C5-arVcqaLuxCJhBYvbuz4afGt1Ql-wOqso6wPN01aAS_B&returnToPartnerUrl=https://www.google.com&partnerLogoUrl=https://www.google.com&displayMode=minibrowser&sellerNonce=ARhK2xC8xSvNRphchskRddPDH2rWnc-F2yPl03oP_Hbi13fUDvNnTB5tiy0ct
+        $config = new Config();
+        $config->getLiveOxidClientId();
+        $config->getLiveOxidPartnerId();
+        $config->getLiveOxidSecret();
+
+        return "#";
+    }
+
+    /**
+     * Template Getter: Get a Link for SignUp the Live Merchant Integration
+     *
+     * @return string
+     */
+    public function getSandboxSignUpMerchantIntegrationLink()
+    {
+        // https://www.sandbox.paypal.com/bizsignup/partner/entry?partnerId=PEZFKJQZVYEE6&product=ppcp&integrationType=FO&features=PAYMENT,REFUND&partnerClientId=AS35dAZbp8yCgjz7UQ0FAzQ_x1ennj5nT8C5-arVcqaLuxCJhBYvbuz4afGt1Ql-wOqso6wPN01aAS_B&returnToPartnerUrl=https://www.google.com&partnerLogoUrl=https://www.google.com&displayMode=minibrowser&sellerNonce=ARhK2xC8xSvNRphchskRddPDH2rWnc-F2yPl03oP_Hbi13fUDvNnTB5tiy0ct
+        $config = new Config();
+        $config->getSandboxOxidClientId();
+        $config->getSandboxOxidPartnerId();
+        $config->getSandboxOxidSecret();
+
+        return "#";
+
+    }
+
+    /**
      * Saves configuration values
      */
     public function save()
