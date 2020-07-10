@@ -133,7 +133,7 @@ class Client
     }
 
     /**
-     * @return bool
+     * @return bool|string
      */
     public function getAccessToken()
     {
