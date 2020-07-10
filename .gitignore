@@ -64,3 +64,4 @@ oxideshop/source/styleguide/
 /tmp/
 !/oxideshop/source/modules/oxps/paypal/
 oxideshop/source/modules/oxps/paypal/resources/node_modules/
+/oxideshop/custom/paypal-client/vendor/

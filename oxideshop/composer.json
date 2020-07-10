@@ -10,6 +10,14 @@
   "prefer-stable": true,
   "repositories": [
     {
+      "type": "path",
+      "url": "source/modules/oxps/*"
+    },
+    {
+      "type": "path",
+      "url": "custom/*"
+    },
+    {
       "type": "composer",
       "url": "https://b2b-edition.packages.oxid-esales.com"
     },
@@ -20,13 +28,10 @@
     {
       "type": "composer",
       "url": "https://enterprise-edition.packages.oxid-esales.com/"
-    },
-    {
-      "type": "path",
-      "url": "source/modules/oxps/*"
     }
   ],
   "require": {
+    "php": ">=7.1",
     "oxid-community/moduleinternals": "^3.0@alpha",
     "oxid-esales/b2b-module": "^3.2",
     "oxid-esales/oxideshop-ce": "6.3.6",
@@ -42,7 +47,8 @@
     "oxid-professional-services/oxid-console": "^6.0@beta",
     "oxid-professional-services/oxid-modules-config": "^6.1@beta",
     "ddoe/visualcms-module": "3.3.2",
-    "oxid-professional-services/paypal": "^0.0.1"
+    "oxid-professional-services/paypal": "^0.0.1",
+    "ext-json": "*"
   },
   "require-dev": {
     "alfredbez/oxid-dump-autoload": "^0.1.0",
