@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<phpunit bootstrap="./vendor/autoload.php">
+
+    <testsuites>
+        <testsuite name="paypal API integration test suite">
+            <directory>./src/Tests/Integration</directory>
+        </testsuite>
+    </testsuites>
+
+</phpunit>
