@@ -26,6 +26,9 @@ use OxidEsales\Eshop\Application\Controller\Admin\AdminController;
 use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Core\Config;
+use OxidProfessionalServices\PayPal\Api\Client;
+use Symfony\Component\Console\Logger\ConsoleLogger;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Controller for admin > Paypal/Configuration page
@@ -67,11 +70,18 @@ class PaypalConfigController extends AdminController
      */
     public function getLiveSignUpMerchantIntegrationLink()
     {
-        // https://www.paypal.com/bizsignup/partner/entry?partnerId=PEZFKJQZVYEE6&product=ppcp&integrationType=FO&features=PAYMENT,REFUND&partnerClientId=AS35dAZbp8yCgjz7UQ0FAzQ_x1ennj5nT8C5-arVcqaLuxCJhBYvbuz4afGt1Ql-wOqso6wPN01aAS_B&returnToPartnerUrl=https://www.google.com&partnerLogoUrl=https://www.google.com&displayMode=minibrowser&sellerNonce=ARhK2xC8xSvNRphchskRddPDH2rWnc-F2yPl03oP_Hbi13fUDvNnTB5tiy0ct
+        $output = new ConsoleOutput(OutputInterface::VERBOSITY_DEBUG);
+        $logger = new ConsoleLogger($output);
         $config = new Config();
-        $config->getLiveOxidClientId();
+
+        $oxidLiveIntegrationClient = new Client($logger, Client::PRODUCTION_URL);
+        $oxidLiveIntegrationClient->auth(
+            $config->getLiveOxidClientId(),
+            $config->getLiveOxidSecret()
+        );
+        $accessToken = $oxidLiveIntegrationClient->getAccessToken();
+
         $config->getLiveOxidPartnerId();
-        $config->getLiveOxidSecret();
 
         return "#";
     }
@@ -84,13 +94,19 @@ class PaypalConfigController extends AdminController
     public function getSandboxSignUpMerchantIntegrationLink()
     {
         // https://www.sandbox.paypal.com/bizsignup/partner/entry?partnerId=PEZFKJQZVYEE6&product=ppcp&integrationType=FO&features=PAYMENT,REFUND&partnerClientId=AS35dAZbp8yCgjz7UQ0FAzQ_x1ennj5nT8C5-arVcqaLuxCJhBYvbuz4afGt1Ql-wOqso6wPN01aAS_B&returnToPartnerUrl=https://www.google.com&partnerLogoUrl=https://www.google.com&displayMode=minibrowser&sellerNonce=ARhK2xC8xSvNRphchskRddPDH2rWnc-F2yPl03oP_Hbi13fUDvNnTB5tiy0ct
+
+        $output = new ConsoleOutput(OutputInterface::VERBOSITY_DEBUG);
+        $logger = new ConsoleLogger($output);
         $config = new Config();
-        $config->getSandboxOxidClientId();
-        $config->getSandboxOxidPartnerId();
-        $config->getSandboxOxidSecret();
+
+        $oxidSandboxIntegrationClient = new Client($logger, Client::SANDBOX_URL);
+        $oxidSandboxIntegrationClient->auth(
+            $config->getSandboxOxidClientId(),
+            $config->getSandboxOxidSecret()
+        );
+        $accessToken = $oxidSandboxIntegrationClient->getAccessToken();
 
         return "#";
-
     }
 
     /**
