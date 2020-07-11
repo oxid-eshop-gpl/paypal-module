@@ -80,10 +80,9 @@ class PaypalConfigController extends AdminController
             $config->getLiveOxidSecret()
         );
         $accessToken = $oxidLiveIntegrationClient->getAccessToken();
+        $oxidLiveIntegrationClient->generateSignupLink($accessToken);
 
-        $config->getLiveOxidPartnerId();
-
-        return "#";
+        return $oxidLiveIntegrationClient->getSignupLink();
     }
 
     /**
@@ -105,8 +104,9 @@ class PaypalConfigController extends AdminController
             $config->getSandboxOxidSecret()
         );
         $accessToken = $oxidSandboxIntegrationClient->getAccessToken();
+        $oxidSandboxIntegrationClient->generateSignupLink($accessToken);
 
-        return "#";
+        return $oxidSandboxIntegrationClient->getSignupLink();
     }
 
     /**

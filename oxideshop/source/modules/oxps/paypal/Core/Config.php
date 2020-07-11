@@ -175,6 +175,6 @@ class Config
      */
     public function getSandboxOxidSecret(): string
     {
-        return "LRCHTG6NYPSXN";
+        return "EANkP__pSQ25b1cXuO4CrC_KeDc78rKtgUpeEDthejOVjkJV9sv0mfjxM_A4qXyMqbdCIeib0tDfQY_6";
     }
 }
