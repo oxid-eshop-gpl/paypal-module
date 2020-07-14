@@ -44,9 +44,6 @@
 
 # Codeception generated and report files
 .env
-/codeception/tests/_output/*
-!/codeception/tests/_output/.gitkeep
-/codeception/tests/_support/_generated/*
 
 # PHPUnit code coverage reports
 /**/[Tt]ests/[Rr]eports/
@@ -65,3 +62,4 @@ oxideshop/source/styleguide/
 !/oxideshop/source/modules/oxps/paypal/
 oxideshop/source/modules/oxps/paypal/resources/node_modules/
 /oxideshop/custom/paypal-client/vendor/
+!/oxideshop/source/modules/oxps/paypal/Tests/Acceptance/

@@ -18,25 +18,22 @@ class TestClientAuth extends TestCase
     public function setUp()
     {
         parent::setUp();
-
-        $output = new ConsoleOutput(OutputInterface::VERBOSITY_DEBUG);
-        $logger = new ConsoleLogger($output);
-        $this->client = new Client($logger, Client::SANDBOX_URL);
+        $this->client = ClientFactory::createClient(Client::class);
     }
 
     public function testAuth()
     {
-        $setting = include __DIR__ . '/auth.php';
         $this->assertFalse($this->client->isAuthenticated());
-        $this->client->auth($setting['clientId'], $setting['clientSecret']);
+        $this->client->auth();
         $this->assertTrue($this->client->isAuthenticated());
     }
 
     public function testAuthFailing()
     {
+        $client = ClientFactory::createCustomClient(Client::class, 'wrongClientId', 'wrongClientSecret', 'wrongPayerId');
         $this->assertFalse($this->client->isAuthenticated());
         $this->expectExceptionCode(401);
-        $this->client->auth('wrongClientId', 'wrongClientSecret');
-        $this->assertFalse($this->client->isAuthenticated());
+        $client->auth();
     }
+
 }

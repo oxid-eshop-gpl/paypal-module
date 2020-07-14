@@ -1,4 +1,10 @@
 [{include file="headitem.tpl" title="paypal"}]
+
+[{oxscript add="function copyToClipboard(element) {
+    document.querySelector(element).select();
+    document.execCommand('copy');
+}"}]
+
 <div id="content" class="paypal-config">
     <h1>[{oxmultilang ident="paypal"}] [{oxmultilang ident="OXPS_PAYPAL_CONFIG"}]</h1>
     <div class="alert alert-[{if $Errors.paypal_error}]danger[{else}]success[{/if}]" role="alert">
@@ -76,6 +82,29 @@
             <div class="controls">
                 <input type="text" class="form-control" id="client-sandbox-secret" name="conf[sPaypalSandboxClientSecret]" value="[{$config->getSandboxClientSecret()}]" />
                 <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_SANDBOX_CLIENT_SECRET"}]</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="client-sandbox-secret">[{oxmultilang ident="OXPS_PAYPAL_CLIENT_SECRET"}]</label>
+            <div class="controls">
+                <input type="text" class="form-control" id="client-sandbox-secret" name="conf[sPaypalSandboxClientSecret]" value="[{$config->getSandboxClientSecret()}]" />
+                <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_SANDBOX_CLIENT_SECRET"}]</span>
+            </div>
+        </div>
+
+        <h3>[{oxmultilang ident="OXPS_PAYPAL_WEBHOOK_TITLE"}]</h3>
+
+        <div class="form-group">
+            <label for="webhook-url">[{oxmultilang ident="OXPS_PAYPAL_WEBHOOK_URL"}]</label>
+            <div class="controls">
+                <div class="input-group">
+                    <input class="form-control" id="webhook-url" type="text" value="[{$oView->getWebhookControllerUrl()}]" readonly>
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" onclick="copyToClipboard('#webhook-url')">Copy</button>
+                    </span>
+                </div>
+                <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_WEBHOOK_URL"}]</span>
             </div>
         </div>
 
