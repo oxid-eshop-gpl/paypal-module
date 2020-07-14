@@ -4,9 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Tests\Integration;
 
 use OxidProfessionalServices\PayPal\Api\Client;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Console\Logger\ConsoleLogger;
-use Symfony\Component\Console\Output\ConsoleOutput;
-use Symfony\Component\Console\Output\OutputInterface;
 
 class TestClientAuth extends TestCase
 {
@@ -30,10 +27,27 @@ class TestClientAuth extends TestCase
 
     public function testAuthFailing()
     {
-        $client = ClientFactory::createCustomClient(Client::class, 'wrongClientId', 'wrongClientSecret', 'wrongPayerId');
+        $client = ClientFactory::createCustomClient(Client::class, 'wrongClientId', 'wrongClientSecret', 'wrongPayerId', false);
         $this->assertFalse($this->client->isAuthenticated());
         $this->expectExceptionCode(401);
         $client->auth();
     }
 
+    /**
+     * If the token is wrong (or expired) the client must automatically do a new auth
+     * and send the request with the new token. The caller must not get any auth error.
+     * @throws \Throwable
+     */
+    public function testReAuth()
+    {
+        $client = $this->client;
+        $request = $client->createRequest("GET", "/v1/identity/oauth2/userinfo?schema=paypalv1.1", []);
+        $wrongToken =
+            'A21AAH0c6n-nvatHmXL7_jWLR7z-Wtw7X3kBgHXZhWJ-r8NKs5A88k6DW7rTpH5LjkvbIx0tnz-MwO33jGmFBO1MzO_gV9FbL';
+        $t = ['access_token' => $wrongToken];
+        $client->injectTokenResponse($t);
+        $res = $client->send($request);
+        $res = json_decode($res->getBody(), true);
+        $this->assertTrue(isset($res['user_id']));
+    }
 }

@@ -8,7 +8,9 @@ use GuzzleHttp\MessageFormatter;
 use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
+use Throwable;
 
 /**
  * Class Client
@@ -58,6 +60,11 @@ class Client
      */
     private $merchantPayerId;
 
+    /**
+     * @var string
+     */
+    private $technicalClientId = "AS-lHBWs8cudxxonSeQ1eRbdn1Nr-7baqAURRNJnIuP-PPQFzFF1XkjDYV3NG3M6O75st2D98DOil4Vd";
+
 
     /**
      * Client constructor.
@@ -100,40 +107,50 @@ class Client
         );
     }
 
-    public function createRequest($method, $path, $header, $body): RequestInterface
+    /**
+     * @param $method
+     * @param $path
+     * @param $header
+     * @param $body
+     * @return RequestInterface
+     */
+    public function createRequest($method, $path, $header, $body = null): RequestInterface
     {
-        if (array_search($method, ['POST','PATCH','PUT','GET','DELETE']) === false) {
-            die("not valid http method '$method' for paypal client");
-        }
-
-        if (!$this->isAuthenticated()) {
-            $this->auth();
-        }
-
-        $header["Authorization"] = "Bearer " . $this->tokenResponse['access_token'];
-
-        $jose_header = base64_encode('{"alg":"none"}');
-        $partnerClientId = $this->merchantClientId;
-        $payer_id = $this->merchantPayerId;
-
-        $payload = base64_encode("{\"iss\": \"$partnerClientId\", \"payer_id\":\"$payer_id\"}");
-        $header['PayPal-Auth-Assertion'] = "{$jose_header}.{$payload}.";
-
-        $header[self::PAYPAL_PARTNER_ATTR_ID_HEADER] = self::PAYPAL_PARTNER_ATTR_ID;
-
         return new Request($method, $this->endpoint . $path, $header, $body);
     }
 
-    protected function send(RequestInterface $request)
+    /**
+     * @param RequestInterface $request
+     * @throws Throwable for now a GuzzleException but you should not rely on this the only commitment for this
+     * exception object is that the method getCode() return the http result code if there is one.
+     * @return ResponseInterface
+     */
+    public function send(RequestInterface $request)
     {
         try {
-            $this->httpClient->send($request);
+            $method = $request->getMethod();
+            assert(
+                (array_search($method, ['POST','PATCH','PUT','GET','DELETE']) !== false),
+                "not valid http method '$method' for paypal client"
+            );
+
+            return $this->sendWithAuth($request);
         } catch (GuzzleException $e) {
-            //fixme: handle 401
-            throw $e;
+            if ($e->getCode() === 401) {
+                //clear tokens to force re-auth
+                $this->tokenResponse = null;
+                return $this->sendWithAuth($request);
+            } else {
+                throw $e;
+            }
         }
     }
 
+
+    public function setTechnicalClientId($clientId)
+    {
+        $this->technicalClientId = $clientId;
+    }
 
     /**
      * normal auth if $clientId and $clientSecret are already available
@@ -170,14 +187,62 @@ class Client
     }
 
     /**
-     * @return bool|string
+     * @param $tokenResponse
      */
-    public function getAccessToken()
+    public function injectTokenResponse($tokenResponse)
     {
-        if(!$this->isAuthenticated()) {
-            return false;
+        $this->tokenResponse = $tokenResponse;
+    }
+
+    /**
+     * use this if you want to store the auth response for later reuse
+     * see also injectTokenResponse
+     * @return array the token response from the auth call
+     */
+    public function tokenResponse()
+    {
+        return $this->tokenResponse;
+    }
+
+
+    /**
+     * @param RequestInterface $request
+     * @return RequestInterface
+     */
+    protected function injectAuthHeaders(RequestInterface $request)
+    {
+        if (!$this->isAuthenticated()) {
+            $this->auth();
         }
 
-        return $this->tokenResponse['access_token'];
+        $headers["Authorization"] = "Bearer " . $this->tokenResponse['access_token'];
+
+        $jose_header = base64_encode('{"alg":"none"}');
+        $payer_id = $this->merchantPayerId;
+
+
+        $partnerClientId = $this->technicalClientId;
+        $payload = base64_encode("{\"iss\": \"$partnerClientId\", \"payer_id\":\"$payer_id\"}");
+
+        $headers['PayPal-Auth-Assertion'] = "{$jose_header}.{$payload}.";
+
+        $headers[self::PAYPAL_PARTNER_ATTR_ID_HEADER] = self::PAYPAL_PARTNER_ATTR_ID;
+        foreach ($headers as $headerName => $headerValue) {
+            $request = $request->withHeader($headerName, $headerValue);
+        }
+
+        return $request;
+    }
+
+    /**
+     * @param RequestInterface $request
+     * @return ResponseInterface
+     * @throws GuzzleException
+     */
+    protected function sendWithAuth(RequestInterface $request)
+    {
+        $request = $this->injectAuthHeaders($request);
+        $res = $this->httpClient->send($request);
+        return $res;
     }
 }
