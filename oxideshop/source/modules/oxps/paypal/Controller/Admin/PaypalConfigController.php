@@ -42,6 +42,16 @@ class PaypalConfigController extends AdminController
     }
 
     /**
+     * Get webhook controller url
+     *
+     * @return string
+     */
+    public function getWebhookControllerUrl(): string
+    {
+        return Registry::getUtilsUrl()->getActiveShopHost() . '/index.php?cl=PaypalWebhookController';
+    }
+
+    /**
      * @return string
      */
     public function render()
@@ -78,7 +88,7 @@ class PaypalConfigController extends AdminController
      * Saves configuration values
      *
      * @param array $conf
-     * @param int $shopId
+     * @param int   $shopId
      */
     protected function saveConfig(array $conf, int $shopId): void
     {
