@@ -21,6 +21,7 @@
  */
 
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalConfigController;
+use OxidProfessionalServices\PayPal\Controller\WebhookController;
 
 $sMetadataVersion = '2.1';
 
@@ -45,6 +46,7 @@ $aModule = [
     'extend' => [],
     'controllers' => [
         'PaypalConfigController' => PaypalConfigController::class,
+        'PaypalWebhookController' => WebhookController::class
     ],
     'templates' => [
         'paypalconfig.tpl' => 'oxps/paypal/views/admin/tpl/paypalconfig.tpl',

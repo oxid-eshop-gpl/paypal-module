@@ -34,6 +34,9 @@ $aLang = [
     'OXPS_PAYPAL_CLIENT_SECRET'      => 'Secret',
     'OXPS_PAYPAL_LIVE_CREDENTIALS'   => 'Live API credentials',
     'OXPS_PAYPAL_SANDBOX_CREDENTIALS'=> 'Sandbox API credentials',
+    'OXPS_PAYPAL_WEBHOOK_TITLE'      => 'Webhook settings',
+    'OXPS_PAYPAL_WEBHOOK_URL'        => 'Webhook listener URL',
+    'HELP_OXPS_PAYPAL_WEBHOOK_URL'   => 'Use this URL to setup webhook listener on paypal portal.',
     'OXPS_PAYPAL_ERR_CONF_INVALID'   =>
         'One or more configuration values are either not set or incorrect. Please double check them.<br>
         <b>Module inactive.</b>',
