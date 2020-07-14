@@ -161,7 +161,7 @@ class Config
      */
     public function getLiveOxidSecret(): string
     {
-        return "FULA6AY33UTA4";
+        return "ELcHsbqzqmC8wVbndnDxokTnQboMn-HfcJ2tGfWbxJUIAIys0HMqfzbHrev5R--RPd6B2xNWJrddtO9z";
     }
 
     /**
