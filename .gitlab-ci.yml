@@ -47,7 +47,7 @@ ci_tests:
     - vendor/bin/oe-eshop-db_views_generate
     - vendor/bin/oxid config:import --env=development
     - vendor/bin/runtests
-    - vendor/bin/phpcs --standard=PSR12 --ignore=*/translations/*,*/views/*,*.min.js,*.min.css source/modules/oxps/paypal
+    - vendor/bin/phpcs --standard=PSR12 --ignore=*/_support/,*/_output,*/_data,*/translations/*,*/views/*,*.min.js,*.min.css source/modules/oxps/paypal
   services:
     - name: mysql:5.7
       alias: db
