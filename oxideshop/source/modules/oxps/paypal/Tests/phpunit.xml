@@ -16,6 +16,7 @@
          stopOnSkipped="false"
          beStrictAboutTestsThatDoNotTestAnything="true"
          strict="false"
+         SYMFONY_DEPRECATIONS_HELPER="weak"
          verbose="false">
 
     <filter>
