@@ -39,6 +39,11 @@ class Client
     private $tokenResponse;
 
     /**
+     * @var
+     */
+    private $signupLinkResponse;
+
+    /**
      * Client constructor.
      * @param LoggerInterface $logger
      * @param string $endpoint
@@ -101,6 +106,54 @@ class Client
     }
 
     /**
+     * Generate a PayPal sign-up link
+     * to include onboarding sellers with PayPal.
+     * @param $authCode string this is returned by paypal in the call back function
+     * @param $sellerNonce string the random number that was used to generate the paypal register/login link
+     */
+    public function generateSignupLink($authCode, $sellerNonce)
+    {
+        $authBase64 = base64_encode("$sharedId:");
+        $client = $this->httpClient;
+        $url = $this->endpoint . "/v2/customer/partner-referrals";
+
+        $res = $client->post($url, [
+            "headers" => [
+                "Authorization" => "Bearer $authBase64",
+                "Content-Type" => self::CONTENT_TYPE_JSON,
+                "Accept" => self::CONTENT_TYPE_JSON
+            ],
+            "operations" => [
+                "operation" => "API_INTEGRATION",
+                "api_integration_preference" => [
+                    "rest_api_integration" => [
+                        "integration_method"  => "PAYPAL",
+                        "integration_type"    => "FIRST_PARTY",
+                        "first_party_details" => [
+                            "features" => [
+                                "PAYMENT",
+                                "REFUND"
+                            ],
+                            "seller_nonce" => $sellerNonce
+                        ]
+                    ]
+                ]
+            ],
+            "products" => [
+                "EXPRESS_CHECKOUT"
+            ],
+            "legal_consents" => [
+                [
+                    "type"    => "SHARE_DATA_CONSENT",
+                    "granted" => true
+                ]
+            ]
+        ]);
+
+        $this->signupLinkResponse = json_decode($res, true);
+    }
+
+    /**
      * normal auth if $clientId and $clientSecret are already available
      * @param $clientId
      * @param $clientSecret
@@ -142,5 +195,25 @@ class Client
         }
 
         return $this->tokenResponse['access_token'];
+    }
+
+    /**
+     * @return bool|string
+     */
+    public function getSignupLink()
+    {
+        if(!$this->isAuthenticated()) {
+            return false;
+        }
+
+        $signupLink = "";
+
+        foreach ($this->signupLinkResponse as $signupLinkData) {
+            if ($signupLinkData["rel"] == "action_url") {
+                $signupLink = $signupLinkData["href"];
+                break;
+            }
+        }
+        return $signupLink;
     }
 }
