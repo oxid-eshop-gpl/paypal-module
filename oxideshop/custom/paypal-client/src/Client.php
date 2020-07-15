@@ -146,7 +146,12 @@ class Client
         }
     }
 
-
+    /**
+     * set the clientId from the technical account for your app.
+     * every app must have a account, this helps paypal to understand how there API is beeing used
+     * it will be transfered in the PayPal-Auth-Assertion header inside the iss field
+     * @param $clientId string clientId from the technical account for your app.
+     */
     public function setTechnicalClientId($clientId)
     {
         $this->technicalClientId = $clientId;
