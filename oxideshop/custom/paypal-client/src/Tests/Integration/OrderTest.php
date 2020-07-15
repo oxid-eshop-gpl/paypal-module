@@ -9,7 +9,7 @@ use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class TestOrder extends TestCase
+class OrderTest extends TestCase
 {
     /**
      * @var OrderClient

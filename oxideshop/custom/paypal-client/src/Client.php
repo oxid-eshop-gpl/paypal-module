@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OxidProfessionalServices\PayPal\Api;
 
 use GuzzleHttp\Exception\GuzzleException;
@@ -9,6 +11,7 @@ use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 use Psr\Log\LoggerInterface;
 use Throwable;
 
@@ -95,7 +98,7 @@ class Client
         $stack->push(
             Middleware::log(
                 $logger,
-//                new MessageFormatter("{req_body} \n ----- ----- \n {res_body}")
+                //                new MessageFormatter("{req_body} \n ----- ----- \n {res_body}")
                 new MessageFormatter(MessageFormatter::DEBUG)
             )
         );
@@ -108,15 +111,15 @@ class Client
     }
 
     /**
-     * @param $method
-     * @param $path
-     * @param $header
-     * @param $body
+     * @param string $method HTTP method
+     * @param string $path part of the URI without the endpoint domain itself
+     * @param array $headers Request headers
+     * @param string|null|resource|StreamInterface $body Request body
      * @return RequestInterface
      */
-    public function createRequest($method, $path, $header, $body = null): RequestInterface
+    public function createRequest($method, $path, array $headers, $body = null): RequestInterface
     {
-        return new Request($method, $this->endpoint . $path, $header, $body);
+        return new Request($method, $this->endpoint . $path, $headers, $body);
     }
 
     /**
@@ -125,7 +128,7 @@ class Client
      * exception object is that the method getCode() return the http result code if there is one.
      * @return ResponseInterface
      */
-    public function send(RequestInterface $request)
+    public function send(RequestInterface $request): ResponseInterface
     {
         try {
             $method = $request->getMethod();
@@ -187,19 +190,22 @@ class Client
     }
 
     /**
+     * use this if you want to inject a token into the auth headers set by this client.
+     * You may want to use this with the return from getTokenResponse() so you are able to cache the
+     * the auth between requests.
      * @param $tokenResponse
      */
-    public function injectTokenResponse($tokenResponse)
+    public function setTokenResponse($tokenResponse)
     {
         $this->tokenResponse = $tokenResponse;
     }
 
     /**
      * use this if you want to store the auth response for later reuse
-     * see also injectTokenResponse
+     * see also setTokenResponse
      * @return array the token response from the auth call
      */
-    public function tokenResponse()
+    public function getTokenResponse()
     {
         return $this->tokenResponse;
     }
@@ -217,14 +223,14 @@ class Client
 
         $headers["Authorization"] = "Bearer " . $this->tokenResponse['access_token'];
 
-        $jose_header = base64_encode('{"alg":"none"}');
-        $payer_id = $this->merchantPayerId;
+        $joseHeader = base64_encode('{"alg":"none"}');
+        $payerId = $this->merchantPayerId;
 
 
         $partnerClientId = $this->technicalClientId;
-        $payload = base64_encode("{\"iss\": \"$partnerClientId\", \"payer_id\":\"$payer_id\"}");
+        $payload = base64_encode("{\"iss\": \"$partnerClientId\", \"payer_id\":\"$payerId\"}");
 
-        $headers['PayPal-Auth-Assertion'] = "{$jose_header}.{$payload}.";
+        $headers['PayPal-Auth-Assertion'] = "{$joseHeader}.{$payload}.";
 
         $headers[self::PAYPAL_PARTNER_ATTR_ID_HEADER] = self::PAYPAL_PARTNER_ATTR_ID;
         foreach ($headers as $headerName => $headerValue) {

@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Tests\Integration;
 use OxidProfessionalServices\PayPal\Api\Client;
 use PHPUnit\Framework\TestCase;
 
-class TestClientAuth extends TestCase
+class ClientAuthTest extends TestCase
 {
     /**
      * @var Client
@@ -45,7 +45,7 @@ class TestClientAuth extends TestCase
         $wrongToken =
             'A21AAH0c6n-nvatHmXL7_jWLR7z-Wtw7X3kBgHXZhWJ-r8NKs5A88k6DW7rTpH5LjkvbIx0tnz-MwO33jGmFBO1MzO_gV9FbL';
         $t = ['access_token' => $wrongToken];
-        $client->injectTokenResponse($t);
+        $client->setTokenResponse($t);
         $res = $client->send($request);
         $res = json_decode($res->getBody(), true);
         $this->assertTrue(isset($res['user_id']));
