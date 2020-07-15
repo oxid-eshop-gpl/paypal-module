@@ -89,19 +89,16 @@ class Client
         $payerId,
         $debug = false
     ) {
-        $logger->info("creating client");
         $this->endpoint = $endpoint;
         $this->merchantClientId = $clientId;
         $this->merchantClientSecret = $clientSecret;
         $this->merchantPayerId = $payerId;
         $stack = HandlerStack::create();
-        $stack->push(
-            Middleware::log(
-                $logger,
-                //                new MessageFormatter("{req_body} \n ----- ----- \n {res_body}")
-                new MessageFormatter(MessageFormatter::DEBUG)
-            )
-        );
+        if ($debug) {
+            $stack->push(
+                Middleware::log($logger, new MessageFormatter(MessageFormatter::DEBUG))
+            );
+        }
         $this->httpClient = new \GuzzleHttp\Client(
             [
                 'handler' => $stack,
