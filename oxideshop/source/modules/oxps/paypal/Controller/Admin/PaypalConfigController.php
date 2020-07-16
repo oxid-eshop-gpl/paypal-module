@@ -96,7 +96,7 @@ class PaypalConfigController extends AdminController
         $accessToken = $oxidLiveIntegrationClient->getTokenResponse();
         $oxidLiveIntegrationClient->generateSignupLink(
             $accessToken,
-            $this->getSellerNonce
+            $oxidLiveIntegrationClient->createSellerNonce()
         );
 
         return $oxidLiveIntegrationClient->getSignupLink();
@@ -115,18 +115,20 @@ class PaypalConfigController extends AdminController
         $logger = new ConsoleLogger($output);
         $config = new Config();
 
-        $oxidLiveIntegrationClient = new Onboarding(
+        $oxidSandboxIntegrationClient = new Onboarding(
             $logger,
             Onboarding::SANDBOX_URL,
             $config->getSandboxOxidClientId(),
             $config->getSandboxOxidSecret(),
-            $config->getSandboxOxidPartnerId()
+            $config->getSandboxOxidPartnerId(),
+            true
         );
+        $oxidSandboxIntegrationClient->auth();
 
         $accessToken = $oxidSandboxIntegrationClient->getTokenResponse();
         $oxidSandboxIntegrationClient->generateSignupLink(
             $accessToken,
-            $this->getSellerNonce
+            $oxidSandboxIntegrationClient->createSellerNonce()
         );
 
         return $oxidSandboxIntegrationClient->getSignupLink();

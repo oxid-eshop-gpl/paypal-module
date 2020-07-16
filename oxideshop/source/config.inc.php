@@ -11,13 +11,13 @@ $this->dbPort = getenv('MYSQL_PORT'); // tcp port to which the database is bound
 $this->dbName = getenv('MYSQL_DATABASE'); // database name
 $this->dbUser = getenv('MYSQL_USER'); // database user name
 $this->dbPwd = getenv('MYSQL_PASSWORD'); // database user password
-$port = getenv('OXID_PORT') != '80' && getenv('DOMAIN') == 'localhost' ? ':' . getenv('OXID_PORT') : '';
-$port_ssl = getenv('SSL_OXID_PORT') != '80' && getenv('DOMAIN') == 'localhost' ? ':' . getenv('SSL_OXID_PORT') : '';
+$port = getenv('OXID_PORT') != '80' ? ':' . getenv('OXID_PORT') : '';
+$port_ssl = getenv('SSL_OXID_PORT') != '80' ? ':' . getenv('SSL_OXID_PORT') : '';
 $this->sShopURL = 'http://'.getenv('DOMAIN') . $port; // eShop base url, required
-$this->sSSLShopURL  = null;            // eShop SSL url, optional
-$this->sAdminSSLURL = null;            // eShop Admin SSL url, optional
+$this->sSSLShopURL  = 'http://'.getenv('DOMAIN') . $port_ssl;            // eShop SSL url, optional
+$this->sAdminSSLURL = null;
 $this->sShopDir     = __DIR__;
-$this->sCompileDir  = realpath(__DIR__ . '/../../tmp');
+$this->sCompileDir  = __DIR__ . '/tmp';
 
 /**
  * Force shop edition. Even if enterprise or professional packages exists, shop edition can still be forced here.
