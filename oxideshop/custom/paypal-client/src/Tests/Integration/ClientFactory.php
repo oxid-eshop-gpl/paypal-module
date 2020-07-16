@@ -21,10 +21,11 @@ abstract class ClientFactory
         );
     }
 
-    public static function createCustomClient($class, $clientId, $clientSecret, $payerId, $debug = true)
+    public static function createCustomClient($class, $clientId, $clientSecret, $payerId, $debug)
     {
+        assert(is_a($class, Client::class, true));
         $output = new ConsoleOutput(OutputInterface::VERBOSITY_DEBUG);
         $logger = new ConsoleLogger($output);
-        return new $class($logger, Client::SANDBOX_URL, $clientId, $clientSecret, $payerId, true);
+        return new $class($logger, Client::SANDBOX_URL, $clientId, $clientSecret, $payerId, $debug);
     }
 }
