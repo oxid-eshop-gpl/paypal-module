@@ -5,7 +5,6 @@
     "require": {
         "php" : "> 7.1",
         "guzzlehttp/guzzle": "^6.5",
-        "phpunit/phpunit": "^7.5",
         "symfony/console": "^4.4",
         "psr/log": "^1.1",
         "league/oauth2-client": "^2.4",
