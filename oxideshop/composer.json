@@ -48,6 +48,7 @@
     "oxid-professional-services/oxid-modules-config": "^6.1@beta",
     "ddoe/visualcms-module": "3.3.2",
     "oxid-professional-services/paypal": "^0.0.1",
+    "oxid-professional-services/paypal-client": "dev-master",
     "ext-json": "*"
   },
   "require-dev": {

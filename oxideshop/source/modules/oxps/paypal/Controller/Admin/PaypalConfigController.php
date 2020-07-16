@@ -26,8 +26,8 @@ use OxidEsales\Eshop\Application\Controller\Admin\AdminController;
 use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Core\Config;
-use OxidProfessionalServices\PayPal\Api\Client;
 use Symfony\Component\Console\Logger\ConsoleLogger;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use OxidProfessionalServices\PayPal\Api\Onboarding;
 
@@ -90,11 +90,14 @@ class PaypalConfigController extends AdminController
             Onboarding::PRODUCTION_URL,
             $config->getLiveOxidClientId(),
             $config->getLiveOxidSecret(),
-            $config->getLiveOxidPartnerId(),
+            $config->getLiveOxidPartnerId()
         );
 
-        $accessToken = $oxidLiveIntegrationClient->getAccessToken();
-        $oxidLiveIntegrationClient->generateSignupLink($accessToken);
+        $accessToken = $oxidLiveIntegrationClient->getTokenResponse();
+        $oxidLiveIntegrationClient->generateSignupLink(
+            $accessToken,
+            $this->getSellerNonce
+        );
 
         return $oxidLiveIntegrationClient->getSignupLink();
     }
@@ -117,11 +120,14 @@ class PaypalConfigController extends AdminController
             Onboarding::SANDBOX_URL,
             $config->getSandboxOxidClientId(),
             $config->getSandboxOxidSecret(),
-            $config->getSandboxOxidPartnerId(),
+            $config->getSandboxOxidPartnerId()
         );
 
-        $accessToken = $oxidSandboxIntegrationClient->getAccessToken();
-        $oxidSandboxIntegrationClient->generateSignupLink($accessToken);
+        $accessToken = $oxidSandboxIntegrationClient->getTokenResponse();
+        $oxidSandboxIntegrationClient->generateSignupLink(
+            $accessToken,
+            $this->getSellerNonce
+        );
 
         return $oxidSandboxIntegrationClient->getSignupLink();
     }

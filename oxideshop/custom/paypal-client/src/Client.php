@@ -66,6 +66,11 @@ class Client
     /**
      * @var string
      */
+    private $sellerNonce;
+
+    /**
+     * @var string
+     */
     private $technicalClientId = "AS-lHBWs8cudxxonSeQ1eRbdn1Nr-7baqAURRNJnIuP-PPQFzFF1XkjDYV3NG3M6O75st2D98DOil4Vd";
 
 
@@ -211,6 +216,19 @@ class Client
         return $this->tokenResponse;
     }
 
+    /**
+     * use this if you want to inject a token into the auth headers set by this client.
+     * You may want to use this with the return from getTokenResponse() so you are able to cache the
+     * the auth between requests.
+     * @param $tokenResponse
+     */
+    public function getSellerNonce()
+    {
+        if (is_null($this->sellerNonce)) {
+            $this->sellerNonce = md5(uniqid('', true) . '|' . microtime());
+        }
+        $this->sellerNonce = $sellerNonce;
+    }
 
     /**
      * @param RequestInterface $request
