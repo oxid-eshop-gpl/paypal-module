@@ -9,7 +9,7 @@ mandatory_parameters:
     # When testing not activated module, specify module path in shop.
     # Module path in shop, e.g. if module is in 'shop/modules/oe/mymodule' directory, value here should be 'oe/mymodule'.
     # Multiple modules can be specified separated by comma: 'oe/module1,module2,tt/module3'.
-    partial_module_paths: oxps/genericimporter
+    partial_module_paths: oxps/paypal
 
 optional_parameters:
     # eShop base url (if not set, takes it from shop's config.inc.php file)

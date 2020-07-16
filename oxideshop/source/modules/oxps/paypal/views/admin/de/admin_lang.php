@@ -23,7 +23,7 @@ $sLangName = 'Deutsch';
 
 $aLang = [
     'charset'                        => 'UTF-8',
-    'paypal'                         => 'Paypal',
+    'paypal'                         => 'PayPal',
     'OXPS_PAYPAL_CONFIG'             => 'Konfiguration',
     'OXPS_PAYPAL_GENERAL'            => 'Allgemein',
     'OXPS_PAYPAL_CREDENTIALS'        => 'Anmeldeinformationen',
@@ -44,6 +44,11 @@ $aLang = [
         'Ein oder mehrere Konfigurationswerte sind entweder nicht festgelegt oder falsch. Bitte überprüfen Sie sie noch einmal.<br>
         <b>Modul inaktiv.</b>',
     'OXPS_PAYPAL_CONF_VALID'         => 'Konfigurationswerte OK.<br><b>Modul ist aktiv</b>',
+    'OXPS_PAYPAL_BUTTON_PLACEMEMT_TITLE' => 'Einstellungen für die Tastenplatzierung',
+    'OXPS_PAYPAL_PRODUCT_DETAILS_BUTTON_PLACEMENT' => 'Produktdetailseite',
+    'OXPS_PAYPAL_ADD_TO_BASKET_MODAL_PLACEMENT' => 'Modal in den Warenkorb legen',
+    'OXPS_PAYPAL_MINI_BASKET_BUTTON_PLACEMENT' => 'Minikorb',
+    'HELP_OXPS_PAYPAL_BUTTON_PLACEMEMT' => 'Schalten Sie die Anzeige der PayPal-Schaltflächen um',
     'HELP_OXPS_PAYPAL_CREDENTIALS'   =>
         'Wenn Sie die API Anmeldeinformationen bereits vorleigen haben, können Sie sie direkt eingeben.<br>
         Alternativ nutzen Sie einen der folgenden Links um die API Anmeldeinformationen für den Live oder den Sandbox-Modus zu erzeugen.',
@@ -51,6 +56,6 @@ $aLang = [
     'HELP_OXPS_PAYPAL_CLIENT_SECRET' => 'Secret des Live-Account für live-Modus',
     'HELP_OXPS_PAYPAL_SANDBOX_CLIENT_ID'     => 'Client ID des Sandbox-Account für Sandbox-Modus',
     'HELP_OXPS_PAYPAL_SANDBOX_CLIENT_SECRET' => 'Secret des Sandbox-Account für Sandbox-Modus',
-    'HELP_OXPS_PAYPAL_OPMODE'        => 'Verwenden Sie Sandbox (Test), um Paypal zu konfigurieren und zu testen. Wenn Sie bereit sind,
+    'HELP_OXPS_PAYPAL_OPMODE'        => 'Verwenden Sie Sandbox (Test), um PayPal zu konfigurieren und zu testen. Wenn Sie bereit sind,
         echte Transaktionen zu empfangen, wechseln Sie zu Produktion (live).'
 ];

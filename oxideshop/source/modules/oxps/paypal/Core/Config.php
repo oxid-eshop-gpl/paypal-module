@@ -58,9 +58,23 @@ class Config
     /**
      * @return bool
      */
+    public function isActive()
+    {
+        try {
+            $this->checkHealth();
+        } catch (StandardException $exception) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
     public function isSandbox(): bool
     {
-        return (bool) Registry::getConfig()->getConfigParam('blPaypalSandboxMode');
+        return (bool) Registry::getConfig()->getConfigParam('blPayPalSandboxMode');
     }
 
     /**
@@ -68,7 +82,7 @@ class Config
      */
     public function getClientId(): string
     {
-        return Registry::getConfig()->getConfigParam('sPaypalClientId');
+        return Registry::getConfig()->getConfigParam('sPayPalClientId');
     }
 
     /**
@@ -76,7 +90,7 @@ class Config
      */
     public function getClientSecret(): string
     {
-        return Registry::getConfig()->getConfigParam('sPaypalClientSecret');
+        return Registry::getConfig()->getConfigParam('sPayPalClientSecret');
     }
 
     /**
@@ -84,7 +98,7 @@ class Config
      */
     public function getSandboxClientId(): string
     {
-        return Registry::getConfig()->getConfigParam('sPaypalSandboxClientId');
+        return Registry::getConfig()->getConfigParam('sPayPalSandboxClientId');
     }
 
     /**
@@ -92,7 +106,31 @@ class Config
      */
     public function getSandboxClientSecret(): string
     {
-        return Registry::getConfig()->getConfigParam('sPaypalSandboxClientSecret');
+        return Registry::getConfig()->getConfigParam('sPayPalSandboxClientSecret');
+    }
+
+    /**
+     * @return bool
+     */
+    public function showPayPalMiniBasketButton(): bool
+    {
+        return (bool) Registry::getConfig()->getConfigParam('blPayPalShowMiniBasketButton');
+    }
+
+    /**
+     * @return bool
+     */
+    public function showPayPalProductDetailsButton(): bool
+    {
+        return (bool) Registry::getConfig()->getConfigParam('blPayPalShowProductDetailsButton');
+    }
+
+    /**
+     * @return bool
+     */
+    public function showPayPalAddToBasketModalButton(): bool
+    {
+        return (bool) Registry::getConfig()->getConfigParam('blPayPalShowAddToBasketModalButton');
     }
 
     /**
