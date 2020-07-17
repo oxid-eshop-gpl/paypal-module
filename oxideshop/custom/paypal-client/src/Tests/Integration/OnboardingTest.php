@@ -31,7 +31,7 @@ class OnboardingTest extends TestCase
             $this->client->createSellerNonce()
         );
 
-        $this->assertTrue($this->client->getSignupLink());
-
+        $this->assertIsArray($this->client->getSignupLinkResponse());
+        $this->assertIsString($this->client->getSignupLink());
     }
 }

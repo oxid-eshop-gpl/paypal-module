@@ -78,7 +78,28 @@ class Onboarding extends Client
                 ]
             ]
         ]);
-        $this->signupLinkResponse = json_decode('' . $res->getBody(), true);
+        $this->setSignupLinkResponse(json_decode('' . $res->getBody(), true));
+    }
+
+    /**
+     * use this if you want to inject a token into the auth headers set by this client.
+     * You may want to use this with the return from getTokenResponse() so you are able to cache the
+     * the auth between requests.
+     * @param $tokenResponse
+     */
+    public function setSignupLinkResponse($signupLinkResponse)
+    {
+        $this->signupLinkResponse = $signupLinkResponse;
+    }
+
+    /**
+     * use this if you want to store the auth response for later reuse
+     * see also setSignupLinkResponse
+     * @return array the token response from the auth call
+     */
+    public function getSignupLinkResponse()
+    {
+        return $this->signupLinkResponse;
     }
 
     /**
@@ -92,7 +113,7 @@ class Onboarding extends Client
 
         $signupLink = "";
 
-        foreach ($this->signupLinkResponse as $signupLinkData) {
+        foreach ($this->getSignupLinkResponse()['links'] as $signupLinkData) {
             if ($signupLinkData["rel"] == "action_url") {
                 $signupLink = $signupLinkData["href"];
                 break;
