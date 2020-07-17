@@ -49,7 +49,6 @@ class Config
                 !$this->getSandboxClientSecret()
             )
         ) {
-
             throw oxNew(StandardException::class);
         }
     }
