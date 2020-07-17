@@ -9,6 +9,11 @@ use Psr\Log\LoggerInterface;
 class Onboarding extends Client
 {
     /**
+     * @var array
+     */
+    protected $signupLinkResponse;
+
+    /**
      * during onboarding you do not have shop owners credentials
      * so you initialize the client with the technical oxid account credentials
      * Onboarding constructor.
@@ -38,13 +43,12 @@ class Onboarding extends Client
      */
     public function generateSignupLink($authCode, $sellerNonce)
     {
-        $authBase64 = base64_encode("$sharedId:");
         $client = $this->httpClient;
         $url = $this->endpoint . "/v2/customer/partner-referrals";
 
         $res = $client->post($url, [
             "headers" => [
-                "Authorization" => "Bearer $authBase64",
+                "Authorization" => "Bearer $authCode",
                 "Content-Type" => self::CONTENT_TYPE_JSON,
                 "Accept" => self::CONTENT_TYPE_JSON
             ],
@@ -74,8 +78,7 @@ class Onboarding extends Client
                 ]
             ]
         ]);
-
-        $this->signupLinkResponse = json_decode($res, true);
+        $this->signupLinkResponse = json_decode('' . $res->getBody(), true);
     }
 
     /**
@@ -133,7 +136,7 @@ class Onboarding extends Client
             ]
         ]);
 
-        $this->tokenResponse = json_decode($res, true);
+        $this->tokenResponse = json_decode('' . $res->getBody(), true);
     }
 
 

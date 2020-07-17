@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Tests\Integration;
 use OxidProfessionalServices\PayPal\Api\Onboarding;
 use PHPUnit\Framework\TestCase;
 
-class Onboarding extends TestCase
+class OnboardingTest extends TestCase
 {
     /**
      * @var Client
@@ -20,9 +20,14 @@ class Onboarding extends TestCase
 
     public function testGetSignupLink()
     {
+        $this->client->auth();
         $accessToken = $this->client->getTokenResponse();
+
+        $this->assertIsArray($accessToken);
+        $this->assertArrayHasKey('access_token', $accessToken);
+
         $this->client->generateSignupLink(
-            $accessToken,
+            $accessToken['access_token'],
             $this->client->createSellerNonce()
         );
 
