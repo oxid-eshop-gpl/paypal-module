@@ -44,7 +44,7 @@
         </p>
 
         <p><a target="_blank" data-paypal-onboard-complete="onboardedCallbackSandbox"
-            href="[{*$oView->getLiveSignUpMerchantIntegrationLink()*}]#" data-paypal-button="PPLtBlue">
+            href="[{$oView->getSandboxSignUpMerchantIntegrationLink()}]" data-paypal-button="PPLtBlue">
                 [{oxmultilang ident="OXPS_PAYPAL_SANDBOX_BUTTON_CREDENTIALS"}]
             </a>
         </p>

@@ -79,7 +79,7 @@ class PaypalConfigController extends AdminController
      *
      * @return string
      */
-    public function getLiveSignUpMerchantIntegrationLink()
+    public function getLiveSignUpMerchantIntegrationLink(): string
     {
         $output = new ConsoleOutput(OutputInterface::VERBOSITY_DEBUG);
         $logger = new ConsoleLogger($output);
@@ -92,10 +92,12 @@ class PaypalConfigController extends AdminController
             $config->getLiveOxidSecret(),
             $config->getLiveOxidPartnerId()
         );
+        $oxidLiveIntegrationClient->auth();
 
         $accessToken = $oxidLiveIntegrationClient->getTokenResponse();
+
         $oxidLiveIntegrationClient->generateSignupLink(
-            $accessToken,
+            $accessToken['access_token'],
             $oxidLiveIntegrationClient->createSellerNonce()
         );
 
@@ -107,9 +109,8 @@ class PaypalConfigController extends AdminController
      *
      * @return string
      */
-    public function getSandboxSignUpMerchantIntegrationLink()
+    public function getSandboxSignUpMerchantIntegrationLink(): string
     {
-        // https://www.sandbox.paypal.com/bizsignup/partner/entry?partnerId=PEZFKJQZVYEE6&product=ppcp&integrationType=FO&features=PAYMENT,REFUND&partnerClientId=AS35dAZbp8yCgjz7UQ0FAzQ_x1ennj5nT8C5-arVcqaLuxCJhBYvbuz4afGt1Ql-wOqso6wPN01aAS_B&returnToPartnerUrl=https://www.google.com&partnerLogoUrl=https://www.google.com&displayMode=minibrowser&sellerNonce=ARhK2xC8xSvNRphchskRddPDH2rWnc-F2yPl03oP_Hbi13fUDvNnTB5tiy0ct
 
         $output = new ConsoleOutput(OutputInterface::VERBOSITY_DEBUG);
         $logger = new ConsoleLogger($output);
@@ -120,14 +121,15 @@ class PaypalConfigController extends AdminController
             Onboarding::SANDBOX_URL,
             $config->getSandboxOxidClientId(),
             $config->getSandboxOxidSecret(),
-            $config->getSandboxOxidPartnerId(),
-            true
+            $config->getSandboxOxidPartnerId()
         );
+
         $oxidSandboxIntegrationClient->auth();
 
         $accessToken = $oxidSandboxIntegrationClient->getTokenResponse();
+
         $oxidSandboxIntegrationClient->generateSignupLink(
-            $accessToken,
+            $accessToken['access_token'],
             $oxidSandboxIntegrationClient->createSellerNonce()
         );
 
