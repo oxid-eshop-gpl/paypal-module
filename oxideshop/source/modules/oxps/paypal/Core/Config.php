@@ -38,7 +38,16 @@ class Config
     public function checkHealth(): void
     {
         if (
-            false
+            (
+                !$this->isSandbox() &&
+                !$this->getClientId() &&
+                !$this->getClientSecret()
+            ) ||
+            (
+                $this->isSandbox() &&
+                !$this->getSandboxClientId() &&
+                !$this->getSandboxClientSecret()
+            )
         ) {
             throw oxNew(StandardException::class);
         }
@@ -82,5 +91,89 @@ class Config
     public function getSandboxClientSecret(): string
     {
         return (string) Registry::getConfig()->getConfigParam('sPaypalSandboxClientSecret');
+    }
+
+    /**
+     * This ClientId is public. The only function is to create
+     * a basiclly AccessToken,  Which one is needed to generate
+     * the request for the merchant ClientId.
+     * For this purpose, this ClientId is unencrypted, here as part
+     * of this open Source Module
+     *
+     * @return string
+     */
+    public function getLiveOxidClientId(): string
+    {
+        return "AQPFC4NJr-nIiumTXvyfHFJLK-RlWAcv9D0zAc4OWiKiQXyXnJZ7Lw1E2h6O2mtceJf5kWflplieijnK";
+    }
+
+    /**
+     * This ClientId is public. The only function is to create
+     * a basiclly AccessToken,  Which one is needed to generate
+     * the request for the merchant ClientId and Secret.
+     * For this purpose, this ClientId is unencrypted, here as part
+     * of this open Source Module
+     *
+     * @return string
+     */
+    public function getSandboxOxidClientId(): string
+    {
+        return "AS-lHBWs8cudxxonSeQ1eRbdn1Nr-7baqAURRNJnIuP-PPQFzFF1XkjDYV3NG3M6O75st2D98DOil4Vd";
+    }
+
+    /**
+     * This PartnerId is public. The only function is to create
+     * a basiclly AccessToken,  Which one is needed to generate
+     * the request for the merchant ClientId and Secret.
+     * For this purpose, this ClientId is unencrypted, here as part
+     * of this open Source Module
+     *
+     * @return string
+     */
+    public function getLiveOxidPartnerId(): string
+    {
+        return "FULA6AY33UTA4";
+    }
+
+    /**
+     * This PartnerId is public. The only function is to create
+     * a basiclly AccessToken,  Which one is needed to generate
+     * the request for the merchant ClientId and Secret.
+     * For this purpose, this PartnerId is unencrypted, here as part
+     * of this open Source Module
+     *
+     * @return string
+     */
+    public function getSandboxOxidPartnerId(): string
+    {
+        return "LRCHTG6NYPSXN";
+    }
+
+    /**
+     * This Secret is public. The only function is to create
+     * a basiclly AccessToken,  Which one is needed to generate
+     * the request for the merchant ClientId and Secret.
+     * For this purpose, this ClientId is unencrypted, here as part
+     * of this open Source Module
+     *
+     * @return string
+     */
+    public function getLiveOxidSecret(): string
+    {
+        return "ELcHsbqzqmC8wVbndnDxokTnQboMn-HfcJ2tGfWbxJUIAIys0HMqfzbHrev5R--RPd6B2xNWJrddtO9z";
+    }
+
+    /**
+     * This Secret is public. The only function is to create
+     * a basiclly AccessToken,  Which one is needed to generate
+     * the request for the merchant ClientId and Secret.
+     * For this purpose, this PartnerId is unencrypted, here as part
+     * of this open Source Module
+     *
+     * @return string
+     */
+    public function getSandboxOxidSecret(): string
+    {
+        return "EANkP__pSQ25b1cXuO4CrC_KeDc78rKtgUpeEDthejOVjkJV9sv0mfjxM_A4qXyMqbdCIeib0tDfQY_6";
     }
 }

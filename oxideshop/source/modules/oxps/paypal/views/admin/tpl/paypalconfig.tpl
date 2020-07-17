@@ -33,6 +33,22 @@
             <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_OPMODE"}]</span>
         </div>
 
+        <h2>[{oxmultilang ident="OXPS_PAYPAL_CREDENTIALS"}]</h2>
+
+        <p class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_CREDENTIALS"}]</p>
+
+        <p><a target="_blank" data-paypal-onboard-complete="onboardedCallbackLive"
+            href="[{*$oView->getLiveSignUpMerchantIntegrationLink()*}]#" data-paypal-button="PPLtBlue">
+                [{oxmultilang ident="OXPS_PAYPAL_LIVE_BUTTON_CREDENTIALS"}]
+           </a>
+        </p>
+
+        <p><a target="_blank" data-paypal-onboard-complete="onboardedCallbackSandbox"
+            href="[{*$oView->getLiveSignUpMerchantIntegrationLink()*}]#" data-paypal-button="PPLtBlue">
+                [{oxmultilang ident="OXPS_PAYPAL_SANDBOX_BUTTON_CREDENTIALS"}]
+            </a>
+        </p>
+
         <h3>[{oxmultilang ident="OXPS_PAYPAL_LIVE_CREDENTIALS"}]</h3>
 
         <div class="form-group">

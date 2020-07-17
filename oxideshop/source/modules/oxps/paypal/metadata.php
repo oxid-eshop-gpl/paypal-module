@@ -60,6 +60,11 @@ $aModule = [
             'template' => 'headitem.tpl',
             'block' => 'admin_headitem_inccss',
             'file' => 'views/blocks/admin/admin_headitem_inccss.tpl'
+        ],
+        [
+            'template' => 'headitem.tpl',
+            'block' => 'admin_headitem_incjs',
+            'file' => 'views/blocks/admin/admin_headitem_incjs.tpl'
         ]
     ],
     'settings' => [

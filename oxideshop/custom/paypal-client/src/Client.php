@@ -156,7 +156,6 @@ class Client
     {
         $this->technicalClientId = $clientId;
     }
-
     /**
      * normal auth if $clientId and $clientSecret are already available
      * @param $clientId
@@ -212,6 +211,13 @@ class Client
         return $this->tokenResponse;
     }
 
+    /**
+     * create a unique Seller Nonce to check your own transactions
+     */
+    public function createSellerNonce()
+    {
+        return md5(uniqid('', true) . '|' . microtime());
+    }
 
     /**
      * @param RequestInterface $request

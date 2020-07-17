@@ -32,15 +32,21 @@ $aLang = [
     'OXPS_PAYPAL_OPMODE_SANDBOX'     => 'Sandbox',
     'OXPS_PAYPAL_CLIENT_ID'          => 'Client ID',
     'OXPS_PAYPAL_CLIENT_SECRET'      => 'Secret',
-    'OXPS_PAYPAL_LIVE_CREDENTIALS'   => 'Live API credentials',
-    'OXPS_PAYPAL_SANDBOX_CREDENTIALS'=> 'Sandbox API credentials',
+    'OXPS_PAYPAL_CREDENTIALS'        => 'API credentials',
     'OXPS_PAYPAL_WEBHOOK_TITLE'      => 'Webhook settings',
     'OXPS_PAYPAL_WEBHOOK_URL'        => 'Webhook listener URL',
     'HELP_OXPS_PAYPAL_WEBHOOK_URL'   => 'Use this URL to setup webhook listener on paypal portal.',
+    'OXPS_PAYPAL_LIVE_CREDENTIALS'   => 'Live API credentials',
+    'OXPS_PAYPAL_SANDBOX_CREDENTIALS'        => 'Sandbox API credentials',
+    'OXPS_PAYPAL_LIVE_BUTTON_CREDENTIALS'    => 'SignUp Merchant Integration (Live)',
+    'OXPS_PAYPAL_SANDBOX_BUTTON_CREDENTIALS' => 'SignUp Merchant Integration (Sandbox)',
     'OXPS_PAYPAL_ERR_CONF_INVALID'   =>
         'One or more configuration values are either not set or incorrect. Please double check them.<br>
         <b>Module inactive.</b>',
     'OXPS_PAYPAL_CONF_VALID'         => 'Configuration values OK.<br><b>Module is active</b>',
+    'HELP_OXPS_PAYPAL_CREDENTIALS'   =>
+        'If you already have the API credentials, you can enter them directly.<br>
+        Alternatively, use one of the following links to generate the API credentials for live or sandbox mode.',
     'HELP_OXPS_PAYPAL_CLIENT_ID'     => 'Client ID for live mode.',
     'HELP_OXPS_PAYPAL_CLIENT_SECRET' => 'Secret for live mode.',
     'HELP_OXPS_PAYPAL_SANDBOX_CLIENT_ID'     => 'Client ID for sandbox mode.',

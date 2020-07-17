@@ -26,6 +26,10 @@ use OxidEsales\Eshop\Application\Controller\Admin\AdminController;
 use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Core\Config;
+use Symfony\Component\Console\Logger\ConsoleLogger;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Output\OutputInterface;
+use OxidProfessionalServices\PayPal\Api\Onboarding;
 
 /**
  * Controller for admin > Paypal/Configuration page
@@ -68,6 +72,66 @@ class PaypalConfigController extends AdminController
         }
 
         return $thisTemplate;
+    }
+
+    /**
+     * Template Getter: Get a Link for SignUp the Live Merchant Integration
+     *
+     * @return string
+     */
+    public function getLiveSignUpMerchantIntegrationLink()
+    {
+        $output = new ConsoleOutput(OutputInterface::VERBOSITY_DEBUG);
+        $logger = new ConsoleLogger($output);
+        $config = new Config();
+
+        $oxidLiveIntegrationClient = new Onboarding(
+            $logger,
+            Onboarding::PRODUCTION_URL,
+            $config->getLiveOxidClientId(),
+            $config->getLiveOxidSecret(),
+            $config->getLiveOxidPartnerId()
+        );
+
+        $accessToken = $oxidLiveIntegrationClient->getTokenResponse();
+        $oxidLiveIntegrationClient->generateSignupLink(
+            $accessToken,
+            $oxidLiveIntegrationClient->createSellerNonce()
+        );
+
+        return $oxidLiveIntegrationClient->getSignupLink();
+    }
+
+    /**
+     * Template Getter: Get a Link for SignUp the Live Merchant Integration
+     *
+     * @return string
+     */
+    public function getSandboxSignUpMerchantIntegrationLink()
+    {
+        // https://www.sandbox.paypal.com/bizsignup/partner/entry?partnerId=PEZFKJQZVYEE6&product=ppcp&integrationType=FO&features=PAYMENT,REFUND&partnerClientId=AS35dAZbp8yCgjz7UQ0FAzQ_x1ennj5nT8C5-arVcqaLuxCJhBYvbuz4afGt1Ql-wOqso6wPN01aAS_B&returnToPartnerUrl=https://www.google.com&partnerLogoUrl=https://www.google.com&displayMode=minibrowser&sellerNonce=ARhK2xC8xSvNRphchskRddPDH2rWnc-F2yPl03oP_Hbi13fUDvNnTB5tiy0ct
+
+        $output = new ConsoleOutput(OutputInterface::VERBOSITY_DEBUG);
+        $logger = new ConsoleLogger($output);
+        $config = new Config();
+
+        $oxidSandboxIntegrationClient = new Onboarding(
+            $logger,
+            Onboarding::SANDBOX_URL,
+            $config->getSandboxOxidClientId(),
+            $config->getSandboxOxidSecret(),
+            $config->getSandboxOxidPartnerId(),
+            true
+        );
+        $oxidSandboxIntegrationClient->auth();
+
+        $accessToken = $oxidSandboxIntegrationClient->getTokenResponse();
+        $oxidSandboxIntegrationClient->generateSignupLink(
+            $accessToken,
+            $oxidSandboxIntegrationClient->createSellerNonce()
+        );
+
+        return $oxidSandboxIntegrationClient->getSignupLink();
     }
 
     /**
