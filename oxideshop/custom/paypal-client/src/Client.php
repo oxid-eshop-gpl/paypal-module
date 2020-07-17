@@ -138,7 +138,7 @@ class Client
         } catch (GuzzleException $e) {
             if ($e->getCode() === 401) {
                 //clear tokens to force re-auth
-                $this->tokenResponse = null;
+                $this->setTokenResponse(null);
                 return $this->sendWithAuth($request);
             } else {
                 throw $e;
@@ -180,7 +180,7 @@ class Client
             ]
         ]);
 
-        $this->tokenResponse = json_decode('' . $res->getBody(), true);
+        $this->setTokenResponse(json_decode('' . $res->getBody(), true));
 
         return $this;
     }
