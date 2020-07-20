@@ -38,11 +38,12 @@
            </a>
         </p>
 
-        <p><a href="[{$oView->getSandboxSignUpMerchantIntegrationLink()}]"
+        [{assign var='sandboxMerchantSignUpLink' value=$oView->getSandboxSignUpMerchantIntegrationLink()|cat:"&displayMode=minibrowser"}]
+        <p><a href="[{$sandboxMerchantSignUpLink}]"
               data-paypal-onboard-complete="onboardedCallbackSandbox"
               data-paypal-button="PPLtBlue"
               onclick="openPopup(
-                  '[{$oView->getSandboxSignUpMerchantIntegrationLink()}]',
+                  '[{$sandboxMerchantSignUpLink}]',
                   'onboardingPopup',
                   { 'width': 800, 'height': 600, 'position': 'center'});
                   return false;">
