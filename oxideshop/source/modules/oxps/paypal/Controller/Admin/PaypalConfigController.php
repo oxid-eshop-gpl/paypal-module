@@ -92,16 +92,35 @@ class PaypalConfigController extends AdminController
             $config->getLiveOxidSecret(),
             $config->getLiveOxidPartnerId()
         );
-        $oxidLiveIntegrationClient->auth();
+//        $oxidLiveIntegrationClient->auth();
+//
+//        $accessToken = $oxidLiveIntegrationClient->getTokenResponse();
+//
+//        $oxidLiveIntegrationClient->generateSignupLink(
+//            $accessToken['access_token'],
+//            $oxidLiveIntegrationClient->createSellerNonce()
+//        );
 
-        $accessToken = $oxidLiveIntegrationClient->getTokenResponse();
+        $config = Registry::getConfig();
+        $url = $config->getShopUrl();
 
-        $oxidLiveIntegrationClient->generateSignupLink(
-            $accessToken['access_token'],
-            $oxidLiveIntegrationClient->createSellerNonce()
-        );
+        //Generate link
+        $host = 'https://www.sandbox.paypal.com/bizsignup/partner/entry';
+        $params = [
+            'sellerNonce' => $oxidLiveIntegrationClient->createSellerNonce(),
+            'partnerId' => $config->getSandboxOxidPartnerId(),
+            'product' => 'EXPRESS_CHECKOUT',
+            'integrationType' => 'FO',
+            'partnerClientId' => $config->getSandboxOxidClientId(),
+            'returnToPartnerUrl' => '',
+//            'partnerLogoUrl' => '',
+            'displayMode' => 'minibrowser',
+            'features' => 'PAYMENT,REFUND'
+        ];
 
-        return $oxidLiveIntegrationClient->getSignupLink();
+        $url = $host.'?'.http_build_query($params);
+
+        return $url;
     }
 
     /**
@@ -111,29 +130,43 @@ class PaypalConfigController extends AdminController
      */
     public function getSandboxSignUpMerchantIntegrationLink(): string
     {
-
         $output = new ConsoleOutput(OutputInterface::VERBOSITY_DEBUG);
         $logger = new ConsoleLogger($output);
         $config = new Config();
 
-        $oxidSandboxIntegrationClient = new Onboarding(
+        $oxidLiveIntegrationClient = new Onboarding(
             $logger,
-            Onboarding::SANDBOX_URL,
-            $config->getSandboxOxidClientId(),
-            $config->getSandboxOxidSecret(),
-            $config->getSandboxOxidPartnerId()
+            Onboarding::PRODUCTION_URL,
+            $config->getLiveOxidClientId(),
+            $config->getLiveOxidSecret(),
+            $config->getLiveOxidPartnerId()
         );
+//        $oxidLiveIntegrationClient->auth();
+//
+//        $accessToken = $oxidLiveIntegrationClient->getTokenResponse();
+//
+//        $oxidLiveIntegrationClient->generateSignupLink(
+//            $accessToken['access_token'],
+//            $oxidLiveIntegrationClient->createSellerNonce()
+//        );
 
-        $oxidSandboxIntegrationClient->auth();
+        //Generate link
+        $host = 'https://www.sandbox.paypal.com/bizsignup/partner/entry';
+        $params = [
+            'sellerNonce' => $oxidLiveIntegrationClient->createSellerNonce(),
+            'partnerId' => $config->getSandboxOxidPartnerId(),
+            'product' => 'EXPRESS_CHECKOUT',
+            'integrationType' => 'FO',
+            'partnerClientId' => $config->getSandboxOxidClientId(),
+            'returnToPartnerUrl' => $this->getReturnUrl(),
+            'partnerLogoUrl' => '',
+            'displayMode' => 'minibrowser',
+            'features' => 'PAYMENT,REFUND'
+        ];
 
-        $accessToken = $oxidSandboxIntegrationClient->getTokenResponse();
+        $url = $host.'?'.http_build_query($params);
 
-        $oxidSandboxIntegrationClient->generateSignupLink(
-            $accessToken['access_token'],
-            $oxidSandboxIntegrationClient->createSellerNonce()
-        );
-
-        return $oxidSandboxIntegrationClient->getSignupLink();
+        return $url;
     }
 
     /**
@@ -216,5 +249,32 @@ class PaypalConfigController extends AdminController
         }
 
         return $conf;
+    }
+
+    /**
+     * Returns RETURN URL
+     *
+     * @return string
+     */
+    protected function getReturnUrl()
+    {
+        $session = Registry::getSession();
+        $controllerKey = Registry::getControllerClassNameResolver()->getIdByClassName(get_class());
+
+        return $session->processUrl($this->getBaseUrl() . "&cl=" . $controllerKey);
+    }
+
+    /**
+     * Returns base url, which is used to construct Callback, Return and Cancel Urls
+     *
+     * @return string
+     */
+    protected function getBaseUrl()
+    {
+        $session = Registry::getSession();
+        $url = Registry::getConfig()->getSslShopUrl() . "index.php?lang=" . Registry::getLang()->getBaseLanguage() . "&sid=" . $session->getId() . "&rtoken=" . $session->getRemoteAccessToken();
+        $url .= "&shp=" . Registry::getConfig()->getShopId();
+
+        return $url;
     }
 }
