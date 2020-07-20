@@ -17,7 +17,7 @@ foreach($files as $file) {
 
     $generator = new \OxidProfessionalServices\Generator(
         '../paypal-client/schema/' . $file,
-        'OxidProfessionalServices\PayPal\Model',
+        'OxidProfessionalServices\PayPal\Api\Model',
         $apiName
     );
 }
