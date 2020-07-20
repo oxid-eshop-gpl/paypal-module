@@ -1,0 +1,27 @@
+{
+	"name": "oxid-professional-services/swagger-php-model-generator",
+    "license": "MIT",
+	"authors": [
+		{
+			"name": "batwolf",
+			"email": "marc.plotz@oxid-esales.com"
+		},
+		{
+			"name": "Keywan Ghadami",
+			"email": "keywan.ghadami@oxid-esales.com"
+		}
+	],
+	"require": {
+		"php": ">=7.1",
+		"nette/php-generator": "^3.4",
+		"symfony/serializer": "^4.4.10",
+		"ext-json": "*"
+	},
+	"require-dev": {
+	},
+	"autoload": {
+		"psr-4": {
+			"OxidProfessionalServices\\": "src/"
+		}
+	}
+}
