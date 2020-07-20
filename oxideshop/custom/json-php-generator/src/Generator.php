@@ -102,7 +102,7 @@ class Generator
      */
     private function writeClassFile($className, $fileName, PhpNamespace $ns): void
     {
-        $directory = str_replace('OxidProfessionalServices\PayPal\Api\\', '', '../paypal-client/src/Api/' . $className);
+        $directory = str_replace('OxidProfessionalServices\PayPal\Model\\', '', '../paypal-client/src/Model/' . $className);
 
         if (!is_dir($directory)) {
             mkdir($directory, 0744, true);
