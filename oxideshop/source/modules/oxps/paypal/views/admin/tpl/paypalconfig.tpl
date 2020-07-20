@@ -1,10 +1,5 @@
 [{include file="headitem.tpl" title="paypal"}]
 
-[{oxscript add="function copyToClipboard(element) {
-    document.querySelector(element).select();
-    document.execCommand('copy');
-}"}]
-
 <div id="content" class="paypal-config">
     <h1>[{oxmultilang ident="paypal"}] [{oxmultilang ident="OXPS_PAYPAL_CONFIG"}]</h1>
     <div class="alert alert-[{if $Errors.paypal_error}]danger[{else}]success[{/if}]" role="alert">
@@ -43,9 +38,15 @@
            </a>
         </p>
 
-        <p><a target="_blank" data-paypal-onboard-complete="onboardedCallbackSandbox"
-            href="[{$oView->getSandboxSignUpMerchantIntegrationLink()}]&displayMode=minibrowser" data-paypal-button="PPLtBlue">
-                [{oxmultilang ident="OXPS_PAYPAL_SANDBOX_BUTTON_CREDENTIALS"}]
+        <p><a href="[{$oView->getSandboxSignUpMerchantIntegrationLink()}]"
+              data-paypal-onboard-complete="onboardedCallbackSandbox"
+              data-paypal-button="PPLtBlue"
+              onclick="openPopup(
+                  '[{$oView->getSandboxSignUpMerchantIntegrationLink()}]',
+                  'onboardingPopup',
+                  { 'width': 800, 'height': 600, 'position': 'center'});
+                  return false;">
+              [{oxmultilang ident="OXPS_PAYPAL_SANDBOX_BUTTON_CREDENTIALS"}]
             </a>
         </p>
 

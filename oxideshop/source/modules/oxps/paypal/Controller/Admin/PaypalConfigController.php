@@ -137,6 +137,38 @@ class PaypalConfigController extends AdminController
     }
 
     /**
+     * Template Getter: Get a Link for SignUp the Live Merchant Integration
+     *
+     * @return string
+     */
+    public function getProductionSignUpMerchantIntegrationLink(): string
+    {
+
+        $output = new ConsoleOutput(OutputInterface::VERBOSITY_DEBUG);
+        $logger = new ConsoleLogger($output);
+        $config = new Config();
+
+        $oxidSandboxIntegrationClient = new Onboarding(
+            $logger,
+            Onboarding::SANDBOX_URL,
+            $config->getSandboxOxidClientId(),
+            $config->getSandboxOxidSecret(),
+            $config->getSandboxOxidPartnerId()
+        );
+
+        $oxidSandboxIntegrationClient->auth();
+
+        $accessToken = $oxidSandboxIntegrationClient->getTokenResponse();
+
+        $oxidSandboxIntegrationClient->generateSignupLink(
+            $accessToken['access_token'],
+            $oxidSandboxIntegrationClient->createSellerNonce()
+        );
+
+        return $oxidSandboxIntegrationClient->getSignupLink();
+    }
+
+    /**
      * Saves configuration values
      */
     public function save()

@@ -32,6 +32,8 @@
   ],
   "require": {
     "php": ">=7.1",
+    "ext-json": "*",
+    "ddoe/visualcms-module": "3.3.2",
     "oxid-community/moduleinternals": "^3.0@alpha",
     "oxid-esales/b2b-module": "^3.2",
     "oxid-esales/oxideshop-ce": "6.3.6",
@@ -46,9 +48,8 @@
     "oxid-esales/wave-theme": "^1.2",
     "oxid-professional-services/oxid-console": "^6.0@beta",
     "oxid-professional-services/oxid-modules-config": "^6.1@beta",
-    "ddoe/visualcms-module": "3.3.2",
     "oxid-professional-services/paypal": "^0.0.1",
-    "ext-json": "*"
+    "oxid-professional-services/paypal-client": "dev-master"
   },
   "require-dev": {
     "alfredbez/oxid-dump-autoload": "^0.1.0",
