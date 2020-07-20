@@ -4,7 +4,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 $files = scandir('../paypal-client/schema');
 
-shell_exec('rm -rf ../paypal-client/src/Api');
+shell_exec('rm -rf ../paypal-client/src/Model');
 
 foreach($files as $file) {
     if($file === '.' || $file === '..') {
@@ -17,7 +17,7 @@ foreach($files as $file) {
 
     $generator = new \OxidProfessionalServices\Generator(
         '../paypal-client/Schema/' . $file,
-        'OxidProfessionalServices\PayPal\Api',
+        'OxidProfessionalServices\PayPal\Model',
         $apiName
     );
 }
