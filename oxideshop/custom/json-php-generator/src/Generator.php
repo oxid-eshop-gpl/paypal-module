@@ -6,6 +6,8 @@ use Nette\PhpGenerator\PhpNamespace;
 
 class Generator
 {
+    private $definitions;
+
     /**
      * @param string $jsonFile
      * @param string $namespace
@@ -13,7 +15,7 @@ class Generator
      */
     public function __construct($jsonFile, $namespace, $className)
     {
-        $this->generateClass($jsonFile, $namespace, $className);
+        $this->generateModels($jsonFile, $namespace, $className);
     }
 
     /**
@@ -21,9 +23,11 @@ class Generator
      * @param string $namespace
      * @param string $className
      */
-    private function generateClass($jsonFile, $namespace, $className): void
+    private function generateModels($jsonFile, $namespace, $className): void
     {
         $fileContent = json_decode(file_get_contents($jsonFile), true);
+
+        $this->definitions = $fileContent['definitions'];
 
         foreach ($fileContent['definitions'] as $key => $defs) {
             $ns = new PhpNamespace($namespace . '\\' . $className);
@@ -83,13 +87,48 @@ class Generator
 
         foreach($jsonData as $key => $value) {
             if(empty($value['type'])) {
-                // This may need further investigation
-                continue;
+                print_r($value);
+
+                if(!empty($value['$ref'])) {
+                    $refName = str_replace('#/definitions/', '', $value['$ref']);
+                    $this->generateFromRef($namespace, $refName);
+                    $class->addProperty($key)
+                        ->setVisibility('public')
+                        ->setComment('@var ' . $value['type']);
+                    continue;
+                }
+
+                if ($value === 'object') {
+                    foreach($jsonData['properties'] as $propertyName => $propertyValue) {
+                        if(!empty($propertyValue['$ref'])) {
+                            $refName = str_replace('#/definitions/', '', $propertyValue['$ref']);
+                            $this->generateFromRef($namespace, $refName);
+                            $class->addProperty($propertyName)
+                                ->setVisibility('public')
+                                ->setComment('@var ' . $value['type']);
+                            continue;
+
+                        }
+                    }
+                }
+
+                if(!isset($value['type'])) {
+                    $class->addProperty($key)
+                        ->setVisibility('public')
+                        ->setComment('@var ' . $jsonData['type']);
+                }
             }
 
-            $class->addProperty($key)
-                ->setVisibility('public')
-                ->setComment('@var ' . $value['type']);
+            if(!isset($value['type'])) {
+                $class->addProperty($key)
+                    ->setVisibility('public')
+                    ->setComment('@var ' . $jsonData['type']);
+            } else {
+                $class->addProperty($key)
+                    ->setVisibility('public')
+                    ->setComment('@var ' . $value['type']);
+
+            }
         }
 
         $this->writeClassFile($namespace, $fileName, $ns);
@@ -115,5 +154,19 @@ class Generator
                 echo "error writing file " . $fileName . PHP_EOL;
             }
         }
+    }
+
+    /**
+     * @param $namespace
+     * @param $refName
+     */
+    private function generateFromRef($namespace, $refName)
+    {
+        $definitionData = $this->definitions[$refName];
+        $classNameExploded = explode('-', $refName);
+        $newClassName = ucfirst(str_replace('.json', '', end($classNameExploded)));
+        $fileName = $newClassName;
+        $parameter['type'] = $namespace . '\\' . $newClassName;
+        $this->generateObject($definitionData, $namespace, $fileName, $newClassName);
     }
 }
