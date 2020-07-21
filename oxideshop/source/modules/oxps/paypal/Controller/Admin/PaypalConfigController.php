@@ -124,8 +124,8 @@ class PaypalConfigController extends AdminController
             'product' => 'EXPRESS_CHECKOUT',
             'integrationType' => 'FO',
             'partnerClientId' => $clientId,
-            'returnToPartnerUrl' => $returnUrl,
-            'partnerLogoUrl' => '',
+            //'returnToPartnerUrl' => $returnUrl,
+            //'partnerLogoUrl' => '',
             'displayMode' => 'minibrowser',
             'features' => 'PAYMENT,REFUND'
         ];
