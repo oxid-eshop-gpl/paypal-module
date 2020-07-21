@@ -113,46 +113,44 @@ class Generator
                                         ->setComment('@var string');
                                 }
 
+                                if ($parameter['type'] === 'object') {
+                                    if (isset($parameter['properties'])) {
+                                        $cna = explode('_', $name);
+                                        $cna = array_map('ucwords', $cna);
+                                        $newClassName = implode('', $cna);
+                                        $fileName = $newClassName;
+                                        $parameter['type'] = $namespace . '\\' . $className . '\\' . $newClassName;
+                                        $name = $newClassName;
 
+                                        foreach($parameter['properties'] as $propertyName => $propertyValue) {
+                                            if (isset($propertyValue['type'])) {
+                                                if ($propertyValue['type'] === 'string') {
+                                                    $class->addProperty($propertyName)
+                                                        ->setVisibility('public')
+                                                        ->setComment('@var ' . $propertyValue['type']);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
 
-//                                if ($parameter['type'] === 'object') {
-//                                    if (isset($parameter['properties'])) {
-//                                        $cna = explode('_', $name);
-//                                        $cna = array_map('ucwords', $cna);
-//                                        $newClassName = implode('', $cna);
-//                                        $fileName = $newClassName;
-//                                        $parameter['type'] = $namespace . '\\' . $className . '\\' . $newClassName;
-//                                        $name = $newClassName;
-//
-//                                        foreach($parameter['properties'] as $propertyName => $propertyValue) {
-//                                            if (isset($propertyValue['type'])) {
-//                                                if ($propertyValue['type'] === 'string') {
-//                                                    $class->addProperty($propertyName)
-//                                                        ->setVisibility('public')
-//                                                        ->setComment('@var ' . $propertyValue['type']);
-//                                                }
-//                                            }
-//                                        }
-//                                    }
-//                                }
-//
-//                                if (is_array($parameter['type'])) {
-//                                    $parameter['type'] = implode('|', $parameter['type']);
-//                                }
-//
-//                                $class->addProperty($name)
-//                                    ->setVisibility('public')
-//                                    ->setComment('@var ' . $parameter['type']);
-//                            } else {
-//                                // use the $this->references[] map here when you come across a reference
-//                                if (!empty($parameter['$ref'])) {
-//                                    $ref = $this->getRefNameFromRefString($parameter['$ref']);
-//                                    if (isset($this->references[$ref])) {
-//                                        $class->addProperty($name)
-//                                            ->setVisibility('public')
-//                                            ->setComment('@var ' . $this->references[$ref]);
-//                                    }
-//                                }
+                                if (is_array($parameter['type'])) {
+                                    $parameter['type'] = implode('|', $parameter['type']);
+                                }
+
+                                $class->addProperty($name)
+                                    ->setVisibility('public')
+                                    ->setComment('@var ' . $parameter['type']);
+                            } else {
+                                // use the $this->references[] map here when you come across a reference
+                                if (!empty($parameter['$ref'])) {
+                                    $ref = $this->getRefNameFromRefString($parameter['$ref']);
+                                    if (isset($this->references[$ref])) {
+                                        $class->addProperty($name)
+                                            ->setVisibility('public')
+                                            ->setComment('@var ' . $this->references[$ref]);
+                                    }
+                                }
                             }
                         }
                     }
