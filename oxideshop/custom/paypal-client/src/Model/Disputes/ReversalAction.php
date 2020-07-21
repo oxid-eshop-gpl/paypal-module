@@ -2,12 +2,14 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
- * The system action that reverses the impact of the unauthorized event. Includes the system-defined details of the reversal action.
+ * The system action that reverses the impact of the unauthorized event. Includes the system-defined details of
+ * the reversal action.
  */
-class ReversalAction implements \JsonSerializable
+class ReversalAction implements JsonSerializable
 {
     use BaseModel;
 

@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Information about the parent transaction.
  */
-class ParentTransaction implements \JsonSerializable
+class ParentTransaction implements JsonSerializable
 {
     use BaseModel;
 

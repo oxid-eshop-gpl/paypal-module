@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The date and time stamps that are common to authorized payment, captured payment, and refund transactions.
  */
-class ActivityTimestamps implements \JsonSerializable
+class ActivityTimestamps implements JsonSerializable
 {
     use BaseModel;
 

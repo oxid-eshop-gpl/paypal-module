@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The breakdown of the refund.
  */
-class RefundSellerPayableBreakdown implements \JsonSerializable
+class RefundSellerPayableBreakdown implements JsonSerializable
 {
     use BaseModel;
 
@@ -20,10 +21,10 @@ class RefundSellerPayableBreakdown implements \JsonSerializable
     /** @var Money */
     public $net_amount;
 
-    /** @var array */
+    /** @var array<PlatformFee> */
     public $platform_fees;
 
-    /** @var array */
+    /** @var array<NetAmountBreakdownItem> */
     public $net_amount_breakdown;
 
     /** @var Money */

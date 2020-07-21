@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The customer-entered issue details for an unauthorized dispute.
  */
-class UnauthorizedDisputeProperties implements \JsonSerializable
+class UnauthorizedDisputeProperties implements JsonSerializable
 {
     use BaseModel;
 

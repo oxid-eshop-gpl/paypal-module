@@ -2,12 +2,14 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
- * The capture identification-related fields. Includes the invoice ID, custom ID, note to payer, and soft descriptor.
+ * The capture identification-related fields. Includes the invoice ID, custom ID, note to payer, and soft
+ * descriptor.
  */
-class SupplementaryPurchaseData implements \JsonSerializable
+class SupplementaryPurchaseData implements JsonSerializable
 {
     use BaseModel;
 

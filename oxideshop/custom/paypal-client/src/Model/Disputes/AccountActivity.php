@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The information about the account-related activities.
  */
-class AccountActivity implements \JsonSerializable
+class AccountActivity implements JsonSerializable
 {
     use BaseModel;
 
@@ -32,6 +33,6 @@ class AccountActivity implements \JsonSerializable
     /** @var ActivityEntityInfo */
     public $activity_entity_info;
 
-    /** @var array */
+    /** @var array<ReversalAction> */
     public $reversal_actions;
 }

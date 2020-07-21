@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The Buyer credit option used to fund the payment.
  */
-class PaypalCredit implements \JsonSerializable
+class PaypalCredit implements JsonSerializable
 {
     use BaseModel;
 

@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * A PayPal-requested or partner action for the dispute.
  */
-class PartnerAction implements \JsonSerializable
+class PartnerAction implements JsonSerializable
 {
     use BaseModel;
 

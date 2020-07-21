@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Catalog;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The error details.
  */
-class Error implements \JsonSerializable
+class Error implements JsonSerializable
 {
     use BaseModel;
 
@@ -23,9 +24,9 @@ class Error implements \JsonSerializable
     /** @var string */
     public $information_link;
 
-    /** @var array */
+    /** @var array<ErrorDetails> */
     public $details;
 
-    /** @var array */
+    /** @var array<array> */
     public $links;
 }

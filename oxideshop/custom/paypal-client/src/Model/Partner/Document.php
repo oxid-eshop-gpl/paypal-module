@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The document object.
  */
-class Document implements \JsonSerializable
+class Document implements JsonSerializable
 {
     use BaseModel;
 
@@ -32,9 +33,9 @@ class Document implements \JsonSerializable
     /** @var string */
     public $issuing_country_code;
 
-    /** @var array */
+    /** @var array<FileReference> */
     public $files;
 
-    /** @var array */
+    /** @var array<array> */
     public $links;
 }

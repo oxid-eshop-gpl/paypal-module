@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Information used to pay using Alipay.
  */
-class Alipay implements \JsonSerializable
+class Alipay implements JsonSerializable
 {
     use BaseModel;
 

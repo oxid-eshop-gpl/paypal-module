@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The details for the failed payment of the subscription.
  */
-class FailedPaymentDetails implements \JsonSerializable
+class FailedPaymentDetails implements JsonSerializable
 {
     use BaseModel;
 

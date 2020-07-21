@@ -2,16 +2,17 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The evidence-related information.
  */
-class EvidenceInfo implements \JsonSerializable
+class EvidenceInfo implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var array */
+    /** @var array<TrackingInfo> */
     public $tracking_info;
 
     /** @var array */

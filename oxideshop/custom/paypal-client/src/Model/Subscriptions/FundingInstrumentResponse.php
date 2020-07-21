@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The customer's funding instrument. Returned as a funding option to external entities.
  */
-class FundingInstrumentResponse implements \JsonSerializable
+class FundingInstrumentResponse implements JsonSerializable
 {
     use BaseModel;
 

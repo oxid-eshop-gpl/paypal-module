@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Catalog;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The create product request details.
  */
-class ProductRequestPOST implements \JsonSerializable
+class ProductRequestPOST implements JsonSerializable
 {
     use BaseModel;
 

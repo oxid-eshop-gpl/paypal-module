@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The charge amount from the subscriber.
  */
-class SubscriptionCaptureRequest implements \JsonSerializable
+class SubscriptionCaptureRequest implements JsonSerializable
 {
     use BaseModel;
 

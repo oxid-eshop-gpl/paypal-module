@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Information needed to pay using TrustPay.
  */
-class TrustpayRequest implements \JsonSerializable
+class TrustpayRequest implements JsonSerializable
 {
     use BaseModel;
 

@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The pricing tier details.
  */
-class PricingTier implements \JsonSerializable
+class PricingTier implements JsonSerializable
 {
     use BaseModel;
 

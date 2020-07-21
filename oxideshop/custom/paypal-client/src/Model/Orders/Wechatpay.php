@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Information needed to pay using WeChat Pay.
  */
-class Wechatpay implements \JsonSerializable
+class Wechatpay implements JsonSerializable
 {
     use BaseModel;
 

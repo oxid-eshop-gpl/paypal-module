@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The bank account ID. An ID with `ROUTING_NUMBER_1` is required.
  */
-class Identifier implements \JsonSerializable
+class Identifier implements JsonSerializable
 {
     use BaseModel;
 

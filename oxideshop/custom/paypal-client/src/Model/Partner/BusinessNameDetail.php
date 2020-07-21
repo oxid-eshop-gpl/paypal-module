@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Name of the business provided.
  */
-class BusinessNameDetail extends BusinessName implements \JsonSerializable
+class BusinessNameDetail extends BusinessName implements JsonSerializable
 {
     use BaseModel;
 

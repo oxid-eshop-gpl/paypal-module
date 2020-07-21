@@ -2,16 +2,17 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The supplementary data.
  */
-class SupplementaryData implements \JsonSerializable
+class SupplementaryData implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var array */
+    /** @var array<AirlineItinerary> */
     public $airline;
 
     /** @var PointOfSale */

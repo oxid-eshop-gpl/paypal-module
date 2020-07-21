@@ -190,10 +190,15 @@ class Generator
      */
     protected function calculateClassName($defName, $defs)
     {
-
         $refName = $this->getRefNameFromRefString($defName);
-        $defClassName = $this->replaceNumbers($this->getClassNameFromRefName($refName));
-/*
+        $className = $this->replaceNumbers($this->getClassNameFromRefName($refName));
+        if ($className == "LinkDescription" || $className == "LinkSchema") {
+            $this->definitions[$defName]['type'] = 'array';
+            return "array";
+        }
+
+
+        /*
         if (strpos($defName, 'MerchantsCommonComponentsSpecification') === false) {
             if(isset($defs['title'])) {
                 $title = implode('', explode(' ', $defs['title']));
@@ -204,7 +209,7 @@ class Generator
             }
         }
 */
-        return $defClassName;
+        return $className;
     }
 
 
@@ -218,11 +223,20 @@ class Generator
         foreach ($this->definitions as $defName => $defs) {
             if (!isset($defs['type'])) {
                 $defs['type'] = "string";
+                if (!empty($defs['properties'])) {
+                    //fix shema definition with missing object type e.g.
+                    //customer_common_overrides-person.json in Partner API
+                    $defs['type'] = "object";
+                    $this->definitions[$defName]['type'] = "object";
+                }
                 if (isset($defs['allOf'])) {
                     $defs['type'] = "object";
                 }
             }
             if (empty($defs['properties']) && !isset($defs['allOf'])) {
+                if (isset($defs['oneOf'])) {
+                    $defs['type'] = "string";
+                }
                 $this->references[$defName] = $defs['type'];
             }
             if (isset($defs['type'])) {
@@ -262,13 +276,16 @@ class Generator
         $ns = new PhpNamespace($namespace . '\\' . $subNameSpace);
 
         $className = $this->calculateClassName($defName, $defs);
-        if ($className == "LinkDescription" || $className == "LinkSchema") {
+        if ($className == "array") {
             return;
         }
 
         $class = $ns->addClass($className);
         if (!empty($defs['description'])) {
-            $class->addComment($defs['description']);
+            $comment = $defs['description'];
+            //this.value = sample_txt.replace(/(.{1,69})(?:\n|$| )/g, "$1\n");
+            $comment = preg_replace("/(.{1,110})(?:\n|$| )/", "$1\n", $comment);
+            $class->addComment($comment);
         }
 
         $properties = [];
@@ -279,6 +296,9 @@ class Generator
                     $ref = $this->getRefNameFromRefString($partialDef['$ref']);
                     if ($firstRef) {
                         $parent = $this->references[$ref];
+                        if ($parent == "string") {
+                            continue;
+                        }
                         $parent = "$namespace\\$subNameSpace\\$parent";
                         $ns->addUse($parent);
                         $class->addExtend($parent);
@@ -296,17 +316,22 @@ class Generator
         if (isset($defs['properties'])) {
             foreach ($defs['properties'] as $name => $parameter) {
                 if (isset($parameter['type'])) {
-                    if ($parameter['type'] === 'string') {
-                        $class->addProperty($name)->setVisibility('public')->setComment('@var string');
-                    }
-
                     if ($parameter['type'] === 'object') {
                         $nestedClassId = $className . '_' . $name;
                         $nestedClassName = $this->calculateClassName($nestedClassId, $parameter);
-                        $parameter['type'] = "$namespace\\$subNameSpace\\$nestedClassName";
+              //          $parameter['type'] = "$namespace\\$subNameSpace\\$nestedClassName";
+                        $parameter['type'] = "$nestedClassName";
                         $this->generateModelClass($namespace, $subNameSpace, $nestedClassId, $parameter);
                     }
-
+                    if ($parameter['type'] === 'array') {
+                        if (isset($parameter['items']['$ref'])) {
+                            $ref = $this->getRefNameFromRefString($parameter['items']['$ref']);
+                            if (isset($this->references[$ref])) {
+                                $itemType = $this->references[$ref];
+                                $parameter['type'] = "array<$itemType>";
+                            }
+                        }
+                    }
                     if (is_array($parameter['type'])) {
                         $parameter['type'] = implode('|', $parameter['type']);
                     }
@@ -323,6 +348,8 @@ class Generator
                 }
             }
         }
+
+        $ns->addUse(\JsonSerializable::class);
         $class->addImplement(\JsonSerializable::class);
         $ns->addUse($namespace . '\\BaseModel');
         $class->addTrait($namespace . '\\BaseModel');

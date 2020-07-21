@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The currency and amount for a financial transaction, such as a balance or payment due.
  */
-class Money implements \JsonSerializable
+class Money implements JsonSerializable
 {
     use BaseModel;
 

@@ -2,9 +2,10 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
-class AddressPortablePostalCodeValidation implements \JsonSerializable
+class AddressPortablePostalCodeValidation implements JsonSerializable
 {
     use BaseModel;
 }

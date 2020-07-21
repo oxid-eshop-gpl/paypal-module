@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Information needed to pay using Verkkopankki (Finnish Online Banking).
  */
-class VerkkopankkiRequest implements \JsonSerializable
+class VerkkopankkiRequest implements JsonSerializable
 {
     use BaseModel;
 

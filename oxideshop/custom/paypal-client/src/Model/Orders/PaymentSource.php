@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The payment source definition.
  */
-class PaymentSource implements \JsonSerializable
+class PaymentSource implements JsonSerializable
 {
     use BaseModel;
 

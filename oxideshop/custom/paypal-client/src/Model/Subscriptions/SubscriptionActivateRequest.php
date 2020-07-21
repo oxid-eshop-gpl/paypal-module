@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The activate subscription request details.
  */
-class SubscriptionActivateRequest implements \JsonSerializable
+class SubscriptionActivateRequest implements JsonSerializable
 {
     use BaseModel;
 

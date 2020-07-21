@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The subscription details.
  */
-class Subscription extends SubscriptionStatus implements \JsonSerializable
+class Subscription extends SubscriptionStatus implements JsonSerializable
 {
     use BaseModel;
 
@@ -50,6 +51,6 @@ class Subscription extends SubscriptionStatus implements \JsonSerializable
     /** @var FundingInstrumentResponse */
     public $preferred_funding_source;
 
-    /** @var array */
+    /** @var array<array> */
     public $links;
 }

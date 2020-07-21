@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The refund information.
  */
-class Refund extends RefundStatus implements \JsonSerializable
+class Refund extends RefundStatus implements JsonSerializable
 {
     use BaseModel;
 
@@ -23,10 +24,10 @@ class Refund extends RefundStatus implements \JsonSerializable
     /** @var string */
     public $note_to_payer;
 
-    /** @var OxidProfessionalServices\PayPal\Api\Model\Orders\RefundSellerPayableBreakdown */
+    /** @var RefundSellerPayableBreakdown */
     public $seller_payable_breakdown;
 
-    /** @var array */
+    /** @var array<array> */
     public $links;
 
     /** @var string */

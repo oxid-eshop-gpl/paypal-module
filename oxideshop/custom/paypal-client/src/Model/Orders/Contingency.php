@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * An action to be taken on a payment method to validate it.
  */
-class Contingency implements \JsonSerializable
+class Contingency implements JsonSerializable
 {
     use BaseModel;
 }

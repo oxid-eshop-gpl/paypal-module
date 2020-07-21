@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Information needed to pay using Trustly.
  */
-class TrustlyRequest implements \JsonSerializable
+class TrustlyRequest implements JsonSerializable
 {
     use BaseModel;
 

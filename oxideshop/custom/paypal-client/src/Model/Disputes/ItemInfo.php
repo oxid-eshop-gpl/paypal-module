@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The information for a purchased item in a disputed transaction.
  */
-class ItemInfo implements \JsonSerializable
+class ItemInfo implements JsonSerializable
 {
     use BaseModel;
 

@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The details for the regulation under which the transaction is covered.
  */
-class RegulationInfo implements \JsonSerializable
+class RegulationInfo implements JsonSerializable
 {
     use BaseModel;
 

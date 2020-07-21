@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The file reference. Can be a file in PayPal MediaServ, PayPal DMS, or another custom store.
  */
-class FileReference implements \JsonSerializable
+class FileReference implements JsonSerializable
 {
     use BaseModel;
 

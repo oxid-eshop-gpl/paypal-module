@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * A simple postal address with coarse-grained fields.
  */
-class BusinessAddressDetail extends AddressPortable implements \JsonSerializable
+class BusinessAddressDetail extends AddressPortable implements JsonSerializable
 {
     use BaseModel;
 

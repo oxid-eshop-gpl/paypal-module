@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The JSON patch object to apply partial updates to resources.
  */
-class Patch implements \JsonSerializable
+class Patch implements JsonSerializable
 {
     use BaseModel;
 

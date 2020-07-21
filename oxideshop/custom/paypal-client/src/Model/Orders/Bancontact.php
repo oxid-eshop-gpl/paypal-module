@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Information used to pay Bancontact.
  */
-class Bancontact implements \JsonSerializable
+class Bancontact implements JsonSerializable
 {
     use BaseModel;
 

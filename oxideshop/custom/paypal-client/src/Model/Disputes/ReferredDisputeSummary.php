@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The dispute details.
  */
-class ReferredDisputeSummary implements \JsonSerializable
+class ReferredDisputeSummary implements JsonSerializable
 {
     use BaseModel;
 
@@ -20,7 +21,7 @@ class ReferredDisputeSummary implements \JsonSerializable
     /** @var string */
     public $update_time;
 
-    /** @var array */
+    /** @var array<ReferenceDispute> */
     public $reference_disputes;
 
     /** @var Money */
@@ -35,6 +36,6 @@ class ReferredDisputeSummary implements \JsonSerializable
     /** @var string */
     public $dispute_flow;
 
-    /** @var array */
+    /** @var array<array> */
     public $links;
 }

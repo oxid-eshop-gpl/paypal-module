@@ -2,16 +2,17 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Common account object to hold the account related details of the customer.
  */
-class Account implements \JsonSerializable
+class Account implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var array */
+    /** @var array<IndividualOwner> */
     public $individual_owners;
 
     /** @var BusinessEntity */

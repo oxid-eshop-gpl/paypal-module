@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The integration details for PayPal REST endpoints.
  */
-class RestApiIntegration implements \JsonSerializable
+class RestApiIntegration implements JsonSerializable
 {
     use BaseModel;
 
@@ -17,9 +18,9 @@ class RestApiIntegration implements \JsonSerializable
     /** @var string */
     public $integration_type;
 
-    /** @var OxidProfessionalServices\PayPal\Api\Model\Partner\RestApiIntegrationFirstPartyDetails */
+    /** @var RestApiIntegrationFirstPartyDetails */
     public $first_party_details;
 
-    /** @var OxidProfessionalServices\PayPal\Api\Model\Partner\RestApiIntegrationThirdPartyDetails */
+    /** @var RestApiIntegrationThirdPartyDetails */
     public $third_party_details;
 }

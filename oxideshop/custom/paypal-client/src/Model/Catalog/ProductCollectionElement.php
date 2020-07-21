@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Catalog;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The details for a product in the collection response.
  */
-class ProductCollectionElement implements \JsonSerializable
+class ProductCollectionElement implements JsonSerializable
 {
     use BaseModel;
 
@@ -23,6 +24,6 @@ class ProductCollectionElement implements \JsonSerializable
     /** @var string */
     public $create_time;
 
-    /** @var array */
+    /** @var array<array> */
     public $links;
 }

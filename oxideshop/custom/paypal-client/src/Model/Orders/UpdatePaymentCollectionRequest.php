@@ -2,18 +2,20 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
- * The collection of payments, or transactions, for a purchase unit in an order. For example, authorized payments, captured payments.
+ * The collection of payments, or transactions, for a purchase unit in an order. For example, authorized
+ * payments, captured payments.
  */
-class UpdatePaymentCollectionRequest implements \JsonSerializable
+class UpdatePaymentCollectionRequest implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var array */
+    /** @var array<UpdateAuthorizationRequest> */
     public $authorizations;
 
-    /** @var array */
+    /** @var array<UpdateCaptureRequest> */
     public $captures;
 }

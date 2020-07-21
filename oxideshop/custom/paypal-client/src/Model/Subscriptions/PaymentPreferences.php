@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The payment preferences for a subscription.
  */
-class PaymentPreferences implements \JsonSerializable
+class PaymentPreferences implements JsonSerializable
 {
     use BaseModel;
 

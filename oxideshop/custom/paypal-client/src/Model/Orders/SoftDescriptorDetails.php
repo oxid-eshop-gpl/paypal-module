@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Soft Descriptor Details.
  */
-class SoftDescriptorDetails implements \JsonSerializable
+class SoftDescriptorDetails implements JsonSerializable
 {
     use BaseModel;
 

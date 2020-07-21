@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The office bearer associated to the account.
  */
-class OfficeBearer extends string implements \JsonSerializable
+class OfficeBearer extends Person implements JsonSerializable
 {
     use BaseModel;
 

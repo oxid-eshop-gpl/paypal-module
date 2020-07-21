@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Payment Directives for transaction.
  */
-class PaymentDirectives implements \JsonSerializable
+class PaymentDirectives implements JsonSerializable
 {
     use BaseModel;
 
@@ -32,13 +33,13 @@ class PaymentDirectives implements \JsonSerializable
     /** @var boolean */
     public $allow_duplicate_invoice_id;
 
-    /** @var array */
+    /** @var array<PolicyDirective> */
     public $policy_directives;
 
-    /** @var array */
+    /** @var array<PaymentMethodDirective> */
     public $payment_method_directives;
 
-    /** @var array */
+    /** @var array<PricingDirective> */
     public $pricing_directives;
 
     /** @var AuthorizationDirectives */

@@ -2,12 +2,14 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
- * Client configuration that captures the product flows and specific experiences that a user completes a paypal transaction.
+ * Client configuration that captures the product flows and specific experiences that a user completes a paypal
+ * transaction.
  */
-class ClientConfiguration implements \JsonSerializable
+class ClientConfiguration implements JsonSerializable
 {
     use BaseModel;
 

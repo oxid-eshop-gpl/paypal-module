@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The exchange rate that determines the amount to convert from one currency to another currency.
  */
-class ExchangeRate implements \JsonSerializable
+class ExchangeRate implements JsonSerializable
 {
     use BaseModel;
 

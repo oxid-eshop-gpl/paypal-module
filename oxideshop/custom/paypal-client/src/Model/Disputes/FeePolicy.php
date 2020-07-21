@@ -2,12 +2,14 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
- * Policy that determines whether the fee needs to be retained or returned while moving the money as part of dispute process.
+ * Policy that determines whether the fee needs to be retained or returned while moving the money as part of
+ * dispute process.
  */
-class FeePolicy implements \JsonSerializable
+class FeePolicy implements JsonSerializable
 {
     use BaseModel;
 

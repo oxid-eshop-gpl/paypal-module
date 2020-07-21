@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The details for the last payment of the subscription.
  */
-class LastPaymentDetails implements \JsonSerializable
+class LastPaymentDetails implements JsonSerializable
 {
     use BaseModel;
 

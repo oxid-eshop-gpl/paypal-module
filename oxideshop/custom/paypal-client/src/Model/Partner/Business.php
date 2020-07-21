@@ -2,9 +2,10 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
-class Business implements \JsonSerializable
+class Business implements JsonSerializable
 {
     use BaseModel;
 
@@ -17,21 +18,21 @@ class Business implements \JsonSerializable
     /** @var BusinessIncorporation */
     public $business_incorporation;
 
-    /** @var array */
+    /** @var array<BusinessNameDetail> */
     public $names;
 
-    /** @var array */
+    /** @var array<Email> */
     public $emails;
 
     /** @var string */
     public $website;
 
-    /** @var array */
+    /** @var array<BusinessAddressDetail> */
     public $addresses;
 
-    /** @var array */
+    /** @var array<BusinessPhoneDetail> */
     public $phones;
 
-    /** @var array */
+    /** @var array<BusinessDocument> */
     public $documents;
 }

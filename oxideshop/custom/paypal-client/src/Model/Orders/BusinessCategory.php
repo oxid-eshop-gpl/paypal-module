@@ -2,12 +2,14 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
- * Business category information. Refer: https://developer.paypal.com/docs/commerce-platform/reference/categories-subcategories/.
+ * Business category information. Refer:
+ * https://developer.paypal.com/docs/commerce-platform/reference/categories-subcategories/.
  */
-class BusinessCategory implements \JsonSerializable
+class BusinessCategory implements JsonSerializable
 {
     use BaseModel;
 

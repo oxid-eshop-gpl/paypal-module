@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The outcome of the dispute case.
  */
-class Outcome implements \JsonSerializable
+class Outcome implements JsonSerializable
 {
     use BaseModel;
 

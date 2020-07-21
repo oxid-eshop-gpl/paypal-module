@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The document-issuing authority information.
  */
-class DocumentIssuer implements \JsonSerializable
+class DocumentIssuer implements JsonSerializable
 {
     use BaseModel;
 

@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The payment card to use to fund a payment. Can be a credit or debit card.
  */
-class Card implements \JsonSerializable
+class Card implements JsonSerializable
 {
     use BaseModel;
 
@@ -35,6 +36,6 @@ class Card implements \JsonSerializable
     /** @var AddressPortable */
     public $billing_address;
 
-    /** @var array */
+    /** @var array<ThreedsResult> */
     public $authentication_results;
 }

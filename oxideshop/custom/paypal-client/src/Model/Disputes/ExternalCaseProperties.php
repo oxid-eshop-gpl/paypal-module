@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The third-party claims properties.
  */
-class ExternalCaseProperties implements \JsonSerializable
+class ExternalCaseProperties implements JsonSerializable
 {
     use BaseModel;
 

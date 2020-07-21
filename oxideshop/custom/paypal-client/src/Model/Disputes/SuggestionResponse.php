@@ -2,12 +2,14 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
- * Arrays of auto-complete and DidYouMean values. Includes links that enable you to navigate through the response.
+ * Arrays of auto-complete and DidYouMean values. Includes links that enable you to navigate through the
+ * response.
  */
-class SuggestionResponse implements \JsonSerializable
+class SuggestionResponse implements JsonSerializable
 {
     use BaseModel;
 
@@ -17,6 +19,6 @@ class SuggestionResponse implements \JsonSerializable
     /** @var string */
     public $corrected_search_text;
 
-    /** @var array */
+    /** @var array<array> */
     public $links;
 }

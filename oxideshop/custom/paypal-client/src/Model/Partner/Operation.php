@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The required operation to share data.
  */
-class Operation implements \JsonSerializable
+class Operation implements JsonSerializable
 {
     use BaseModel;
 

@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Information needed to pay using eps.
  */
-class EpsRequest implements \JsonSerializable
+class EpsRequest implements JsonSerializable
 {
     use BaseModel;
 

@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Address and confirmation details.
  */
-class AddressWithConfirmation extends AddressName implements \JsonSerializable
+class AddressWithConfirmation extends AddressName implements JsonSerializable
 {
     use BaseModel;
 

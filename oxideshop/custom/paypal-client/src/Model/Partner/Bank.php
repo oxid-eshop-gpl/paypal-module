@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The bank account information.
  */
-class Bank implements \JsonSerializable
+class Bank implements JsonSerializable
 {
     use BaseModel;
 
@@ -23,7 +24,7 @@ class Bank implements \JsonSerializable
     /** @var string */
     public $currency_code;
 
-    /** @var array */
+    /** @var array<Identifier> */
     public $identifiers;
 
     /** @var AddressPortable */

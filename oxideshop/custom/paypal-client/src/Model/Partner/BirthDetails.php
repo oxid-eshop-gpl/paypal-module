@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Date of birth data provided by the user
  */
-class BirthDetails implements \JsonSerializable
+class BirthDetails implements JsonSerializable
 {
     use BaseModel;
 

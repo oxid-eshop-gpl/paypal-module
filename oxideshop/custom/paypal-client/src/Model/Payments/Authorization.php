@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The authorized payment transaction.
  */
-class Authorization extends AuthorizationStatus implements \JsonSerializable
+class Authorization extends AuthorizationStatus implements JsonSerializable
 {
     use BaseModel;
 
@@ -32,7 +33,7 @@ class Authorization extends AuthorizationStatus implements \JsonSerializable
     /** @var string */
     public $expiration_time;
 
-    /** @var array */
+    /** @var array<array> */
     public $links;
 
     /** @var string */

@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Auth-Capture Tolerance details.
  */
-class AuthTolerance implements \JsonSerializable
+class AuthTolerance implements JsonSerializable
 {
     use BaseModel;
 

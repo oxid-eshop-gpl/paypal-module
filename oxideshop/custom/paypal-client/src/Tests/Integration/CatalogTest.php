@@ -3,8 +3,7 @@
 namespace OxidProfessionalServices\PayPal\Api\Tests\Integration;
 
 use OxidProfessionalServices\PayPal\Api\Client;
-use OxidProfessionalServices\PayPal\Api\Model\Catalog\CreateProductRequest;
-use OxidProfessionalServices\PayPal\Api\Model\Catalog\ProductDetails;
+use OxidProfessionalServices\PayPal\Api\Model\Catalog\ProductRequestPOST;
 use OxidProfessionalServices\PayPal\Api\Service\Catalog;
 use PHPUnit\Framework\TestCase;
 
@@ -24,8 +23,8 @@ class CatalogTest extends TestCase
 
     public function testCreateProduct()
     {
-        $pd = new CreateProductRequest();
-        $pd->id = "123456" . rand(0,100);
+        $pd = new ProductRequestPOST();
+        $pd->id = "123456" . rand(0, 100);
         $pd->name = "foo";
 
         /**
@@ -36,7 +35,6 @@ class CatalogTest extends TestCase
         $pd->type = "PHYSICAL";
         $pd->description = "bla bla";
         $pd->home_url = "https://oxid.de/foo";
-        $pd->links = [];
         $pd->image_url = "";
 
         /**

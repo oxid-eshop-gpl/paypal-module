@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Card brand that the transaction was processed for authentication.
  */
-class ThreedsCardBrand implements \JsonSerializable
+class ThreedsCardBrand implements JsonSerializable
 {
     use BaseModel;
 }

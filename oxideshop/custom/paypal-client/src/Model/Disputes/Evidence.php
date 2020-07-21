@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * A merchant- or customer-submitted evidence document.
  */
-class Evidence implements \JsonSerializable
+class Evidence implements JsonSerializable
 {
     use BaseModel;
 
@@ -17,7 +18,7 @@ class Evidence implements \JsonSerializable
     /** @var EvidenceInfo */
     public $evidence_info;
 
-    /** @var array */
+    /** @var array<Document> */
     public $documents;
 
     /** @var string */

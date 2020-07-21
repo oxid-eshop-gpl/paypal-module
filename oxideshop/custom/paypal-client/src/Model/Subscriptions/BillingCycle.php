@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The billing cycle details.
  */
-class BillingCycle implements \JsonSerializable
+class BillingCycle implements JsonSerializable
 {
     use BaseModel;
 

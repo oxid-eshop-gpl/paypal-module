@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The ineligible dispute with the reason for ineligibility.
  */
-class IneligibleDisputeReason implements \JsonSerializable
+class IneligibleDisputeReason implements JsonSerializable
 {
     use BaseModel;
 

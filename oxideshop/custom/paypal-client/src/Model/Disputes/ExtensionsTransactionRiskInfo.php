@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The transaction risk information.
  */
-class ExtensionsTransactionRiskInfo implements \JsonSerializable
+class ExtensionsTransactionRiskInfo implements JsonSerializable
 {
     use BaseModel;
 

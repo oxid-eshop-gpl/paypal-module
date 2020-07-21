@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * A request by a merchant to accept a customer's merchandise claim.
  */
-class AcceptClaim implements \JsonSerializable
+class AcceptClaim implements JsonSerializable
 {
     use BaseModel;
 

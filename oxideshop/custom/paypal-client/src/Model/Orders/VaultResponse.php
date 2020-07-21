@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The details about a saved payment source.
  */
-class VaultResponse implements \JsonSerializable
+class VaultResponse implements JsonSerializable
 {
     use BaseModel;
 

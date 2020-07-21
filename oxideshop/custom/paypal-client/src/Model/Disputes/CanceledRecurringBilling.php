@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The recurring billing canceled details.
  */
-class CanceledRecurringBilling implements \JsonSerializable
+class CanceledRecurringBilling implements JsonSerializable
 {
     use BaseModel;
 

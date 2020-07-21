@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Completes an action for an order.
  */
-class OrderValidateRequest implements \JsonSerializable
+class OrderValidateRequest implements JsonSerializable
 {
     use BaseModel;
 

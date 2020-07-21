@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Encapsulates the properties of user account.
  */
-class Account implements \JsonSerializable
+class Account implements JsonSerializable
 {
     use BaseModel;
 

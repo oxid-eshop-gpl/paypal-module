@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * ACH bank details required to fund the payment.
  */
-class AchDebit implements \JsonSerializable
+class AchDebit implements JsonSerializable
 {
     use BaseModel;
 

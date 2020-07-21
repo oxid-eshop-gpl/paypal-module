@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The cancellation details.
  */
-class CancellationDetails implements \JsonSerializable
+class CancellationDetails implements JsonSerializable
 {
     use BaseModel;
 

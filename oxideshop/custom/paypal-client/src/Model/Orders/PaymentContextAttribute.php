@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Payment Context Attribute. Typically used as a reference for a payment. Eg: CART_ID, PAY_ID.
  */
-class PaymentContextAttribute implements \JsonSerializable
+class PaymentContextAttribute implements JsonSerializable
 {
     use BaseModel;
 

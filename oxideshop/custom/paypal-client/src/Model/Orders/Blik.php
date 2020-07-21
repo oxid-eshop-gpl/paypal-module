@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Information used to pay using BLIK
  */
-class Blik implements \JsonSerializable
+class Blik implements JsonSerializable
 {
     use BaseModel;
 

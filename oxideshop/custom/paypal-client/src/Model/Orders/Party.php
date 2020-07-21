@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The properties of a party.
  */
-class Party implements \JsonSerializable
+class Party implements JsonSerializable
 {
     use BaseModel;
 
@@ -23,13 +24,13 @@ class Party implements \JsonSerializable
     /** @var string */
     public $primary_email;
 
-    /** @var array */
+    /** @var array<string> */
     public $emails;
 
-    /** @var array */
+    /** @var array<PhoneInfo> */
     public $phones;
 
-    /** @var array */
+    /** @var array<AddressWithConfirmation> */
     public $addresses;
 
     /** @var string */

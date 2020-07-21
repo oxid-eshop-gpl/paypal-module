@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Results of Authentication such as 3D Secure.
  */
-class AuthenticationResponse implements \JsonSerializable
+class AuthenticationResponse implements JsonSerializable
 {
     use BaseModel;
 

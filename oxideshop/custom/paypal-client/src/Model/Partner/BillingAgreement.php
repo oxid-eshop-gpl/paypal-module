@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The details of the billing agreement between the partner and a seller.
  */
-class BillingAgreement implements \JsonSerializable
+class BillingAgreement implements JsonSerializable
 {
     use BaseModel;
 

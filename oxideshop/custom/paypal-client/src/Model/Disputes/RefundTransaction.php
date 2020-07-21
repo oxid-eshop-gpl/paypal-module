@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The refund transaction.
  */
-class RefundTransaction implements \JsonSerializable
+class RefundTransaction implements JsonSerializable
 {
     use BaseModel;
 

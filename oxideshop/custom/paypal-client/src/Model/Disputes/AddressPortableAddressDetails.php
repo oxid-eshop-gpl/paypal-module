@@ -2,12 +2,16 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
- * The non-portable additional address details that are sometimes needed for compliance, risk, or other scenarios where fine-grain address information might be needed. Not portable with common third party and opensource. Redundant with core fields. For example, `address_portable.address_line_1` is usually a combination of `address_details.street_number` and `street_name` and `street_type`.
+ * The non-portable additional address details that are sometimes needed for compliance, risk, or other scenarios
+ * where fine-grain address information might be needed. Not portable with common third party and opensource.
+ * Redundant with core fields. For example, `address_portable.address_line_1` is usually a combination of
+ * `address_details.street_number` and `street_name` and `street_type`.
  */
-class AddressPortableAddressDetails implements \JsonSerializable
+class AddressPortableAddressDetails implements JsonSerializable
 {
     use BaseModel;
 

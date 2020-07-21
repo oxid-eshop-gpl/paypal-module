@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The details for the airline ticket.
  */
-class AirlineTicket implements \JsonSerializable
+class AirlineTicket implements JsonSerializable
 {
     use BaseModel;
 

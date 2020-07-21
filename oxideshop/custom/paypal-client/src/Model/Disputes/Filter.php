@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * A set of filters that you can use to filter the disputes in the response.
  */
-class Filter implements \JsonSerializable
+class Filter implements JsonSerializable
 {
     use BaseModel;
 

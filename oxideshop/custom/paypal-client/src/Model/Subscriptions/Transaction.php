@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The transaction details.
  */
-class Transaction extends CaptureStatus implements \JsonSerializable
+class Transaction extends CaptureStatus implements JsonSerializable
 {
     use BaseModel;
 

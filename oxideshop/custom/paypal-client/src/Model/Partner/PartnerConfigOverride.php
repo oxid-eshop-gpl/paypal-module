@@ -2,12 +2,14 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
- * The preference to customize the web experience of the customer by overriding that is set at the Partner's Account.
+ * The preference to customize the web experience of the customer by overriding that is set at the Partner's
+ * Account.
  */
-class PartnerConfigOverride implements \JsonSerializable
+class PartnerConfigOverride implements JsonSerializable
 {
     use BaseModel;
 

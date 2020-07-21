@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Information used to pay using P24(Przelewy24)
  */
-class PTwoFour implements \JsonSerializable
+class PTwoFour implements JsonSerializable
 {
     use BaseModel;
 

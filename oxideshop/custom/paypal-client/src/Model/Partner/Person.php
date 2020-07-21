@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Details of the person or party.
  */
-class Person implements \JsonSerializable
+class Person implements JsonSerializable
 {
     use BaseModel;
 
@@ -17,21 +18,21 @@ class Person implements \JsonSerializable
     /** @var string */
     public $party_id;
 
-    /** @var array */
+    /** @var array<PersonName> */
     public $names;
 
     /** @var string */
     public $citizenship;
 
-    /** @var array */
+    /** @var array<PersonAddressDetail> */
     public $addresses;
 
-    /** @var array */
+    /** @var array<PersonPhoneDetail> */
     public $phones;
 
     /** @var BirthDetails */
     public $birth_details;
 
-    /** @var array */
+    /** @var array<PersonDocument> */
     public $documents;
 }

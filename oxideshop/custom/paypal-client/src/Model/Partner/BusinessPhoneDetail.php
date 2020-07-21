@@ -2,12 +2,14 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
- * The phone number, in its canonical international [E.164 numbering plan format](https://www.itu.int/rec/T-REC-E.164/en).
+ * The phone number, in its canonical international [E.164 numbering plan
+ * format](https://www.itu.int/rec/T-REC-E.164/en).
  */
-class BusinessPhoneDetail extends Phone implements \JsonSerializable
+class BusinessPhoneDetail extends Phone implements JsonSerializable
 {
     use BaseModel;
 
@@ -23,6 +25,6 @@ class BusinessPhoneDetail extends Phone implements \JsonSerializable
     /** @var string */
     public $type;
 
-    /** @var array */
+    /** @var array<string> */
     public $tags;
 }

@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The payment by other means details.
  */
-class PaymentByOtherMeans implements \JsonSerializable
+class PaymentByOtherMeans implements JsonSerializable
 {
     use BaseModel;
 

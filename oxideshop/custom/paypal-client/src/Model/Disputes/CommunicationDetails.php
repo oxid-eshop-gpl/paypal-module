@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The contact details that a merchant provides to the customer to use to share their evidence documents.
  */
-class CommunicationDetails implements \JsonSerializable
+class CommunicationDetails implements JsonSerializable
 {
     use BaseModel;
 

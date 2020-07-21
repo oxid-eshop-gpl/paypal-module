@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Authorizes either a portion or the full amount of a saved order.
  */
-class AuthorizationRequest implements \JsonSerializable
+class AuthorizationRequest implements JsonSerializable
 {
     use BaseModel;
 
@@ -32,7 +33,7 @@ class AuthorizationRequest implements \JsonSerializable
     /** @var string */
     public $invoice_id;
 
-    /** @var array */
+    /** @var array<Item> */
     public $items;
 
     /** @var ShippingDetail */

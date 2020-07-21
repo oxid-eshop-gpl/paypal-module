@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The tax details.
  */
-class Taxes implements \JsonSerializable
+class Taxes implements JsonSerializable
 {
     use BaseModel;
 

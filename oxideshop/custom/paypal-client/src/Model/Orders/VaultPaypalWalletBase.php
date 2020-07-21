@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Resource consolidating common request and response attirbutes for vaulting PayPal Wallet.
  */
-class VaultPaypalWalletBase implements \JsonSerializable
+class VaultPaypalWalletBase implements JsonSerializable
 {
     use BaseModel;
 

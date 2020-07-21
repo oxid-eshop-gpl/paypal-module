@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The return details for the product.
  */
-class ReturnDetails implements \JsonSerializable
+class ReturnDetails implements JsonSerializable
 {
     use BaseModel;
 

@@ -2,16 +2,17 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Business information.
  */
-class Business extends Party implements \JsonSerializable
+class Business extends Party implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var array */
+    /** @var array<BusinessName> */
     public $names;
 
     /** @var string */
@@ -20,13 +21,13 @@ class Business extends Party implements \JsonSerializable
     /** @var BusinessCategory */
     public $category;
 
-    /** @var array */
+    /** @var array<BusinessIdentification> */
     public $identifications;
 
     /** @var string */
     public $description;
 
-    /** @var array */
+    /** @var array<Person> */
     public $owners;
 
     /** @var string */

@@ -2,19 +2,20 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The billing details for the subscription. If the subscription was or is active, these fields are populated.
  */
-class SubscriptionBillingInfo implements \JsonSerializable
+class SubscriptionBillingInfo implements JsonSerializable
 {
     use BaseModel;
 
     /** @var Money */
     public $outstanding_balance;
 
-    /** @var array */
+    /** @var array<CycleExecution> */
     public $cycle_executions;
 
     /** @var LastPaymentDetails */

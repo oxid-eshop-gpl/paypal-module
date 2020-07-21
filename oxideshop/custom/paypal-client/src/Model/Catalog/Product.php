@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Catalog;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The product details.
  */
-class Product implements \JsonSerializable
+class Product implements JsonSerializable
 {
     use BaseModel;
 
@@ -38,6 +39,6 @@ class Product implements \JsonSerializable
     /** @var string */
     public $update_time;
 
-    /** @var array */
+    /** @var array<array> */
     public $links;
 }

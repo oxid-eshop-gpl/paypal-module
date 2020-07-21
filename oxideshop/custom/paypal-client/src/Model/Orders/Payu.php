@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Information needed to pay using PayU.
  */
-class Payu implements \JsonSerializable
+class Payu implements JsonSerializable
 {
     use BaseModel;
 

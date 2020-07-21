@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * A merchant request to acknowledge receipt of the disputed item that the customer returned.
  */
-class AcknowledgeReturnItem implements \JsonSerializable
+class AcknowledgeReturnItem implements JsonSerializable
 {
     use BaseModel;
 

@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The error details. Required for client-side `4XX` errors.
  */
-class ErrorDetails implements \JsonSerializable
+class ErrorDetails implements JsonSerializable
 {
     use BaseModel;
 

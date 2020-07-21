@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The tracking information item.
  */
-class TrackingInfoItem implements \JsonSerializable
+class TrackingInfoItem implements JsonSerializable
 {
     use BaseModel;
 

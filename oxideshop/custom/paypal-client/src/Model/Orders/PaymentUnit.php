@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Payment data for a purchase unit.
  */
-class PaymentUnit implements \JsonSerializable
+class PaymentUnit implements JsonSerializable
 {
     use BaseModel;
 
@@ -29,7 +30,7 @@ class PaymentUnit implements \JsonSerializable
     /** @var AmountWithBreakdown */
     public $amount;
 
-    /** @var array */
+    /** @var array<Item> */
     public $items;
 
     /** @var ShippingDetails */
@@ -59,7 +60,7 @@ class PaymentUnit implements \JsonSerializable
     /** @var OdfiDetails */
     public $odfi_details;
 
-    /** @var array */
+    /** @var array<PaymentContextAttribute> */
     public $context_attributes;
 
     /** @var Participant */

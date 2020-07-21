@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The breakdown details for the amount. Includes the gross, tax, fee, and shipping amounts.
  */
-class AmountWithBreakdown implements \JsonSerializable
+class AmountWithBreakdown implements JsonSerializable
 {
     use BaseModel;
 

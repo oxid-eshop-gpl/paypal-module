@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * A captured payment.
  */
-class Capture extends CaptureStatus implements \JsonSerializable
+class Capture extends CaptureStatus implements JsonSerializable
 {
     use BaseModel;
 
@@ -41,7 +42,7 @@ class Capture extends CaptureStatus implements \JsonSerializable
     /** @var Error */
     public $error;
 
-    /** @var array */
+    /** @var array<array> */
     public $links;
 
     /** @var ProcessorResponse */

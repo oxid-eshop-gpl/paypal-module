@@ -2,12 +2,16 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
- * The portable international postal address. Maps to [AddressValidationMetadata](https://github.com/googlei18n/libaddressinput/wiki/AddressValidationMetadata) and HTML 5.1 [Autofilling form controls: the autocomplete attribute](https://www.w3.org/TR/html51/sec-forms.html#autofilling-form-controls-the-autocomplete-attribute).
+ * The portable international postal address. Maps to
+ * [AddressValidationMetadata](https://github.com/googlei18n/libaddressinput/wiki/AddressValidationMetadata) and
+ * HTML 5.1 [Autofilling form controls: the autocomplete
+ * attribute](https://www.w3.org/TR/html51/sec-forms.html#autofilling-form-controls-the-autocomplete-attribute).
  */
-class AddressPortable implements \JsonSerializable
+class AddressPortable implements JsonSerializable
 {
     use BaseModel;
 
@@ -38,6 +42,6 @@ class AddressPortable implements \JsonSerializable
     /** @var string */
     public $country_code;
 
-    /** @var OxidProfessionalServices\PayPal\Api\Model\Partner\AddressPortableAddressDetails */
+    /** @var AddressPortableAddressDetails */
     public $address_details;
 }

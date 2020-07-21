@@ -10,4 +10,9 @@ trait BaseModel
             return isset($var);
         });
     }
+
+    public function __set($name, $value)
+    {
+        throw new \Error("Cant set $name on " . static::class);
+    }
 }

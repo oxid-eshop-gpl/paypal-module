@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The authorized payment transaction.
  */
-class UpdateAuthorizationRequest implements \JsonSerializable
+class UpdateAuthorizationRequest implements JsonSerializable
 {
     use BaseModel;
 

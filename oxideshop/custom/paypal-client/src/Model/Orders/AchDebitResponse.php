@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * ACH bank details response object
  */
-class AchDebitResponse implements \JsonSerializable
+class AchDebitResponse implements JsonSerializable
 {
     use BaseModel;
 

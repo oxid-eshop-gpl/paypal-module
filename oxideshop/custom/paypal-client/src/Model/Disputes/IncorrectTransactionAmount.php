@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The incorrect transaction amount details.
  */
-class IncorrectTransactionAmount implements \JsonSerializable
+class IncorrectTransactionAmount implements JsonSerializable
 {
     use BaseModel;
 

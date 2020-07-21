@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The cancel subscription request details.
  */
-class SubscriptionCancelRequest implements \JsonSerializable
+class SubscriptionCancelRequest implements JsonSerializable
 {
     use BaseModel;
 

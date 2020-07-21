@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Policy directive indicating how to process the payment.
  */
-class PolicyDirective implements \JsonSerializable
+class PolicyDirective implements JsonSerializable
 {
     use BaseModel;
 

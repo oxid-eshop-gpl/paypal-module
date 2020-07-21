@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The options that the payee or merchant offers to the payer to ship or pick up their items.
  */
-class ShippingOption implements \JsonSerializable
+class ShippingOption implements JsonSerializable
 {
     use BaseModel;
 

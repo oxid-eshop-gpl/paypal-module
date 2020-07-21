@@ -2,12 +2,14 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
- * The application context, which customizes the payer experience during the subscription approval process with PayPal.
+ * The application context, which customizes the payer experience during the subscription approval process with
+ * PayPal.
  */
-class CustomizedXUnsupportedNineEightNineFourApplicationContext implements \JsonSerializable
+class CustomizedXUnsupportedNineEightNineFourApplicationContext implements JsonSerializable
 {
     use BaseModel;
 

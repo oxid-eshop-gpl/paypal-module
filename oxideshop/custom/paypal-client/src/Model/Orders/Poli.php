@@ -2,12 +2,13 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Information used to pay using POLi.
  */
-class Poli implements \JsonSerializable
+class Poli implements JsonSerializable
 {
     use BaseModel;
 
