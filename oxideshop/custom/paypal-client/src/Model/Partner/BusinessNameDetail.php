@@ -12,7 +12,10 @@ class BusinessNameDetail extends BusinessName implements JsonSerializable
 {
     use BaseModel;
 
+    /** The trading name of the business. */
     const TYPE_DOING_BUSINESS_AS = 'DOING_BUSINESS_AS';
+
+    /** The legal name of the business. */
     const TYPE_LEGAL_NAME = 'LEGAL_NAME';
 
     /** @var string */

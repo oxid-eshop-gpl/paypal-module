@@ -12,7 +12,10 @@ class AdjudicationInfo implements JsonSerializable
 {
     use BaseModel;
 
+    /** The customer did not receive the merchandise or service. */
     const DISPUTE_REASON_MERCHANDISE_OR_SERVICE_NOT_RECEIVED = 'MERCHANDISE_OR_SERVICE_NOT_RECEIVED';
+
+    /** The customer reports that the merchandise or service is not as described. */
     const DISPUTE_REASON_MERCHANDISE_OR_SERVICE_NOT_AS_DESCRIBED = 'MERCHANDISE_OR_SERVICE_NOT_AS_DESCRIBED';
 
     /**

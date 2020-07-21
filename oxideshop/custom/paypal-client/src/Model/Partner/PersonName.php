@@ -12,6 +12,7 @@ class PersonName extends Name implements JsonSerializable
 {
     use BaseModel;
 
+    /** Indicates that this name is the legal name of the user. */
     const TYPE_LEGAL = 'LEGAL';
 
     /**

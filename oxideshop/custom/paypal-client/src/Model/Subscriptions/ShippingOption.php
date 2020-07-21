@@ -12,7 +12,10 @@ class ShippingOption implements JsonSerializable
 {
     use BaseModel;
 
+    /** The payer intends to receive the items at a specified address. */
     const TYPE_SHIPPING = 'SHIPPING';
+
+    /** The payer intends to pick up the items at a specified address. For example, a store address. */
     const TYPE_PICKUP = 'PICKUP';
 
     /** @var string */

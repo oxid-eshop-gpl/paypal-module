@@ -12,41 +12,112 @@ class BusinessName implements JsonSerializable
 {
     use BaseModel;
 
+    /** The orthography cannot be determined. */
     const ORTHOGRAPHY_ZYYY = 'Zyyy';
+
+    /** The orthography is unknown. */
     const ORTHOGRAPHY_ZZZZ = 'Zzzz';
+
+    /** An angular form of Japanese writing for words of foreign origin. */
     const ORTHOGRAPHY_KANA = 'Kana';
+
+    /** The Slavic languages alphabet. Used in eastern Europe. */
     const ORTHOGRAPHY_CYRL = 'Cyrl';
+
+    /** The Arabic language alphabet. */
     const ORTHOGRAPHY_ARAB = 'Arab';
+
+    /** The Armenian alphabet. */
     const ORTHOGRAPHY_ARMN = 'Armn';
+
+    /** The Bengali alphabet. Used in eastern India. */
     const ORTHOGRAPHY_BENG = 'Beng';
+
+    /** The Unified Canadian Aboriginal Syllabics alphabet. */
     const ORTHOGRAPHY_CANS = 'Cans';
+
+    /** The Devanagari (Nagari) alphabet. */
     const ORTHOGRAPHY_DEVA = 'Deva';
+
+    /** The Ethiopic alphabet. */
     const ORTHOGRAPHY_ETHI = 'Ethi';
+
+    /** The Georgian (Mkhedruli and Mtavruli) alphabet. */
     const ORTHOGRAPHY_GEOR = 'Geor';
+
+    /** The Greek alphabet. */
     const ORTHOGRAPHY_GREK = 'Grek';
+
+    /** The Gujurati language alphabet. Used in western India. */
     const ORTHOGRAPHY_GUJR = 'Gujr';
+
+    /** The Gurmukhi alphabet. Used in the northern Indian state of Punjab. */
     const ORTHOGRAPHY_GURU = 'Guru';
+
+    /** The Han (Hanzi, Kanji, Hanja) alphabet. */
     const ORTHOGRAPHY_HANI = 'Hani';
+
+    /** The Hebrew alphabet. */
     const ORTHOGRAPHY_HEBR = 'Hebr';
+
+    /** The Javanese alphabet. */
     const ORTHOGRAPHY_JAVA = 'Java';
+
+    /** The Japanese (alias for Han + Hiragana + Katakana) alphabet. */
     const ORTHOGRAPHY_JPAN = 'Jpan';
+
+    /** The Khmer alphabet. */
     const ORTHOGRAPHY_KHMR = 'Khmr';
+
+    /** The Kannada alphabet. Used in the southern Indian state of Karnataka. */
     const ORTHOGRAPHY_KNDA = 'Knda';
+
+    /** Korean (alias for Hangul + Han). */
     const ORTHOGRAPHY_KORE = 'Kore';
+
+    /** The Lao alphabet. */
     const ORTHOGRAPHY_LAOO = 'Laoo';
+
+    /** The Latin alphabet. */
     const ORTHOGRAPHY_LATN = 'Latn';
+
+    /** The Malayalam alphabet. Used in the southern Indian state of Kerala. */
     const ORTHOGRAPHY_MLYM = 'Mlym';
+
+    /** The Mongolian alphabet. */
     const ORTHOGRAPHY_MONG = 'Mong';
+
+    /** The Myanmar (Burmese) alphabet. */
     const ORTHOGRAPHY_MYMR = 'Mymr';
+
+    /** The Oriya (Odia) alphabet. Used in the eastern Indian state of Odisha. */
     const ORTHOGRAPHY_ORYA = 'Orya';
+
+    /** The Sinhala alphabet. */
     const ORTHOGRAPHY_SINH = 'Sinh';
+
+    /** The Sundanese alphabet. */
     const ORTHOGRAPHY_SUND = 'Sund';
+
+    /** The Syriac alphabet. */
     const ORTHOGRAPHY_SYRC = 'Syrc';
+
+    /** The Tamil alphabet. Used in the southern Indian state of Tamilnadu. */
     const ORTHOGRAPHY_TAML = 'Taml';
+
+    /** The Telugu language alphabet. Used in the southern Indian state of Andhra pradesh. */
     const ORTHOGRAPHY_TELU = 'Telu';
+
+    /** The Thaana (Maldivian) alphabet. */
     const ORTHOGRAPHY_THAA = 'Thaa';
+
+    /** The Thai alphabet. Used in Thailand. */
     const ORTHOGRAPHY_THAI = 'Thai';
+
+    /** The Tibetan alphabet. */
     const ORTHOGRAPHY_TIBT = 'Tibt';
+
+    /** The Yi alphabet. */
     const ORTHOGRAPHY_YIII = 'Yiii';
 
     /** @var string */

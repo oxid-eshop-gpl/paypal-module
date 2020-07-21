@@ -12,15 +12,34 @@ class DisputeCreateRequest implements JsonSerializable
 {
     use BaseModel;
 
+    /** Third-party claim information that the dispute requires custom handling. */
     const DISPUTE_FLOW_THIRD_PARTY_CLAIM = 'THIRD_PARTY_CLAIM';
+
+    /** Third-party claim information that the dispute does not require any special handling. Defaults to default procedures. */
     const DISPUTE_FLOW_THIRD_PARTY_DISPUTE = 'THIRD_PARTY_DISPUTE';
+
+    /** The customer did not receive the merchandise or service. */
     const REASON_MERCHANDISE_OR_SERVICE_NOT_RECEIVED = 'MERCHANDISE_OR_SERVICE_NOT_RECEIVED';
+
+    /** The customer reports that the merchandise or service is not as described. */
     const REASON_MERCHANDISE_OR_SERVICE_NOT_AS_DESCRIBED = 'MERCHANDISE_OR_SERVICE_NOT_AS_DESCRIBED';
+
+    /** The order is incomplete. It has missing parts or an incorrect quantity. */
     const SUB_REASON_INCOMPLETE_ORDER = 'INCOMPLETE_ORDER';
+
+    /** The goods are damaged. */
     const SUB_REASON_DAMAGED = 'DAMAGED';
+
+    /** The item is fake. */
     const SUB_REASON_FAKE = 'FAKE';
+
+    /** The item is materially different. It is a different item, the wrong size or model,the wrong color, or used instead of new. */
     const SUB_REASON_MATERIALLY_DIFFERENT = 'MATERIALLY_DIFFERENT';
+
+    /** The item is unusable or ruined. */
     const SUB_REASON_UNUSABLE = 'UNUSABLE';
+
+    /** The surcharge is incorrect. */
     const SUB_REASON_EXCESSIVE_SURCHARGE = 'EXCESSIVE_SURCHARGE';
 
     /**

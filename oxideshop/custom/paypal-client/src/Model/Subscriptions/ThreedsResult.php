@@ -12,43 +12,118 @@ class ThreedsResult extends AuthenticationResultType implements JsonSerializable
 {
     use BaseModel;
 
+    /** Mastercard non-3-D Secure transaction. */
     const ECI_FLAG_MASTERCARD_NON_3D_SECURE_TRANSACTION = 'MASTERCARD_NON_3D_SECURE_TRANSACTION';
+
+    /** Mastercard attempted authentication transaction. */
     const ECI_FLAG_MASTERCARD_ATTEMPTED_AUTHENTICATION_TRANSACTION = 'MASTERCARD_ATTEMPTED_AUTHENTICATION_TRANSACTION';
+
+    /** Mastercard fully authenticated transaction. */
     const ECI_FLAG_MASTERCARD_FULLY_AUTHENTICATED_TRANSACTION = 'MASTERCARD_FULLY_AUTHENTICATED_TRANSACTION';
+
+    /** VISA, AMEX, JCB, DINERS CLUB fully authenticated transaction. */
     const ECI_FLAG_FULLY_AUTHENTICATED_TRANSACTION = 'FULLY_AUTHENTICATED_TRANSACTION';
+
+    /** VISA, AMEX, JCB, DINERS CLUB attempted authentication transaction. */
     const ECI_FLAG_ATTEMPTED_AUTHENTICATION_TRANSACTION = 'ATTEMPTED_AUTHENTICATION_TRANSACTION';
+
+    /** VISA, AMEX, JCB, DINERS CLUB non-3-D Secure transaction. */
     const ECI_FLAG_NON_3D_SECURE_TRANSACTION = 'NON_3D_SECURE_TRANSACTION';
+
+    /** Non-SecureCode transaction, bypassed by the merchant. */
     const UCAF_INDICATOR_NON_SECURECODE_TRANSACTION = 'NON_SECURECODE_TRANSACTION';
+
+    /** Merchant-Only SecureCode transaction. */
     const UCAF_INDICATOR_MERCHANT_ONLY_SECURECODE_TRANSACTION = 'MERCHANT_ONLY_SECURECODE_TRANSACTION';
+
+    /** Fully authenticated SecureCode. */
     const UCAF_INDICATOR_FULLY_AUTHENTICATED_SECURECODE = 'FULLY_AUTHENTICATED_SECURECODE';
+
+    /** Card Brand Amex. */
     const CARD_BRAND_AMERICAN_EXPRESS = 'AMERICAN_EXPRESS';
+
+    /** Card Brand DISCOVER. */
     const CARD_BRAND_DISCOVER = 'DISCOVER';
+
+    /** Card Brand JCB. */
     const CARD_BRAND_JCB = 'JCB';
+
+    /** Card Brand MAESTRO. */
     const CARD_BRAND_MAESTRO = 'MAESTRO';
+
+    /** Card Brand MASTERCARD. */
     const CARD_BRAND_MASTERCARD = 'MASTERCARD';
+
+    /** Card Brand SOLO. */
     const CARD_BRAND_SOLO = 'SOLO';
+
+    /** Card Brand VISA. */
     const CARD_BRAND_VISA = 'VISA';
+
+    /** Card Brand ELECTRON. */
     const CARD_BRAND_ELECTRON = 'ELECTRON';
+
+    /** Card Brand ELO. */
     const CARD_BRAND_ELO = 'ELO';
+
+    /** Yes. The bank is participating in 3-D Secure protocol and will return the ACSUrl. */
     const ENROLLED_Y = 'Y';
+
+    /** No. The bank is not participating in 3-D Secure protocol. */
     const ENROLLED_N = 'N';
+
+    /** Unavailable. The DS or ACS is not available for authentication at the time of the request. */
     const ENROLLED_U = 'U';
+
+    /** Bypass. The merchant authentication rule is triggered to bypass authentication. */
     const ENROLLED_B = 'B';
+
+    /** Successful authentication. */
     const PARES_STATUS_Y = 'Y';
+
+    /** Failed authentication / account not verified / transaction denied. */
     const PARES_STATUS_N = 'N';
+
+    /** Unable to complete authentication. */
     const PARES_STATUS_U = 'U';
+
+    /** Successful attempts transaction. */
     const PARES_STATUS_A = 'A';
+
+    /** Challenge required for authentication. */
     const PARES_STATUS_C = 'C';
+
+    /** Authentication rejected (merchant must not submit for authorization). */
     const PARES_STATUS_R = 'R';
+
+    /** Challenge required; decoupled authentication confirmed. */
     const PARES_STATUS_D = 'D';
+
+    /** Informational anly; 3DS requestor challenge preference acknowledged. */
     const PARES_STATUS_I = 'I';
+
+    /** Indicates fixed password. */
     const AUTHENTICATION_TYPE_STATIC = 'STATIC';
+
+    /** Indicates one-time password. Could be single-step or multi-step. */
     const AUTHENTICATION_TYPE_DYNAMIC = 'DYNAMIC';
+
+    /** Indicates biometric over the phone. */
     const AUTHENTICATION_TYPE_OUT_OF_BAND = 'OUT_OF_BAND';
+
+    /** Indicates decoupled authentication. */
     const AUTHENTICATION_TYPE_DECOUPLED = 'DECOUPLED';
+
+    /** Indicates that the signature of the PARes has been validated successfully and the message contents can be trusted. */
     const SIGNATURE_VERIFICATION_STATUS_YES = 'YES';
+
+    /** Indicates that the PARes could not be validated. */
     const SIGNATURE_VERIFICATION_STATUS_NO = 'NO';
+
+    /** Refers to the Visa CAVV generation specification that includes a unique identifier built into the value. */
     const CAVV_ALGORITHM_CVV_WITH_ATN = 'CVV_WITH_ATN';
+
+    /** Refers to Secure Payment Algorithm used to generate Mastercard's Accountholder Authentication Value (AAV). */
     const CAVV_ALGORITHM_MASTERCARD_SPA_ALGORITHM = 'MASTERCARD_SPA_ALGORITHM';
 
     /**

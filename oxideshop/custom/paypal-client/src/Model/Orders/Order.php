@@ -12,14 +12,31 @@ class Order extends ActivityTimestamps implements JsonSerializable
 {
     use BaseModel;
 
+    /** The merchant intends to capture payment immediately after the customer makes a payment. */
     const INTENT_CAPTURE = 'CAPTURE';
+
+    /** The merchant intends to authorize a payment and place funds on hold after the customer makes a payment. Authorized payments are guaranteed for up to three days but are available to capture for up to 29 days. After the three-day honor period, the original authorized payment expires and you must re-authorize the payment. You must make a separate request to capture payments on demand. This intent is not supported when you have more than one `purchase_unit` within your order. */
     const INTENT_AUTHORIZE = 'AUTHORIZE';
+
+    /** The order was created with the specified context. */
     const STATUS_CREATED = 'CREATED';
+
+    /** The order was saved and persisted. The order status continues to be in progress until a capture is made with <code>final_capture = true</code> for all purchase units within the order. */
     const STATUS_SAVED = 'SAVED';
+
+    /** The customer approved the payment through the PayPal wallet or another form of guest or unbranded payment. For example, a card, bank account, or so on. */
     const STATUS_APPROVED = 'APPROVED';
+
+    /** All purchase units in the order are voided. */
     const STATUS_VOIDED = 'VOIDED';
+
+    /** The payment was authorized or the authorized payment was captured for the order. */
     const STATUS_COMPLETED = 'COMPLETED';
+
+    /** The order requires an action from the payer (e.g. 3DS authentication). Redirect the payer to the "rel":"payer_action" HATEOAS link returned as part of the response prior to authorizing or capturing the order. */
     const STATUS_PAYER_ACTION_REQUIRED = 'PAYER_ACTION_REQUIRED';
+
+    /** Some of the 'purchase_units' within the Order could not be successfully authorized or captured. This status is only applicable if you have multiple 'purchase_units' for an order. */
     const STATUS_PARTIALLY_COMPLETED = 'PARTIALLY_COMPLETED';
 
     /** @var string */

@@ -12,10 +12,19 @@ class PricingDirective implements JsonSerializable
 {
     use BaseModel;
 
+    /** Sender of the payment. */
     const PARTICIPANT_TYPE_SENDER = 'SENDER';
+
+    /** Receiver of the payment. */
     const PARTICIPANT_TYPE_RECEIVER = 'RECEIVER';
+
+    /** Facilitator of the payment. */
     const PARTICIPANT_TYPE_FACILITATOR = 'FACILITATOR';
+
+    /** Blended Pricing Type. */
     const TYPE_BLENDED = 'BLENDED';
+
+    /** IC+ Pricing Type. */
     const TYPE_IC_PLUS = 'IC_PLUS';
 
     /**

@@ -12,9 +12,16 @@ class ReferredDisputeSummary implements JsonSerializable
 {
     use BaseModel;
 
+    /** The customer did not receive the merchandise or service. */
     const REASON_MERCHANDISE_OR_SERVICE_NOT_RECEIVED = 'MERCHANDISE_OR_SERVICE_NOT_RECEIVED';
+
+    /** The customer reports that the merchandise or service is not as described. */
     const REASON_MERCHANDISE_OR_SERVICE_NOT_AS_DESCRIBED = 'MERCHANDISE_OR_SERVICE_NOT_AS_DESCRIBED';
+
+    /** The dispute is open. */
     const STATUS_OPEN = 'OPEN';
+
+    /** The dispute is resolved. */
     const STATUS_CLOSED = 'CLOSED';
 
     /** @var string */

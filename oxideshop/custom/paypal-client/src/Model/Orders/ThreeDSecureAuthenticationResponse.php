@@ -12,17 +12,40 @@ class ThreeDSecureAuthenticationResponse implements JsonSerializable
 {
     use BaseModel;
 
+    /** Successful authentication. */
     const AUTHENTICATION_STATUS_Y = 'Y';
+
+    /** Failed authentication / account not verified / transaction denied. */
     const AUTHENTICATION_STATUS_N = 'N';
+
+    /** Unable to complete authentication. */
     const AUTHENTICATION_STATUS_U = 'U';
+
+    /** Successful attempts transaction. */
     const AUTHENTICATION_STATUS_A = 'A';
+
+    /** Challenge required for authentication. */
     const AUTHENTICATION_STATUS_C = 'C';
+
+    /** Authentication rejected (merchant must not submit for authorization). */
     const AUTHENTICATION_STATUS_R = 'R';
+
+    /** Challenge required; decoupled authentication confirmed. */
     const AUTHENTICATION_STATUS_D = 'D';
+
+    /** Informational only; 3DS requestor challenge preference acknowledged. */
     const AUTHENTICATION_STATUS_I = 'I';
+
+    /** Yes. The bank is participating in 3-D Secure protocol and will return the ACSUrl. */
     const ENROLLMENT_STATUS_Y = 'Y';
+
+    /** No. The bank is not participating in 3-D Secure protocol. */
     const ENROLLMENT_STATUS_N = 'N';
+
+    /** Unavailable. The DS or ACS is not available for authentication at the time of the request. */
     const ENROLLMENT_STATUS_U = 'U';
+
+    /** Bypass. The merchant authentication rule is triggered to bypass authentication. */
     const ENROLLMENT_STATUS_B = 'B';
 
     /**

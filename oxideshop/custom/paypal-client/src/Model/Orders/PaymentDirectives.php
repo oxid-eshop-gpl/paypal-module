@@ -12,13 +12,28 @@ class PaymentDirectives implements JsonSerializable
 {
     use BaseModel;
 
+    /** Instant Disbursement Type. */
     const DISBURSEMENT_TYPE_INSTANT = 'INSTANT';
+
+    /** Delayed Disbursement Type. */
     const DISBURSEMENT_TYPE_DELAYED = 'DELAYED';
+
+    /** Full liability for post payment events. The loss_account will be used for events including refunds, reversals, disputes etc. */
     const LIABILITY_TYPE_FULL = 'FULL';
+
+    /** Partial liability for post payment events. The loss_account will be used for limited cases like UNAUTH. */
     const LIABILITY_TYPE_PARTIAL = 'PARTIAL';
+
+    /** Accept payment after auto currency conversion. */
     const CURRENCY_RECEIVING_DIRECTIVE_ACCEPT = 'ACCEPT';
+
+    /** Deny payment. */
     const CURRENCY_RECEIVING_DIRECTIVE_DENY = 'DENY';
+
+    /** Pend payment for seller's approval. */
     const CURRENCY_RECEIVING_DIRECTIVE_HOLD = 'HOLD';
+
+    /** Accept payment after opening a new currency holding. */
     const CURRENCY_RECEIVING_DIRECTIVE_ACCEPT_OPEN = 'ACCEPT_OPEN';
 
     /**

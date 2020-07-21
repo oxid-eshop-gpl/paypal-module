@@ -12,21 +12,52 @@ class CardResponse implements JsonSerializable
 {
     use BaseModel;
 
+    /** Visa card. */
     const BRAND_VISA = 'VISA';
+
+    /** Mastecard card. */
     const BRAND_MASTERCARD = 'MASTERCARD';
+
+    /** Discover card. */
     const BRAND_DISCOVER = 'DISCOVER';
+
+    /** American Express card. */
     const BRAND_AMEX = 'AMEX';
+
+    /** Solo debit card. */
     const BRAND_SOLO = 'SOLO';
+
+    /** Japan Credit Bureau card. */
     const BRAND_JCB = 'JCB';
+
+    /** Military Star card. */
     const BRAND_STAR = 'STAR';
+
+    /** Delta Airlines card. */
     const BRAND_DELTA = 'DELTA';
+
+    /** Switch credit card. */
     const BRAND_SWITCH = 'SWITCH';
+
+    /** Maestro credit card. */
     const BRAND_MAESTRO = 'MAESTRO';
+
+    /** Carte Bancaire (CB) credit card. */
     const BRAND_CB_NATIONALE = 'CB_NATIONALE';
+
+    /** Configoga credit card. */
     const BRAND_CONFIGOGA = 'CONFIGOGA';
+
+    /** Confidis credit card. */
     const BRAND_CONFIDIS = 'CONFIDIS';
+
+    /** Visa Electron credit card. */
     const BRAND_ELECTRON = 'ELECTRON';
+
+    /** Cetelem credit card. */
     const BRAND_CETELEM = 'CETELEM';
+
+    /** China union pay credit card. */
     const BRAND_CHINA_UNION_PAY = 'CHINA_UNION_PAY';
 
     /** @var string */

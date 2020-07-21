@@ -12,7 +12,10 @@ class PaymentMethod implements JsonSerializable
 {
     use BaseModel;
 
+    /** Accepts any type of payment from the customer. */
     const PAYEE_PREFERRED_UNRESTRICTED = 'UNRESTRICTED';
+
+    /** Accepts only immediate payment from the customer. For example, credit card, PayPal balance, or instant ACH. Ensures that at the time of capture, the payment does not have the `pending` status. */
     const PAYEE_PREFERRED_IMMEDIATE_PAYMENT_REQUIRED = 'IMMEDIATE_PAYMENT_REQUIRED';
 
     /** @var string */

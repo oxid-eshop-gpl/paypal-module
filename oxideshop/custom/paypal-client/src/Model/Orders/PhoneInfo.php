@@ -12,11 +12,22 @@ class PhoneInfo implements JsonSerializable
 {
     use BaseModel;
 
+    /** A fax machine. */
     const PHONE_TYPE_FAX = 'FAX';
+
+    /** A home phone. */
     const PHONE_TYPE_HOME = 'HOME';
+
+    /** A mobile phone. */
     const PHONE_TYPE_MOBILE = 'MOBILE';
+
+    /** Other. */
     const PHONE_TYPE_OTHER = 'OTHER';
+
+    /** A pager. */
     const PHONE_TYPE_PAGER = 'PAGER';
+
+    /** A work phone. */
     const PHONE_TYPE_WORK = 'WORK';
 
     /**

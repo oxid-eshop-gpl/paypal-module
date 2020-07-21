@@ -12,21 +12,52 @@ class Card implements JsonSerializable
 {
     use BaseModel;
 
+    /** Visa card. */
     const CARD_TYPE_VISA = 'VISA';
+
+    /** Mastecard card. */
     const CARD_TYPE_MASTERCARD = 'MASTERCARD';
+
+    /** Discover card. */
     const CARD_TYPE_DISCOVER = 'DISCOVER';
+
+    /** American Express card. */
     const CARD_TYPE_AMEX = 'AMEX';
+
+    /** Solo debit card. */
     const CARD_TYPE_SOLO = 'SOLO';
+
+    /** Japan Credit Bureau card. */
     const CARD_TYPE_JCB = 'JCB';
+
+    /** Military Star card. */
     const CARD_TYPE_STAR = 'STAR';
+
+    /** Delta Airlines card. */
     const CARD_TYPE_DELTA = 'DELTA';
+
+    /** Switch credit card. */
     const CARD_TYPE_SWITCH = 'SWITCH';
+
+    /** Maestro credit card. */
     const CARD_TYPE_MAESTRO = 'MAESTRO';
+
+    /** Carte Bancaire (CB) credit card. */
     const CARD_TYPE_CB_NATIONALE = 'CB_NATIONALE';
+
+    /** Configoga credit card. */
     const CARD_TYPE_CONFIGOGA = 'CONFIGOGA';
+
+    /** Confidis credit card. */
     const CARD_TYPE_CONFIDIS = 'CONFIDIS';
+
+    /** Visa Electron credit card. */
     const CARD_TYPE_ELECTRON = 'ELECTRON';
+
+    /** Cetelem credit card. */
     const CARD_TYPE_CETELEM = 'CETELEM';
+
+    /** China union pay credit card. */
     const CARD_TYPE_CHINA_UNION_PAY = 'CHINA_UNION_PAY';
 
     /** @var string */

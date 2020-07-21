@@ -12,6 +12,7 @@ class PersonAddressDetail extends AddressPortable implements JsonSerializable
 {
     use BaseModel;
 
+    /** The home address of the customer. */
     const TYPE_HOME = 'HOME';
 
     /**

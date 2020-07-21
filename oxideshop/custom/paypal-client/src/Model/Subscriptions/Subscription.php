@@ -12,7 +12,10 @@ class Subscription extends SubscriptionStatus implements JsonSerializable
 {
     use BaseModel;
 
+    /** PayPal currency conversion. */
     const PREFERRED_CURRENCY_CONVERSION_PAYPAL = 'PAYPAL';
+
+    /** Vendor currency conversion. */
     const PREFERRED_CURRENCY_CONVERSION_VENDOR = 'VENDOR';
 
     /** @var string */
