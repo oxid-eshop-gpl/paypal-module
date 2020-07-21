@@ -37,7 +37,6 @@ class Catalog
     public function listProducts($totalRequired = false, $page = 1, $pageSize = 10): ProductCollection
     {
         $headers = [];
-        $headers['Content-Type'] = 'application/json';
 
         $body = null;
         $request = $this->client->createRequest('GET', "/v1/catalogs/products", $headers, $body);
@@ -50,7 +49,6 @@ class Catalog
     public function showProductDetails($productId): Product
     {
         $headers = [];
-        $headers['Content-Type'] = 'application/json';
 
         $body = null;
         $request = $this->client->createRequest('GET', "/v1/catalogs/products/{$productId}", $headers, $body);

@@ -50,6 +50,7 @@ class Disputes
     public function notifyPayPalAboutReferredDisputeAdjudicationUpdates($disputeId, AdjudicationInfo $adjudicationInfo): SubsequentAction
     {
         $headers = [];
+        $headers['Content-Type'] = 'application/json';
 
         $body = json_encode(array_filter((array)$adjudicationInfo), true);
         $request = $this->client->createRequest('POST', "/v1/customer/referred-disputes/{$disputeId}/process-adjudication-event", $headers, $body);
@@ -62,6 +63,7 @@ class Disputes
     public function updateDisputeStatus($disputeId, RequireEvidence $requireEvidenceRequest): SubsequentAction
     {
         $headers = [];
+        $headers['Content-Type'] = 'application/json';
 
         $body = json_encode(array_filter((array)$requireEvidenceRequest), true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/require-evidence", $headers, $body);
@@ -74,6 +76,7 @@ class Disputes
     public function notifyPayPalAboutRefundForReferredDispute($disputeId, RefundInfo $refundInfo): SubsequentAction
     {
         $headers = [];
+        $headers['Content-Type'] = 'application/json';
 
         $body = json_encode(array_filter((array)$refundInfo), true);
         $request = $this->client->createRequest('POST', "/v1/customer/referred-disputes/{$disputeId}/process-refund-event", $headers, $body);
@@ -86,6 +89,7 @@ class Disputes
     public function determineDisputeEligibility(Eligibility $eligibilityRequest): DisputeEligibility
     {
         $headers = [];
+        $headers['Content-Type'] = 'application/json';
 
         $body = json_encode(array_filter((array)$eligibilityRequest), true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes/validate-eligibility", $headers, $body);
@@ -139,6 +143,7 @@ class Disputes
     public function createDispute(Dispute $dispute): DisputeCreate
     {
         $headers = [];
+        $headers['Content-Type'] = 'application/json';
 
         $body = json_encode(array_filter((array)$dispute), true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes", $headers, $body);
@@ -151,6 +156,7 @@ class Disputes
     public function appealDispute($disputeId, Evidences $evidence): SubsequentAction
     {
         $headers = [];
+        $headers['Content-Type'] = 'application/json';
 
         $body = json_encode(array_filter((array)$evidence), true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/appeal", $headers, $body);
@@ -163,6 +169,7 @@ class Disputes
     public function createReferredDispute(DisputeCreateRequest $disputeCreateRequest): DisputeCreateResponse
     {
         $headers = [];
+        $headers['Content-Type'] = 'application/json';
 
         $body = json_encode(array_filter((array)$disputeCreateRequest), true);
         $request = $this->client->createRequest('POST', "/v1/customer/referred-disputes", $headers, $body);
@@ -187,6 +194,7 @@ class Disputes
     public function cancelDispute($disputeId, Cancel $cancelRequest): SubsequentAction
     {
         $headers = [];
+        $headers['Content-Type'] = 'application/json';
 
         $body = json_encode(array_filter((array)$cancelRequest), true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/cancel", $headers, $body);
@@ -199,6 +207,7 @@ class Disputes
     public function escalateDisputeToClaim($disputeId, Escalate $escalateRequest): SubsequentAction
     {
         $headers = [];
+        $headers['Content-Type'] = 'application/json';
 
         $body = json_encode(array_filter((array)$escalateRequest), true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/escalate", $headers, $body);
@@ -211,6 +220,7 @@ class Disputes
     public function settleDispute($disputeId, Adjudicate $adjudicateRequest): SubsequentAction
     {
         $headers = [];
+        $headers['Content-Type'] = 'application/json';
 
         $body = json_encode(array_filter((array)$adjudicateRequest), true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/adjudicate", $headers, $body);
@@ -235,6 +245,7 @@ class Disputes
     public function partiallyUpdateDispute($disputeId, array $patchRequest)
     {
         $headers = [];
+        $headers['Content-Type'] = 'application/json';
 
         $body = json_encode(array_filter((array)$patchRequest), true);
         $request = $this->client->createRequest('PATCH', "/v1/customer/disputes/{$disputeId}", $headers, $body);
@@ -247,6 +258,7 @@ class Disputes
     public function acceptClaim($disputeId, AcceptClaim $acceptClaimRequest): SubsequentAction
     {
         $headers = [];
+        $headers['Content-Type'] = 'application/json';
 
         $body = json_encode(array_filter((array)$acceptClaimRequest), true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/accept-claim", $headers, $body);
@@ -259,6 +271,7 @@ class Disputes
     public function sendMessageAboutDisputeToOtherParty($disputeId, SendMessage $sendMessage): SubsequentAction
     {
         $headers = [];
+        $headers['Content-Type'] = 'application/json';
 
         $body = json_encode(array_filter((array)$sendMessage), true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/send-message", $headers, $body);
@@ -271,6 +284,7 @@ class Disputes
     public function acknowledgeReturnedItem($disputeId, AcknowledgeReturnItem $acknowledgeReturnItemRequest): SubsequentAction
     {
         $headers = [];
+        $headers['Content-Type'] = 'application/json';
 
         $body = json_encode(array_filter((array)$acknowledgeReturnItemRequest), true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/acknowledge-return-item", $headers, $body);
@@ -283,6 +297,7 @@ class Disputes
     public function computeMetricsForDisputes(Metrics $metricsRequest): Metrics
     {
         $headers = [];
+        $headers['Content-Type'] = 'application/json';
 
         $body = json_encode(array_filter((array)$metricsRequest), true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes/compute-metrics", $headers, $body);
@@ -295,6 +310,7 @@ class Disputes
     public function changeReasonForDispute($disputeId, ChangeReason $changeReason): DisputesChangeReason
     {
         $headers = [];
+        $headers['Content-Type'] = 'application/json';
 
         $body = json_encode(array_filter((array)$changeReason), true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/changeReason", $headers, $body);
@@ -307,6 +323,7 @@ class Disputes
     public function denyOfferToResolveDispute($disputeId, DenyOffer $denyOfferRequest): SubsequentAction
     {
         $headers = [];
+        $headers['Content-Type'] = 'application/json';
 
         $body = json_encode(array_filter((array)$denyOfferRequest), true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/deny-offer", $headers, $body);
@@ -331,6 +348,7 @@ class Disputes
     public function determineEligibilityForReferredDisputeCreation(EligibilityRequest $eligibilityRequest): EligibilityResponse
     {
         $headers = [];
+        $headers['Content-Type'] = 'application/json';
 
         $body = json_encode(array_filter((array)$eligibilityRequest), true);
         $request = $this->client->createRequest('POST', "/v1/customer/validate-referred-dispute-eligibility", $headers, $body);
@@ -355,6 +373,7 @@ class Disputes
     public function partiallyUpdateDisputeAction($disputeId, $actionId, array $patchRequest)
     {
         $headers = [];
+        $headers['Content-Type'] = 'application/json';
 
         $body = json_encode(array_filter((array)$patchRequest), true);
         $request = $this->client->createRequest('PATCH', "/v1/customer/disputes/{$disputeId}/partner-actions/{$actionId}", $headers, $body);
@@ -379,6 +398,7 @@ class Disputes
     public function provideSupportingInformationForDispute($disputeId, ProvideSupportingInfo $provideSupportingInfoRequest, $supportingDocument): SubsequentAction
     {
         $headers = [];
+        $headers['Content-Type'] = 'application/json';
 
         $body = json_encode(array_filter((array)$provideSupportingInfoRequest), true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/provide-supporting-info", $headers, $body);
@@ -391,6 +411,7 @@ class Disputes
     public function makeOfferToResolveDispute($disputeId, MakeOffer $makeOfferRequest): SubsequentAction
     {
         $headers = [];
+        $headers['Content-Type'] = 'application/json';
 
         $body = json_encode(array_filter((array)$makeOfferRequest), true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/make-offer", $headers, $body);
@@ -403,6 +424,7 @@ class Disputes
     public function provideEvidence($disputeId, $evidence): SubsequentAction
     {
         $headers = [];
+        $headers['Content-Type'] = 'application/json';
 
         $body = json_encode(array_filter((array)$evidence), true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/provide-evidence", $headers, $body);
@@ -415,6 +437,7 @@ class Disputes
     public function acceptOfferToResolveDispute($disputeId, AcceptOffer $acceptOfferRequest): SubsequentAction
     {
         $headers = [];
+        $headers['Content-Type'] = 'application/json';
 
         $body = json_encode(array_filter((array)$acceptOfferRequest), true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/accept-offer", $headers, $body);

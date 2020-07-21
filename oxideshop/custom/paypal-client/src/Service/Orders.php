@@ -27,9 +27,9 @@ class Orders
     public function createOrder(OrderRequest $order, $payPalPartnerAttributionId, $payPalClientMetadataId, $prefer = 'return=minimal'): Order
     {
         $headers = [];
+        $headers['Content-Type'] = 'application/json';
         $headers['PayPal-Partner-Attribution-Id'] = $payPalPartnerAttributionId;
         $headers['PayPal-Client-Metadata-Id'] = $payPalClientMetadataId;
-        $headers['Content-Type'] = 'application/json';
         $headers['Prefer'] = $prefer;
 
         $body = json_encode(array_filter((array)$order), true);
@@ -43,7 +43,6 @@ class Orders
     public function showOrderDetails($id): Order
     {
         $headers = [];
-        $headers['Content-Type'] = 'application/json';
 
         $body = null;
         $request = $this->client->createRequest('GET', "/v2/checkout/orders/{$id}", $headers, $body);
@@ -84,8 +83,8 @@ class Orders
     {
         $headers = [];
         $headers['PayPal-Client-Metadata-Id'] = $payPalClientMetadataId;
-        $headers['PayPal-Auth-Assertion'] = $payPalAuthAssertion;
         $headers['Content-Type'] = 'application/json';
+        $headers['PayPal-Auth-Assertion'] = $payPalAuthAssertion;
         $headers['Prefer'] = $prefer;
 
         $body = json_encode(array_filter((array)$authorizeRequest), true);
@@ -100,8 +99,8 @@ class Orders
     {
         $headers = [];
         $headers['PayPal-Client-Metadata-Id'] = $payPalClientMetadataId;
-        $headers['PayPal-Auth-Assertion'] = $payPalAuthAssertion;
         $headers['Content-Type'] = 'application/json';
+        $headers['PayPal-Auth-Assertion'] = $payPalAuthAssertion;
         $headers['Prefer'] = $prefer;
 
         $body = json_encode(array_filter((array)$orderCaptureRequest), true);
@@ -143,7 +142,6 @@ class Orders
     public function getPaymentContextForAnOrder($orderId): PaymentContextData
     {
         $headers = [];
-        $headers['Content-Type'] = 'application/json';
 
         $body = null;
         $request = $this->client->createRequest('GET', "/v2/checkout/payment-context", $headers, $body);

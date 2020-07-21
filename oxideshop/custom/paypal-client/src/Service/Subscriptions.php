@@ -57,7 +57,6 @@ class Subscriptions
         $prefer = 'return=minimal'
     ): PlanCollection {
         $headers = [];
-        $headers['Content-Type'] = 'application/json';
         $headers['PayPal-Subject-Account'] = $payPalSubjectAccount;
         $headers['Prefer'] = $prefer;
 
@@ -72,7 +71,6 @@ class Subscriptions
     public function showPlanDetails($payPalSubjectAccount, $id, $version): Plan
     {
         $headers = [];
-        $headers['Content-Type'] = 'application/json';
         $headers['PayPal-Subject-Account'] = $payPalSubjectAccount;
 
         $body = null;
@@ -112,7 +110,6 @@ class Subscriptions
     public function activatePlan($id)
     {
         $headers = [];
-        $headers['Content-Type'] = 'application/json';
 
         $body = null;
         $request = $this->client->createRequest('POST', "/v1/billing/plans/{$id}/activate", $headers, $body);
@@ -125,7 +122,6 @@ class Subscriptions
     public function deactivatePlan($id)
     {
         $headers = [];
-        $headers['Content-Type'] = 'application/json';
 
         $body = null;
         $request = $this->client->createRequest('POST', "/v1/billing/plans/{$id}/deactivate", $headers, $body);
@@ -176,7 +172,6 @@ class Subscriptions
         $pageSize = 10
     ): SubscriptionCollection {
         $headers = [];
-        $headers['Content-Type'] = 'application/json';
 
         $body = null;
         $request = $this->client->createRequest('GET', "/v1/billing/subscriptions", $headers, $body);
@@ -189,7 +184,6 @@ class Subscriptions
     public function showSubscriptionDetails($id, $fields): Subscription
     {
         $headers = [];
-        $headers['Content-Type'] = 'application/json';
 
         $body = null;
         $request = $this->client->createRequest('GET', "/v1/billing/subscriptions/{$id}", $headers, $body);
@@ -293,7 +287,6 @@ class Subscriptions
     public function listTransactionsForSubscription($id, $startTime, $endTime): TransactionsList
     {
         $headers = [];
-        $headers['Content-Type'] = 'application/json';
 
         $body = null;
         $request = $this->client->createRequest('GET', "/v1/billing/subscriptions/{$id}/transactions", $headers, $body);

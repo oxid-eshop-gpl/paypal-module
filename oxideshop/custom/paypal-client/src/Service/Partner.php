@@ -23,6 +23,7 @@ class Partner
     public function createPartnerReferral(ReferralData $referralData): CreateReferralDataResponse
     {
         $headers = [];
+        $headers['Content-Type'] = 'application/json';
 
         $body = json_encode(array_filter((array)$referralData), true);
         $request = $this->client->createRequest('POST', "/v2/customer/partner-referrals", $headers, $body);

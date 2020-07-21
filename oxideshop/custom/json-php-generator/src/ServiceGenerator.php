@@ -69,7 +69,10 @@ class ServiceGenerator extends Generator
                         continue;
                     }
                     if ($origParamName == "Content-Type") {
-                        $methodBody .= "\$headers['Content-Type'] = 'application/json';\n";
+                        //do not set the http header here because
+                        //some schemas like the dispute API do use "consumes" definition
+                        //and by that there will be no explicit Content-Type paramter and
+                        //the type is added for simplicity below if there is a "body" parameter
                         continue;
                     }
                     $paramName = $this->cleanMethodName($origParamName);
@@ -81,6 +84,7 @@ class ServiceGenerator extends Generator
 
 
                     if ($parameterDefinition['in'] == "body") {
+                        $methodBody .= "\$headers['Content-Type'] = 'application/json';\n";
                         $requestBody = "\$body = json_encode(array_filter((array)\$$paramName), true);";
                     } elseif ($parameterDefinition['in'] == "header") {
                         $methodBody .= "\$headers['$origParamName'] = \$$paramName;\n";

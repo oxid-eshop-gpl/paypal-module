@@ -42,7 +42,6 @@ class Payments
     public function showDetailsForAuthorizedPayment($authorizationId): Authorization
     {
         $headers = [];
-        $headers['Content-Type'] = 'application/json';
 
         $body = null;
         $request = $this->client->createRequest('GET', "/v2/payments/authorizations/{$authorizationId}", $headers, $body);
@@ -83,7 +82,6 @@ class Payments
     public function voidAuthorizedPayment($authorizationId, $payPalAuthAssertion)
     {
         $headers = [];
-        $headers['Content-Type'] = 'application/json';
         $headers['PayPal-Auth-Assertion'] = $payPalAuthAssertion;
 
         $body = null;
@@ -111,7 +109,6 @@ class Payments
     public function showCapturedPaymentDetails($captureId): Capture
     {
         $headers = [];
-        $headers['Content-Type'] = 'application/json';
 
         $body = null;
         $request = $this->client->createRequest('GET', "/v2/payments/captures/{$captureId}", $headers, $body);
@@ -139,7 +136,6 @@ class Payments
     public function showRefundDetails($refundId): Refund
     {
         $headers = [];
-        $headers['Content-Type'] = 'application/json';
 
         $body = null;
         $request = $this->client->createRequest('GET', "/v2/payments/refunds/{$refundId}", $headers, $body);
