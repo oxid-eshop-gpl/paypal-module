@@ -90,7 +90,7 @@ class Config
      */
     public function getSandboxClientSecret(): string
     {
-        return (string) Registry::getConfig()->getConfigParam('sPaypalSandboxClientSecret');
+        return Registry::getConfig()->getConfigParam('sPaypalSandboxClientSecret');
     }
 
     /**
