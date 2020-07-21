@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Payments;
+namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
-/**
- * The capture identification-related fields. Includes the invoice ID, custom ID, note to payer, and soft descriptor.
- */
 class CaptureIdentifier
 {
 	/** @var string */

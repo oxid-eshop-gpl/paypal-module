@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Orders;
+namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
-/**
- * ODFI acts as the interface between the Federal Reserve or ACH network and the originator of the transaction.
- */
 class OriginatingDepositoryFinancialInstitutionODFIdetails
 {
 	/** @var string */

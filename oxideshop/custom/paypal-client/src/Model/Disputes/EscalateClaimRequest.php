@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Disputes;
+namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
-/**
- * A merchant request to escalate a dispute, by ID, to a PayPal claim.
- */
 class EscalateClaimRequest
 {
 	/** @var string */

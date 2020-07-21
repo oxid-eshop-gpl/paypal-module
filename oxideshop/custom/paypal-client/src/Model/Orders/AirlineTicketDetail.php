@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Orders;
+namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
-/**
- * The details for the airline ticket.
- */
 class AirlineTicketDetail
 {
 	/** @var string */
@@ -21,4 +18,13 @@ class AirlineTicketDetail
 
 	/** @var boolean */
 	public $restricted_ticket;
+
+	/** @var Money */
+	public $fare;
+
+	/** @var Money */
+	public $tax;
+
+	/** @var Money */
+	public $fee;
 }

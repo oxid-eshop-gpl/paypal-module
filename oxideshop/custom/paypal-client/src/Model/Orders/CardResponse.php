@@ -1,6 +1,6 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Orders;
+namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 /**
  * The payment card to use to fund a payment. Card can be a credit or debit card.
@@ -16,6 +16,9 @@ class CardResponse
 	/** @var string */
 	public $last_digits;
 
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\CardBrand */
+	public $brand;
+
 	/** @var string */
 	public $type;
 
@@ -24,4 +27,10 @@ class CardResponse
 
 	/** @var string */
 	public $bin;
+
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\AuthenticationResponse */
+	public $authentication_result;
+
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\CardAttributesResponse */
+	public $attributes;
 }

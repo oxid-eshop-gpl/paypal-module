@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Payments;
+namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
-/**
- * The refund status.
- */
 class RefundStatus
 {
 	/** @var string */

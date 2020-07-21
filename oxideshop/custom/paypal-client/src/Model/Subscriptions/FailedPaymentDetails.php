@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Subscriptions;
+namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
-/**
- * The details for the failed payment of the subscription.
- */
 class FailedPaymentDetails
 {
 	/** @var string */

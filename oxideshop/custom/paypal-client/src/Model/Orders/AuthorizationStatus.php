@@ -1,6 +1,6 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Orders;
+namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 /**
  * The status fields for an authorized payment.
@@ -9,4 +9,7 @@ class AuthorizationStatus
 {
 	/** @var string */
 	public $status;
+
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\AuthorizationStatusDetails */
+	public $status_details;
 }

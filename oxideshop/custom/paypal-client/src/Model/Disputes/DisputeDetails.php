@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Disputes;
+namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
-/**
- * The dispute details.
- */
 class DisputeDetails
 {
 	/** @var string */

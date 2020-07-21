@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Disputes;
+namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
-/**
- * The information for a purchased item in a disputed transaction.
- */
 class ItemInformation
 {
 	/** @var string */

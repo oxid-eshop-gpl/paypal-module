@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Subscriptions;
+namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
-/**
- * The customer and merchant payment preferences.
- */
 class PaymentMethod
 {
 	/** @var string */

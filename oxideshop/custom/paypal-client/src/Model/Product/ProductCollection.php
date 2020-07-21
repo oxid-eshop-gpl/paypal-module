@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Product;
+namespace OxidProfessionalServices\PayPal\Api\Model\Product;
 
-/**
- * The list of products, with details.
- */
 class ProductCollection
 {
 	/** @var array */

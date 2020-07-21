@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Orders;
+namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
-/**
- * Payment Directives for transaction.
- */
 class PaymentDirectives
 {
 	/** @var string */

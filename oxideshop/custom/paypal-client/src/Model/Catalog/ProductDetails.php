@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Catalog;
+namespace OxidProfessionalServices\PayPal\Api\Model\Catalog;
 
-/**
- * The product details.
- */
 class ProductDetails
 {
 	/** @var string */

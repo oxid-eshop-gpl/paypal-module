@@ -1,6 +1,6 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Orders;
+namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 /**
  * The product experiences that a user completes on a PayPal transaction.

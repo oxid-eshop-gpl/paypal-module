@@ -1,6 +1,6 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Orders;
+namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 /**
  * Indicates the form of authentication used on the financial instrument.

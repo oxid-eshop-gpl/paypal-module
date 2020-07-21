@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Subscriptions;
+namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
-/**
- * The details of the captured payment status.
- */
 class CaptureStatusDetails
 {
 	/** @var string */

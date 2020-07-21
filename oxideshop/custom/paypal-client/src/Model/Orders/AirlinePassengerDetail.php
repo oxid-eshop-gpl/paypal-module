@@ -1,12 +1,12 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Orders;
+namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
-/**
- * The airline passenger details.
- */
 class AirlinePassengerDetail
 {
+	/** @var Name */
+	public $name;
+
 	/** @var string */
 	public $customer_code;
 }

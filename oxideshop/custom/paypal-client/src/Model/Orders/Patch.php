@@ -1,6 +1,6 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Orders;
+namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 /**
  * The JSON patch object to apply partial updates to resources.

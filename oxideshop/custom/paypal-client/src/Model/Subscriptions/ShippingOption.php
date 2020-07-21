@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Subscriptions;
+namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
-/**
- * The options that the payee or merchant offers to the payer to ship or pick up their items.
- */
 class ShippingOption
 {
 	/** @var string */

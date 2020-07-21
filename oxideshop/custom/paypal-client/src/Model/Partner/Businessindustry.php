@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Partner;
+namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
-/**
- * The category, subcategory and MCC code of the business.
- */
 class Businessindustry
 {
 	/** @var string */

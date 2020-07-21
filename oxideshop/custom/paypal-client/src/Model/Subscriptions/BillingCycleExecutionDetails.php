@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Subscriptions;
+namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
-/**
- * The regular and trial execution details for a billing cycle.
- */
 class BillingCycleExecutionDetails
 {
 	/** @var string */

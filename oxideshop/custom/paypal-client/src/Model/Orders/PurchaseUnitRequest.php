@@ -1,14 +1,14 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Orders;
+namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
-/**
- * The purchase unit request. Includes required information for the payment contract.
- */
 class PurchaseUnitRequest
 {
 	/** @var string */
 	public $reference_id;
+
+	/** @var PaymentInstruction */
+	public $payment_instruction;
 
 	/** @var string */
 	public $description;
@@ -24,4 +24,10 @@ class PurchaseUnitRequest
 
 	/** @var array */
 	public $items;
+
+	/** @var ShippingDetail */
+	public $shipping;
+
+	/** @var SupplementaryData */
+	public $supplementary_data;
 }

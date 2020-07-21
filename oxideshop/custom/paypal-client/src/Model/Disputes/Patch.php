@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Disputes;
+namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
-/**
- * The JSON patch object to apply partial updates to resources.
- */
 class Patch
 {
 	/** @var string */

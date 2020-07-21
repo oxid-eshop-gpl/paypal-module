@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Disputes;
+namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
-/**
- * The customer-provided merchandise issue details for the dispute.
- */
 class MerchandiseDisputeProperties
 {
 	/** @var string */

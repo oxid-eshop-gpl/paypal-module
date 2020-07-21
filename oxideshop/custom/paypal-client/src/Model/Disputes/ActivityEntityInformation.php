@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Disputes;
+namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
-/**
- * The date and time of the last known transaction or when other entity-related information was updated, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
- */
 class ActivityEntityInformation
 {
 	/** @var boolean */

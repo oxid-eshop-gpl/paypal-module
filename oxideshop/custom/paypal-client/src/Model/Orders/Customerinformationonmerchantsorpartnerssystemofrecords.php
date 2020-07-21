@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Orders;
+namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
-/**
- * The details about a customer in merchant's or partner's system of records.
- */
 class Customerinformationonmerchantsorpartnerssystemofrecords
 {
 }

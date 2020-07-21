@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Disputes;
+namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
-/**
- * The partner-provided details that were used for adjudication on the partner's side.
- */
 class AdjudicationDetails
 {
 	/** @var array */

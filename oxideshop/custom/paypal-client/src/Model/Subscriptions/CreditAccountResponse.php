@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Subscriptions;
+namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
-/**
- * The Buyer credit option used to fund the payment.
- */
 class CreditAccountResponse
 {
 	/** @var string */

@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Partner;
+namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
-/**
- * The business beneficial owner of the account.
- */
 class Businessbeneficialowner
 {
 }

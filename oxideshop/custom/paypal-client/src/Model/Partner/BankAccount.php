@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Partner;
+namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
-/**
- * The bank account information.
- */
 class BankAccount
 {
 	/** @var string */

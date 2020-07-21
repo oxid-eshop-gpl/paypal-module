@@ -1,12 +1,18 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Orders;
+namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 /**
  * The airline itinerary details.
  */
 class AirlineItinerary
 {
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\AirlineTicket */
+	public $ticket;
+
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\AirlinePassenger */
+	public $passenger;
+
 	/** @var array */
 	public $flight_leg_details;
 

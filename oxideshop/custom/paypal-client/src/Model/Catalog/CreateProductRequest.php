@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Catalog;
+namespace OxidProfessionalServices\PayPal\Api\Model\Catalog;
 
-/**
- * The create product request details.
- */
 class CreateProductRequest
 {
 	/** @var string */

@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Disputes;
+namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
-/**
- * Information about the items in the transaction.
- */
 class EligibilityRequestItems
 {
 	/** @var string */

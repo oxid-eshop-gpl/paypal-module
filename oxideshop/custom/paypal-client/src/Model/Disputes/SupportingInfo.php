@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Disputes;
+namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
-/**
- * A merchant- or customer-submitted supporting information.
- */
 class SupportingInfo
 {
 	/** @var string */

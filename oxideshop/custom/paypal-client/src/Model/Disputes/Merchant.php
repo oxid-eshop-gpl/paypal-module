@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Disputes;
+namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
-/**
- * The details for the merchant who receives the funds and fulfills the order. For example, merchant ID, and contact email address.
- */
 class Merchant
 {
 	/** @var string */

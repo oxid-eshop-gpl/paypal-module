@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Disputes;
+namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
-/**
- * The system action that reverses the impact of the unauthorized event. Includes the system-defined details of the reversal action.
- */
 class ReversalAction
 {
 	/** @var string */

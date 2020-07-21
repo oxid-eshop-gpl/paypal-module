@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Orders;
+namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
-/**
- * The authorized payment transaction.
- */
 class UpdateAuthorization
 {
 	/** @var string */
@@ -12,4 +9,7 @@ class UpdateAuthorization
 
 	/** @var string */
 	public $status;
+
+	/** @var AuthorizationStatusDetails */
+	public $status_details;
 }

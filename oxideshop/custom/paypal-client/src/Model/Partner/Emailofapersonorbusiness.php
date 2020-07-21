@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Partner;
+namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
-/**
- * An email address at which the person or business can be contacted.
- */
 class Emailofapersonorbusiness
 {
 	/** @var string */

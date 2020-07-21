@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Payments;
+namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
-/**
- * The details of the authorized payment status.
- */
 class AuhorizationStatusDetails
 {
 	/** @var string */

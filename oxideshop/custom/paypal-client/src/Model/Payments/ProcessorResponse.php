@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Payments;
+namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
-/**
- * The processor information. Might be required for payment requests, such as direct credit card transactions.
- */
 class ProcessorResponse
 {
 	/** @var string */

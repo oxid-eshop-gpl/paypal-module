@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Orders;
+namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
-/**
- * Information used to pay using P24(Przelewy24)
- */
 class P24paymentobject
 {
 	/** @var string */

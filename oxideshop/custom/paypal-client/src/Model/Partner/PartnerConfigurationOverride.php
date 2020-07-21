@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Partner;
+namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
-/**
- * The preference to customize the web experience of the customer by overriding that is set at the Partner's Account.
- */
 class PartnerConfigurationOverride
 {
 	/** @var string */

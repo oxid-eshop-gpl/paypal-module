@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Orders;
+namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
-/**
- * A captured payment.
- */
 class UpdateCapture
 {
 	/** @var string */
@@ -12,4 +9,7 @@ class UpdateCapture
 
 	/** @var string */
 	public $status;
+
+	/** @var CaptureStatusDetails */
+	public $status_details;
 }

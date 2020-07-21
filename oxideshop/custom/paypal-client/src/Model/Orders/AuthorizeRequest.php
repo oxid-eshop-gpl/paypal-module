@@ -1,12 +1,15 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Orders;
+namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
-/**
- * The authorization of an order request.
- */
 class AuthorizeRequest
 {
+	/** @var PaymentSource */
+	public $payment_source;
+
 	/** @var string */
 	public $reference_id;
+
+	/** @var Money */
+	public $amount;
 }

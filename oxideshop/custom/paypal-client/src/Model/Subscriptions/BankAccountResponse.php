@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Subscriptions;
+namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
-/**
- * The details for a bank account that can be used to fund a payment.
- */
 class BankAccountResponse
 {
 	/** @var string */

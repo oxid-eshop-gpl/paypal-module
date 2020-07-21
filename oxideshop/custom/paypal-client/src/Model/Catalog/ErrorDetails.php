@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Catalog;
+namespace OxidProfessionalServices\PayPal\Api\Model\Catalog;
 
-/**
- * The error details. Required for client-side `4XX` errors.
- */
 class ErrorDetails
 {
 	/** @var string */

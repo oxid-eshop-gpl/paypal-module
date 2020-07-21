@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Payments;
+namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
-/**
- * Basic vault instruction specification that can be extended by specific payment sources that supports vaulting.
- */
 class BasevaultInstructionparameters
 {
 	/** @var string */

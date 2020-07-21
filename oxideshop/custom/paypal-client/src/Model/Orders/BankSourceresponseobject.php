@@ -1,10 +1,9 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Orders;
+namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
-/**
- * The bank source used to fund the payment
- */
 class BankSourceresponseobject
 {
+	/** @var AchDebitResponse */
+	public $ach_debit;
 }

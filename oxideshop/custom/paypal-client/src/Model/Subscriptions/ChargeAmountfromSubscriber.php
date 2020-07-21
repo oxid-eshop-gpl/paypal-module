@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Subscriptions;
+namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
-/**
- * The charge amount from the subscriber.
- */
 class ChargeAmountfromSubscriber
 {
 	/** @var string */

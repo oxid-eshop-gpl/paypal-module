@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Disputes;
+namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
-/**
- * The eligible and ineligible disputes with reasons.
- */
 class DisputeEligibilityResponse
 {
 	/** @var string */

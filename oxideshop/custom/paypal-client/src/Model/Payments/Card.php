@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Payments;
+namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
-/**
- * The payment card to use to fund a payment. Can be a credit or debit card.
- */
 class Card
 {
 	/** @var string */

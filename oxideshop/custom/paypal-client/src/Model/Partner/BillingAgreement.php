@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Partner;
+namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
-/**
- * The details of the billing agreement between the partner and a seller.
- */
 class BillingAgreement
 {
 	/** @var string */

@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Disputes;
+namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
-/**
- * A PayPal-requested or partner action for the dispute.
- */
 class PartnerAction
 {
 	/** @var string */

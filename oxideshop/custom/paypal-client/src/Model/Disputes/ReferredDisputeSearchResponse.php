@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Disputes;
+namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
-/**
- * An array of disputes. Includes links that enable you to navigate through the response.
- */
 class ReferredDisputeSearchResponse
 {
 	/** @var array */

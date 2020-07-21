@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Subscriptions;
+namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
-/**
- * The update pricing scheme request details.
- */
 class UpdatePricingSchemeRequest
 {
 	/** @var array */

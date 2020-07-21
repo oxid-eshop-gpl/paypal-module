@@ -1,12 +1,15 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Orders;
+namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
-/**
- * The order request details.
- */
 class OrderRequest
 {
+	/** @var Payer */
+	public $payer;
+
 	/** @var array */
 	public $purchase_units;
+
+	/** @var PaymentSource */
+	public $payment_source;
 }

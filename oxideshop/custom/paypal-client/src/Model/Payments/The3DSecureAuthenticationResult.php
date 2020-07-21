@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Payments;
+namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
-/**
- * Additional 3D Secure authentication data.
- */
 class The3DSecureAuthenticationResult
 {
 }

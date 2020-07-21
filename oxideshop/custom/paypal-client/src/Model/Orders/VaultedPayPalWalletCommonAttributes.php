@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Orders;
+namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
-/**
- * Resource consolidating common request and response attirbutes for vaulting PayPal Wallet.
- */
 class VaultedPayPalWalletCommonAttributes
 {
 	/** @var string */
@@ -12,6 +9,9 @@ class VaultedPayPalWalletCommonAttributes
 
 	/** @var string */
 	public $product_label;
+
+	/** @var ShippingDetail */
+	public $shipping;
 
 	/** @var string */
 	public $usage_type;

@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Payments;
+namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
-/**
- * ACH bank details required to fund the payment.
- */
 class ACHbankpaymentobject
 {
 	/** @var string */

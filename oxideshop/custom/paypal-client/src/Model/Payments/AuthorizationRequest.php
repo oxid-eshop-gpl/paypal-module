@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Payments;
+namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
-/**
- * Authorizes either a portion or the full amount of a saved order.
- */
 class AuthorizationRequest
 {
 	/** @var string */

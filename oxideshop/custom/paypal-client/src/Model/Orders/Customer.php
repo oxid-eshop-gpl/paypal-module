@@ -1,10 +1,12 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Orders;
+namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 /**
- * The customer who approves and pays for the order. The customer is also known as the payer.
+ * The details about a customer in merchant's or partner's system of records.
  */
 class Customer
 {
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\MerchantPartnerCustomerId */
+	public $id;
 }

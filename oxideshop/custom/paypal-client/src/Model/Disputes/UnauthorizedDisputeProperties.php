@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Disputes;
+namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
-/**
- * The customer-entered issue details for an unauthorized dispute.
- */
 class UnauthorizedDisputeProperties
 {
 	/** @var boolean */

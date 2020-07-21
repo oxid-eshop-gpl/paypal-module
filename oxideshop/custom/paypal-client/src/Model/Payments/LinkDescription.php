@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Payments;
+namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
-/**
- * The request-related [HATEOAS link](/docs/api/reference/api-responses/#hateoas-links) information.
- */
 class LinkDescription
 {
 	/** @var string */

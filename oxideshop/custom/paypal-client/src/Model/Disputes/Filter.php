@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Disputes;
+namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
-/**
- * A set of filters that you can use to filter the disputes in the response.
- */
 class Filter
 {
 	/** @var string */

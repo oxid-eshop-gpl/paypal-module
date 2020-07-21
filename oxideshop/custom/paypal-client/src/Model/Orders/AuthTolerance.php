@@ -1,10 +1,9 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Orders;
+namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
-/**
- * Auth-Capture Tolerance details.
- */
 class AuthTolerance
 {
+	/** @var Money */
+	public $absolute;
 }

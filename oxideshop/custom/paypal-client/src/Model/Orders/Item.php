@@ -1,6 +1,6 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Orders;
+namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 /**
  * The details for the items to be purchased.
@@ -9,6 +9,12 @@ class Item
 {
 	/** @var string */
 	public $name;
+
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Money */
+	public $unit_amount;
+
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Money */
+	public $tax;
 
 	/** @var string */
 	public $quantity;

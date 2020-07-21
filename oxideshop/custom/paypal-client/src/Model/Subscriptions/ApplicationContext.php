@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Subscriptions;
+namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
-/**
- * The application context, which customizes the payer experience during the subscription approval process with PayPal.
- */
 class ApplicationContext
 {
 	/** @var string */

@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Disputes;
+namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
-/**
- * Policy that determines whether the fee needs to be retained or returned while moving the money as part of dispute process.
- */
 class FeePolicy
 {
 	/** @var string */

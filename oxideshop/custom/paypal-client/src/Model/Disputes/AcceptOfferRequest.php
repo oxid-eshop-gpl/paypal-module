@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Disputes;
+namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
-/**
- * A customer request to accept the offer made by the merchant.
- */
 class AcceptOfferRequest
 {
 	/** @var string */

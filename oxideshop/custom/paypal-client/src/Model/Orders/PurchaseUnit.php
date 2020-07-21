@@ -1,14 +1,14 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Orders;
+namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
-/**
- * The purchase unit details. Used to capture required information for the payment contract.
- */
 class PurchaseUnit
 {
 	/** @var string */
 	public $reference_id;
+
+	/** @var PaymentInstruction */
+	public $payment_instruction;
 
 	/** @var string */
 	public $description;
@@ -27,4 +27,10 @@ class PurchaseUnit
 
 	/** @var array */
 	public $items;
+
+	/** @var ShippingDetail */
+	public $shipping;
+
+	/** @var SupplementaryData */
+	public $supplementary_data;
 }

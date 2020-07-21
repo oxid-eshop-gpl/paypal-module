@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Disputes;
+namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
-/**
- * A merchant request to make an offer to resolve a dispute.
- */
 class MakeOfferRequest
 {
 	/** @var string */

@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Orders;
+namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
-/**
- * Business identification details.
- */
 class BusinessIdentification
 {
 	/** @var string */
@@ -12,4 +9,7 @@ class BusinessIdentification
 
 	/** @var string */
 	public $identifier;
+
+	/** @var DocumentIssuer */
+	public $issuer;
 }

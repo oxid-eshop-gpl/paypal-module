@@ -1,10 +1,12 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Orders;
+namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 /**
  * The Apple Pay Wallet used to fund a payment.
  */
 class ApplePayWalletResponse
 {
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\ApplePayCardResponse */
+	public $card;
 }

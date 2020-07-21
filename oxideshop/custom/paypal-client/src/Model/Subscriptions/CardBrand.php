@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Subscriptions;
+namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
-/**
- * The card network or brand. Applies to credit, debit, gift, and payment cards.
- */
 class CardBrand
 {
 }

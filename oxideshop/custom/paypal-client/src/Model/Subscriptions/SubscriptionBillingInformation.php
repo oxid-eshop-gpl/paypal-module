@@ -1,10 +1,7 @@
 <?php
 
-namespace OxidProfessionalServices\PayPal\Model\Subscriptions;
+namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
-/**
- * The billing details for the subscription. If the subscription was or is active, these fields are populated.
- */
 class SubscriptionBillingInformation
 {
 	/** @var array */
