@@ -246,7 +246,9 @@ class PaypalConfigController extends AdminController
     protected function getBaseUrl()
     {
         $session = Registry::getSession();
-        $url = Registry::getConfig()->getSslShopUrl() . "index.php?lang=" . Registry::getLang()->getBaseLanguage() . "&sid=" . $session->getId() . "&rtoken=" . $session->getRemoteAccessToken();
+        $url = Registry::getConfig()->getSslShopUrl() . "index.php?lang="
+            . Registry::getLang()->getBaseLanguage()
+            . "&sid=" . $session->getId() . "&rtoken=" . $session->getRemoteAccessToken();
         $url .= "&shp=" . Registry::getConfig()->getShopId();
 
         return $url;
