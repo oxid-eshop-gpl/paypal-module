@@ -7,7 +7,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class Participant extends \Account
 {
-	/** @var string */
+	/** @var Person */
 	public $person;
 
 	/** @var Business */

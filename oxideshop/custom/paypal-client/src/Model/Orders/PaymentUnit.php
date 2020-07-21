@@ -58,7 +58,7 @@ class PaymentUnit
 	/** @var array */
 	public $context_attributes;
 
-	/** @var string */
+	/** @var Participant */
 	public $receiver;
 
 	/** @var PaymentDirectives */

@@ -289,8 +289,10 @@ class Generator
     {
         foreach ($this->definitions as $defName => $defs) {
             if (!isset($defs['type'])) {
-                //todo: allOf and oneOf types
                 $defs['type'] = "string";
+                if (isset($defs['allOf'])) {
+                    $defs['type'] = "object";
+                }
             }
             if (empty($defs['properties']) && !isset($defs['allOf'])) {
                 $this->references[$defName] = $defs['type'];

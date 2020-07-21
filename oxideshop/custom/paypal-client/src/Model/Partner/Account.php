@@ -10,6 +10,6 @@ class Account
 	/** @var array */
 	public $individual_owners;
 
-	/** @var string */
+	/** @var BusinessEntity */
 	public $business_entity;
 }
