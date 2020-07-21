@@ -1,5 +1,7 @@
 <?php
 
+namespace Paypal\Tests\Unit\Controller\Admin;
+
 /**
  * This file is part of OXID eSales Paypal module.
  *
