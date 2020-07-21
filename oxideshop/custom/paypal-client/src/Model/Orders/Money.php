@@ -7,7 +7,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class Money
 {
-	/** @var OxidProfessionalServices\PayPal\Api\Model\CurrencyCode */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\CurrencyCode */
 	public $currency_code;
 
 	/** @var string */

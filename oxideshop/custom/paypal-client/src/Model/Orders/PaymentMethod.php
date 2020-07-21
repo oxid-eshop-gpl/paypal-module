@@ -10,7 +10,7 @@ class PaymentMethod
 	/** @var string */
 	public $payer_selected;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\PayeePaymentMethodPreference */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\PayeePaymentMethodPreference */
 	public $payee_preferred;
 
 	/** @var string */

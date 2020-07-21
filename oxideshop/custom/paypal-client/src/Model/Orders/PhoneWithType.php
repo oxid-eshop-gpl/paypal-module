@@ -7,9 +7,9 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class PhoneWithType
 {
-	/** @var OxidProfessionalServices\PayPal\Api\Model\PhoneType */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\PhoneType */
 	public $phone_type;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Phone */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Phone */
 	public $phone_number;
 }

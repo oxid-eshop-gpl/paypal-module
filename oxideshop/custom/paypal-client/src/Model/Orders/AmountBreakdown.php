@@ -7,24 +7,24 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class AmountBreakdown
 {
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Money */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Money */
 	public $item_total;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Money */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Money */
 	public $shipping;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Money */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Money */
 	public $handling;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Money */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Money */
 	public $tax_total;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Money */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Money */
 	public $insurance;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Money */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Money */
 	public $shipping_discount;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Money */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Money */
 	public $discount;
 }

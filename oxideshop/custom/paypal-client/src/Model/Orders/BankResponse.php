@@ -7,6 +7,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class BankResponse
 {
-	/** @var OxidProfessionalServices\PayPal\Api\Model\AchDebitResponse */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\AchDebitResponse */
 	public $ach_debit;
 }

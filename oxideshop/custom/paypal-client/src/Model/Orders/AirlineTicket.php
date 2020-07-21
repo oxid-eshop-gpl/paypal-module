@@ -10,7 +10,7 @@ class AirlineTicket
 	/** @var string */
 	public $number;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\DateNoTime */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\DateNoTime */
 	public $issue_date;
 
 	/** @var string */
@@ -25,12 +25,12 @@ class AirlineTicket
 	/** @var boolean */
 	public $restricted_ticket;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Money */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Money */
 	public $fare;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Money */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Money */
 	public $tax;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Money */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Money */
 	public $fee;
 }

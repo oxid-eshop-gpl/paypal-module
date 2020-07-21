@@ -10,6 +10,6 @@ class CaptureStatus
 	/** @var string */
 	public $status;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\CaptureStatusDetails */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\CaptureStatusDetails */
 	public $status_details;
 }

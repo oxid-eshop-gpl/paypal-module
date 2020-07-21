@@ -7,9 +7,9 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class PaypalWallet
 {
-	/** @var OxidProfessionalServices\PayPal\Api\Model\PayeePaymentMethodPreference */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\PayeePaymentMethodPreference */
 	public $payment_method_preference;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\PaypalWalletAttributes */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\PaypalWalletAttributes */
 	public $attributes;
 }

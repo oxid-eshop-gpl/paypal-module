@@ -7,15 +7,15 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class Ideal
 {
-	/** @var OxidProfessionalServices\PayPal\Api\Model\FullName */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\FullName */
 	public $name;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\CountryCode */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\CountryCode */
 	public $country_code;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Bic */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Bic */
 	public $bic;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\IbanLastChars */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\IbanLastChars */
 	public $iban_last_chars;
 }

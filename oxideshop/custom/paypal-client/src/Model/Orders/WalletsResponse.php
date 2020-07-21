@@ -7,6 +7,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class WalletsResponse
 {
-	/** @var OxidProfessionalServices\PayPal\Api\Model\ApplePayWalletResponse */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\ApplePayWalletResponse */
 	public $apple_pay;
 }

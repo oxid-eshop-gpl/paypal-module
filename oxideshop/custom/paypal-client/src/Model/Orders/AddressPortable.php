@@ -31,7 +31,7 @@ class AddressPortable
 	/** @var string */
 	public $postal_code;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\CountryCode */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\CountryCode */
 	public $country_code;
 
 	/** @var object */

@@ -10,6 +10,6 @@ class AuthorizationStatus
 	/** @var string */
 	public $status;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\AuthorizationStatusDetails */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\AuthorizationStatusDetails */
 	public $status_details;
 }

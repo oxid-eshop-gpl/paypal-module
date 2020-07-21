@@ -10,6 +10,6 @@ class PaymentInstruction
 	/** @var array */
 	public $platform_fees;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\DisbursementMode */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\DisbursementMode */
 	public $disbursement_mode;
 }

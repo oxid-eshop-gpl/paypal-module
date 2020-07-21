@@ -4,6 +4,7 @@ namespace OxidProfessionalServices;
 
 use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\PsrPrinter;
+use PHP_CodeSniffer\Exceptions\DeepExitException;
 
 class Generator
 {
@@ -58,7 +59,7 @@ class Generator
                 foreach ($definition['properties'] as $name => $parameter) {
                     if (isset($parameter['$ref'])) {
                         $ref = $this->getRefNameFromRefString($parameter['$ref']);
-                        $class = $this->generateFromRef($namespace, $name, $ref, $class);
+                        $class = $this->generateFromRef($namespace, $className, $name, $ref, $class);
                     } elseif (isset($parameter['type'])) {
                         if(!empty($parameter['type'])) {
                             $comment = $this->parseCommentString($parameter);
@@ -75,19 +76,28 @@ class Generator
             }
         }
 
+
+
         foreach($this->definitions as $defName => $definition) {
+
+            if(empty($definition['properties'])) {
+                $k=1;
+                // this must be a new class generated from refs
+            }
+
             $ns = new PhpNamespace($namespace . '\\' . $className);
 
+            // Not a reference object
             if(strpos($defName, 'MerchantsCommonComponentsSpecification') === false) {
 
                 foreach ($fileContent['definitions'] as $key => $defs) {
-
+                    $title = null;
                     if(isset($defs['title'])) {
                         $title = implode('', explode(' ', $defs['title']));
                         $title = preg_replace("/[^A-Za-z0-9 ]/", '', $title);
                     }
-
                     if(empty($title)) {
+                        // properties could be objects
                         $title = $this->replaceNumbers($this->getClassNameFromRefName($key));
                     }
 
@@ -96,117 +106,61 @@ class Generator
                     if(isset($defs['properties'])) {
                         foreach ($defs['properties'] as $name => $parameter) {
                             if (isset($parameter['type'])) {
-                                if ($parameter['type'] === 'object') {
-                                    if (isset($parameter['properties'])) {
-                                        $cna = explode('_', $name);
-                                        $cna = array_map('ucwords', $cna);
-                                        $newClassName = implode('', $cna);
-                                        $fileName = $newClassName;
-                                        $parameter['type'] = $namespace . '\\' . $className . '\\' . $newClassName;
-                                        $name = $newClassName;
-                                        $this->generateObject($parameter['properties'], $namespace . '\\' . $className, $fileName, $newClassName);
-                                    }
+
+                                if($parameter['type'] === 'string') {
+                                    $class->addProperty($name)
+                                        ->setVisibility('public')
+                                        ->setComment('@var string');
                                 }
 
-                                if (is_array($parameter['type'])) {
-                                    $parameter['type'] = implode('|', $parameter['type']);
-                                }
 
-                                $class->addProperty($name)
-                                    ->setVisibility('public')
-                                    ->setComment('@var ' . $parameter['type']);
-                            } else {
-                                // use the $this->references[] map here when you come across a reference
-                                if (!empty($parameter['$ref'])) {
-//                                $refName = str_replace('#/definitions/', '', $parameter['$ref']);
-                                    $ref = $this->getRefNameFromRefString($parameter['$ref']);
-                                    if (isset($this->references[$ref])) {
-                                        $class->addProperty($name)
-                                            ->setVisibility('public')
-                                            ->setComment('@var ' . $this->references[$ref]);
-                                    }
-                                }
+
+//                                if ($parameter['type'] === 'object') {
+//                                    if (isset($parameter['properties'])) {
+//                                        $cna = explode('_', $name);
+//                                        $cna = array_map('ucwords', $cna);
+//                                        $newClassName = implode('', $cna);
+//                                        $fileName = $newClassName;
+//                                        $parameter['type'] = $namespace . '\\' . $className . '\\' . $newClassName;
+//                                        $name = $newClassName;
+//
+//                                        foreach($parameter['properties'] as $propertyName => $propertyValue) {
+//                                            if (isset($propertyValue['type'])) {
+//                                                if ($propertyValue['type'] === 'string') {
+//                                                    $class->addProperty($propertyName)
+//                                                        ->setVisibility('public')
+//                                                        ->setComment('@var ' . $propertyValue['type']);
+//                                                }
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//
+//                                if (is_array($parameter['type'])) {
+//                                    $parameter['type'] = implode('|', $parameter['type']);
+//                                }
+//
+//                                $class->addProperty($name)
+//                                    ->setVisibility('public')
+//                                    ->setComment('@var ' . $parameter['type']);
+//                            } else {
+//                                // use the $this->references[] map here when you come across a reference
+//                                if (!empty($parameter['$ref'])) {
+//                                    $ref = $this->getRefNameFromRefString($parameter['$ref']);
+//                                    if (isset($this->references[$ref])) {
+//                                        $class->addProperty($name)
+//                                            ->setVisibility('public')
+//                                            ->setComment('@var ' . $this->references[$ref]);
+//                                    }
+//                                }
                             }
                         }
-                    } else {
-                        $l=1;
                     }
                 }
             }
 
-            $this->writeClassFile($className, $defClassName, $ns);
+//            $this->writeClassFile($className, $defClassName, $ns);
         }
-    }
-
-    /**
-     * @param array $jsonData
-     * @param string $namespace
-     * @param string $fileName
-     * @param string $className
-     */
-    private function generateObject($jsonData, $namespace, $fileName, $className)
-    {
-        $ns = new PhpNamespace($namespace);
-        $class = $ns->addClass($className);
-
-        foreach($jsonData as $key => $value) {
-            if(isset($value['type'])) {
-                if($value['type'] === 'string') {
-                    $class->addProperty($key)
-                        ->setVisibility('public')
-                        ->setComment('@var ' . $value['type']);
-                } else {
-                    $x = 1;
-                }
-            }
-
-
-
-//            if ($value['type'] === 'object') {
-//                foreach($jsonData['properties'] as $propertyName => $propertyValue) {
-//                    if(!empty($propertyValue['$ref'])) {
-//                        $refName = str_replace('#/definitions/', '', $propertyValue['$ref']);
-//                        $class = $this->generateFromRef($namespace, $refName, $class);
-//                    }
-//                }
-//            }
-
-
-
-
-
-
-            if(empty($value['type'])) {
-
-
-//                if(!empty($value['$ref'])) {
-//                    $refName = str_replace('#/definitions/', '', $value['$ref']);
-//                    $class = $this->generateFromRef($namespace, $refName, $class);
-//                }
-//                elseif ($value === 'object') {
-//                    foreach($jsonData['properties'] as $propertyName => $propertyValue) {
-//                        if(!empty($propertyValue['$ref'])) {
-//                            $refName = str_replace('#/definitions/', '', $propertyValue['$ref']);
-//                            $class = $this->generateFromRef($namespace, $refName, $class);
-//                        }
-//                    }
-//                }
-//
-////                if(!isset($value['type'])) {
-////                    $class->addProperty($key)
-////                        ->setVisibility('public')
-////                        ->setComment('@var ' . $jsonData['type']);
-////                }
-//            }
-//
-//            if(isset($value['type'])) {
-//                $class->addProperty($key)
-//                    ->setVisibility('public')
-//                    ->setComment('@var ' . $value['type']);
-            }
-        }
-
-        $this->writeClassFile($namespace, $fileName, $ns);
     }
 
     /**
@@ -233,16 +187,17 @@ class Generator
 
     /**
      * @param $namespace
+     * @param $classname
      * @param $name
      * @param $refName
      * @param $class
      * @return mixed
      */
-    private function generateFromRef($namespace, $name, $refName, $class)
+    private function generateFromRef($namespace, $classname, $name, $refName, $class)
     {
         $fileName = $this->getFileNameFromRefName($refName);
 
-        $parameter['type'] = $namespace . '\\' . $fileName;
+        $parameter['type'] = $namespace . '\\' . $classname . '\\' . $fileName;
 
         $class->addProperty(lcfirst($name))
             ->setVisibility('public')

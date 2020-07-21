@@ -7,12 +7,12 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class ShippingDetail
 {
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Name */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Name */
 	public $name;
 
 	/** @var array */
 	public $options;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\AddressPortable */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\AddressPortable */
 	public $address;
 }

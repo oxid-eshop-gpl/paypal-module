@@ -7,6 +7,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class CardAttributesResponse
 {
-	/** @var OxidProfessionalServices\PayPal\Api\Model\VaultResponse */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\VaultResponse */
 	public $vault;
 }

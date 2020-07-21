@@ -19,10 +19,10 @@ class FlightLeg
 	/** @var string */
 	public $service_class;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\DateNoTime */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\DateNoTime */
 	public $departure_date;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\TimeHourmin */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\TimeHourmin */
 	public $departure_time;
 
 	/** @var string */
@@ -37,19 +37,19 @@ class FlightLeg
 	/** @var string */
 	public $fare_basis_code;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\TimeHourmin */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\TimeHourmin */
 	public $arrival_time;
 
 	/** @var string */
 	public $conjunction_ticket_number;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Money */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Money */
 	public $fare;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Money */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Money */
 	public $tax;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Money */
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Money */
 	public $fee;
 
 	/** @var string */
