@@ -37,6 +37,7 @@ use OxidProfessionalServices\PayPal\Api\Onboarding;
 class PaypalConfigController extends AdminController
 {
     public const MODULE_ID = 'module:oxps/paypal';
+    public const SIGN_UP_HOST = 'https://www.sandbox.paypal.com/bizsignup/partner/entry';
 
     public function __construct()
     {
@@ -81,46 +82,13 @@ class PaypalConfigController extends AdminController
      */
     public function getLiveSignUpMerchantIntegrationLink(): string
     {
-        $output = new ConsoleOutput(OutputInterface::VERBOSITY_DEBUG);
-        $logger = new ConsoleLogger($output);
         $config = new Config();
 
-        $oxidLiveIntegrationClient = new Onboarding(
-            $logger,
-            Onboarding::PRODUCTION_URL,
+        return $this->buildSignUpLink(
+            $config->getLiveOxidPartnerId(),
             $config->getLiveOxidClientId(),
-            $config->getLiveOxidSecret(),
-            $config->getLiveOxidPartnerId()
+            $this->getReturnUrl()
         );
-//        $oxidLiveIntegrationClient->auth();
-//
-//        $accessToken = $oxidLiveIntegrationClient->getTokenResponse();
-//
-//        $oxidLiveIntegrationClient->generateSignupLink(
-//            $accessToken['access_token'],
-//            $oxidLiveIntegrationClient->createSellerNonce()
-//        );
-
-        $config = Registry::getConfig();
-        $url = $config->getShopUrl();
-
-        //Generate link
-        $host = 'https://www.sandbox.paypal.com/bizsignup/partner/entry';
-        $params = [
-            'sellerNonce' => $oxidLiveIntegrationClient->createSellerNonce(),
-            'partnerId' => $config->getSandboxOxidPartnerId(),
-            'product' => 'EXPRESS_CHECKOUT',
-            'integrationType' => 'FO',
-            'partnerClientId' => $config->getSandboxOxidClientId(),
-            'returnToPartnerUrl' => '',
-//            'partnerLogoUrl' => '',
-            'displayMode' => 'minibrowser',
-            'features' => 'PAYMENT,REFUND'
-        ];
-
-        $url = $host.'?'.http_build_query($params);
-
-        return $url;
     }
 
     /**
@@ -130,43 +98,49 @@ class PaypalConfigController extends AdminController
      */
     public function getSandboxSignUpMerchantIntegrationLink(): string
     {
-        $output = new ConsoleOutput(OutputInterface::VERBOSITY_DEBUG);
-        $logger = new ConsoleLogger($output);
         $config = new Config();
 
-        $oxidLiveIntegrationClient = new Onboarding(
-            $logger,
-            Onboarding::PRODUCTION_URL,
-            $config->getLiveOxidClientId(),
-            $config->getLiveOxidSecret(),
-            $config->getLiveOxidPartnerId()
+        return $this->buildSignUpLink(
+            $config->getSandboxOxidPartnerId(),
+            $config->getSandboxClientId(),
+            $this->getReturnUrl()
         );
-//        $oxidLiveIntegrationClient->auth();
-//
-//        $accessToken = $oxidLiveIntegrationClient->getTokenResponse();
-//
-//        $oxidLiveIntegrationClient->generateSignupLink(
-//            $accessToken['access_token'],
-//            $oxidLiveIntegrationClient->createSellerNonce()
-//        );
+    }
 
-        //Generate link
-        $host = 'https://www.sandbox.paypal.com/bizsignup/partner/entry';
+    /**
+     * Maps arguments and constants to request parameters, generates a sign up url
+     *
+     * @param string $partnerId
+     * @param string $clientId
+     * @param string $returnUrl
+     *
+     * @return string
+     */
+    private function buildSignUpLink(string $partnerId, string $clientId, string $returnUrl): string
+    {
         $params = [
-            'sellerNonce' => $oxidLiveIntegrationClient->createSellerNonce(),
-            'partnerId' => $config->getSandboxOxidPartnerId(),
+            'sellerNonce' => $this->createSellerNonce(),
+            'partnerId' => $partnerId,
             'product' => 'EXPRESS_CHECKOUT',
             'integrationType' => 'FO',
-            'partnerClientId' => $config->getSandboxOxidClientId(),
-            'returnToPartnerUrl' => $this->getReturnUrl(),
+            'partnerClientId' => $clientId,
+            'returnToPartnerUrl' => $returnUrl,
             'partnerLogoUrl' => '',
             'displayMode' => 'minibrowser',
             'features' => 'PAYMENT,REFUND'
         ];
 
-        $url = $host.'?'.http_build_query($params);
+        return self::SIGN_UP_HOST . '?' . http_build_query($params);
+    }
 
-        return $url;
+    /**
+     * create a unique Seller Nonce to check your own transactions
+     *
+     * @return string
+     */
+    public function createSellerNonce(): string
+    {
+        return md5(uniqid('', true) . '|' . microtime());
     }
 
     /**

@@ -212,14 +212,6 @@ class Client
     }
 
     /**
-     * create a unique Seller Nonce to check your own transactions
-     */
-    public function createSellerNonce()
-    {
-        return md5(uniqid('', true) . '|' . microtime());
-    }
-
-    /**
      * @param RequestInterface $request
      * @return RequestInterface
      */
