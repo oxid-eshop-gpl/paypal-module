@@ -21,6 +21,10 @@ class BusinessNameDetail extends BusinessName implements JsonSerializable
     /**
      * @var string
      * Business name type
+     *
+     * use one of constants defined in this class to set the value:
+     * @see TYPE_DOING_BUSINESS_AS
+     * @see TYPE_LEGAL_NAME
      */
     public $type;
 }

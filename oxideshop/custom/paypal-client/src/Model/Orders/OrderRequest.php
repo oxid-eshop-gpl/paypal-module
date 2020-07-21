@@ -21,12 +21,21 @@ class OrderRequest implements JsonSerializable
     /**
      * @var string
      * The intent to either capture payment immediately or authorize a payment for an order after order creation.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see INTENT_CAPTURE
+     * @see INTENT_AUTHORIZE
      */
     public $intent;
 
     /**
      * @var string
      * The instruction to process an order.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see PROCESSING_INSTRUCTION_ORDER_SAVED_EXPLICITLY
+     * @see PROCESSING_INSTRUCTION_ORDER_SAVED_ON_BUYER_APPROVAL
+     * @see PROCESSING_INSTRUCTION_NO_INSTRUCTION
      */
     public $processing_instruction;
 

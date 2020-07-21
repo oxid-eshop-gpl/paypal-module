@@ -28,6 +28,18 @@ class ChangeReason implements JsonSerializable
      * The reason for the item-level dispute. For information about the required information for each dispute reason
      * and associated evidence type, see <a
      * href="/docs/integration/direct/customer-disputes/integration-guide/#dispute-reasons">dispute reasons</a>.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see REASON_MERCHANDISE_OR_SERVICE_NOT_RECEIVED
+     * @see REASON_MERCHANDISE_OR_SERVICE_NOT_AS_DESCRIBED
+     * @see REASON_UNAUTHORISED
+     * @see REASON_CREDIT_NOT_PROCESSED
+     * @see REASON_DUPLICATE_TRANSACTION
+     * @see REASON_INCORRECT_AMOUNT
+     * @see REASON_PAYMENT_BY_OTHER_MEANS
+     * @see REASON_CANCELED_RECURRING_BILLING
+     * @see REASON_PROBLEM_WITH_REMITTANCE
+     * @see REASON_OTHER
      */
     public $reason;
 

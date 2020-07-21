@@ -89,12 +89,32 @@ class Dispute implements JsonSerializable
      * The reason for the item-level dispute. For information about the required information for each dispute reason
      * and associated evidence type, see <a
      * href="/docs/integration/direct/customer-disputes/integration-guide/#dispute-reasons">dispute reasons</a>.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see REASON_MERCHANDISE_OR_SERVICE_NOT_RECEIVED
+     * @see REASON_MERCHANDISE_OR_SERVICE_NOT_AS_DESCRIBED
+     * @see REASON_UNAUTHORISED
+     * @see REASON_CREDIT_NOT_PROCESSED
+     * @see REASON_DUPLICATE_TRANSACTION
+     * @see REASON_INCORRECT_AMOUNT
+     * @see REASON_PAYMENT_BY_OTHER_MEANS
+     * @see REASON_CANCELED_RECURRING_BILLING
+     * @see REASON_PROBLEM_WITH_REMITTANCE
+     * @see REASON_OTHER
      */
     public $reason;
 
     /**
      * @var string
      * The status of the dispute.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see STATUS_OPEN
+     * @see STATUS_WAITING_FOR_BUYER_RESPONSE
+     * @see STATUS_WAITING_FOR_SELLER_RESPONSE
+     * @see STATUS_UNDER_REVIEW
+     * @see STATUS_RESOLVED
+     * @see STATUS_OTHER
      */
     public $status;
 
@@ -129,12 +149,22 @@ class Dispute implements JsonSerializable
     /**
      * @var string
      * The stage in the dispute lifecycle.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see DISPUTE_LIFE_CYCLE_STAGE_INQUIRY
+     * @see DISPUTE_LIFE_CYCLE_STAGE_CHARGEBACK
+     * @see DISPUTE_LIFE_CYCLE_STAGE_PRE_ARBITRATION
+     * @see DISPUTE_LIFE_CYCLE_STAGE_ARBITRATION
      */
     public $dispute_life_cycle_stage;
 
     /**
      * @var string
      * The channel where the customer created the dispute.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see DISPUTE_CHANNEL_INTERNAL
+     * @see DISPUTE_CHANNEL_EXTERNAL
      */
     public $dispute_channel;
 
@@ -173,6 +203,32 @@ class Dispute implements JsonSerializable
     /**
      * @var string
      * The flow ID for the dispute ID.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see DISPUTE_FLOW_ACH_RETURNS
+     * @see DISPUTE_FLOW_ACCOUNT_ISSUES
+     * @see DISPUTE_FLOW_ADMIN_FRAUD_REVERSAL
+     * @see DISPUTE_FLOW_BILLING
+     * @see DISPUTE_FLOW_CHARGEBACKS
+     * @see DISPUTE_FLOW_COMPLAINT_RESOLUTION
+     * @see DISPUTE_FLOW_CORRECTION
+     * @see DISPUTE_FLOW_DEBIT_CARD_CHARGEBACK
+     * @see DISPUTE_FLOW_FAX_ROUTING
+     * @see DISPUTE_FLOW_MIPS_COMPLAINT_ITEM
+     * @see DISPUTE_FLOW_MIPS_COMPLAINT
+     * @see DISPUTE_FLOW_OPS_VERIFICATION_FLOW
+     * @see DISPUTE_FLOW_PAYPAL_DISPUTE_RESOLUTION
+     * @see DISPUTE_FLOW_PINLESS_DEBIT_RETURN
+     * @see DISPUTE_FLOW_PRICING_ADJUSTMENT
+     * @see DISPUTE_FLOW_SPOOF_UNAUTH_CHILD
+     * @see DISPUTE_FLOW_SPOOF_UNAUTH_PARENT
+     * @see DISPUTE_FLOW_THIRD_PARTY_CLAIM
+     * @see DISPUTE_FLOW_THIRD_PARTY_DISPUTE
+     * @see DISPUTE_FLOW_TICKET_RETRIEVAL
+     * @see DISPUTE_FLOW_UK_EXPRESS_RETURNS
+     * @see DISPUTE_FLOW_UNKNOWN_FAXES
+     * @see DISPUTE_FLOW_VETTING
+     * @see DISPUTE_FLOW_OTHER
      */
     public $dispute_flow;
 

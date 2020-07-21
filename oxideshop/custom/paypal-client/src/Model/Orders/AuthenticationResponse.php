@@ -20,6 +20,12 @@ class AuthenticationResponse implements JsonSerializable
     /**
      * @var string
      * Liability shift indicator. The outcome of the issuer's authentication.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see LIABILITY_SHIFT_YES
+     * @see LIABILITY_SHIFT_NO
+     * @see LIABILITY_SHIFT_POSSIBLE
+     * @see LIABILITY_SHIFT_UNKNOWN
      */
     public $liability_shift;
 

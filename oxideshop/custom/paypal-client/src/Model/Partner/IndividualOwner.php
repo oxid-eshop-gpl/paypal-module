@@ -17,6 +17,9 @@ class IndividualOwner extends Person implements JsonSerializable
     /**
      * @var string
      * Role of the person party played in the account.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see TYPE_PRIMARY
      */
     public $type;
 }

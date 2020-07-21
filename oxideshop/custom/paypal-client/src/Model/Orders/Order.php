@@ -34,6 +34,10 @@ class Order extends ActivityTimestamps implements JsonSerializable
     /**
      * @var string
      * The intent to either capture payment immediately or authorize a payment for an order after order creation.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see INTENT_CAPTURE
+     * @see INTENT_AUTHORIZE
      */
     public $intent;
 
@@ -57,6 +61,15 @@ class Order extends ActivityTimestamps implements JsonSerializable
     /**
      * @var string
      * The order status.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see STATUS_CREATED
+     * @see STATUS_SAVED
+     * @see STATUS_APPROVED
+     * @see STATUS_VOIDED
+     * @see STATUS_COMPLETED
+     * @see STATUS_PAYER_ACTION_REQUIRED
+     * @see STATUS_PARTIALLY_COMPLETED
      */
     public $status;
 

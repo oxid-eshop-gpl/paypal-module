@@ -30,6 +30,11 @@ class Account implements JsonSerializable
     /**
      * @var string
      * Paypal account type.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see TIER_BUSINESS
+     * @see TIER_PERSONAL
+     * @see TIER_PREMIER
      */
     public $tier;
 

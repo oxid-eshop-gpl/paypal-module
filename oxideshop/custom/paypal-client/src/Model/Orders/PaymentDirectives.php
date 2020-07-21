@@ -24,6 +24,10 @@ class PaymentDirectives implements JsonSerializable
     /**
      * @var string
      * Disbursement type.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see DISBURSEMENT_TYPE_INSTANT
+     * @see DISBURSEMENT_TYPE_DELAYED
      */
     public $disbursement_type;
 
@@ -39,6 +43,10 @@ class PaymentDirectives implements JsonSerializable
     /**
      * @var string
      * Liability type defined by PayPal Risk.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see LIABILITY_TYPE_FULL
+     * @see LIABILITY_TYPE_PARTIAL
      */
     public $liability_type;
 
@@ -66,6 +74,12 @@ class PaymentDirectives implements JsonSerializable
     /**
      * @var string
      * Currency receiving type defines the options when receiving payment in a currency not held by the reciver.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see CURRENCY_RECEIVING_DIRECTIVE_ACCEPT
+     * @see CURRENCY_RECEIVING_DIRECTIVE_DENY
+     * @see CURRENCY_RECEIVING_DIRECTIVE_HOLD
+     * @see CURRENCY_RECEIVING_DIRECTIVE_ACCEPT_OPEN
      */
     public $currency_receiving_directive;
 

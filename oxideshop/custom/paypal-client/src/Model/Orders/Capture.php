@@ -55,6 +55,10 @@ class Capture extends CaptureStatus implements JsonSerializable
     /**
      * @var string
      * The funds that are held on behalf of the merchant.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see DISBURSEMENT_MODE_INSTANT
+     * @see DISBURSEMENT_MODE_DELAYED
      */
     public $disbursement_mode;
 

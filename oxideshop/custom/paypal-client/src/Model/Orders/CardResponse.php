@@ -41,6 +41,24 @@ class CardResponse implements JsonSerializable
     /**
      * @var string
      * The card network or brand. Applies to credit, debit, gift, and payment cards.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see BRAND_VISA
+     * @see BRAND_MASTERCARD
+     * @see BRAND_DISCOVER
+     * @see BRAND_AMEX
+     * @see BRAND_SOLO
+     * @see BRAND_JCB
+     * @see BRAND_STAR
+     * @see BRAND_DELTA
+     * @see BRAND_SWITCH
+     * @see BRAND_MAESTRO
+     * @see BRAND_CB_NATIONALE
+     * @see BRAND_CONFIGOGA
+     * @see BRAND_CONFIDIS
+     * @see BRAND_ELECTRON
+     * @see BRAND_CETELEM
+     * @see BRAND_CHINA_UNION_PAY
      */
     public $brand;
 

@@ -17,6 +17,9 @@ class BusinessAddressDetail extends AddressPortable implements JsonSerializable
     /**
      * @var string
      * Address type under which the provided address is tagged
+     *
+     * use one of constants defined in this class to set the value:
+     * @see TYPE_WORK
      */
     public $type;
 

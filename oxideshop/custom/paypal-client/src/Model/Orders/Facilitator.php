@@ -19,6 +19,11 @@ class Facilitator extends Participant implements JsonSerializable
     /**
      * @var string
      * Facilitator type.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see TYPE_API_CALLER
+     * @see TYPE_PARTNER
+     * @see TYPE_INTERNAL
      */
     public $type;
 

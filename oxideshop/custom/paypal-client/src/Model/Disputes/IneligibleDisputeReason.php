@@ -28,6 +28,18 @@ class IneligibleDisputeReason implements JsonSerializable
      * The reason for the item-level dispute. For information about the required information for each dispute reason
      * and associated evidence type, see <a
      * href="/docs/integration/direct/customer-disputes/integration-guide/#dispute-reasons">dispute reasons</a>.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see DISPUTE_REASON_MERCHANDISE_OR_SERVICE_NOT_RECEIVED
+     * @see DISPUTE_REASON_MERCHANDISE_OR_SERVICE_NOT_AS_DESCRIBED
+     * @see DISPUTE_REASON_UNAUTHORISED
+     * @see DISPUTE_REASON_CREDIT_NOT_PROCESSED
+     * @see DISPUTE_REASON_DUPLICATE_TRANSACTION
+     * @see DISPUTE_REASON_INCORRECT_AMOUNT
+     * @see DISPUTE_REASON_PAYMENT_BY_OTHER_MEANS
+     * @see DISPUTE_REASON_CANCELED_RECURRING_BILLING
+     * @see DISPUTE_REASON_PROBLEM_WITH_REMITTANCE
+     * @see DISPUTE_REASON_OTHER
      */
     public $dispute_reason;
 

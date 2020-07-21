@@ -17,6 +17,9 @@ class PersonName extends Name implements JsonSerializable
     /**
      * @var string
      * The person's name type.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see TYPE_LEGAL
      */
     public $type;
 }

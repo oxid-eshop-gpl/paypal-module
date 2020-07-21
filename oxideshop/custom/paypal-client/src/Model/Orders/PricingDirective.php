@@ -21,6 +21,11 @@ class PricingDirective implements JsonSerializable
     /**
      * @var string
      * Participant type.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see PARTICIPANT_TYPE_SENDER
+     * @see PARTICIPANT_TYPE_RECEIVER
+     * @see PARTICIPANT_TYPE_FACILITATOR
      */
     public $participant_type;
 
@@ -30,6 +35,10 @@ class PricingDirective implements JsonSerializable
     /**
      * @var string
      * Type of pricing applied to a payment.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see TYPE_BLENDED
+     * @see TYPE_IC_PLUS
      */
     public $type;
 }

@@ -78,6 +78,10 @@ class Subscription extends SubscriptionStatus implements JsonSerializable
     /**
      * @var string
      * The list of currency conversion providers.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see PREFERRED_CURRENCY_CONVERSION_PAYPAL
+     * @see PREFERRED_CURRENCY_CONVERSION_VENDOR
      */
     public $preferred_currency_conversion;
 

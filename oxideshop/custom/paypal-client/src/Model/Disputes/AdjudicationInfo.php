@@ -45,6 +45,10 @@ class AdjudicationInfo implements JsonSerializable
      * The reason for the item-level dispute. For information about the required information for each dispute reason
      * and associated evidence type, see <a
      * href="/docs/integration/direct/customer-disputes/integration-guide/#dispute-reasons">dispute reasons</a>.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see DISPUTE_REASON_MERCHANDISE_OR_SERVICE_NOT_RECEIVED
+     * @see DISPUTE_REASON_MERCHANDISE_OR_SERVICE_NOT_AS_DESCRIBED
      */
     public $dispute_reason;
 

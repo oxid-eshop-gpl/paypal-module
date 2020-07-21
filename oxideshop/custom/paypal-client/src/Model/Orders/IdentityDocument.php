@@ -22,6 +22,14 @@ class IdentityDocument implements JsonSerializable
     /**
      * @var string
      * The identity document type.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see TYPE_SOCIAL_SECURITY_NUMBER
+     * @see TYPE_INDIVIDUAL_TAXPAYER_IDENTIFICATION_NUMBER
+     * @see TYPE_NATIONAL_IDENTIFICATION_NUMBER
+     * @see TYPE_TAX_IDENTIFICATION_NUMBER
+     * @see TYPE_PASSPORT_NUMBER
+     * @see TYPE_SSN4
      */
     public $type;
 

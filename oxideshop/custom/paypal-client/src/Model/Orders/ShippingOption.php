@@ -24,6 +24,10 @@ class ShippingOption implements JsonSerializable
     /**
      * @var string
      * The method by which the payer wants to get their items.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see TYPE_SHIPPING
+     * @see TYPE_PICKUP
      */
     public $type;
 

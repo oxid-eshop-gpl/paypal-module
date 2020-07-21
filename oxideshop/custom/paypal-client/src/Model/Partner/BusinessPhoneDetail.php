@@ -27,6 +27,9 @@ class BusinessPhoneDetail extends Phone implements JsonSerializable
     /**
      * @var string
      * The type of phone number provided. For example, home, work, or mobile.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see TYPE_CUSTOMER_SERVICE
      */
     public $type;
 

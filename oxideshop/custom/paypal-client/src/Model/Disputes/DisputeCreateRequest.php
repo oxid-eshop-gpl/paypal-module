@@ -26,6 +26,10 @@ class DisputeCreateRequest implements JsonSerializable
     /**
      * @var string
      * The flow ID for the dispute being created.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see DISPUTE_FLOW_THIRD_PARTY_CLAIM
+     * @see DISPUTE_FLOW_THIRD_PARTY_DISPUTE
      */
     public $dispute_flow;
 
@@ -56,12 +60,24 @@ class DisputeCreateRequest implements JsonSerializable
      * The reason for the item-level dispute. For information about the required information for each dispute reason
      * and associated evidence type, see <a
      * href="/docs/integration/direct/customer-disputes/integration-guide/#dispute-reasons">dispute reasons</a>.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see REASON_MERCHANDISE_OR_SERVICE_NOT_RECEIVED
+     * @see REASON_MERCHANDISE_OR_SERVICE_NOT_AS_DESCRIBED
      */
     public $reason;
 
     /**
      * @var string
      * The dispute sub-reason.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see SUB_REASON_INCOMPLETE_ORDER
+     * @see SUB_REASON_DAMAGED
+     * @see SUB_REASON_FAKE
+     * @see SUB_REASON_MATERIALLY_DIFFERENT
+     * @see SUB_REASON_UNUSABLE
+     * @see SUB_REASON_EXCESSIVE_SURCHARGE
      */
     public $sub_reason;
 

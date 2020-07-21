@@ -358,9 +358,11 @@ class Generator
                             }
                             if (isset($propDef['x-enum'])) {
                                 $enums = $propDef['x-enum'];
+                                $property->addComment("use one of constants defined in this class to set the value:");
                                 foreach ($enums as $constant) {
                                     $value = $constant['value'];
                                     $constantName = $this->cleanConstantName($name . '_' . $value);
+                                    $property->addComment("@see $constantName");
                                     $class->addConstant($constantName, $value);
                                 }
                             }

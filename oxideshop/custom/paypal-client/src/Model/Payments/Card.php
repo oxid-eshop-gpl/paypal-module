@@ -54,6 +54,24 @@ class Card implements JsonSerializable
     /**
      * @var string
      * The card network or brand. Applies to credit, debit, gift, and payment cards.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see CARD_TYPE_VISA
+     * @see CARD_TYPE_MASTERCARD
+     * @see CARD_TYPE_DISCOVER
+     * @see CARD_TYPE_AMEX
+     * @see CARD_TYPE_SOLO
+     * @see CARD_TYPE_JCB
+     * @see CARD_TYPE_STAR
+     * @see CARD_TYPE_DELTA
+     * @see CARD_TYPE_SWITCH
+     * @see CARD_TYPE_MAESTRO
+     * @see CARD_TYPE_CB_NATIONALE
+     * @see CARD_TYPE_CONFIGOGA
+     * @see CARD_TYPE_CONFIDIS
+     * @see CARD_TYPE_ELECTRON
+     * @see CARD_TYPE_CETELEM
+     * @see CARD_TYPE_CHINA_UNION_PAY
      */
     public $card_type;
 

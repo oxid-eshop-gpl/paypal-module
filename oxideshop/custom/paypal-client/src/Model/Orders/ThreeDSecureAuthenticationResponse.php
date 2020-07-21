@@ -28,12 +28,28 @@ class ThreeDSecureAuthenticationResponse implements JsonSerializable
     /**
      * @var string
      * Transactions status result identifier. The outcome of the issuer's authentication.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see AUTHENTICATION_STATUS_Y
+     * @see AUTHENTICATION_STATUS_N
+     * @see AUTHENTICATION_STATUS_U
+     * @see AUTHENTICATION_STATUS_A
+     * @see AUTHENTICATION_STATUS_C
+     * @see AUTHENTICATION_STATUS_R
+     * @see AUTHENTICATION_STATUS_D
+     * @see AUTHENTICATION_STATUS_I
      */
     public $authentication_status;
 
     /**
      * @var string
      * Status of Authentication eligibility.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see ENROLLMENT_STATUS_Y
+     * @see ENROLLMENT_STATUS_N
+     * @see ENROLLMENT_STATUS_U
+     * @see ENROLLMENT_STATUS_B
      */
     public $enrollment_status;
 }

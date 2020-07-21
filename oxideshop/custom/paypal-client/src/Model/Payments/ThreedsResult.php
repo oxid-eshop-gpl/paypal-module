@@ -56,18 +56,42 @@ class ThreedsResult extends AuthenticationResultType implements JsonSerializable
      * Electronic Commerce Indicator (ECI). The ECI value is part of the 2 data elements that indicate the
      * transaction was processed electronically. This should be passed on the authorization transaction to the
      * Gateway/Processor.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see ECI_FLAG_MASTERCARD_NON_3D_SECURE_TRANSACTION
+     * @see ECI_FLAG_MASTERCARD_ATTEMPTED_AUTHENTICATION_TRANSACTION
+     * @see ECI_FLAG_MASTERCARD_FULLY_AUTHENTICATED_TRANSACTION
+     * @see ECI_FLAG_FULLY_AUTHENTICATED_TRANSACTION
+     * @see ECI_FLAG_ATTEMPTED_AUTHENTICATION_TRANSACTION
+     * @see ECI_FLAG_NON_3D_SECURE_TRANSACTION
      */
     public $eci_flag;
 
     /**
      * @var string
      * Universal Cardholder Authentication Field (UCAF) Indicator value provided by the issuer.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see UCAF_INDICATOR_NON_SECURECODE_TRANSACTION
+     * @see UCAF_INDICATOR_MERCHANT_ONLY_SECURECODE_TRANSACTION
+     * @see UCAF_INDICATOR_FULLY_AUTHENTICATED_SECURECODE
      */
     public $ucaf_indicator;
 
     /**
      * @var string
      * Card brand that the transaction was processed for authentication.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see CARD_BRAND_AMERICAN_EXPRESS
+     * @see CARD_BRAND_DISCOVER
+     * @see CARD_BRAND_JCB
+     * @see CARD_BRAND_MAESTRO
+     * @see CARD_BRAND_MASTERCARD
+     * @see CARD_BRAND_SOLO
+     * @see CARD_BRAND_VISA
+     * @see CARD_BRAND_ELECTRON
+     * @see CARD_BRAND_ELO
      */
     public $card_brand;
 
@@ -80,12 +104,28 @@ class ThreedsResult extends AuthenticationResultType implements JsonSerializable
     /**
      * @var string
      * Status of Authentication eligibility.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see ENROLLED_Y
+     * @see ENROLLED_N
+     * @see ENROLLED_U
+     * @see ENROLLED_B
      */
     public $enrolled;
 
     /**
      * @var string
      * Transactions status result identifier. The outcome of the issuer's authentication.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see PARES_STATUS_Y
+     * @see PARES_STATUS_N
+     * @see PARES_STATUS_U
+     * @see PARES_STATUS_A
+     * @see PARES_STATUS_C
+     * @see PARES_STATUS_R
+     * @see PARES_STATUS_D
+     * @see PARES_STATUS_I
      */
     public $pares_status;
 
@@ -101,6 +141,12 @@ class ThreedsResult extends AuthenticationResultType implements JsonSerializable
     /**
      * @var string
      * Indicates the type of authentication that was used to challenge the card holder.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see AUTHENTICATION_TYPE_STATIC
+     * @see AUTHENTICATION_TYPE_DYNAMIC
+     * @see AUTHENTICATION_TYPE_OUT_OF_BAND
+     * @see AUTHENTICATION_TYPE_DECOUPLED
      */
     public $authentication_type;
 
@@ -110,6 +156,10 @@ class ThreedsResult extends AuthenticationResultType implements JsonSerializable
     /**
      * @var string
      * Transaction signature status identifier.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see SIGNATURE_VERIFICATION_STATUS_YES
+     * @see SIGNATURE_VERIFICATION_STATUS_NO
      */
     public $signature_verification_status;
 
@@ -122,6 +172,10 @@ class ThreedsResult extends AuthenticationResultType implements JsonSerializable
     /**
      * @var string
      * Indicates the algorithm used to generate the CAVV/AAV value.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see CAVV_ALGORITHM_CVV_WITH_ATN
+     * @see CAVV_ALGORITHM_MASTERCARD_SPA_ALGORITHM
      */
     public $cavv_algorithm;
 

@@ -34,6 +34,13 @@ class PersonPhoneDetail extends Phone implements JsonSerializable
     /**
      * @var string
      * The phone type.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see TYPE_FAX
+     * @see TYPE_HOME
+     * @see TYPE_MOBILE
+     * @see TYPE_OTHER
+     * @see TYPE_PAGER
      */
     public $type;
 

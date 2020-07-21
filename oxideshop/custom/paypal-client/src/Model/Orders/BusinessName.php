@@ -56,6 +56,44 @@ class BusinessName implements JsonSerializable
      * @var string
      * The orthography type based on the ISO 15924 names for scripts. Scipts are chosen based on [most widely used
      * writing systems](https://www.worldatlas.com/articles/the-world-s-most-popular-writing-scripts.html).
+     *
+     * use one of constants defined in this class to set the value:
+     * @see ORTHOGRAPHY_ZYYY
+     * @see ORTHOGRAPHY_ZZZZ
+     * @see ORTHOGRAPHY_KANA
+     * @see ORTHOGRAPHY_CYRL
+     * @see ORTHOGRAPHY_ARAB
+     * @see ORTHOGRAPHY_ARMN
+     * @see ORTHOGRAPHY_BENG
+     * @see ORTHOGRAPHY_CANS
+     * @see ORTHOGRAPHY_DEVA
+     * @see ORTHOGRAPHY_ETHI
+     * @see ORTHOGRAPHY_GEOR
+     * @see ORTHOGRAPHY_GREK
+     * @see ORTHOGRAPHY_GUJR
+     * @see ORTHOGRAPHY_GURU
+     * @see ORTHOGRAPHY_HANI
+     * @see ORTHOGRAPHY_HEBR
+     * @see ORTHOGRAPHY_JAVA
+     * @see ORTHOGRAPHY_JPAN
+     * @see ORTHOGRAPHY_KHMR
+     * @see ORTHOGRAPHY_KNDA
+     * @see ORTHOGRAPHY_KORE
+     * @see ORTHOGRAPHY_LAOO
+     * @see ORTHOGRAPHY_LATN
+     * @see ORTHOGRAPHY_MLYM
+     * @see ORTHOGRAPHY_MONG
+     * @see ORTHOGRAPHY_MYMR
+     * @see ORTHOGRAPHY_ORYA
+     * @see ORTHOGRAPHY_SINH
+     * @see ORTHOGRAPHY_SUND
+     * @see ORTHOGRAPHY_SYRC
+     * @see ORTHOGRAPHY_TAML
+     * @see ORTHOGRAPHY_TELU
+     * @see ORTHOGRAPHY_THAA
+     * @see ORTHOGRAPHY_THAI
+     * @see ORTHOGRAPHY_TIBT
+     * @see ORTHOGRAPHY_YIII
      */
     public $orthography;
 }

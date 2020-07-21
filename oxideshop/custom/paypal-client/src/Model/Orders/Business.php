@@ -43,6 +43,32 @@ class Business extends Party implements JsonSerializable
     /**
      * @var string
      * The business types classified.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see TYPE_ANY_OTHER_BUSINESS_ENTITY
+     * @see TYPE_ASSOCIATION
+     * @see TYPE_CORPORATION
+     * @see TYPE_GENERAL_PARTNERSHIP
+     * @see TYPE_GOVERNMENT
+     * @see TYPE_INDIVIDUAL
+     * @see TYPE_LIMITED_LIABILITY_PARTNERSHIP
+     * @see TYPE_LIMITED_LIABILITY_PROPRIETORS
+     * @see TYPE_LIMITED_LIABILITY_PRIVATE_CORPORATION
+     * @see TYPE_LIMITED_PARTNERSHIP
+     * @see TYPE_LIMITED_PARTNERSHIP_PRIVATE_CORPORATION
+     * @see TYPE_NONPROFIT
+     * @see TYPE_ONLY_BUY_OR_SEND_MONEY
+     * @see TYPE_OTHER_CORPORATE_BODY
+     * @see TYPE_PARTNERSHIP
+     * @see TYPE_PRIVATE_PARTNERSHIP
+     * @see TYPE_PROPRIETORSHIP
+     * @see TYPE_PROPRIETORSHIP_CRAFTSMAN
+     * @see TYPE_PROPRIETORY_COMPANY
+     * @see TYPE_PRIVATE_CORPORATION
+     * @see TYPE_PUBLIC_COMPANY
+     * @see TYPE_PUBLIC_CORPORATION
+     * @see TYPE_PUBLIC_PARTNERSHIP
+     * @see TYPE_REGISTERED_COOPERATIVE
      */
     public $type;
 

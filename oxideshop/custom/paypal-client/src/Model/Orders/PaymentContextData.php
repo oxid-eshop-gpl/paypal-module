@@ -18,6 +18,10 @@ class PaymentContextData implements JsonSerializable
     /**
      * @var string
      * The intent to either capture payment immediately or authorize a payment for an order after order creation.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see INTENT_CAPTURE
+     * @see INTENT_AUTHORIZE
      */
     public $intent;
 

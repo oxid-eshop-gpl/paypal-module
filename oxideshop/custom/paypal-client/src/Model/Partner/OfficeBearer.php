@@ -22,6 +22,14 @@ class OfficeBearer extends Person implements JsonSerializable
     /**
      * @var string
      * Role of the person party played in the business.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see ROLE_CEO
+     * @see ROLE_CHAIRMAN
+     * @see ROLE_DIRECTOR
+     * @see ROLE_SECRETARY
+     * @see ROLE_TREASURER
+     * @see ROLE_TRUSTEE
      */
     public $role;
 }

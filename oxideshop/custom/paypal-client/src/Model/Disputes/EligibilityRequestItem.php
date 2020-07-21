@@ -30,6 +30,19 @@ class EligibilityRequestItem implements JsonSerializable
     /**
      * @var string
      * The category of the item in dispute.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see CATEGORY_COMPUTERS
+     * @see CATEGORY_HOME
+     * @see CATEGORY_JEWELRY
+     * @see CATEGORY_ANTIQUES
+     * @see CATEGORY_ENTERTAINMENT
+     * @see CATEGORY_OTHER_TANGIBLES
+     * @see CATEGORY_TRAVEL
+     * @see CATEGORY_SERVICE
+     * @see CATEGORY_VIRTUAL_GOODS
+     * @see CATEGORY_OTHER_INTANGIBLES
+     * @see CATEGORY_TICKETS
      */
     public $category;
 }

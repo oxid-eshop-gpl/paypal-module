@@ -28,6 +28,11 @@ class Extensions implements JsonSerializable
     /**
      * @var string
      * The outcome when the customer has contacted the merchant.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see MERCHANT_CONTACTED_OUTCOME_NO_RESPONSE
+     * @see MERCHANT_CONTACTED_OUTCOME_FIXED
+     * @see MERCHANT_CONTACTED_OUTCOME_NOT_FIXED
      */
     public $merchant_contacted_outcome;
 
@@ -42,6 +47,13 @@ class Extensions implements JsonSerializable
     /**
      * @var string
      * The method used to contact the merchant.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see MERCHANT_CONTACTED_MODE_WEBSITE
+     * @see MERCHANT_CONTACTED_MODE_PHONE
+     * @see MERCHANT_CONTACTED_MODE_EMAIL
+     * @see MERCHANT_CONTACTED_MODE_WRITTEN
+     * @see MERCHANT_CONTACTED_MODE_IN_PERSON
      */
     public $merchant_contacted_mode;
 

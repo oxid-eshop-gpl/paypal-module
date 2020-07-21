@@ -25,6 +25,17 @@ class PersonDocument extends Document implements JsonSerializable
     /**
      * @var string
      * The type of documents.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see TYPE_SOCIAL_SECURITY_NUMBER
+     * @see TYPE_EMPLOYMENT_IDENTIFICATION_NUMBER
+     * @see TYPE_TAX_IDENTIFICATION_NUMBER
+     * @see TYPE_PASSPORT_NUMBER
+     * @see TYPE_PENSION_FUND_ID
+     * @see TYPE_MEDICAL_INSURANCE_ID
+     * @see TYPE_CNPJ
+     * @see TYPE_CPF
+     * @see TYPE_PAN
      */
     public $type;
 }

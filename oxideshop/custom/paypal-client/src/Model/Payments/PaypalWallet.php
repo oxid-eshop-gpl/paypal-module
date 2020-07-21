@@ -18,6 +18,10 @@ class PaypalWallet implements JsonSerializable
     /**
      * @var string
      * The merchant-preferred payment methods.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see PAYMENT_METHOD_PREFERENCE_UNRESTRICTED
+     * @see PAYMENT_METHOD_PREFERENCE_IMMEDIATE_PAYMENT_REQUIRED
      */
     public $payment_method_preference;
 

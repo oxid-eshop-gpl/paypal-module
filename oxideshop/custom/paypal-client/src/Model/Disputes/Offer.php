@@ -32,6 +32,12 @@ class Offer implements JsonSerializable
     /**
      * @var string
      * The merchant-proposed offer type for the dispute.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see OFFER_TYPE_REFUND
+     * @see OFFER_TYPE_REFUND_WITH_RETURN
+     * @see OFFER_TYPE_REFUND_WITH_REPLACEMENT
+     * @see OFFER_TYPE_REPLACEMENT_WITHOUT_REFUND
      */
     public $offer_type;
 

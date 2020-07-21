@@ -29,6 +29,14 @@ class PhoneInfo implements JsonSerializable
     /**
      * @var string
      * The phone type.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see PHONE_TYPE_FAX
+     * @see PHONE_TYPE_HOME
+     * @see PHONE_TYPE_MOBILE
+     * @see PHONE_TYPE_OTHER
+     * @see PHONE_TYPE_PAGER
+     * @see PHONE_TYPE_WORK
      */
     public $phone_type;
 }
