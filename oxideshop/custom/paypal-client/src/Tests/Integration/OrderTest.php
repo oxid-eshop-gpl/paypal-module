@@ -3,28 +3,34 @@
 namespace OxidProfessionalServices\PayPal\Api\Tests\Integration;
 
 use OxidProfessionalServices\PayPal\Api\Client;
-use OxidProfessionalServices\PayPal\Api\Order as OrderClient;
+use OxidProfessionalServices\PayPal\Api\Model\Orders\DateNoTime;
+use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderRequest;
+use OxidProfessionalServices\PayPal\Api\Model\Orders\Payer;
+use OxidProfessionalServices\PayPal\Api\Service\Orders;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Console\Logger\ConsoleLogger;
-use Symfony\Component\Console\Output\ConsoleOutput;
-use Symfony\Component\Console\Output\OutputInterface;
 
 class OrderTest extends TestCase
 {
     /**
-     * @var OrderClient
+     * @var Client
      */
     private $client;
 
     public function setUp()
     {
         parent::setUp();
-//        $client = ClientFactory::createClient(OrderClient::class);
-//        $this->client = $client;
+        $client = ClientFactory::createClient(Client::class);
+        $this->client = $client;
     }
 
     public function testCreateOrder()
     {
-//        $this->client->createOrder();
+        $orderService = new Orders($this->client);
+        $orderRequest = new OrderRequest();
+        $orderRequest->payer = new Payer();
+        $orderRequest->payer->name = "Johannes";
+        $orderRequest->payer->phone = "09812943";
+        $orderService->createOrder($orderRequest,"","");
+
     }
 }

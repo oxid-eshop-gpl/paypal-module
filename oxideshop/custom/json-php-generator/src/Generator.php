@@ -2,6 +2,8 @@
 
 namespace OxidProfessionalServices;
 
+use Exception;
+use JsonSerializable;
 use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\PsrPrinter;
 use PHP_CodeSniffer\Exceptions\DeepExitException;
@@ -245,7 +247,7 @@ class Generator
                 if ($type == 'object') {
                     $className = $this->calculateClassName($defName, $defs);
                     if (isset($this->references[$defName])) {
-                        throw new \Exception("duplicate Class Name");
+                        throw new Exception("duplicate Class Name");
                     }
                     $this->references[$defName] = $className;
                 } else {
@@ -266,15 +268,14 @@ class Generator
     }
 
     /**
-     * @param string $namespace
-     * @param string $subNameSpace
+     * @param $namespace
+     * @param $subNameSpace
      * @param $defName
      * @param $defs
      */
-    private function generateModelClass(string $namespace, string $subNameSpace, $defName, $defs): void
+    private function generateModelClass($namespace, $subNameSpace, $defName, $defs): void
     {
         $ns = new PhpNamespace($namespace . '\\' . $subNameSpace);
-
         $className = $this->calculateClassName($defName, $defs);
         if ($className == "array") {
             return;
@@ -287,13 +288,13 @@ class Generator
                 return;
             }
         }
-
         $class = $ns->addClass($className);
         if (!empty($defs['description'])) {
             $comment = $defs['description'];
             $comment = $this->formatComment($comment);
             $class->addComment($comment);
         }
+        $class->addComment("generated from: $defName");
 
         $properties = [];
         if (isset($defs['allOf'])) {
@@ -308,6 +309,7 @@ class Generator
                         }
                         $parent = "$namespace\\$subNameSpace\\$parent";
                         $ns->addUse($parent);
+
                         $class->addExtend($parent);
                         $firstRef = false;
                         continue;
@@ -326,9 +328,16 @@ class Generator
                     if ($parameter['type'] === 'object') {
                         $nestedClassId = $className . '_' . $name;
                         $nestedClassName = $this->calculateClassName($nestedClassId, $parameter);
-              //          $parameter['type'] = "$namespace\\$subNameSpace\\$nestedClassName";
-                        $parameter['type'] = "$nestedClassName";
-                        $this->generateModelClass($namespace, $subNameSpace, $nestedClassId, $parameter);
+                        $parameter['type'] = $nestedClassName;
+                        if (isset($this->definitions[$nestedClassId])) {
+                            if ($parameter != $this->definitions[$nestedClassId]) {
+                                $doomed = 1;
+                            }
+                        } else {
+
+                            $this->definitions[$nestedClassId] = $parameter;
+                            $this->generateModelClass($namespace, $subNameSpace, $nestedClassId, $parameter);
+                        }
                     }
                     if ($parameter['type'] === 'array') {
                         if (isset($parameter['items']['$ref'])) {
@@ -343,13 +352,16 @@ class Generator
                         $parameter['type'] = implode('|', $parameter['type']);
                     }
 
-                    $class->addProperty($name)->setVisibility('public')->setComment('@var ' . $parameter['type']);
+                    $class->addProperty($name)
+                        ->setVisibility('public')
+                        ->setComment('@var ' . $parameter['type']);
                 } else {
                     // use the $this->references[] map here when you come across a reference
                     if (!empty($parameter['$ref'])) {
                         $ref = $this->getRefNameFromRefString($parameter['$ref']);
                         if (isset($this->references[$ref])) {
-                            $property = $class->addProperty($name)->setVisibility('public')
+                            $property = $class->addProperty($name)
+                                ->setVisibility('public')
                                 ->setComment('@var ' . $this->references[$ref]);
                             $propDef = $this->definitions[$ref];
                             if (isset($propDef['description'])) {
@@ -375,9 +387,8 @@ class Generator
                 }
             }
         }
-
-        $ns->addUse(\JsonSerializable::class);
-        $class->addImplement(\JsonSerializable::class);
+        $ns->addUse(JsonSerializable::class);
+        $class->addImplement(JsonSerializable::class);
         $ns->addUse($namespace . '\\BaseModel');
         $class->addTrait($namespace . '\\BaseModel');
 
