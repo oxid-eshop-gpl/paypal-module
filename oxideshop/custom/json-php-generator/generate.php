@@ -15,12 +15,6 @@ foreach($files as $file) {
 
     echo "Generating $apiName API" . PHP_EOL;
 
-    $generator = new \OxidProfessionalServices\Generator(
-        '../paypal-client/schema/' . $file,
-        'OxidProfessionalServices\PayPal\Api\Model',
-        $apiName
-    );
-
     $generator = new \OxidProfessionalServices\ServiceGenerator(
         '../paypal-client/schema/' . $file,
         'OxidProfessionalServices\PayPal\Api\Service',

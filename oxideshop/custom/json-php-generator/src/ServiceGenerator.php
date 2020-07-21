@@ -5,7 +5,7 @@ namespace OxidProfessionalServices;
 use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\PsrPrinter;
 
-class ServiceGenerator
+class ServiceGenerator extends Generator
 {
 
     private $namespace;
@@ -13,67 +13,22 @@ class ServiceGenerator
     /**
      * @param string $jsonFile
      * @param string $namespace
-     * @param string $className
+     * @param string $subNameSpace
      */
-    public function __construct($jsonFile, $namespace, $modelNamespace, $className)
+    public function __construct($jsonFile, $namespace, $modelNamespace, $subNameSpace)
     {
         $this->namespace = $namespace;
-        $this->generateClass($jsonFile, $namespace, $modelNamespace, $className);
+        parent::__construct($jsonFile, $modelNamespace, $subNameSpace);
+        $this->generateService($namespace, $modelNamespace, $subNameSpace);
     }
-
-
-    /**
-     * @param $defName
-     * @return string|string[]
-     */
-    private function getRefNameFromRefString($defName)
-    {
-        return str_replace('#/definitions/', '', $defName);
-    }
-
-    private function replaceNumbers($string)
-    {
-        $numbers = array(
-            '0' => 'Zero',
-            '1' => 'One',
-            '2' => 'Two',
-            '3' => 'Three',
-            '4' => 'Four',
-            '5' => 'Five',
-            '6' => 'Six',
-            '7' => 'Seven',
-            '8' => 'Eight',
-            '9' => 'Nine',
-        );
-        return preg_replace_callback('/[0-9]/', function ($matches) use ($numbers) {
-            return $numbers[ $matches[0] ];
-        }, $string);
-    }
-
-    /**
-     * @param $refName
-     * @return string
-     */
-    private function getClassNameFromRefName($refName)
-    {
-        $classNameExploded = explode('-', $refName);
-        $defClassName = ucfirst(str_replace('.json', '', end($classNameExploded)));
-        $defClassNameArray = array_map('ucwords', explode('_', $defClassName));
-        $defClassName = implode('', $defClassNameArray);
-
-        return $defClassName;
-    }
-
-
 
     /**
      * @param string $jsonFile
      * @param string $namespace
      * @param string $className
      */
-    private function generateClass($jsonFile, $namespace, $modelNamespace, $className): void
+    private function generateService($namespace, $modelNamespace, $className): void
     {
-        $fileContent = json_decode(file_get_contents($jsonFile), true);
 
         $ns = new PhpNamespace($namespace);
         $serviceClass = $ns->addClass($className);
@@ -86,24 +41,16 @@ class ServiceGenerator
 
 
         $refMap = [];
-        foreach ($fileContent['definitions'] as $defName => $def) {
-            if (isset($def['type'])) {
-                $type = $def['type'];
-                if ($type == 'object') {
-                    $refName = $this->getRefNameFromRefString($defName);
-                    $defClassName = $this->replaceNumbers($this->getClassNameFromRefName($refName));
-                    $defClassNameClean = $this->cleanName($defClassName);
+        foreach ($this->references as $defName => $type) {
+            $def = $this->definitions[$defName];
 
-                    $refMap[$defName] = '\\' . $modelNamespace . '\\' . $className . '\\' . $defClassName;
-                } else {
-                    $refMap[$defName] = $type;
-                }
-            } else {
-                $refMap[$defName] = "string";
+            if (isset($def['type']) && $def['type'] == 'object'){
+                $type = '\\' . $modelNamespace . '\\' .$className . '\\'. $type;
             }
+            $refMap[$defName] = $type;
         }
 
-        foreach ($fileContent['paths'] as $path => $ops) {
+        foreach ($this->fileContent['paths'] as $path => $ops) {
             $path = str_replace('{', '{$', $path);
             foreach ($ops as $httpMethod => $def) {
                 $methodName = $def['summary'];
@@ -167,7 +114,7 @@ class ServiceGenerator
                         $responseType = (substr($responseType, strrpos($responseType, '\\') + 1));
                     }
                 }
-                $basePath = $fileContent['basePath'];
+                $basePath = $this->fileContent['basePath'];
                 $fullPath = $basePath . $path;
                 $httpMethod = strtoupper($httpMethod);
                 $methodBody = <<<PHP
@@ -178,7 +125,7 @@ $requestBody
 \$response = \$this->client->send(\$request);
 \$jsonProduct = json_decode(\$response->getBody());
 \$mapper = new \JsonMapper();
-return \$mapper->map(\$jsonProduct, new $responseType());
+return \$mapper->map(\$jsonProduct, new ${responseType}());
 PHP;
                     $method->setBody($methodBody);
                     $method->setVisibility('public');
@@ -203,8 +150,8 @@ PHP;
         $fileName = str_replace('\\', '/', $directory . '/' . $className . '.php');
 
         $printer = new PsrPrinter();
-        $ns = $printer->printNamespace($ns);
-        if (!file_put_contents($fileName, '<?php' . PHP_EOL . PHP_EOL . $ns)) {
+        $phpContent = $printer->printNamespace($ns);
+        if (!file_put_contents($fileName, '<?php' . PHP_EOL . PHP_EOL . $phpContent)) {
             echo "error writing file " . $fileName . PHP_EOL;
         }
     }
