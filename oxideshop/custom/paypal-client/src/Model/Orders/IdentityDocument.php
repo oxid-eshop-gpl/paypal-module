@@ -7,24 +7,23 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class IdentityDocument implements \JsonSerializable
 {
-	/** @var string */
-	public $type;
+    /** @var string */
+    public $type;
 
-	/** @var DocumentIssuer */
-	public $issuer;
+    /** @var DocumentIssuer */
+    public $issuer;
 
-	/** @var string */
-	public $id_number;
+    /** @var string */
+    public $id_number;
 
-	/** @var string */
-	public $issued_date;
+    /** @var string */
+    public $issued_date;
 
-	/** @var string */
-	public $expiration_date;
+    /** @var string */
+    public $expiration_date;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

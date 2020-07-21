@@ -7,12 +7,11 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
  */
 class Facilitator implements \JsonSerializable
 {
-	/** @var string */
-	public $name;
+    /** @var string */
+    public $name;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

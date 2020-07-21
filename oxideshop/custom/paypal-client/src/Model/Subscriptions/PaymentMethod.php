@@ -7,18 +7,17 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
  */
 class PaymentMethod implements \JsonSerializable
 {
-	/** @var string */
-	public $payer_selected;
+    /** @var string */
+    public $payer_selected;
 
-	/** @var string */
-	public $payee_preferred;
+    /** @var string */
+    public $payee_preferred;
 
-	/** @var string */
-	public $category;
+    /** @var string */
+    public $category;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

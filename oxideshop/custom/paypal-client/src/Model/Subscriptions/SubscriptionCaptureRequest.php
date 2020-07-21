@@ -7,18 +7,17 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
  */
 class SubscriptionCaptureRequest implements \JsonSerializable
 {
-	/** @var string */
-	public $note;
+    /** @var string */
+    public $note;
 
-	/** @var string */
-	public $capture_type;
+    /** @var string */
+    public $capture_type;
 
-	/** @var Money */
-	public $amount;
+    /** @var Money */
+    public $amount;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

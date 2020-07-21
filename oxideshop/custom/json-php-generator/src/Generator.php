@@ -128,7 +128,7 @@ class Generator
                 }
             }
             $class->addImplement(\JsonSerializable::class);
-            $class->addMethod('jsonSerialize')->addBody('return array_filter((array) $this);')->setVisibility('public');
+            $class->addMethod('jsonSerialize')->addBody('return array_filter((array) $this,static function($var){return isset($var);});')->setVisibility('public');
 
 //              $title = implode('', explode(' ', $definition['title']));
 //              $title = preg_replace("/[^A-Za-z0-9 ]/", '', $title);
@@ -151,9 +151,10 @@ class Generator
         }
 
         $className = str_replace('\\', '/', $directory . '/' . $className . '.php');
-
+        $printer = new PsrPrinter();
+        $phpContent = $printer->printNamespace($ns);
         if (!file_exists($className)) {
-            if(!file_put_contents($className, '<?php' . PHP_EOL . PHP_EOL . $ns)) {
+            if(!file_put_contents($className, '<?php' . PHP_EOL . PHP_EOL . $phpContent)) {
                 echo "error writing file " . $className . PHP_EOL;
             }
         }
@@ -274,14 +275,17 @@ class Generator
 
         $refName = $this->getRefNameFromRefString($defName);
         $defClassName = $this->replaceNumbers($this->getClassNameFromRefName($refName));
-
+/*
         if (strpos($defName, 'MerchantsCommonComponentsSpecification') === false) {
             if(isset($defs['title'])) {
                 $title = implode('', explode(' ', $defs['title']));
                 $title = preg_replace("/[^A-Za-z0-9 ]/", '', $title);
+                if ($title != $defClassName) {
+                    //not sure which name is better e.g. Title = ProductDetails vs Product
+                }
             }
         }
-
+*/
         return $defClassName;
     }
 
@@ -309,6 +313,9 @@ class Generator
 
                 if ($type == 'object') {
                     $className = $this->calculateClassName($defName, $defs);
+                    if (isset($this->references[$defName])) {
+                        throw new \Exception("duplicate Class Name");
+                    }
                     $this->references[$defName] = $className;
                 } else {
                     $this->references[$defName] = $type;

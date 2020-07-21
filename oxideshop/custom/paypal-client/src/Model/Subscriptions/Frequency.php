@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
  */
 class Frequency implements \JsonSerializable
 {
-	/** @var string */
-	public $interval_unit;
+    /** @var string */
+    public $interval_unit;
 
-	/** @var integer */
-	public $interval_count;
+    /** @var integer */
+    public $interval_count;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

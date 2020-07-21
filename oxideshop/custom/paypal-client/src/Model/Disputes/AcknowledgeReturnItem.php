@@ -7,12 +7,11 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
  */
 class AcknowledgeReturnItem implements \JsonSerializable
 {
-	/** @var string */
-	public $note;
+    /** @var string */
+    public $note;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

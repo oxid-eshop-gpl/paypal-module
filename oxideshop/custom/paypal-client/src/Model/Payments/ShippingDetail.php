@@ -7,18 +7,17 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
  */
 class ShippingDetail implements \JsonSerializable
 {
-	/** @var Name */
-	public $name;
+    /** @var Name */
+    public $name;
 
-	/** @var array */
-	public $options;
+    /** @var array */
+    public $options;
 
-	/** @var AddressPortable */
-	public $address;
+    /** @var AddressPortable */
+    public $address;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

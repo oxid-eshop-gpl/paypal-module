@@ -7,36 +7,35 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
  */
 class ReferredDisputeSummary implements \JsonSerializable
 {
-	/** @var string */
-	public $dispute_id;
+    /** @var string */
+    public $dispute_id;
 
-	/** @var string */
-	public $create_time;
+    /** @var string */
+    public $create_time;
 
-	/** @var string */
-	public $update_time;
+    /** @var string */
+    public $update_time;
 
-	/** @var array */
-	public $reference_disputes;
+    /** @var array */
+    public $reference_disputes;
 
-	/** @var Money */
-	public $dispute_amount;
+    /** @var Money */
+    public $dispute_amount;
 
-	/** @var string */
-	public $reason;
+    /** @var string */
+    public $reason;
 
-	/** @var string */
-	public $status;
+    /** @var string */
+    public $status;
 
-	/** @var string */
-	public $dispute_flow;
+    /** @var string */
+    public $dispute_flow;
 
-	/** @var array */
-	public $links;
+    /** @var array */
+    public $links;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

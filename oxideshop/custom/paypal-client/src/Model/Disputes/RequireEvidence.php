@@ -7,12 +7,11 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
  */
 class RequireEvidence implements \JsonSerializable
 {
-	/** @var string */
-	public $action;
+    /** @var string */
+    public $action;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

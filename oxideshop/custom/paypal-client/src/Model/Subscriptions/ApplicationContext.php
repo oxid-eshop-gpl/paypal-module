@@ -7,30 +7,29 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
  */
 class ApplicationContext implements \JsonSerializable
 {
-	/** @var string */
-	public $brand_name;
+    /** @var string */
+    public $brand_name;
 
-	/** @var string */
-	public $locale;
+    /** @var string */
+    public $locale;
 
-	/** @var string */
-	public $shipping_preference;
+    /** @var string */
+    public $shipping_preference;
 
-	/** @var string */
-	public $user_action;
+    /** @var string */
+    public $user_action;
 
-	/** @var PaymentMethod */
-	public $payment_method;
+    /** @var PaymentMethod */
+    public $payment_method;
 
-	/** @var string */
-	public $return_url;
+    /** @var string */
+    public $return_url;
 
-	/** @var string */
-	public $cancel_url;
+    /** @var string */
+    public $cancel_url;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

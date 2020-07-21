@@ -7,24 +7,23 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
  */
 class PartnerConfigOverride implements \JsonSerializable
 {
-	/** @var string */
-	public $partner_logo_url;
+    /** @var string */
+    public $partner_logo_url;
 
-	/** @var string */
-	public $return_url;
+    /** @var string */
+    public $return_url;
 
-	/** @var string */
-	public $return_url_description;
+    /** @var string */
+    public $return_url_description;
 
-	/** @var string */
-	public $action_renewal_url;
+    /** @var string */
+    public $action_renewal_url;
 
-	/** @var boolean */
-	public $show_add_credit_card;
+    /** @var boolean */
+    public $show_add_credit_card;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

@@ -7,12 +7,11 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class ExtendedPaymentSource extends \PaymentSource implements \JsonSerializable
 {
-	/** @var array */
-	public $contingencies;
+    /** @var array */
+    public $contingencies;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

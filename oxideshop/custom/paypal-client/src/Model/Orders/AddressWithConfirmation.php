@@ -7,18 +7,17 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class AddressWithConfirmation extends \AddressName implements \JsonSerializable
 {
-	/** @var string */
-	public $id;
+    /** @var string */
+    public $id;
 
-	/** @var string */
-	public $confirmation_status;
+    /** @var string */
+    public $confirmation_status;
 
-	/** @var string */
-	public $confirmation_authority;
+    /** @var string */
+    public $confirmation_authority;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

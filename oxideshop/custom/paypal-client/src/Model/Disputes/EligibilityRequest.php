@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
  */
 class EligibilityRequest implements \JsonSerializable
 {
-	/** @var string */
-	public $transaction_id;
+    /** @var string */
+    public $transaction_id;
 
-	/** @var array */
-	public $disputed_items;
+    /** @var array */
+    public $disputed_items;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

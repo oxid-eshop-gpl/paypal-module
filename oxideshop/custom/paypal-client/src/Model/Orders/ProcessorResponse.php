@@ -7,21 +7,20 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class ProcessorResponse implements \JsonSerializable
 {
-	/** @var string */
-	public $avs_code;
+    /** @var string */
+    public $avs_code;
 
-	/** @var string */
-	public $cvv_code;
+    /** @var string */
+    public $cvv_code;
 
-	/** @var string */
-	public $response_code;
+    /** @var string */
+    public $response_code;
 
-	/** @var string */
-	public $payment_advice_code;
+    /** @var string */
+    public $payment_advice_code;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

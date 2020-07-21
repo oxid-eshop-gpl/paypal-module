@@ -7,12 +7,11 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
  */
 class BusinessName implements \JsonSerializable
 {
-	/** @var string */
-	public $business_name;
+    /** @var string */
+    public $business_name;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

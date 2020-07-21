@@ -7,24 +7,23 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
  */
 class AcceptClaim implements \JsonSerializable
 {
-	/** @var string */
-	public $note;
+    /** @var string */
+    public $note;
 
-	/** @var string */
-	public $accept_claim_reason;
+    /** @var string */
+    public $accept_claim_reason;
 
-	/** @var string */
-	public $invoice_id;
+    /** @var string */
+    public $invoice_id;
 
-	/** @var AddressPortable */
-	public $return_shipping_address;
+    /** @var AddressPortable */
+    public $return_shipping_address;
 
-	/** @var Money */
-	public $refund_amount;
+    /** @var Money */
+    public $refund_amount;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

@@ -7,18 +7,17 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class BlikRequest implements \JsonSerializable
 {
-	/** @var string */
-	public $name;
+    /** @var string */
+    public $name;
 
-	/** @var string */
-	public $country_code;
+    /** @var string */
+    public $country_code;
 
-	/** @var string */
-	public $email;
+    /** @var string */
+    public $email;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

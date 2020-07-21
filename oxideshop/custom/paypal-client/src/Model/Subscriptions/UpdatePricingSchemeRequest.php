@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
  */
 class UpdatePricingSchemeRequest implements \JsonSerializable
 {
-	/** @var integer */
-	public $billing_cycle_sequence;
+    /** @var integer */
+    public $billing_cycle_sequence;
 
-	/** @var PricingScheme */
-	public $pricing_scheme;
+    /** @var PricingScheme */
+    public $pricing_scheme;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

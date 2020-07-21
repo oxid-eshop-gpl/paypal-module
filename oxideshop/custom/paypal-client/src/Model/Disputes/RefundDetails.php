@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
  */
 class RefundDetails implements \JsonSerializable
 {
-	/** @var Money */
-	public $allowed_refund_amount;
+    /** @var Money */
+    public $allowed_refund_amount;
 
-	/** @var array */
-	public $refunds;
+    /** @var array */
+    public $refunds;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

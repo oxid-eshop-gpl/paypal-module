@@ -7,24 +7,23 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
  */
 class FileReference implements \JsonSerializable
 {
-	/** @var string */
-	public $id;
+    /** @var string */
+    public $id;
 
-	/** @var string */
-	public $reference_url;
+    /** @var string */
+    public $reference_url;
 
-	/** @var string */
-	public $content_type;
+    /** @var string */
+    public $content_type;
 
-	/** @var string */
-	public $create_time;
+    /** @var string */
+    public $create_time;
 
-	/** @var string */
-	public $size;
+    /** @var string */
+    public $size;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

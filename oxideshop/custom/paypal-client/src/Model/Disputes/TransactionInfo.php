@@ -7,54 +7,53 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
  */
 class TransactionInfo implements \JsonSerializable
 {
-	/** @var string */
-	public $buyer_transaction_id;
+    /** @var string */
+    public $buyer_transaction_id;
 
-	/** @var string */
-	public $seller_transaction_id;
+    /** @var string */
+    public $seller_transaction_id;
 
-	/** @var string */
-	public $create_time;
+    /** @var string */
+    public $create_time;
 
-	/** @var string */
-	public $transaction_status;
+    /** @var string */
+    public $transaction_status;
 
-	/** @var Money */
-	public $gross_amount;
+    /** @var Money */
+    public $gross_amount;
 
-	/** @var string */
-	public $invoice_number;
+    /** @var string */
+    public $invoice_number;
 
-	/** @var string */
-	public $custom;
+    /** @var string */
+    public $custom;
 
-	/** @var Buyer */
-	public $buyer;
+    /** @var Buyer */
+    public $buyer;
 
-	/** @var Seller */
-	public $seller;
+    /** @var Seller */
+    public $seller;
 
-	/** @var Facilitator */
-	public $facilitator;
+    /** @var Facilitator */
+    public $facilitator;
 
-	/** @var array */
-	public $items;
+    /** @var array */
+    public $items;
 
-	/** @var boolean */
-	public $seller_protection_eligible;
+    /** @var boolean */
+    public $seller_protection_eligible;
 
-	/** @var string */
-	public $seller_protection_type;
+    /** @var string */
+    public $seller_protection_type;
 
-	/** @var RegulationInfo */
-	public $regulation_info;
+    /** @var RegulationInfo */
+    public $regulation_info;
 
-	/** @var string */
-	public $provisional_credit_status;
+    /** @var string */
+    public $provisional_credit_status;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

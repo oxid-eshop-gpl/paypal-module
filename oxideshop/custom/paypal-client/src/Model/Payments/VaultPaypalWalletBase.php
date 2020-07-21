@@ -7,27 +7,26 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
  */
 class VaultPaypalWalletBase implements \JsonSerializable
 {
-	/** @var string */
-	public $description;
+    /** @var string */
+    public $description;
 
-	/** @var string */
-	public $product_label;
+    /** @var string */
+    public $product_label;
 
-	/** @var ShippingDetail */
-	public $shipping;
+    /** @var ShippingDetail */
+    public $shipping;
 
-	/** @var string */
-	public $usage_type;
+    /** @var string */
+    public $usage_type;
 
-	/** @var string */
-	public $customer_type;
+    /** @var string */
+    public $customer_type;
 
-	/** @var boolean */
-	public $permit_multiple_payment_tokens;
+    /** @var boolean */
+    public $permit_multiple_payment_tokens;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

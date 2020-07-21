@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class AuthorizationWithAdditionalData extends \Authorization implements \JsonSerializable
 {
-	/** @var RiskAssessments */
-	public $risk_assessment;
+    /** @var RiskAssessments */
+    public $risk_assessment;
 
-	/** @var ProcessorResponse */
-	public $processor_response;
+    /** @var ProcessorResponse */
+    public $processor_response;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

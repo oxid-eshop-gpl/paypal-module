@@ -7,24 +7,23 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
  */
 class EligibilityResponse implements \JsonSerializable
 {
-	/** @var boolean */
-	public $eligible;
+    /** @var boolean */
+    public $eligible;
 
-	/** @var string */
-	public $allowable_life_cycle;
+    /** @var string */
+    public $allowable_life_cycle;
 
-	/** @var string */
-	public $ineligibility_reason;
+    /** @var string */
+    public $ineligibility_reason;
 
-	/** @var array */
-	public $existing_disputes;
+    /** @var array */
+    public $existing_disputes;
 
-	/** @var array */
-	public $existing_refunds;
+    /** @var array */
+    public $existing_refunds;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

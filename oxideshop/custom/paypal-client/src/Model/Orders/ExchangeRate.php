@@ -7,18 +7,17 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class ExchangeRate implements \JsonSerializable
 {
-	/** @var string */
-	public $source_currency;
+    /** @var string */
+    public $source_currency;
 
-	/** @var string */
-	public $target_currency;
+    /** @var string */
+    public $target_currency;
 
-	/** @var string */
-	public $value;
+    /** @var string */
+    public $value;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

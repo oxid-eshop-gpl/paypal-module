@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
  */
 class RollOutStrategy implements \JsonSerializable
 {
-	/** @var string */
-	public $effective_time;
+    /** @var string */
+    public $effective_time;
 
-	/** @var string */
-	public $process_change_from;
+    /** @var string */
+    public $process_change_from;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

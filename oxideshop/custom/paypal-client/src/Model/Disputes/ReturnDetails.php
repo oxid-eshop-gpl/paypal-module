@@ -7,24 +7,23 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
  */
 class ReturnDetails implements \JsonSerializable
 {
-	/** @var string */
-	public $return_time;
+    /** @var string */
+    public $return_time;
 
-	/** @var string */
-	public $mode;
+    /** @var string */
+    public $mode;
 
-	/** @var boolean */
-	public $receipt;
+    /** @var boolean */
+    public $receipt;
 
-	/** @var string */
-	public $return_confirmation_number;
+    /** @var string */
+    public $return_confirmation_number;
 
-	/** @var boolean */
-	public $returned;
+    /** @var boolean */
+    public $returned;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

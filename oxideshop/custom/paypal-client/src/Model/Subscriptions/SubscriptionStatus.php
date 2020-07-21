@@ -7,21 +7,20 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
  */
 class SubscriptionStatus implements \JsonSerializable
 {
-	/** @var string */
-	public $status;
+    /** @var string */
+    public $status;
 
-	/** @var string */
-	public $status_change_note;
+    /** @var string */
+    public $status_change_note;
 
-	/** @var string */
-	public $status_update_time;
+    /** @var string */
+    public $status_update_time;
 
-	/** @var string */
-	public $status_changed_by;
+    /** @var string */
+    public $status_changed_by;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

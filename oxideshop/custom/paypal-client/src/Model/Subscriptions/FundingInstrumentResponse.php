@@ -7,18 +7,17 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
  */
 class FundingInstrumentResponse implements \JsonSerializable
 {
-	/** @var CardResponse */
-	public $card;
+    /** @var CardResponse */
+    public $card;
 
-	/** @var BankAccountResponse */
-	public $bank_account;
+    /** @var BankAccountResponse */
+    public $bank_account;
 
-	/** @var PaypalCredit */
-	public $credit;
+    /** @var PaypalCredit */
+    public $credit;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
  */
 class RegulationInfo implements \JsonSerializable
 {
-	/** @var string */
-	public $regulation_covered;
+    /** @var string */
+    public $regulation_covered;
 
-	/** @var string */
-	public $resolution_sla;
+    /** @var string */
+    public $resolution_sla;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

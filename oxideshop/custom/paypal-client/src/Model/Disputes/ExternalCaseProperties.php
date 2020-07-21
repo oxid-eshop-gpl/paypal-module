@@ -7,21 +7,20 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
  */
 class ExternalCaseProperties implements \JsonSerializable
 {
-	/** @var string */
-	public $reference_id;
+    /** @var string */
+    public $reference_id;
 
-	/** @var string */
-	public $external_type;
+    /** @var string */
+    public $external_type;
 
-	/** @var string */
-	public $recovery_type;
+    /** @var string */
+    public $recovery_type;
 
-	/** @var Money */
-	public $reversal_fee;
+    /** @var Money */
+    public $reversal_fee;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

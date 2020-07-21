@@ -7,24 +7,23 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Catalog;
  */
 class ErrorDetails implements \JsonSerializable
 {
-	/** @var string */
-	public $field;
+    /** @var string */
+    public $field;
 
-	/** @var string */
-	public $value;
+    /** @var string */
+    public $value;
 
-	/** @var string */
-	public $location;
+    /** @var string */
+    public $location;
 
-	/** @var string */
-	public $issue;
+    /** @var string */
+    public $issue;
 
-	/** @var string */
-	public $description;
+    /** @var string */
+    public $description;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

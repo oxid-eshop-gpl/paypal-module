@@ -7,45 +7,44 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class OrderApplicationContext implements \JsonSerializable
 {
-	/** @var string */
-	public $brand_name;
+    /** @var string */
+    public $brand_name;
 
-	/** @var string */
-	public $locale;
+    /** @var string */
+    public $locale;
 
-	/** @var string */
-	public $landing_page;
+    /** @var string */
+    public $landing_page;
 
-	/** @var string */
-	public $shipping_preference;
+    /** @var string */
+    public $shipping_preference;
 
-	/** @var string */
-	public $user_action;
+    /** @var string */
+    public $user_action;
 
-	/** @var PaymentMethod */
-	public $payment_method;
+    /** @var PaymentMethod */
+    public $payment_method;
 
-	/** @var string */
-	public $return_url;
+    /** @var string */
+    public $return_url;
 
-	/** @var string */
-	public $cancel_url;
+    /** @var string */
+    public $cancel_url;
 
-	/** @var string */
-	public $payment_token;
+    /** @var string */
+    public $payment_token;
 
-	/** @var ClientConfiguration */
-	public $client_configuration;
+    /** @var ClientConfiguration */
+    public $client_configuration;
 
-	/** @var boolean */
-	public $vault;
+    /** @var boolean */
+    public $vault;
 
-	/** @var PaymentSource */
-	public $preferred_payment_source;
+    /** @var PaymentSource */
+    public $preferred_payment_source;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

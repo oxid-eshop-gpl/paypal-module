@@ -7,12 +7,11 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
  */
 class Mandate implements \JsonSerializable
 {
-	/** @var boolean */
-	public $accepted;
+    /** @var boolean */
+    public $accepted;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

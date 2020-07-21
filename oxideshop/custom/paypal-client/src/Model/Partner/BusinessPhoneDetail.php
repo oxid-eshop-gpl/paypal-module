@@ -7,24 +7,23 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
  */
 class BusinessPhoneDetail extends \Phone implements \JsonSerializable
 {
-	/** @var string */
-	public $contact_name;
+    /** @var string */
+    public $contact_name;
 
-	/** @var boolean */
-	public $inactive;
+    /** @var boolean */
+    public $inactive;
 
-	/** @var boolean */
-	public $primary;
+    /** @var boolean */
+    public $primary;
 
-	/** @var string */
-	public $type;
+    /** @var string */
+    public $type;
 
-	/** @var array */
-	public $tags;
+    /** @var array */
+    public $tags;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

@@ -7,30 +7,29 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
  */
 class Bank implements \JsonSerializable
 {
-	/** @var string */
-	public $nick_name;
+    /** @var string */
+    public $nick_name;
 
-	/** @var string */
-	public $account_number;
+    /** @var string */
+    public $account_number;
 
-	/** @var string */
-	public $account_type;
+    /** @var string */
+    public $account_type;
 
-	/** @var string */
-	public $currency_code;
+    /** @var string */
+    public $currency_code;
 
-	/** @var array */
-	public $identifiers;
+    /** @var array */
+    public $identifiers;
 
-	/** @var AddressPortable */
-	public $branch_location;
+    /** @var AddressPortable */
+    public $branch_location;
 
-	/** @var Mandate */
-	public $mandate;
+    /** @var Mandate */
+    public $mandate;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

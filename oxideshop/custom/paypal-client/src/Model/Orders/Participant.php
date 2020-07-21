@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class Participant extends \Account implements \JsonSerializable
 {
-	/** @var Person */
-	public $person;
+    /** @var Person */
+    public $person;
 
-	/** @var Business */
-	public $business;
+    /** @var Business */
+    public $business;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

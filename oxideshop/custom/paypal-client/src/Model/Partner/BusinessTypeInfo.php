@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
  */
 class BusinessTypeInfo implements \JsonSerializable
 {
-	/** @var string */
-	public $type;
+    /** @var string */
+    public $type;
 
-	/** @var string */
-	public $subtype;
+    /** @var string */
+    public $subtype;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

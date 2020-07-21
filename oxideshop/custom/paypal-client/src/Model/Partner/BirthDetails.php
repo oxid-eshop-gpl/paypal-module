@@ -7,12 +7,11 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
  */
 class BirthDetails implements \JsonSerializable
 {
-	/** @var string */
-	public $date_of_birth;
+    /** @var string */
+    public $date_of_birth;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

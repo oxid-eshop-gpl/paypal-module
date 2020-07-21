@@ -7,18 +7,17 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class ApplePayCardResponse extends \CardResponse implements \JsonSerializable
 {
-	/** @var string */
-	public $name;
+    /** @var string */
+    public $name;
 
-	/** @var AddressPortable */
-	public $billing_address;
+    /** @var AddressPortable */
+    public $billing_address;
 
-	/** @var string */
-	public $country_code;
+    /** @var string */
+    public $country_code;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

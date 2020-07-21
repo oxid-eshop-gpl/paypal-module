@@ -7,12 +7,11 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class Bank implements \JsonSerializable
 {
-	/** @var AchDebit */
-	public $ach_debit;
+    /** @var AchDebit */
+    public $ach_debit;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

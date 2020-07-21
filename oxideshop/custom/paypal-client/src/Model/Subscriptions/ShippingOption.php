@@ -7,24 +7,23 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
  */
 class ShippingOption implements \JsonSerializable
 {
-	/** @var string */
-	public $id;
+    /** @var string */
+    public $id;
 
-	/** @var string */
-	public $label;
+    /** @var string */
+    public $label;
 
-	/** @var string */
-	public $type;
+    /** @var string */
+    public $type;
 
-	/** @var Money */
-	public $amount;
+    /** @var Money */
+    public $amount;
 
-	/** @var boolean */
-	public $selected;
+    /** @var boolean */
+    public $selected;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

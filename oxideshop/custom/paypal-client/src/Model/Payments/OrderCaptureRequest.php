@@ -7,12 +7,11 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
  */
 class OrderCaptureRequest extends \CaptureRequest implements \JsonSerializable
 {
-	/** @var string */
-	public $order_id;
+    /** @var string */
+    public $order_id;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

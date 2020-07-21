@@ -7,21 +7,20 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class Facilitator extends \Participant implements \JsonSerializable
 {
-	/** @var string */
-	public $type;
+    /** @var string */
+    public $type;
 
-	/** @var string */
-	public $client_id;
+    /** @var string */
+    public $client_id;
 
-	/** @var string */
-	public $integration_identifier;
+    /** @var string */
+    public $integration_identifier;
 
-	/** @var array */
-	public $segments;
+    /** @var array */
+    public $segments;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
  */
 class Taxes implements \JsonSerializable
 {
-	/** @var string */
-	public $percentage;
+    /** @var string */
+    public $percentage;
 
-	/** @var boolean */
-	public $inclusive;
+    /** @var boolean */
+    public $inclusive;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

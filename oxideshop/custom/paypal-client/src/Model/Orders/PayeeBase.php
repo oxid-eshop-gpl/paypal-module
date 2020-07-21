@@ -7,18 +7,17 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class PayeeBase implements \JsonSerializable
 {
-	/** @var string */
-	public $email_address;
+    /** @var string */
+    public $email_address;
 
-	/** @var string */
-	public $merchant_id;
+    /** @var string */
+    public $merchant_id;
 
-	/** @var string */
-	public $client_id;
+    /** @var string */
+    public $client_id;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

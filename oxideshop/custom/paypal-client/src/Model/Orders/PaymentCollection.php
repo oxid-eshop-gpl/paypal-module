@@ -7,18 +7,17 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class PaymentCollection implements \JsonSerializable
 {
-	/** @var array */
-	public $authorizations;
+    /** @var array */
+    public $authorizations;
 
-	/** @var array */
-	public $captures;
+    /** @var array */
+    public $captures;
 
-	/** @var array */
-	public $refunds;
+    /** @var array */
+    public $refunds;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

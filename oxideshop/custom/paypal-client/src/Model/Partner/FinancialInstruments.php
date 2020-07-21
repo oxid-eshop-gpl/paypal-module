@@ -7,12 +7,11 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
  */
 class FinancialInstruments implements \JsonSerializable
 {
-	/** @var array */
-	public $banks;
+    /** @var array */
+    public $banks;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

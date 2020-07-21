@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class CustomerServiceContact implements \JsonSerializable
 {
-	/** @var array */
-	public $emails;
+    /** @var array */
+    public $emails;
 
-	/** @var array */
-	public $phones;
+    /** @var array */
+    public $phones;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

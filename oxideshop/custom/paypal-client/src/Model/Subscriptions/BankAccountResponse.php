@@ -7,27 +7,26 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
  */
 class BankAccountResponse implements \JsonSerializable
 {
-	/** @var string */
-	public $id;
+    /** @var string */
+    public $id;
 
-	/** @var string */
-	public $last_n_chars;
+    /** @var string */
+    public $last_n_chars;
 
-	/** @var string */
-	public $bank_name;
+    /** @var string */
+    public $bank_name;
 
-	/** @var string */
-	public $account_type;
+    /** @var string */
+    public $account_type;
 
-	/** @var string */
-	public $country_code;
+    /** @var string */
+    public $country_code;
 
-	/** @var BackupFundingInstrument */
-	public $backup_funding_instrument;
+    /** @var BackupFundingInstrument */
+    public $backup_funding_instrument;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

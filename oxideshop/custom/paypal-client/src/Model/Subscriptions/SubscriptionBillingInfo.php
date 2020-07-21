@@ -7,36 +7,35 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
  */
 class SubscriptionBillingInfo implements \JsonSerializable
 {
-	/** @var Money */
-	public $outstanding_balance;
+    /** @var Money */
+    public $outstanding_balance;
 
-	/** @var array */
-	public $cycle_executions;
+    /** @var array */
+    public $cycle_executions;
 
-	/** @var LastPaymentDetails */
-	public $last_payment;
+    /** @var LastPaymentDetails */
+    public $last_payment;
 
-	/** @var string */
-	public $next_billing_time;
+    /** @var string */
+    public $next_billing_time;
 
-	/** @var Money */
-	public $next_payment;
+    /** @var Money */
+    public $next_payment;
 
-	/** @var string */
-	public $final_payment_time;
+    /** @var string */
+    public $final_payment_time;
 
-	/** @var integer */
-	public $failed_payments_count;
+    /** @var integer */
+    public $failed_payments_count;
 
-	/** @var FailedPaymentDetails */
-	public $last_failed_payment;
+    /** @var FailedPaymentDetails */
+    public $last_failed_payment;
 
-	/** @var Money */
-	public $total_paid_amount;
+    /** @var Money */
+    public $total_paid_amount;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

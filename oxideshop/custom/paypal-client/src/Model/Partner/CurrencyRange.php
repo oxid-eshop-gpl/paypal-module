@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
  */
 class CurrencyRange implements \JsonSerializable
 {
-	/** @var Money */
-	public $minimum_amount;
+    /** @var Money */
+    public $minimum_amount;
 
-	/** @var Money */
-	public $maximum_amount;
+    /** @var Money */
+    public $maximum_amount;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

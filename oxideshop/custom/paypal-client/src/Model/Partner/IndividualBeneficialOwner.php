@@ -7,12 +7,11 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
  */
 class IndividualBeneficialOwner extends string implements \JsonSerializable
 {
-	/** @var string */
-	public $percentage_of_ownership;
+    /** @var string */
+    public $percentage_of_ownership;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

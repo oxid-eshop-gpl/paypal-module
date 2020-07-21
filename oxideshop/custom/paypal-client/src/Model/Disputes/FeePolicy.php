@@ -7,12 +7,11 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
  */
 class FeePolicy implements \JsonSerializable
 {
-	/** @var string */
-	public $transaction_fee;
+    /** @var string */
+    public $transaction_fee;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

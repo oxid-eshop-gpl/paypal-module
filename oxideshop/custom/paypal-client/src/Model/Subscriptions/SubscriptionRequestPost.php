@@ -7,30 +7,29 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
  */
 class SubscriptionRequestPost implements \JsonSerializable
 {
-	/** @var string */
-	public $plan_id;
+    /** @var string */
+    public $plan_id;
 
-	/** @var string */
-	public $start_time;
+    /** @var string */
+    public $start_time;
 
-	/** @var string */
-	public $quantity;
+    /** @var string */
+    public $quantity;
 
-	/** @var Money */
-	public $shipping_amount;
+    /** @var Money */
+    public $shipping_amount;
 
-	/** @var SubscriberRequest */
-	public $subscriber;
+    /** @var SubscriberRequest */
+    public $subscriber;
 
-	/** @var boolean */
-	public $auto_renewal;
+    /** @var boolean */
+    public $auto_renewal;
 
-	/** @var ApplicationContext */
-	public $application_context;
+    /** @var ApplicationContext */
+    public $application_context;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

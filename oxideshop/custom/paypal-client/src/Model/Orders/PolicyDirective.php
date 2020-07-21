@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class PolicyDirective implements \JsonSerializable
 {
-	/** @var string */
-	public $payment_decision;
+    /** @var string */
+    public $payment_decision;
 
-	/** @var array */
-	public $reason;
+    /** @var array */
+    public $reason;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

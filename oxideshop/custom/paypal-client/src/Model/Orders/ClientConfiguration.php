@@ -7,24 +7,23 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class ClientConfiguration implements \JsonSerializable
 {
-	/** @var string */
-	public $product_code;
+    /** @var string */
+    public $product_code;
 
-	/** @var string */
-	public $product_feature;
+    /** @var string */
+    public $product_feature;
 
-	/** @var string */
-	public $api;
+    /** @var string */
+    public $api;
 
-	/** @var string */
-	public $integration_artifact;
+    /** @var string */
+    public $integration_artifact;
 
-	/** @var ProductExperience */
-	public $experience;
+    /** @var ProductExperience */
+    public $experience;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

@@ -7,21 +7,20 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
  */
 class SupportingInfo implements \JsonSerializable
 {
-	/** @var string */
-	public $notes;
+    /** @var string */
+    public $notes;
 
-	/** @var array */
-	public $documents;
+    /** @var array */
+    public $documents;
 
-	/** @var string */
-	public $source;
+    /** @var string */
+    public $source;
 
-	/** @var string */
-	public $provided_time;
+    /** @var string */
+    public $provided_time;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

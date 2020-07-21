@@ -7,18 +7,17 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class PricingDirective implements \JsonSerializable
 {
-	/** @var string */
-	public $participant_type;
+    /** @var string */
+    public $participant_type;
 
-	/** @var string */
-	public $account_number;
+    /** @var string */
+    public $account_number;
 
-	/** @var string */
-	public $type;
+    /** @var string */
+    public $type;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

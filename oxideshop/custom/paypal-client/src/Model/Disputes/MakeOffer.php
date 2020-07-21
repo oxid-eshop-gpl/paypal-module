@@ -7,24 +7,23 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
  */
 class MakeOffer implements \JsonSerializable
 {
-	/** @var string */
-	public $note;
+    /** @var string */
+    public $note;
 
-	/** @var Money */
-	public $offer_amount;
+    /** @var Money */
+    public $offer_amount;
 
-	/** @var AddressPortable */
-	public $return_shipping_address;
+    /** @var AddressPortable */
+    public $return_shipping_address;
 
-	/** @var string */
-	public $invoice_id;
+    /** @var string */
+    public $invoice_id;
 
-	/** @var string */
-	public $offer_type;
+    /** @var string */
+    public $offer_type;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

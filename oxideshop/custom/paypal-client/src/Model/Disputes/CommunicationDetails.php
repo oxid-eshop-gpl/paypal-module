@@ -7,18 +7,17 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
  */
 class CommunicationDetails implements \JsonSerializable
 {
-	/** @var string */
-	public $email;
+    /** @var string */
+    public $email;
 
-	/** @var string */
-	public $note;
+    /** @var string */
+    public $note;
 
-	/** @var string */
-	public $time_posted;
+    /** @var string */
+    public $time_posted;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

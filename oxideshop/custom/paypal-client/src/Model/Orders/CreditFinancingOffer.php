@@ -7,27 +7,26 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class CreditFinancingOffer implements \JsonSerializable
 {
-	/** @var string */
-	public $issuer;
+    /** @var string */
+    public $issuer;
 
-	/** @var Money */
-	public $total_payment;
+    /** @var Money */
+    public $total_payment;
 
-	/** @var Money */
-	public $total_interest;
+    /** @var Money */
+    public $total_interest;
 
-	/** @var string */
-	public $period;
+    /** @var string */
+    public $period;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\InstallmentDetails */
-	public $InstallmentDetails;
+    /** @var OxidProfessionalServices\PayPal\Api\Model\Orders\InstallmentDetails */
+    public $InstallmentDetails;
 
-	/** @var integer */
-	public $term;
+    /** @var integer */
+    public $term;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

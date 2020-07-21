@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class PaypalWallet implements \JsonSerializable
 {
-	/** @var string */
-	public $payment_method_preference;
+    /** @var string */
+    public $payment_method_preference;
 
-	/** @var PaypalWalletAttributes */
-	public $attributes;
+    /** @var PaypalWalletAttributes */
+    public $attributes;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

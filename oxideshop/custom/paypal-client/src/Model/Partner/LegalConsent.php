@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
  */
 class LegalConsent implements \JsonSerializable
 {
-	/** @var string */
-	public $type;
+    /** @var string */
+    public $type;
 
-	/** @var boolean */
-	public $granted;
+    /** @var boolean */
+    public $granted;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

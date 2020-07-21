@@ -7,21 +7,20 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class PaymentContextData implements \JsonSerializable
 {
-	/** @var string */
-	public $intent;
+    /** @var string */
+    public $intent;
 
-	/** @var OrderApplicationContext */
-	public $application_context;
+    /** @var OrderApplicationContext */
+    public $application_context;
 
-	/** @var array */
-	public $facilitators;
+    /** @var array */
+    public $facilitators;
 
-	/** @var array */
-	public $payment_units;
+    /** @var array */
+    public $payment_units;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

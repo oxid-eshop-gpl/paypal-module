@@ -7,39 +7,38 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class Account implements \JsonSerializable
 {
-	/** @var string */
-	public $account_number;
+    /** @var string */
+    public $account_number;
 
-	/** @var string */
-	public $account_id;
+    /** @var string */
+    public $account_id;
 
-	/** @var string */
-	public $tier;
+    /** @var string */
+    public $tier;
 
-	/** @var string */
-	public $registration_type;
+    /** @var string */
+    public $registration_type;
 
-	/** @var string */
-	public $legal_country_code;
+    /** @var string */
+    public $legal_country_code;
 
-	/** @var array */
-	public $account_tags;
+    /** @var array */
+    public $account_tags;
 
-	/** @var string */
-	public $status;
+    /** @var string */
+    public $status;
 
-	/** @var string */
-	public $pricing_category;
+    /** @var string */
+    public $pricing_category;
 
-	/** @var string */
-	public $legal_entity;
+    /** @var string */
+    public $legal_entity;
 
-	/** @var string */
-	public $time_created;
+    /** @var string */
+    public $time_created;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

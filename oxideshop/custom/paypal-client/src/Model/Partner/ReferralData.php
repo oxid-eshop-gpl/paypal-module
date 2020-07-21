@@ -7,33 +7,32 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
  */
 class ReferralData extends \Account implements \JsonSerializable
 {
-	/** @var string */
-	public $email;
+    /** @var string */
+    public $email;
 
-	/** @var string */
-	public $preferred_language_code;
+    /** @var string */
+    public $preferred_language_code;
 
-	/** @var string */
-	public $tracking_id;
+    /** @var string */
+    public $tracking_id;
 
-	/** @var PartnerConfigOverride */
-	public $partner_config_override;
+    /** @var PartnerConfigOverride */
+    public $partner_config_override;
 
-	/** @var FinancialInstruments */
-	public $financial_instruments;
+    /** @var FinancialInstruments */
+    public $financial_instruments;
 
-	/** @var array */
-	public $operations;
+    /** @var array */
+    public $operations;
 
-	/** @var array */
-	public $products;
+    /** @var array */
+    public $products;
 
-	/** @var array */
-	public $legal_consents;
+    /** @var array */
+    public $legal_consents;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

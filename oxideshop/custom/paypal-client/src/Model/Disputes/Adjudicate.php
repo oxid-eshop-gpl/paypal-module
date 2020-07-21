@@ -7,12 +7,11 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
  */
 class Adjudicate implements \JsonSerializable
 {
-	/** @var string */
-	public $adjudication_outcome;
+    /** @var string */
+    public $adjudication_outcome;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

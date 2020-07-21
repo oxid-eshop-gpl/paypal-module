@@ -7,18 +7,17 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
  */
 class Phone implements \JsonSerializable
 {
-	/** @var string */
-	public $country_code;
+    /** @var string */
+    public $country_code;
 
-	/** @var string */
-	public $national_number;
+    /** @var string */
+    public $national_number;
 
-	/** @var string */
-	public $extension_number;
+    /** @var string */
+    public $extension_number;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

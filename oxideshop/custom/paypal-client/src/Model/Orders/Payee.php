@@ -7,12 +7,11 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class Payee extends \PayeeBase implements \JsonSerializable
 {
-	/** @var PayeeDisplayable */
-	public $display_data;
+    /** @var PayeeDisplayable */
+    public $display_data;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

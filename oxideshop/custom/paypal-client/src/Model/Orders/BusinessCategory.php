@@ -7,18 +7,17 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class BusinessCategory implements \JsonSerializable
 {
-	/** @var string */
-	public $category;
+    /** @var string */
+    public $category;
 
-	/** @var string */
-	public $sub_category;
+    /** @var string */
+    public $sub_category;
 
-	/** @var string */
-	public $mcc_code;
+    /** @var string */
+    public $mcc_code;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

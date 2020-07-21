@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class OrderValidateRequest implements \JsonSerializable
 {
-	/** @var ExtendedPaymentSource */
-	public $payment_source;
+    /** @var ExtendedPaymentSource */
+    public $payment_source;
 
-	/** @var OrderValidateApplicationContext */
-	public $application_context;
+    /** @var OrderValidateApplicationContext */
+    public $application_context;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

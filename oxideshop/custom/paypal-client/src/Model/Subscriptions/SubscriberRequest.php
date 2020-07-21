@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
  */
 class SubscriberRequest extends \Payer implements \JsonSerializable
 {
-	/** @var ShippingDetail */
-	public $shipping_address;
+    /** @var ShippingDetail */
+    public $shipping_address;
 
-	/** @var PaymentSource */
-	public $payment_source;
+    /** @var PaymentSource */
+    public $payment_source;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

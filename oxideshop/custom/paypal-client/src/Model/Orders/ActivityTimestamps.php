@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class ActivityTimestamps implements \JsonSerializable
 {
-	/** @var string */
-	public $create_time;
+    /** @var string */
+    public $create_time;
 
-	/** @var string */
-	public $update_time;
+    /** @var string */
+    public $update_time;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

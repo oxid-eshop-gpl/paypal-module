@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class TaxInfo implements \JsonSerializable
 {
-	/** @var string */
-	public $tax_id;
+    /** @var string */
+    public $tax_id;
 
-	/** @var string */
-	public $tax_id_type;
+    /** @var string */
+    public $tax_id_type;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

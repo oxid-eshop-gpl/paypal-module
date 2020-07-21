@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
  */
 class IncorrectTransactionAmount implements \JsonSerializable
 {
-	/** @var Money */
-	public $correct_transaction_amount;
+    /** @var Money */
+    public $correct_transaction_amount;
 
-	/** @var string */
-	public $correct_transaction_time;
+    /** @var string */
+    public $correct_transaction_time;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

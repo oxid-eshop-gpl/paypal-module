@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
  */
 class EvidenceInfo implements \JsonSerializable
 {
-	/** @var array */
-	public $tracking_info;
+    /** @var array */
+    public $tracking_info;
 
-	/** @var array */
-	public $refund_ids;
+    /** @var array */
+    public $refund_ids;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

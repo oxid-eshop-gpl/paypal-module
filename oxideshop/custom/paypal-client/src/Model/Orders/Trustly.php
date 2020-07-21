@@ -7,21 +7,20 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class Trustly implements \JsonSerializable
 {
-	/** @var string */
-	public $name;
+    /** @var string */
+    public $name;
 
-	/** @var string */
-	public $country_code;
+    /** @var string */
+    public $country_code;
 
-	/** @var string */
-	public $bic;
+    /** @var string */
+    public $bic;
 
-	/** @var string */
-	public $iban_last_chars;
+    /** @var string */
+    public $iban_last_chars;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

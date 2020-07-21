@@ -7,21 +7,20 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class VerkkopankkiRequest implements \JsonSerializable
 {
-	/** @var string */
-	public $name;
+    /** @var string */
+    public $name;
 
-	/** @var string */
-	public $email;
+    /** @var string */
+    public $email;
 
-	/** @var string */
-	public $country_code;
+    /** @var string */
+    public $country_code;
 
-	/** @var string */
-	public $bank_id;
+    /** @var string */
+    public $bank_id;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

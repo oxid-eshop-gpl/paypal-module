@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class PhoneInfo implements \JsonSerializable
 {
-	/** @var Phone */
-	public $phone_number;
+    /** @var Phone */
+    public $phone_number;
 
-	/** @var string */
-	public $phone_type;
+    /** @var string */
+    public $phone_type;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

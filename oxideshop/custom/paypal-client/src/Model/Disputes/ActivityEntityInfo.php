@@ -7,24 +7,23 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
  */
 class ActivityEntityInfo implements \JsonSerializable
 {
-	/** @var string */
-	public $last_known_valid_transaction_date;
+    /** @var string */
+    public $last_known_valid_transaction_date;
 
-	/** @var boolean */
-	public $card_replacement_address_confirmed;
+    /** @var boolean */
+    public $card_replacement_address_confirmed;
 
-	/** @var boolean */
-	public $card_shared_with_someone_else;
+    /** @var boolean */
+    public $card_shared_with_someone_else;
 
-	/** @var boolean */
-	public $merchant_has_card_details;
+    /** @var boolean */
+    public $merchant_has_card_details;
 
-	/** @var boolean */
-	public $card_settings_changed;
+    /** @var boolean */
+    public $card_settings_changed;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

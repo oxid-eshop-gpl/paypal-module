@@ -7,21 +7,20 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
  */
 class EligibleDisputeReason implements \JsonSerializable
 {
-	/** @var string */
-	public $dispute_reason;
+    /** @var string */
+    public $dispute_reason;
 
-	/** @var string */
-	public $stage;
+    /** @var string */
+    public $stage;
 
-	/** @var string */
-	public $reason;
+    /** @var string */
+    public $reason;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Disputes\AllowableLifeCycle */
-	public $AllowableLifeCycle;
+    /** @var OxidProfessionalServices\PayPal\Api\Model\Disputes\AllowableLifeCycle */
+    public $AllowableLifeCycle;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

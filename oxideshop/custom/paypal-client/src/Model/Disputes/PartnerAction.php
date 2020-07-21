@@ -7,30 +7,29 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
  */
 class PartnerAction implements \JsonSerializable
 {
-	/** @var string */
-	public $id;
+    /** @var string */
+    public $id;
 
-	/** @var string */
-	public $name;
+    /** @var string */
+    public $name;
 
-	/** @var string */
-	public $create_time;
+    /** @var string */
+    public $create_time;
 
-	/** @var string */
-	public $update_time;
+    /** @var string */
+    public $update_time;
 
-	/** @var string */
-	public $due_time;
+    /** @var string */
+    public $due_time;
 
-	/** @var string */
-	public $status;
+    /** @var string */
+    public $status;
 
-	/** @var Money */
-	public $amount;
+    /** @var Money */
+    public $amount;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

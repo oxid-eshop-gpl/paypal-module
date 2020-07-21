@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
  */
 class CanceledRecurringBilling implements \JsonSerializable
 {
-	/** @var Money */
-	public $expected_refund;
+    /** @var Money */
+    public $expected_refund;
 
-	/** @var CancellationDetails */
-	public $cancellation_details;
+    /** @var CancellationDetails */
+    public $cancellation_details;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

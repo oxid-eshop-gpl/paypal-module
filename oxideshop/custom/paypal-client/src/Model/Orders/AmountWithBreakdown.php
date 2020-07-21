@@ -7,12 +7,11 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class AmountWithBreakdown extends \Money implements \JsonSerializable
 {
-	/** @var AmountBreakdown */
-	public $breakdown;
+    /** @var AmountBreakdown */
+    public $breakdown;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

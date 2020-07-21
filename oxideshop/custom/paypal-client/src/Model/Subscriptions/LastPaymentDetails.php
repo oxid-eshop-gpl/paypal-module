@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
  */
 class LastPaymentDetails implements \JsonSerializable
 {
-	/** @var Money */
-	public $amount;
+    /** @var Money */
+    public $amount;
 
-	/** @var string */
-	public $time;
+    /** @var string */
+    public $time;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

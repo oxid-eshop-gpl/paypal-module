@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
  */
 class BillingExperiencePreference implements \JsonSerializable
 {
-	/** @var string */
-	public $experience_id;
+    /** @var string */
+    public $experience_id;
 
-	/** @var boolean */
-	public $billing_context_set;
+    /** @var boolean */
+    public $billing_context_set;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

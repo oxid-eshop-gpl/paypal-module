@@ -7,21 +7,20 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class Patch implements \JsonSerializable
 {
-	/** @var string */
-	public $op;
+    /** @var string */
+    public $op;
 
-	/** @var string */
-	public $path;
+    /** @var string */
+    public $path;
 
-	/** @var number|integer|string|boolean|null|array|object */
-	public $value;
+    /** @var number|integer|string|boolean|null|array|object */
+    public $value;
 
-	/** @var string */
-	public $from;
+    /** @var string */
+    public $from;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

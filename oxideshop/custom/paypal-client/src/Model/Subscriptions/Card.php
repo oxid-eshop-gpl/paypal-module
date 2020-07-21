@@ -7,36 +7,35 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
  */
 class Card implements \JsonSerializable
 {
-	/** @var string */
-	public $id;
+    /** @var string */
+    public $id;
 
-	/** @var string */
-	public $name;
+    /** @var string */
+    public $name;
 
-	/** @var string */
-	public $number;
+    /** @var string */
+    public $number;
 
-	/** @var string */
-	public $expiry;
+    /** @var string */
+    public $expiry;
 
-	/** @var string */
-	public $security_code;
+    /** @var string */
+    public $security_code;
 
-	/** @var string */
-	public $last_digits;
+    /** @var string */
+    public $last_digits;
 
-	/** @var string */
-	public $card_type;
+    /** @var string */
+    public $card_type;
 
-	/** @var AddressPortable */
-	public $billing_address;
+    /** @var AddressPortable */
+    public $billing_address;
 
-	/** @var array */
-	public $authentication_results;
+    /** @var array */
+    public $authentication_results;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

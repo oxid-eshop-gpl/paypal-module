@@ -7,12 +7,11 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class VaultInstructionBase implements \JsonSerializable
 {
-	/** @var string */
-	public $confirm_payment_token;
+    /** @var string */
+    public $confirm_payment_token;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class UpdatePurchaseUnitRequest implements \JsonSerializable
 {
-	/** @var string */
-	public $reference_id;
+    /** @var string */
+    public $reference_id;
 
-	/** @var UpdatePaymentCollectionRequest */
-	public $payments;
+    /** @var UpdatePaymentCollectionRequest */
+    public $payments;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

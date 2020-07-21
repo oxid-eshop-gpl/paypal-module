@@ -7,12 +7,11 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class PaypalWalletResponse implements \JsonSerializable
 {
-	/** @var PaypalWalletAttributesResponse */
-	public $attributes;
+    /** @var PaypalWalletAttributesResponse */
+    public $attributes;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

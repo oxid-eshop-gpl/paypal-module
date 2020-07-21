@@ -7,27 +7,26 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
  */
 class SubscriptionReviseRequest implements \JsonSerializable
 {
-	/** @var string */
-	public $plan_id;
+    /** @var string */
+    public $plan_id;
 
-	/** @var string */
-	public $quantity;
+    /** @var string */
+    public $quantity;
 
-	/** @var string */
-	public $effective_time;
+    /** @var string */
+    public $effective_time;
 
-	/** @var Money */
-	public $shipping_amount;
+    /** @var Money */
+    public $shipping_amount;
 
-	/** @var ShippingDetail */
-	public $shipping_address;
+    /** @var ShippingDetail */
+    public $shipping_address;
 
-	/** @var CustomizedXUnsupportedNineEightNineFourApplicationContext */
-	public $application_context;
+    /** @var CustomizedXUnsupportedNineEightNineFourApplicationContext */
+    public $application_context;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

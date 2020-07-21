@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
  */
 class PointOfSale implements \JsonSerializable
 {
-	/** @var string */
-	public $store_id;
+    /** @var string */
+    public $store_id;
 
-	/** @var string */
-	public $terminal_id;
+    /** @var string */
+    public $terminal_id;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

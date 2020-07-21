@@ -7,24 +7,23 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
  */
 class CreditNotProcessed implements \JsonSerializable
 {
-	/** @var string */
-	public $issue_type;
+    /** @var string */
+    public $issue_type;
 
-	/** @var Money */
-	public $expected_refund;
+    /** @var Money */
+    public $expected_refund;
 
-	/** @var CancellationDetails */
-	public $cancellation_details;
+    /** @var CancellationDetails */
+    public $cancellation_details;
 
-	/** @var ProductDetails */
-	public $product_details;
+    /** @var ProductDetails */
+    public $product_details;
 
-	/** @var ServiceDetails */
-	public $service_details;
+    /** @var ServiceDetails */
+    public $service_details;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

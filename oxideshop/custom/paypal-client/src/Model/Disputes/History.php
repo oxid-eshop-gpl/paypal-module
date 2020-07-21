@@ -7,18 +7,17 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
  */
 class History implements \JsonSerializable
 {
-	/** @var string */
-	public $date;
+    /** @var string */
+    public $date;
 
-	/** @var string */
-	public $actor;
+    /** @var string */
+    public $actor;
 
-	/** @var string */
-	public $event_type;
+    /** @var string */
+    public $event_type;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

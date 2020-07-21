@@ -7,33 +7,32 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class Refund extends \RefundStatus implements \JsonSerializable
 {
-	/** @var string */
-	public $id;
+    /** @var string */
+    public $id;
 
-	/** @var Money */
-	public $amount;
+    /** @var Money */
+    public $amount;
 
-	/** @var string */
-	public $invoice_id;
+    /** @var string */
+    public $invoice_id;
 
-	/** @var string */
-	public $note_to_payer;
+    /** @var string */
+    public $note_to_payer;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\SellerPayableBreakdown */
-	public $SellerPayableBreakdown;
+    /** @var OxidProfessionalServices\PayPal\Api\Model\Orders\SellerPayableBreakdown */
+    public $SellerPayableBreakdown;
 
-	/** @var array */
-	public $links;
+    /** @var array */
+    public $links;
 
-	/** @var string */
-	public $create_time;
+    /** @var string */
+    public $create_time;
 
-	/** @var string */
-	public $update_time;
+    /** @var string */
+    public $update_time;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

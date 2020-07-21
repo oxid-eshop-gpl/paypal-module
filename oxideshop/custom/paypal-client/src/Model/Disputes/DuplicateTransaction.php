@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
  */
 class DuplicateTransaction implements \JsonSerializable
 {
-	/** @var boolean */
-	public $received_duplicate;
+    /** @var boolean */
+    public $received_duplicate;
 
-	/** @var TransactionInfo */
-	public $original_transaction;
+    /** @var TransactionInfo */
+    public $original_transaction;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

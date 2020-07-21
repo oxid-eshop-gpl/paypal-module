@@ -7,21 +7,20 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
  */
 class ReferralDataResponse implements \JsonSerializable
 {
-	/** @var string */
-	public $partner_referral_id;
+    /** @var string */
+    public $partner_referral_id;
 
-	/** @var string */
-	public $submitter_payer_id;
+    /** @var string */
+    public $submitter_payer_id;
 
-	/** @var ReferralData */
-	public $referral_data;
+    /** @var ReferralData */
+    public $referral_data;
 
-	/** @var array */
-	public $links;
+    /** @var array */
+    public $links;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

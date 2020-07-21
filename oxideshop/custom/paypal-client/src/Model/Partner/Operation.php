@@ -7,18 +7,17 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
  */
 class Operation implements \JsonSerializable
 {
-	/** @var string */
-	public $operation;
+    /** @var string */
+    public $operation;
 
-	/** @var IntegrationDetails */
-	public $api_integration_preference;
+    /** @var IntegrationDetails */
+    public $api_integration_preference;
 
-	/** @var BillingAgreement */
-	public $billing_agreement;
+    /** @var BillingAgreement */
+    public $billing_agreement;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

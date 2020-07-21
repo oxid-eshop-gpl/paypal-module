@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
  */
 class Identifier implements \JsonSerializable
 {
-	/** @var string */
-	public $type;
+    /** @var string */
+    public $type;
 
-	/** @var string */
-	public $value;
+    /** @var string */
+    public $value;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

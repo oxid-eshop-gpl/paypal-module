@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class AuthenticationResponse implements \JsonSerializable
 {
-	/** @var string */
-	public $liability_shift;
+    /** @var string */
+    public $liability_shift;
 
-	/** @var ThreeDSecureAuthenticationResponse */
-	public $three_d_secure;
+    /** @var ThreeDSecureAuthenticationResponse */
+    public $three_d_secure;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

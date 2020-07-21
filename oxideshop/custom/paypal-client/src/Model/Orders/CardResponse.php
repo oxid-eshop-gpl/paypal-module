@@ -7,36 +7,35 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class CardResponse implements \JsonSerializable
 {
-	/** @var string */
-	public $id;
+    /** @var string */
+    public $id;
 
-	/** @var string */
-	public $last_n_chars;
+    /** @var string */
+    public $last_n_chars;
 
-	/** @var string */
-	public $last_digits;
+    /** @var string */
+    public $last_digits;
 
-	/** @var string */
-	public $brand;
+    /** @var string */
+    public $brand;
 
-	/** @var string */
-	public $type;
+    /** @var string */
+    public $type;
 
-	/** @var string */
-	public $issuer;
+    /** @var string */
+    public $issuer;
 
-	/** @var string */
-	public $bin;
+    /** @var string */
+    public $bin;
 
-	/** @var AuthenticationResponse */
-	public $authentication_result;
+    /** @var AuthenticationResponse */
+    public $authentication_result;
 
-	/** @var CardAttributesResponse */
-	public $attributes;
+    /** @var CardAttributesResponse */
+    public $attributes;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

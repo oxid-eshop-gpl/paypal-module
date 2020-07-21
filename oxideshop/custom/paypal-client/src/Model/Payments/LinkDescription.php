@@ -7,33 +7,32 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
  */
 class LinkDescription implements \JsonSerializable
 {
-	/** @var string */
-	public $href;
+    /** @var string */
+    public $href;
 
-	/** @var string */
-	public $rel;
+    /** @var string */
+    public $rel;
 
-	/** @var string */
-	public $method;
+    /** @var string */
+    public $method;
 
-	/** @var string */
-	public $title;
+    /** @var string */
+    public $title;
 
-	/** @var string */
-	public $mediaType;
+    /** @var string */
+    public $mediaType;
 
-	/** @var string */
-	public $encType;
+    /** @var string */
+    public $encType;
 
-	/** @var LinkSchema */
-	public $schema;
+    /** @var LinkSchema */
+    public $schema;
 
-	/** @var LinkSchema */
-	public $targetSchema;
+    /** @var LinkSchema */
+    public $targetSchema;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

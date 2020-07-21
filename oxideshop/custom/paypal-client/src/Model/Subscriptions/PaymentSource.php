@@ -7,12 +7,11 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
  */
 class PaymentSource implements \JsonSerializable
 {
-	/** @var Card */
-	public $card;
+    /** @var Card */
+    public $card;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

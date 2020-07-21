@@ -7,18 +7,17 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class NetAmountBreakdownItem implements \JsonSerializable
 {
-	/** @var Money */
-	public $payable_amount;
+    /** @var Money */
+    public $payable_amount;
 
-	/** @var Money */
-	public $converted_amount;
+    /** @var Money */
+    public $converted_amount;
 
-	/** @var ExchangeRate */
-	public $exchange_rate;
+    /** @var ExchangeRate */
+    public $exchange_rate;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

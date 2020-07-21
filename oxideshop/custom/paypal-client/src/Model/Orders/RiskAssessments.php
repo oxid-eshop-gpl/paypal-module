@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class RiskAssessments implements \JsonSerializable
 {
-	/** @var RiskAssessment */
-	public $payer;
+    /** @var RiskAssessment */
+    public $payer;
 
-	/** @var RiskAssessment */
-	public $payee;
+    /** @var RiskAssessment */
+    public $payee;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

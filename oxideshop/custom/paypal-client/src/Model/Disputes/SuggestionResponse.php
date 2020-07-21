@@ -7,18 +7,17 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
  */
 class SuggestionResponse implements \JsonSerializable
 {
-	/** @var array */
-	public $suggestions;
+    /** @var array */
+    public $suggestions;
 
-	/** @var string */
-	public $corrected_search_text;
+    /** @var string */
+    public $corrected_search_text;
 
-	/** @var array */
-	public $links;
+    /** @var array */
+    public $links;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

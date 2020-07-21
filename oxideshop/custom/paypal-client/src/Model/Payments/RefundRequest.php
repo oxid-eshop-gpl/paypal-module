@@ -7,21 +7,20 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
  */
 class RefundRequest implements \JsonSerializable
 {
-	/** @var Money */
-	public $amount;
+    /** @var Money */
+    public $amount;
 
-	/** @var string */
-	public $invoice_id;
+    /** @var string */
+    public $invoice_id;
 
-	/** @var string */
-	public $custom_id;
+    /** @var string */
+    public $custom_id;
 
-	/** @var string */
-	public $note_to_payer;
+    /** @var string */
+    public $note_to_payer;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

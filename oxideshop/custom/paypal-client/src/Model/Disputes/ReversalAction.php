@@ -7,27 +7,26 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
  */
 class ReversalAction implements \JsonSerializable
 {
-	/** @var string */
-	public $id;
+    /** @var string */
+    public $id;
 
-	/** @var string */
-	public $original_activity_id;
+    /** @var string */
+    public $original_activity_id;
 
-	/** @var string */
-	public $entity_type;
+    /** @var string */
+    public $entity_type;
 
-	/** @var string */
-	public $entity_subtype;
+    /** @var string */
+    public $entity_subtype;
 
-	/** @var string */
-	public $action_performed;
+    /** @var string */
+    public $action_performed;
 
-	/** @var string */
-	public $status;
+    /** @var string */
+    public $status;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

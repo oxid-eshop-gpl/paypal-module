@@ -7,21 +7,20 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
  */
 class RefundTransaction implements \JsonSerializable
 {
-	/** @var string */
-	public $id;
+    /** @var string */
+    public $id;
 
-	/** @var string */
-	public $status;
+    /** @var string */
+    public $status;
 
-	/** @var Money */
-	public $gross_amount;
+    /** @var Money */
+    public $gross_amount;
 
-	/** @var string */
-	public $create_time;
+    /** @var string */
+    public $create_time;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

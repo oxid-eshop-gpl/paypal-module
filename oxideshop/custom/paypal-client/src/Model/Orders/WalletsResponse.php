@@ -7,12 +7,11 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class WalletsResponse implements \JsonSerializable
 {
-	/** @var ApplePayWalletResponse */
-	public $apple_pay;
+    /** @var ApplePayWalletResponse */
+    public $apple_pay;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

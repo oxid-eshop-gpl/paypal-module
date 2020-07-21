@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
  */
 class AuthorizationStatus implements \JsonSerializable
 {
-	/** @var string */
-	public $status;
+    /** @var string */
+    public $status;
 
-	/** @var AuthorizationStatusDetails */
-	public $status_details;
+    /** @var AuthorizationStatusDetails */
+    public $status_details;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

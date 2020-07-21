@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
  */
 class Evidences implements \JsonSerializable
 {
-	/** @var array */
-	public $evidences;
+    /** @var array */
+    public $evidences;
 
-	/** @var AddressPortable */
-	public $return_shipping_address;
+    /** @var AddressPortable */
+    public $return_shipping_address;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

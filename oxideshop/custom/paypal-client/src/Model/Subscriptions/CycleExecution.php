@@ -7,30 +7,29 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
  */
 class CycleExecution implements \JsonSerializable
 {
-	/** @var string */
-	public $tenure_type;
+    /** @var string */
+    public $tenure_type;
 
-	/** @var integer */
-	public $sequence;
+    /** @var integer */
+    public $sequence;
 
-	/** @var integer */
-	public $cycles_completed;
+    /** @var integer */
+    public $cycles_completed;
 
-	/** @var integer */
-	public $cycles_remaining;
+    /** @var integer */
+    public $cycles_remaining;
 
-	/** @var integer */
-	public $current_pricing_scheme_version;
+    /** @var integer */
+    public $current_pricing_scheme_version;
 
-	/** @var Money */
-	public $amount_payable_per_cycle;
+    /** @var Money */
+    public $amount_payable_per_cycle;
 
-	/** @var integer */
-	public $total_cycles;
+    /** @var integer */
+    public $total_cycles;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }

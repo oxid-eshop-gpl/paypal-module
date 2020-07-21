@@ -7,15 +7,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class CardAttributes implements \JsonSerializable
 {
-	/** @var Customer */
-	public $customer;
+    /** @var Customer */
+    public $customer;
 
-	/** @var CardVerification */
-	public $verification;
+    /** @var CardVerification */
+    public $verification;
 
-
-	public function jsonSerialize()
-	{
-		return array_filter((array) $this);
-	}
+    public function jsonSerialize()
+    {
+        return array_filter((array) $this,static function($var){return isset($var);});
+    }
 }
