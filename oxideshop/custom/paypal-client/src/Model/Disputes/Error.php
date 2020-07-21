@@ -2,6 +2,9 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+/**
+ * The error details.
+ */
 class Error
 {
 	/** @var string */

@@ -2,6 +2,9 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+/**
+ * The collection of payments, or transactions, for a purchase unit in an order. For example, authorized payments, captured payments, and refunds.
+ */
 class PaymentCollection
 {
 	/** @var array */

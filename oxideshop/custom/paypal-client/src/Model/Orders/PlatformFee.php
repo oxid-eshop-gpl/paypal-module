@@ -7,9 +7,9 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class PlatformFee
 {
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Money */
+	/** @var Money */
 	public $amount;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\PayeeBase */
+	/** @var PayeeBase */
 	public $payee;
 }

@@ -2,6 +2,9 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+/**
+ * The name of the party.
+ */
 class Name
 {
 	/** @var string */

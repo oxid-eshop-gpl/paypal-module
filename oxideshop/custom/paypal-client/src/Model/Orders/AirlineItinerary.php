@@ -7,10 +7,10 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class AirlineItinerary
 {
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\AirlineTicket */
+	/** @var AirlineTicket */
 	public $ticket;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\AirlinePassenger */
+	/** @var AirlinePassenger */
 	public $passenger;
 
 	/** @var array */

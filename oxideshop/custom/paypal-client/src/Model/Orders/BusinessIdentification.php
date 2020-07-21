@@ -2,6 +2,9 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+/**
+ * Business identification details.
+ */
 class BusinessIdentification
 {
 	/** @var string */
@@ -12,4 +15,7 @@ class BusinessIdentification
 
 	/** @var DocumentIssuer */
 	public $issuer;
+
+	/** @var string */
+	public $issued_time;
 }

@@ -25,9 +25,9 @@ class LinkDescription
 	/** @var string */
 	public $encType;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\LinkSchema */
+	/** @var LinkSchema */
 	public $schema;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\LinkSchema */
+	/** @var LinkSchema */
 	public $targetSchema;
 }

@@ -7,63 +7,63 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class PaymentSourceResponse
 {
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\CardResponse */
+	/** @var CardResponse */
 	public $card;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\PaypalWalletResponse */
+	/** @var PaypalWalletResponse */
 	public $paypal;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\WalletsResponse */
+	/** @var WalletsResponse */
 	public $wallet;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\BankResponse */
+	/** @var BankResponse */
 	public $bank;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Alipay */
+	/** @var Alipay */
 	public $alipay;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Bancontact */
+	/** @var Bancontact */
 	public $bancontact;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Blik */
+	/** @var Blik */
 	public $blik;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Eps */
+	/** @var Eps */
 	public $eps;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Giropay */
+	/** @var Giropay */
 	public $giropay;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Ideal */
+	/** @var Ideal */
 	public $ideal;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Multibanco */
+	/** @var Multibanco */
 	public $multibanco;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Mybank */
+	/** @var Mybank */
 	public $mybank;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Payu */
+	/** @var Payu */
 	public $payu;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\P24 */
+	/** @var PTwoFour */
 	public $p24;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Poli */
+	/** @var Poli */
 	public $poli;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Sofort */
+	/** @var Sofort */
 	public $sofort;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Trustly */
+	/** @var Trustly */
 	public $trustly;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Trustpay */
+	/** @var Trustpay */
 	public $trustpay;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Verkkopankki */
+	/** @var Verkkopankki */
 	public $verkkopankki;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Wechatpay */
+	/** @var Wechatpay */
 	public $wechatpay;
 }

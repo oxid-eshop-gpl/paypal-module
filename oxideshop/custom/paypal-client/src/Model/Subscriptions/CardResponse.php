@@ -2,6 +2,9 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+/**
+ * The payment card to use to fund a payment. Card can be a credit or debit card.
+ */
 class CardResponse
 {
 	/** @var string */
@@ -12,6 +15,9 @@ class CardResponse
 
 	/** @var string */
 	public $last_digits;
+
+	/** @var string */
+	public $brand;
 
 	/** @var string */
 	public $type;

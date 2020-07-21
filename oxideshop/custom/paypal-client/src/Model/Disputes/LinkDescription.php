@@ -2,6 +2,9 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+/**
+ * The request-related [HATEOAS link](/docs/api/overview/#hateoas-links) information.
+ */
 class LinkDescription
 {
 	/** @var string */
@@ -21,4 +24,10 @@ class LinkDescription
 
 	/** @var string */
 	public $encType;
+
+	/** @var LinkSchema */
+	public $schema;
+
+	/** @var LinkSchema */
+	public $targetSchema;
 }

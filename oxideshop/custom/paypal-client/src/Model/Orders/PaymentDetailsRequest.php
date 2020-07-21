@@ -2,6 +2,9 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+/**
+ * Payment details for an order.
+ */
 class PaymentDetailsRequest
 {
 	/** @var PaymentSource */

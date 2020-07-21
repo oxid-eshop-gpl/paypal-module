@@ -2,10 +2,19 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
+/**
+ * The details for the items to be purchased.
+ */
 class Item
 {
 	/** @var string */
 	public $name;
+
+	/** @var Money */
+	public $unit_amount;
+
+	/** @var Money */
+	public $tax;
 
 	/** @var string */
 	public $quantity;

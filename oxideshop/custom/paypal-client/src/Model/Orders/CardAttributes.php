@@ -7,9 +7,9 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class CardAttributes
 {
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Customer */
+	/** @var Customer */
 	public $customer;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\CardVerification */
+	/** @var CardVerification */
 	public $verification;
 }

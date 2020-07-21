@@ -7,9 +7,9 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class ActivityTimestamps
 {
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\DateTime */
+	/** @var string */
 	public $create_time;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\DateTime */
+	/** @var string */
 	public $update_time;
 }

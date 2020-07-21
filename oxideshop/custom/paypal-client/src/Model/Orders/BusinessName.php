@@ -10,6 +10,6 @@ class BusinessName
 	/** @var string */
 	public $business_name;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Orthography */
+	/** @var string */
 	public $orthography;
 }

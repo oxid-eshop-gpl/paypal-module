@@ -7,10 +7,10 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class PayeeDisplayable
 {
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Email */
+	/** @var string */
 	public $business_email;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Phone */
+	/** @var Phone */
 	public $business_phone;
 
 	/** @var string */

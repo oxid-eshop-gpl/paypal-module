@@ -2,13 +2,25 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+/**
+ * Encapsulates the properties of user account.
+ */
 class Account
 {
 	/** @var string */
 	public $account_number;
 
 	/** @var string */
+	public $account_id;
+
+	/** @var string */
+	public $tier;
+
+	/** @var string */
 	public $registration_type;
+
+	/** @var string */
+	public $legal_country_code;
 
 	/** @var array */
 	public $account_tags;
@@ -21,4 +33,7 @@ class Account
 
 	/** @var string */
 	public $legal_entity;
+
+	/** @var string */
+	public $time_created;
 }

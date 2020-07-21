@@ -2,6 +2,9 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+/**
+ * The list of subscriptions.
+ */
 class SubscriptionCollection
 {
 	/** @var array */

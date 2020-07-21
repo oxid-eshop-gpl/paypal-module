@@ -7,9 +7,9 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class AuthenticationResponse
 {
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\LiabilityShift */
+	/** @var string */
 	public $liability_shift;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\ThreeDSecureAuthenticationResponse */
+	/** @var ThreeDSecureAuthenticationResponse */
 	public $three_d_secure;
 }

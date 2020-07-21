@@ -10,10 +10,10 @@ class Item
 	/** @var string */
 	public $name;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Money */
+	/** @var Money */
 	public $unit_amount;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Money */
+	/** @var Money */
 	public $tax;
 
 	/** @var string */

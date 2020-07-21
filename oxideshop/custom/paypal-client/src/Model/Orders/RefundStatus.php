@@ -10,6 +10,6 @@ class RefundStatus
 	/** @var string */
 	public $status;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\RefundStatusDetails */
+	/** @var RefundStatusDetails */
 	public $status_details;
 }

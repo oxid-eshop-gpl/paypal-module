@@ -7,13 +7,13 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class AirlinePassenger
 {
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Name */
+	/** @var Name */
 	public $name;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\DateNoTime */
+	/** @var string */
 	public $date_of_birth;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\CountryCode */
+	/** @var string */
 	public $country_code;
 
 	/** @var string */

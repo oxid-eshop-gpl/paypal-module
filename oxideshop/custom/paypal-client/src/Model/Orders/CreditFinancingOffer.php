@@ -10,14 +10,17 @@ class CreditFinancingOffer
 	/** @var string */
 	public $issuer;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Money */
+	/** @var Money */
 	public $total_payment;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Money */
+	/** @var Money */
 	public $total_interest;
 
-	/** @var object */
-	public $installment_details;
+	/** @var string */
+	public $period;
+
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\InstallmentDetails */
+	public $InstallmentDetails;
 
 	/** @var integer */
 	public $term;

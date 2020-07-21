@@ -2,6 +2,9 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+/**
+ * The document object.
+ */
 class Document
 {
 	/** @var string */
@@ -15,6 +18,15 @@ class Document
 
 	/** @var string */
 	public $identification_number;
+
+	/** @var string */
+	public $issue_date;
+
+	/** @var string */
+	public $expiry_date;
+
+	/** @var string */
+	public $issuing_country_code;
 
 	/** @var array */
 	public $files;

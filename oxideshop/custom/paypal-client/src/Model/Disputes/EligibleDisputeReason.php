@@ -2,8 +2,14 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+/**
+ * The eligible dispute reason.
+ */
 class EligibleDisputeReason
 {
+	/** @var string */
+	public $dispute_reason;
+
 	/** @var string */
 	public $stage;
 

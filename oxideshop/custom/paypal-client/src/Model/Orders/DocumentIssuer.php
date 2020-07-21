@@ -7,7 +7,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class DocumentIssuer
 {
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\CountryCode */
+	/** @var string */
 	public $country_code;
 
 	/** @var string */

@@ -19,6 +19,6 @@ class ClientConfiguration
 	/** @var string */
 	public $integration_artifact;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\ProductExperience */
+	/** @var ProductExperience */
 	public $experience;
 }

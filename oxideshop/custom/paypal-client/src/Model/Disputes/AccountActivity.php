@@ -2,10 +2,16 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+/**
+ * The information about the account-related activities.
+ */
 class AccountActivity
 {
 	/** @var string */
 	public $id;
+
+	/** @var string */
+	public $create_time;
 
 	/** @var string */
 	public $entity_type;
@@ -18,6 +24,9 @@ class AccountActivity
 
 	/** @var string */
 	public $entity_id;
+
+	/** @var ActivityEntityInfo */
+	public $activity_entity_info;
 
 	/** @var array */
 	public $reversal_actions;

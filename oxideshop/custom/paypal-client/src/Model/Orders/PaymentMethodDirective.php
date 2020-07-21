@@ -2,6 +2,9 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+/**
+ * Directives for certain payment methods based on eligibility.
+ */
 class PaymentMethodDirective
 {
 	/** @var string */

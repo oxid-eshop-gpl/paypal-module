@@ -7,12 +7,12 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class NetAmountBreakdownItem
 {
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Money */
+	/** @var Money */
 	public $payable_amount;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Money */
+	/** @var Money */
 	public $converted_amount;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\ExchangeRate */
+	/** @var ExchangeRate */
 	public $exchange_rate;
 }

@@ -10,6 +10,6 @@ class SupplementaryData
 	/** @var array */
 	public $airline;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\PointOfSale */
+	/** @var PointOfSale */
 	public $point_of_sale;
 }

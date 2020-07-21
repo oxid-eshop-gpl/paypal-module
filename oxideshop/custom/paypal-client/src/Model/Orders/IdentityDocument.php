@@ -7,18 +7,18 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class IdentityDocument
 {
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\IdentityDocumentType */
+	/** @var string */
 	public $type;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\DocumentIssuer */
+	/** @var DocumentIssuer */
 	public $issuer;
 
 	/** @var string */
 	public $id_number;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\DateNoTime */
+	/** @var string */
 	public $issued_date;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\DateNoTime */
+	/** @var string */
 	public $expiration_date;
 }

@@ -2,8 +2,14 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+/**
+ * The return details for the product.
+ */
 class ReturnDetails
 {
+	/** @var string */
+	public $return_time;
+
 	/** @var string */
 	public $mode;
 

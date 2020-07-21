@@ -13,10 +13,10 @@ class ShippingOption
 	/** @var string */
 	public $label;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\ShippingType */
+	/** @var string */
 	public $type;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Money */
+	/** @var Money */
 	public $amount;
 
 	/** @var boolean */

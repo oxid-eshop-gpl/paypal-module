@@ -2,8 +2,17 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+/**
+ * The order request details.
+ */
 class OrderRequest
 {
+	/** @var string */
+	public $intent;
+
+	/** @var string */
+	public $processing_instruction;
+
 	/** @var Payer */
 	public $payer;
 
@@ -12,4 +21,7 @@ class OrderRequest
 
 	/** @var PaymentSource */
 	public $payment_source;
+
+	/** @var OrderApplicationContext */
+	public $application_context;
 }

@@ -2,6 +2,9 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+/**
+ * The tracking information item.
+ */
 class TrackingInfoItem
 {
 	/** @var string */
@@ -18,4 +21,7 @@ class TrackingInfoItem
 
 	/** @var string */
 	public $note;
+
+	/** @var string */
+	public $posted_time;
 }

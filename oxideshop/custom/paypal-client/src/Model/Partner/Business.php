@@ -4,6 +4,15 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 class Business
 {
+	/** @var BusinessTypeInfo */
+	public $business_type;
+
+	/** @var BusinessIndustry */
+	public $business_industry;
+
+	/** @var BusinessIncorporation */
+	public $business_incorporation;
+
 	/** @var array */
 	public $names;
 

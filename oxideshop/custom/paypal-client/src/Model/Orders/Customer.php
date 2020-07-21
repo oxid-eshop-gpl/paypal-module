@@ -7,6 +7,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class Customer
 {
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\MerchantPartnerCustomerId */
+	/** @var string */
 	public $id;
 }

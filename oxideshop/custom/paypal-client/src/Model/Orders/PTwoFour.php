@@ -7,13 +7,13 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class PTwoFour
 {
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\FullName */
+	/** @var string */
 	public $name;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\EmailAddress */
+	/** @var string */
 	public $email;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\CountryCode */
+	/** @var string */
 	public $country_code;
 
 	/** @var string */

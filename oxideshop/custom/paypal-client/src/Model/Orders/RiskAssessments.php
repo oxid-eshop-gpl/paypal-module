@@ -7,9 +7,9 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class RiskAssessments
 {
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\RiskAssessment */
+	/** @var RiskAssessment */
 	public $payer;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\RiskAssessment */
+	/** @var RiskAssessment */
 	public $payee;
 }

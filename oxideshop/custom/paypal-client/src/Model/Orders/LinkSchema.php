@@ -43,8 +43,14 @@ class LinkSchema
 	/** @var string */
 	public $fragmentResolution;
 
-	/** @var object */
-	public $media;
+	/** @var string */
+	public $type;
+
+	/** @var string */
+	public $binaryEncoding;
+
+	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Media */
+	public $Media;
 
 	/** @var string */
 	public $pathStart;

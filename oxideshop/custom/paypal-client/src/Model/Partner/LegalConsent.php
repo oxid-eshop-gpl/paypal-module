@@ -2,6 +2,9 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+/**
+ * The customer-provided consent.
+ */
 class LegalConsent
 {
 	/** @var string */

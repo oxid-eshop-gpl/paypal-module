@@ -2,6 +2,9 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+/**
+ * The preference that customizes the billing experience of the customer.
+ */
 class BillingExperiencePreference
 {
 	/** @var string */

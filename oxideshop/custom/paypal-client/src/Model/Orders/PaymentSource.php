@@ -7,63 +7,63 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class PaymentSource
 {
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Card */
+	/** @var Card */
 	public $card;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Token */
+	/** @var Token */
 	public $token;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Bank */
+	/** @var Bank */
 	public $bank;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\PaypalWallet */
+	/** @var PaypalWallet */
 	public $paypal;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\AlipayRequest */
+	/** @var AlipayRequest */
 	public $alipay;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\BancontactRequest */
+	/** @var BancontactRequest */
 	public $bancontact;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\BlikRequest */
+	/** @var BlikRequest */
 	public $blik;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\EpsRequest */
+	/** @var EpsRequest */
 	public $eps;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\GiropayRequest */
+	/** @var GiropayRequest */
 	public $giropay;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\IdealRequest */
+	/** @var IdealRequest */
 	public $ideal;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\MultibancoRequest */
+	/** @var MultibancoRequest */
 	public $multibanco;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\MybankRequest */
+	/** @var MybankRequest */
 	public $mybank;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\PayuRequest */
+	/** @var PayuRequest */
 	public $payu;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\P24Request */
+	/** @var PTwoFourRequest */
 	public $p24;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\PoliRequest */
+	/** @var PoliRequest */
 	public $poli;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\SofortRequest */
+	/** @var SofortRequest */
 	public $sofort;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\TrustlyRequest */
+	/** @var TrustlyRequest */
 	public $trustly;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\TrustpayRequest */
+	/** @var TrustpayRequest */
 	public $trustpay;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\VerkkopankkiRequest */
+	/** @var VerkkopankkiRequest */
 	public $verkkopankki;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\WechatpayRequest */
+	/** @var WechatpayRequest */
 	public $wechatpay;
 }

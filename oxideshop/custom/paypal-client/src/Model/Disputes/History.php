@@ -2,8 +2,14 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+/**
+ * The history of the dispute.
+ */
 class History
 {
+	/** @var string */
+	public $date;
+
 	/** @var string */
 	public $actor;
 

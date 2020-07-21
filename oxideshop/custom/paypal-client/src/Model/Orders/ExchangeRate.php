@@ -7,10 +7,10 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class ExchangeRate
 {
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\CurrencyCode */
+	/** @var string */
 	public $source_currency;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\CurrencyCode */
+	/** @var string */
 	public $target_currency;
 
 	/** @var string */

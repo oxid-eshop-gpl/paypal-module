@@ -16,7 +16,7 @@ class Card
 	/** @var string */
 	public $number;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\DateYearMonth */
+	/** @var string */
 	public $expiry;
 
 	/** @var string */
@@ -25,15 +25,15 @@ class Card
 	/** @var string */
 	public $last_digits;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\CardBrand */
+	/** @var string */
 	public $card_type;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\AddressPortable */
+	/** @var AddressPortable */
 	public $billing_address;
 
 	/** @var array */
 	public $authentication_results;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\CardAttributes */
+	/** @var CardAttributes */
 	public $attributes;
 }

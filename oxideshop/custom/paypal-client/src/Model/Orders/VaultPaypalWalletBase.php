@@ -13,7 +13,7 @@ class VaultPaypalWalletBase
 	/** @var string */
 	public $product_label;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\ShippingDetail */
+	/** @var ShippingDetail */
 	public $shipping;
 
 	/** @var string */

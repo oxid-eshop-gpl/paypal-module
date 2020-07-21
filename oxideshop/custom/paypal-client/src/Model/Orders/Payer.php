@@ -7,24 +7,24 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class Payer
 {
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Name */
+	/** @var Name */
 	public $name;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Email */
+	/** @var string */
 	public $email_address;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\AccountId */
+	/** @var string */
 	public $payer_id;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\PhoneWithType */
+	/** @var PhoneWithType */
 	public $phone;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\DateNoTime */
+	/** @var string */
 	public $birth_date;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\TaxInfo */
+	/** @var TaxInfo */
 	public $tax_info;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\AddressPortable */
+	/** @var AddressPortable */
 	public $address;
 }

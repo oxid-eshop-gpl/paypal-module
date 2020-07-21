@@ -7,9 +7,9 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class Poli
 {
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\FullName */
+	/** @var string */
 	public $name;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\CountryCode */
+	/** @var string */
 	public $country_code;
 }

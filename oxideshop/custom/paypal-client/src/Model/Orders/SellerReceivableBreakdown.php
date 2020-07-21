@@ -7,22 +7,22 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class SellerReceivableBreakdown
 {
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Money */
+	/** @var Money */
 	public $gross_amount;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Money */
+	/** @var Money */
 	public $paypal_fee;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Money */
+	/** @var Money */
 	public $paypal_fee_in_receivable_currency;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Money */
+	/** @var Money */
 	public $net_amount;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Money */
+	/** @var Money */
 	public $receivable_amount;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\ExchangeRate */
+	/** @var ExchangeRate */
 	public $exchange_rate;
 
 	/** @var array */

@@ -2,6 +2,9 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+/**
+ * Policy directive indicating how to process the payment.
+ */
 class PolicyDirective
 {
 	/** @var string */

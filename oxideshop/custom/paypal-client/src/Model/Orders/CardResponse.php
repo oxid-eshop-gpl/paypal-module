@@ -16,7 +16,7 @@ class CardResponse
 	/** @var string */
 	public $last_digits;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\CardBrand */
+	/** @var string */
 	public $brand;
 
 	/** @var string */
@@ -28,9 +28,9 @@ class CardResponse
 	/** @var string */
 	public $bin;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\AuthenticationResponse */
+	/** @var AuthenticationResponse */
 	public $authentication_result;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\CardAttributesResponse */
+	/** @var CardAttributesResponse */
 	public $attributes;
 }

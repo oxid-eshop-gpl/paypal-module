@@ -7,9 +7,9 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class ThreeDSecureAuthenticationResponse
 {
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\ParesStatus */
+	/** @var string */
 	public $authentication_status;
 
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Enrolled */
+	/** @var string */
 	public $enrollment_status;
 }

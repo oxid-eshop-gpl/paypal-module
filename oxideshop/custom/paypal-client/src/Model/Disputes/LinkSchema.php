@@ -2,6 +2,9 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+/**
+ * The request data or link target.
+ */
 class LinkSchema
 {
 	/** @var object */

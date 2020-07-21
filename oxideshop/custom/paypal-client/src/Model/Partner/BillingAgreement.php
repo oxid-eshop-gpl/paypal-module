@@ -2,10 +2,16 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+/**
+ * The details of the billing agreement between the partner and a seller.
+ */
 class BillingAgreement
 {
 	/** @var string */
 	public $description;
+
+	/** @var BillingExperiencePreference */
+	public $billing_experience_preference;
 
 	/** @var string */
 	public $merchant_custom_data;

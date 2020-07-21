@@ -7,6 +7,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class PaypalWalletAttributes
 {
-	/** @var OxidProfessionalServices\PayPal\Api\Model\Orders\Customer */
+	/** @var Customer */
 	public $customer;
 }

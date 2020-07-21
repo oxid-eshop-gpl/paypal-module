@@ -2,6 +2,9 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
+/**
+ * The details of the flight leg.
+ */
 class FlightLeg
 {
 	/** @var string */
@@ -17,6 +20,12 @@ class FlightLeg
 	public $service_class;
 
 	/** @var string */
+	public $departure_date;
+
+	/** @var string */
+	public $departure_time;
+
+	/** @var string */
 	public $departure_airport;
 
 	/** @var string */
@@ -29,7 +38,19 @@ class FlightLeg
 	public $fare_basis_code;
 
 	/** @var string */
+	public $arrival_time;
+
+	/** @var string */
 	public $conjunction_ticket_number;
+
+	/** @var Money */
+	public $fare;
+
+	/** @var Money */
+	public $tax;
+
+	/** @var Money */
+	public $fee;
 
 	/** @var string */
 	public $additional_notations;

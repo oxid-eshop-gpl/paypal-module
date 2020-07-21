@@ -2,14 +2,14 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+/**
+ * Shipping details for transaction.
+ */
 class ShippingDetails
 {
-	/** @var Name */
-	public $name;
+	/** @var AddressWithConfirmation */
+	public $shipping_address;
 
 	/** @var array */
 	public $options;
-
-	/** @var AddressPortable */
-	public $address;
 }
