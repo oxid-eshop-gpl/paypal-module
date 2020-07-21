@@ -80,17 +80,20 @@ class Generator
 
         foreach($this->definitions as $defName => $definition) {
 
-            if(empty($definition['properties'])) {
-                $k=1;
-                // this must be a new class generated from refs
-            }
+//            if(empty($definition['properties'])) {
+//                $k=1;
+//                // this must be a new class generated from refs
+//            }
 
-            $ns = new PhpNamespace($namespace . '\\' . $className);
+
 
             // Not a reference object
             if(strpos($defName, 'MerchantsCommonComponentsSpecification') === false) {
 
                 foreach ($fileContent['definitions'] as $key => $defs) {
+
+                    $ns = new PhpNamespace($namespace . '\\' . $className);
+
                     $title = null;
                     if(isset($defs['title'])) {
                         $title = implode('', explode(' ', $defs['title']));
@@ -154,10 +157,17 @@ class Generator
                             }
                         }
                     }
+
+//                    $title = implode('', explode(' ', $definition['title']));
+//                    $title = preg_replace("/[^A-Za-z0-9 ]/", '', $title);
+                    $this->writeClassFile($className, $title, $ns);
+
                 }
+
+
+
             }
 
-//            $this->writeClassFile($className, $defClassName, $ns);
         }
     }
 
