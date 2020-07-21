@@ -13,9 +13,15 @@ class AuthorizationWithAdditionalData extends Authorization implements JsonSeria
 {
     use BaseModel;
 
-    /** @var RiskAssessments */
+    /**
+     * @var RiskAssessments
+     * The risk assessment for a customer account, merchant account, or transaction.
+     */
     public $risk_assessment;
 
-    /** @var ProcessorResponse */
+    /**
+     * @var ProcessorResponse
+     * The processor information. Might be required for payment requests, such as direct credit card transactions.
+     */
     public $processor_response;
 }

@@ -12,10 +12,16 @@ class AirlineItinerary implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var AirlineTicket */
+    /**
+     * @var AirlineTicket
+     * The details for the airline ticket.
+     */
     public $ticket;
 
-    /** @var AirlinePassenger */
+    /**
+     * @var AirlinePassenger
+     * The airline passenger details.
+     */
     public $passenger;
 
     /** @var array<FlightLeg> */

@@ -15,6 +15,9 @@ class Account implements JsonSerializable
     /** @var array<IndividualOwner> */
     public $individual_owners;
 
-    /** @var BusinessEntity */
+    /**
+     * @var BusinessEntity
+     * The business entity of the account.
+     */
     public $business_entity;
 }

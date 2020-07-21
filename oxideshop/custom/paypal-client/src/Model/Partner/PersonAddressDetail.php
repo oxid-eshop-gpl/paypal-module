@@ -12,7 +12,10 @@ class PersonAddressDetail extends AddressPortable implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The address type under which the provided address is tagged.
+     */
     public $type;
 
     /** @var boolean */

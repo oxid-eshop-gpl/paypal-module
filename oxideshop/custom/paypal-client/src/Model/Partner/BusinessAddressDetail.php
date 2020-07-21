@@ -12,7 +12,10 @@ class BusinessAddressDetail extends AddressPortable implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * Address type under which the provided address is tagged
+     */
     public $type;
 
     /** @var boolean */

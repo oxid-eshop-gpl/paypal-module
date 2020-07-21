@@ -291,8 +291,7 @@ class Generator
         $class = $ns->addClass($className);
         if (!empty($defs['description'])) {
             $comment = $defs['description'];
-            //this.value = sample_txt.replace(/(.{1,69})(?:\n|$| )/g, "$1\n");
-            $comment = preg_replace("/(.{1,110})(?:\n|$| )/", "$1\n", $comment);
+            $comment = $this->formatComment($comment);
             $class->addComment($comment);
         }
 
@@ -350,7 +349,15 @@ class Generator
                     if (!empty($parameter['$ref'])) {
                         $ref = $this->getRefNameFromRefString($parameter['$ref']);
                         if (isset($this->references[$ref])) {
-                            $class->addProperty($name)->setVisibility('public')->setComment('@var ' . $this->references[$ref]);
+                            $property = $class->addProperty($name)->setVisibility('public')
+                                ->setComment('@var ' . $this->references[$ref]);
+                            $propDef = $this->definitions[$ref];
+                            if (isset($propDef['description'])) {
+                                $propDesc = $propDef['description'];
+                                $property->addComment($this->formatComment($propDesc));
+                            }
+
+
                         }
                     }
                 }
@@ -364,4 +371,26 @@ class Generator
 
         $this->writeClassFile($subNameSpace, $className, $ns);
     }
+
+    /**
+     * @param $methodName
+     */
+    protected function cleanName($methodName): string
+    {
+        $methodName = ucwords($methodName, $delimiters = " \t\r\n\f\v-_");
+        $methodName = implode('', explode(' ', $methodName));
+        return preg_replace("/[^A-Za-z0-9 ]/", '', $methodName);
+    }
+
+    /**
+     * @param $comment
+     * @return string|string[]|null
+     */
+    private function formatComment($comment)
+    {
+        $comment = preg_replace("/(.{1,110})(?:\n|$| )/", "$1\n", $comment);
+        return $comment;
+    }
 }
+
+

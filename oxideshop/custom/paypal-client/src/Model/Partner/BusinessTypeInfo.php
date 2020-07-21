@@ -12,9 +12,15 @@ class BusinessTypeInfo implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The business types classified
+     */
     public $type;
 
-    /** @var string */
+    /**
+     * @var string
+     * Sub classification of the business type
+     */
     public $subtype;
 }

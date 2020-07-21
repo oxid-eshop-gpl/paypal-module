@@ -12,6 +12,9 @@ class BankResponse implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var AchDebitResponse */
+    /**
+     * @var AchDebitResponse
+     * ACH bank details response object
+     */
     public $ach_debit;
 }

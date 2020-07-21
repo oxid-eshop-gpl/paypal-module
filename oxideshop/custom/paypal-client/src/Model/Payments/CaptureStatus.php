@@ -15,6 +15,9 @@ class CaptureStatus implements JsonSerializable
     /** @var string */
     public $status;
 
-    /** @var CaptureStatusDetails */
+    /**
+     * @var CaptureStatusDetails
+     * The details of the captured payment status.
+     */
     public $status_details;
 }

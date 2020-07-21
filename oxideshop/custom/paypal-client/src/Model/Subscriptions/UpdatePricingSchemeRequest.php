@@ -15,6 +15,9 @@ class UpdatePricingSchemeRequest implements JsonSerializable
     /** @var integer */
     public $billing_cycle_sequence;
 
-    /** @var PricingScheme */
+    /**
+     * @var PricingScheme
+     * The pricing scheme details.
+     */
     public $pricing_scheme;
 }

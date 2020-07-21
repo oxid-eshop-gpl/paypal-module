@@ -15,6 +15,9 @@ class EligibilityRequestItem implements JsonSerializable
     /** @var string */
     public $id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The category of the item in dispute.
+     */
     public $category;
 }

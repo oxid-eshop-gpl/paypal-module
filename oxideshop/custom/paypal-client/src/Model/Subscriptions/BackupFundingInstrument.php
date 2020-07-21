@@ -12,6 +12,9 @@ class BackupFundingInstrument implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var CardResponse */
+    /**
+     * @var CardResponse
+     * The payment card to use to fund a payment. Card can be a credit or debit card.
+     */
     public $card;
 }

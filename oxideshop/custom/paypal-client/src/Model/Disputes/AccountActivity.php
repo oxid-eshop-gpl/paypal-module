@@ -15,7 +15,12 @@ class AccountActivity implements JsonSerializable
     /** @var string */
     public $id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
+     * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
+     * expression provides guidance but does not reject all invalid dates.</blockquote>
+     */
     public $create_time;
 
     /** @var string */
@@ -30,7 +35,11 @@ class AccountActivity implements JsonSerializable
     /** @var string */
     public $entity_id;
 
-    /** @var ActivityEntityInfo */
+    /**
+     * @var ActivityEntityInfo
+     * The date and time of the last known transaction or when other entity-related information was updated, in
+     * [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
+     */
     public $activity_entity_info;
 
     /** @var array<ReversalAction> */

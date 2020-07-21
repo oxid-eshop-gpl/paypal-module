@@ -12,6 +12,9 @@ class OrderCaptureRequest implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var PaymentSource */
+    /**
+     * @var PaymentSource
+     * The payment source definition.
+     */
     public $payment_source;
 }

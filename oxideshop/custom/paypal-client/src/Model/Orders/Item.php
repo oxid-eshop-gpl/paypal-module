@@ -15,10 +15,16 @@ class Item implements JsonSerializable
     /** @var string */
     public $name;
 
-    /** @var Money */
+    /**
+     * @var Money
+     * The currency and amount for a financial transaction, such as a balance or payment due.
+     */
     public $unit_amount;
 
-    /** @var Money */
+    /**
+     * @var Money
+     * The currency and amount for a financial transaction, such as a balance or payment due.
+     */
     public $tax;
 
     /** @var string */

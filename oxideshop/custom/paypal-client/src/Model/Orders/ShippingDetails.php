@@ -12,7 +12,10 @@ class ShippingDetails implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var AddressWithConfirmation */
+    /**
+     * @var AddressWithConfirmation
+     * Address and confirmation details.
+     */
     public $shipping_address;
 
     /** @var array<ShippingOption> */

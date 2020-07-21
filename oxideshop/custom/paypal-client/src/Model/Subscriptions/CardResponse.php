@@ -21,7 +21,10 @@ class CardResponse implements JsonSerializable
     /** @var string */
     public $last_digits;
 
-    /** @var string */
+    /**
+     * @var string
+     * The card network or brand. Applies to credit, debit, gift, and payment cards.
+     */
     public $brand;
 
     /** @var string */

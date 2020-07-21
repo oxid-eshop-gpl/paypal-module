@@ -15,6 +15,9 @@ class SupplementaryData implements JsonSerializable
     /** @var array<AirlineItinerary> */
     public $airline;
 
-    /** @var PointOfSale */
+    /**
+     * @var PointOfSale
+     * The API caller-provided information about the store.
+     */
     public $point_of_sale;
 }

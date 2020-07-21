@@ -12,9 +12,15 @@ class Subscriber extends Payer implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var ShippingDetail */
+    /**
+     * @var ShippingDetail
+     * The shipping details.
+     */
     public $shipping_address;
 
-    /** @var PaymentSourceResponse */
+    /**
+     * @var PaymentSourceResponse
+     * The payment source used to fund the payment.
+     */
     public $payment_source;
 }

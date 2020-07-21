@@ -12,6 +12,9 @@ class PaypalWalletAttributes implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var Customer */
+    /**
+     * @var Customer
+     * The details about a customer in merchant's or partner's system of records.
+     */
     public $customer;
 }

@@ -12,9 +12,15 @@ class PaypalWallet implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The merchant-preferred payment methods.
+     */
     public $payment_method_preference;
 
-    /** @var PaypalWalletAttributes */
+    /**
+     * @var PaypalWalletAttributes
+     * Additional attributes associated with the use of this paypal wallet
+     */
     public $attributes;
 }

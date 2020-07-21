@@ -12,7 +12,10 @@ class RefundDetails implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var Money */
+    /**
+     * @var Money
+     * The currency and amount for a financial transaction, such as a balance or payment due.
+     */
     public $allowed_refund_amount;
 
     /** @var array<Refund> */

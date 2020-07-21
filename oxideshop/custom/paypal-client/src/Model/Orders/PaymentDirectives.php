@@ -12,7 +12,10 @@ class PaymentDirectives implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * Disbursement type.
+     */
     public $disbursement_type;
 
     /** @var string */
@@ -24,7 +27,10 @@ class PaymentDirectives implements JsonSerializable
     /** @var string */
     public $loss_account_number;
 
-    /** @var string */
+    /**
+     * @var string
+     * Liability type defined by PayPal Risk.
+     */
     public $liability_type;
 
     /** @var boolean */
@@ -42,10 +48,16 @@ class PaymentDirectives implements JsonSerializable
     /** @var array<PricingDirective> */
     public $pricing_directives;
 
-    /** @var AuthorizationDirectives */
+    /**
+     * @var AuthorizationDirectives
+     * Auth directives for the transaction.
+     */
     public $authorization_directives;
 
-    /** @var string */
+    /**
+     * @var string
+     * Currency receiving type defines the options when receiving payment in a currency not held by the reciver.
+     */
     public $currency_receiving_directive;
 
     /** @var boolean */

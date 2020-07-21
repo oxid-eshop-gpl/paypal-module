@@ -25,7 +25,10 @@ class PersonPhoneDetail extends Phone implements JsonSerializable
     /** @var boolean */
     public $primary_mobile;
 
-    /** @var string */
+    /**
+     * @var string
+     * The phone type.
+     */
     public $type;
 
     /** @var array<string> */

@@ -18,37 +18,70 @@ class Subscription extends SubscriptionStatus implements JsonSerializable
     /** @var string */
     public $plan_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
+     * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
+     * expression provides guidance but does not reject all invalid dates.</blockquote>
+     */
     public $start_time;
 
     /** @var string */
     public $quantity;
 
-    /** @var Money */
+    /**
+     * @var Money
+     * The currency and amount for a financial transaction, such as a balance or payment due.
+     */
     public $shipping_amount;
 
-    /** @var Payee */
+    /**
+     * @var Payee
+     * The merchant who receives the funds and fulfills the order. The merchant is also known as the payee.
+     */
     public $payee;
 
-    /** @var Subscriber */
+    /**
+     * @var Subscriber
+     * The subscriber response information.
+     */
     public $subscriber;
 
-    /** @var SubscriptionBillingInfo */
+    /**
+     * @var SubscriptionBillingInfo
+     * The billing details for the subscription. If the subscription was or is active, these fields are populated.
+     */
     public $billing_info;
 
     /** @var boolean */
     public $auto_renewal;
 
-    /** @var string */
+    /**
+     * @var string
+     * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
+     * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
+     * expression provides guidance but does not reject all invalid dates.</blockquote>
+     */
     public $create_time;
 
-    /** @var string */
+    /**
+     * @var string
+     * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
+     * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
+     * expression provides guidance but does not reject all invalid dates.</blockquote>
+     */
     public $update_time;
 
-    /** @var string */
+    /**
+     * @var string
+     * The list of currency conversion providers.
+     */
     public $preferred_currency_conversion;
 
-    /** @var FundingInstrumentResponse */
+    /**
+     * @var FundingInstrumentResponse
+     * The customer's funding instrument. Returned as a funding option to external entities.
+     */
     public $preferred_funding_source;
 
     /** @var array<array> */

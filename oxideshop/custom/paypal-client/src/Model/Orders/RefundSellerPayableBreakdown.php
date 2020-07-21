@@ -12,13 +12,22 @@ class RefundSellerPayableBreakdown implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var Money */
+    /**
+     * @var Money
+     * The currency and amount for a financial transaction, such as a balance or payment due.
+     */
     public $gross_amount;
 
-    /** @var Money */
+    /**
+     * @var Money
+     * The currency and amount for a financial transaction, such as a balance or payment due.
+     */
     public $paypal_fee;
 
-    /** @var Money */
+    /**
+     * @var Money
+     * The currency and amount for a financial transaction, such as a balance or payment due.
+     */
     public $net_amount;
 
     /** @var array<PlatformFee> */
@@ -27,6 +36,9 @@ class RefundSellerPayableBreakdown implements JsonSerializable
     /** @var array<NetAmountBreakdownItem> */
     public $net_amount_breakdown;
 
-    /** @var Money */
+    /**
+     * @var Money
+     * The currency and amount for a financial transaction, such as a balance or payment due.
+     */
     public $total_refunded_amount;
 }

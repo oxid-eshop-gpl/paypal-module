@@ -18,6 +18,9 @@ class DisputeOutcome implements JsonSerializable
     /** @var string */
     public $outcome_reason;
 
-    /** @var Money */
+    /**
+     * @var Money
+     * The currency and amount for a financial transaction, such as a balance or payment due.
+     */
     public $amount_refunded;
 }

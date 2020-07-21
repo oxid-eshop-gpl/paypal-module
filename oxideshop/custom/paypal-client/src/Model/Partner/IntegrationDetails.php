@@ -13,9 +13,15 @@ class IntegrationDetails implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var ClassicApiIntegration */
+    /**
+     * @var ClassicApiIntegration
+     * The integration details for PayPal CLASSIC endpoints.
+     */
     public $classic_api_integration;
 
-    /** @var RestApiIntegration */
+    /**
+     * @var RestApiIntegration
+     * The integration details for PayPal REST endpoints.
+     */
     public $rest_api_integration;
 }

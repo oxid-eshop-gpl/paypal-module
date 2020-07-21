@@ -14,6 +14,9 @@ class PaymentSource implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var Card */
+    /**
+     * @var Card
+     * The payment card to use to fund a payment. Can be a credit or debit card.
+     */
     public $card;
 }

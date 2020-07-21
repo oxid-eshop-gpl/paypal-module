@@ -12,13 +12,24 @@ class ThreedsResult extends AuthenticationResultType implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * Electronic Commerce Indicator (ECI). The ECI value is part of the 2 data elements that indicate the
+     * transaction was processed electronically. This should be passed on the authorization transaction to the
+     * Gateway/Processor.
+     */
     public $eci_flag;
 
-    /** @var string */
+    /**
+     * @var string
+     * Universal Cardholder Authentication Field (UCAF) Indicator value provided by the issuer.
+     */
     public $ucaf_indicator;
 
-    /** @var string */
+    /**
+     * @var string
+     * Card brand that the transaction was processed for authentication.
+     */
     public $card_brand;
 
     /** @var string */
@@ -27,10 +38,16 @@ class ThreedsResult extends AuthenticationResultType implements JsonSerializable
     /** @var string */
     public $xid;
 
-    /** @var string */
+    /**
+     * @var string
+     * Status of Authentication eligibility.
+     */
     public $enrolled;
 
-    /** @var string */
+    /**
+     * @var string
+     * Transactions status result identifier. The outcome of the issuer's authentication.
+     */
     public $pares_status;
 
     /** @var string */
@@ -42,13 +59,19 @@ class ThreedsResult extends AuthenticationResultType implements JsonSerializable
     /** @var string */
     public $directory_server_transaction_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * Indicates the type of authentication that was used to challenge the card holder.
+     */
     public $authentication_type;
 
     /** @var string */
     public $access_control_server_transaction_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * Transaction signature status identifier.
+     */
     public $signature_verification_status;
 
     /** @var string */
@@ -57,7 +80,10 @@ class ThreedsResult extends AuthenticationResultType implements JsonSerializable
     /** @var string */
     public $paypal_acquiring_bin;
 
-    /** @var string */
+    /**
+     * @var string
+     * Indicates the algorithm used to generate the CAVV/AAV value.
+     */
     public $cavv_algorithm;
 
     /** @var string */

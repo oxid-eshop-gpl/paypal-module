@@ -25,6 +25,9 @@ class ClientConfiguration implements JsonSerializable
     /** @var string */
     public $integration_artifact;
 
-    /** @var ProductExperience */
+    /**
+     * @var ProductExperience
+     * The product experiences that a user completes on a PayPal transaction.
+     */
     public $experience;
 }

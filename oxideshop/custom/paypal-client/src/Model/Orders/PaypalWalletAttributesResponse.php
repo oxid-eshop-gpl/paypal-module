@@ -12,6 +12,9 @@ class PaypalWalletAttributesResponse implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var VaultResponse */
+    /**
+     * @var VaultResponse
+     * The details about a saved payment source.
+     */
     public $vault;
 }

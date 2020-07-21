@@ -21,6 +21,9 @@ class ExternalCaseProperties implements JsonSerializable
     /** @var string */
     public $recovery_type;
 
-    /** @var Money */
+    /**
+     * @var Money
+     * The currency and amount for a financial transaction, such as a balance or payment due.
+     */
     public $reversal_fee;
 }

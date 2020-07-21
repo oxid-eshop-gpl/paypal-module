@@ -12,16 +12,25 @@ class BusinessEntity extends Business implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var BeneficialOwners */
+    /**
+     * @var BeneficialOwners
+     * Beneficial owners of the entity.
+     */
     public $beneficial_owners;
 
     /** @var array<OfficeBearer> */
     public $office_bearers;
 
-    /** @var CurrencyRange */
+    /**
+     * @var CurrencyRange
+     * The currency range, from the minimum inclusive amount to the maximum inclusive amount.
+     */
     public $annual_sales_volume_range;
 
-    /** @var CurrencyRange */
+    /**
+     * @var CurrencyRange
+     * The currency range, from the minimum inclusive amount to the maximum inclusive amount.
+     */
     public $average_monthly_volume_range;
 
     /** @var string */

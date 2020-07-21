@@ -12,63 +12,123 @@ class PaymentSource implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var Card */
+    /**
+     * @var Card
+     * The payment card to use to fund a payment. Can be a credit or debit card.
+     */
     public $card;
 
-    /** @var Token */
+    /**
+     * @var Token
+     * The tokenized payment source to fund a payment.
+     */
     public $token;
 
-    /** @var Bank */
+    /**
+     * @var Bank
+     * The bank source used to fund the payment
+     */
     public $bank;
 
-    /** @var PaypalWallet */
+    /**
+     * @var PaypalWallet
+     * A resource that identies that a paypal wallet is used for payment.
+     */
     public $paypal;
 
-    /** @var AlipayRequest */
+    /**
+     * @var AlipayRequest
+     * Information needed to pay using Alipay
+     */
     public $alipay;
 
-    /** @var BancontactRequest */
+    /**
+     * @var BancontactRequest
+     * Information needed to pay using Bancontact.
+     */
     public $bancontact;
 
-    /** @var BlikRequest */
+    /**
+     * @var BlikRequest
+     * Information needed to pay using BLIK.
+     */
     public $blik;
 
-    /** @var EpsRequest */
+    /**
+     * @var EpsRequest
+     * Information needed to pay using eps.
+     */
     public $eps;
 
-    /** @var GiropayRequest */
+    /**
+     * @var GiropayRequest
+     * Information needed to pay using giropay.
+     */
     public $giropay;
 
-    /** @var IdealRequest */
+    /**
+     * @var IdealRequest
+     * Information needed to pay using iDEAL.
+     */
     public $ideal;
 
-    /** @var MultibancoRequest */
+    /**
+     * @var MultibancoRequest
+     * Information needed to pay using Multibanco.
+     */
     public $multibanco;
 
-    /** @var MybankRequest */
+    /**
+     * @var MybankRequest
+     * Information needed to pay using MyBank.
+     */
     public $mybank;
 
-    /** @var PayuRequest */
+    /**
+     * @var PayuRequest
+     * Information needed to pay using PayU.
+     */
     public $payu;
 
-    /** @var PTwoFourRequest */
+    /**
+     * @var PTwoFourRequest
+     * Information needed to pay using P24 (Przelewy24).
+     */
     public $p24;
 
-    /** @var PoliRequest */
+    /**
+     * @var PoliRequest
+     * Information needed to pay using POLi.
+     */
     public $poli;
 
-    /** @var SofortRequest */
+    /**
+     * @var SofortRequest
+     * Information needed to pay using Sofort.
+     */
     public $sofort;
 
-    /** @var TrustlyRequest */
+    /**
+     * @var TrustlyRequest
+     * Information needed to pay using Trustly.
+     */
     public $trustly;
 
-    /** @var TrustpayRequest */
+    /**
+     * @var TrustpayRequest
+     * Information needed to pay using TrustPay.
+     */
     public $trustpay;
 
-    /** @var VerkkopankkiRequest */
+    /**
+     * @var VerkkopankkiRequest
+     * Information needed to pay using Verkkopankki (Finnish Online Banking).
+     */
     public $verkkopankki;
 
-    /** @var WechatpayRequest */
+    /**
+     * @var WechatpayRequest
+     * Information needed to pay using WeChat Pay.
+     */
     public $wechatpay;
 }

@@ -9,13 +9,22 @@ class Business implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var BusinessTypeInfo */
+    /**
+     * @var BusinessTypeInfo
+     * The type and subtype of the business.
+     */
     public $business_type;
 
-    /** @var BusinessIndustry */
+    /**
+     * @var BusinessIndustry
+     * The category, subcategory and MCC code of the business.
+     */
     public $business_industry;
 
-    /** @var BusinessIncorporation */
+    /**
+     * @var BusinessIncorporation
+     * Business incorporation information.
+     */
     public $business_incorporation;
 
     /** @var array<BusinessNameDetail> */

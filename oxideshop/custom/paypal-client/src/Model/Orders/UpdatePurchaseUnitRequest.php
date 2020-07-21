@@ -15,6 +15,10 @@ class UpdatePurchaseUnitRequest implements JsonSerializable
     /** @var string */
     public $reference_id;
 
-    /** @var UpdatePaymentCollectionRequest */
+    /**
+     * @var UpdatePaymentCollectionRequest
+     * The collection of payments, or transactions, for a purchase unit in an order. For example, authorized
+     * payments, captured payments.
+     */
     public $payments;
 }

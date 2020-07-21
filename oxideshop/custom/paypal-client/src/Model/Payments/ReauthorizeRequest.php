@@ -19,6 +19,9 @@ class ReauthorizeRequest implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var Money */
+    /**
+     * @var Money
+     * The currency and amount for a financial transaction, such as a balance or payment due.
+     */
     public $amount;
 }

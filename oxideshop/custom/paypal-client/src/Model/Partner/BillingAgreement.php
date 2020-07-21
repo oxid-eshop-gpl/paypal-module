@@ -15,7 +15,10 @@ class BillingAgreement implements JsonSerializable
     /** @var string */
     public $description;
 
-    /** @var BillingExperiencePreference */
+    /**
+     * @var BillingExperiencePreference
+     * The preference that customizes the billing experience of the customer.
+     */
     public $billing_experience_preference;
 
     /** @var string */

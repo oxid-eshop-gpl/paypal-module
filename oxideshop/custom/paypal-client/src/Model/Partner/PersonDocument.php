@@ -12,6 +12,9 @@ class PersonDocument extends Document implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The type of documents.
+     */
     public $type;
 }

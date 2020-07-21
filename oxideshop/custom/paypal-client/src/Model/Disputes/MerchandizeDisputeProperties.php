@@ -15,12 +15,24 @@ class MerchandizeDisputeProperties implements JsonSerializable
     /** @var string */
     public $issue_type;
 
-    /** @var ProductDetails */
+    /**
+     * @var ProductDetails
+     * The product information.
+     */
     public $product_details;
 
-    /** @var ServiceDetails */
+    /**
+     * @var ServiceDetails
+     * The service details.
+     */
     public $service_details;
 
-    /** @var AddressPortable */
+    /**
+     * @var AddressPortable
+     * The portable international postal address. Maps to
+     * [AddressValidationMetadata](https://github.com/googlei18n/libaddressinput/wiki/AddressValidationMetadata) and
+     * HTML 5.1 [Autofilling form controls: the autocomplete
+     * attribute](https://www.w3.org/TR/html51/sec-forms.html#autofilling-form-controls-the-autocomplete-attribute).
+     */
     public $return_shipping_address;
 }

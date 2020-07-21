@@ -18,7 +18,10 @@ class ReferralDataResponse implements JsonSerializable
     /** @var string */
     public $submitter_payer_id;
 
-    /** @var ReferralData */
+    /**
+     * @var ReferralData
+     * The customer's referral data that partners share with PayPal.
+     */
     public $referral_data;
 
     /** @var array<array> */

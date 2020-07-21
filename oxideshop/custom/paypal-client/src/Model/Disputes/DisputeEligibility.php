@@ -24,6 +24,11 @@ class DisputeEligibility implements JsonSerializable
     /** @var array<IneligibleDisputeReason> */
     public $ineligible_dispute_reasons;
 
-    /** @var string */
+    /**
+     * @var string
+     * The reason for the item-level dispute. For information about the required information for each dispute reason
+     * and associated evidence type, see <a
+     * href="/docs/integration/direct/customer-disputes/integration-guide/#dispute-reasons">dispute reasons</a>.
+     */
     public $recommended_dispute_reason;
 }

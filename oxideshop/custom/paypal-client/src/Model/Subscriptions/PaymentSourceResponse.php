@@ -12,6 +12,9 @@ class PaymentSourceResponse implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var CardResponseWithBillingAddress */
+    /**
+     * @var CardResponseWithBillingAddress
+     * The payment card used to fund the payment. Card can be a credit or debit card.
+     */
     public $card;
 }

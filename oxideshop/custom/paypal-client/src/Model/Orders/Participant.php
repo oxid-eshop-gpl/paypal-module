@@ -12,9 +12,15 @@ class Participant extends Account implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var Person */
+    /**
+     * @var Person
+     * Person information.
+     */
     public $person;
 
-    /** @var Business */
+    /**
+     * @var Business
+     * Business information.
+     */
     public $business;
 }

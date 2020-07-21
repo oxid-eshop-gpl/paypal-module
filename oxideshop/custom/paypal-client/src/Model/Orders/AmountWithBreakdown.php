@@ -17,6 +17,10 @@ class AmountWithBreakdown extends Money implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var AmountBreakdown */
+    /**
+     * @var AmountBreakdown
+     * The breakdown of the amount. Breakdown provides details such as total item amount, total tax amount, shipping,
+     * handling, insurance, and discounts, if any.
+     */
     public $breakdown;
 }

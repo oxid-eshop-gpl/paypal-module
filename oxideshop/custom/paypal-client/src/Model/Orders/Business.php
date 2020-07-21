@@ -15,10 +15,17 @@ class Business extends Party implements JsonSerializable
     /** @var array<BusinessName> */
     public $names;
 
-    /** @var string */
+    /**
+     * @var string
+     * The business types classified.
+     */
     public $type;
 
-    /** @var BusinessCategory */
+    /**
+     * @var BusinessCategory
+     * Business category information. Refer:
+     * https://developer.paypal.com/docs/commerce-platform/reference/categories-subcategories/.
+     */
     public $category;
 
     /** @var array<BusinessIdentification> */
@@ -33,6 +40,9 @@ class Business extends Party implements JsonSerializable
     /** @var string */
     public $url;
 
-    /** @var CustomerServiceContact */
+    /**
+     * @var CustomerServiceContact
+     * Customer care contact information.
+     */
     public $customer_service_contacts;
 }

@@ -18,6 +18,9 @@ class Escalate implements JsonSerializable
     /** @var string */
     public $buyer_escalation_reason;
 
-    /** @var Money */
+    /**
+     * @var Money
+     * The currency and amount for a financial transaction, such as a balance or payment due.
+     */
     public $buyer_requested_amount;
 }

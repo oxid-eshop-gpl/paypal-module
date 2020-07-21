@@ -17,6 +17,9 @@ class PaymentInstruction implements JsonSerializable
     /** @var array<PlatformFee> */
     public $platform_fees;
 
-    /** @var string */
+    /**
+     * @var string
+     * The funds that are held on behalf of the merchant.
+     */
     public $disbursement_mode;
 }

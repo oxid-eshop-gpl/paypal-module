@@ -12,6 +12,9 @@ class WalletsResponse implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var ApplePayWalletResponse */
+    /**
+     * @var ApplePayWalletResponse
+     * The Apple Pay Wallet used to fund a payment.
+     */
     public $apple_pay;
 }

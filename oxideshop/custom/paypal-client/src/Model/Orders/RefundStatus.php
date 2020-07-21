@@ -15,6 +15,9 @@ class RefundStatus implements JsonSerializable
     /** @var string */
     public $status;
 
-    /** @var RefundStatusDetails */
+    /**
+     * @var RefundStatusDetails
+     * The details of the refund status.
+     */
     public $status_details;
 }

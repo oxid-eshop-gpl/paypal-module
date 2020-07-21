@@ -24,10 +24,18 @@ class ItemInfo implements JsonSerializable
     /** @var string */
     public $partner_transaction_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The reason for the item-level dispute. For information about the required information for each dispute reason
+     * and associated evidence type, see <a
+     * href="/docs/integration/direct/customer-disputes/integration-guide/#dispute-reasons">dispute reasons</a>.
+     */
     public $reason;
 
-    /** @var Money */
+    /**
+     * @var Money
+     * The currency and amount for a financial transaction, such as a balance or payment due.
+     */
     public $dispute_amount;
 
     /** @var string */

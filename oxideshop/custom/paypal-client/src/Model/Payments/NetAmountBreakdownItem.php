@@ -13,12 +13,21 @@ class NetAmountBreakdownItem implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var Money */
+    /**
+     * @var Money
+     * The currency and amount for a financial transaction, such as a balance or payment due.
+     */
     public $payable_amount;
 
-    /** @var Money */
+    /**
+     * @var Money
+     * The currency and amount for a financial transaction, such as a balance or payment due.
+     */
     public $converted_amount;
 
-    /** @var ExchangeRate */
+    /**
+     * @var ExchangeRate
+     * The exchange rate that determines the amount to convert from one currency to another currency.
+     */
     public $exchange_rate;
 }

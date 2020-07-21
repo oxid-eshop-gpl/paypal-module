@@ -15,6 +15,9 @@ class BusinessNameDetail extends BusinessName implements JsonSerializable
     /** @var string */
     public $id;
 
-    /** @var string */
+    /**
+     * @var string
+     * Business name type
+     */
     public $type;
 }

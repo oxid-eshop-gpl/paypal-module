@@ -15,15 +15,27 @@ class CreditNotProcessed implements JsonSerializable
     /** @var string */
     public $issue_type;
 
-    /** @var Money */
+    /**
+     * @var Money
+     * The currency and amount for a financial transaction, such as a balance or payment due.
+     */
     public $expected_refund;
 
-    /** @var CancellationDetails */
+    /**
+     * @var CancellationDetails
+     * The cancellation details.
+     */
     public $cancellation_details;
 
-    /** @var ProductDetails */
+    /**
+     * @var ProductDetails
+     * The product information.
+     */
     public $product_details;
 
-    /** @var ServiceDetails */
+    /**
+     * @var ServiceDetails
+     * The service details.
+     */
     public $service_details;
 }

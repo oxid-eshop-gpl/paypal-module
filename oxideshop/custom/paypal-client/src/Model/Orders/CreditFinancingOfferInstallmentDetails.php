@@ -15,6 +15,9 @@ class CreditFinancingOfferInstallmentDetails implements JsonSerializable
     /** @var string */
     public $period;
 
-    /** @var Money */
+    /**
+     * @var Money
+     * The currency and amount for a financial transaction, such as a balance or payment due.
+     */
     public $payment_due;
 }

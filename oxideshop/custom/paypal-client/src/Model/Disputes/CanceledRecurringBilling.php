@@ -12,9 +12,15 @@ class CanceledRecurringBilling implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var Money */
+    /**
+     * @var Money
+     * The currency and amount for a financial transaction, such as a balance or payment due.
+     */
     public $expected_refund;
 
-    /** @var CancellationDetails */
+    /**
+     * @var CancellationDetails
+     * The cancellation details.
+     */
     public $cancellation_details;
 }

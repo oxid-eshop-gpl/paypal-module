@@ -21,7 +21,10 @@ class CardResponse implements JsonSerializable
     /** @var string */
     public $last_digits;
 
-    /** @var string */
+    /**
+     * @var string
+     * The card network or brand. Applies to credit, debit, gift, and payment cards.
+     */
     public $brand;
 
     /** @var string */
@@ -33,9 +36,15 @@ class CardResponse implements JsonSerializable
     /** @var string */
     public $bin;
 
-    /** @var AuthenticationResponse */
+    /**
+     * @var AuthenticationResponse
+     * Results of Authentication such as 3D Secure.
+     */
     public $authentication_result;
 
-    /** @var CardAttributesResponse */
+    /**
+     * @var CardAttributesResponse
+     * Additional attributes associated with the use of this card.
+     */
     public $attributes;
 }

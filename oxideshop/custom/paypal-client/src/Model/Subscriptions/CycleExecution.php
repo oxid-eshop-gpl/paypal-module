@@ -27,7 +27,10 @@ class CycleExecution implements JsonSerializable
     /** @var integer */
     public $current_pricing_scheme_version;
 
-    /** @var Money */
+    /**
+     * @var Money
+     * The currency and amount for a financial transaction, such as a balance or payment due.
+     */
     public $amount_payable_per_cycle;
 
     /** @var integer */

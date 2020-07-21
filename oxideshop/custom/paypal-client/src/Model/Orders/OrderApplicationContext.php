@@ -18,7 +18,14 @@ class OrderApplicationContext implements JsonSerializable
     /** @var string */
     public $brand_name;
 
-    /** @var string */
+    /**
+     * @var string
+     * The [language tag](https://tools.ietf.org/html/bcp47#section-2) for the language in which to localize the
+     * error-related strings, such as messages, issues, and suggested actions. The tag is made up of the [ISO 639-2
+     * language code](https://www.loc.gov/standards/iso639-2/php/code_list.php), the optional [ISO-15924 script
+     * tag](https://www.unicode.org/iso15924/codelists.html), and the [ISO-3166 alpha-2 country
+     * code](/docs/integration/direct/rest/country-codes/).
+     */
     public $locale;
 
     /** @var string */
@@ -30,7 +37,10 @@ class OrderApplicationContext implements JsonSerializable
     /** @var string */
     public $user_action;
 
-    /** @var PaymentMethod */
+    /**
+     * @var PaymentMethod
+     * The customer and merchant payment preferences.
+     */
     public $payment_method;
 
     /** @var string */
@@ -42,12 +52,19 @@ class OrderApplicationContext implements JsonSerializable
     /** @var string */
     public $payment_token;
 
-    /** @var ClientConfiguration */
+    /**
+     * @var ClientConfiguration
+     * Client configuration that captures the product flows and specific experiences that a user completes a paypal
+     * transaction.
+     */
     public $client_configuration;
 
     /** @var boolean */
     public $vault;
 
-    /** @var PaymentSource */
+    /**
+     * @var PaymentSource
+     * The payment source definition.
+     */
     public $preferred_payment_source;
 }

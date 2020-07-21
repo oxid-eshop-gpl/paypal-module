@@ -12,18 +12,33 @@ class BillingDisputesProperties implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var DuplicateTransaction */
+    /**
+     * @var DuplicateTransaction
+     * The duplicate transaction details.
+     */
     public $duplicate_transaction;
 
-    /** @var IncorrectTransactionAmount */
+    /**
+     * @var IncorrectTransactionAmount
+     * The incorrect transaction amount details.
+     */
     public $incorrect_transaction_amount;
 
-    /** @var PaymentByOtherMeans */
+    /**
+     * @var PaymentByOtherMeans
+     * The payment by other means details.
+     */
     public $payment_by_other_means;
 
-    /** @var CreditNotProcessed */
+    /**
+     * @var CreditNotProcessed
+     * The credit not processed details.
+     */
     public $credit_not_processed;
 
-    /** @var CanceledRecurringBilling */
+    /**
+     * @var CanceledRecurringBilling
+     * The recurring billing canceled details.
+     */
     public $canceled_recurring_billing;
 }

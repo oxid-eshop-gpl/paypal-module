@@ -18,7 +18,10 @@ class VaultPaypalWalletBase implements JsonSerializable
     /** @var string */
     public $product_label;
 
-    /** @var ShippingDetail */
+    /**
+     * @var ShippingDetail
+     * The shipping details.
+     */
     public $shipping;
 
     /** @var string */

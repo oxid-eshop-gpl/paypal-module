@@ -21,6 +21,9 @@ class AuthorizationDirectives implements JsonSerializable
     /** @var boolean */
     public $allow_multiple_captures;
 
-    /** @var AuthTolerance */
+    /**
+     * @var AuthTolerance
+     * Auth-Capture Tolerance details.
+     */
     public $tolerance;
 }

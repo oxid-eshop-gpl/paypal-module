@@ -30,10 +30,16 @@ class PlanRequestPOST implements JsonSerializable
     /** @var array<BillingCycle> */
     public $billing_cycles;
 
-    /** @var PaymentPreferences */
+    /**
+     * @var PaymentPreferences
+     * The payment preferences for a subscription.
+     */
     public $payment_preferences;
 
-    /** @var Taxes */
+    /**
+     * @var Taxes
+     * The tax details.
+     */
     public $taxes;
 
     /** @var boolean */

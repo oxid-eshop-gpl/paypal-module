@@ -12,22 +12,37 @@ class AdjudicationInfo implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var Money */
+    /**
+     * @var Money
+     * The currency and amount for a financial transaction, such as a balance or payment due.
+     */
     public $dispute_amount;
 
     /** @var array<ItemInfo> */
     public $items;
 
-    /** @var Outcome */
+    /**
+     * @var Outcome
+     * The outcome of the dispute case.
+     */
     public $outcome;
 
-    /** @var Extensions */
+    /**
+     * @var Extensions
+     * The extended properties for the dispute. Includes additional information for a dispute category, such as
+     * billing disputes, the original transaction ID, correct amount, and so on.
+     */
     public $extensions;
 
     /** @var array<Evidence> */
     public $evidences;
 
-    /** @var string */
+    /**
+     * @var string
+     * The reason for the item-level dispute. For information about the required information for each dispute reason
+     * and associated evidence type, see <a
+     * href="/docs/integration/direct/customer-disputes/integration-guide/#dispute-reasons">dispute reasons</a>.
+     */
     public $dispute_reason;
 
     /** @var string */

@@ -12,9 +12,15 @@ class AuthenticationResponse implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * Liability shift indicator. The outcome of the issuer's authentication.
+     */
     public $liability_shift;
 
-    /** @var ThreeDSecureAuthenticationResponse */
+    /**
+     * @var ThreeDSecureAuthenticationResponse
+     * Results of 3D Secure Authentication.
+     */
     public $three_d_secure;
 }

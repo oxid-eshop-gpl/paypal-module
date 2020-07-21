@@ -12,12 +12,21 @@ class FundingInstrumentResponse implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var CardResponse */
+    /**
+     * @var CardResponse
+     * The payment card to use to fund a payment. Card can be a credit or debit card.
+     */
     public $card;
 
-    /** @var BankAccountResponse */
+    /**
+     * @var BankAccountResponse
+     * The details for a bank account that can be used to fund a payment.
+     */
     public $bank_account;
 
-    /** @var PaypalCredit */
+    /**
+     * @var PaypalCredit
+     * The Buyer credit option used to fund the payment.
+     */
     public $credit;
 }

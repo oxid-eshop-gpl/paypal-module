@@ -15,27 +15,47 @@ class Order extends ActivityTimestamps implements JsonSerializable
     /** @var string */
     public $id;
 
-    /** @var PaymentSourceResponse */
+    /**
+     * @var PaymentSourceResponse
+     * The payment source used to fund the payment
+     */
     public $payment_source;
 
-    /** @var string */
+    /**
+     * @var string
+     * The intent to either capture payment immediately or authorize a payment for an order after order creation.
+     */
     public $intent;
 
-    /** @var Payer */
+    /**
+     * @var Payer
+     * The customer who approves and pays for the order. The customer is also known as the payer.
+     */
     public $payer;
 
-    /** @var string */
+    /**
+     * @var string
+     * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
+     * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
+     * expression provides guidance but does not reject all invalid dates.</blockquote>
+     */
     public $expiration_time;
 
     /** @var array<PurchaseUnit> */
     public $purchase_units;
 
-    /** @var string */
+    /**
+     * @var string
+     * The order status.
+     */
     public $status;
 
     /** @var array<array> */
     public $links;
 
-    /** @var CreditFinancingOffer */
+    /**
+     * @var CreditFinancingOffer
+     * The details about the payer-selected credit financing offer.
+     */
     public $credit_financing_offer;
 }

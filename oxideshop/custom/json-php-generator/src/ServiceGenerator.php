@@ -161,15 +161,6 @@ PHP;
         }
     }
 
-    /**
-     * @param $methodName
-     */
-    private function cleanName($methodName): string
-    {
-        $methodName = ucwords($methodName, $delimiters = " \t\r\n\f\v-_");
-        $methodName = implode('', explode(' ', $methodName));
-        return preg_replace("/[^A-Za-z0-9 ]/", '', $methodName);
-    }
 
     /**
      * @param $methodName

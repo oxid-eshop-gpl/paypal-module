@@ -12,12 +12,18 @@ class PricingDirective implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * Participant type.
+     */
     public $participant_type;
 
     /** @var string */
     public $account_number;
 
-    /** @var string */
+    /**
+     * @var string
+     * Type of pricing applied to a payment.
+     */
     public $type;
 }

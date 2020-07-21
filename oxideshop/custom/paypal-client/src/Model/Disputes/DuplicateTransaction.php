@@ -15,6 +15,9 @@ class DuplicateTransaction implements JsonSerializable
     /** @var boolean */
     public $received_duplicate;
 
-    /** @var TransactionInfo */
+    /**
+     * @var TransactionInfo
+     * The information about the disputed transaction.
+     */
     public $original_transaction;
 }

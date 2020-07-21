@@ -18,10 +18,16 @@ class ShippingOption implements JsonSerializable
     /** @var string */
     public $label;
 
-    /** @var string */
+    /**
+     * @var string
+     * The method by which the payer wants to get their items.
+     */
     public $type;
 
-    /** @var Money */
+    /**
+     * @var Money
+     * The currency and amount for a financial transaction, such as a balance or payment due.
+     */
     public $amount;
 
     /** @var boolean */

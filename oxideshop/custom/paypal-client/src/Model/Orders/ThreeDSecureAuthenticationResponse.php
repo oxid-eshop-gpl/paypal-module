@@ -12,9 +12,15 @@ class ThreeDSecureAuthenticationResponse implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * Transactions status result identifier. The outcome of the issuer's authentication.
+     */
     public $authentication_status;
 
-    /** @var string */
+    /**
+     * @var string
+     * Status of Authentication eligibility.
+     */
     public $enrollment_status;
 }

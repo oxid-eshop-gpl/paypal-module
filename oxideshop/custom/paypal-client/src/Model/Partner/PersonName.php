@@ -12,6 +12,9 @@ class PersonName extends Name implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The person's name type.
+     */
     public $type;
 }

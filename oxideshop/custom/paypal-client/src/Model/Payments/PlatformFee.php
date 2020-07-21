@@ -14,9 +14,16 @@ class PlatformFee implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var Money */
+    /**
+     * @var Money
+     * The currency and amount for a financial transaction, such as a balance or payment due.
+     */
     public $amount;
 
-    /** @var PayeeBase */
+    /**
+     * @var PayeeBase
+     * The details for the merchant who receives the funds and fulfills the order. The merchant is also known as the
+     * payee.
+     */
     public $payee;
 }

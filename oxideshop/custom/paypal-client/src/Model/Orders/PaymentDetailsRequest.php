@@ -12,7 +12,10 @@ class PaymentDetailsRequest implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var PaymentSource */
+    /**
+     * @var PaymentSource
+     * The payment source definition.
+     */
     public $payment_source;
 
     /** @var array<UpdatePurchaseUnitRequest> */

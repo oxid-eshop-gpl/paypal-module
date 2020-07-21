@@ -15,21 +15,36 @@ class SubscriptionRequestPost implements JsonSerializable
     /** @var string */
     public $plan_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
+     * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
+     * expression provides guidance but does not reject all invalid dates.</blockquote>
+     */
     public $start_time;
 
     /** @var string */
     public $quantity;
 
-    /** @var Money */
+    /**
+     * @var Money
+     * The currency and amount for a financial transaction, such as a balance or payment due.
+     */
     public $shipping_amount;
 
-    /** @var SubscriberRequest */
+    /**
+     * @var SubscriberRequest
+     * The subscriber request information .
+     */
     public $subscriber;
 
     /** @var boolean */
     public $auto_renewal;
 
-    /** @var ApplicationContext */
+    /**
+     * @var ApplicationContext
+     * The application context, which customizes the payer experience during the subscription approval process with
+     * PayPal.
+     */
     public $application_context;
 }

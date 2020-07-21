@@ -24,7 +24,10 @@ class ProductRequestPOST implements JsonSerializable
     /** @var string */
     public $type;
 
-    /** @var string */
+    /**
+     * @var string
+     * The product category.
+     */
     public $category;
 
     /** @var string */

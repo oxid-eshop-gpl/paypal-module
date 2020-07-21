@@ -16,27 +16,55 @@ class Extensions implements JsonSerializable
     /** @var boolean */
     public $merchant_contacted;
 
-    /** @var string */
+    /**
+     * @var string
+     * The outcome when the customer has contacted the merchant.
+     */
     public $merchant_contacted_outcome;
 
-    /** @var string */
+    /**
+     * @var string
+     * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
+     * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
+     * expression provides guidance but does not reject all invalid dates.</blockquote>
+     */
     public $merchant_contacted_time;
 
-    /** @var string */
+    /**
+     * @var string
+     * The method used to contact the merchant.
+     */
     public $merchant_contacted_mode;
 
-    /** @var string */
+    /**
+     * @var string
+     * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
+     * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
+     * expression provides guidance but does not reject all invalid dates.</blockquote>
+     */
     public $buyer_contacted_time;
 
-    /** @var BillingDisputesProperties */
+    /**
+     * @var BillingDisputesProperties
+     * The billing issue details.
+     */
     public $billing_dispute_properties;
 
-    /** @var UnauthorizedDisputeProperties */
+    /**
+     * @var UnauthorizedDisputeProperties
+     * The customer-entered issue details for an unauthorized dispute.
+     */
     public $unauthorized_dispute_properties;
 
-    /** @var MerchandizeDisputeProperties */
+    /**
+     * @var MerchandizeDisputeProperties
+     * The customer-provided merchandise issue details for the dispute.
+     */
     public $merchandize_dispute_properties;
 
-    /** @var ExternalCaseProperties */
+    /**
+     * @var ExternalCaseProperties
+     * The third-party claims properties.
+     */
     public $external_case_properties;
 }

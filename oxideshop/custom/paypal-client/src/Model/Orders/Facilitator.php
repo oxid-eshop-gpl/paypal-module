@@ -12,7 +12,10 @@ class Facilitator extends Participant implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * Facilitator type.
+     */
     public $type;
 
     /** @var string */

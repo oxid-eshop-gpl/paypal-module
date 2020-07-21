@@ -12,6 +12,9 @@ class Customer implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The unique ID for a customer in merchant's or partner's system of records.
+     */
     public $id;
 }

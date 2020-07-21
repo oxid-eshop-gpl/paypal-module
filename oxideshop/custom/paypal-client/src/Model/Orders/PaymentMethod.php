@@ -15,7 +15,10 @@ class PaymentMethod implements JsonSerializable
     /** @var string */
     public $payer_selected;
 
-    /** @var string */
+    /**
+     * @var string
+     * The merchant-preferred payment methods.
+     */
     public $payee_preferred;
 
     /** @var string */

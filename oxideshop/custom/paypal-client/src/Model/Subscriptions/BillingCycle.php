@@ -12,10 +12,16 @@ class BillingCycle implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var PricingScheme */
+    /**
+     * @var PricingScheme
+     * The pricing scheme details.
+     */
     public $pricing_scheme;
 
-    /** @var Frequency */
+    /**
+     * @var Frequency
+     * The frequency of the billing cycle.
+     */
     public $frequency;
 
     /** @var string */

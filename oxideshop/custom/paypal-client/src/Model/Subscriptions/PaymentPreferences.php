@@ -18,7 +18,10 @@ class PaymentPreferences implements JsonSerializable
     /** @var boolean */
     public $auto_bill_outstanding;
 
-    /** @var Money */
+    /**
+     * @var Money
+     * The currency and amount for a financial transaction, such as a balance or payment due.
+     */
     public $setup_fee;
 
     /** @var string */

@@ -12,6 +12,9 @@ class Bank implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var AchDebit */
+    /**
+     * @var AchDebit
+     * ACH bank details required to fund the payment.
+     */
     public $ach_debit;
 }

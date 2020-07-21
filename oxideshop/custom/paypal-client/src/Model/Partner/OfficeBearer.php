@@ -12,6 +12,9 @@ class OfficeBearer extends Person implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * Role of the person party played in the business.
+     */
     public $role;
 }

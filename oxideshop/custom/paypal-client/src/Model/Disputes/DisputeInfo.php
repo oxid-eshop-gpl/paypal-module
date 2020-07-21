@@ -15,10 +15,20 @@ class DisputeInfo implements JsonSerializable
     /** @var string */
     public $dispute_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
+     * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
+     * expression provides guidance but does not reject all invalid dates.</blockquote>
+     */
     public $create_time;
 
-    /** @var string */
+    /**
+     * @var string
+     * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
+     * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
+     * expression provides guidance but does not reject all invalid dates.</blockquote>
+     */
     public $update_time;
 
     /** @var array<TransactionInfo> */
@@ -27,61 +37,113 @@ class DisputeInfo implements JsonSerializable
     /** @var array<AccountActivity> */
     public $disputed_account_activities;
 
-    /** @var string */
+    /**
+     * @var string
+     * The reason for the item-level dispute. For information about the required information for each dispute reason
+     * and associated evidence type, see <a
+     * href="/docs/integration/direct/customer-disputes/integration-guide/#dispute-reasons">dispute reasons</a>.
+     */
     public $reason;
 
-    /** @var string */
+    /**
+     * @var string
+     * The status of the dispute.
+     */
     public $status;
 
-    /** @var string */
+    /**
+     * @var string
+     * The state of the dispute.
+     */
     public $dispute_state;
 
-    /** @var Money */
+    /**
+     * @var Money
+     * The currency and amount for a financial transaction, such as a balance or payment due.
+     */
     public $dispute_amount;
 
-    /** @var Money */
+    /**
+     * @var Money
+     * The currency and amount for a financial transaction, such as a balance or payment due.
+     */
     public $dispute_fee;
 
     /** @var string */
     public $external_reason_code;
 
-    /** @var DisputeOutcome */
+    /**
+     * @var DisputeOutcome
+     * The outcome of a dispute.
+     */
     public $dispute_outcome;
 
-    /** @var string */
+    /**
+     * @var string
+     * The stage in the dispute lifecycle.
+     */
     public $dispute_life_cycle_stage;
 
-    /** @var string */
+    /**
+     * @var string
+     * The channel where the customer created the dispute.
+     */
     public $dispute_channel;
 
     /** @var array<Message> */
     public $messages;
 
-    /** @var Extensions */
+    /**
+     * @var Extensions
+     * The extended properties for the dispute. Includes additional information for a dispute category, such as
+     * billing disputes, the original transaction ID, and the correct amount.
+     */
     public $extensions;
 
     /** @var array<Evidence> */
     public $evidences;
 
-    /** @var string */
+    /**
+     * @var string
+     * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
+     * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
+     * expression provides guidance but does not reject all invalid dates.</blockquote>
+     */
     public $buyer_response_due_date;
 
-    /** @var string */
+    /**
+     * @var string
+     * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
+     * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
+     * expression provides guidance but does not reject all invalid dates.</blockquote>
+     */
     public $seller_response_due_date;
 
     /** @var array<History> */
     public $history;
 
-    /** @var string */
+    /**
+     * @var string
+     * The flow ID for the dispute ID.
+     */
     public $dispute_flow;
 
-    /** @var Offer */
+    /**
+     * @var Offer
+     * The merchant-proposed offer for a dispute.
+     */
     public $offer;
 
-    /** @var RefundDetails */
+    /**
+     * @var RefundDetails
+     * The refund details.
+     */
     public $refund_details;
 
-    /** @var CommunicationDetails */
+    /**
+     * @var CommunicationDetails
+     * The contact details that a merchant provides to the customer to use to share their evidence documents.
+     */
     public $communication_details;
 
     /** @var array<PartnerAction> */

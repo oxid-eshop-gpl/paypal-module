@@ -12,9 +12,15 @@ class RiskAssessments implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var RiskAssessment */
+    /**
+     * @var RiskAssessment
+     * The risk assessment for a customer or merchant account or transaction.
+     */
     public $payer;
 
-    /** @var RiskAssessment */
+    /**
+     * @var RiskAssessment
+     * The risk assessment for a customer or merchant account or transaction.
+     */
     public $payee;
 }
