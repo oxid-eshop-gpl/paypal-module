@@ -12,6 +12,12 @@ class OrderRequest implements JsonSerializable
 {
     use BaseModel;
 
+    const INTENT_CAPTURE = 'CAPTURE';
+    const INTENT_AUTHORIZE = 'AUTHORIZE';
+    const PROCESSING_INSTRUCTION_ORDER_SAVED_EXPLICITLY = 'ORDER_SAVED_EXPLICITLY';
+    const PROCESSING_INSTRUCTION_ORDER_SAVED_ON_BUYER_APPROVAL = 'ORDER_SAVED_ON_BUYER_APPROVAL';
+    const PROCESSING_INSTRUCTION_NO_INSTRUCTION = 'NO_INSTRUCTION';
+
     /**
      * @var string
      * The intent to either capture payment immediately or authorize a payment for an order after order creation.

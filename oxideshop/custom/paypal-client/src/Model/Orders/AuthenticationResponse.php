@@ -12,6 +12,11 @@ class AuthenticationResponse implements JsonSerializable
 {
     use BaseModel;
 
+    const LIABILITY_SHIFT_YES = 'YES';
+    const LIABILITY_SHIFT_NO = 'NO';
+    const LIABILITY_SHIFT_POSSIBLE = 'POSSIBLE';
+    const LIABILITY_SHIFT_UNKNOWN = 'UNKNOWN';
+
     /**
      * @var string
      * Liability shift indicator. The outcome of the issuer's authentication.

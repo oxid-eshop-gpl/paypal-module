@@ -356,7 +356,14 @@ class Generator
                                 $propDesc = $propDef['description'];
                                 $property->addComment($this->formatComment($propDesc));
                             }
-
+                            if (isset($propDef['x-enum'])) {
+                                $enums = $propDef['x-enum'];
+                                foreach ($enums as $constant) {
+                                    $value = $constant['value'];
+                                    $constantName = $this->cleanConstantName($name . '_' . $value);
+                                    $class->addConstant($constantName, $value);
+                                }
+                            }
 
                         }
                     }
@@ -380,6 +387,16 @@ class Generator
         $methodName = ucwords($methodName, $delimiters = " \t\r\n\f\v-_");
         $methodName = implode('', explode(' ', $methodName));
         return preg_replace("/[^A-Za-z0-9 ]/", '', $methodName);
+    }
+
+    /**
+     * @param $name
+     */
+    protected function cleanConstantName($name): string
+    {
+        $name = preg_replace("/[^A-Za-z0-9 ]/", '_', $name);
+        $name = implode('_', explode(' ', $name));
+        return strtoupper($name);
     }
 
     /**

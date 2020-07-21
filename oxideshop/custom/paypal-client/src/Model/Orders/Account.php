@@ -12,6 +12,10 @@ class Account implements JsonSerializable
 {
     use BaseModel;
 
+    const TIER_BUSINESS = 'BUSINESS';
+    const TIER_PERSONAL = 'PERSONAL';
+    const TIER_PREMIER = 'PREMIER';
+
     /** @var string */
     public $account_number;
 

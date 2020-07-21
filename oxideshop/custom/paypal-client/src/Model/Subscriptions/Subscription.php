@@ -12,6 +12,9 @@ class Subscription extends SubscriptionStatus implements JsonSerializable
 {
     use BaseModel;
 
+    const PREFERRED_CURRENCY_CONVERSION_PAYPAL = 'PAYPAL';
+    const PREFERRED_CURRENCY_CONVERSION_VENDOR = 'VENDOR';
+
     /** @var string */
     public $id;
 

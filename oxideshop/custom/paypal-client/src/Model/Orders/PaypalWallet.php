@@ -12,6 +12,9 @@ class PaypalWallet implements JsonSerializable
 {
     use BaseModel;
 
+    const PAYMENT_METHOD_PREFERENCE_UNRESTRICTED = 'UNRESTRICTED';
+    const PAYMENT_METHOD_PREFERENCE_IMMEDIATE_PAYMENT_REQUIRED = 'IMMEDIATE_PAYMENT_REQUIRED';
+
     /**
      * @var string
      * The merchant-preferred payment methods.

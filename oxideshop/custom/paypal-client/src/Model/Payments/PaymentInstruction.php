@@ -14,6 +14,9 @@ class PaymentInstruction implements JsonSerializable
 {
     use BaseModel;
 
+    const DISBURSEMENT_MODE_INSTANT = 'INSTANT';
+    const DISBURSEMENT_MODE_DELAYED = 'DELAYED';
+
     /** @var array<PlatformFee> */
     public $platform_fees;
 

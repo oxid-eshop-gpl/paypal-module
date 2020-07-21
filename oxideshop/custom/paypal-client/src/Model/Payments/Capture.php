@@ -12,6 +12,9 @@ class Capture extends CaptureStatus implements JsonSerializable
 {
     use BaseModel;
 
+    const DISBURSEMENT_MODE_INSTANT = 'INSTANT';
+    const DISBURSEMENT_MODE_DELAYED = 'DELAYED';
+
     /** @var string */
     public $id;
 

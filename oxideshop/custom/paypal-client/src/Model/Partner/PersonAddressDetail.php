@@ -12,6 +12,8 @@ class PersonAddressDetail extends AddressPortable implements JsonSerializable
 {
     use BaseModel;
 
+    const TYPE_HOME = 'HOME';
+
     /**
      * @var string
      * The address type under which the provided address is tagged.

@@ -13,6 +13,15 @@ class Extensions implements JsonSerializable
 {
     use BaseModel;
 
+    const MERCHANT_CONTACTED_OUTCOME_NO_RESPONSE = 'NO_RESPONSE';
+    const MERCHANT_CONTACTED_OUTCOME_FIXED = 'FIXED';
+    const MERCHANT_CONTACTED_OUTCOME_NOT_FIXED = 'NOT_FIXED';
+    const MERCHANT_CONTACTED_MODE_WEBSITE = 'WEBSITE';
+    const MERCHANT_CONTACTED_MODE_PHONE = 'PHONE';
+    const MERCHANT_CONTACTED_MODE_EMAIL = 'EMAIL';
+    const MERCHANT_CONTACTED_MODE_WRITTEN = 'WRITTEN';
+    const MERCHANT_CONTACTED_MODE_IN_PERSON = 'IN_PERSON';
+
     /** @var boolean */
     public $merchant_contacted;
 

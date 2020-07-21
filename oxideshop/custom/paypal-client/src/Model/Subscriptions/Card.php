@@ -12,6 +12,23 @@ class Card implements JsonSerializable
 {
     use BaseModel;
 
+    const CARD_TYPE_VISA = 'VISA';
+    const CARD_TYPE_MASTERCARD = 'MASTERCARD';
+    const CARD_TYPE_DISCOVER = 'DISCOVER';
+    const CARD_TYPE_AMEX = 'AMEX';
+    const CARD_TYPE_SOLO = 'SOLO';
+    const CARD_TYPE_JCB = 'JCB';
+    const CARD_TYPE_STAR = 'STAR';
+    const CARD_TYPE_DELTA = 'DELTA';
+    const CARD_TYPE_SWITCH = 'SWITCH';
+    const CARD_TYPE_MAESTRO = 'MAESTRO';
+    const CARD_TYPE_CB_NATIONALE = 'CB_NATIONALE';
+    const CARD_TYPE_CONFIGOGA = 'CONFIGOGA';
+    const CARD_TYPE_CONFIDIS = 'CONFIDIS';
+    const CARD_TYPE_ELECTRON = 'ELECTRON';
+    const CARD_TYPE_CETELEM = 'CETELEM';
+    const CARD_TYPE_CHINA_UNION_PAY = 'CHINA_UNION_PAY';
+
     /** @var string */
     public $id;
 

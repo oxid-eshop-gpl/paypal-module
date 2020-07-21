@@ -12,6 +12,9 @@ class ShippingOption implements JsonSerializable
 {
     use BaseModel;
 
+    const TYPE_SHIPPING = 'SHIPPING';
+    const TYPE_PICKUP = 'PICKUP';
+
     /** @var string */
     public $id;
 

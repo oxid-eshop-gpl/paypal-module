@@ -13,6 +13,12 @@ class PersonPhoneDetail extends Phone implements JsonSerializable
 {
     use BaseModel;
 
+    const TYPE_FAX = 'FAX';
+    const TYPE_HOME = 'HOME';
+    const TYPE_MOBILE = 'MOBILE';
+    const TYPE_OTHER = 'OTHER';
+    const TYPE_PAGER = 'PAGER';
+
     /** @var string */
     public $contact_name;
 

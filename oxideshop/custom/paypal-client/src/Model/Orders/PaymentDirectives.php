@@ -12,6 +12,15 @@ class PaymentDirectives implements JsonSerializable
 {
     use BaseModel;
 
+    const DISBURSEMENT_TYPE_INSTANT = 'INSTANT';
+    const DISBURSEMENT_TYPE_DELAYED = 'DELAYED';
+    const LIABILITY_TYPE_FULL = 'FULL';
+    const LIABILITY_TYPE_PARTIAL = 'PARTIAL';
+    const CURRENCY_RECEIVING_DIRECTIVE_ACCEPT = 'ACCEPT';
+    const CURRENCY_RECEIVING_DIRECTIVE_DENY = 'DENY';
+    const CURRENCY_RECEIVING_DIRECTIVE_HOLD = 'HOLD';
+    const CURRENCY_RECEIVING_DIRECTIVE_ACCEPT_OPEN = 'ACCEPT_OPEN';
+
     /**
      * @var string
      * Disbursement type.

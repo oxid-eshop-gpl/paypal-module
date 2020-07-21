@@ -12,6 +12,11 @@ class ReferredDisputeSummary implements JsonSerializable
 {
     use BaseModel;
 
+    const REASON_MERCHANDISE_OR_SERVICE_NOT_RECEIVED = 'MERCHANDISE_OR_SERVICE_NOT_RECEIVED';
+    const REASON_MERCHANDISE_OR_SERVICE_NOT_AS_DESCRIBED = 'MERCHANDISE_OR_SERVICE_NOT_AS_DESCRIBED';
+    const STATUS_OPEN = 'OPEN';
+    const STATUS_CLOSED = 'CLOSED';
+
     /** @var string */
     public $dispute_id;
 

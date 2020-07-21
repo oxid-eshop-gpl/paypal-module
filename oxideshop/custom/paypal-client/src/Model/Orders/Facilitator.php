@@ -12,6 +12,10 @@ class Facilitator extends Participant implements JsonSerializable
 {
     use BaseModel;
 
+    const TYPE_API_CALLER = 'API_CALLER';
+    const TYPE_PARTNER = 'PARTNER';
+    const TYPE_INTERNAL = 'INTERNAL';
+
     /**
      * @var string
      * Facilitator type.

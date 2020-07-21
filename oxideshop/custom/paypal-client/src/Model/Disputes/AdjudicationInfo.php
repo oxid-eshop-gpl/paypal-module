@@ -12,6 +12,9 @@ class AdjudicationInfo implements JsonSerializable
 {
     use BaseModel;
 
+    const DISPUTE_REASON_MERCHANDISE_OR_SERVICE_NOT_RECEIVED = 'MERCHANDISE_OR_SERVICE_NOT_RECEIVED';
+    const DISPUTE_REASON_MERCHANDISE_OR_SERVICE_NOT_AS_DESCRIBED = 'MERCHANDISE_OR_SERVICE_NOT_AS_DESCRIBED';
+
     /**
      * @var Money
      * The currency and amount for a financial transaction, such as a balance or payment due.

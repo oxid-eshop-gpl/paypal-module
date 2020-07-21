@@ -12,6 +12,9 @@ class PaymentContextData implements JsonSerializable
 {
     use BaseModel;
 
+    const INTENT_CAPTURE = 'CAPTURE';
+    const INTENT_AUTHORIZE = 'AUTHORIZE';
+
     /**
      * @var string
      * The intent to either capture payment immediately or authorize a payment for an order after order creation.

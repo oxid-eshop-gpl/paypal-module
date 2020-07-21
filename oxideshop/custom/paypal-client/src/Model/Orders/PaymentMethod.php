@@ -12,6 +12,9 @@ class PaymentMethod implements JsonSerializable
 {
     use BaseModel;
 
+    const PAYEE_PREFERRED_UNRESTRICTED = 'UNRESTRICTED';
+    const PAYEE_PREFERRED_IMMEDIATE_PAYMENT_REQUIRED = 'IMMEDIATE_PAYMENT_REQUIRED';
+
     /** @var string */
     public $payer_selected;
 

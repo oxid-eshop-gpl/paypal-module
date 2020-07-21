@@ -12,6 +12,11 @@ class MakeOffer implements JsonSerializable
 {
     use BaseModel;
 
+    const OFFER_TYPE_REFUND = 'REFUND';
+    const OFFER_TYPE_REFUND_WITH_RETURN = 'REFUND_WITH_RETURN';
+    const OFFER_TYPE_REFUND_WITH_REPLACEMENT = 'REFUND_WITH_REPLACEMENT';
+    const OFFER_TYPE_REPLACEMENT_WITHOUT_REFUND = 'REPLACEMENT_WITHOUT_REFUND';
+
     /** @var string */
     public $note;
 

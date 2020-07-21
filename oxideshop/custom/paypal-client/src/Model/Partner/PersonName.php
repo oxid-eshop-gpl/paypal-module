@@ -12,6 +12,8 @@ class PersonName extends Name implements JsonSerializable
 {
     use BaseModel;
 
+    const TYPE_LEGAL = 'LEGAL';
+
     /**
      * @var string
      * The person's name type.

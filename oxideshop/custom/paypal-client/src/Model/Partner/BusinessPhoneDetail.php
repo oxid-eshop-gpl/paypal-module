@@ -13,6 +13,8 @@ class BusinessPhoneDetail extends Phone implements JsonSerializable
 {
     use BaseModel;
 
+    const TYPE_CUSTOMER_SERVICE = 'CUSTOMER_SERVICE';
+
     /** @var string */
     public $contact_name;
 

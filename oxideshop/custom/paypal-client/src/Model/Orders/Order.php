@@ -12,6 +12,16 @@ class Order extends ActivityTimestamps implements JsonSerializable
 {
     use BaseModel;
 
+    const INTENT_CAPTURE = 'CAPTURE';
+    const INTENT_AUTHORIZE = 'AUTHORIZE';
+    const STATUS_CREATED = 'CREATED';
+    const STATUS_SAVED = 'SAVED';
+    const STATUS_APPROVED = 'APPROVED';
+    const STATUS_VOIDED = 'VOIDED';
+    const STATUS_COMPLETED = 'COMPLETED';
+    const STATUS_PAYER_ACTION_REQUIRED = 'PAYER_ACTION_REQUIRED';
+    const STATUS_PARTIALLY_COMPLETED = 'PARTIALLY_COMPLETED';
+
     /** @var string */
     public $id;
 
