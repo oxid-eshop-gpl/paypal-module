@@ -14,8 +14,8 @@ class ClassicApiIntegration implements \JsonSerializable
     /** @var string */
     public $integration_type;
 
-    /** @var OxidProfessionalServices\PayPal\Api\Model\Partner\ThirdPartyDetails */
-    public $ThirdPartyDetails;
+    /** @var OxidProfessionalServices\PayPal\Api\Model\Partner\ClassicApiIntegrationThirdPartyDetails */
+    public $third_party_details;
 
     /** @var string */
     public $first_party_details;

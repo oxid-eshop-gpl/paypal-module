@@ -48,93 +48,7 @@ class Generator
 
 
         foreach ($this->definitions as $defName => $defs) {
-            $ns = new PhpNamespace($namespace . '\\' . $subNameSpace);
-
-            $className = $this->calculateClassName($defName, $defs);
-
-
-
-            $class = $ns->addClass($className);
-            if (!empty($defs['description'])) {
-                $class->addComment($defs['description']);
-            }
-
-            $properties = [];
-            if (isset($defs['allOf'])) {
-                $firstRef = true;
-                foreach ($defs['allOf'] as $partialDef) {
-                    if (isset($partialDef['$ref'])) {
-                        $ref = $this->getRefNameFromRefString($partialDef['$ref']);
-                        if ($firstRef) {
-                            $parent = $this->references[$ref];
-                            $parent = "$namespace\\$subNameSpace\\$parent";
-                            $ns->addUse($parent);
-                            $class->addExtend($parent);
-                            $firstRef = false;
-                            continue;
-                        }
-                        $partialDef = $this->definitions[$ref];
-                    }
-
-                    $properties = array_merge($properties, $partialDef['properties']);
-                }
-                $defs['properties'] = $properties;
-            }
-
-            if (isset($defs['properties'])) {
-                foreach ($defs['properties'] as $name => $parameter) {
-                    if (isset($parameter['type'])) {
-                        if ($parameter['type'] === 'string') {
-                            $class->addProperty($name)
-                                ->setVisibility('public')
-                                ->setComment('@var string');
-                        }
-
-                        if ($parameter['type'] === 'object') {
-                            if (isset($parameter['properties'])) {
-                                $cna = explode('_', $name);
-                                $cna = array_map('ucwords', $cna);
-                                $newClassName = implode('', $cna);
-                                $parameter['type'] = $namespace . '\\' . $subNameSpace . '\\' . $newClassName;
-                                $name = $newClassName;
-
-                                foreach ($parameter['properties'] as $propertyName => $propertyValue) {
-                                    if (isset($propertyValue['type'])) {
-                                        if ($propertyValue['type'] === 'string') {
-                                            $class->addProperty($propertyName)
-                                                ->setVisibility('public')
-                                                ->setComment('@var ' . $propertyValue['type']);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        if (is_array($parameter['type'])) {
-                            $parameter['type'] = implode('|', $parameter['type']);
-                        }
-
-                        $class->addProperty($name)
-                            ->setVisibility('public')
-                            ->setComment('@var ' . $parameter['type']);
-                    } else {
-                        // use the $this->references[] map here when you come across a reference
-                        if (!empty($parameter['$ref'])) {
-                            $ref = $this->getRefNameFromRefString($parameter['$ref']);
-                            if (isset($this->references[$ref])) {
-                                $class->addProperty($name)
-                                    ->setVisibility('public')
-                                    ->setComment('@var ' . $this->references[$ref]);
-                            }
-                        }
-                    }
-                }
-            }
-            $class->addImplement(\JsonSerializable::class);
-            $ns->addUse($namespace . '\\BaseModel');
-            $class->addTrait($namespace . '\\BaseModel');
-
-            $this->writeClassFile($subNameSpace, $className, $ns);
+            $this->generateModelClass($namespace, $subNameSpace, $defName, $defs);
         }
     }
 
@@ -335,5 +249,84 @@ class Generator
         $this->fileContent = json_decode(file_get_contents($jsonFile), true);
 
         $this->definitions = $this->fileContent['definitions'];
+    }
+
+    /**
+     * @param string $namespace
+     * @param string $subNameSpace
+     * @param $defName
+     * @param $defs
+     */
+    private function generateModelClass(string $namespace, string $subNameSpace, $defName, $defs): void
+    {
+        $ns = new PhpNamespace($namespace . '\\' . $subNameSpace);
+
+        $className = $this->calculateClassName($defName, $defs);
+        if ($className == "LinkDescription" || $className == "LinkSchema") {
+            return;
+        }
+
+        $class = $ns->addClass($className);
+        if (!empty($defs['description'])) {
+            $class->addComment($defs['description']);
+        }
+
+        $properties = [];
+        if (isset($defs['allOf'])) {
+            $firstRef = true;
+            foreach ($defs['allOf'] as $partialDef) {
+                if (isset($partialDef['$ref'])) {
+                    $ref = $this->getRefNameFromRefString($partialDef['$ref']);
+                    if ($firstRef) {
+                        $parent = $this->references[$ref];
+                        $parent = "$namespace\\$subNameSpace\\$parent";
+                        $ns->addUse($parent);
+                        $class->addExtend($parent);
+                        $firstRef = false;
+                        continue;
+                    }
+                    $partialDef = $this->definitions[$ref];
+                }
+
+                $properties = array_merge($properties, $partialDef['properties']);
+            }
+            $defs['properties'] = $properties;
+        }
+
+        if (isset($defs['properties'])) {
+            foreach ($defs['properties'] as $name => $parameter) {
+                if (isset($parameter['type'])) {
+                    if ($parameter['type'] === 'string') {
+                        $class->addProperty($name)->setVisibility('public')->setComment('@var string');
+                    }
+
+                    if ($parameter['type'] === 'object') {
+                        $nestedClassId = $className . '_' . $name;
+                        $nestedClassName = $this->calculateClassName($nestedClassId, $parameter);
+                        $parameter['type'] = "$namespace\\$subNameSpace\\$nestedClassName";
+                        $this->generateModelClass($namespace, $subNameSpace, $nestedClassId, $parameter);
+                    }
+
+                    if (is_array($parameter['type'])) {
+                        $parameter['type'] = implode('|', $parameter['type']);
+                    }
+
+                    $class->addProperty($name)->setVisibility('public')->setComment('@var ' . $parameter['type']);
+                } else {
+                    // use the $this->references[] map here when you come across a reference
+                    if (!empty($parameter['$ref'])) {
+                        $ref = $this->getRefNameFromRefString($parameter['$ref']);
+                        if (isset($this->references[$ref])) {
+                            $class->addProperty($name)->setVisibility('public')->setComment('@var ' . $this->references[$ref]);
+                        }
+                    }
+                }
+            }
+        }
+        $class->addImplement(\JsonSerializable::class);
+        $ns->addUse($namespace . '\\BaseModel');
+        $class->addTrait($namespace . '\\BaseModel');
+
+        $this->writeClassFile($subNameSpace, $className, $ns);
     }
 }

@@ -17,12 +17,9 @@ class RestApiIntegration implements \JsonSerializable
     /** @var string */
     public $integration_type;
 
-    /** @var string */
-    public $seller_nonce;
+    /** @var OxidProfessionalServices\PayPal\Api\Model\Partner\RestApiIntegrationFirstPartyDetails */
+    public $first_party_details;
 
-    /** @var OxidProfessionalServices\PayPal\Api\Model\Partner\FirstPartyDetails */
-    public $FirstPartyDetails;
-
-    /** @var OxidProfessionalServices\PayPal\Api\Model\Partner\ThirdPartyDetails */
-    public $ThirdPartyDetails;
+    /** @var OxidProfessionalServices\PayPal\Api\Model\Partner\RestApiIntegrationThirdPartyDetails */
+    public $third_party_details;
 }

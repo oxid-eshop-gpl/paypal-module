@@ -14,12 +14,6 @@ class EligibleDisputeReason implements \JsonSerializable
     /** @var string */
     public $dispute_reason;
 
-    /** @var string */
-    public $stage;
-
-    /** @var string */
-    public $reason;
-
-    /** @var OxidProfessionalServices\PayPal\Api\Model\Disputes\AllowableLifeCycle */
-    public $AllowableLifeCycle;
+    /** @var OxidProfessionalServices\PayPal\Api\Model\Disputes\EligibleDisputeReasonAllowableLifeCycle */
+    public $allowable_life_cycle;
 }

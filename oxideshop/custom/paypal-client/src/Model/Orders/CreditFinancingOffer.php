@@ -20,11 +20,8 @@ class CreditFinancingOffer implements \JsonSerializable
     /** @var Money */
     public $total_interest;
 
-    /** @var string */
-    public $period;
-
-    /** @var OxidProfessionalServices\PayPal\Api\Model\Orders\InstallmentDetails */
-    public $InstallmentDetails;
+    /** @var OxidProfessionalServices\PayPal\Api\Model\Orders\CreditFinancingOfferInstallmentDetails */
+    public $installment_details;
 
     /** @var integer */
     public $term;

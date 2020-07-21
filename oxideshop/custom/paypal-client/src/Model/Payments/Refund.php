@@ -23,8 +23,8 @@ class Refund extends RefundStatus implements \JsonSerializable
     /** @var string */
     public $note_to_payer;
 
-    /** @var OxidProfessionalServices\PayPal\Api\Model\Payments\SellerPayableBreakdown */
-    public $SellerPayableBreakdown;
+    /** @var OxidProfessionalServices\PayPal\Api\Model\Payments\RefundSellerPayableBreakdown */
+    public $seller_payable_breakdown;
 
     /** @var array */
     public $links;

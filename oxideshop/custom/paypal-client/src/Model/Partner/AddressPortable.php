@@ -38,24 +38,6 @@ class AddressPortable implements \JsonSerializable
     /** @var string */
     public $country_code;
 
-    /** @var string */
-    public $street_number;
-
-    /** @var string */
-    public $street_name;
-
-    /** @var string */
-    public $street_type;
-
-    /** @var string */
-    public $delivery_service;
-
-    /** @var string */
-    public $building_name;
-
-    /** @var string */
-    public $sub_building;
-
-    /** @var OxidProfessionalServices\PayPal\Api\Model\Partner\AddressDetails */
-    public $AddressDetails;
+    /** @var OxidProfessionalServices\PayPal\Api\Model\Partner\AddressPortableAddressDetails */
+    public $address_details;
 }
