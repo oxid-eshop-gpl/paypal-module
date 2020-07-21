@@ -38,7 +38,7 @@
               data-paypal-button="PPLtBlue"
               onclick="openPopup(
                       '[{$liveMerchantSignUpLink}]',
-                      'onboardingPopup',
+                      'onboardingPopupLive',
                       { 'width': 800, 'height': 600, 'position': 'center' });
                       return false;">
                 [{oxmultilang ident="OXPS_PAYPAL_LIVE_BUTTON_CREDENTIALS"}]
@@ -52,7 +52,7 @@
               data-paypal-button="PPLtBlue"
               onclick="openPopup(
                   '[{$sandboxMerchantSignUpLink}]',
-                  'onboardingPopup',
+                  'onboardingPopupSandbox',
                   { 'width': 800, 'height': 600, 'position': 'center' });
                   return false;">
               [{oxmultilang ident="OXPS_PAYPAL_SANDBOX_BUTTON_CREDENTIALS"}]
