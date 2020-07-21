@@ -57,6 +57,26 @@ class Generator
             if(!empty($defs['description'])) {
                 $class->addComment($defs['description']);
             }
+
+            $properties = [];
+            if (isset($defs['allOf'])) {
+                $firstRef = true;
+                foreach ($defs['allOf'] as $partialDef) {
+                    if (isset($partialDef['$ref'])) {
+                        $ref = $this->getRefNameFromRefString($partialDef['$ref']);
+                        if ($firstRef) {
+                            $class->addExtend($this->references[$ref]);
+                            $firstRef = false;
+                            continue;
+                        }
+                        $partialDef = $this->definitions[$ref];
+                    }
+
+                    $properties = array_merge($properties, $partialDef['properties']);
+                }
+                $defs['properties'] = $properties;
+            }
+
             if(isset($defs['properties'])) {
                 foreach ($defs['properties'] as $name => $parameter) {
                     if (isset($parameter['type'])) {
@@ -272,14 +292,8 @@ class Generator
                 //todo: allOf and oneOf types
                 $defs['type'] = "string";
             }
-            if (empty($defs['properties'])) {
+            if (empty($defs['properties']) && !isset($defs['allOf'])) {
                 $this->references[$defName] = $defs['type'];
-                if (!isset($defs['allOf'])) {
-                    continue;
-                }
-                if (isset($defs['allOf'])) {
-                    $defs['properties'] = $defs['allOf'];
-                }
             }
             if (isset($defs['type'])) {
                 $type = $defs['type'];
