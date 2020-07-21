@@ -12,5 +12,7 @@ class ExchangeRate
 
 	/** @var OxidProfessionalServices\PayPal\Api\Model\CurrencyCode */
 	public $target_currency;
+
+	/** @var string */
 	public $value;
 }

@@ -7,6 +7,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class PaymentInstruction
 {
+	/** @var array */
 	public $platform_fees;
 
 	/** @var OxidProfessionalServices\PayPal\Api\Model\DisbursementMode */

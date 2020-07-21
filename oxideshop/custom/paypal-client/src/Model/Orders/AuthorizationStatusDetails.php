@@ -7,5 +7,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class AuthorizationStatusDetails
 {
+	/** @var string */
 	public $reason;
 }

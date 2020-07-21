@@ -7,9 +7,16 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class ClientConfiguration
 {
+	/** @var string */
 	public $product_code;
+
+	/** @var string */
 	public $product_feature;
+
+	/** @var string */
 	public $api;
+
+	/** @var string */
 	public $integration_artifact;
 
 	/** @var OxidProfessionalServices\PayPal\Api\Model\ProductExperience */

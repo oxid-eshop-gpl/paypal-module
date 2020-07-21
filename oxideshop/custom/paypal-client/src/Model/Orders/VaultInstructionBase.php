@@ -7,5 +7,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class VaultInstructionBase
 {
+	/** @var string */
 	public $confirm_payment_token;
 }

@@ -7,6 +7,9 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class TaxInfo
 {
+	/** @var string */
 	public $tax_id;
+
+	/** @var string */
 	public $tax_id_type;
 }

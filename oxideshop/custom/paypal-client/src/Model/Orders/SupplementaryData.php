@@ -7,6 +7,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class SupplementaryData
 {
+	/** @var array */
 	public $airline;
 
 	/** @var OxidProfessionalServices\PayPal\Api\Model\PointOfSale */

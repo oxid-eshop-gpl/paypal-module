@@ -7,5 +7,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class RefundStatusDetails
 {
+	/** @var string */
 	public $reason;
 }

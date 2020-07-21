@@ -7,9 +7,18 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class ProductExperience
 {
+	/** @var string */
 	public $user_experience_flow;
+
+	/** @var string */
 	public $entry_point;
+
+	/** @var string */
 	public $payment_method;
+
+	/** @var string */
 	public $channel;
+
+	/** @var string */
 	public $product_flow;
 }

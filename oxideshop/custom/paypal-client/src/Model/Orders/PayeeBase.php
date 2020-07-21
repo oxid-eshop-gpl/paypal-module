@@ -12,5 +12,7 @@ class PayeeBase
 
 	/** @var OxidProfessionalServices\PayPal\Api\Model\AccountId */
 	public $merchant_id;
+
+	/** @var string */
 	public $client_id;
 }

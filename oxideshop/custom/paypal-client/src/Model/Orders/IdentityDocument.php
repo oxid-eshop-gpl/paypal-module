@@ -12,6 +12,8 @@ class IdentityDocument
 
 	/** @var OxidProfessionalServices\PayPal\Api\Model\DocumentIssuer */
 	public $issuer;
+
+	/** @var string */
 	public $id_number;
 
 	/** @var OxidProfessionalServices\PayPal\Api\Model\DateNoTime */

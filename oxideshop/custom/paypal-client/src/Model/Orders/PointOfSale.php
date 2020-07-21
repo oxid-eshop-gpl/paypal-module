@@ -7,6 +7,9 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class PointOfSale
 {
+	/** @var string */
 	public $store_id;
+
+	/** @var string */
 	public $terminal_id;
 }

@@ -9,5 +9,7 @@ class Money
 {
 	/** @var OxidProfessionalServices\PayPal\Api\Model\CurrencyCode */
 	public $currency_code;
+
+	/** @var string */
 	public $value;
 }

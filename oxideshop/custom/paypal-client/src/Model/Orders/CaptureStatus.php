@@ -7,6 +7,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class CaptureStatus
 {
+	/** @var string */
 	public $status;
 
 	/** @var OxidProfessionalServices\PayPal\Api\Model\CaptureStatusDetails */

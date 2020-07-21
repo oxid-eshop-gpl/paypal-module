@@ -7,6 +7,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class BusinessName
 {
+	/** @var string */
 	public $business_name;
 
 	/** @var OxidProfessionalServices\PayPal\Api\Model\Orthography */

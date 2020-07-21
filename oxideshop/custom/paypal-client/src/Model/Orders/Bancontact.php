@@ -18,5 +18,7 @@ class Bancontact
 
 	/** @var OxidProfessionalServices\PayPal\Api\Model\IbanLastChars */
 	public $iban_last_chars;
+
+	/** @var string */
 	public $card_last_digits;
 }

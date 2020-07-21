@@ -7,16 +7,33 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class AddressPortable
 {
+	/** @var string */
 	public $address_line_1;
+
+	/** @var string */
 	public $address_line_2;
+
+	/** @var string */
 	public $address_line_3;
+
+	/** @var string */
 	public $admin_area_4;
+
+	/** @var string */
 	public $admin_area_3;
+
+	/** @var string */
 	public $admin_area_2;
+
+	/** @var string */
 	public $admin_area_1;
+
+	/** @var string */
 	public $postal_code;
 
 	/** @var OxidProfessionalServices\PayPal\Api\Model\CountryCode */
 	public $country_code;
+
+	/** @var object */
 	public $address_details;
 }

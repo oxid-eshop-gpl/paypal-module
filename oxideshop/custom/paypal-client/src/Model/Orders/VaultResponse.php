@@ -7,6 +7,9 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class VaultResponse
 {
+	/** @var string */
 	public $id;
+
+	/** @var string */
 	public $status;
 }

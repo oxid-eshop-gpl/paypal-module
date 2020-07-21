@@ -7,6 +7,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class Item
 {
+	/** @var string */
 	public $name;
 
 	/** @var OxidProfessionalServices\PayPal\Api\Model\Money */
@@ -14,8 +15,16 @@ class Item
 
 	/** @var OxidProfessionalServices\PayPal\Api\Model\Money */
 	public $tax;
+
+	/** @var string */
 	public $quantity;
+
+	/** @var string */
 	public $description;
+
+	/** @var string */
 	public $sku;
+
+	/** @var string */
 	public $category;
 }

@@ -7,6 +7,9 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class RiskAssessment
 {
+	/** @var integer */
 	public $score;
+
+	/** @var array */
 	public $reasons;
 }

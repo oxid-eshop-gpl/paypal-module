@@ -7,6 +7,9 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class SellerProtection
 {
+	/** @var string */
 	public $status;
+
+	/** @var array */
 	public $dispute_categories;
 }

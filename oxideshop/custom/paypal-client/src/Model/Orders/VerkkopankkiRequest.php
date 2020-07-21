@@ -15,5 +15,7 @@ class VerkkopankkiRequest
 
 	/** @var OxidProfessionalServices\PayPal\Api\Model\CountryCode */
 	public $country_code;
+
+	/** @var string */
 	public $bank_id;
 }

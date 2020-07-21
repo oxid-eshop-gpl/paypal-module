@@ -7,14 +7,25 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class CardResponse
 {
+	/** @var string */
 	public $id;
+
+	/** @var string */
 	public $last_n_chars;
+
+	/** @var string */
 	public $last_digits;
 
 	/** @var OxidProfessionalServices\PayPal\Api\Model\CardBrand */
 	public $brand;
+
+	/** @var string */
 	public $type;
+
+	/** @var string */
 	public $issuer;
+
+	/** @var string */
 	public $bin;
 
 	/** @var OxidProfessionalServices\PayPal\Api\Model\AuthenticationResponse */

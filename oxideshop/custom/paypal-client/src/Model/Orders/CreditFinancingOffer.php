@@ -7,6 +7,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class CreditFinancingOffer
 {
+	/** @var string */
 	public $issuer;
 
 	/** @var OxidProfessionalServices\PayPal\Api\Model\Money */
@@ -14,6 +15,10 @@ class CreditFinancingOffer
 
 	/** @var OxidProfessionalServices\PayPal\Api\Model\Money */
 	public $total_interest;
+
+	/** @var object */
 	public $installment_details;
+
+	/** @var integer */
 	public $term;
 }

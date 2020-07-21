@@ -7,7 +7,12 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class Phone
 {
+	/** @var string */
 	public $country_code;
+
+	/** @var string */
 	public $national_number;
+
+	/** @var string */
 	public $extension_number;
 }

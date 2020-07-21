@@ -15,5 +15,7 @@ class AirlinePassenger
 
 	/** @var OxidProfessionalServices\PayPal\Api\Model\CountryCode */
 	public $country_code;
+
+	/** @var string */
 	public $customer_code;
 }

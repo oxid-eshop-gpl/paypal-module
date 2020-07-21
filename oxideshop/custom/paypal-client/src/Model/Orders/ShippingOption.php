@@ -7,7 +7,10 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
  */
 class ShippingOption
 {
+	/** @var string */
 	public $id;
+
+	/** @var string */
 	public $label;
 
 	/** @var OxidProfessionalServices\PayPal\Api\Model\ShippingType */
@@ -15,5 +18,7 @@ class ShippingOption
 
 	/** @var OxidProfessionalServices\PayPal\Api\Model\Money */
 	public $amount;
+
+	/** @var boolean */
 	public $selected;
 }

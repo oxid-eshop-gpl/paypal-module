@@ -24,5 +24,7 @@ class SellerReceivableBreakdown
 
 	/** @var OxidProfessionalServices\PayPal\Api\Model\ExchangeRate */
 	public $exchange_rate;
+
+	/** @var array */
 	public $platform_fees;
 }

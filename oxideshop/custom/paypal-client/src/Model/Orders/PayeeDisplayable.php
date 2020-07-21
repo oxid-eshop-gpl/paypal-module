@@ -12,5 +12,7 @@ class PayeeDisplayable
 
 	/** @var OxidProfessionalServices\PayPal\Api\Model\Phone */
 	public $business_phone;
+
+	/** @var string */
 	public $brand_name;
 }

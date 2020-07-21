@@ -50,13 +50,13 @@ class Generator
                         $class = $this->generateFromRef($namespace, $name, $ref, $class);
                     } elseif (isset($parameter['type'])) {
                         if(!empty($parameter['type'])) {
+                            $comment = $this->parseCommentString($parameter);
                             $class->addProperty($name)
-                                ->setVisibility('public');
-//                                ->setComment('@var ' . $parameter['type']);
+                                ->setVisibility('public')
+                                ->setComment('@var ' . $comment);
                         }
                     }
                 }
-
 
                 $this->writeClassFile($className, $defClassName, $ns);
             }
@@ -301,5 +301,19 @@ class Generator
         return preg_replace_callback( '/[0-9]/', function ( $matches ) use ( $numbers ) {
             return $numbers[ $matches[0] ];
         }, $string );
+    }
+
+    /**
+     * @param $parameter
+     * @return string
+     */
+    private function parseCommentString($parameter): string
+    {
+        if (is_string($parameter['type'])) {
+            $comment = $parameter['type'];
+        } else {
+            $comment = implode('|', $parameter['type']);
+        }
+        return $comment;
     }
 }
