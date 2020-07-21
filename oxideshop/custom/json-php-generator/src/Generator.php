@@ -7,7 +7,15 @@ use Nette\PhpGenerator\PsrPrinter;
 
 class Generator
 {
+    /**
+     * @var array
+     */
     private $definitions;
+
+    /**
+     * @var array
+     */
+    private $references = [];
 
     /**
      * @param string $jsonFile
@@ -31,13 +39,16 @@ class Generator
         $this->definitions = $fileContent['definitions'];
 
         foreach($this->definitions as $defName => $definition) {
+
+            if(empty($definition['properties'])) {
+                continue;
+            }
+
             $ns = new PhpNamespace($namespace . '\\' . $className);
 
             if(strpos($defName, 'MerchantsCommonComponentsSpecification') !== false) {
-
                 $refName = $this->getRefNameFromRefString($defName);
                 $defClassName = $this->replaceNumbers($this->getClassNameFromRefName($refName));
-
                 $class = $ns->addClass($defClassName);
 
                 if(!empty($definition['description'])) {
@@ -58,66 +69,73 @@ class Generator
                     }
                 }
 
+                $this->references[$defName] = $defClassName;
+
                 $this->writeClassFile($className, $defClassName, $ns);
             }
-
         }
 
+        foreach($this->definitions as $defName => $definition) {
+            $ns = new PhpNamespace($namespace . '\\' . $className);
 
+            if(strpos($defName, 'MerchantsCommonComponentsSpecification') === false) {
 
+                foreach ($fileContent['definitions'] as $key => $defs) {
 
+                    if(isset($defs['title'])) {
+                        $title = implode('', explode(' ', $defs['title']));
+                        $title = preg_replace("/[^A-Za-z0-9 ]/", '', $title);
+                    }
 
+                    if(empty($title)) {
+                        $title = $this->replaceNumbers($this->getClassNameFromRefName($key));
+                    }
 
+                    $class = $ns->addClass($title);
 
+                    if(isset($defs['properties'])) {
+                        foreach ($defs['properties'] as $name => $parameter) {
+                            if (isset($parameter['type'])) {
+                                if ($parameter['type'] === 'object') {
+                                    if (isset($parameter['properties'])) {
+                                        $cna = explode('_', $name);
+                                        $cna = array_map('ucwords', $cna);
+                                        $newClassName = implode('', $cna);
+                                        $fileName = $newClassName;
+                                        $parameter['type'] = $namespace . '\\' . $className . '\\' . $newClassName;
+                                        $name = $newClassName;
+                                        $this->generateObject($parameter['properties'], $namespace . '\\' . $className, $fileName, $newClassName);
+                                    }
+                                }
 
-//        foreach ($fileContent['definitions'] as $key => $defs) {
-//            $ns = new PhpNamespace($namespace . '\\' . $className);
-//
-//            if (empty($defs['title'])) {
-//                if (isset($defs['format'])) {
-//                    $defs['title'] = $defs['format'];
-//                } else {
-//                    continue;
-//                }
-//            }
-//
-//            $title = implode('', explode(' ', $defs['title']));
-//            $title = preg_replace("/[^A-Za-z0-9 ]/", '', $title);
-//            $fileName = $title;
-//            $class = $ns->addClass($title);
-//            $class->addComment($defs['description']);
-//
-//            foreach ($defs['properties'] as $name => $parameter) {
-//                if (isset($parameter['type'])) {
-//                    if ($parameter['type'] === 'object') {
-//                        if (isset($parameter['properties'])) {
-//                            $cna = explode('_', $name);
-//                            $cna = array_map('ucwords', $cna);
-//                            $newClassName = implode('', $cna);
-//                            $fileName = $newClassName;
-//                            $parameter['type'] = $namespace . '\\' . $className . '\\' . $newClassName;
-//                            $name = $newClassName;
-//                            $this->generateObject($parameter['properties'], $namespace . '\\' . $className, $fileName, $newClassName);
-//                        }
-//                    }
-//
-//                    if (is_array($parameter['type'])) {
-//                        $parameter['type'] = implode('|', $parameter['type']);
-//                    }
-//
-//                    $class->addProperty($name)
-//                        ->setVisibility('public')
-//                        ->setComment('@var ' . $parameter['type']);
-//                } else {
-//                    if(!empty($parameter['$ref'])) {
-//                        $refName = str_replace('#/definitions/', '', $parameter['$ref']);
-//                        $class = $this->generateFromRef($namespace . '\\' . $className, $refName, $class);
-//                    }
-//                }
-//            }
-//
-//            $this->writeClassFile($className, $fileName, $ns);
-//        }
+                                if (is_array($parameter['type'])) {
+                                    $parameter['type'] = implode('|', $parameter['type']);
+                                }
+
+                                $class->addProperty($name)
+                                    ->setVisibility('public')
+                                    ->setComment('@var ' . $parameter['type']);
+                            } else {
+                                // use the $this->references[] map here when you come across a reference
+                                if (!empty($parameter['$ref'])) {
+//                                $refName = str_replace('#/definitions/', '', $parameter['$ref']);
+                                    $ref = $this->getRefNameFromRefString($parameter['$ref']);
+                                    if (isset($this->references[$ref])) {
+                                        $class->addProperty($name)
+                                            ->setVisibility('public')
+                                            ->setComment('@var ' . $this->references[$ref]);
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        $l=1;
+                    }
+                }
+            }
+
+            $this->writeClassFile($className, $defClassName, $ns);
+        }
     }
 
     /**

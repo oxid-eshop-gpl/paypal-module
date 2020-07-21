@@ -2,6 +2,8 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
-class AddressPortablePostalCodeValidation
+class InstallmentDetails
 {
+	/** @var string */
+	public $period;
 }
