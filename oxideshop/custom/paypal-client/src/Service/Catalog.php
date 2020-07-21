@@ -2,6 +2,7 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Service;
 
+use JsonMapper;
 use OxidProfessionalServices\PayPal\Api\Client;
 use OxidProfessionalServices\PayPal\Api\Model\Catalog\Product;
 use OxidProfessionalServices\PayPal\Api\Model\Catalog\ProductCollection;
@@ -30,7 +31,7 @@ class Catalog
         $request = $this->client->createRequest('POST', "/v1/catalogs/products", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new Product());
     }
 
@@ -42,7 +43,7 @@ class Catalog
         $request = $this->client->createRequest('GET', "/v1/catalogs/products", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new ProductCollection());
     }
 
@@ -54,7 +55,7 @@ class Catalog
         $request = $this->client->createRequest('GET', "/v1/catalogs/products/{$productId}", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new Product());
     }
 
@@ -67,7 +68,7 @@ class Catalog
         $request = $this->client->createRequest('PATCH', "/v1/catalogs/products/{$productId}", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new Product());
     }
 }

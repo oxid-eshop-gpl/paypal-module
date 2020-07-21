@@ -2,6 +2,8 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model;
 
+use Error;
+
 trait BaseModel
 {
     public function jsonSerialize()
@@ -13,6 +15,6 @@ trait BaseModel
 
     public function __set($name, $value)
     {
-        throw new \Error("Cant set $name on " . static::class);
+        throw new Error("Cant set $name on " . static::class);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Service;
 
+use JsonMapper;
 use OxidProfessionalServices\PayPal\Api\Client;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Plan;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\PlanCollection;
@@ -43,7 +44,7 @@ class Subscriptions
         $request = $this->client->createRequest('POST', "/v1/billing/plans", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new Plan());
     }
 
@@ -64,7 +65,7 @@ class Subscriptions
         $request = $this->client->createRequest('GET', "/v1/billing/plans", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new PlanCollection());
     }
 
@@ -77,7 +78,7 @@ class Subscriptions
         $request = $this->client->createRequest('GET', "/v1/billing/plans/{$id}", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new Plan());
     }
 
@@ -90,7 +91,7 @@ class Subscriptions
         $request = $this->client->createRequest('PATCH', "/v1/billing/plans/{$id}", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new Plan());
     }
 
@@ -103,7 +104,7 @@ class Subscriptions
         $request = $this->client->createRequest('PUT', "/v1/billing/plans/{$id}", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new Plan());
     }
 
@@ -115,7 +116,7 @@ class Subscriptions
         $request = $this->client->createRequest('POST', "/v1/billing/plans/{$id}/activate", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new Plan());
     }
 
@@ -127,7 +128,7 @@ class Subscriptions
         $request = $this->client->createRequest('POST', "/v1/billing/plans/{$id}/deactivate", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new Plan());
     }
 
@@ -140,7 +141,7 @@ class Subscriptions
         $request = $this->client->createRequest('POST', "/v1/billing/plans/{$id}/update-pricing-schemes", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new Plan());
     }
 
@@ -154,7 +155,7 @@ class Subscriptions
         $request = $this->client->createRequest('POST', "/v1/billing/subscriptions", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new Subscription());
     }
 
@@ -177,7 +178,7 @@ class Subscriptions
         $request = $this->client->createRequest('GET', "/v1/billing/subscriptions", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new SubscriptionCollection());
     }
 
@@ -189,7 +190,7 @@ class Subscriptions
         $request = $this->client->createRequest('GET', "/v1/billing/subscriptions/{$id}", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new Subscription());
     }
 
@@ -202,7 +203,7 @@ class Subscriptions
         $request = $this->client->createRequest('PATCH', "/v1/billing/subscriptions/{$id}", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new Subscription());
     }
 
@@ -215,7 +216,7 @@ class Subscriptions
         $request = $this->client->createRequest('POST', "/v1/billing/subscriptions/{$id}/revise", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new SubscriptionReviseResponse());
     }
 
@@ -228,7 +229,7 @@ class Subscriptions
         $request = $this->client->createRequest('POST', "/v1/billing/subscriptions/{$id}/save", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new SubscriptionReviseResponse());
     }
 
@@ -241,7 +242,7 @@ class Subscriptions
         $request = $this->client->createRequest('POST', "/v1/billing/subscriptions/{$id}/suspend", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new SubscriptionReviseResponse());
     }
 
@@ -254,7 +255,7 @@ class Subscriptions
         $request = $this->client->createRequest('POST', "/v1/billing/subscriptions/{$id}/cancel", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new SubscriptionReviseResponse());
     }
 
@@ -267,7 +268,7 @@ class Subscriptions
         $request = $this->client->createRequest('POST', "/v1/billing/subscriptions/{$id}/activate", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new SubscriptionReviseResponse());
     }
 
@@ -280,7 +281,7 @@ class Subscriptions
         $request = $this->client->createRequest('POST', "/v1/billing/subscriptions/{$id}/capture", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new Transaction());
     }
 
@@ -292,7 +293,7 @@ class Subscriptions
         $request = $this->client->createRequest('GET', "/v1/billing/subscriptions/{$id}/transactions", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new TransactionsList());
     }
 }

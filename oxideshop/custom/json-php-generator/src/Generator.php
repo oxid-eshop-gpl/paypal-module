@@ -279,6 +279,14 @@ class Generator
         if ($className == "array") {
             return;
         }
+        if (isset($defs['type'])) {
+            if ($defs['type'] == "string") {
+                return;
+            }
+            if ($defs['type'] == "array") {
+                return;
+            }
+        }
 
         $class = $ns->addClass($className);
         if (!empty($defs['description'])) {

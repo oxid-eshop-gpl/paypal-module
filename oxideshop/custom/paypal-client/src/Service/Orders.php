@@ -2,6 +2,7 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Service;
 
+use JsonMapper;
 use OxidProfessionalServices\PayPal\Api\Client;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\Order;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderAuthorizeRequest;
@@ -36,7 +37,7 @@ class Orders
         $request = $this->client->createRequest('POST', "/v2/checkout/orders", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new Order());
     }
 
@@ -48,7 +49,7 @@ class Orders
         $request = $this->client->createRequest('GET', "/v2/checkout/orders/{$id}", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new Order());
     }
 
@@ -61,7 +62,7 @@ class Orders
         $request = $this->client->createRequest('PATCH', "/v2/checkout/orders/{$id}", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new Order());
     }
 
@@ -75,7 +76,7 @@ class Orders
         $request = $this->client->createRequest('POST', "/v2/checkout/orders/{$id}/validate-payment-method", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new Order());
     }
 
@@ -91,7 +92,7 @@ class Orders
         $request = $this->client->createRequest('POST', "/v2/checkout/orders/{$id}/authorize", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new Order());
     }
 
@@ -107,7 +108,7 @@ class Orders
         $request = $this->client->createRequest('POST', "/v2/checkout/orders/{$id}/capture", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new Order());
     }
 
@@ -121,7 +122,7 @@ class Orders
         $request = $this->client->createRequest('POST', "/v2/checkout/orders/{$id}/save", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new Order());
     }
 
@@ -135,7 +136,7 @@ class Orders
         $request = $this->client->createRequest('POST', "/v2/checkout/orders/{$id}/void", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new Order());
     }
 
@@ -147,7 +148,7 @@ class Orders
         $request = $this->client->createRequest('GET', "/v2/checkout/payment-context", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new PaymentContextData());
     }
 
@@ -160,7 +161,7 @@ class Orders
         $request = $this->client->createRequest('POST', "/v2/checkout/orders/{$id}/update-paymentDetails", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
-        $mapper = new \JsonMapper();
+        $mapper = new JsonMapper();
         return $mapper->map($jsonProduct, new PaymentContextData());
     }
 }

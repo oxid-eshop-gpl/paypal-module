@@ -31,6 +31,7 @@ class ServiceGenerator extends Generator
     {
 
         $ns = new PhpNamespace($namespace);
+        $ns->addUse(\JsonMapper::class);
         $serviceClass = $ns->addClass($className);
         $ns->addUse('OxidProfessionalServices\PayPal\Api\Client');
         $serviceClass->addProperty('client')->addComment('@var Client');
@@ -128,7 +129,7 @@ $requestBody
 \$request = \$this->client->createRequest('$httpMethod', "$fullPath", \$headers, \$body);
 \$response = \$this->client->send(\$request);
 \$jsonProduct = json_decode(\$response->getBody());
-\$mapper = new \JsonMapper();
+\$mapper = new JsonMapper();
 return \$mapper->map(\$jsonProduct, new ${responseType}());
 PHP;
                     $method->setBody($methodBody);
