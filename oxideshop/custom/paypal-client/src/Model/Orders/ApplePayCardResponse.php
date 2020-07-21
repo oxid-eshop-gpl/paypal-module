@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The Card from Apple Pay Wallet used to fund the payment
  */
-class ApplePayCardResponse extends \CardResponse implements \JsonSerializable
+class ApplePayCardResponse extends CardResponse implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $name;
 
@@ -15,9 +19,4 @@ class ApplePayCardResponse extends \CardResponse implements \JsonSerializable
 
     /** @var string */
     public $country_code;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

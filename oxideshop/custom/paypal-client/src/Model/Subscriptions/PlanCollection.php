@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The list of plans with details.
  */
 class PlanCollection implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var array */
     public $plans;
 
@@ -18,9 +22,4 @@ class PlanCollection implements \JsonSerializable
 
     /** @var array */
     public $links;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

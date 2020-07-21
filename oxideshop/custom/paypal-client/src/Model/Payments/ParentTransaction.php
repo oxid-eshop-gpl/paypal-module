@@ -2,19 +2,18 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * Information about the parent transaction.
  */
 class ParentTransaction implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $id;
 
     /** @var string */
     public $type;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

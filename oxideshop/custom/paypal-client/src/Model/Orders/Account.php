@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * Encapsulates the properties of user account.
  */
 class Account implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $account_number;
 
@@ -36,9 +40,4 @@ class Account implements \JsonSerializable
 
     /** @var string */
     public $time_created;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

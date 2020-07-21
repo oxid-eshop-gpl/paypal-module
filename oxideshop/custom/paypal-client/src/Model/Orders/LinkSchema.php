@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The request data or link target.
  */
 class LinkSchema implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var object */
     public $additionalItems;
 
@@ -54,9 +58,4 @@ class LinkSchema implements \JsonSerializable
 
     /** @var string */
     public $pathStart;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

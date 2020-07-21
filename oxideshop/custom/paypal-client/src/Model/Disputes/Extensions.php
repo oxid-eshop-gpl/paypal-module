@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The extended properties for the dispute. Includes additional information for a dispute category, such as billing disputes, the original transaction ID, and the correct amount.
  */
 class Extensions implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var boolean */
     public $merchant_contacted;
 
@@ -33,9 +37,4 @@ class Extensions implements \JsonSerializable
 
     /** @var ExternalCaseProperties */
     public $external_case_properties;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

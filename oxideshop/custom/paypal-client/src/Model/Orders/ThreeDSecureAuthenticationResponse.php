@@ -2,19 +2,18 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * Results of 3D Secure Authentication.
  */
 class ThreeDSecureAuthenticationResponse implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $authentication_status;
 
     /** @var string */
     public $enrollment_status;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The cancellation details.
  */
 class CancellationDetails implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $cancellation_date;
 
@@ -18,9 +22,4 @@ class CancellationDetails implements \JsonSerializable
 
     /** @var string */
     public $cancellation_mode;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

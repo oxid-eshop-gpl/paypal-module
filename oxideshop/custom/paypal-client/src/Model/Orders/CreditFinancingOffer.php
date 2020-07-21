@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The details about the payer-selected credit financing offer.
  */
 class CreditFinancingOffer implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $issuer;
 
@@ -24,9 +28,4 @@ class CreditFinancingOffer implements \JsonSerializable
 
     /** @var integer */
     public $term;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

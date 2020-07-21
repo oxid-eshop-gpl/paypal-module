@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The collection of payments, or transactions, for a purchase unit in an order. For example, authorized payments, captured payments, and refunds.
  */
 class PaymentCollection implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var array */
     public $authorizations;
 
@@ -15,9 +19,4 @@ class PaymentCollection implements \JsonSerializable
 
     /** @var array */
     public $refunds;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

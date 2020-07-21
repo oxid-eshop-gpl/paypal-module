@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * Information needed to pay using P24 (Przelewy24).
  */
 class PTwoFourRequest implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $name;
 
@@ -15,9 +19,4 @@ class PTwoFourRequest implements \JsonSerializable
 
     /** @var string */
     public $country_code;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * Information used to pay using eps.
  */
 class Eps implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $name;
 
@@ -15,9 +19,4 @@ class Eps implements \JsonSerializable
 
     /** @var string */
     public $bic;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The error details.
  */
 class Error implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $name;
 
@@ -24,9 +28,4 @@ class Error implements \JsonSerializable
 
     /** @var array */
     public $links;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

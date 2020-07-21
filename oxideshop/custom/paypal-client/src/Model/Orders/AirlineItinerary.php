@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The airline itinerary details.
  */
 class AirlineItinerary implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var AirlineTicket */
     public $ticket;
 
@@ -21,9 +25,4 @@ class AirlineItinerary implements \JsonSerializable
 
     /** @var integer */
     public $clearing_count;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

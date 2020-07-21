@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The file reference. Can be a file in PayPal MediaServ, PayPal DMS, or another custom store.
  */
 class FileReference implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $id;
 
@@ -21,9 +25,4 @@ class FileReference implements \JsonSerializable
 
     /** @var string */
     public $size;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

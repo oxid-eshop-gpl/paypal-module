@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The pricing tier details.
  */
 class PricingTier implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $starting_quantity;
 
@@ -15,9 +19,4 @@ class PricingTier implements \JsonSerializable
 
     /** @var Money */
     public $amount;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The create plan request details.
  */
 class PlanRequestPOST implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $product_id;
 
@@ -33,9 +37,4 @@ class PlanRequestPOST implements \JsonSerializable
 
     /** @var boolean */
     public $quantity_supported;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

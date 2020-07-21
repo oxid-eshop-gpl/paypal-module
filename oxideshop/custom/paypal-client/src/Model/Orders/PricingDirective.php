@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * Pricing directive for transaction indication the source and type of pricing.
  */
 class PricingDirective implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $participant_type;
 
@@ -15,9 +19,4 @@ class PricingDirective implements \JsonSerializable
 
     /** @var string */
     public $type;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

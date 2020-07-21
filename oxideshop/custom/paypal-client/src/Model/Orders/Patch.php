@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The JSON patch object to apply partial updates to resources.
  */
 class Patch implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $op;
 
@@ -18,9 +22,4 @@ class Patch implements \JsonSerializable
 
     /** @var string */
     public $from;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

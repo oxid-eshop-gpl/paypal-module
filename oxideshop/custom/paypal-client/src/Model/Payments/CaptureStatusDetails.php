@@ -2,16 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The details of the captured payment status.
  */
 class CaptureStatusDetails implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $reason;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

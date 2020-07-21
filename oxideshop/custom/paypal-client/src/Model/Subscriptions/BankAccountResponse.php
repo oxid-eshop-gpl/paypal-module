@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The details for a bank account that can be used to fund a payment.
  */
 class BankAccountResponse implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $id;
 
@@ -24,9 +28,4 @@ class BankAccountResponse implements \JsonSerializable
 
     /** @var BackupFundingInstrument */
     public $backup_funding_instrument;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

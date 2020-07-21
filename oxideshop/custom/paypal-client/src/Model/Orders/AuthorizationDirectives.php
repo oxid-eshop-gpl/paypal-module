@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * Auth directives for the transaction.
  */
 class AuthorizationDirectives implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var integer */
     public $honor_time_offset;
 
@@ -18,9 +22,4 @@ class AuthorizationDirectives implements \JsonSerializable
 
     /** @var AuthTolerance */
     public $tolerance;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * Payment Directives for transaction.
  */
 class PaymentDirectives implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $disbursement_type;
 
@@ -45,9 +49,4 @@ class PaymentDirectives implements \JsonSerializable
 
     /** @var boolean */
     public $immediate_payment_required;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

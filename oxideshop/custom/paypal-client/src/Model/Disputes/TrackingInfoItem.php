@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The tracking information item.
  */
 class TrackingInfoItem implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $carrier_name;
 
@@ -24,9 +28,4 @@ class TrackingInfoItem implements \JsonSerializable
 
     /** @var string */
     public $posted_time;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

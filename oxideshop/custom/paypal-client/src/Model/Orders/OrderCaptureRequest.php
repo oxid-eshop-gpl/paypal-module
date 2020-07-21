@@ -2,16 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * Completes an capture payment for an order.
  */
 class OrderCaptureRequest implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var PaymentSource */
     public $payment_source;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

@@ -2,16 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The business name of the party.
  */
 class BusinessName implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $business_name;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

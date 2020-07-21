@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The options that the payee or merchant offers to the payer to ship or pick up their items.
  */
 class ShippingOption implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $id;
 
@@ -21,9 +25,4 @@ class ShippingOption implements \JsonSerializable
 
     /** @var boolean */
     public $selected;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

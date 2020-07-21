@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The charge amount from the subscriber.
  */
 class SubscriptionCaptureRequest implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $note;
 
@@ -15,9 +19,4 @@ class SubscriptionCaptureRequest implements \JsonSerializable
 
     /** @var Money */
     public $amount;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

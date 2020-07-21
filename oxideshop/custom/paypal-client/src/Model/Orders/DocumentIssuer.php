@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The document-issuing authority information.
  */
 class DocumentIssuer implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $country_code;
 
@@ -15,9 +19,4 @@ class DocumentIssuer implements \JsonSerializable
 
     /** @var string */
     public $authority;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

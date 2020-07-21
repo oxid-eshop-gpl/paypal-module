@@ -2,16 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The Paypal Wallet response.
  */
 class PaypalWalletResponse implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var PaypalWalletAttributesResponse */
     public $attributes;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The customer who approves and pays for the order. The customer is also known as the payer.
  */
 class Payer implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var Name */
     public $name;
 
@@ -27,9 +31,4 @@ class Payer implements \JsonSerializable
 
     /** @var AddressPortable */
     public $address;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

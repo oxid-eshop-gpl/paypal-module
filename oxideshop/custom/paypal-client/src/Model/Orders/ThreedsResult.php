@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * Additional 3D Secure authentication data.
  */
-class ThreedsResult extends \AuthenticationResultType implements \JsonSerializable
+class ThreedsResult extends AuthenticationResultType implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $eci_flag;
 
@@ -57,9 +61,4 @@ class ThreedsResult extends \AuthenticationResultType implements \JsonSerializab
 
     /** @var string */
     public $three_ds_server_transaction_id;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

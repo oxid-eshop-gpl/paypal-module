@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * A request to change the reason for a dispute.
  */
 class ChangeReason implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $reason;
 
@@ -27,9 +31,4 @@ class ChangeReason implements \JsonSerializable
 
     /** @var array */
     public $item_info;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

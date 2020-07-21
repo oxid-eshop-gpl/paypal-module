@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * Client configuration that captures the product flows and specific experiences that a user completes a paypal transaction.
  */
 class ClientConfiguration implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $product_code;
 
@@ -21,9 +25,4 @@ class ClientConfiguration implements \JsonSerializable
 
     /** @var ProductExperience */
     public $experience;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

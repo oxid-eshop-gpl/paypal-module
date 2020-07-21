@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * A merchant- or customer-submitted supporting information.
  */
 class SupportingInfo implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $notes;
 
@@ -18,9 +22,4 @@ class SupportingInfo implements \JsonSerializable
 
     /** @var string */
     public $provided_time;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

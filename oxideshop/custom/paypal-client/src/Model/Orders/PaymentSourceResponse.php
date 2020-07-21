@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The payment source used to fund the payment
  */
 class PaymentSourceResponse implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var CardResponse */
     public $card;
 
@@ -66,9 +70,4 @@ class PaymentSourceResponse implements \JsonSerializable
 
     /** @var Wechatpay */
     public $wechatpay;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

@@ -2,19 +2,18 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * Auth-Capture Tolerance details.
  */
 class AuthTolerance implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $percent;
 
     /** @var Money */
     public $absolute;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The customer and merchant payment preferences.
  */
 class PaymentMethod implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $payer_selected;
 
@@ -15,9 +19,4 @@ class PaymentMethod implements \JsonSerializable
 
     /** @var string */
     public $standard_entry_class_code;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

@@ -2,13 +2,12 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The percentage, as a fixed-point, signed decimal number. For example, define a 19.99% interest rate as `19.99`.
  */
 class Percentage implements \JsonSerializable
 {
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
+    use BaseModel;
 }

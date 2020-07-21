@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The system action that reverses the impact of the unauthorized event. Includes the system-defined details of the reversal action.
  */
 class ReversalAction implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $id;
 
@@ -24,9 +28,4 @@ class ReversalAction implements \JsonSerializable
 
     /** @var string */
     public $status;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The details for the merchant who receives the funds and fulfills the order. For example, merchant ID, and contact email address.
  */
 class Seller implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $email;
 
@@ -15,9 +19,4 @@ class Seller implements \JsonSerializable
 
     /** @var string */
     public $name;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

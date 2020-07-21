@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The credit not processed details.
  */
 class CreditNotProcessed implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $issue_type;
 
@@ -21,9 +25,4 @@ class CreditNotProcessed implements \JsonSerializable
 
     /** @var ServiceDetails */
     public $service_details;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

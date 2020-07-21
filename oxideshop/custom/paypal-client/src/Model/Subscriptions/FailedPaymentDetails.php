@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The details for the failed payment of the subscription.
  */
 class FailedPaymentDetails implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var Money */
     public $amount;
 
@@ -18,9 +22,4 @@ class FailedPaymentDetails implements \JsonSerializable
 
     /** @var string */
     public $next_payment_retry_time;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

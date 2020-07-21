@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * A metric.
  */
 class Metric implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $key;
 
@@ -15,9 +19,4 @@ class Metric implements \JsonSerializable
 
     /** @var array */
     public $amount;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

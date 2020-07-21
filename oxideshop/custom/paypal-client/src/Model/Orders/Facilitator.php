@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * Facilitator involved in the Payment. Usually the API caller. Example: AliExpress, facebook, eBay.
  */
-class Facilitator extends \Participant implements \JsonSerializable
+class Facilitator extends Participant implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $type;
 
@@ -18,9 +22,4 @@ class Facilitator extends \Participant implements \JsonSerializable
 
     /** @var array */
     public $segments;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

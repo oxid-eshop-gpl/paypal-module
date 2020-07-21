@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The customer's referral data that partners share with PayPal.
  */
-class ReferralData extends \Account implements \JsonSerializable
+class ReferralData extends Account implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $email;
 
@@ -30,9 +34,4 @@ class ReferralData extends \Account implements \JsonSerializable
 
     /** @var array */
     public $legal_consents;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

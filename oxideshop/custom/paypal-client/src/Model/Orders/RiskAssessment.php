@@ -2,19 +2,18 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The risk assessment for a customer or merchant account or transaction.
  */
 class RiskAssessment implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var integer */
     public $score;
 
     /** @var array */
     public $reasons;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The eligible and ineligible disputes with reasons. Disputes and refund information are returned, if applicable.
  */
 class EligibilityResponse implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var boolean */
     public $eligible;
 
@@ -21,9 +25,4 @@ class EligibilityResponse implements \JsonSerializable
 
     /** @var array */
     public $existing_refunds;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

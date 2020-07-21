@@ -2,19 +2,18 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The customer-provided consent.
  */
 class LegalConsent implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $type;
 
     /** @var boolean */
     public $granted;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

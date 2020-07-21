@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The customer's funding instrument. Returned as a funding option to external entities.
  */
 class FundingInstrumentResponse implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var CardResponse */
     public $card;
 
@@ -15,9 +19,4 @@ class FundingInstrumentResponse implements \JsonSerializable
 
     /** @var PaypalCredit */
     public $credit;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

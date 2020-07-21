@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * Payment context data required for processing payments for an order.
  */
 class PaymentContextData implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $intent;
 
@@ -18,9 +22,4 @@ class PaymentContextData implements \JsonSerializable
 
     /** @var array */
     public $payment_units;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

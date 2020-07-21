@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The customer-entered issue details for an unauthorized dispute.
  */
 class UnauthorizedDisputeProperties implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var boolean */
     public $password_changed;
 
@@ -21,9 +25,4 @@ class UnauthorizedDisputeProperties implements \JsonSerializable
 
     /** @var array */
     public $rejected_dispute_transactions;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

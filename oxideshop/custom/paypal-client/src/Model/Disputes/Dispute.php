@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The dispute details.
  */
 class Dispute implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $dispute_id;
 
@@ -84,9 +88,4 @@ class Dispute implements \JsonSerializable
 
     /** @var array */
     public $links;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

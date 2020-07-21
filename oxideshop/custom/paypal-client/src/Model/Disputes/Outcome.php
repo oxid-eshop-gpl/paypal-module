@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The outcome of the dispute case.
  */
 class Outcome implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $faulty_party;
 
@@ -15,9 +19,4 @@ class Outcome implements \JsonSerializable
 
     /** @var string */
     public $resolution_date;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

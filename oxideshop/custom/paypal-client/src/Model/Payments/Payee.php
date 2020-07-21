@@ -2,16 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The merchant who receives the funds and fulfills the order. The merchant is also known as the payee.
  */
-class Payee extends \PayeeBase implements \JsonSerializable
+class Payee extends PayeeBase implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var PayeeDisplayable */
     public $display_data;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

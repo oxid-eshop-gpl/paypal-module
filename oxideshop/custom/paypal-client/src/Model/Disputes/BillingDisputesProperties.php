@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The billing issue details.
  */
 class BillingDisputesProperties implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var DuplicateTransaction */
     public $duplicate_transaction;
 
@@ -21,9 +25,4 @@ class BillingDisputesProperties implements \JsonSerializable
 
     /** @var CanceledRecurringBilling */
     public $canceled_recurring_billing;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

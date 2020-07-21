@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The payment by other means details.
  */
 class PaymentByOtherMeans implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var boolean */
     public $charge_different_from_original;
 
@@ -18,9 +22,4 @@ class PaymentByOtherMeans implements \JsonSerializable
 
     /** @var string */
     public $payment_instrument_suffix;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

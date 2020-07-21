@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The application context, which customizes the payer experience during the subscription approval process with PayPal.
  */
 class CustomizedXUnsupportedNineEightNineFourApplicationContext implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $brand_name;
 
@@ -24,9 +28,4 @@ class CustomizedXUnsupportedNineEightNineFourApplicationContext implements \Json
 
     /** @var string */
     public $cancel_url;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

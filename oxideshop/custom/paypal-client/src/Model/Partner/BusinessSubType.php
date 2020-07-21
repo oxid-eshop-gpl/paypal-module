@@ -2,13 +2,12 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * Sub classification of the business type
  */
 class BusinessSubType implements \JsonSerializable
 {
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
+    use BaseModel;
 }

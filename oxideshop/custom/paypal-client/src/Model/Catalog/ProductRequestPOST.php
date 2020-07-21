@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Catalog;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The create product request details.
  */
 class ProductRequestPOST implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $id;
 
@@ -27,9 +31,4 @@ class ProductRequestPOST implements \JsonSerializable
 
     /** @var string */
     public $home_url;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

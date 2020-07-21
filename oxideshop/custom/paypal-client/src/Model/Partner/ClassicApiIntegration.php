@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The integration details for PayPal CLASSIC endpoints.
  */
 class ClassicApiIntegration implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $integration_type;
 
@@ -15,9 +19,4 @@ class ClassicApiIntegration implements \JsonSerializable
 
     /** @var string */
     public $first_party_details;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

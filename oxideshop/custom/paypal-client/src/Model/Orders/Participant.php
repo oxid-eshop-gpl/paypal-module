@@ -2,19 +2,18 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * Participant in a payment activity, one of person or business must be provided.
  */
-class Participant extends \Account implements \JsonSerializable
+class Participant extends Account implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var Person */
     public $person;
 
     /** @var Business */
     public $business;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

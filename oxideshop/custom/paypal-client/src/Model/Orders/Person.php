@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * Person information.
  */
-class Person extends \Party implements \JsonSerializable
+class Person extends Party implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var array */
     public $names;
 
@@ -18,9 +22,4 @@ class Person extends \Party implements \JsonSerializable
 
     /** @var array */
     public $identifications;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

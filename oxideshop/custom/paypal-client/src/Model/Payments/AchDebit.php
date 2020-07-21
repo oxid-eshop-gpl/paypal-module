@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * ACH bank details required to fund the payment.
  */
 class AchDebit implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $account_number;
 
@@ -18,9 +22,4 @@ class AchDebit implements \JsonSerializable
 
     /** @var string */
     public $account_holder_name;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

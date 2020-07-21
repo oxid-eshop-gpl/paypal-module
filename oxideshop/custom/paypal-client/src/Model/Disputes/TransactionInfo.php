@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The information about the disputed transaction.
  */
 class TransactionInfo implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $buyer_transaction_id;
 
@@ -51,9 +55,4 @@ class TransactionInfo implements \JsonSerializable
 
     /** @var string */
     public $provisional_credit_status;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

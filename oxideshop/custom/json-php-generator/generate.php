@@ -4,10 +4,8 @@ require __DIR__ . '/vendor/autoload.php';
 
 $files = scandir('../paypal-client/schema');
 
-shell_exec('rm -rf ../paypal-client/src/Model');
-
-foreach($files as $file) {
-    if($file === '.' || $file === '..') {
+foreach ($files as $file) {
+    if ($file === '.' || $file === '..') {
         continue;
     }
 

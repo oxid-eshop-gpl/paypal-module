@@ -2,16 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The save subscription request details.
  */
 class SubscriptionSaveRequest implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $token_id;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

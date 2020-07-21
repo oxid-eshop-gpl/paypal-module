@@ -44,9 +44,10 @@ class Generator
 
         $this->buildRefs();
 
+        shell_exec('rm -rf ../paypal-client/src/Model/' . $subNameSpace);
+
 
         foreach ($this->definitions as $defName => $defs) {
-
             $ns = new PhpNamespace($namespace . '\\' . $subNameSpace);
 
             $className = $this->calculateClassName($defName, $defs);
@@ -54,7 +55,7 @@ class Generator
 
 
             $class = $ns->addClass($className);
-            if(!empty($defs['description'])) {
+            if (!empty($defs['description'])) {
                 $class->addComment($defs['description']);
             }
 
@@ -65,7 +66,10 @@ class Generator
                     if (isset($partialDef['$ref'])) {
                         $ref = $this->getRefNameFromRefString($partialDef['$ref']);
                         if ($firstRef) {
-                            $class->addExtend($this->references[$ref]);
+                            $parent = $this->references[$ref];
+                            $parent = "$namespace\\$subNameSpace\\$parent";
+                            $ns->addUse($parent);
+                            $class->addExtend($parent);
                             $firstRef = false;
                             continue;
                         }
@@ -77,11 +81,10 @@ class Generator
                 $defs['properties'] = $properties;
             }
 
-            if(isset($defs['properties'])) {
+            if (isset($defs['properties'])) {
                 foreach ($defs['properties'] as $name => $parameter) {
                     if (isset($parameter['type'])) {
-
-                        if($parameter['type'] === 'string') {
+                        if ($parameter['type'] === 'string') {
                             $class->addProperty($name)
                                 ->setVisibility('public')
                                 ->setComment('@var string');
@@ -95,7 +98,7 @@ class Generator
                                 $parameter['type'] = $namespace . '\\' . $subNameSpace . '\\' . $newClassName;
                                 $name = $newClassName;
 
-                                foreach($parameter['properties'] as $propertyName => $propertyValue) {
+                                foreach ($parameter['properties'] as $propertyName => $propertyValue) {
                                     if (isset($propertyValue['type'])) {
                                         if ($propertyValue['type'] === 'string') {
                                             $class->addProperty($propertyName)
@@ -128,10 +131,8 @@ class Generator
                 }
             }
             $class->addImplement(\JsonSerializable::class);
-            $class->addMethod('jsonSerialize')->addBody('return array_filter((array) $this,static function($var){return isset($var);});')->setVisibility('public');
-
-//              $title = implode('', explode(' ', $definition['title']));
-//              $title = preg_replace("/[^A-Za-z0-9 ]/", '', $title);
+            $ns->addUse($namespace . '\\BaseModel');
+            $class->addTrait($namespace . '\\BaseModel');
 
             $this->writeClassFile($subNameSpace, $className, $ns);
         }
@@ -144,7 +145,11 @@ class Generator
      */
     private function writeClassFile($subNameSpace, $className, PhpNamespace $ns): void
     {
-        $directory = str_replace('OxidProfessionalServices\PayPal\Api\Model\\', '', '../paypal-client/src/Model/' . $subNameSpace);
+        $directory = str_replace(
+            'OxidProfessionalServices\PayPal\Api\Model\\',
+            '',
+            '../paypal-client/src/Model/' . $subNameSpace
+        );
 
         if (!is_dir($directory)) {
             mkdir($directory, 0744, true);
@@ -154,7 +159,7 @@ class Generator
         $printer = new PsrPrinter();
         $phpContent = $printer->printNamespace($ns);
         if (!file_exists($className)) {
-            if(!file_put_contents($className, '<?php' . PHP_EOL . PHP_EOL . $phpContent)) {
+            if (!file_put_contents($className, '<?php' . PHP_EOL . PHP_EOL . $phpContent)) {
                 echo "error writing file " . $className . PHP_EOL;
             }
         }
@@ -179,7 +184,6 @@ class Generator
             ->setComment('@var ' . $parameter['type']);
 
         return $class;
-
     }
 
     /**
@@ -246,9 +250,9 @@ class Generator
             '8' => 'Eight',
             '9' => 'Nine',
         );
-        return preg_replace_callback( '/[0-9]/', function ( $matches ) use ( $numbers ) {
+        return preg_replace_callback('/[0-9]/', function ($matches) use ($numbers) {
             return $numbers[ $matches[0] ];
-        }, $string );
+        }, $string);
     }
 
     /**
@@ -298,7 +302,6 @@ class Generator
     protected function buildRefs(): void
     {
         foreach ($this->definitions as $defName => $defs) {
-
             if (!isset($defs['type'])) {
                 $defs['type'] = "string";
                 if (isset($defs['allOf'])) {

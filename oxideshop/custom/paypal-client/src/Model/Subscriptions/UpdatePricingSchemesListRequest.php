@@ -2,16 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The update pricing scheme request details.
  */
 class UpdatePricingSchemesListRequest implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var array */
     public $pricing_schemes;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

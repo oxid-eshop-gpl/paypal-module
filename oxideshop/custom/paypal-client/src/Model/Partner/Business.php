@@ -2,8 +2,12 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 class Business implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var BusinessTypeInfo */
     public $business_type;
 
@@ -30,9 +34,4 @@ class Business implements \JsonSerializable
 
     /** @var array */
     public $documents;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

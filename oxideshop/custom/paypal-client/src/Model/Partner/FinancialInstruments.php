@@ -2,16 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * Financial instruments attached to this account.
  */
 class FinancialInstruments implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var array */
     public $banks;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

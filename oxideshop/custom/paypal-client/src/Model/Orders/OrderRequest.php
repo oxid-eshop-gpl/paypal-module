@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The order request details.
  */
 class OrderRequest implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $intent;
 
@@ -24,9 +28,4 @@ class OrderRequest implements \JsonSerializable
 
     /** @var OrderApplicationContext */
     public $application_context;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

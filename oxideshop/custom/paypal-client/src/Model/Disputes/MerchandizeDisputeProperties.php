@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The customer-provided merchandise issue details for the dispute.
  */
 class MerchandizeDisputeProperties implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $issue_type;
 
@@ -18,9 +22,4 @@ class MerchandizeDisputeProperties implements \JsonSerializable
 
     /** @var AddressPortable */
     public $return_shipping_address;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

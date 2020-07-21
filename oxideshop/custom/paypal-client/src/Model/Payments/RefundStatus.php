@@ -2,19 +2,18 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The refund status.
  */
 class RefundStatus implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $status;
 
     /** @var RefundStatusDetails */
     public $status_details;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

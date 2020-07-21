@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The authorization of an order request.
  */
 class OrderAuthorizeRequest implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var PaymentSource */
     public $payment_source;
 
@@ -15,9 +19,4 @@ class OrderAuthorizeRequest implements \JsonSerializable
 
     /** @var Money */
     public $amount;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

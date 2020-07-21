@@ -2,19 +2,18 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The frequency of the billing cycle.
  */
 class Frequency implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $interval_unit;
 
     /** @var integer */
     public $interval_count;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * Business incorporation information.
  */
 class BusinessIncorporation implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $incorporation_country_code;
 
@@ -15,9 +19,4 @@ class BusinessIncorporation implements \JsonSerializable
 
     /** @var string */
     public $incorporation_province_code;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

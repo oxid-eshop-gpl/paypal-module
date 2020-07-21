@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The return details for the product.
  */
 class ReturnDetails implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $return_time;
 
@@ -21,9 +25,4 @@ class ReturnDetails implements \JsonSerializable
 
     /** @var boolean */
     public $returned;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

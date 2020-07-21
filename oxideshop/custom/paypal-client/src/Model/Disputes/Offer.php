@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The merchant-proposed offer for a dispute.
  */
 class Offer implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var Money */
     public $buyer_requested_amount;
 
@@ -18,9 +22,4 @@ class Offer implements \JsonSerializable
 
     /** @var array */
     public $history;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

@@ -2,16 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The bank source used to fund the payment
  */
 class BankResponse implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var AchDebitResponse */
     public $ach_debit;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

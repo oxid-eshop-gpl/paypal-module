@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The phone number, in its canonical international [E.164 numbering plan format](https://www.itu.int/rec/T-REC-E.164/en).
  */
 class Phone implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $country_code;
 
@@ -15,9 +19,4 @@ class Phone implements \JsonSerializable
 
     /** @var string */
     public $extension_number;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

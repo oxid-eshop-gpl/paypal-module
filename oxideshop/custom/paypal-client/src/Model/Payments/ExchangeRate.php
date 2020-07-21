@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The exchange rate that determines the amount to convert from one currency to another currency.
  */
 class ExchangeRate implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $source_currency;
 
@@ -15,9 +19,4 @@ class ExchangeRate implements \JsonSerializable
 
     /** @var string */
     public $value;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

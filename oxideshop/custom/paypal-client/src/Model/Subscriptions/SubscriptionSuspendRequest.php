@@ -2,16 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The suspend subscription request details.
  */
 class SubscriptionSuspendRequest implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $reason;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

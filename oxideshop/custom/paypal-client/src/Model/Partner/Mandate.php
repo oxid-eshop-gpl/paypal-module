@@ -2,16 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * Seller’s consent to operate on this financial instrument.
  */
 class Mandate implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var boolean */
     public $accepted;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

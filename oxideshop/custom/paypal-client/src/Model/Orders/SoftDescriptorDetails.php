@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * Soft Descriptor Details.
  */
 class SoftDescriptorDetails implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $soft_descriptor;
 
@@ -15,9 +19,4 @@ class SoftDescriptorDetails implements \JsonSerializable
 
     /** @var string */
     public $contact_value;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

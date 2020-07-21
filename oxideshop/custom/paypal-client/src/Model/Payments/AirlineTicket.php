@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The details for the airline ticket.
  */
 class AirlineTicket implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $number;
 
@@ -33,9 +37,4 @@ class AirlineTicket implements \JsonSerializable
 
     /** @var Money */
     public $fee;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The product information.
  */
 class ProductDetails implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $description;
 
@@ -24,9 +28,4 @@ class ProductDetails implements \JsonSerializable
 
     /** @var ReturnDetails */
     public $return_details;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

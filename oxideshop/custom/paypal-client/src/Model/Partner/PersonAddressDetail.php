@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * A simple postal address with coarse-grained fields.
  */
-class PersonAddressDetail extends \AddressPortable implements \JsonSerializable
+class PersonAddressDetail extends AddressPortable implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $type;
 
@@ -15,9 +19,4 @@ class PersonAddressDetail extends \AddressPortable implements \JsonSerializable
 
     /** @var boolean */
     public $inactive;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

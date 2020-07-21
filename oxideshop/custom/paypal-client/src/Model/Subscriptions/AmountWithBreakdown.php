@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The breakdown details for the amount. Includes the gross, tax, fee, and shipping amounts.
  */
 class AmountWithBreakdown implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var Money */
     public $gross_amount;
 
@@ -21,9 +25,4 @@ class AmountWithBreakdown implements \JsonSerializable
 
     /** @var Money */
     public $net_amount;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

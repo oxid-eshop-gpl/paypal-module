@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The details of the billing agreement between the partner and a seller.
  */
 class BillingAgreement implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $description;
 
@@ -21,9 +25,4 @@ class BillingAgreement implements \JsonSerializable
 
     /** @var string */
     public $ec_token;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

@@ -2,16 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The name of the person.
  */
-class PersonName extends \Name implements \JsonSerializable
+class PersonName extends Name implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $type;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

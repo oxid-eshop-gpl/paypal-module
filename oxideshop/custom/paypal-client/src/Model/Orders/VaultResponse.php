@@ -2,19 +2,18 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The details about a saved payment source.
  */
 class VaultResponse implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $id;
 
     /** @var string */
     public $status;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

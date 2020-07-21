@@ -2,11 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The request-related [HATEOAS link](/docs/api/reference/api-responses/#hateoas-links) information.
  */
 class LinkDescription implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var string */
     public $href;
 
@@ -30,9 +34,4 @@ class LinkDescription implements \JsonSerializable
 
     /** @var LinkSchema */
     public $targetSchema;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }

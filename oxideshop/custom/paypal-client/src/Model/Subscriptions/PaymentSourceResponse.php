@@ -2,16 +2,15 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
+use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+
 /**
  * The payment source used to fund the payment.
  */
 class PaymentSourceResponse implements \JsonSerializable
 {
+    use BaseModel;
+
     /** @var CardResponseWithBillingAddress */
     public $card;
-
-    public function jsonSerialize()
-    {
-        return array_filter((array) $this,static function($var){return isset($var);});
-    }
 }
