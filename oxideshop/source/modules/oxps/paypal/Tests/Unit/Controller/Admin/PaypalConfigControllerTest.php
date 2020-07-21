@@ -1,7 +1,5 @@
 <?php
 
-namespace Paypal\Tests\Unit\Controller\Admin;
-
 /**
  * This file is part of OXID eSales Paypal module.
  *
@@ -21,6 +19,8 @@ namespace Paypal\Tests\Unit\Controller\Admin;
  * @link      http://www.oxid-esales.com
  * @copyright (C) OXID eSales AG 2003-2020
  */
+
+namespace Paypal\Tests\Unit\Controller\Admin;
 
 use OxidEsales\TestingLibrary\UnitTestCase;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalConfigController;
