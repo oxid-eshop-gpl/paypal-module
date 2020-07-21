@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 /**
  * The payment by other means details.
  */
-class PaymentByOtherMeans
+class PaymentByOtherMeans implements \JsonSerializable
 {
 	/** @var boolean */
 	public $charge_different_from_original;
@@ -18,4 +18,10 @@ class PaymentByOtherMeans
 
 	/** @var string */
 	public $payment_instrument_suffix;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

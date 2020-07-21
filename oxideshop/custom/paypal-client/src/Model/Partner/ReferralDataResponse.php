@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 /**
  * The share referral data response.
  */
-class ReferralDataResponse
+class ReferralDataResponse implements \JsonSerializable
 {
 	/** @var string */
 	public $partner_referral_id;
@@ -18,4 +18,10 @@ class ReferralDataResponse
 
 	/** @var array */
 	public $links;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

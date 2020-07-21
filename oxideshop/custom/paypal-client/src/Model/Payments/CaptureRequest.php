@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 /**
  * Captures either a portion or the full authorized amount of an authorized payment.
  */
-class CaptureRequest extends \SupplementaryPurchaseData
+class CaptureRequest extends \SupplementaryPurchaseData implements \JsonSerializable
 {
 	/** @var Money */
 	public $amount;
@@ -18,4 +18,10 @@ class CaptureRequest extends \SupplementaryPurchaseData
 
 	/** @var SupplementaryData */
 	public $supplementary_data;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

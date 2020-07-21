@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 /**
  * Information used to pay using MyBank.
  */
-class Mybank
+class Mybank implements \JsonSerializable
 {
 	/** @var string */
 	public $name;
@@ -18,4 +18,10 @@ class Mybank
 
 	/** @var string */
 	public $iban_last_chars;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

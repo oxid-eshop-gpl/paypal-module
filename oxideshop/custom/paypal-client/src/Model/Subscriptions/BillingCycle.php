@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 /**
  * The billing cycle details.
  */
-class BillingCycle
+class BillingCycle implements \JsonSerializable
 {
 	/** @var PricingScheme */
 	public $pricing_scheme;
@@ -21,4 +21,10 @@ class BillingCycle
 
 	/** @var integer */
 	public $total_cycles;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

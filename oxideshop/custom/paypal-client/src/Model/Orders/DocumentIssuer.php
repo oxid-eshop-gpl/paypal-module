@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 /**
  * The document-issuing authority information.
  */
-class DocumentIssuer
+class DocumentIssuer implements \JsonSerializable
 {
 	/** @var string */
 	public $country_code;
@@ -15,4 +15,10 @@ class DocumentIssuer
 
 	/** @var string */
 	public $authority;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

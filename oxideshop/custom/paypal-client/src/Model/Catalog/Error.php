@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Catalog;
 /**
  * The error details.
  */
-class Error
+class Error implements \JsonSerializable
 {
 	/** @var string */
 	public $name;
@@ -24,4 +24,10 @@ class Error
 
 	/** @var array */
 	public $links;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

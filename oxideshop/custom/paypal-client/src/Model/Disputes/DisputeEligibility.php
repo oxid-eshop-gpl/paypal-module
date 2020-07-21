@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 /**
  * The eligible and ineligible disputes with reasons.
  */
-class DisputeEligibility
+class DisputeEligibility implements \JsonSerializable
 {
 	/** @var string */
 	public $seller_transaction_id;
@@ -21,4 +21,10 @@ class DisputeEligibility
 
 	/** @var string */
 	public $recommended_dispute_reason;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

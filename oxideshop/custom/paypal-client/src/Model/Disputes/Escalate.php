@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 /**
  * A merchant request to escalate a dispute, by ID, to a PayPal claim.
  */
-class Escalate
+class Escalate implements \JsonSerializable
 {
 	/** @var string */
 	public $note;
@@ -15,4 +15,10 @@ class Escalate
 
 	/** @var Money */
 	public $buyer_requested_amount;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

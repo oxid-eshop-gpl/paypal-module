@@ -25,7 +25,7 @@ class Partner
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$referralData), true);
+        $body = json_encode($referralData, true);
         $request = $this->client->createRequest('POST', "/v2/customer/partner-referrals", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());

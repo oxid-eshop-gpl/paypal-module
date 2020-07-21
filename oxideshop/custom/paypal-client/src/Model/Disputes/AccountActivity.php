@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 /**
  * The information about the account-related activities.
  */
-class AccountActivity
+class AccountActivity implements \JsonSerializable
 {
 	/** @var string */
 	public $id;
@@ -30,4 +30,10 @@ class AccountActivity
 
 	/** @var array */
 	public $reversal_actions;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

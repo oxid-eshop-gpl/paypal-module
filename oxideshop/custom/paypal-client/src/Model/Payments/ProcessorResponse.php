@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 /**
  * The processor information. Might be required for payment requests, such as direct credit card transactions.
  */
-class ProcessorResponse
+class ProcessorResponse implements \JsonSerializable
 {
 	/** @var string */
 	public $avs_code;
@@ -18,4 +18,10 @@ class ProcessorResponse
 
 	/** @var string */
 	public $payment_advice_code;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

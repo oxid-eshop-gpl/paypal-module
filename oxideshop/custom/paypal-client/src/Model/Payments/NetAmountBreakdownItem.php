@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 /**
  * The net amount. Returned when the currency of the refund is different from the currency of the PayPal account where the merchant holds their funds.
  */
-class NetAmountBreakdownItem
+class NetAmountBreakdownItem implements \JsonSerializable
 {
 	/** @var Money */
 	public $payable_amount;
@@ -15,4 +15,10 @@ class NetAmountBreakdownItem
 
 	/** @var ExchangeRate */
 	public $exchange_rate;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

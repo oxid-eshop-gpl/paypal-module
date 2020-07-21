@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Catalog;
 /**
  * The details for a product in the collection response.
  */
-class ProductCollectionElement
+class ProductCollectionElement implements \JsonSerializable
 {
 	/** @var string */
 	public $id;
@@ -21,4 +21,10 @@ class ProductCollectionElement
 
 	/** @var array */
 	public $links;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

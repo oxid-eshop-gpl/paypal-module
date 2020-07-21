@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 /**
  * The order request details.
  */
-class OrderRequest
+class OrderRequest implements \JsonSerializable
 {
 	/** @var string */
 	public $intent;
@@ -24,4 +24,10 @@ class OrderRequest
 
 	/** @var OrderApplicationContext */
 	public $application_context;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

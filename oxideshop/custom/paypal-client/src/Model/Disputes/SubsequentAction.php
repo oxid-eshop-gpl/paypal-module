@@ -5,8 +5,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 /**
  * The subsequent action.
  */
-class SubsequentAction
+class SubsequentAction implements \JsonSerializable
 {
 	/** @var array */
 	public $links;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

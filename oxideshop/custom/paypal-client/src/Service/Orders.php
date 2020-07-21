@@ -32,7 +32,7 @@ class Orders
         $headers['PayPal-Client-Metadata-Id'] = $payPalClientMetadataId;
         $headers['Prefer'] = $prefer;
 
-        $body = json_encode(array_filter((array)$order), true);
+        $body = json_encode($order, true);
         $request = $this->client->createRequest('POST', "/v2/checkout/orders", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -57,7 +57,7 @@ class Orders
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$patchRequest), true);
+        $body = json_encode($patchRequest, true);
         $request = $this->client->createRequest('PATCH', "/v2/checkout/orders/{$id}", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -71,7 +71,7 @@ class Orders
         $headers['PayPal-Client-Metadata-Id'] = $payPalClientMetadataId;
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$orderValidateRequest), true);
+        $body = json_encode($orderValidateRequest, true);
         $request = $this->client->createRequest('POST', "/v2/checkout/orders/{$id}/validate-payment-method", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -87,7 +87,7 @@ class Orders
         $headers['PayPal-Auth-Assertion'] = $payPalAuthAssertion;
         $headers['Prefer'] = $prefer;
 
-        $body = json_encode(array_filter((array)$authorizeRequest), true);
+        $body = json_encode($authorizeRequest, true);
         $request = $this->client->createRequest('POST', "/v2/checkout/orders/{$id}/authorize", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -103,7 +103,7 @@ class Orders
         $headers['PayPal-Auth-Assertion'] = $payPalAuthAssertion;
         $headers['Prefer'] = $prefer;
 
-        $body = json_encode(array_filter((array)$orderCaptureRequest), true);
+        $body = json_encode($orderCaptureRequest, true);
         $request = $this->client->createRequest('POST', "/v2/checkout/orders/{$id}/capture", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -156,7 +156,7 @@ class Orders
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$paymentDetails), true);
+        $body = json_encode($paymentDetails, true);
         $request = $this->client->createRequest('POST', "/v2/checkout/orders/{$id}/update-paymentDetails", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());

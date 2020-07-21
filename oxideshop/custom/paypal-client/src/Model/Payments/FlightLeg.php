@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 /**
  * The details of the flight leg.
  */
-class FlightLeg
+class FlightLeg implements \JsonSerializable
 {
 	/** @var string */
 	public $flight_code;
@@ -54,4 +54,10 @@ class FlightLeg
 
 	/** @var string */
 	public $additional_notations;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

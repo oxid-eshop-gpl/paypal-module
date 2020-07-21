@@ -5,6 +5,10 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 /**
  * The channel where the customer created the dispute.
  */
-class DisputeChannel
+class DisputeChannel implements \JsonSerializable
 {
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

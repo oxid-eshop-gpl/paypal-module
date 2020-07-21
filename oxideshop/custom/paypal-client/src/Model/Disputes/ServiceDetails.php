@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 /**
  * The service details.
  */
-class ServiceDetails
+class ServiceDetails implements \JsonSerializable
 {
 	/** @var string */
 	public $description;
@@ -21,4 +21,10 @@ class ServiceDetails
 
 	/** @var string */
 	public $purchase_url;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

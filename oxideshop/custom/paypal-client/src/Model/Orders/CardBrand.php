@@ -5,6 +5,10 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 /**
  * The card network or brand. Applies to credit, debit, gift, and payment cards.
  */
-class CardBrand
+class CardBrand implements \JsonSerializable
 {
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

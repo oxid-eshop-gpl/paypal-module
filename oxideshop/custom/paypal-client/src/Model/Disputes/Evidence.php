@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 /**
  * A merchant- or customer-submitted evidence document.
  */
-class Evidence
+class Evidence implements \JsonSerializable
 {
 	/** @var string */
 	public $evidence_type;
@@ -27,4 +27,10 @@ class Evidence
 
 	/** @var string */
 	public $item_id;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

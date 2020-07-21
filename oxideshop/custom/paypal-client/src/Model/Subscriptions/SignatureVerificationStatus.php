@@ -5,6 +5,10 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 /**
  * Transaction signature status identifier.
  */
-class SignatureVerificationStatus
+class SignatureVerificationStatus implements \JsonSerializable
 {
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

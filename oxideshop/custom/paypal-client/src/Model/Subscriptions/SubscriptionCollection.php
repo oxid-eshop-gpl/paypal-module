@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 /**
  * The list of subscriptions.
  */
-class SubscriptionCollection
+class SubscriptionCollection implements \JsonSerializable
 {
 	/** @var array */
 	public $subscriptions;
@@ -18,4 +18,10 @@ class SubscriptionCollection
 
 	/** @var array */
 	public $links;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

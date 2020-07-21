@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 /**
  * The payment card to use to fund a payment. Can be a credit or debit card.
  */
-class Card
+class Card implements \JsonSerializable
 {
 	/** @var string */
 	public $id;
@@ -36,4 +36,10 @@ class Card
 
 	/** @var CardAttributes */
 	public $attributes;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

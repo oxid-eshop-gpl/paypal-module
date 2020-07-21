@@ -85,7 +85,7 @@ class ServiceGenerator extends Generator
 
                     if ($parameterDefinition['in'] == "body") {
                         $methodBody .= "\$headers['Content-Type'] = 'application/json';\n";
-                        $requestBody = "\$body = json_encode(array_filter((array)\$$paramName), true);";
+                        $requestBody = "\$body = json_encode(\$$paramName, true);";
                     } elseif ($parameterDefinition['in'] == "header") {
                         $methodBody .= "\$headers['$origParamName'] = \$$paramName;\n";
                     }

@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 /**
  * The third-party claims properties.
  */
-class ExternalCaseProperties
+class ExternalCaseProperties implements \JsonSerializable
 {
 	/** @var string */
 	public $reference_id;
@@ -18,4 +18,10 @@ class ExternalCaseProperties
 
 	/** @var Money */
 	public $reversal_fee;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

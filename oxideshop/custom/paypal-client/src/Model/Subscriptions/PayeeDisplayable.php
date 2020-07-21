@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 /**
  * The merchant information. The merchant is also known as the payee. Appears to the customer in checkout, transactions, email receipts, and transaction history.
  */
-class PayeeDisplayable
+class PayeeDisplayable implements \JsonSerializable
 {
 	/** @var string */
 	public $business_email;
@@ -15,4 +15,10 @@ class PayeeDisplayable
 
 	/** @var string */
 	public $brand_name;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

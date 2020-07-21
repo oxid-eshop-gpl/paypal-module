@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 /**
  * The required operation to share data.
  */
-class Operation
+class Operation implements \JsonSerializable
 {
 	/** @var string */
 	public $operation;
@@ -15,4 +15,10 @@ class Operation
 
 	/** @var BillingAgreement */
 	public $billing_agreement;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

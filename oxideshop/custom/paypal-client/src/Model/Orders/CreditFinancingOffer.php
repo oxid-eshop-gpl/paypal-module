@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 /**
  * The details about the payer-selected credit financing offer.
  */
-class CreditFinancingOffer
+class CreditFinancingOffer implements \JsonSerializable
 {
 	/** @var string */
 	public $issuer;
@@ -24,4 +24,10 @@ class CreditFinancingOffer
 
 	/** @var integer */
 	public $term;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

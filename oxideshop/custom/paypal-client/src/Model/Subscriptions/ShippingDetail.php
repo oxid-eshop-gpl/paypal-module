@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 /**
  * The shipping details.
  */
-class ShippingDetail
+class ShippingDetail implements \JsonSerializable
 {
 	/** @var Name */
 	public $name;
@@ -15,4 +15,10 @@ class ShippingDetail
 
 	/** @var AddressPortable */
 	public $address;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

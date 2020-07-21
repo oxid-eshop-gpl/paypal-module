@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 /**
  * The request-related [HATEOAS link](/docs/api/overview/#hateoas-links) information.
  */
-class LinkDescription
+class LinkDescription implements \JsonSerializable
 {
 	/** @var string */
 	public $href;
@@ -30,4 +30,10 @@ class LinkDescription
 
 	/** @var LinkSchema */
 	public $targetSchema;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

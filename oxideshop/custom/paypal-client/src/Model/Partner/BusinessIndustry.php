@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 /**
  * The category, subcategory and MCC code of the business.
  */
-class BusinessIndustry
+class BusinessIndustry implements \JsonSerializable
 {
 	/** @var string */
 	public $category;
@@ -15,4 +15,10 @@ class BusinessIndustry
 
 	/** @var string */
 	public $subcategory;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

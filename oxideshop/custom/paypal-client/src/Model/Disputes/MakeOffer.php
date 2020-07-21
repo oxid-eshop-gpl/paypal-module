@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 /**
  * A merchant request to make an offer to resolve a dispute.
  */
-class MakeOffer
+class MakeOffer implements \JsonSerializable
 {
 	/** @var string */
 	public $note;
@@ -21,4 +21,10 @@ class MakeOffer
 
 	/** @var string */
 	public $offer_type;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

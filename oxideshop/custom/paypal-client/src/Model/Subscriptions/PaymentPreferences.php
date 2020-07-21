@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 /**
  * The payment preferences for a subscription.
  */
-class PaymentPreferences
+class PaymentPreferences implements \JsonSerializable
 {
 	/** @var string */
 	public $service_type;
@@ -21,4 +21,10 @@ class PaymentPreferences
 
 	/** @var integer */
 	public $payment_failure_threshold;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

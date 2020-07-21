@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 /**
  * The name of the party.
  */
-class Name
+class Name implements \JsonSerializable
 {
 	/** @var string */
 	public $prefix;
@@ -24,4 +24,10 @@ class Name
 
 	/** @var string */
 	public $full_name;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

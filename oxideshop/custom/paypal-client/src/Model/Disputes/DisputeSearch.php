@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 /**
  * An array of disputes. Includes links that enable you to navigate through the response.
  */
-class DisputeSearch
+class DisputeSearch implements \JsonSerializable
 {
 	/** @var array */
 	public $items;
@@ -18,4 +18,10 @@ class DisputeSearch
 
 	/** @var array */
 	public $links;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

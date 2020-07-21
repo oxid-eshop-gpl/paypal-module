@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 /**
  * Authorizes either a portion or the full amount of a saved order.
  */
-class AuthorizationRequest
+class AuthorizationRequest implements \JsonSerializable
 {
 	/** @var string */
 	public $order_id;
@@ -33,4 +33,10 @@ class AuthorizationRequest
 
 	/** @var ShippingDetail */
 	public $shipping;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

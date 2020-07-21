@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 /**
  * Soft Descriptor Details.
  */
-class SoftDescriptorDetails
+class SoftDescriptorDetails implements \JsonSerializable
 {
 	/** @var string */
 	public $soft_descriptor;
@@ -15,4 +15,10 @@ class SoftDescriptorDetails
 
 	/** @var string */
 	public $contact_value;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

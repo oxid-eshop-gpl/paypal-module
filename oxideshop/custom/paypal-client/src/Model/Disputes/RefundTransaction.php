@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 /**
  * The refund transaction.
  */
-class RefundTransaction
+class RefundTransaction implements \JsonSerializable
 {
 	/** @var string */
 	public $id;
@@ -18,4 +18,10 @@ class RefundTransaction
 
 	/** @var string */
 	public $create_time;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

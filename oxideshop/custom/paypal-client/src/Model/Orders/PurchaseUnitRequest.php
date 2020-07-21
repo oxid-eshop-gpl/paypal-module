@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 /**
  * The purchase unit request. Includes required information for the payment contract.
  */
-class PurchaseUnitRequest
+class PurchaseUnitRequest implements \JsonSerializable
 {
 	/** @var string */
 	public $reference_id;
@@ -39,4 +39,10 @@ class PurchaseUnitRequest
 
 	/** @var SupplementaryData */
 	public $supplementary_data;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 /**
  * Information needed to pay using giropay.
  */
-class GiropayRequest
+class GiropayRequest implements \JsonSerializable
 {
 	/** @var string */
 	public $name;
@@ -15,4 +15,10 @@ class GiropayRequest
 
 	/** @var string */
 	public $bic;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

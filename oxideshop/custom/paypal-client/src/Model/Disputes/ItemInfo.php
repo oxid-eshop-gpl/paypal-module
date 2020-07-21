@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 /**
  * The information for a purchased item in a disputed transaction.
  */
-class ItemInfo
+class ItemInfo implements \JsonSerializable
 {
 	/** @var string */
 	public $item_id;
@@ -27,4 +27,10 @@ class ItemInfo
 
 	/** @var string */
 	public $notes;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

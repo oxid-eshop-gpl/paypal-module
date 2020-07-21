@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 /**
  * The transaction details.
  */
-class Transaction extends \CaptureStatus
+class Transaction extends \CaptureStatus implements \JsonSerializable
 {
 	/** @var string */
 	public $id;
@@ -21,4 +21,10 @@ class Transaction extends \CaptureStatus
 
 	/** @var string */
 	public $time;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

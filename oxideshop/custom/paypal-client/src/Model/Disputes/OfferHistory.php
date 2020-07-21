@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 /**
  * The offer history.
  */
-class OfferHistory
+class OfferHistory implements \JsonSerializable
 {
 	/** @var string */
 	public $offer_time;
@@ -21,4 +21,10 @@ class OfferHistory
 
 	/** @var Money */
 	public $offer_amount;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

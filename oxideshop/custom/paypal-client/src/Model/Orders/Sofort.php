@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 /**
  * Information used to pay using Sofort.
  */
-class Sofort
+class Sofort implements \JsonSerializable
 {
 	/** @var string */
 	public $name;
@@ -18,4 +18,10 @@ class Sofort
 
 	/** @var string */
 	public $iban_last_chars;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

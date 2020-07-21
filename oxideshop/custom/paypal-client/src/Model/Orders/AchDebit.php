@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 /**
  * ACH bank details required to fund the payment.
  */
-class AchDebit
+class AchDebit implements \JsonSerializable
 {
 	/** @var string */
 	public $account_number;
@@ -18,4 +18,10 @@ class AchDebit
 
 	/** @var string */
 	public $account_holder_name;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

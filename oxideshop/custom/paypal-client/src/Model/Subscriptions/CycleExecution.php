@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 /**
  * The regular and trial execution details for a billing cycle.
  */
-class CycleExecution
+class CycleExecution implements \JsonSerializable
 {
 	/** @var string */
 	public $tenure_type;
@@ -27,4 +27,10 @@ class CycleExecution
 
 	/** @var integer */
 	public $total_cycles;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

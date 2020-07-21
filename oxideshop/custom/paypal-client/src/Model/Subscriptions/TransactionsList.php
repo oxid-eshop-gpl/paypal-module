@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 /**
  * The list transactions for a subscription request details.
  */
-class TransactionsList
+class TransactionsList implements \JsonSerializable
 {
 	/** @var array */
 	public $transactions;
@@ -18,4 +18,10 @@ class TransactionsList
 
 	/** @var array */
 	public $links;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

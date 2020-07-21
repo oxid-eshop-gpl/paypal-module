@@ -5,8 +5,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 /**
  * The details of the refund status.
  */
-class RefundStatusDetails
+class RefundStatusDetails implements \JsonSerializable
 {
 	/** @var string */
 	public $reason;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

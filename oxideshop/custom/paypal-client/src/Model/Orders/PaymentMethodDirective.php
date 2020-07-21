@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 /**
  * Directives for certain payment methods based on eligibility.
  */
-class PaymentMethodDirective
+class PaymentMethodDirective implements \JsonSerializable
 {
 	/** @var string */
 	public $payment_processing_type;
@@ -15,4 +15,10 @@ class PaymentMethodDirective
 
 	/** @var array */
 	public $reason;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

@@ -2,6 +2,10 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
-class NameValidation
+class NameValidation implements \JsonSerializable
 {
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

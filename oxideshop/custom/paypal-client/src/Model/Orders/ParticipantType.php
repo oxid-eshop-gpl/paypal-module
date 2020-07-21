@@ -5,6 +5,10 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 /**
  * Participant type.
  */
-class ParticipantType
+class ParticipantType implements \JsonSerializable
 {
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

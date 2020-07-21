@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 /**
  * The refund details.
  */
-class Refund
+class Refund implements \JsonSerializable
 {
 	/** @var Money */
 	public $gross_amount;
@@ -18,4 +18,10 @@ class Refund
 
 	/** @var string */
 	public $invoice_number;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

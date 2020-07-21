@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 /**
  * A request by a merchant to accept a customer's merchandise claim.
  */
-class AcceptClaim
+class AcceptClaim implements \JsonSerializable
 {
 	/** @var string */
 	public $note;
@@ -21,4 +21,10 @@ class AcceptClaim
 
 	/** @var Money */
 	public $refund_amount;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

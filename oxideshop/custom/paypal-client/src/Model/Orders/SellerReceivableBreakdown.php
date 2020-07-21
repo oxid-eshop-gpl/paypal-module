@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 /**
  * The detailed breakdown of the capture activity.
  */
-class SellerReceivableBreakdown
+class SellerReceivableBreakdown implements \JsonSerializable
 {
 	/** @var Money */
 	public $gross_amount;
@@ -27,4 +27,10 @@ class SellerReceivableBreakdown
 
 	/** @var array */
 	public $platform_fees;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

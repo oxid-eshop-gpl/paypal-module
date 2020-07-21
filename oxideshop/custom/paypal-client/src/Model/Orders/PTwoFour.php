@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 /**
  * Information used to pay using P24(Przelewy24)
  */
-class PTwoFour
+class PTwoFour implements \JsonSerializable
 {
 	/** @var string */
 	public $name;
@@ -24,4 +24,10 @@ class PTwoFour
 
 	/** @var string */
 	public $method_description;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

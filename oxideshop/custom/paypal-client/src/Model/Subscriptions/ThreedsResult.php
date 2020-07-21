@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 /**
  * Additional 3D Secure authentication data.
  */
-class ThreedsResult extends \AuthenticationResultType
+class ThreedsResult extends \AuthenticationResultType implements \JsonSerializable
 {
 	/** @var string */
 	public $eci_flag;
@@ -57,4 +57,10 @@ class ThreedsResult extends \AuthenticationResultType
 
 	/** @var string */
 	public $three_ds_server_transaction_id;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

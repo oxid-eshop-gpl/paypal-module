@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 /**
  * The details for the merchant who receives the funds and fulfills the order. The merchant is also known as the payee.
  */
-class PayeeBase
+class PayeeBase implements \JsonSerializable
 {
 	/** @var string */
 	public $email_address;
@@ -15,4 +15,10 @@ class PayeeBase
 
 	/** @var string */
 	public $client_id;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

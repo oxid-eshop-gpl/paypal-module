@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 /**
  * Business incorporation information.
  */
-class BusinessIncorporation
+class BusinessIncorporation implements \JsonSerializable
 {
 	/** @var string */
 	public $incorporation_country_code;
@@ -15,4 +15,10 @@ class BusinessIncorporation
 
 	/** @var string */
 	public $incorporation_province_code;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

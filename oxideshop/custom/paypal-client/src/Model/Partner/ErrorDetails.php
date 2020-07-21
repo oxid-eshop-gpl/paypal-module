@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 /**
  * The error details. Required for client-side `4XX` errors.
  */
-class ErrorDetails
+class ErrorDetails implements \JsonSerializable
 {
 	/** @var string */
 	public $field;
@@ -21,4 +21,10 @@ class ErrorDetails
 
 	/** @var string */
 	public $description;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

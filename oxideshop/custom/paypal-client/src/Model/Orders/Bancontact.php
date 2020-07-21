@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 /**
  * Information used to pay Bancontact.
  */
-class Bancontact
+class Bancontact implements \JsonSerializable
 {
 	/** @var string */
 	public $name;
@@ -21,4 +21,10 @@ class Bancontact
 
 	/** @var string */
 	public $card_last_digits;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

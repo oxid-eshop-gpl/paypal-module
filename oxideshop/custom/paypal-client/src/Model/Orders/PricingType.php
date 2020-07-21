@@ -5,6 +5,10 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 /**
  * Type of pricing applied to a payment.
  */
-class PricingType
+class PricingType implements \JsonSerializable
 {
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

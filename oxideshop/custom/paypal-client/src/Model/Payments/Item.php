@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 /**
  * The details for the items to be purchased.
  */
-class Item
+class Item implements \JsonSerializable
 {
 	/** @var string */
 	public $name;
@@ -27,4 +27,10 @@ class Item
 
 	/** @var string */
 	public $category;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

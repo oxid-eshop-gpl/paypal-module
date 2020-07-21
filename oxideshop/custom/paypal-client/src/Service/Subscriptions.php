@@ -39,7 +39,7 @@ class Subscriptions
         $headers['Content-Type'] = 'application/json';
         $headers['Prefer'] = $prefer;
 
-        $body = json_encode(array_filter((array)$planRequest), true);
+        $body = json_encode($planRequest, true);
         $request = $this->client->createRequest('POST', "/v1/billing/plans", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -86,7 +86,7 @@ class Subscriptions
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$patchRequest), true);
+        $body = json_encode($patchRequest, true);
         $request = $this->client->createRequest('PATCH', "/v1/billing/plans/{$id}", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -99,7 +99,7 @@ class Subscriptions
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$plan), true);
+        $body = json_encode($plan, true);
         $request = $this->client->createRequest('PUT', "/v1/billing/plans/{$id}", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -136,7 +136,7 @@ class Subscriptions
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$updatePricingSchemesListRequest), true);
+        $body = json_encode($updatePricingSchemesListRequest, true);
         $request = $this->client->createRequest('POST', "/v1/billing/plans/{$id}/update-pricing-schemes", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -150,7 +150,7 @@ class Subscriptions
         $headers['Content-Type'] = 'application/json';
         $headers['Prefer'] = $prefer;
 
-        $body = json_encode(array_filter((array)$subscriptionRequest), true);
+        $body = json_encode($subscriptionRequest, true);
         $request = $this->client->createRequest('POST', "/v1/billing/subscriptions", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -198,7 +198,7 @@ class Subscriptions
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$patchRequest), true);
+        $body = json_encode($patchRequest, true);
         $request = $this->client->createRequest('PATCH', "/v1/billing/subscriptions/{$id}", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -211,7 +211,7 @@ class Subscriptions
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$subscriptionReviseRequest), true);
+        $body = json_encode($subscriptionReviseRequest, true);
         $request = $this->client->createRequest('POST', "/v1/billing/subscriptions/{$id}/revise", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -224,7 +224,7 @@ class Subscriptions
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$subscriptionSaveRequest), true);
+        $body = json_encode($subscriptionSaveRequest, true);
         $request = $this->client->createRequest('POST', "/v1/billing/subscriptions/{$id}/save", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -237,7 +237,7 @@ class Subscriptions
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$subscriptionSuspendRequest), true);
+        $body = json_encode($subscriptionSuspendRequest, true);
         $request = $this->client->createRequest('POST', "/v1/billing/subscriptions/{$id}/suspend", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -250,7 +250,7 @@ class Subscriptions
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$subscriptionCancelRequest), true);
+        $body = json_encode($subscriptionCancelRequest, true);
         $request = $this->client->createRequest('POST', "/v1/billing/subscriptions/{$id}/cancel", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -263,7 +263,7 @@ class Subscriptions
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$subscriptionActivateRequest), true);
+        $body = json_encode($subscriptionActivateRequest, true);
         $request = $this->client->createRequest('POST', "/v1/billing/subscriptions/{$id}/activate", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -276,7 +276,7 @@ class Subscriptions
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$subscriptionCaptureRequest), true);
+        $body = json_encode($subscriptionCaptureRequest, true);
         $request = $this->client->createRequest('POST', "/v1/billing/subscriptions/{$id}/capture", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());

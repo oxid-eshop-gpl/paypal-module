@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 /**
  * The authorized payment transaction.
  */
-class Authorization extends \AuthorizationStatus
+class Authorization extends \AuthorizationStatus implements \JsonSerializable
 {
 	/** @var string */
 	public $id;
@@ -36,4 +36,10 @@ class Authorization extends \AuthorizationStatus
 
 	/** @var string */
 	public $update_time;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

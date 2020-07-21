@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 /**
  * The transaction for which to create a case.
  */
-class Transaction
+class Transaction implements \JsonSerializable
 {
 	/** @var string */
 	public $id;
@@ -21,4 +21,10 @@ class Transaction
 
 	/** @var string */
 	public $create_time;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

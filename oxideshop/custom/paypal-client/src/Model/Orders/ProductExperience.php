@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 /**
  * The product experiences that a user completes on a PayPal transaction.
  */
-class ProductExperience
+class ProductExperience implements \JsonSerializable
 {
 	/** @var string */
 	public $user_experience_flow;
@@ -21,4 +21,10 @@ class ProductExperience
 
 	/** @var string */
 	public $product_flow;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

@@ -52,7 +52,7 @@ class Disputes
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$adjudicationInfo), true);
+        $body = json_encode($adjudicationInfo, true);
         $request = $this->client->createRequest('POST', "/v1/customer/referred-disputes/{$disputeId}/process-adjudication-event", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -65,7 +65,7 @@ class Disputes
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$requireEvidenceRequest), true);
+        $body = json_encode($requireEvidenceRequest, true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/require-evidence", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -78,7 +78,7 @@ class Disputes
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$refundInfo), true);
+        $body = json_encode($refundInfo, true);
         $request = $this->client->createRequest('POST', "/v1/customer/referred-disputes/{$disputeId}/process-refund-event", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -91,7 +91,7 @@ class Disputes
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$eligibilityRequest), true);
+        $body = json_encode($eligibilityRequest, true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes/validate-eligibility", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -145,7 +145,7 @@ class Disputes
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$dispute), true);
+        $body = json_encode($dispute, true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -158,7 +158,7 @@ class Disputes
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$evidence), true);
+        $body = json_encode($evidence, true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/appeal", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -171,7 +171,7 @@ class Disputes
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$disputeCreateRequest), true);
+        $body = json_encode($disputeCreateRequest, true);
         $request = $this->client->createRequest('POST', "/v1/customer/referred-disputes", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -196,7 +196,7 @@ class Disputes
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$cancelRequest), true);
+        $body = json_encode($cancelRequest, true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/cancel", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -209,7 +209,7 @@ class Disputes
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$escalateRequest), true);
+        $body = json_encode($escalateRequest, true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/escalate", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -222,7 +222,7 @@ class Disputes
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$adjudicateRequest), true);
+        $body = json_encode($adjudicateRequest, true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/adjudicate", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -247,7 +247,7 @@ class Disputes
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$patchRequest), true);
+        $body = json_encode($patchRequest, true);
         $request = $this->client->createRequest('PATCH', "/v1/customer/disputes/{$disputeId}", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -260,7 +260,7 @@ class Disputes
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$acceptClaimRequest), true);
+        $body = json_encode($acceptClaimRequest, true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/accept-claim", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -273,7 +273,7 @@ class Disputes
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$sendMessage), true);
+        $body = json_encode($sendMessage, true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/send-message", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -286,7 +286,7 @@ class Disputes
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$acknowledgeReturnItemRequest), true);
+        $body = json_encode($acknowledgeReturnItemRequest, true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/acknowledge-return-item", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -299,7 +299,7 @@ class Disputes
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$metricsRequest), true);
+        $body = json_encode($metricsRequest, true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes/compute-metrics", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -312,7 +312,7 @@ class Disputes
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$changeReason), true);
+        $body = json_encode($changeReason, true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/changeReason", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -325,7 +325,7 @@ class Disputes
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$denyOfferRequest), true);
+        $body = json_encode($denyOfferRequest, true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/deny-offer", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -350,7 +350,7 @@ class Disputes
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$eligibilityRequest), true);
+        $body = json_encode($eligibilityRequest, true);
         $request = $this->client->createRequest('POST', "/v1/customer/validate-referred-dispute-eligibility", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -375,7 +375,7 @@ class Disputes
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$patchRequest), true);
+        $body = json_encode($patchRequest, true);
         $request = $this->client->createRequest('PATCH', "/v1/customer/disputes/{$disputeId}/partner-actions/{$actionId}", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -400,7 +400,7 @@ class Disputes
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$provideSupportingInfoRequest), true);
+        $body = json_encode($provideSupportingInfoRequest, true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/provide-supporting-info", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -413,7 +413,7 @@ class Disputes
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$makeOfferRequest), true);
+        $body = json_encode($makeOfferRequest, true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/make-offer", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -426,7 +426,7 @@ class Disputes
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$evidence), true);
+        $body = json_encode($evidence, true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/provide-evidence", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -439,7 +439,7 @@ class Disputes
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$acceptOfferRequest), true);
+        $body = json_encode($acceptOfferRequest, true);
         $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/accept-offer", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());

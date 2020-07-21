@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 /**
  * The payout details for the referred dispute.
  */
-class RefundInfo
+class RefundInfo implements \JsonSerializable
 {
 	/** @var string */
 	public $recipient;
@@ -27,4 +27,10 @@ class RefundInfo
 
 	/** @var string */
 	public $transaction_source;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

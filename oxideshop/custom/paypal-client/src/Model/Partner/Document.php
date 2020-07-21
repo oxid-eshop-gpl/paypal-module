@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 /**
  * The document object.
  */
-class Document
+class Document implements \JsonSerializable
 {
 	/** @var string */
 	public $id;
@@ -33,4 +33,10 @@ class Document
 
 	/** @var array */
 	public $links;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

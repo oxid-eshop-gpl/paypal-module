@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 /**
  * Information needed to pay using PayU.
  */
-class Payu
+class Payu implements \JsonSerializable
 {
 	/** @var string */
 	public $name;
@@ -15,4 +15,10 @@ class Payu
 
 	/** @var string */
 	public $country_code;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

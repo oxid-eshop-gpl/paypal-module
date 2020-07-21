@@ -31,7 +31,7 @@ class Payments
         $headers['Content-Type'] = 'application/json';
         $headers['Prefer'] = $prefer;
 
-        $body = json_encode(array_filter((array)$authorizeRequest), true);
+        $body = json_encode($authorizeRequest, true);
         $request = $this->client->createRequest('POST', "/v2/payments/authorizations", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -57,7 +57,7 @@ class Payments
         $headers['Content-Type'] = 'application/json';
         $headers['Prefer'] = $prefer;
 
-        $body = json_encode(array_filter((array)$capture), true);
+        $body = json_encode($capture, true);
         $request = $this->client->createRequest('POST', "/v2/payments/authorizations/{$authorizationId}/capture", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -71,7 +71,7 @@ class Payments
         $headers['Content-Type'] = 'application/json';
         $headers['Prefer'] = $prefer;
 
-        $body = json_encode(array_filter((array)$reauthorizeRequest), true);
+        $body = json_encode($reauthorizeRequest, true);
         $request = $this->client->createRequest('POST', "/v2/payments/authorizations/{$authorizationId}/reauthorize", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -98,7 +98,7 @@ class Payments
         $headers['Content-Type'] = 'application/json';
         $headers['Prefer'] = $prefer;
 
-        $body = json_encode(array_filter((array)$capture), true);
+        $body = json_encode($capture, true);
         $request = $this->client->createRequest('POST', "/v2/payments/captures", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -125,7 +125,7 @@ class Payments
         $headers['PayPal-Auth-Assertion'] = $payPalAuthAssertion;
         $headers['Prefer'] = $prefer;
 
-        $body = json_encode(array_filter((array)$refundRequest), true);
+        $body = json_encode($refundRequest, true);
         $request = $this->client->createRequest('POST', "/v2/payments/captures/{$captureId}/refund", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());

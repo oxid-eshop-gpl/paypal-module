@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 /**
  * A captured payment.
  */
-class UpdateCaptureRequest
+class UpdateCaptureRequest implements \JsonSerializable
 {
 	/** @var string */
 	public $id;
@@ -15,4 +15,10 @@ class UpdateCaptureRequest
 
 	/** @var CaptureStatusDetails */
 	public $status_details;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

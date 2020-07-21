@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 /**
  * Business category information. Refer: https://developer.paypal.com/docs/commerce-platform/reference/categories-subcategories/.
  */
-class BusinessCategory
+class BusinessCategory implements \JsonSerializable
 {
 	/** @var string */
 	public $category;
@@ -15,4 +15,10 @@ class BusinessCategory
 
 	/** @var string */
 	public $mcc_code;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

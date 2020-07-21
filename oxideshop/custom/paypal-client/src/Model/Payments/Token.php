@@ -5,11 +5,17 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 /**
  * The tokenized payment source to fund a payment.
  */
-class Token
+class Token implements \JsonSerializable
 {
 	/** @var string */
 	public $id;
 
 	/** @var string */
 	public $type;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

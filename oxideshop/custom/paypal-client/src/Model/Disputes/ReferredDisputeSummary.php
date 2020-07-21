@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 /**
  * The dispute details.
  */
-class ReferredDisputeSummary
+class ReferredDisputeSummary implements \JsonSerializable
 {
 	/** @var string */
 	public $dispute_id;
@@ -33,4 +33,10 @@ class ReferredDisputeSummary
 
 	/** @var array */
 	public $links;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

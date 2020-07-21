@@ -5,6 +5,10 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 /**
  * The category of the item in dispute.
  */
-class ItemCategory
+class ItemCategory implements \JsonSerializable
 {
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

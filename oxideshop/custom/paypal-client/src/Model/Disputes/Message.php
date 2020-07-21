@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 /**
  * A customer- or merchant-posted message for the dispute.
  */
-class Message
+class Message implements \JsonSerializable
 {
 	/** @var string */
 	public $posted_by;
@@ -15,4 +15,10 @@ class Message
 
 	/** @var string */
 	public $content;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

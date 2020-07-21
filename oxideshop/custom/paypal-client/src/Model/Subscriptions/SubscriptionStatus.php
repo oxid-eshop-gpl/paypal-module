@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 /**
  * The subscription status details.
  */
-class SubscriptionStatus
+class SubscriptionStatus implements \JsonSerializable
 {
 	/** @var string */
 	public $status;
@@ -18,4 +18,10 @@ class SubscriptionStatus
 
 	/** @var string */
 	public $status_changed_by;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

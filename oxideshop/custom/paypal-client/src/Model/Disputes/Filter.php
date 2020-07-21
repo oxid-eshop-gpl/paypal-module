@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 /**
  * A set of filters that you can use to filter the disputes in the response.
  */
-class Filter
+class Filter implements \JsonSerializable
 {
 	/** @var string */
 	public $email;
@@ -42,4 +42,10 @@ class Filter
 
 	/** @var Money */
 	public $dispute_amount_lte;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

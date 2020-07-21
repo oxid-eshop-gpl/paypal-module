@@ -2,6 +2,10 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
-class AddressPortablePostalCodeValidation
+class AddressPortablePostalCodeValidation implements \JsonSerializable
 {
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 /**
  * The referred dispute details.
  */
-class DisputeCreateRequest
+class DisputeCreateRequest implements \JsonSerializable
 {
 	/** @var string */
 	public $dispute_flow;
@@ -30,4 +30,10 @@ class DisputeCreateRequest
 
 	/** @var array */
 	public $messages;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

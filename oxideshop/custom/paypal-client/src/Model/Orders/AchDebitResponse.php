@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 /**
  * ACH bank details response object
  */
-class AchDebitResponse
+class AchDebitResponse implements \JsonSerializable
 {
 	/** @var string */
 	public $last_digits;
@@ -15,4 +15,10 @@ class AchDebitResponse
 
 	/** @var string */
 	public $account_holder_name;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

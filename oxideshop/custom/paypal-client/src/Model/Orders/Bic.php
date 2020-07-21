@@ -5,6 +5,10 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 /**
  * The business identification code (BIC). In payments systems, a BIC is used to identify a specific business, most commonly a bank
  */
-class Bic
+class Bic implements \JsonSerializable
 {
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

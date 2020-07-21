@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 /**
  * The bank account information.
  */
-class Bank
+class Bank implements \JsonSerializable
 {
 	/** @var string */
 	public $nick_name;
@@ -27,4 +27,10 @@ class Bank
 
 	/** @var Mandate */
 	public $mandate;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

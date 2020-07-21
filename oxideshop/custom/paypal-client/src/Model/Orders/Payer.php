@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 /**
  * The customer who approves and pays for the order. The customer is also known as the payer.
  */
-class Payer
+class Payer implements \JsonSerializable
 {
 	/** @var Name */
 	public $name;
@@ -27,4 +27,10 @@ class Payer
 
 	/** @var AddressPortable */
 	public $address;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

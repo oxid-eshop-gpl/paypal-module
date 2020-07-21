@@ -5,6 +5,10 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 /**
  * Indicates the algorithm used to generate the CAVV/AAV value.
  */
-class CavvAlgorithm
+class CavvAlgorithm implements \JsonSerializable
 {
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

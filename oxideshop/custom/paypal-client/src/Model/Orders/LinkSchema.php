@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 /**
  * The request data or link target.
  */
-class LinkSchema
+class LinkSchema implements \JsonSerializable
 {
 	/** @var object */
 	public $additionalItems;
@@ -54,4 +54,10 @@ class LinkSchema
 
 	/** @var string */
 	public $pathStart;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

@@ -127,10 +127,13 @@ class Generator
                     }
                 }
             }
+            $class->addImplement(\JsonSerializable::class);
+            $class->addMethod('jsonSerialize')->addBody('return array_filter((array) $this);')->setVisibility('public');
 
 //              $title = implode('', explode(' ', $definition['title']));
 //              $title = preg_replace("/[^A-Za-z0-9 ]/", '', $title);
-                $this->writeClassFile($subNameSpace, $className, $ns);
+
+            $this->writeClassFile($subNameSpace, $className, $ns);
         }
     }
 
@@ -282,12 +285,16 @@ class Generator
         return $defClassName;
     }
 
+
+    protected $uniqueType = [];
+
     /**
      * @return void
      */
     protected function buildRefs(): void
     {
         foreach ($this->definitions as $defName => $defs) {
+
             if (!isset($defs['type'])) {
                 $defs['type'] = "string";
                 if (isset($defs['allOf'])) {

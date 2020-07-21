@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 /**
  * The partner-provided details that were used for adjudication on the partner's side.
  */
-class AdjudicationInfo
+class AdjudicationInfo implements \JsonSerializable
 {
 	/** @var Money */
 	public $dispute_amount;
@@ -30,4 +30,10 @@ class AdjudicationInfo
 
 	/** @var array */
 	public $messages;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 /**
  * A PayPal-requested or partner action for the dispute.
  */
-class PartnerAction
+class PartnerAction implements \JsonSerializable
 {
 	/** @var string */
 	public $id;
@@ -27,4 +27,10 @@ class PartnerAction
 
 	/** @var Money */
 	public $amount;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

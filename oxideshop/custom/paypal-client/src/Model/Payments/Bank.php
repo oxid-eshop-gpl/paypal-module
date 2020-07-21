@@ -5,8 +5,14 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 /**
  * The bank source used to fund the payment
  */
-class Bank
+class Bank implements \JsonSerializable
 {
 	/** @var AchDebit */
 	public $ach_debit;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

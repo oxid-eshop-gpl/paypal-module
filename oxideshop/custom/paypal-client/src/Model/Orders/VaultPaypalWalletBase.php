@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 /**
  * Resource consolidating common request and response attirbutes for vaulting PayPal Wallet.
  */
-class VaultPaypalWalletBase
+class VaultPaypalWalletBase implements \JsonSerializable
 {
 	/** @var string */
 	public $description;
@@ -24,4 +24,10 @@ class VaultPaypalWalletBase
 
 	/** @var boolean */
 	public $permit_multiple_payment_tokens;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Catalog;
 /**
  * The product details.
  */
-class Product
+class Product implements \JsonSerializable
 {
 	/** @var string */
 	public $id;
@@ -36,4 +36,10 @@ class Product
 
 	/** @var array */
 	public $links;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

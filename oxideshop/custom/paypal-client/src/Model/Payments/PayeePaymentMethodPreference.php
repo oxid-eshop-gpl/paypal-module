@@ -5,6 +5,10 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 /**
  * The merchant-preferred payment methods.
  */
-class PayeePaymentMethodPreference
+class PayeePaymentMethodPreference implements \JsonSerializable
 {
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

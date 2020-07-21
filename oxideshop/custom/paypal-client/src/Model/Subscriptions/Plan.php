@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 /**
  * The plan details.
  */
-class Plan
+class Plan implements \JsonSerializable
 {
 	/** @var string */
 	public $id;
@@ -51,4 +51,10 @@ class Plan
 
 	/** @var array */
 	public $links;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

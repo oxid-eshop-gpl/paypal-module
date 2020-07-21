@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 /**
  * The order details.
  */
-class Order extends \ActivityTimestamps
+class Order extends \ActivityTimestamps implements \JsonSerializable
 {
 	/** @var string */
 	public $id;
@@ -33,4 +33,10 @@ class Order extends \ActivityTimestamps
 
 	/** @var CreditFinancingOffer */
 	public $credit_financing_offer;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

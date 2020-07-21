@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 /**
  * Business identification details.
  */
-class BusinessIdentification
+class BusinessIdentification implements \JsonSerializable
 {
 	/** @var string */
 	public $type;
@@ -18,4 +18,10 @@ class BusinessIdentification
 
 	/** @var string */
 	public $issued_time;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

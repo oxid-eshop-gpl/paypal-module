@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 /**
  * The history of the dispute.
  */
-class History
+class History implements \JsonSerializable
 {
 	/** @var string */
 	public $date;
@@ -15,4 +15,10 @@ class History
 
 	/** @var string */
 	public $event_type;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

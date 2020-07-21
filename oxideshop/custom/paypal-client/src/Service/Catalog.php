@@ -26,7 +26,7 @@ class Catalog
         $headers['Content-Type'] = 'application/json';
         $headers['Prefer'] = $prefer;
 
-        $body = json_encode(array_filter((array)$productRequest), true);
+        $body = json_encode($productRequest, true);
         $request = $this->client->createRequest('POST', "/v1/catalogs/products", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());
@@ -63,7 +63,7 @@ class Catalog
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
-        $body = json_encode(array_filter((array)$patchRequest), true);
+        $body = json_encode($patchRequest, true);
         $request = $this->client->createRequest('PATCH', "/v1/catalogs/products/{$productId}", $headers, $body);
         $response = $this->client->send($request);
         $jsonProduct = json_decode($response->getBody());

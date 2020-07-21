@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 /**
  * Information needed to pay using BLIK.
  */
-class BlikRequest
+class BlikRequest implements \JsonSerializable
 {
 	/** @var string */
 	public $name;
@@ -15,4 +15,10 @@ class BlikRequest
 
 	/** @var string */
 	public $email;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

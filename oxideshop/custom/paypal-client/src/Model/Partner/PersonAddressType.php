@@ -5,6 +5,10 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 /**
  * The address type under which the provided address is tagged.
  */
-class PersonAddressType
+class PersonAddressType implements \JsonSerializable
 {
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

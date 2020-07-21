@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 /**
  * The breakdown of the amount. Breakdown provides details such as total item amount, total tax amount, shipping, handling, insurance, and discounts, if any.
  */
-class AmountBreakdown
+class AmountBreakdown implements \JsonSerializable
 {
 	/** @var Money */
 	public $item_total;
@@ -27,4 +27,10 @@ class AmountBreakdown
 
 	/** @var Money */
 	public $discount;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

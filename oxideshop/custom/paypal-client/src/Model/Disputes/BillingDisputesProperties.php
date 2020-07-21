@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 /**
  * The billing issue details.
  */
-class BillingDisputesProperties
+class BillingDisputesProperties implements \JsonSerializable
 {
 	/** @var DuplicateTransaction */
 	public $duplicate_transaction;
@@ -21,4 +21,10 @@ class BillingDisputesProperties
 
 	/** @var CanceledRecurringBilling */
 	public $canceled_recurring_billing;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

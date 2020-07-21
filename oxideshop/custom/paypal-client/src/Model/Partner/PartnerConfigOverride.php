@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 /**
  * The preference to customize the web experience of the customer by overriding that is set at the Partner's Account.
  */
-class PartnerConfigOverride
+class PartnerConfigOverride implements \JsonSerializable
 {
 	/** @var string */
 	public $partner_logo_url;
@@ -21,4 +21,10 @@ class PartnerConfigOverride
 
 	/** @var boolean */
 	public $show_add_credit_card;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

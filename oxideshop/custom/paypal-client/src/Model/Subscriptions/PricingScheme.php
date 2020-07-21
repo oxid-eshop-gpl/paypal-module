@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 /**
  * The pricing scheme details.
  */
-class PricingScheme
+class PricingScheme implements \JsonSerializable
 {
 	/** @var integer */
 	public $version;
@@ -30,4 +30,10 @@ class PricingScheme
 
 	/** @var string */
 	public $update_time;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

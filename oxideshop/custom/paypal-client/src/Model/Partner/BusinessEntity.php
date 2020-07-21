@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 /**
  * The business entity of the account.
  */
-class BusinessEntity extends string
+class BusinessEntity extends string implements \JsonSerializable
 {
 	/** @var BeneficialOwners */
 	public $beneficial_owners;
@@ -21,4 +21,10 @@ class BusinessEntity extends string
 
 	/** @var string */
 	public $business_description;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }

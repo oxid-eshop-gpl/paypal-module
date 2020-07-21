@@ -5,7 +5,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 /**
  * The dispute summary information.
  */
-class DisputeInfo
+class DisputeInfo implements \JsonSerializable
 {
 	/** @var string */
 	public $dispute_id;
@@ -87,4 +87,10 @@ class DisputeInfo
 
 	/** @var array */
 	public $links;
+
+
+	public function jsonSerialize()
+	{
+		return array_filter((array) $this);
+	}
 }
