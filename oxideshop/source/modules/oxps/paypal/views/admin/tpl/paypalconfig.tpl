@@ -1,10 +1,5 @@
 [{include file="headitem.tpl" title="paypal"}]
 
-[{oxscript add="function copyToClipboard(element) {
-    document.querySelector(element).select();
-    document.execCommand('copy');
-}"}]
-
 <div id="content" class="paypal-config">
     <h1>[{oxmultilang ident="paypal"}] [{oxmultilang ident="OXPS_PAYPAL_CONFIG"}]</h1>
     <div class="alert alert-[{if $Errors.paypal_error}]danger[{else}]success[{/if}]" role="alert">
@@ -37,15 +32,30 @@
 
         <p class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_CREDENTIALS"}]</p>
 
-        <p><a target="_blank" data-paypal-onboard-complete="onboardedCallbackLive"
-            href="[{*$oView->getLiveSignUpMerchantIntegrationLink()*}]&displayMode=minibrowser" data-paypal-button="PPLtBlue">
+        [{assign var='liveMerchantSignUpLink' value=$oView->getLiveSignUpMerchantIntegrationLink()}]
+        <p><a target="_blank"
+              href="[{$liveMerchantSignUpLink}]"
+              data-paypal-button="PPLtBlue"
+              onclick="openPopup(
+                      '[{$liveMerchantSignUpLink}]',
+                      'onboardingPopupLive',
+                      { 'width': 800, 'height': 600, 'position': 'center' });
+                      return false;">
                 [{oxmultilang ident="OXPS_PAYPAL_LIVE_BUTTON_CREDENTIALS"}]
            </a>
         </p>
 
-        <p><a target="_blank" data-paypal-onboard-complete="onboardedCallbackSandbox"
-            href="[{$oView->getSandboxSignUpMerchantIntegrationLink()}]&displayMode=minibrowser" data-paypal-button="PPLtBlue">
-                [{oxmultilang ident="OXPS_PAYPAL_SANDBOX_BUTTON_CREDENTIALS"}]
+        [{assign var='sandboxMerchantSignUpLink' value=$oView->getSandboxSignUpMerchantIntegrationLink()}]
+        <p><a target="_blank"
+              href="[{$sandboxMerchantSignUpLink}]"
+              data-paypal-onboard-complete="onboardedCallbackSandbox"
+              data-paypal-button="PPLtBlue"
+              onclick="openPopup(
+                  '[{$sandboxMerchantSignUpLink}]',
+                  'onboardingPopupSandbox',
+                  { 'width': 800, 'height': 600, 'position': 'center' });
+                  return false;">
+              [{oxmultilang ident="OXPS_PAYPAL_SANDBOX_BUTTON_CREDENTIALS"}]
             </a>
         </p>
 

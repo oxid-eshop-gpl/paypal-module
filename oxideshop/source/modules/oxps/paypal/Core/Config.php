@@ -66,7 +66,7 @@ class Config
      */
     public function getClientId(): string
     {
-        return (string) Registry::getConfig()->getConfigParam('sPaypalClientId');
+        return Registry::getConfig()->getConfigParam('sPaypalClientId');
     }
 
     /**
@@ -74,7 +74,7 @@ class Config
      */
     public function getClientSecret(): string
     {
-        return (string) Registry::getConfig()->getConfigParam('sPaypalClientSecret');
+        return Registry::getConfig()->getConfigParam('sPaypalClientSecret');
     }
 
     /**
@@ -82,7 +82,7 @@ class Config
      */
     public function getSandboxClientId(): string
     {
-        return (string) Registry::getConfig()->getConfigParam('sPaypalSandboxClientId');
+        return Registry::getConfig()->getConfigParam('sPaypalSandboxClientId');
     }
 
     /**
@@ -90,7 +90,7 @@ class Config
      */
     public function getSandboxClientSecret(): string
     {
-        return (string) Registry::getConfig()->getConfigParam('sPaypalSandboxClientSecret');
+        return Registry::getConfig()->getConfigParam('sPaypalSandboxClientSecret');
     }
 
     /**
