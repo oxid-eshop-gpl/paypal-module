@@ -4848,7 +4848,6 @@
         }
       },
       "required": [
-        "country_code",
         "national_number"
       ]
     },

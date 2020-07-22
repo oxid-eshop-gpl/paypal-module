@@ -23,7 +23,6 @@ class Phone implements JsonSerializable
      * not be greater than 15 digits. The national number consists of a national destination code (NDC) and
      * subscriber number (SN).
      *
-     * this is mandatory to be set
      * minLength: 1
      * maxLength: 3
      */
@@ -54,9 +53,8 @@ class Phone implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        Assert::notNull($this->country_code, "country_code in Phone must not be NULL $within");
-         Assert::minLength($this->country_code, 1, "country_code in Phone must have minlength of 1 $within");
-         Assert::maxLength($this->country_code, 3, "country_code in Phone must have maxlength of 3 $within");
+        !isset($this->country_code) || Assert::minLength($this->country_code, 1, "country_code in Phone must have minlength of 1 $within");
+        !isset($this->country_code) || Assert::maxLength($this->country_code, 3, "country_code in Phone must have maxlength of 3 $within");
         Assert::notNull($this->national_number, "national_number in Phone must not be NULL $within");
          Assert::minLength($this->national_number, 1, "national_number in Phone must have minlength of 1 $within");
          Assert::maxLength($this->national_number, 14, "national_number in Phone must have maxlength of 14 $within");
