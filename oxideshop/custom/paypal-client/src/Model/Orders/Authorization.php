@@ -101,8 +101,6 @@ class Authorization extends AuthorizationStatus implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->amount) || Assert::notNull($this->amount->currency_code, "currency_code in amount must not be NULL within Authorization $within");
-        !isset($this->amount) || Assert::notNull($this->amount->value, "value in amount must not be NULL within Authorization $within");
         !isset($this->amount) || Assert::isInstanceOf($this->amount, Money::class, "amount in Authorization must be instance of Money $within");
         !isset($this->amount) || $this->amount->validate(Authorization::class);
         !isset($this->custom_id) || Assert::maxLength($this->custom_id, 127, "custom_id in Authorization must have maxlength of 127 $within");

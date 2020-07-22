@@ -22,6 +22,7 @@ class ReferralData extends Account implements JsonSerializable
      * for an email address is 254 characters. The pattern verifies that an unquoted <code>@</code> sign
      * exists.</blockquote>
      *
+     * this is mandatory to be set
      * minLength: 3
      * maxLength: 254
      */
@@ -66,6 +67,7 @@ class ReferralData extends Account implements JsonSerializable
      * @var array<Operation>
      * An array of operations to perform for the customer while they share their data.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 5
      */
@@ -75,6 +77,7 @@ class ReferralData extends Account implements JsonSerializable
      * @var array<string>
      * An array of PayPal products to which the partner wants to onboard the customer.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 1
      */
@@ -85,6 +88,7 @@ class ReferralData extends Account implements JsonSerializable
      * An array of all consents that the partner has received from this seller. If `SHARE_DATA_CONSENT` is not
      * granted, PayPal does not store customer data.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 5
      */
@@ -93,8 +97,9 @@ class ReferralData extends Account implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->email) || Assert::minLength($this->email, 3, "email in ReferralData must have minlength of 3 $within");
-        !isset($this->email) || Assert::maxLength($this->email, 254, "email in ReferralData must have maxlength of 254 $within");
+        Assert::notNull($this->email, "email in ReferralData must not be NULL $within");
+         Assert::minLength($this->email, 3, "email in ReferralData must have minlength of 3 $within");
+         Assert::maxLength($this->email, 254, "email in ReferralData must have maxlength of 254 $within");
         !isset($this->preferred_language_code) || Assert::minLength($this->preferred_language_code, 2, "preferred_language_code in ReferralData must have minlength of 2 $within");
         !isset($this->preferred_language_code) || Assert::maxLength($this->preferred_language_code, 10, "preferred_language_code in ReferralData must have maxlength of 10 $within");
         !isset($this->tracking_id) || Assert::minLength($this->tracking_id, 1, "tracking_id in ReferralData must have minlength of 1 $within");

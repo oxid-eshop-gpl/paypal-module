@@ -67,12 +67,16 @@ class DisputeCreateRequest implements JsonSerializable
     /**
      * @var Transaction
      * The transaction for which to create a case.
+     *
+     * this is mandatory to be set
      */
     public $transaction;
 
     /**
      * @var ReferenceDispute
      * The details about the partner dispute.
+     *
+     * this is mandatory to be set
      */
     public $reference_dispute;
 
@@ -125,10 +129,12 @@ class DisputeCreateRequest implements JsonSerializable
         !isset($this->dispute_flow) || Assert::maxLength($this->dispute_flow, 255, "dispute_flow in DisputeCreateRequest must have maxlength of 255 $within");
         !isset($this->extensions) || Assert::isInstanceOf($this->extensions, Extensions::class, "extensions in DisputeCreateRequest must be instance of Extensions $within");
         !isset($this->extensions) || $this->extensions->validate(DisputeCreateRequest::class);
-        !isset($this->transaction) || Assert::isInstanceOf($this->transaction, Transaction::class, "transaction in DisputeCreateRequest must be instance of Transaction $within");
-        !isset($this->transaction) || $this->transaction->validate(DisputeCreateRequest::class);
-        !isset($this->reference_dispute) || Assert::isInstanceOf($this->reference_dispute, ReferenceDispute::class, "reference_dispute in DisputeCreateRequest must be instance of ReferenceDispute $within");
-        !isset($this->reference_dispute) || $this->reference_dispute->validate(DisputeCreateRequest::class);
+        Assert::notNull($this->transaction, "transaction in DisputeCreateRequest must not be NULL $within");
+         Assert::isInstanceOf($this->transaction, Transaction::class, "transaction in DisputeCreateRequest must be instance of Transaction $within");
+         $this->transaction->validate(DisputeCreateRequest::class);
+        Assert::notNull($this->reference_dispute, "reference_dispute in DisputeCreateRequest must not be NULL $within");
+         Assert::isInstanceOf($this->reference_dispute, ReferenceDispute::class, "reference_dispute in DisputeCreateRequest must be instance of ReferenceDispute $within");
+         $this->reference_dispute->validate(DisputeCreateRequest::class);
         !isset($this->evidences) || Assert::isArray($this->evidences, "evidences in DisputeCreateRequest must be array $within");
 
                                 if (isset($this->evidences)){

@@ -75,8 +75,6 @@ class DisputeOutcome implements JsonSerializable
         !isset($this->outcome_code) || Assert::maxLength($this->outcome_code, 255, "outcome_code in DisputeOutcome must have maxlength of 255 $within");
         !isset($this->outcome_reason) || Assert::minLength($this->outcome_reason, 1, "outcome_reason in DisputeOutcome must have minlength of 1 $within");
         !isset($this->outcome_reason) || Assert::maxLength($this->outcome_reason, 2000, "outcome_reason in DisputeOutcome must have maxlength of 2000 $within");
-        !isset($this->amount_refunded) || Assert::notNull($this->amount_refunded->currency_code, "currency_code in amount_refunded must not be NULL within DisputeOutcome $within");
-        !isset($this->amount_refunded) || Assert::notNull($this->amount_refunded->value, "value in amount_refunded must not be NULL within DisputeOutcome $within");
         !isset($this->amount_refunded) || Assert::isInstanceOf($this->amount_refunded, Money::class, "amount_refunded in DisputeOutcome must be instance of Money $within");
         !isset($this->amount_refunded) || $this->amount_refunded->validate(DisputeOutcome::class);
     }

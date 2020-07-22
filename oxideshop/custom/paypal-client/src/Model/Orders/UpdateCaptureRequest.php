@@ -34,6 +34,7 @@ class UpdateCaptureRequest implements JsonSerializable
      * @var string
      * The transaction ID for the captured payment.
      *
+     * this is mandatory to be set
      * minLength: 1
      * maxLength: 20
      */
@@ -49,6 +50,7 @@ class UpdateCaptureRequest implements JsonSerializable
      * @see STATUS_PARTIALLY_REFUNDED
      * @see STATUS_PENDING
      * @see STATUS_REFUNDED
+     * this is mandatory to be set
      * minLength: 1
      * maxLength: 127
      */
@@ -63,10 +65,12 @@ class UpdateCaptureRequest implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->id) || Assert::minLength($this->id, 1, "id in UpdateCaptureRequest must have minlength of 1 $within");
-        !isset($this->id) || Assert::maxLength($this->id, 20, "id in UpdateCaptureRequest must have maxlength of 20 $within");
-        !isset($this->status) || Assert::minLength($this->status, 1, "status in UpdateCaptureRequest must have minlength of 1 $within");
-        !isset($this->status) || Assert::maxLength($this->status, 127, "status in UpdateCaptureRequest must have maxlength of 127 $within");
+        Assert::notNull($this->id, "id in UpdateCaptureRequest must not be NULL $within");
+         Assert::minLength($this->id, 1, "id in UpdateCaptureRequest must have minlength of 1 $within");
+         Assert::maxLength($this->id, 20, "id in UpdateCaptureRequest must have maxlength of 20 $within");
+        Assert::notNull($this->status, "status in UpdateCaptureRequest must not be NULL $within");
+         Assert::minLength($this->status, 1, "status in UpdateCaptureRequest must have minlength of 1 $within");
+         Assert::maxLength($this->status, 127, "status in UpdateCaptureRequest must have maxlength of 127 $within");
         !isset($this->status_details) || Assert::isInstanceOf($this->status_details, CaptureStatusDetails::class, "status_details in UpdateCaptureRequest must be instance of CaptureStatusDetails $within");
         !isset($this->status_details) || $this->status_details->validate(UpdateCaptureRequest::class);
     }

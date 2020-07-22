@@ -100,6 +100,7 @@ class AddressPortable implements JsonSerializable
      * worldwide for comparable uncontrolled price (CUP) method, bank card, and cross-border
      * transactions.</blockquote>
      *
+     * this is mandatory to be set
      * minLength: 2
      * maxLength: 2
      */
@@ -125,8 +126,9 @@ class AddressPortable implements JsonSerializable
         !isset($this->admin_area_2) || Assert::maxLength($this->admin_area_2, 300, "admin_area_2 in AddressPortable must have maxlength of 300 $within");
         !isset($this->admin_area_1) || Assert::maxLength($this->admin_area_1, 300, "admin_area_1 in AddressPortable must have maxlength of 300 $within");
         !isset($this->postal_code) || Assert::maxLength($this->postal_code, 60, "postal_code in AddressPortable must have maxlength of 60 $within");
-        !isset($this->country_code) || Assert::minLength($this->country_code, 2, "country_code in AddressPortable must have minlength of 2 $within");
-        !isset($this->country_code) || Assert::maxLength($this->country_code, 2, "country_code in AddressPortable must have maxlength of 2 $within");
+        Assert::notNull($this->country_code, "country_code in AddressPortable must not be NULL $within");
+         Assert::minLength($this->country_code, 2, "country_code in AddressPortable must have minlength of 2 $within");
+         Assert::maxLength($this->country_code, 2, "country_code in AddressPortable must have maxlength of 2 $within");
         !isset($this->address_details) || Assert::isInstanceOf($this->address_details, AddressPortableAddressDetails::class, "address_details in AddressPortable must be instance of AddressPortableAddressDetails $within");
         !isset($this->address_details) || $this->address_details->validate(AddressPortable::class);
     }

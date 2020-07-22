@@ -43,6 +43,7 @@ class RefundInfo implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see RECIPIENT_BUYER
      * @see RECIPIENT_SELLER
+     * this is mandatory to be set
      * minLength: 1
      * maxLength: 255
      */
@@ -51,6 +52,8 @@ class RefundInfo implements JsonSerializable
     /**
      * @var Money
      * The currency and amount for a financial transaction, such as a balance or payment due.
+     *
+     * this is mandatory to be set
      */
     public $amount;
 
@@ -60,6 +63,7 @@ class RefundInfo implements JsonSerializable
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
      *
+     * this is mandatory to be set
      * minLength: 20
      * maxLength: 64
      */
@@ -82,6 +86,7 @@ class RefundInfo implements JsonSerializable
      * @see PAYOUT_TYPE_REVERSAL
      * @see PAYOUT_TYPE_COURTESY_CREDIT
      * @see PAYOUT_TYPE_SELLER_PROTECTION_COVERAGE
+     * this is mandatory to be set
      * minLength: 1
      * maxLength: 255
      */
@@ -90,6 +95,8 @@ class RefundInfo implements JsonSerializable
     /**
      * @var boolean
      * Indicates whether the merchant is eligible for protection on the disputed transaction.
+     *
+     * this is mandatory to be set
      */
     public $seller_protection_eligible;
 
@@ -100,6 +107,7 @@ class RefundInfo implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see TRANSACTION_SOURCE_PAYPAL
      * @see TRANSACTION_SOURCE_OTHER
+     * this is mandatory to be set
      * minLength: 1
      * maxLength: 255
      */
@@ -108,20 +116,24 @@ class RefundInfo implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->recipient) || Assert::minLength($this->recipient, 1, "recipient in RefundInfo must have minlength of 1 $within");
-        !isset($this->recipient) || Assert::maxLength($this->recipient, 255, "recipient in RefundInfo must have maxlength of 255 $within");
-        !isset($this->amount) || Assert::notNull($this->amount->currency_code, "currency_code in amount must not be NULL within RefundInfo $within");
-        !isset($this->amount) || Assert::notNull($this->amount->value, "value in amount must not be NULL within RefundInfo $within");
-        !isset($this->amount) || Assert::isInstanceOf($this->amount, Money::class, "amount in RefundInfo must be instance of Money $within");
-        !isset($this->amount) || $this->amount->validate(RefundInfo::class);
-        !isset($this->create_time) || Assert::minLength($this->create_time, 20, "create_time in RefundInfo must have minlength of 20 $within");
-        !isset($this->create_time) || Assert::maxLength($this->create_time, 64, "create_time in RefundInfo must have maxlength of 64 $within");
+        Assert::notNull($this->recipient, "recipient in RefundInfo must not be NULL $within");
+         Assert::minLength($this->recipient, 1, "recipient in RefundInfo must have minlength of 1 $within");
+         Assert::maxLength($this->recipient, 255, "recipient in RefundInfo must have maxlength of 255 $within");
+        Assert::notNull($this->amount, "amount in RefundInfo must not be NULL $within");
+         Assert::isInstanceOf($this->amount, Money::class, "amount in RefundInfo must be instance of Money $within");
+         $this->amount->validate(RefundInfo::class);
+        Assert::notNull($this->create_time, "create_time in RefundInfo must not be NULL $within");
+         Assert::minLength($this->create_time, 20, "create_time in RefundInfo must have minlength of 20 $within");
+         Assert::maxLength($this->create_time, 64, "create_time in RefundInfo must have maxlength of 64 $within");
         !isset($this->transaction_id) || Assert::minLength($this->transaction_id, 1, "transaction_id in RefundInfo must have minlength of 1 $within");
         !isset($this->transaction_id) || Assert::maxLength($this->transaction_id, 255, "transaction_id in RefundInfo must have maxlength of 255 $within");
-        !isset($this->payout_type) || Assert::minLength($this->payout_type, 1, "payout_type in RefundInfo must have minlength of 1 $within");
-        !isset($this->payout_type) || Assert::maxLength($this->payout_type, 255, "payout_type in RefundInfo must have maxlength of 255 $within");
-        !isset($this->transaction_source) || Assert::minLength($this->transaction_source, 1, "transaction_source in RefundInfo must have minlength of 1 $within");
-        !isset($this->transaction_source) || Assert::maxLength($this->transaction_source, 255, "transaction_source in RefundInfo must have maxlength of 255 $within");
+        Assert::notNull($this->payout_type, "payout_type in RefundInfo must not be NULL $within");
+         Assert::minLength($this->payout_type, 1, "payout_type in RefundInfo must have minlength of 1 $within");
+         Assert::maxLength($this->payout_type, 255, "payout_type in RefundInfo must have maxlength of 255 $within");
+        Assert::notNull($this->seller_protection_eligible, "seller_protection_eligible in RefundInfo must not be NULL $within");
+        Assert::notNull($this->transaction_source, "transaction_source in RefundInfo must not be NULL $within");
+         Assert::minLength($this->transaction_source, 1, "transaction_source in RefundInfo must have minlength of 1 $within");
+         Assert::maxLength($this->transaction_source, 255, "transaction_source in RefundInfo must have maxlength of 255 $within");
     }
 
     public function __construct()

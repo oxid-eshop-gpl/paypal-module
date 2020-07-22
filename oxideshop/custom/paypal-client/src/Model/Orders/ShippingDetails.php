@@ -25,6 +25,7 @@ class ShippingDetails implements JsonSerializable
      * @var array<ShippingOption>
      * An array of shipping options that the payee or merchant offers to the payer to ship or pick up their items.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 10
      */

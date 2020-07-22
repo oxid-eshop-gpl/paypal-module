@@ -36,6 +36,7 @@ class Outcome implements JsonSerializable
      * @see FAULTY_PARTY_SELLER
      * @see FAULTY_PARTY_PARTNER
      * @see FAULTY_PARTY_NONE
+     * this is mandatory to be set
      * minLength: 1
      * maxLength: 255
      */
@@ -45,6 +46,7 @@ class Outcome implements JsonSerializable
      * @var string
      * The reason for the decision.
      *
+     * this is mandatory to be set
      * minLength: 1
      * maxLength: 2000
      */
@@ -64,10 +66,12 @@ class Outcome implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->faulty_party) || Assert::minLength($this->faulty_party, 1, "faulty_party in Outcome must have minlength of 1 $within");
-        !isset($this->faulty_party) || Assert::maxLength($this->faulty_party, 255, "faulty_party in Outcome must have maxlength of 255 $within");
-        !isset($this->adjudication_reason) || Assert::minLength($this->adjudication_reason, 1, "adjudication_reason in Outcome must have minlength of 1 $within");
-        !isset($this->adjudication_reason) || Assert::maxLength($this->adjudication_reason, 2000, "adjudication_reason in Outcome must have maxlength of 2000 $within");
+        Assert::notNull($this->faulty_party, "faulty_party in Outcome must not be NULL $within");
+         Assert::minLength($this->faulty_party, 1, "faulty_party in Outcome must have minlength of 1 $within");
+         Assert::maxLength($this->faulty_party, 255, "faulty_party in Outcome must have maxlength of 255 $within");
+        Assert::notNull($this->adjudication_reason, "adjudication_reason in Outcome must not be NULL $within");
+         Assert::minLength($this->adjudication_reason, 1, "adjudication_reason in Outcome must have minlength of 1 $within");
+         Assert::maxLength($this->adjudication_reason, 2000, "adjudication_reason in Outcome must have maxlength of 2000 $within");
         !isset($this->resolution_date) || Assert::minLength($this->resolution_date, 20, "resolution_date in Outcome must have minlength of 20 $within");
         !isset($this->resolution_date) || Assert::maxLength($this->resolution_date, 64, "resolution_date in Outcome must have maxlength of 64 $within");
     }

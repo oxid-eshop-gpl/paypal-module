@@ -67,8 +67,6 @@ class CustomizedXUnsupportedFiveEightSevenFiveSubscriptionReviseRequest implemen
         !isset($this->quantity) || Assert::maxLength($this->quantity, 32, "quantity in CustomizedXUnsupportedFiveEightSevenFiveSubscriptionReviseRequest must have maxlength of 32 $within");
         !isset($this->effective_time) || Assert::minLength($this->effective_time, 20, "effective_time in CustomizedXUnsupportedFiveEightSevenFiveSubscriptionReviseRequest must have minlength of 20 $within");
         !isset($this->effective_time) || Assert::maxLength($this->effective_time, 64, "effective_time in CustomizedXUnsupportedFiveEightSevenFiveSubscriptionReviseRequest must have maxlength of 64 $within");
-        !isset($this->shipping_amount) || Assert::notNull($this->shipping_amount->currency_code, "currency_code in shipping_amount must not be NULL within CustomizedXUnsupportedFiveEightSevenFiveSubscriptionReviseRequest $within");
-        !isset($this->shipping_amount) || Assert::notNull($this->shipping_amount->value, "value in shipping_amount must not be NULL within CustomizedXUnsupportedFiveEightSevenFiveSubscriptionReviseRequest $within");
         !isset($this->shipping_amount) || Assert::isInstanceOf($this->shipping_amount, Money::class, "shipping_amount in CustomizedXUnsupportedFiveEightSevenFiveSubscriptionReviseRequest must be instance of Money $within");
         !isset($this->shipping_amount) || $this->shipping_amount->validate(CustomizedXUnsupportedFiveEightSevenFiveSubscriptionReviseRequest::class);
         !isset($this->shipping_address) || Assert::isInstanceOf($this->shipping_address, ShippingDetail::class, "shipping_address in CustomizedXUnsupportedFiveEightSevenFiveSubscriptionReviseRequest must be instance of ShippingDetail $within");

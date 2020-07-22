@@ -23,6 +23,7 @@ class DocumentIssuer implements JsonSerializable
      * worldwide for comparable uncontrolled price (CUP) method, bank card, and cross-border
      * transactions.</blockquote>
      *
+     * this is mandatory to be set
      * minLength: 2
      * maxLength: 2
      */
@@ -50,8 +51,9 @@ class DocumentIssuer implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->country_code) || Assert::minLength($this->country_code, 2, "country_code in DocumentIssuer must have minlength of 2 $within");
-        !isset($this->country_code) || Assert::maxLength($this->country_code, 2, "country_code in DocumentIssuer must have maxlength of 2 $within");
+        Assert::notNull($this->country_code, "country_code in DocumentIssuer must not be NULL $within");
+         Assert::minLength($this->country_code, 2, "country_code in DocumentIssuer must have minlength of 2 $within");
+         Assert::maxLength($this->country_code, 2, "country_code in DocumentIssuer must have maxlength of 2 $within");
         !isset($this->province_code) || Assert::minLength($this->province_code, 5, "province_code in DocumentIssuer must have minlength of 5 $within");
         !isset($this->province_code) || Assert::maxLength($this->province_code, 6, "province_code in DocumentIssuer must have maxlength of 6 $within");
         !isset($this->authority) || Assert::minLength($this->authority, 1, "authority in DocumentIssuer must have minlength of 1 $within");

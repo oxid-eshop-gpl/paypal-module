@@ -107,6 +107,7 @@ class PaymentDirectives implements JsonSerializable
      * @var array<PolicyDirective>
      * Policy directives indicating how to process the payment.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 30
      */
@@ -116,6 +117,7 @@ class PaymentDirectives implements JsonSerializable
      * @var array<PaymentMethodDirective>
      * Directives for certain payment methods based on eligibility.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 30
      */
@@ -125,6 +127,7 @@ class PaymentDirectives implements JsonSerializable
      * @var array<PricingDirective>
      * Pricing directives for the transaction.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 25
      */

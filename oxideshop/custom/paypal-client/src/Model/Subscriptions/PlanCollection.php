@@ -19,6 +19,7 @@ class PlanCollection implements JsonSerializable
      * @var array<Plan>
      * An array of plans.
      *
+     * this is mandatory to be set
      * maxItems: 0
      * maxItems: 32767
      */

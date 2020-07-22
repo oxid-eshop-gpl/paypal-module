@@ -436,12 +436,8 @@ class Dispute implements JsonSerializable
         !isset($this->reason) || Assert::maxLength($this->reason, 255, "reason in Dispute must have maxlength of 255 $within");
         !isset($this->status) || Assert::minLength($this->status, 1, "status in Dispute must have minlength of 1 $within");
         !isset($this->status) || Assert::maxLength($this->status, 255, "status in Dispute must have maxlength of 255 $within");
-        !isset($this->dispute_amount) || Assert::notNull($this->dispute_amount->currency_code, "currency_code in dispute_amount must not be NULL within Dispute $within");
-        !isset($this->dispute_amount) || Assert::notNull($this->dispute_amount->value, "value in dispute_amount must not be NULL within Dispute $within");
         !isset($this->dispute_amount) || Assert::isInstanceOf($this->dispute_amount, Money::class, "dispute_amount in Dispute must be instance of Money $within");
         !isset($this->dispute_amount) || $this->dispute_amount->validate(Dispute::class);
-        !isset($this->dispute_fee) || Assert::notNull($this->dispute_fee->currency_code, "currency_code in dispute_fee must not be NULL within Dispute $within");
-        !isset($this->dispute_fee) || Assert::notNull($this->dispute_fee->value, "value in dispute_fee must not be NULL within Dispute $within");
         !isset($this->dispute_fee) || Assert::isInstanceOf($this->dispute_fee, Money::class, "dispute_fee in Dispute must be instance of Money $within");
         !isset($this->dispute_fee) || $this->dispute_fee->validate(Dispute::class);
         !isset($this->fee_policy) || Assert::isInstanceOf($this->fee_policy, FeePolicy::class, "fee_policy in Dispute must be instance of FeePolicy $within");

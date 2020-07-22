@@ -67,6 +67,7 @@ class VaultPaypalWalletBase implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see USAGE_TYPE_MERCHANT
      * @see USAGE_TYPE_PLATFORM
+     * this is mandatory to be set
      * minLength: 1
      * maxLength: 255
      */
@@ -104,8 +105,9 @@ class VaultPaypalWalletBase implements JsonSerializable
         !isset($this->product_label) || Assert::maxLength($this->product_label, 25, "product_label in VaultPaypalWalletBase must have maxlength of 25 $within");
         !isset($this->shipping) || Assert::isInstanceOf($this->shipping, ShippingDetail::class, "shipping in VaultPaypalWalletBase must be instance of ShippingDetail $within");
         !isset($this->shipping) || $this->shipping->validate(VaultPaypalWalletBase::class);
-        !isset($this->usage_type) || Assert::minLength($this->usage_type, 1, "usage_type in VaultPaypalWalletBase must have minlength of 1 $within");
-        !isset($this->usage_type) || Assert::maxLength($this->usage_type, 255, "usage_type in VaultPaypalWalletBase must have maxlength of 255 $within");
+        Assert::notNull($this->usage_type, "usage_type in VaultPaypalWalletBase must not be NULL $within");
+         Assert::minLength($this->usage_type, 1, "usage_type in VaultPaypalWalletBase must have minlength of 1 $within");
+         Assert::maxLength($this->usage_type, 255, "usage_type in VaultPaypalWalletBase must have maxlength of 255 $within");
         !isset($this->customer_type) || Assert::minLength($this->customer_type, 1, "customer_type in VaultPaypalWalletBase must have minlength of 1 $within");
         !isset($this->customer_type) || Assert::maxLength($this->customer_type, 255, "customer_type in VaultPaypalWalletBase must have maxlength of 255 $within");
     }

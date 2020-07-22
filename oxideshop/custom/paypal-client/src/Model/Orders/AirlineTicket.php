@@ -101,16 +101,10 @@ class AirlineTicket implements JsonSerializable
         !isset($this->travel_agency_name) || Assert::maxLength($this->travel_agency_name, 25, "travel_agency_name in AirlineTicket must have maxlength of 25 $within");
         !isset($this->travel_agency_code) || Assert::minLength($this->travel_agency_code, 1, "travel_agency_code in AirlineTicket must have minlength of 1 $within");
         !isset($this->travel_agency_code) || Assert::maxLength($this->travel_agency_code, 8, "travel_agency_code in AirlineTicket must have maxlength of 8 $within");
-        !isset($this->fare) || Assert::notNull($this->fare->currency_code, "currency_code in fare must not be NULL within AirlineTicket $within");
-        !isset($this->fare) || Assert::notNull($this->fare->value, "value in fare must not be NULL within AirlineTicket $within");
         !isset($this->fare) || Assert::isInstanceOf($this->fare, Money::class, "fare in AirlineTicket must be instance of Money $within");
         !isset($this->fare) || $this->fare->validate(AirlineTicket::class);
-        !isset($this->tax) || Assert::notNull($this->tax->currency_code, "currency_code in tax must not be NULL within AirlineTicket $within");
-        !isset($this->tax) || Assert::notNull($this->tax->value, "value in tax must not be NULL within AirlineTicket $within");
         !isset($this->tax) || Assert::isInstanceOf($this->tax, Money::class, "tax in AirlineTicket must be instance of Money $within");
         !isset($this->tax) || $this->tax->validate(AirlineTicket::class);
-        !isset($this->fee) || Assert::notNull($this->fee->currency_code, "currency_code in fee must not be NULL within AirlineTicket $within");
-        !isset($this->fee) || Assert::notNull($this->fee->value, "value in fee must not be NULL within AirlineTicket $within");
         !isset($this->fee) || Assert::isInstanceOf($this->fee, Money::class, "fee in AirlineTicket must be instance of Money $within");
         !isset($this->fee) || $this->fee->validate(AirlineTicket::class);
     }

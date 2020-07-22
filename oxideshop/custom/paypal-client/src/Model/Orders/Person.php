@@ -19,6 +19,7 @@ class Person extends Party implements JsonSerializable
      * @var array<Name>
      * Names of person.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 10
      */
@@ -53,6 +54,7 @@ class Person extends Party implements JsonSerializable
      * @var array<IdentityDocument>
      * Identity documents for the entity like passport number.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 10
      */

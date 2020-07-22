@@ -33,6 +33,8 @@ class PurchaseUnitRequest implements JsonSerializable
      * `shipping_discount` minus discount.<br/>The amount must be a positive number. For listed of supported
      * currencies and decimal precision, see the PayPal REST APIs <a
      * href="/docs/integration/direct/rest/currency-codes/">Currency Codes</a>.
+     *
+     * this is mandatory to be set
      */
     public $amount;
 
@@ -116,8 +118,9 @@ class PurchaseUnitRequest implements JsonSerializable
     {
         $within = isset($from) ? "within $from" : "";
         !isset($this->reference_id) || Assert::maxLength($this->reference_id, 256, "reference_id in PurchaseUnitRequest must have maxlength of 256 $within");
-        !isset($this->amount) || Assert::isInstanceOf($this->amount, AmountWithBreakdown::class, "amount in PurchaseUnitRequest must be instance of AmountWithBreakdown $within");
-        !isset($this->amount) || $this->amount->validate(PurchaseUnitRequest::class);
+        Assert::notNull($this->amount, "amount in PurchaseUnitRequest must not be NULL $within");
+         Assert::isInstanceOf($this->amount, AmountWithBreakdown::class, "amount in PurchaseUnitRequest must be instance of AmountWithBreakdown $within");
+         $this->amount->validate(PurchaseUnitRequest::class);
         !isset($this->payee) || Assert::isInstanceOf($this->payee, Payee::class, "payee in PurchaseUnitRequest must be instance of Payee $within");
         !isset($this->payee) || $this->payee->validate(PurchaseUnitRequest::class);
         !isset($this->payment_instruction) || Assert::isInstanceOf($this->payment_instruction, PaymentInstruction::class, "payment_instruction in PurchaseUnitRequest must be instance of PaymentInstruction $within");

@@ -40,6 +40,7 @@ class Frequency implements JsonSerializable
      * @see INTERVAL_UNIT_SEMI_MONTH
      * @see INTERVAL_UNIT_MONTH
      * @see INTERVAL_UNIT_YEAR
+     * this is mandatory to be set
      * minLength: 1
      * maxLength: 24
      */
@@ -60,8 +61,9 @@ class Frequency implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->interval_unit) || Assert::minLength($this->interval_unit, 1, "interval_unit in Frequency must have minlength of 1 $within");
-        !isset($this->interval_unit) || Assert::maxLength($this->interval_unit, 24, "interval_unit in Frequency must have maxlength of 24 $within");
+        Assert::notNull($this->interval_unit, "interval_unit in Frequency must not be NULL $within");
+         Assert::minLength($this->interval_unit, 1, "interval_unit in Frequency must have minlength of 1 $within");
+         Assert::maxLength($this->interval_unit, 24, "interval_unit in Frequency must have maxlength of 24 $within");
     }
 
     public function __construct()

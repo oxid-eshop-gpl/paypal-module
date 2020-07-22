@@ -28,6 +28,7 @@ class Item implements JsonSerializable
      * @var string
      * The item name or title.
      *
+     * this is mandatory to be set
      * minLength: 1
      * maxLength: 127
      */
@@ -36,6 +37,8 @@ class Item implements JsonSerializable
     /**
      * @var Money
      * The currency and amount for a financial transaction, such as a balance or payment due.
+     *
+     * this is mandatory to be set
      */
     public $unit_amount;
 
@@ -49,6 +52,7 @@ class Item implements JsonSerializable
      * @var string
      * The item quantity. Must be a whole number.
      *
+     * this is mandatory to be set
      * maxLength: 10
      */
     public $quantity;
@@ -85,17 +89,16 @@ class Item implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->name) || Assert::minLength($this->name, 1, "name in Item must have minlength of 1 $within");
-        !isset($this->name) || Assert::maxLength($this->name, 127, "name in Item must have maxlength of 127 $within");
-        !isset($this->unit_amount) || Assert::notNull($this->unit_amount->currency_code, "currency_code in unit_amount must not be NULL within Item $within");
-        !isset($this->unit_amount) || Assert::notNull($this->unit_amount->value, "value in unit_amount must not be NULL within Item $within");
-        !isset($this->unit_amount) || Assert::isInstanceOf($this->unit_amount, Money::class, "unit_amount in Item must be instance of Money $within");
-        !isset($this->unit_amount) || $this->unit_amount->validate(Item::class);
-        !isset($this->tax) || Assert::notNull($this->tax->currency_code, "currency_code in tax must not be NULL within Item $within");
-        !isset($this->tax) || Assert::notNull($this->tax->value, "value in tax must not be NULL within Item $within");
+        Assert::notNull($this->name, "name in Item must not be NULL $within");
+         Assert::minLength($this->name, 1, "name in Item must have minlength of 1 $within");
+         Assert::maxLength($this->name, 127, "name in Item must have maxlength of 127 $within");
+        Assert::notNull($this->unit_amount, "unit_amount in Item must not be NULL $within");
+         Assert::isInstanceOf($this->unit_amount, Money::class, "unit_amount in Item must be instance of Money $within");
+         $this->unit_amount->validate(Item::class);
         !isset($this->tax) || Assert::isInstanceOf($this->tax, Money::class, "tax in Item must be instance of Money $within");
         !isset($this->tax) || $this->tax->validate(Item::class);
-        !isset($this->quantity) || Assert::maxLength($this->quantity, 10, "quantity in Item must have maxlength of 10 $within");
+        Assert::notNull($this->quantity, "quantity in Item must not be NULL $within");
+         Assert::maxLength($this->quantity, 10, "quantity in Item must have maxlength of 10 $within");
         !isset($this->description) || Assert::maxLength($this->description, 127, "description in Item must have maxlength of 127 $within");
         !isset($this->sku) || Assert::maxLength($this->sku, 127, "sku in Item must have maxlength of 127 $within");
         !isset($this->category) || Assert::minLength($this->category, 1, "category in Item must have minlength of 1 $within");

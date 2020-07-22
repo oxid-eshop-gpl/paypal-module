@@ -19,6 +19,7 @@ class CustomerServiceContact implements JsonSerializable
      * @var array<string>
      * Customer service email addresses.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 100
      */
@@ -28,6 +29,7 @@ class CustomerServiceContact implements JsonSerializable
      * @var array<PhoneInfo>
      * Details of customer service phone numbers.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 100
      */

@@ -18,6 +18,8 @@ class SellerReceivableBreakdown implements JsonSerializable
     /**
      * @var Money
      * The currency and amount for a financial transaction, such as a balance or payment due.
+     *
+     * this is mandatory to be set
      */
     public $gross_amount;
 
@@ -56,6 +58,7 @@ class SellerReceivableBreakdown implements JsonSerializable
      * An array of platform or partner fees, commissions, or brokerage fees that associated with the captured
      * payment.
      *
+     * this is mandatory to be set
      * maxItems: 0
      * maxItems: 1
      */
@@ -64,24 +67,15 @@ class SellerReceivableBreakdown implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->gross_amount) || Assert::notNull($this->gross_amount->currency_code, "currency_code in gross_amount must not be NULL within SellerReceivableBreakdown $within");
-        !isset($this->gross_amount) || Assert::notNull($this->gross_amount->value, "value in gross_amount must not be NULL within SellerReceivableBreakdown $within");
-        !isset($this->gross_amount) || Assert::isInstanceOf($this->gross_amount, Money::class, "gross_amount in SellerReceivableBreakdown must be instance of Money $within");
-        !isset($this->gross_amount) || $this->gross_amount->validate(SellerReceivableBreakdown::class);
-        !isset($this->paypal_fee) || Assert::notNull($this->paypal_fee->currency_code, "currency_code in paypal_fee must not be NULL within SellerReceivableBreakdown $within");
-        !isset($this->paypal_fee) || Assert::notNull($this->paypal_fee->value, "value in paypal_fee must not be NULL within SellerReceivableBreakdown $within");
+        Assert::notNull($this->gross_amount, "gross_amount in SellerReceivableBreakdown must not be NULL $within");
+         Assert::isInstanceOf($this->gross_amount, Money::class, "gross_amount in SellerReceivableBreakdown must be instance of Money $within");
+         $this->gross_amount->validate(SellerReceivableBreakdown::class);
         !isset($this->paypal_fee) || Assert::isInstanceOf($this->paypal_fee, Money::class, "paypal_fee in SellerReceivableBreakdown must be instance of Money $within");
         !isset($this->paypal_fee) || $this->paypal_fee->validate(SellerReceivableBreakdown::class);
-        !isset($this->paypal_fee_in_receivable_currency) || Assert::notNull($this->paypal_fee_in_receivable_currency->currency_code, "currency_code in paypal_fee_in_receivable_currency must not be NULL within SellerReceivableBreakdown $within");
-        !isset($this->paypal_fee_in_receivable_currency) || Assert::notNull($this->paypal_fee_in_receivable_currency->value, "value in paypal_fee_in_receivable_currency must not be NULL within SellerReceivableBreakdown $within");
         !isset($this->paypal_fee_in_receivable_currency) || Assert::isInstanceOf($this->paypal_fee_in_receivable_currency, Money::class, "paypal_fee_in_receivable_currency in SellerReceivableBreakdown must be instance of Money $within");
         !isset($this->paypal_fee_in_receivable_currency) || $this->paypal_fee_in_receivable_currency->validate(SellerReceivableBreakdown::class);
-        !isset($this->net_amount) || Assert::notNull($this->net_amount->currency_code, "currency_code in net_amount must not be NULL within SellerReceivableBreakdown $within");
-        !isset($this->net_amount) || Assert::notNull($this->net_amount->value, "value in net_amount must not be NULL within SellerReceivableBreakdown $within");
         !isset($this->net_amount) || Assert::isInstanceOf($this->net_amount, Money::class, "net_amount in SellerReceivableBreakdown must be instance of Money $within");
         !isset($this->net_amount) || $this->net_amount->validate(SellerReceivableBreakdown::class);
-        !isset($this->receivable_amount) || Assert::notNull($this->receivable_amount->currency_code, "currency_code in receivable_amount must not be NULL within SellerReceivableBreakdown $within");
-        !isset($this->receivable_amount) || Assert::notNull($this->receivable_amount->value, "value in receivable_amount must not be NULL within SellerReceivableBreakdown $within");
         !isset($this->receivable_amount) || Assert::isInstanceOf($this->receivable_amount, Money::class, "receivable_amount in SellerReceivableBreakdown must be instance of Money $within");
         !isset($this->receivable_amount) || $this->receivable_amount->validate(SellerReceivableBreakdown::class);
         !isset($this->exchange_rate) || Assert::isInstanceOf($this->exchange_rate, ExchangeRate::class, "exchange_rate in SellerReceivableBreakdown must be instance of ExchangeRate $within");

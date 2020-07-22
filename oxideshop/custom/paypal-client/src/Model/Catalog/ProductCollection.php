@@ -19,6 +19,7 @@ class ProductCollection implements JsonSerializable
      * @var array<ProductCollectionElement>
      * An array of products.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 32767
      */

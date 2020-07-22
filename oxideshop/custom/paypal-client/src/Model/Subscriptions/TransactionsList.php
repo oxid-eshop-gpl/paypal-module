@@ -19,6 +19,7 @@ class TransactionsList implements JsonSerializable
      * @var array<Transaction>
      * An array of transactions.
      *
+     * this is mandatory to be set
      * maxItems: 0
      * maxItems: 32767
      */

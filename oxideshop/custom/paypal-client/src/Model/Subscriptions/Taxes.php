@@ -19,6 +19,8 @@ class Taxes implements JsonSerializable
      * @var string
      * The percentage, as a fixed-point, signed decimal number. For example, define a 19.99% interest rate as
      * `19.99`.
+     *
+     * this is mandatory to be set
      */
     public $percentage;
 
@@ -31,6 +33,7 @@ class Taxes implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
+        Assert::notNull($this->percentage, "percentage in Taxes must not be NULL $within");
     }
 
     public function __construct()

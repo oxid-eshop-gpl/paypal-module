@@ -21,6 +21,7 @@ class UpdatePaymentCollectionRequest implements JsonSerializable
      * An array of authorized payments for a purchase unit. A purchase unit can have zero or more authorized
      * payments.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 50
      */
@@ -30,6 +31,7 @@ class UpdatePaymentCollectionRequest implements JsonSerializable
      * @var array<UpdateCaptureRequest>
      * An array of captured payments for a purchase unit. A purchase unit can have zero or more captured payments.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 50
      */

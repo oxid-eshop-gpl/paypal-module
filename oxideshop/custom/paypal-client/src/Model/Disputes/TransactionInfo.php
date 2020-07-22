@@ -219,8 +219,6 @@ class TransactionInfo implements JsonSerializable
         !isset($this->create_time) || Assert::maxLength($this->create_time, 64, "create_time in TransactionInfo must have maxlength of 64 $within");
         !isset($this->transaction_status) || Assert::minLength($this->transaction_status, 1, "transaction_status in TransactionInfo must have minlength of 1 $within");
         !isset($this->transaction_status) || Assert::maxLength($this->transaction_status, 255, "transaction_status in TransactionInfo must have maxlength of 255 $within");
-        !isset($this->gross_amount) || Assert::notNull($this->gross_amount->currency_code, "currency_code in gross_amount must not be NULL within TransactionInfo $within");
-        !isset($this->gross_amount) || Assert::notNull($this->gross_amount->value, "value in gross_amount must not be NULL within TransactionInfo $within");
         !isset($this->gross_amount) || Assert::isInstanceOf($this->gross_amount, Money::class, "gross_amount in TransactionInfo must be instance of Money $within");
         !isset($this->gross_amount) || $this->gross_amount->validate(TransactionInfo::class);
         !isset($this->invoice_number) || Assert::minLength($this->invoice_number, 1, "invoice_number in TransactionInfo must have minlength of 1 $within");

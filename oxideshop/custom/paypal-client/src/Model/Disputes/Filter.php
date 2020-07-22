@@ -157,12 +157,8 @@ class Filter implements JsonSerializable
         !isset($this->response_due_date_before) || Assert::maxLength($this->response_due_date_before, 64, "response_due_date_before in Filter must have maxlength of 64 $within");
         !isset($this->response_due_date_after) || Assert::minLength($this->response_due_date_after, 20, "response_due_date_after in Filter must have minlength of 20 $within");
         !isset($this->response_due_date_after) || Assert::maxLength($this->response_due_date_after, 64, "response_due_date_after in Filter must have maxlength of 64 $within");
-        !isset($this->dispute_amount_gte) || Assert::notNull($this->dispute_amount_gte->currency_code, "currency_code in dispute_amount_gte must not be NULL within Filter $within");
-        !isset($this->dispute_amount_gte) || Assert::notNull($this->dispute_amount_gte->value, "value in dispute_amount_gte must not be NULL within Filter $within");
         !isset($this->dispute_amount_gte) || Assert::isInstanceOf($this->dispute_amount_gte, Money::class, "dispute_amount_gte in Filter must be instance of Money $within");
         !isset($this->dispute_amount_gte) || $this->dispute_amount_gte->validate(Filter::class);
-        !isset($this->dispute_amount_lte) || Assert::notNull($this->dispute_amount_lte->currency_code, "currency_code in dispute_amount_lte must not be NULL within Filter $within");
-        !isset($this->dispute_amount_lte) || Assert::notNull($this->dispute_amount_lte->value, "value in dispute_amount_lte must not be NULL within Filter $within");
         !isset($this->dispute_amount_lte) || Assert::isInstanceOf($this->dispute_amount_lte, Money::class, "dispute_amount_lte in Filter must be instance of Money $within");
         !isset($this->dispute_amount_lte) || $this->dispute_amount_lte->validate(Filter::class);
     }

@@ -57,7 +57,6 @@ class BusinessIdentification implements JsonSerializable
         !isset($this->type) || Assert::maxLength($this->type, 127, "type in BusinessIdentification must have maxlength of 127 $within");
         !isset($this->identifier) || Assert::minLength($this->identifier, 1, "identifier in BusinessIdentification must have minlength of 1 $within");
         !isset($this->identifier) || Assert::maxLength($this->identifier, 127, "identifier in BusinessIdentification must have maxlength of 127 $within");
-        !isset($this->issuer) || Assert::notNull($this->issuer->country_code, "country_code in issuer must not be NULL within BusinessIdentification $within");
         !isset($this->issuer) || Assert::isInstanceOf($this->issuer, DocumentIssuer::class, "issuer in BusinessIdentification must be instance of DocumentIssuer $within");
         !isset($this->issuer) || $this->issuer->validate(BusinessIdentification::class);
         !isset($this->issued_time) || Assert::minLength($this->issued_time, 20, "issued_time in BusinessIdentification must have minlength of 20 $within");

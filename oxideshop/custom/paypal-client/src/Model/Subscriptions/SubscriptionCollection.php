@@ -19,6 +19,7 @@ class SubscriptionCollection implements JsonSerializable
      * @var array<Subscription>
      * An array of subscriptions.
      *
+     * this is mandatory to be set
      * maxItems: 0
      * maxItems: 32767
      */

@@ -19,6 +19,7 @@ class SubscriptionCancelRequest implements JsonSerializable
      * @var string
      * The reason for the cancellation of a subscription.
      *
+     * this is mandatory to be set
      * minLength: 1
      * maxLength: 128
      */
@@ -27,8 +28,9 @@ class SubscriptionCancelRequest implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->reason) || Assert::minLength($this->reason, 1, "reason in SubscriptionCancelRequest must have minlength of 1 $within");
-        !isset($this->reason) || Assert::maxLength($this->reason, 128, "reason in SubscriptionCancelRequest must have maxlength of 128 $within");
+        Assert::notNull($this->reason, "reason in SubscriptionCancelRequest must not be NULL $within");
+         Assert::minLength($this->reason, 1, "reason in SubscriptionCancelRequest must have minlength of 1 $within");
+         Assert::maxLength($this->reason, 128, "reason in SubscriptionCancelRequest must have maxlength of 128 $within");
     }
 
     public function __construct()

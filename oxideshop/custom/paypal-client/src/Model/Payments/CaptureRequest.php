@@ -46,8 +46,6 @@ class CaptureRequest extends SupplementaryPurchaseData implements JsonSerializab
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->amount) || Assert::notNull($this->amount->currency_code, "currency_code in amount must not be NULL within CaptureRequest $within");
-        !isset($this->amount) || Assert::notNull($this->amount->value, "value in amount must not be NULL within CaptureRequest $within");
         !isset($this->amount) || Assert::isInstanceOf($this->amount, Money::class, "amount in CaptureRequest must be instance of Money $within");
         !isset($this->amount) || $this->amount->validate(CaptureRequest::class);
         !isset($this->payment_instruction) || Assert::isInstanceOf($this->payment_instruction, PaymentInstruction::class, "payment_instruction in CaptureRequest must be instance of PaymentInstruction $within");

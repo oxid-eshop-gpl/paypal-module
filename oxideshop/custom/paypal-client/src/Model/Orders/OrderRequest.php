@@ -37,6 +37,7 @@ class OrderRequest implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see INTENT_CAPTURE
      * @see INTENT_AUTHORIZE
+     * this is mandatory to be set
      */
     public $intent;
 
@@ -62,6 +63,7 @@ class OrderRequest implements JsonSerializable
      * An array of purchase units. Each purchase unit establishes a contract between a payer and the payee. Each
      * purchase unit represents either a full or partial order that the payer intends to purchase from the payee.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 10
      */
@@ -85,6 +87,7 @@ class OrderRequest implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
+        Assert::notNull($this->intent, "intent in OrderRequest must not be NULL $within");
         !isset($this->payer) || Assert::isInstanceOf($this->payer, Payer::class, "payer in OrderRequest must be instance of Payer $within");
         !isset($this->payer) || $this->payer->validate(OrderRequest::class);
         Assert::notNull($this->purchase_units, "purchase_units in OrderRequest must not be NULL $within");

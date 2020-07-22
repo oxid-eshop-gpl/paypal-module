@@ -29,6 +29,7 @@ class Document implements JsonSerializable
      * The document labels. A document could be classfied to multiple categories. For example, a bill document can be
      * classfified as `BILL DOCUMENT` and `UTILITY DOCUMENT`.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 50
      */
@@ -95,6 +96,7 @@ class Document implements JsonSerializable
      * The files contained in the document. For example, a document could be represented by a front page file and a
      * back page file, etc.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 50
      */
@@ -104,6 +106,7 @@ class Document implements JsonSerializable
      * @var array<array>
      * The HATEOAS links.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 10
      */

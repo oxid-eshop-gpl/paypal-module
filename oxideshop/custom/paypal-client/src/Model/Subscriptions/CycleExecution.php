@@ -28,6 +28,7 @@ class CycleExecution implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see TENURE_TYPE_REGULAR
      * @see TENURE_TYPE_TRIAL
+     * this is mandatory to be set
      * minLength: 1
      * maxLength: 24
      */
@@ -36,12 +37,16 @@ class CycleExecution implements JsonSerializable
     /**
      * @var integer
      * The order in which to run this cycle among other billing cycles.
+     *
+     * this is mandatory to be set
      */
     public $sequence;
 
     /**
      * @var integer
      * The number of billing cycles that have completed.
+     *
+     * this is mandatory to be set
      */
     public $cycles_completed;
 
@@ -76,10 +81,11 @@ class CycleExecution implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->tenure_type) || Assert::minLength($this->tenure_type, 1, "tenure_type in CycleExecution must have minlength of 1 $within");
-        !isset($this->tenure_type) || Assert::maxLength($this->tenure_type, 24, "tenure_type in CycleExecution must have maxlength of 24 $within");
-        !isset($this->amount_payable_per_cycle) || Assert::notNull($this->amount_payable_per_cycle->currency_code, "currency_code in amount_payable_per_cycle must not be NULL within CycleExecution $within");
-        !isset($this->amount_payable_per_cycle) || Assert::notNull($this->amount_payable_per_cycle->value, "value in amount_payable_per_cycle must not be NULL within CycleExecution $within");
+        Assert::notNull($this->tenure_type, "tenure_type in CycleExecution must not be NULL $within");
+         Assert::minLength($this->tenure_type, 1, "tenure_type in CycleExecution must have minlength of 1 $within");
+         Assert::maxLength($this->tenure_type, 24, "tenure_type in CycleExecution must have maxlength of 24 $within");
+        Assert::notNull($this->sequence, "sequence in CycleExecution must not be NULL $within");
+        Assert::notNull($this->cycles_completed, "cycles_completed in CycleExecution must not be NULL $within");
         !isset($this->amount_payable_per_cycle) || Assert::isInstanceOf($this->amount_payable_per_cycle, Money::class, "amount_payable_per_cycle in CycleExecution must be instance of Money $within");
         !isset($this->amount_payable_per_cycle) || $this->amount_payable_per_cycle->validate(CycleExecution::class);
     }

@@ -24,6 +24,7 @@ class LegalConsent implements JsonSerializable
      *
      * use one of constants defined in this class to set the value:
      * @see TYPE_SHARE_DATA_CONSENT
+     * this is mandatory to be set
      * minLength: 1
      * maxLength: 127
      */
@@ -33,14 +34,18 @@ class LegalConsent implements JsonSerializable
      * @var boolean
      * Indicates whether the customer agreed to share this type of data. To give consent, specify `true`. To withhold
      * consent, specify `false`.
+     *
+     * this is mandatory to be set
      */
     public $granted;
 
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->type) || Assert::minLength($this->type, 1, "type in LegalConsent must have minlength of 1 $within");
-        !isset($this->type) || Assert::maxLength($this->type, 127, "type in LegalConsent must have maxlength of 127 $within");
+        Assert::notNull($this->type, "type in LegalConsent must not be NULL $within");
+         Assert::minLength($this->type, 1, "type in LegalConsent must have minlength of 1 $within");
+         Assert::maxLength($this->type, 127, "type in LegalConsent must have maxlength of 127 $within");
+        Assert::notNull($this->granted, "granted in LegalConsent must not be NULL $within");
     }
 
     public function __construct()

@@ -34,6 +34,7 @@ class PlanRequestPOST implements JsonSerializable
      * @var string
      * The ID of the product.
      *
+     * this is mandatory to be set
      * minLength: 6
      * maxLength: 50
      */
@@ -43,6 +44,7 @@ class PlanRequestPOST implements JsonSerializable
      * @var string
      * The plan name.
      *
+     * this is mandatory to be set
      * minLength: 1
      * maxLength: 127
      */
@@ -87,6 +89,7 @@ class PlanRequestPOST implements JsonSerializable
      * An array of billing cycles for trial billing and regular billing. A plan can have at most two trial cycles and
      * only one regular cycle.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 12
      */
@@ -95,6 +98,8 @@ class PlanRequestPOST implements JsonSerializable
     /**
      * @var PaymentPreferences
      * The payment preferences for a subscription.
+     *
+     * this is mandatory to be set
      */
     public $payment_preferences;
 
@@ -113,10 +118,12 @@ class PlanRequestPOST implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->product_id) || Assert::minLength($this->product_id, 6, "product_id in PlanRequestPOST must have minlength of 6 $within");
-        !isset($this->product_id) || Assert::maxLength($this->product_id, 50, "product_id in PlanRequestPOST must have maxlength of 50 $within");
-        !isset($this->name) || Assert::minLength($this->name, 1, "name in PlanRequestPOST must have minlength of 1 $within");
-        !isset($this->name) || Assert::maxLength($this->name, 127, "name in PlanRequestPOST must have maxlength of 127 $within");
+        Assert::notNull($this->product_id, "product_id in PlanRequestPOST must not be NULL $within");
+         Assert::minLength($this->product_id, 6, "product_id in PlanRequestPOST must have minlength of 6 $within");
+         Assert::maxLength($this->product_id, 50, "product_id in PlanRequestPOST must have maxlength of 50 $within");
+        Assert::notNull($this->name, "name in PlanRequestPOST must not be NULL $within");
+         Assert::minLength($this->name, 1, "name in PlanRequestPOST must have minlength of 1 $within");
+         Assert::maxLength($this->name, 127, "name in PlanRequestPOST must have maxlength of 127 $within");
         !isset($this->status) || Assert::minLength($this->status, 1, "status in PlanRequestPOST must have minlength of 1 $within");
         !isset($this->status) || Assert::maxLength($this->status, 24, "status in PlanRequestPOST must have maxlength of 24 $within");
         !isset($this->description) || Assert::minLength($this->description, 1, "description in PlanRequestPOST must have minlength of 1 $within");
@@ -134,9 +141,9 @@ class PlanRequestPOST implements JsonSerializable
                                     }
                                 }
 
-        !isset($this->payment_preferences) || Assert::isInstanceOf($this->payment_preferences, PaymentPreferences::class, "payment_preferences in PlanRequestPOST must be instance of PaymentPreferences $within");
-        !isset($this->payment_preferences) || $this->payment_preferences->validate(PlanRequestPOST::class);
-        !isset($this->taxes) || Assert::notNull($this->taxes->percentage, "percentage in taxes must not be NULL within PlanRequestPOST $within");
+        Assert::notNull($this->payment_preferences, "payment_preferences in PlanRequestPOST must not be NULL $within");
+         Assert::isInstanceOf($this->payment_preferences, PaymentPreferences::class, "payment_preferences in PlanRequestPOST must be instance of PaymentPreferences $within");
+         $this->payment_preferences->validate(PlanRequestPOST::class);
         !isset($this->taxes) || Assert::isInstanceOf($this->taxes, Taxes::class, "taxes in PlanRequestPOST must be instance of Taxes $within");
         !isset($this->taxes) || $this->taxes->validate(PlanRequestPOST::class);
     }

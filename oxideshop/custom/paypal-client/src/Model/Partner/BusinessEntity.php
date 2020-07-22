@@ -25,6 +25,7 @@ class BusinessEntity extends Business implements JsonSerializable
      * @var array<OfficeBearer>
      * List of Directors present as part of the business entity.
      *
+     * this is mandatory to be set
      * maxItems: 0
      * maxItems: 5
      */

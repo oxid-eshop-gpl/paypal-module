@@ -28,6 +28,7 @@ class PolicyDirective implements JsonSerializable
      * @var array<string>
      * List of reasons for the payment decision.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 50
      */

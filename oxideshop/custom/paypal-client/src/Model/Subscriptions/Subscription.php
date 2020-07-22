@@ -144,16 +144,12 @@ class Subscription extends SubscriptionStatus implements JsonSerializable
         !isset($this->start_time) || Assert::maxLength($this->start_time, 64, "start_time in Subscription must have maxlength of 64 $within");
         !isset($this->quantity) || Assert::minLength($this->quantity, 1, "quantity in Subscription must have minlength of 1 $within");
         !isset($this->quantity) || Assert::maxLength($this->quantity, 32, "quantity in Subscription must have maxlength of 32 $within");
-        !isset($this->shipping_amount) || Assert::notNull($this->shipping_amount->currency_code, "currency_code in shipping_amount must not be NULL within Subscription $within");
-        !isset($this->shipping_amount) || Assert::notNull($this->shipping_amount->value, "value in shipping_amount must not be NULL within Subscription $within");
         !isset($this->shipping_amount) || Assert::isInstanceOf($this->shipping_amount, Money::class, "shipping_amount in Subscription must be instance of Money $within");
         !isset($this->shipping_amount) || $this->shipping_amount->validate(Subscription::class);
         !isset($this->payee) || Assert::isInstanceOf($this->payee, Payee::class, "payee in Subscription must be instance of Payee $within");
         !isset($this->payee) || $this->payee->validate(Subscription::class);
         !isset($this->subscriber) || Assert::isInstanceOf($this->subscriber, Subscriber::class, "subscriber in Subscription must be instance of Subscriber $within");
         !isset($this->subscriber) || $this->subscriber->validate(Subscription::class);
-        !isset($this->billing_info) || Assert::notNull($this->billing_info->outstanding_balance, "outstanding_balance in billing_info must not be NULL within Subscription $within");
-        !isset($this->billing_info) || Assert::notNull($this->billing_info->failed_payments_count, "failed_payments_count in billing_info must not be NULL within Subscription $within");
         !isset($this->billing_info) || Assert::isInstanceOf($this->billing_info, SubscriptionBillingInfo::class, "billing_info in Subscription must be instance of SubscriptionBillingInfo $within");
         !isset($this->billing_info) || $this->billing_info->validate(Subscription::class);
         !isset($this->create_time) || Assert::minLength($this->create_time, 20, "create_time in Subscription must have minlength of 20 $within");

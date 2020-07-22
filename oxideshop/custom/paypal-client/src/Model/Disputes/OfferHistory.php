@@ -109,8 +109,6 @@ class OfferHistory implements JsonSerializable
         !isset($this->event_type) || Assert::maxLength($this->event_type, 255, "event_type in OfferHistory must have maxlength of 255 $within");
         !isset($this->offer_type) || Assert::minLength($this->offer_type, 1, "offer_type in OfferHistory must have minlength of 1 $within");
         !isset($this->offer_type) || Assert::maxLength($this->offer_type, 255, "offer_type in OfferHistory must have maxlength of 255 $within");
-        !isset($this->offer_amount) || Assert::notNull($this->offer_amount->currency_code, "currency_code in offer_amount must not be NULL within OfferHistory $within");
-        !isset($this->offer_amount) || Assert::notNull($this->offer_amount->value, "value in offer_amount must not be NULL within OfferHistory $within");
         !isset($this->offer_amount) || Assert::isInstanceOf($this->offer_amount, Money::class, "offer_amount in OfferHistory must be instance of Money $within");
         !isset($this->offer_amount) || $this->offer_amount->validate(OfferHistory::class);
     }

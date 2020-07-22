@@ -19,6 +19,7 @@ class BeneficialOwners implements JsonSerializable
      * @var array<IndividualBeneficialOwner>
      * Individual beneficial owners.
      *
+     * this is mandatory to be set
      * maxItems: 0
      * maxItems: 5
      */
@@ -28,6 +29,7 @@ class BeneficialOwners implements JsonSerializable
      * @var array<BusinessBeneficialOwner>
      * Business beneficial owners.
      *
+     * this is mandatory to be set
      * maxItems: 0
      * maxItems: 5
      */

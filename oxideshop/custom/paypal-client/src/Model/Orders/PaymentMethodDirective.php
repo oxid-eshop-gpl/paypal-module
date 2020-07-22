@@ -37,6 +37,7 @@ class PaymentMethodDirective implements JsonSerializable
      * @var array<string>
      * Reasons for the decision. Usually set for a DENY decision.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 10
      */

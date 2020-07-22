@@ -31,6 +31,7 @@ class AirlineItinerary implements JsonSerializable
      * @var array<FlightLeg>
      * An array of the airline itinerary legs.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 12
      */

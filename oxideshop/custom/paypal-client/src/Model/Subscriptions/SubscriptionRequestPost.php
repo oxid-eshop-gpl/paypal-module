@@ -19,6 +19,7 @@ class SubscriptionRequestPost implements JsonSerializable
      * @var string
      * The ID of the plan.
      *
+     * this is mandatory to be set
      * minLength: 3
      * maxLength: 50
      */
@@ -72,20 +73,17 @@ class SubscriptionRequestPost implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->plan_id) || Assert::minLength($this->plan_id, 3, "plan_id in SubscriptionRequestPost must have minlength of 3 $within");
-        !isset($this->plan_id) || Assert::maxLength($this->plan_id, 50, "plan_id in SubscriptionRequestPost must have maxlength of 50 $within");
+        Assert::notNull($this->plan_id, "plan_id in SubscriptionRequestPost must not be NULL $within");
+         Assert::minLength($this->plan_id, 3, "plan_id in SubscriptionRequestPost must have minlength of 3 $within");
+         Assert::maxLength($this->plan_id, 50, "plan_id in SubscriptionRequestPost must have maxlength of 50 $within");
         !isset($this->start_time) || Assert::minLength($this->start_time, 20, "start_time in SubscriptionRequestPost must have minlength of 20 $within");
         !isset($this->start_time) || Assert::maxLength($this->start_time, 64, "start_time in SubscriptionRequestPost must have maxlength of 64 $within");
         !isset($this->quantity) || Assert::minLength($this->quantity, 1, "quantity in SubscriptionRequestPost must have minlength of 1 $within");
         !isset($this->quantity) || Assert::maxLength($this->quantity, 32, "quantity in SubscriptionRequestPost must have maxlength of 32 $within");
-        !isset($this->shipping_amount) || Assert::notNull($this->shipping_amount->currency_code, "currency_code in shipping_amount must not be NULL within SubscriptionRequestPost $within");
-        !isset($this->shipping_amount) || Assert::notNull($this->shipping_amount->value, "value in shipping_amount must not be NULL within SubscriptionRequestPost $within");
         !isset($this->shipping_amount) || Assert::isInstanceOf($this->shipping_amount, Money::class, "shipping_amount in SubscriptionRequestPost must be instance of Money $within");
         !isset($this->shipping_amount) || $this->shipping_amount->validate(SubscriptionRequestPost::class);
         !isset($this->subscriber) || Assert::isInstanceOf($this->subscriber, SubscriberRequest::class, "subscriber in SubscriptionRequestPost must be instance of SubscriberRequest $within");
         !isset($this->subscriber) || $this->subscriber->validate(SubscriptionRequestPost::class);
-        !isset($this->application_context) || Assert::notNull($this->application_context->return_url, "return_url in application_context must not be NULL within SubscriptionRequestPost $within");
-        !isset($this->application_context) || Assert::notNull($this->application_context->cancel_url, "cancel_url in application_context must not be NULL within SubscriptionRequestPost $within");
         !isset($this->application_context) || Assert::isInstanceOf($this->application_context, ApplicationContext::class, "application_context in SubscriptionRequestPost must be instance of ApplicationContext $within");
         !isset($this->application_context) || $this->application_context->validate(SubscriptionRequestPost::class);
     }

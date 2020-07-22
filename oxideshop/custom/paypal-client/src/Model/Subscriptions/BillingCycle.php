@@ -30,6 +30,8 @@ class BillingCycle implements JsonSerializable
     /**
      * @var Frequency
      * The frequency of the billing cycle.
+     *
+     * this is mandatory to be set
      */
     public $frequency;
 
@@ -41,6 +43,7 @@ class BillingCycle implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see TENURE_TYPE_REGULAR
      * @see TENURE_TYPE_TRIAL
+     * this is mandatory to be set
      * minLength: 1
      * maxLength: 24
      */
@@ -51,6 +54,8 @@ class BillingCycle implements JsonSerializable
      * The order in which this cycle is to run among other billing cycles. For example, a trial billing cycle has a
      * `sequence` of `1` while a regular billing cycle has a `sequence` of `2`, so that trial cycle runs before the
      * regular cycle.
+     *
+     * this is mandatory to be set
      */
     public $sequence;
 
@@ -68,11 +73,13 @@ class BillingCycle implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
         !isset($this->pricing_scheme) || Assert::isInstanceOf($this->pricing_scheme, PricingScheme::class, "pricing_scheme in BillingCycle must be instance of PricingScheme $within");
         !isset($this->pricing_scheme) || $this->pricing_scheme->validate(BillingCycle::class);
-        !isset($this->frequency) || Assert::notNull($this->frequency->interval_unit, "interval_unit in frequency must not be NULL within BillingCycle $within");
-        !isset($this->frequency) || Assert::isInstanceOf($this->frequency, Frequency::class, "frequency in BillingCycle must be instance of Frequency $within");
-        !isset($this->frequency) || $this->frequency->validate(BillingCycle::class);
-        !isset($this->tenure_type) || Assert::minLength($this->tenure_type, 1, "tenure_type in BillingCycle must have minlength of 1 $within");
-        !isset($this->tenure_type) || Assert::maxLength($this->tenure_type, 24, "tenure_type in BillingCycle must have maxlength of 24 $within");
+        Assert::notNull($this->frequency, "frequency in BillingCycle must not be NULL $within");
+         Assert::isInstanceOf($this->frequency, Frequency::class, "frequency in BillingCycle must be instance of Frequency $within");
+         $this->frequency->validate(BillingCycle::class);
+        Assert::notNull($this->tenure_type, "tenure_type in BillingCycle must not be NULL $within");
+         Assert::minLength($this->tenure_type, 1, "tenure_type in BillingCycle must have minlength of 1 $within");
+         Assert::maxLength($this->tenure_type, 24, "tenure_type in BillingCycle must have maxlength of 24 $within");
+        Assert::notNull($this->sequence, "sequence in BillingCycle must not be NULL $within");
     }
 
     public function __construct()

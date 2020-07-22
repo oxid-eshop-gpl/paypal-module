@@ -35,6 +35,7 @@ class Business implements JsonSerializable
      * @var array<BusinessNameDetail>
      * Name of the business.
      *
+     * this is mandatory to be set
      * maxItems: 0
      * maxItems: 5
      */
@@ -44,6 +45,7 @@ class Business implements JsonSerializable
      * @var array<Email>
      * Email addresses of the business.
      *
+     * this is mandatory to be set
      * maxItems: 0
      * maxItems: 5
      */
@@ -62,6 +64,7 @@ class Business implements JsonSerializable
      * @var array<BusinessAddressDetail>
      * List of addresses associated with the business entity.
      *
+     * this is mandatory to be set
      * maxItems: 0
      * maxItems: 5
      */
@@ -71,6 +74,7 @@ class Business implements JsonSerializable
      * @var array<BusinessPhoneDetail>
      * List of phone number associated with the business.
      *
+     * this is mandatory to be set
      * maxItems: 0
      * maxItems: 5
      */
@@ -81,6 +85,7 @@ class Business implements JsonSerializable
      * Business Party related Document data collected from the customer.. For example SSN, ITIN, Business
      * registration number that were collected from the user.
      *
+     * this is mandatory to be set
      * maxItems: 0
      * maxItems: 20
      */
@@ -91,9 +96,6 @@ class Business implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
         !isset($this->business_type) || Assert::isInstanceOf($this->business_type, BusinessTypeInfo::class, "business_type in Business must be instance of BusinessTypeInfo $within");
         !isset($this->business_type) || $this->business_type->validate(Business::class);
-        !isset($this->business_industry) || Assert::notNull($this->business_industry->category, "category in business_industry must not be NULL within Business $within");
-        !isset($this->business_industry) || Assert::notNull($this->business_industry->mcc_code, "mcc_code in business_industry must not be NULL within Business $within");
-        !isset($this->business_industry) || Assert::notNull($this->business_industry->subcategory, "subcategory in business_industry must not be NULL within Business $within");
         !isset($this->business_industry) || Assert::isInstanceOf($this->business_industry, BusinessIndustry::class, "business_industry in Business must be instance of BusinessIndustry $within");
         !isset($this->business_industry) || $this->business_industry->validate(Business::class);
         !isset($this->business_incorporation) || Assert::isInstanceOf($this->business_incorporation, BusinessIncorporation::class, "business_incorporation in Business must be instance of BusinessIncorporation $within");

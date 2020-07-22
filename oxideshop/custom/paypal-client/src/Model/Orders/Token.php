@@ -40,6 +40,7 @@ class Token implements JsonSerializable
      * @var string
      * The PayPal-generated ID for the token.
      *
+     * this is mandatory to be set
      * minLength: 1
      * maxLength: 255
      */
@@ -57,6 +58,7 @@ class Token implements JsonSerializable
      * @see TYPE_PAYPAL_TRANSACTION_ID
      * @see TYPE_PNREF
      * @see TYPE_AUTHORIZATION_ID
+     * this is mandatory to be set
      * minLength: 1
      * maxLength: 255
      */
@@ -65,10 +67,12 @@ class Token implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->id) || Assert::minLength($this->id, 1, "id in Token must have minlength of 1 $within");
-        !isset($this->id) || Assert::maxLength($this->id, 255, "id in Token must have maxlength of 255 $within");
-        !isset($this->type) || Assert::minLength($this->type, 1, "type in Token must have minlength of 1 $within");
-        !isset($this->type) || Assert::maxLength($this->type, 255, "type in Token must have maxlength of 255 $within");
+        Assert::notNull($this->id, "id in Token must not be NULL $within");
+         Assert::minLength($this->id, 1, "id in Token must have minlength of 1 $within");
+         Assert::maxLength($this->id, 255, "id in Token must have maxlength of 255 $within");
+        Assert::notNull($this->type, "type in Token must not be NULL $within");
+         Assert::minLength($this->type, 1, "type in Token must have minlength of 1 $within");
+         Assert::maxLength($this->type, 255, "type in Token must have maxlength of 255 $within");
     }
 
     public function __construct()

@@ -46,6 +46,7 @@ class BusinessPhoneDetail extends Phone implements JsonSerializable
      *
      * use one of constants defined in this class to set the value:
      * @see TYPE_CUSTOMER_SERVICE
+     * this is mandatory to be set
      * minLength: 1
      * maxLength: 255
      */
@@ -55,6 +56,7 @@ class BusinessPhoneDetail extends Phone implements JsonSerializable
      * @var array<string>
      * Array of tags for this phone number.
      *
+     * this is mandatory to be set
      * maxItems: 0
      * maxItems: 20
      */
@@ -65,8 +67,9 @@ class BusinessPhoneDetail extends Phone implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
         !isset($this->contact_name) || Assert::minLength($this->contact_name, 1, "contact_name in BusinessPhoneDetail must have minlength of 1 $within");
         !isset($this->contact_name) || Assert::maxLength($this->contact_name, 900, "contact_name in BusinessPhoneDetail must have maxlength of 900 $within");
-        !isset($this->type) || Assert::minLength($this->type, 1, "type in BusinessPhoneDetail must have minlength of 1 $within");
-        !isset($this->type) || Assert::maxLength($this->type, 255, "type in BusinessPhoneDetail must have maxlength of 255 $within");
+        Assert::notNull($this->type, "type in BusinessPhoneDetail must not be NULL $within");
+         Assert::minLength($this->type, 1, "type in BusinessPhoneDetail must have minlength of 1 $within");
+         Assert::maxLength($this->type, 255, "type in BusinessPhoneDetail must have maxlength of 255 $within");
         Assert::notNull($this->tags, "tags in BusinessPhoneDetail must not be NULL $within");
          Assert::minCount($this->tags, 0, "tags in BusinessPhoneDetail must have min. count of 0 $within");
          Assert::maxCount($this->tags, 20, "tags in BusinessPhoneDetail must have max. count of 20 $within");

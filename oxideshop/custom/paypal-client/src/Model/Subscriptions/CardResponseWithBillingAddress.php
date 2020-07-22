@@ -38,7 +38,6 @@ class CardResponseWithBillingAddress extends CardResponse implements JsonSeriali
         $within = isset($from) ? "within $from" : "";
         !isset($this->name) || Assert::minLength($this->name, 2, "name in CardResponseWithBillingAddress must have minlength of 2 $within");
         !isset($this->name) || Assert::maxLength($this->name, 300, "name in CardResponseWithBillingAddress must have maxlength of 300 $within");
-        !isset($this->billing_address) || Assert::notNull($this->billing_address->country_code, "country_code in billing_address must not be NULL within CardResponseWithBillingAddress $within");
         !isset($this->billing_address) || Assert::isInstanceOf($this->billing_address, AddressPortable::class, "billing_address in CardResponseWithBillingAddress must be instance of AddressPortable $within");
         !isset($this->billing_address) || $this->billing_address->validate(CardResponseWithBillingAddress::class);
     }

@@ -70,6 +70,7 @@ class CustomizedXUnsupportedNineEightNineFourApplicationContext implements JsonS
      * @var string
      * The URL where the customer is redirected after the customer approves the payment.
      *
+     * this is mandatory to be set
      * minLength: 10
      * maxLength: 4000
      */
@@ -79,6 +80,7 @@ class CustomizedXUnsupportedNineEightNineFourApplicationContext implements JsonS
      * @var string
      * The URL where the customer is redirected after the customer cancels the payment.
      *
+     * this is mandatory to be set
      * minLength: 10
      * maxLength: 4000
      */
@@ -95,10 +97,12 @@ class CustomizedXUnsupportedNineEightNineFourApplicationContext implements JsonS
         !isset($this->shipping_preference) || Assert::maxLength($this->shipping_preference, 24, "shipping_preference in CustomizedXUnsupportedNineEightNineFourApplicationContext must have maxlength of 24 $within");
         !isset($this->payment_method) || Assert::isInstanceOf($this->payment_method, PaymentMethod::class, "payment_method in CustomizedXUnsupportedNineEightNineFourApplicationContext must be instance of PaymentMethod $within");
         !isset($this->payment_method) || $this->payment_method->validate(CustomizedXUnsupportedNineEightNineFourApplicationContext::class);
-        !isset($this->return_url) || Assert::minLength($this->return_url, 10, "return_url in CustomizedXUnsupportedNineEightNineFourApplicationContext must have minlength of 10 $within");
-        !isset($this->return_url) || Assert::maxLength($this->return_url, 4000, "return_url in CustomizedXUnsupportedNineEightNineFourApplicationContext must have maxlength of 4000 $within");
-        !isset($this->cancel_url) || Assert::minLength($this->cancel_url, 10, "cancel_url in CustomizedXUnsupportedNineEightNineFourApplicationContext must have minlength of 10 $within");
-        !isset($this->cancel_url) || Assert::maxLength($this->cancel_url, 4000, "cancel_url in CustomizedXUnsupportedNineEightNineFourApplicationContext must have maxlength of 4000 $within");
+        Assert::notNull($this->return_url, "return_url in CustomizedXUnsupportedNineEightNineFourApplicationContext must not be NULL $within");
+         Assert::minLength($this->return_url, 10, "return_url in CustomizedXUnsupportedNineEightNineFourApplicationContext must have minlength of 10 $within");
+         Assert::maxLength($this->return_url, 4000, "return_url in CustomizedXUnsupportedNineEightNineFourApplicationContext must have maxlength of 4000 $within");
+        Assert::notNull($this->cancel_url, "cancel_url in CustomizedXUnsupportedNineEightNineFourApplicationContext must not be NULL $within");
+         Assert::minLength($this->cancel_url, 10, "cancel_url in CustomizedXUnsupportedNineEightNineFourApplicationContext must have minlength of 10 $within");
+         Assert::maxLength($this->cancel_url, 4000, "cancel_url in CustomizedXUnsupportedNineEightNineFourApplicationContext must have maxlength of 4000 $within");
     }
 
     public function __construct()

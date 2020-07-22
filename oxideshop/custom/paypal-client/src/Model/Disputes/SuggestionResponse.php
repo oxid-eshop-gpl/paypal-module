@@ -20,6 +20,7 @@ class SuggestionResponse implements JsonSerializable
      * @var array<string>
      * An array of auto complete values for the given search_text if present.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 10
      */
@@ -38,6 +39,7 @@ class SuggestionResponse implements JsonSerializable
      * @var array<array>
      * An array of request-related [HATEOAS links](/docs/api/hateoas-links/).
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 10
      */

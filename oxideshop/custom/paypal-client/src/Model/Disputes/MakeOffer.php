@@ -31,6 +31,7 @@ class MakeOffer implements JsonSerializable
      * @var string
      * The merchant's notes about the offer. PayPal can, but the customer cannot, view these notes.
      *
+     * this is mandatory to be set
      * minLength: 1
      * maxLength: 2000
      */
@@ -70,6 +71,7 @@ class MakeOffer implements JsonSerializable
      * @see OFFER_TYPE_REFUND_WITH_RETURN
      * @see OFFER_TYPE_REFUND_WITH_REPLACEMENT
      * @see OFFER_TYPE_REPLACEMENT_WITHOUT_REFUND
+     * this is mandatory to be set
      * minLength: 1
      * maxLength: 255
      */
@@ -78,19 +80,18 @@ class MakeOffer implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->note) || Assert::minLength($this->note, 1, "note in MakeOffer must have minlength of 1 $within");
-        !isset($this->note) || Assert::maxLength($this->note, 2000, "note in MakeOffer must have maxlength of 2000 $within");
-        !isset($this->offer_amount) || Assert::notNull($this->offer_amount->currency_code, "currency_code in offer_amount must not be NULL within MakeOffer $within");
-        !isset($this->offer_amount) || Assert::notNull($this->offer_amount->value, "value in offer_amount must not be NULL within MakeOffer $within");
+        Assert::notNull($this->note, "note in MakeOffer must not be NULL $within");
+         Assert::minLength($this->note, 1, "note in MakeOffer must have minlength of 1 $within");
+         Assert::maxLength($this->note, 2000, "note in MakeOffer must have maxlength of 2000 $within");
         !isset($this->offer_amount) || Assert::isInstanceOf($this->offer_amount, Money::class, "offer_amount in MakeOffer must be instance of Money $within");
         !isset($this->offer_amount) || $this->offer_amount->validate(MakeOffer::class);
-        !isset($this->return_shipping_address) || Assert::notNull($this->return_shipping_address->country_code, "country_code in return_shipping_address must not be NULL within MakeOffer $within");
         !isset($this->return_shipping_address) || Assert::isInstanceOf($this->return_shipping_address, AddressPortable::class, "return_shipping_address in MakeOffer must be instance of AddressPortable $within");
         !isset($this->return_shipping_address) || $this->return_shipping_address->validate(MakeOffer::class);
         !isset($this->invoice_id) || Assert::minLength($this->invoice_id, 1, "invoice_id in MakeOffer must have minlength of 1 $within");
         !isset($this->invoice_id) || Assert::maxLength($this->invoice_id, 127, "invoice_id in MakeOffer must have maxlength of 127 $within");
-        !isset($this->offer_type) || Assert::minLength($this->offer_type, 1, "offer_type in MakeOffer must have minlength of 1 $within");
-        !isset($this->offer_type) || Assert::maxLength($this->offer_type, 255, "offer_type in MakeOffer must have maxlength of 255 $within");
+        Assert::notNull($this->offer_type, "offer_type in MakeOffer must not be NULL $within");
+         Assert::minLength($this->offer_type, 1, "offer_type in MakeOffer must have minlength of 1 $within");
+         Assert::maxLength($this->offer_type, 255, "offer_type in MakeOffer must have maxlength of 255 $within");
     }
 
     public function __construct()

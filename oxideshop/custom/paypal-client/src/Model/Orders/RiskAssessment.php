@@ -25,6 +25,7 @@ class RiskAssessment implements JsonSerializable
      * @var array<string>
      * An array of risk assessment reasons.
      *
+     * this is mandatory to be set
      * maxItems: 0
      * maxItems: 9
      */

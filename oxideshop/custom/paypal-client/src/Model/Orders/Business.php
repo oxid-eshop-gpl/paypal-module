@@ -91,6 +91,7 @@ class Business extends Party implements JsonSerializable
      * @var array<BusinessName>
      * Names of business.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 10
      */
@@ -141,6 +142,7 @@ class Business extends Party implements JsonSerializable
      * @var array<BusinessIdentification>
      * Identification details for the business.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 30
      */
@@ -159,6 +161,7 @@ class Business extends Party implements JsonSerializable
      * @var array<Person>
      * Beneficial owners of the business.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 100
      */

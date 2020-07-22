@@ -18,6 +18,8 @@ class AuthorizationRequest implements JsonSerializable
     /**
      * @var string
      * The identifier of the order for this authorization.
+     *
+     * this is mandatory to be set
      */
     public $order_id;
 
@@ -35,6 +37,8 @@ class AuthorizationRequest implements JsonSerializable
      * `shipping_discount` minus discount.<br/>The amount must be a positive number. For listed of supported
      * currencies and decimal precision, see the PayPal REST APIs <a
      * href="/docs/integration/direct/rest/currency-codes/">Currency Codes</a>.
+     *
+     * this is mandatory to be set
      */
     public $amount;
 
@@ -84,10 +88,12 @@ class AuthorizationRequest implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
+        Assert::notNull($this->order_id, "order_id in AuthorizationRequest must not be NULL $within");
         !isset($this->payment_source) || Assert::isInstanceOf($this->payment_source, PaymentSource::class, "payment_source in AuthorizationRequest must be instance of PaymentSource $within");
         !isset($this->payment_source) || $this->payment_source->validate(AuthorizationRequest::class);
-        !isset($this->amount) || Assert::isInstanceOf($this->amount, AmountWithBreakdown::class, "amount in AuthorizationRequest must be instance of AmountWithBreakdown $within");
-        !isset($this->amount) || $this->amount->validate(AuthorizationRequest::class);
+        Assert::notNull($this->amount, "amount in AuthorizationRequest must not be NULL $within");
+         Assert::isInstanceOf($this->amount, AmountWithBreakdown::class, "amount in AuthorizationRequest must be instance of AmountWithBreakdown $within");
+         $this->amount->validate(AuthorizationRequest::class);
         !isset($this->payee) || Assert::isInstanceOf($this->payee, Payee::class, "payee in AuthorizationRequest must be instance of Payee $within");
         !isset($this->payee) || $this->payee->validate(AuthorizationRequest::class);
         !isset($this->description) || Assert::maxLength($this->description, 127, "description in AuthorizationRequest must have maxlength of 127 $within");

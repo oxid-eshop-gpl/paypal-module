@@ -43,6 +43,7 @@ class Escalate implements JsonSerializable
      * @var string
      * The notes about the escalation of the dispute to a claim.
      *
+     * this is mandatory to be set
      * minLength: 1
      * maxLength: 2000
      */
@@ -75,12 +76,11 @@ class Escalate implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->note) || Assert::minLength($this->note, 1, "note in Escalate must have minlength of 1 $within");
-        !isset($this->note) || Assert::maxLength($this->note, 2000, "note in Escalate must have maxlength of 2000 $within");
+        Assert::notNull($this->note, "note in Escalate must not be NULL $within");
+         Assert::minLength($this->note, 1, "note in Escalate must have minlength of 1 $within");
+         Assert::maxLength($this->note, 2000, "note in Escalate must have maxlength of 2000 $within");
         !isset($this->buyer_escalation_reason) || Assert::minLength($this->buyer_escalation_reason, 1, "buyer_escalation_reason in Escalate must have minlength of 1 $within");
         !isset($this->buyer_escalation_reason) || Assert::maxLength($this->buyer_escalation_reason, 255, "buyer_escalation_reason in Escalate must have maxlength of 255 $within");
-        !isset($this->buyer_requested_amount) || Assert::notNull($this->buyer_requested_amount->currency_code, "currency_code in buyer_requested_amount must not be NULL within Escalate $within");
-        !isset($this->buyer_requested_amount) || Assert::notNull($this->buyer_requested_amount->value, "value in buyer_requested_amount must not be NULL within Escalate $within");
         !isset($this->buyer_requested_amount) || Assert::isInstanceOf($this->buyer_requested_amount, Money::class, "buyer_requested_amount in Escalate must be instance of Money $within");
         !isset($this->buyer_requested_amount) || $this->buyer_requested_amount->validate(Escalate::class);
     }

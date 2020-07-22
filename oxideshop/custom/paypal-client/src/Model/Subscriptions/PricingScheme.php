@@ -72,6 +72,7 @@ class PricingScheme implements JsonSerializable
      * An array of pricing tiers which are used for billing volume/graduated plans. tier_mode field has to be
      * specified.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 32
      */
@@ -111,8 +112,6 @@ class PricingScheme implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
         !isset($this->status) || Assert::minLength($this->status, 1, "status in PricingScheme must have minlength of 1 $within");
         !isset($this->status) || Assert::maxLength($this->status, 24, "status in PricingScheme must have maxlength of 24 $within");
-        !isset($this->fixed_price) || Assert::notNull($this->fixed_price->currency_code, "currency_code in fixed_price must not be NULL within PricingScheme $within");
-        !isset($this->fixed_price) || Assert::notNull($this->fixed_price->value, "value in fixed_price must not be NULL within PricingScheme $within");
         !isset($this->fixed_price) || Assert::isInstanceOf($this->fixed_price, Money::class, "fixed_price in PricingScheme must be instance of Money $within");
         !isset($this->fixed_price) || $this->fixed_price->validate(PricingScheme::class);
         !isset($this->tier_mode) || Assert::minLength($this->tier_mode, 1, "tier_mode in PricingScheme must have minlength of 1 $within");

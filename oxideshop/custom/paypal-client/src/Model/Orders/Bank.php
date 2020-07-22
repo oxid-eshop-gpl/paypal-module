@@ -24,9 +24,6 @@ class Bank implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->ach_debit) || Assert::notNull($this->ach_debit->account_number, "account_number in ach_debit must not be NULL within Bank $within");
-        !isset($this->ach_debit) || Assert::notNull($this->ach_debit->routing_number, "routing_number in ach_debit must not be NULL within Bank $within");
-        !isset($this->ach_debit) || Assert::notNull($this->ach_debit->account_holder_name, "account_holder_name in ach_debit must not be NULL within Bank $within");
         !isset($this->ach_debit) || Assert::isInstanceOf($this->ach_debit, AchDebit::class, "ach_debit in Bank must be instance of AchDebit $within");
         !isset($this->ach_debit) || $this->ach_debit->validate(Bank::class);
     }

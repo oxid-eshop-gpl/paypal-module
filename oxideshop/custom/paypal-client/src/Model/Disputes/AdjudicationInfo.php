@@ -84,8 +84,6 @@ class AdjudicationInfo implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->dispute_amount) || Assert::notNull($this->dispute_amount->currency_code, "currency_code in dispute_amount must not be NULL within AdjudicationInfo $within");
-        !isset($this->dispute_amount) || Assert::notNull($this->dispute_amount->value, "value in dispute_amount must not be NULL within AdjudicationInfo $within");
         !isset($this->dispute_amount) || Assert::isInstanceOf($this->dispute_amount, Money::class, "dispute_amount in AdjudicationInfo must be instance of Money $within");
         !isset($this->dispute_amount) || $this->dispute_amount->validate(AdjudicationInfo::class);
         !isset($this->items) || Assert::isArray($this->items, "items in AdjudicationInfo must be array $within");
@@ -96,8 +94,6 @@ class AdjudicationInfo implements JsonSerializable
                                     }
                                 }
 
-        !isset($this->outcome) || Assert::notNull($this->outcome->faulty_party, "faulty_party in outcome must not be NULL within AdjudicationInfo $within");
-        !isset($this->outcome) || Assert::notNull($this->outcome->adjudication_reason, "adjudication_reason in outcome must not be NULL within AdjudicationInfo $within");
         !isset($this->outcome) || Assert::isInstanceOf($this->outcome, Outcome::class, "outcome in AdjudicationInfo must be instance of Outcome $within");
         !isset($this->outcome) || $this->outcome->validate(AdjudicationInfo::class);
         !isset($this->extensions) || Assert::isInstanceOf($this->extensions, Extensions::class, "extensions in AdjudicationInfo must be instance of Extensions $within");

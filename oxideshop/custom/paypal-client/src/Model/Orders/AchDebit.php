@@ -25,6 +25,7 @@ class AchDebit implements JsonSerializable
      * @var string
      * The US bank account number from which the payment will be debited.
      *
+     * this is mandatory to be set
      * minLength: 3
      * maxLength: 17
      */
@@ -34,6 +35,7 @@ class AchDebit implements JsonSerializable
      * @var string
      * The 9-digit ABA routing transit number for the bank at which the account is held.
      *
+     * this is mandatory to be set
      * minLength: 9
      * maxLength: 9
      */
@@ -55,6 +57,7 @@ class AchDebit implements JsonSerializable
      * @var string
      * Name of the person or business that owns the bank account.
      *
+     * this is mandatory to be set
      * minLength: 1
      * maxLength: 300
      */
@@ -63,14 +66,17 @@ class AchDebit implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->account_number) || Assert::minLength($this->account_number, 3, "account_number in AchDebit must have minlength of 3 $within");
-        !isset($this->account_number) || Assert::maxLength($this->account_number, 17, "account_number in AchDebit must have maxlength of 17 $within");
-        !isset($this->routing_number) || Assert::minLength($this->routing_number, 9, "routing_number in AchDebit must have minlength of 9 $within");
-        !isset($this->routing_number) || Assert::maxLength($this->routing_number, 9, "routing_number in AchDebit must have maxlength of 9 $within");
+        Assert::notNull($this->account_number, "account_number in AchDebit must not be NULL $within");
+         Assert::minLength($this->account_number, 3, "account_number in AchDebit must have minlength of 3 $within");
+         Assert::maxLength($this->account_number, 17, "account_number in AchDebit must have maxlength of 17 $within");
+        Assert::notNull($this->routing_number, "routing_number in AchDebit must not be NULL $within");
+         Assert::minLength($this->routing_number, 9, "routing_number in AchDebit must have minlength of 9 $within");
+         Assert::maxLength($this->routing_number, 9, "routing_number in AchDebit must have maxlength of 9 $within");
         !isset($this->account_type) || Assert::minLength($this->account_type, 1, "account_type in AchDebit must have minlength of 1 $within");
         !isset($this->account_type) || Assert::maxLength($this->account_type, 255, "account_type in AchDebit must have maxlength of 255 $within");
-        !isset($this->account_holder_name) || Assert::minLength($this->account_holder_name, 1, "account_holder_name in AchDebit must have minlength of 1 $within");
-        !isset($this->account_holder_name) || Assert::maxLength($this->account_holder_name, 300, "account_holder_name in AchDebit must have maxlength of 300 $within");
+        Assert::notNull($this->account_holder_name, "account_holder_name in AchDebit must not be NULL $within");
+         Assert::minLength($this->account_holder_name, 1, "account_holder_name in AchDebit must have minlength of 1 $within");
+         Assert::maxLength($this->account_holder_name, 300, "account_holder_name in AchDebit must have maxlength of 300 $within");
     }
 
     public function __construct()

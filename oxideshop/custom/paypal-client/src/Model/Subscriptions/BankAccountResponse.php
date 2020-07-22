@@ -24,12 +24,16 @@ class BankAccountResponse implements JsonSerializable
     /**
      * @var string
      * The PayPal-generated ID for the bank account.
+     *
+     * this is mandatory to be set
      */
     public $id;
 
     /**
      * @var string
      * The last four digits of the bank account number.
+     *
+     * this is mandatory to be set
      */
     public $last_n_chars;
 
@@ -37,6 +41,7 @@ class BankAccountResponse implements JsonSerializable
      * @var string
      * The name of the bank to which the account is linked.
      *
+     * this is mandatory to be set
      * maxLength: 64
      */
     public $bank_name;
@@ -59,6 +64,7 @@ class BankAccountResponse implements JsonSerializable
      * worldwide for comparable uncontrolled price (CUP) method, bank card, and cross-border
      * transactions.</blockquote>
      *
+     * this is mandatory to be set
      * minLength: 2
      * maxLength: 2
      */
@@ -73,10 +79,13 @@ class BankAccountResponse implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->bank_name) || Assert::maxLength($this->bank_name, 64, "bank_name in BankAccountResponse must have maxlength of 64 $within");
-        !isset($this->country_code) || Assert::minLength($this->country_code, 2, "country_code in BankAccountResponse must have minlength of 2 $within");
-        !isset($this->country_code) || Assert::maxLength($this->country_code, 2, "country_code in BankAccountResponse must have maxlength of 2 $within");
-        !isset($this->backup_funding_instrument) || Assert::notNull($this->backup_funding_instrument->card, "card in backup_funding_instrument must not be NULL within BankAccountResponse $within");
+        Assert::notNull($this->id, "id in BankAccountResponse must not be NULL $within");
+        Assert::notNull($this->last_n_chars, "last_n_chars in BankAccountResponse must not be NULL $within");
+        Assert::notNull($this->bank_name, "bank_name in BankAccountResponse must not be NULL $within");
+         Assert::maxLength($this->bank_name, 64, "bank_name in BankAccountResponse must have maxlength of 64 $within");
+        Assert::notNull($this->country_code, "country_code in BankAccountResponse must not be NULL $within");
+         Assert::minLength($this->country_code, 2, "country_code in BankAccountResponse must have minlength of 2 $within");
+         Assert::maxLength($this->country_code, 2, "country_code in BankAccountResponse must have maxlength of 2 $within");
         !isset($this->backup_funding_instrument) || Assert::isInstanceOf($this->backup_funding_instrument, BackupFundingInstrument::class, "backup_funding_instrument in BankAccountResponse must be instance of BackupFundingInstrument $within");
         !isset($this->backup_funding_instrument) || $this->backup_funding_instrument->validate(BankAccountResponse::class);
     }

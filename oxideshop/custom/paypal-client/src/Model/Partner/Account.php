@@ -20,6 +20,7 @@ class Account implements JsonSerializable
      * List of owners in the account. There should be only one primary account owner which is mentioned in their
      * role_type.
      *
+     * this is mandatory to be set
      * maxItems: 0
      * maxItems: 2
      */

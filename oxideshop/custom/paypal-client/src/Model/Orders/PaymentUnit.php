@@ -75,6 +75,7 @@ class PaymentUnit implements JsonSerializable
      * @var array<Item>
      * List of purchase items.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 10
      */
@@ -160,6 +161,7 @@ class PaymentUnit implements JsonSerializable
      * List of context attributes usually used to lookup as an alternative id or provides a relative context for a
      * payment.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 50
      */

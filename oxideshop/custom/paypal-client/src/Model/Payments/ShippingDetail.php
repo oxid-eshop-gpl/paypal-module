@@ -52,7 +52,6 @@ class ShippingDetail implements JsonSerializable
                                     }
                                 }
 
-        !isset($this->address) || Assert::notNull($this->address->country_code, "country_code in address must not be NULL within ShippingDetail $within");
         !isset($this->address) || Assert::isInstanceOf($this->address, AddressPortable::class, "address in ShippingDetail must be instance of AddressPortable $within");
         !isset($this->address) || $this->address->validate(ShippingDetail::class);
     }

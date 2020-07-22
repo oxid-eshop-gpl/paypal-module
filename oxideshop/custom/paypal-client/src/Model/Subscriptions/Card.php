@@ -81,6 +81,7 @@ class Card implements JsonSerializable
      * @var string
      * The primary account number (PAN) for the payment card.
      *
+     * this is mandatory to be set
      * minLength: 13
      * maxLength: 19
      */
@@ -91,6 +92,7 @@ class Card implements JsonSerializable
      * The year and month, in ISO-8601 `YYYY-MM` date format. See [Internet date and time
      * format](https://tools.ietf.org/html/rfc3339#section-5.6).
      *
+     * this is mandatory to be set
      * minLength: 7
      * maxLength: 7
      */
@@ -155,13 +157,14 @@ class Card implements JsonSerializable
     {
         $within = isset($from) ? "within $from" : "";
         !isset($this->name) || Assert::maxLength($this->name, 300, "name in Card must have maxlength of 300 $within");
-        !isset($this->number) || Assert::minLength($this->number, 13, "number in Card must have minlength of 13 $within");
-        !isset($this->number) || Assert::maxLength($this->number, 19, "number in Card must have maxlength of 19 $within");
-        !isset($this->expiry) || Assert::minLength($this->expiry, 7, "expiry in Card must have minlength of 7 $within");
-        !isset($this->expiry) || Assert::maxLength($this->expiry, 7, "expiry in Card must have maxlength of 7 $within");
+        Assert::notNull($this->number, "number in Card must not be NULL $within");
+         Assert::minLength($this->number, 13, "number in Card must have minlength of 13 $within");
+         Assert::maxLength($this->number, 19, "number in Card must have maxlength of 19 $within");
+        Assert::notNull($this->expiry, "expiry in Card must not be NULL $within");
+         Assert::minLength($this->expiry, 7, "expiry in Card must have minlength of 7 $within");
+         Assert::maxLength($this->expiry, 7, "expiry in Card must have maxlength of 7 $within");
         !isset($this->card_type) || Assert::minLength($this->card_type, 1, "card_type in Card must have minlength of 1 $within");
         !isset($this->card_type) || Assert::maxLength($this->card_type, 255, "card_type in Card must have maxlength of 255 $within");
-        !isset($this->billing_address) || Assert::notNull($this->billing_address->country_code, "country_code in billing_address must not be NULL within Card $within");
         !isset($this->billing_address) || Assert::isInstanceOf($this->billing_address, AddressPortable::class, "billing_address in Card must be instance of AddressPortable $within");
         !isset($this->billing_address) || $this->billing_address->validate(Card::class);
         !isset($this->authentication_results) || Assert::maxCount($this->authentication_results, 1, "authentication_results in Card must have max. count of 1 $within");

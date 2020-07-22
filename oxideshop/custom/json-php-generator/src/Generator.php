@@ -309,7 +309,7 @@ class Generator
 
                     $propType = $parameter['type'];
                     $propDef = $parameter;
-                    $this->addProperty($propDef, $name, $class, $propType);
+                    $this->addProperty($propDef, $name, $class, $propType, $defs);
 
                 } else {
                     // use the $this->references[] map here when you come across a reference
@@ -318,7 +318,7 @@ class Generator
                         if (isset($this->references[$ref])) {
                             $propType = $this->references[$ref];
                             $propDef = $this->definitions[$ref];
-                            $this->addProperty($propDef, $name, $class, $propType);
+                            $this->addProperty($propDef, $name, $class, $propType, $defs);
                         }
                     }
                 }
@@ -369,7 +369,7 @@ class Generator
      * @param $name
      * @param \Nette\PhpGenerator\ClassType $class
      */
-    private function addProperty($propDef, $name, \Nette\PhpGenerator\ClassType $class, $propType): void
+    private function addProperty($propDef, $name, \Nette\PhpGenerator\ClassType $class, $propType, $classDef): void
     {
         $validateMethod = $class->getMethod('validate');
         $constructor = $class->getMethod('__construct');
@@ -402,21 +402,36 @@ class Generator
         $emptyOr = "!isset(\$this->$name) ||";
         $className = $class->getName();
 
+        $required = false;
+
         //purchase_units do have set minItems and are required but the schema does not explicitly set required to true
         if (isset($propDef['minItems'])) {
+            $required = true;
+        }
+
+        if (isset($classDef['required'])) {
+            if(array_search($name, $classDef['required']) !== false) {
+                $required = true;
+            }
+        }
+
+        if ($required) {
+            $property->addComment("this is mandatory to be set");
             $validateMethod->addBody("Assert::notNull(\$this->$name, \"$name in $className must not be NULL \$within\");");
+            $emptyOr = "";
+
             if ($this->isObjectType($propType)) {
                 //$constructor->addBody("\$this->$name = new ${propType}();");
             }
-            $emptyOr = "";
         }
 
-        if (isset($propDef['required']) && is_array($propDef['required'])) {
-            foreach ($propDef['required'] as $subProp) {
-                $validateMethod->addBody("$emptyOr Assert::notNull(\$this->$name->$subProp, \"$subProp in $name must not be NULL within $className \$within\");");
-            }
-            //validate sub properties
-        }
+
+        /* if (isset($propDef['required']) && is_array($propDef['required'])) {
+             foreach ($propDef['required'] as $subProp) {
+                 $validateMethod->addBody("$emptyOr Assert::notNull(\$this->$name->$subProp, \"$subProp in $name must not be NULL within $className \$within\");");
+             }
+             //validate sub properties
+         }*/
 
 
         if (isset($propDef['minItems'])) {

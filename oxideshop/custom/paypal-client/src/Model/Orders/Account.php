@@ -85,6 +85,7 @@ class Account implements JsonSerializable
      * Array of tags stored for the account in User domain by other clients Eg: YOUTH_ACCOUNT, RESTRICTED, WAX_USER,
      * MASSPAY_ENABLED etc.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 100
      */

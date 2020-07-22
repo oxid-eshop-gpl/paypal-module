@@ -30,8 +30,6 @@ class CanceledRecurringBilling implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->expected_refund) || Assert::notNull($this->expected_refund->currency_code, "currency_code in expected_refund must not be NULL within CanceledRecurringBilling $within");
-        !isset($this->expected_refund) || Assert::notNull($this->expected_refund->value, "value in expected_refund must not be NULL within CanceledRecurringBilling $within");
         !isset($this->expected_refund) || Assert::isInstanceOf($this->expected_refund, Money::class, "expected_refund in CanceledRecurringBilling must be instance of Money $within");
         !isset($this->expected_refund) || $this->expected_refund->validate(CanceledRecurringBilling::class);
         !isset($this->cancellation_details) || Assert::isInstanceOf($this->cancellation_details, CancellationDetails::class, "cancellation_details in CanceledRecurringBilling must be instance of CancellationDetails $within");

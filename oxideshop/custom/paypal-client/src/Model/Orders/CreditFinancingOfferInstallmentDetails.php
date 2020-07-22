@@ -36,8 +36,6 @@ class CreditFinancingOfferInstallmentDetails implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->payment_due) || Assert::notNull($this->payment_due->currency_code, "currency_code in payment_due must not be NULL within CreditFinancingOfferInstallmentDetails $within");
-        !isset($this->payment_due) || Assert::notNull($this->payment_due->value, "value in payment_due must not be NULL within CreditFinancingOfferInstallmentDetails $within");
         !isset($this->payment_due) || Assert::isInstanceOf($this->payment_due, Money::class, "payment_due in CreditFinancingOfferInstallmentDetails must be instance of Money $within");
         !isset($this->payment_due) || $this->payment_due->validate(CreditFinancingOfferInstallmentDetails::class);
     }

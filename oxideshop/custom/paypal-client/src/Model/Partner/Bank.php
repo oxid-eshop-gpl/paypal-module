@@ -34,6 +34,7 @@ class Bank implements JsonSerializable
      * @var string
      * The bank account number.
      *
+     * this is mandatory to be set
      * minLength: 1
      * maxLength: 50
      */
@@ -46,6 +47,7 @@ class Bank implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see ACCOUNT_TYPE_CHECKING
      * @see ACCOUNT_TYPE_SAVINGS
+     * this is mandatory to be set
      * minLength: 1
      * maxLength: 50
      */
@@ -67,6 +69,7 @@ class Bank implements JsonSerializable
      * Value is:<ul><li>For banks with IBAN information, the IBAN number.</li><li>For banks with BBAN information,
      * the BBAN number.</li><li>For banks with both IBAN and BBAN information, the IBAN number.</li></ul>
      *
+     * this is mandatory to be set
      * maxItems: 0
      * maxItems: 20
      */
@@ -92,10 +95,12 @@ class Bank implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
         !isset($this->nick_name) || Assert::minLength($this->nick_name, 1, "nick_name in Bank must have minlength of 1 $within");
         !isset($this->nick_name) || Assert::maxLength($this->nick_name, 50, "nick_name in Bank must have maxlength of 50 $within");
-        !isset($this->account_number) || Assert::minLength($this->account_number, 1, "account_number in Bank must have minlength of 1 $within");
-        !isset($this->account_number) || Assert::maxLength($this->account_number, 50, "account_number in Bank must have maxlength of 50 $within");
-        !isset($this->account_type) || Assert::minLength($this->account_type, 1, "account_type in Bank must have minlength of 1 $within");
-        !isset($this->account_type) || Assert::maxLength($this->account_type, 50, "account_type in Bank must have maxlength of 50 $within");
+        Assert::notNull($this->account_number, "account_number in Bank must not be NULL $within");
+         Assert::minLength($this->account_number, 1, "account_number in Bank must have minlength of 1 $within");
+         Assert::maxLength($this->account_number, 50, "account_number in Bank must have maxlength of 50 $within");
+        Assert::notNull($this->account_type, "account_type in Bank must not be NULL $within");
+         Assert::minLength($this->account_type, 1, "account_type in Bank must have minlength of 1 $within");
+         Assert::maxLength($this->account_type, 50, "account_type in Bank must have maxlength of 50 $within");
         !isset($this->currency_code) || Assert::minLength($this->currency_code, 3, "currency_code in Bank must have minlength of 3 $within");
         !isset($this->currency_code) || Assert::maxLength($this->currency_code, 3, "currency_code in Bank must have maxlength of 3 $within");
         Assert::notNull($this->identifiers, "identifiers in Bank must not be NULL $within");
@@ -109,10 +114,8 @@ class Bank implements JsonSerializable
                                     }
                                 }
 
-        !isset($this->branch_location) || Assert::notNull($this->branch_location->country_code, "country_code in branch_location must not be NULL within Bank $within");
         !isset($this->branch_location) || Assert::isInstanceOf($this->branch_location, AddressPortable::class, "branch_location in Bank must be instance of AddressPortable $within");
         !isset($this->branch_location) || $this->branch_location->validate(Bank::class);
-        !isset($this->mandate) || Assert::notNull($this->mandate->accepted, "accepted in mandate must not be NULL within Bank $within");
         !isset($this->mandate) || Assert::isInstanceOf($this->mandate, Mandate::class, "mandate in Bank must be instance of Mandate $within");
         !isset($this->mandate) || $this->mandate->validate(Bank::class);
     }

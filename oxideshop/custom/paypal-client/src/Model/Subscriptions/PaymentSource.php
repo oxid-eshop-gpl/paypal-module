@@ -26,8 +26,6 @@ class PaymentSource implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->card) || Assert::notNull($this->card->number, "number in card must not be NULL within PaymentSource $within");
-        !isset($this->card) || Assert::notNull($this->card->expiry, "expiry in card must not be NULL within PaymentSource $within");
         !isset($this->card) || Assert::isInstanceOf($this->card, Card::class, "card in PaymentSource must be instance of Card $within");
         !isset($this->card) || $this->card->validate(PaymentSource::class);
     }

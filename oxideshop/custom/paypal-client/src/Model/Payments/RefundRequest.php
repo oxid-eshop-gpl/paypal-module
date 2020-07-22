@@ -52,8 +52,6 @@ class RefundRequest implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->amount) || Assert::notNull($this->amount->currency_code, "currency_code in amount must not be NULL within RefundRequest $within");
-        !isset($this->amount) || Assert::notNull($this->amount->value, "value in amount must not be NULL within RefundRequest $within");
         !isset($this->amount) || Assert::isInstanceOf($this->amount, Money::class, "amount in RefundRequest must be instance of Money $within");
         !isset($this->amount) || $this->amount->validate(RefundRequest::class);
         !isset($this->invoice_id) || Assert::maxLength($this->invoice_id, 127, "invoice_id in RefundRequest must have maxlength of 127 $within");

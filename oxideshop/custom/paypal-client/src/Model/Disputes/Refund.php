@@ -53,8 +53,6 @@ class Refund implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->gross_amount) || Assert::notNull($this->gross_amount->currency_code, "currency_code in gross_amount must not be NULL within Refund $within");
-        !isset($this->gross_amount) || Assert::notNull($this->gross_amount->value, "value in gross_amount must not be NULL within Refund $within");
         !isset($this->gross_amount) || Assert::isInstanceOf($this->gross_amount, Money::class, "gross_amount in Refund must be instance of Money $within");
         !isset($this->gross_amount) || $this->gross_amount->validate(Refund::class);
         !isset($this->transaction_time) || Assert::minLength($this->transaction_time, 20, "transaction_time in Refund must have minlength of 20 $within");

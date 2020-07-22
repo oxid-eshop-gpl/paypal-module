@@ -40,6 +40,7 @@ class UpdateAuthorizationRequest implements JsonSerializable
      * @var string
      * The unique transaction ID for the authorized payment.
      *
+     * this is mandatory to be set
      * minLength: 1
      * maxLength: 20
      */
@@ -57,6 +58,7 @@ class UpdateAuthorizationRequest implements JsonSerializable
      * @see STATUS_PARTIALLY_CAPTURED
      * @see STATUS_VOIDED
      * @see STATUS_PENDING
+     * this is mandatory to be set
      * minLength: 1
      * maxLength: 127
      */
@@ -71,10 +73,12 @@ class UpdateAuthorizationRequest implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->id) || Assert::minLength($this->id, 1, "id in UpdateAuthorizationRequest must have minlength of 1 $within");
-        !isset($this->id) || Assert::maxLength($this->id, 20, "id in UpdateAuthorizationRequest must have maxlength of 20 $within");
-        !isset($this->status) || Assert::minLength($this->status, 1, "status in UpdateAuthorizationRequest must have minlength of 1 $within");
-        !isset($this->status) || Assert::maxLength($this->status, 127, "status in UpdateAuthorizationRequest must have maxlength of 127 $within");
+        Assert::notNull($this->id, "id in UpdateAuthorizationRequest must not be NULL $within");
+         Assert::minLength($this->id, 1, "id in UpdateAuthorizationRequest must have minlength of 1 $within");
+         Assert::maxLength($this->id, 20, "id in UpdateAuthorizationRequest must have maxlength of 20 $within");
+        Assert::notNull($this->status, "status in UpdateAuthorizationRequest must not be NULL $within");
+         Assert::minLength($this->status, 1, "status in UpdateAuthorizationRequest must have minlength of 1 $within");
+         Assert::maxLength($this->status, 127, "status in UpdateAuthorizationRequest must have maxlength of 127 $within");
         !isset($this->status_details) || Assert::isInstanceOf($this->status_details, AuthorizationStatusDetails::class, "status_details in UpdateAuthorizationRequest must be instance of AuthorizationStatusDetails $within");
         !isset($this->status_details) || $this->status_details->validate(UpdateAuthorizationRequest::class);
     }

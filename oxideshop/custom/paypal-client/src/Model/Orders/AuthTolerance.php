@@ -31,8 +31,6 @@ class AuthTolerance implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->absolute) || Assert::notNull($this->absolute->currency_code, "currency_code in absolute must not be NULL within AuthTolerance $within");
-        !isset($this->absolute) || Assert::notNull($this->absolute->value, "value in absolute must not be NULL within AuthTolerance $within");
         !isset($this->absolute) || Assert::isInstanceOf($this->absolute, Money::class, "absolute in AuthTolerance must be instance of Money $within");
         !isset($this->absolute) || $this->absolute->validate(AuthTolerance::class);
     }

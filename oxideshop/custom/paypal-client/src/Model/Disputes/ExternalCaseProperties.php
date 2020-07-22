@@ -83,8 +83,6 @@ class ExternalCaseProperties implements JsonSerializable
         !isset($this->external_type) || Assert::maxLength($this->external_type, 255, "external_type in ExternalCaseProperties must have maxlength of 255 $within");
         !isset($this->recovery_type) || Assert::minLength($this->recovery_type, 1, "recovery_type in ExternalCaseProperties must have minlength of 1 $within");
         !isset($this->recovery_type) || Assert::maxLength($this->recovery_type, 255, "recovery_type in ExternalCaseProperties must have maxlength of 255 $within");
-        !isset($this->reversal_fee) || Assert::notNull($this->reversal_fee->currency_code, "currency_code in reversal_fee must not be NULL within ExternalCaseProperties $within");
-        !isset($this->reversal_fee) || Assert::notNull($this->reversal_fee->value, "value in reversal_fee must not be NULL within ExternalCaseProperties $within");
         !isset($this->reversal_fee) || Assert::isInstanceOf($this->reversal_fee, Money::class, "reversal_fee in ExternalCaseProperties must be instance of Money $within");
         !isset($this->reversal_fee) || $this->reversal_fee->validate(ExternalCaseProperties::class);
     }

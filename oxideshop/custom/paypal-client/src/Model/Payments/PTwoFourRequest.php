@@ -19,6 +19,7 @@ class PTwoFourRequest implements JsonSerializable
      * @var string
      * The full name representation like Mr J Smith
      *
+     * this is mandatory to be set
      * minLength: 3
      * maxLength: 300
      */
@@ -31,6 +32,7 @@ class PTwoFourRequest implements JsonSerializable
      * for an email address is 254 characters. The pattern verifies that an unquoted <code>@</code> sign
      * exists.</blockquote>
      *
+     * this is mandatory to be set
      * minLength: 3
      * maxLength: 254
      */
@@ -44,6 +46,7 @@ class PTwoFourRequest implements JsonSerializable
      * worldwide for comparable uncontrolled price (CUP) method, bank card, and cross-border
      * transactions.</blockquote>
      *
+     * this is mandatory to be set
      * minLength: 2
      * maxLength: 2
      */
@@ -52,12 +55,15 @@ class PTwoFourRequest implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->name) || Assert::minLength($this->name, 3, "name in PTwoFourRequest must have minlength of 3 $within");
-        !isset($this->name) || Assert::maxLength($this->name, 300, "name in PTwoFourRequest must have maxlength of 300 $within");
-        !isset($this->email) || Assert::minLength($this->email, 3, "email in PTwoFourRequest must have minlength of 3 $within");
-        !isset($this->email) || Assert::maxLength($this->email, 254, "email in PTwoFourRequest must have maxlength of 254 $within");
-        !isset($this->country_code) || Assert::minLength($this->country_code, 2, "country_code in PTwoFourRequest must have minlength of 2 $within");
-        !isset($this->country_code) || Assert::maxLength($this->country_code, 2, "country_code in PTwoFourRequest must have maxlength of 2 $within");
+        Assert::notNull($this->name, "name in PTwoFourRequest must not be NULL $within");
+         Assert::minLength($this->name, 3, "name in PTwoFourRequest must have minlength of 3 $within");
+         Assert::maxLength($this->name, 300, "name in PTwoFourRequest must have maxlength of 300 $within");
+        Assert::notNull($this->email, "email in PTwoFourRequest must not be NULL $within");
+         Assert::minLength($this->email, 3, "email in PTwoFourRequest must have minlength of 3 $within");
+         Assert::maxLength($this->email, 254, "email in PTwoFourRequest must have maxlength of 254 $within");
+        Assert::notNull($this->country_code, "country_code in PTwoFourRequest must not be NULL $within");
+         Assert::minLength($this->country_code, 2, "country_code in PTwoFourRequest must have minlength of 2 $within");
+         Assert::maxLength($this->country_code, 2, "country_code in PTwoFourRequest must have maxlength of 2 $within");
     }
 
     public function __construct()

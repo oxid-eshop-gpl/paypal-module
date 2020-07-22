@@ -71,11 +71,8 @@ class RestApiIntegration implements JsonSerializable
         !isset($this->integration_method) || Assert::maxLength($this->integration_method, 255, "integration_method in RestApiIntegration must have maxlength of 255 $within");
         !isset($this->integration_type) || Assert::minLength($this->integration_type, 1, "integration_type in RestApiIntegration must have minlength of 1 $within");
         !isset($this->integration_type) || Assert::maxLength($this->integration_type, 255, "integration_type in RestApiIntegration must have maxlength of 255 $within");
-        !isset($this->first_party_details) || Assert::notNull($this->first_party_details->features, "features in first_party_details must not be NULL within RestApiIntegration $within");
-        !isset($this->first_party_details) || Assert::notNull($this->first_party_details->seller_nonce, "seller_nonce in first_party_details must not be NULL within RestApiIntegration $within");
         !isset($this->first_party_details) || Assert::isInstanceOf($this->first_party_details, RestApiIntegrationFirstPartyDetails::class, "first_party_details in RestApiIntegration must be instance of RestApiIntegrationFirstPartyDetails $within");
         !isset($this->first_party_details) || $this->first_party_details->validate(RestApiIntegration::class);
-        !isset($this->third_party_details) || Assert::notNull($this->third_party_details->features, "features in third_party_details must not be NULL within RestApiIntegration $within");
         !isset($this->third_party_details) || Assert::isInstanceOf($this->third_party_details, RestApiIntegrationThirdPartyDetails::class, "third_party_details in RestApiIntegration must be instance of RestApiIntegrationThirdPartyDetails $within");
         !isset($this->third_party_details) || $this->third_party_details->validate(RestApiIntegration::class);
     }

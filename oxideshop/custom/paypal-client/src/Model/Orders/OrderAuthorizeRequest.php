@@ -41,8 +41,6 @@ class OrderAuthorizeRequest implements JsonSerializable
         !isset($this->payment_source) || Assert::isInstanceOf($this->payment_source, PaymentSource::class, "payment_source in OrderAuthorizeRequest must be instance of PaymentSource $within");
         !isset($this->payment_source) || $this->payment_source->validate(OrderAuthorizeRequest::class);
         !isset($this->reference_id) || Assert::maxLength($this->reference_id, 256, "reference_id in OrderAuthorizeRequest must have maxlength of 256 $within");
-        !isset($this->amount) || Assert::notNull($this->amount->currency_code, "currency_code in amount must not be NULL within OrderAuthorizeRequest $within");
-        !isset($this->amount) || Assert::notNull($this->amount->value, "value in amount must not be NULL within OrderAuthorizeRequest $within");
         !isset($this->amount) || Assert::isInstanceOf($this->amount, Money::class, "amount in OrderAuthorizeRequest must be instance of Money $within");
         !isset($this->amount) || $this->amount->validate(OrderAuthorizeRequest::class);
     }

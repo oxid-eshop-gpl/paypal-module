@@ -19,6 +19,7 @@ class SupplementaryData implements JsonSerializable
      * @var array<AirlineItinerary>
      * An array of airline itineraries' data, including ticket, passenger, and airline details.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 1
      */

@@ -19,6 +19,7 @@ class Metrics implements JsonSerializable
      * @var array<Metric>
      * An array of dimension and measurement metrics for disputes.
      *
+     * this is mandatory to be set
      * maxItems: 0
      */
     public $metrics;

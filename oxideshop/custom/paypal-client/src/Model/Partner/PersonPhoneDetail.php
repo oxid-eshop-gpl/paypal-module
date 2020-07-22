@@ -68,6 +68,7 @@ class PersonPhoneDetail extends Phone implements JsonSerializable
      * @see TYPE_MOBILE
      * @see TYPE_OTHER
      * @see TYPE_PAGER
+     * this is mandatory to be set
      */
     public $type;
 
@@ -75,6 +76,7 @@ class PersonPhoneDetail extends Phone implements JsonSerializable
      * @var array<string>
      * Array of tags for this phone number.
      *
+     * this is mandatory to be set
      * maxItems: 0
      * maxItems: 20
      */
@@ -85,6 +87,7 @@ class PersonPhoneDetail extends Phone implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
         !isset($this->contact_name) || Assert::minLength($this->contact_name, 1, "contact_name in PersonPhoneDetail must have minlength of 1 $within");
         !isset($this->contact_name) || Assert::maxLength($this->contact_name, 900, "contact_name in PersonPhoneDetail must have maxlength of 900 $within");
+        Assert::notNull($this->type, "type in PersonPhoneDetail must not be NULL $within");
         Assert::notNull($this->tags, "tags in PersonPhoneDetail must not be NULL $within");
          Assert::minCount($this->tags, 0, "tags in PersonPhoneDetail must have min. count of 0 $within");
          Assert::maxCount($this->tags, 20, "tags in PersonPhoneDetail must have max. count of 20 $within");

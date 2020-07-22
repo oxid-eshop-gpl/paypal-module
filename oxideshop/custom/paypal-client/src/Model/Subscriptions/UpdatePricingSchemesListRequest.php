@@ -19,6 +19,7 @@ class UpdatePricingSchemesListRequest implements JsonSerializable
      * @var array<UpdatePricingSchemeRequest>
      * An array of pricing schemes.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 99
      */

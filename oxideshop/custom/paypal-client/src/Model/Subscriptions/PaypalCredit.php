@@ -31,6 +31,7 @@ class PaypalCredit implements JsonSerializable
      * @var string
      * The PayPal-generated ID for the credit instrument.
      *
+     * this is mandatory to be set
      * minLength: 4
      * maxLength: 25
      */
@@ -53,8 +54,9 @@ class PaypalCredit implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->id) || Assert::minLength($this->id, 4, "id in PaypalCredit must have minlength of 4 $within");
-        !isset($this->id) || Assert::maxLength($this->id, 25, "id in PaypalCredit must have maxlength of 25 $within");
+        Assert::notNull($this->id, "id in PaypalCredit must not be NULL $within");
+         Assert::minLength($this->id, 4, "id in PaypalCredit must have minlength of 4 $within");
+         Assert::maxLength($this->id, 25, "id in PaypalCredit must have maxlength of 25 $within");
         !isset($this->type) || Assert::minLength($this->type, 1, "type in PaypalCredit must have minlength of 1 $within");
         !isset($this->type) || Assert::maxLength($this->type, 50, "type in PaypalCredit must have maxlength of 50 $within");
     }

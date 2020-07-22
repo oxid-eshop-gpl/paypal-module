@@ -18,12 +18,15 @@ class Mandate implements JsonSerializable
     /**
      * @var boolean
      * Whether mandate was accepted or not.
+     *
+     * this is mandatory to be set
      */
     public $accepted;
 
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
+        Assert::notNull($this->accepted, "accepted in Mandate must not be NULL $within");
     }
 
     public function __construct()

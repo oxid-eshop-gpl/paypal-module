@@ -37,6 +37,7 @@ class BusinessNameDetail extends BusinessName implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see TYPE_DOING_BUSINESS_AS
      * @see TYPE_LEGAL_NAME
+     * this is mandatory to be set
      * minLength: 1
      * maxLength: 255
      */
@@ -47,8 +48,9 @@ class BusinessNameDetail extends BusinessName implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
         !isset($this->id) || Assert::minLength($this->id, 1, "id in BusinessNameDetail must have minlength of 1 $within");
         !isset($this->id) || Assert::maxLength($this->id, 20, "id in BusinessNameDetail must have maxlength of 20 $within");
-        !isset($this->type) || Assert::minLength($this->type, 1, "type in BusinessNameDetail must have minlength of 1 $within");
-        !isset($this->type) || Assert::maxLength($this->type, 255, "type in BusinessNameDetail must have maxlength of 255 $within");
+        Assert::notNull($this->type, "type in BusinessNameDetail must not be NULL $within");
+         Assert::minLength($this->type, 1, "type in BusinessNameDetail must have minlength of 1 $within");
+         Assert::maxLength($this->type, 255, "type in BusinessNameDetail must have maxlength of 255 $within");
     }
 
     public function __construct()

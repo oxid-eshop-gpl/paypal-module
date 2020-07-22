@@ -22,6 +22,7 @@ class BirthDetails implements JsonSerializable
      * time-zone data. Whenever possible, use the standard `date_time` type. This regular expression does not
      * validate all dates. For example, February 31 is valid and nothing is known about leap years.
      *
+     * this is mandatory to be set
      * minLength: 10
      * maxLength: 10
      */
@@ -30,8 +31,9 @@ class BirthDetails implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->date_of_birth) || Assert::minLength($this->date_of_birth, 10, "date_of_birth in BirthDetails must have minlength of 10 $within");
-        !isset($this->date_of_birth) || Assert::maxLength($this->date_of_birth, 10, "date_of_birth in BirthDetails must have maxlength of 10 $within");
+        Assert::notNull($this->date_of_birth, "date_of_birth in BirthDetails must not be NULL $within");
+         Assert::minLength($this->date_of_birth, 10, "date_of_birth in BirthDetails must have minlength of 10 $within");
+         Assert::maxLength($this->date_of_birth, 10, "date_of_birth in BirthDetails must have maxlength of 10 $within");
     }
 
     public function __construct()

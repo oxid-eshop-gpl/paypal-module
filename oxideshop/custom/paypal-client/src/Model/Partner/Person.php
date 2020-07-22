@@ -37,6 +37,7 @@ class Person implements JsonSerializable
      * @var array<PersonName>
      * The name of the person.
      *
+     * this is mandatory to be set
      * maxItems: 0
      * maxItems: 5
      */
@@ -59,6 +60,7 @@ class Person implements JsonSerializable
      * @var array<PersonAddressDetail>
      * The list of addresses associated with the person.
      *
+     * this is mandatory to be set
      * maxItems: 0
      * maxItems: 5
      */
@@ -68,6 +70,7 @@ class Person implements JsonSerializable
      * @var array<PersonPhoneDetail>
      * The list of phone numbers associated with the person.
      *
+     * this is mandatory to be set
      * maxItems: 0
      * maxItems: 5
      */
@@ -84,6 +87,7 @@ class Person implements JsonSerializable
      * A person's or party's related document data collected from the customer. For example SSN, ITIN, or business
      * registration number collected from the user.
      *
+     * this is mandatory to be set
      * maxItems: 0
      * maxItems: 20
      */
@@ -131,7 +135,6 @@ class Person implements JsonSerializable
                                     }
                                 }
 
-        !isset($this->birth_details) || Assert::notNull($this->birth_details->date_of_birth, "date_of_birth in birth_details must not be NULL within Person $within");
         !isset($this->birth_details) || Assert::isInstanceOf($this->birth_details, BirthDetails::class, "birth_details in Person must be instance of BirthDetails $within");
         !isset($this->birth_details) || $this->birth_details->validate(Person::class);
         Assert::notNull($this->documents, "documents in Person must not be NULL $within");

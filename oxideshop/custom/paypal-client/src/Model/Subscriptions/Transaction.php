@@ -19,6 +19,7 @@ class Transaction extends CaptureStatus implements JsonSerializable
      * @var string
      * The PayPal-generated transaction ID.
      *
+     * this is mandatory to be set
      * minLength: 3
      * maxLength: 50
      */
@@ -27,6 +28,8 @@ class Transaction extends CaptureStatus implements JsonSerializable
     /**
      * @var AmountWithBreakdown
      * The breakdown details for the amount. Includes the gross, tax, fee, and shipping amounts.
+     *
+     * this is mandatory to be set
      */
     public $amount_with_breakdown;
 
@@ -54,6 +57,7 @@ class Transaction extends CaptureStatus implements JsonSerializable
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
      *
+     * this is mandatory to be set
      * minLength: 20
      * maxLength: 64
      */
@@ -62,18 +66,19 @@ class Transaction extends CaptureStatus implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->id) || Assert::minLength($this->id, 3, "id in Transaction must have minlength of 3 $within");
-        !isset($this->id) || Assert::maxLength($this->id, 50, "id in Transaction must have maxlength of 50 $within");
-        !isset($this->amount_with_breakdown) || Assert::notNull($this->amount_with_breakdown->gross_amount, "gross_amount in amount_with_breakdown must not be NULL within Transaction $within");
-        !isset($this->amount_with_breakdown) || Assert::notNull($this->amount_with_breakdown->net_amount, "net_amount in amount_with_breakdown must not be NULL within Transaction $within");
-        !isset($this->amount_with_breakdown) || Assert::isInstanceOf($this->amount_with_breakdown, AmountWithBreakdown::class, "amount_with_breakdown in Transaction must be instance of AmountWithBreakdown $within");
-        !isset($this->amount_with_breakdown) || $this->amount_with_breakdown->validate(Transaction::class);
+        Assert::notNull($this->id, "id in Transaction must not be NULL $within");
+         Assert::minLength($this->id, 3, "id in Transaction must have minlength of 3 $within");
+         Assert::maxLength($this->id, 50, "id in Transaction must have maxlength of 50 $within");
+        Assert::notNull($this->amount_with_breakdown, "amount_with_breakdown in Transaction must not be NULL $within");
+         Assert::isInstanceOf($this->amount_with_breakdown, AmountWithBreakdown::class, "amount_with_breakdown in Transaction must be instance of AmountWithBreakdown $within");
+         $this->amount_with_breakdown->validate(Transaction::class);
         !isset($this->payer_name) || Assert::isInstanceOf($this->payer_name, Name::class, "payer_name in Transaction must be instance of Name $within");
         !isset($this->payer_name) || $this->payer_name->validate(Transaction::class);
         !isset($this->payer_email) || Assert::minLength($this->payer_email, 3, "payer_email in Transaction must have minlength of 3 $within");
         !isset($this->payer_email) || Assert::maxLength($this->payer_email, 254, "payer_email in Transaction must have maxlength of 254 $within");
-        !isset($this->time) || Assert::minLength($this->time, 20, "time in Transaction must have minlength of 20 $within");
-        !isset($this->time) || Assert::maxLength($this->time, 64, "time in Transaction must have maxlength of 64 $within");
+        Assert::notNull($this->time, "time in Transaction must not be NULL $within");
+         Assert::minLength($this->time, 20, "time in Transaction must have minlength of 20 $within");
+         Assert::maxLength($this->time, 64, "time in Transaction must have maxlength of 64 $within");
     }
 
     public function __construct()

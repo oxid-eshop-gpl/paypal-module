@@ -54,12 +54,8 @@ class CreditFinancingOffer implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->total_payment) || Assert::notNull($this->total_payment->currency_code, "currency_code in total_payment must not be NULL within CreditFinancingOffer $within");
-        !isset($this->total_payment) || Assert::notNull($this->total_payment->value, "value in total_payment must not be NULL within CreditFinancingOffer $within");
         !isset($this->total_payment) || Assert::isInstanceOf($this->total_payment, Money::class, "total_payment in CreditFinancingOffer must be instance of Money $within");
         !isset($this->total_payment) || $this->total_payment->validate(CreditFinancingOffer::class);
-        !isset($this->total_interest) || Assert::notNull($this->total_interest->currency_code, "currency_code in total_interest must not be NULL within CreditFinancingOffer $within");
-        !isset($this->total_interest) || Assert::notNull($this->total_interest->value, "value in total_interest must not be NULL within CreditFinancingOffer $within");
         !isset($this->total_interest) || Assert::isInstanceOf($this->total_interest, Money::class, "total_interest in CreditFinancingOffer must be instance of Money $within");
         !isset($this->total_interest) || $this->total_interest->validate(CreditFinancingOffer::class);
         !isset($this->installment_details) || Assert::isInstanceOf($this->installment_details, CreditFinancingOfferInstallmentDetails::class, "installment_details in CreditFinancingOffer must be instance of CreditFinancingOfferInstallmentDetails $within");

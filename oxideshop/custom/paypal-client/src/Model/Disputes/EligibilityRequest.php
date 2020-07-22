@@ -21,6 +21,7 @@ class EligibilityRequest implements JsonSerializable
      * @var string
      * The encrypted transaction ID.
      *
+     * this is mandatory to be set
      * minLength: 1
      * maxLength: 255
      */
@@ -35,8 +36,9 @@ class EligibilityRequest implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->transaction_id) || Assert::minLength($this->transaction_id, 1, "transaction_id in EligibilityRequest must have minlength of 1 $within");
-        !isset($this->transaction_id) || Assert::maxLength($this->transaction_id, 255, "transaction_id in EligibilityRequest must have maxlength of 255 $within");
+        Assert::notNull($this->transaction_id, "transaction_id in EligibilityRequest must not be NULL $within");
+         Assert::minLength($this->transaction_id, 1, "transaction_id in EligibilityRequest must have minlength of 1 $within");
+         Assert::maxLength($this->transaction_id, 255, "transaction_id in EligibilityRequest must have maxlength of 255 $within");
         !isset($this->disputed_items) || Assert::isArray($this->disputed_items, "disputed_items in EligibilityRequest must be array $within");
 
                                 if (isset($this->disputed_items)){

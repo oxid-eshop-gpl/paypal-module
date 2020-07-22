@@ -47,8 +47,6 @@ class PayeeDisplayable implements JsonSerializable
     {
         $within = isset($from) ? "within $from" : "";
         !isset($this->business_email) || Assert::maxLength($this->business_email, 254, "business_email in PayeeDisplayable must have maxlength of 254 $within");
-        !isset($this->business_phone) || Assert::notNull($this->business_phone->country_code, "country_code in business_phone must not be NULL within PayeeDisplayable $within");
-        !isset($this->business_phone) || Assert::notNull($this->business_phone->national_number, "national_number in business_phone must not be NULL within PayeeDisplayable $within");
         !isset($this->business_phone) || Assert::isInstanceOf($this->business_phone, Phone::class, "business_phone in PayeeDisplayable must be instance of Phone $within");
         !isset($this->business_phone) || $this->business_phone->validate(PayeeDisplayable::class);
         !isset($this->brand_name) || Assert::maxLength($this->brand_name, 127, "brand_name in PayeeDisplayable must have maxlength of 127 $within");

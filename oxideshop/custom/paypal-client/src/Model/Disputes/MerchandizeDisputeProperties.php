@@ -63,7 +63,6 @@ class MerchandizeDisputeProperties implements JsonSerializable
         !isset($this->product_details) || $this->product_details->validate(MerchandizeDisputeProperties::class);
         !isset($this->service_details) || Assert::isInstanceOf($this->service_details, ServiceDetails::class, "service_details in MerchandizeDisputeProperties must be instance of ServiceDetails $within");
         !isset($this->service_details) || $this->service_details->validate(MerchandizeDisputeProperties::class);
-        !isset($this->return_shipping_address) || Assert::notNull($this->return_shipping_address->country_code, "country_code in return_shipping_address must not be NULL within MerchandizeDisputeProperties $within");
         !isset($this->return_shipping_address) || Assert::isInstanceOf($this->return_shipping_address, AddressPortable::class, "return_shipping_address in MerchandizeDisputeProperties must be instance of AddressPortable $within");
         !isset($this->return_shipping_address) || $this->return_shipping_address->validate(MerchandizeDisputeProperties::class);
     }

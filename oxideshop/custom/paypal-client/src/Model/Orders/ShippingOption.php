@@ -25,6 +25,7 @@ class ShippingOption implements JsonSerializable
      * @var string
      * A unique ID that identifies a payer-selected shipping option.
      *
+     * this is mandatory to be set
      * maxLength: 127
      */
     public $id;
@@ -35,6 +36,7 @@ class ShippingOption implements JsonSerializable
      * Shipping`, `USPS Priority Shipping`, `Expédition prioritaire USPS`, or `USPS yōuxiān fā huò`. Localize
      * this description to the payer's locale.
      *
+     * this is mandatory to be set
      * maxLength: 127
      */
     public $label;
@@ -62,18 +64,21 @@ class ShippingOption implements JsonSerializable
      * experience. As part of the response if a `shipping.option` contains `selected=true`, it represents the
      * shipping option that the payer selected during the course of checkout with PayPal. Only one `shipping.option`
      * can be set to `selected=true`.
+     *
+     * this is mandatory to be set
      */
     public $selected;
 
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->id) || Assert::maxLength($this->id, 127, "id in ShippingOption must have maxlength of 127 $within");
-        !isset($this->label) || Assert::maxLength($this->label, 127, "label in ShippingOption must have maxlength of 127 $within");
-        !isset($this->amount) || Assert::notNull($this->amount->currency_code, "currency_code in amount must not be NULL within ShippingOption $within");
-        !isset($this->amount) || Assert::notNull($this->amount->value, "value in amount must not be NULL within ShippingOption $within");
+        Assert::notNull($this->id, "id in ShippingOption must not be NULL $within");
+         Assert::maxLength($this->id, 127, "id in ShippingOption must have maxlength of 127 $within");
+        Assert::notNull($this->label, "label in ShippingOption must not be NULL $within");
+         Assert::maxLength($this->label, 127, "label in ShippingOption must have maxlength of 127 $within");
         !isset($this->amount) || Assert::isInstanceOf($this->amount, Money::class, "amount in ShippingOption must be instance of Money $within");
         !isset($this->amount) || $this->amount->validate(ShippingOption::class);
+        Assert::notNull($this->selected, "selected in ShippingOption must not be NULL $within");
     }
 
     public function __construct()

@@ -20,6 +20,7 @@ class Money implements JsonSerializable
      * The [three-character ISO-4217 currency code](/docs/integration/direct/rest/currency-codes/) that identifies
      * the currency.
      *
+     * this is mandatory to be set
      * minLength: 3
      * maxLength: 3
      */
@@ -32,6 +33,7 @@ class Money implements JsonSerializable
      * thousandths.</li></ul>For the required number of decimal places for a currency code, see [Currency
      * Codes](/docs/integration/direct/rest/currency-codes/).
      *
+     * this is mandatory to be set
      * maxLength: 32
      */
     public $value;
@@ -39,9 +41,11 @@ class Money implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->currency_code) || Assert::minLength($this->currency_code, 3, "currency_code in Money must have minlength of 3 $within");
-        !isset($this->currency_code) || Assert::maxLength($this->currency_code, 3, "currency_code in Money must have maxlength of 3 $within");
-        !isset($this->value) || Assert::maxLength($this->value, 32, "value in Money must have maxlength of 32 $within");
+        Assert::notNull($this->currency_code, "currency_code in Money must not be NULL $within");
+         Assert::minLength($this->currency_code, 3, "currency_code in Money must have minlength of 3 $within");
+         Assert::maxLength($this->currency_code, 3, "currency_code in Money must have maxlength of 3 $within");
+        Assert::notNull($this->value, "value in Money must not be NULL $within");
+         Assert::maxLength($this->value, 32, "value in Money must have maxlength of 32 $within");
     }
 
     public function __construct()

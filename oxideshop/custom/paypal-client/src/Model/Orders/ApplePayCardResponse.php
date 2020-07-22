@@ -49,7 +49,6 @@ class ApplePayCardResponse extends CardResponse implements JsonSerializable
     {
         $within = isset($from) ? "within $from" : "";
         !isset($this->name) || Assert::maxLength($this->name, 300, "name in ApplePayCardResponse must have maxlength of 300 $within");
-        !isset($this->billing_address) || Assert::notNull($this->billing_address->country_code, "country_code in billing_address must not be NULL within ApplePayCardResponse $within");
         !isset($this->billing_address) || Assert::isInstanceOf($this->billing_address, AddressPortable::class, "billing_address in ApplePayCardResponse must be instance of AddressPortable $within");
         !isset($this->billing_address) || $this->billing_address->validate(ApplePayCardResponse::class);
         !isset($this->country_code) || Assert::minLength($this->country_code, 2, "country_code in ApplePayCardResponse must have minlength of 2 $within");

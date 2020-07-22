@@ -125,8 +125,6 @@ class ChangeReason implements JsonSerializable
                                 }
 
         !isset($this->transaction_ids) || Assert::isArray($this->transaction_ids, "transaction_ids in ChangeReason must be array $within");
-        !isset($this->buyer_requested_amount) || Assert::notNull($this->buyer_requested_amount->currency_code, "currency_code in buyer_requested_amount must not be NULL within ChangeReason $within");
-        !isset($this->buyer_requested_amount) || Assert::notNull($this->buyer_requested_amount->value, "value in buyer_requested_amount must not be NULL within ChangeReason $within");
         !isset($this->buyer_requested_amount) || Assert::isInstanceOf($this->buyer_requested_amount, Money::class, "buyer_requested_amount in ChangeReason must be instance of Money $within");
         !isset($this->buyer_requested_amount) || $this->buyer_requested_amount->validate(ChangeReason::class);
         !isset($this->item_info) || Assert::isArray($this->item_info, "item_info in ChangeReason must be array $within");

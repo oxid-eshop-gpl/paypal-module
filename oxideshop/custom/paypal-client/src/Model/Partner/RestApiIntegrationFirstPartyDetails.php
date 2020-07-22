@@ -19,6 +19,8 @@ class RestApiIntegrationFirstPartyDetails implements JsonSerializable
      * @var array<string>
      * An array of features that partner can access, or use, in PayPal on behalf of the seller. The seller grants
      * permission for these features to the partner.
+     *
+     * this is mandatory to be set
      */
     public $features;
 
@@ -26,6 +28,7 @@ class RestApiIntegrationFirstPartyDetails implements JsonSerializable
      * @var string
      * S256 - The code verifier must be high-entropy cryptographic random string with a byte length of 43-128 range.
      *
+     * this is mandatory to be set
      * minLength: 44
      * maxLength: 128
      */
@@ -34,9 +37,11 @@ class RestApiIntegrationFirstPartyDetails implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->features) || Assert::isArray($this->features, "features in RestApiIntegrationFirstPartyDetails must be array $within");
-        !isset($this->seller_nonce) || Assert::minLength($this->seller_nonce, 44, "seller_nonce in RestApiIntegrationFirstPartyDetails must have minlength of 44 $within");
-        !isset($this->seller_nonce) || Assert::maxLength($this->seller_nonce, 128, "seller_nonce in RestApiIntegrationFirstPartyDetails must have maxlength of 128 $within");
+        Assert::notNull($this->features, "features in RestApiIntegrationFirstPartyDetails must not be NULL $within");
+         Assert::isArray($this->features, "features in RestApiIntegrationFirstPartyDetails must be array $within");
+        Assert::notNull($this->seller_nonce, "seller_nonce in RestApiIntegrationFirstPartyDetails must not be NULL $within");
+         Assert::minLength($this->seller_nonce, 44, "seller_nonce in RestApiIntegrationFirstPartyDetails must have minlength of 44 $within");
+         Assert::maxLength($this->seller_nonce, 128, "seller_nonce in RestApiIntegrationFirstPartyDetails must have maxlength of 128 $within");
     }
 
     public function __construct()

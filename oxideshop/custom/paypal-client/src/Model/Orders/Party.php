@@ -55,6 +55,7 @@ class Party implements JsonSerializable
      * @var array<string>
      * Email addresses.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 100
      */
@@ -64,6 +65,7 @@ class Party implements JsonSerializable
      * @var array<PhoneInfo>
      * Details of party's phone numbers.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 100
      */
@@ -73,6 +75,7 @@ class Party implements JsonSerializable
      * @var array<AddressWithConfirmation>
      * Details of party's addresses.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 100
      */

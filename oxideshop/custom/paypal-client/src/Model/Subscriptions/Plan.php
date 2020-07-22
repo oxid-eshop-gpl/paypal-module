@@ -102,6 +102,7 @@ class Plan implements JsonSerializable
      * An array of billing cycles for trial billing and regular billing. A plan can have at most two trial cycles and
      * only one regular cycle.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 12
      */
@@ -187,7 +188,6 @@ class Plan implements JsonSerializable
 
         !isset($this->payment_preferences) || Assert::isInstanceOf($this->payment_preferences, PaymentPreferences::class, "payment_preferences in Plan must be instance of PaymentPreferences $within");
         !isset($this->payment_preferences) || $this->payment_preferences->validate(Plan::class);
-        !isset($this->taxes) || Assert::notNull($this->taxes->percentage, "percentage in taxes must not be NULL within Plan $within");
         !isset($this->taxes) || Assert::isInstanceOf($this->taxes, Taxes::class, "taxes in Plan must be instance of Taxes $within");
         !isset($this->taxes) || $this->taxes->validate(Plan::class);
         !isset($this->payee) || Assert::isInstanceOf($this->payee, Payee::class, "payee in Plan must be instance of Payee $within");

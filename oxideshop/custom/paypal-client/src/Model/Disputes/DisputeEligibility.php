@@ -68,6 +68,7 @@ class DisputeEligibility implements JsonSerializable
      * @var array<EligibleDisputeReason>
      * An array of the eligible disputes with reasons.
      *
+     * this is mandatory to be set
      * maxItems: 0
      */
     public $eligible_dispute_reasons;
@@ -76,6 +77,7 @@ class DisputeEligibility implements JsonSerializable
      * @var array<IneligibleDisputeReason>
      * An array of the ineligible disputes with ineligibility reasons.
      *
+     * this is mandatory to be set
      * maxItems: 0
      */
     public $ineligible_dispute_reasons;

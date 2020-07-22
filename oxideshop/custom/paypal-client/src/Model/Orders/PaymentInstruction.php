@@ -27,6 +27,7 @@ class PaymentInstruction implements JsonSerializable
      * @var array<PlatformFee>
      * An array of various fees, commissions, tips, or donations.
      *
+     * this is mandatory to be set
      * maxItems: 0
      * maxItems: 1
      */

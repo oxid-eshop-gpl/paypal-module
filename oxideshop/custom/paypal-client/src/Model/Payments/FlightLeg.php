@@ -183,16 +183,10 @@ class FlightLeg implements JsonSerializable
         !isset($this->arrival_time) || Assert::maxLength($this->arrival_time, 5, "arrival_time in FlightLeg must have maxlength of 5 $within");
         !isset($this->conjunction_ticket_number) || Assert::minLength($this->conjunction_ticket_number, 1, "conjunction_ticket_number in FlightLeg must have minlength of 1 $within");
         !isset($this->conjunction_ticket_number) || Assert::maxLength($this->conjunction_ticket_number, 16, "conjunction_ticket_number in FlightLeg must have maxlength of 16 $within");
-        !isset($this->fare) || Assert::notNull($this->fare->currency_code, "currency_code in fare must not be NULL within FlightLeg $within");
-        !isset($this->fare) || Assert::notNull($this->fare->value, "value in fare must not be NULL within FlightLeg $within");
         !isset($this->fare) || Assert::isInstanceOf($this->fare, Money::class, "fare in FlightLeg must be instance of Money $within");
         !isset($this->fare) || $this->fare->validate(FlightLeg::class);
-        !isset($this->tax) || Assert::notNull($this->tax->currency_code, "currency_code in tax must not be NULL within FlightLeg $within");
-        !isset($this->tax) || Assert::notNull($this->tax->value, "value in tax must not be NULL within FlightLeg $within");
         !isset($this->tax) || Assert::isInstanceOf($this->tax, Money::class, "tax in FlightLeg must be instance of Money $within");
         !isset($this->tax) || $this->tax->validate(FlightLeg::class);
-        !isset($this->fee) || Assert::notNull($this->fee->currency_code, "currency_code in fee must not be NULL within FlightLeg $within");
-        !isset($this->fee) || Assert::notNull($this->fee->value, "value in fee must not be NULL within FlightLeg $within");
         !isset($this->fee) || Assert::isInstanceOf($this->fee, Money::class, "fee in FlightLeg must be instance of Money $within");
         !isset($this->fee) || $this->fee->validate(FlightLeg::class);
         !isset($this->additional_notations) || Assert::minLength($this->additional_notations, 1, "additional_notations in FlightLeg must have minlength of 1 $within");

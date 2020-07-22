@@ -93,7 +93,6 @@ class IdentityDocument implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
         !isset($this->type) || Assert::minLength($this->type, 1, "type in IdentityDocument must have minlength of 1 $within");
         !isset($this->type) || Assert::maxLength($this->type, 255, "type in IdentityDocument must have maxlength of 255 $within");
-        !isset($this->issuer) || Assert::notNull($this->issuer->country_code, "country_code in issuer must not be NULL within IdentityDocument $within");
         !isset($this->issuer) || Assert::isInstanceOf($this->issuer, DocumentIssuer::class, "issuer in IdentityDocument must be instance of DocumentIssuer $within");
         !isset($this->issuer) || $this->issuer->validate(IdentityDocument::class);
         !isset($this->id_number) || Assert::minLength($this->id_number, 1, "id_number in IdentityDocument must have minlength of 1 $within");

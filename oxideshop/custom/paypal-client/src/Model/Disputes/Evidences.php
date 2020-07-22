@@ -19,6 +19,7 @@ class Evidences implements JsonSerializable
      * @var array<Evidence>
      * An array of evidences for the dispute.
      *
+     * this is mandatory to be set
      * maxItems: 0
      */
     public $evidences;
@@ -45,7 +46,6 @@ class Evidences implements JsonSerializable
                                     }
                                 }
 
-        !isset($this->return_shipping_address) || Assert::notNull($this->return_shipping_address->country_code, "country_code in return_shipping_address must not be NULL within Evidences $within");
         !isset($this->return_shipping_address) || Assert::isInstanceOf($this->return_shipping_address, AddressPortable::class, "return_shipping_address in Evidences must be instance of AddressPortable $within");
         !isset($this->return_shipping_address) || $this->return_shipping_address->validate(Evidences::class);
     }

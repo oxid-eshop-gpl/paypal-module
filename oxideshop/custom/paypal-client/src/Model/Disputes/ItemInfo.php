@@ -131,8 +131,6 @@ class ItemInfo implements JsonSerializable
         !isset($this->partner_transaction_id) || Assert::maxLength($this->partner_transaction_id, 255, "partner_transaction_id in ItemInfo must have maxlength of 255 $within");
         !isset($this->reason) || Assert::minLength($this->reason, 1, "reason in ItemInfo must have minlength of 1 $within");
         !isset($this->reason) || Assert::maxLength($this->reason, 255, "reason in ItemInfo must have maxlength of 255 $within");
-        !isset($this->dispute_amount) || Assert::notNull($this->dispute_amount->currency_code, "currency_code in dispute_amount must not be NULL within ItemInfo $within");
-        !isset($this->dispute_amount) || Assert::notNull($this->dispute_amount->value, "value in dispute_amount must not be NULL within ItemInfo $within");
         !isset($this->dispute_amount) || Assert::isInstanceOf($this->dispute_amount, Money::class, "dispute_amount in ItemInfo must be instance of Money $within");
         !isset($this->dispute_amount) || $this->dispute_amount->validate(ItemInfo::class);
         !isset($this->notes) || Assert::minLength($this->notes, 1, "notes in ItemInfo must have minlength of 1 $within");

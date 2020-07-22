@@ -135,8 +135,6 @@ class Capture extends CaptureStatus implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->amount) || Assert::notNull($this->amount->currency_code, "currency_code in amount must not be NULL within Capture $within");
-        !isset($this->amount) || Assert::notNull($this->amount->value, "value in amount must not be NULL within Capture $within");
         !isset($this->amount) || Assert::isInstanceOf($this->amount, Money::class, "amount in Capture must be instance of Money $within");
         !isset($this->amount) || $this->amount->validate(Capture::class);
         !isset($this->parent_transaction) || Assert::isInstanceOf($this->parent_transaction, ParentTransaction::class, "parent_transaction in Capture must be instance of ParentTransaction $within");
@@ -144,12 +142,8 @@ class Capture extends CaptureStatus implements JsonSerializable
         !isset($this->custom_id) || Assert::maxLength($this->custom_id, 127, "custom_id in Capture must have maxlength of 127 $within");
         !isset($this->seller_protection) || Assert::isInstanceOf($this->seller_protection, SellerProtection::class, "seller_protection in Capture must be instance of SellerProtection $within");
         !isset($this->seller_protection) || $this->seller_protection->validate(Capture::class);
-        !isset($this->seller_receivable_breakdown) || Assert::notNull($this->seller_receivable_breakdown->gross_amount, "gross_amount in seller_receivable_breakdown must not be NULL within Capture $within");
         !isset($this->seller_receivable_breakdown) || Assert::isInstanceOf($this->seller_receivable_breakdown, SellerReceivableBreakdown::class, "seller_receivable_breakdown in Capture must be instance of SellerReceivableBreakdown $within");
         !isset($this->seller_receivable_breakdown) || $this->seller_receivable_breakdown->validate(Capture::class);
-        !isset($this->error) || Assert::notNull($this->error->name, "name in error must not be NULL within Capture $within");
-        !isset($this->error) || Assert::notNull($this->error->message, "message in error must not be NULL within Capture $within");
-        !isset($this->error) || Assert::notNull($this->error->debug_id, "debug_id in error must not be NULL within Capture $within");
         !isset($this->error) || Assert::isInstanceOf($this->error, Error::class, "error in Capture must be instance of Error $within");
         !isset($this->error) || $this->error->validate(Capture::class);
         !isset($this->links) || Assert::isArray($this->links, "links in Capture must be array $within");

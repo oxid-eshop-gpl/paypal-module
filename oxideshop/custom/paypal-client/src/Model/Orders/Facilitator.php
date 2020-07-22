@@ -59,6 +59,7 @@ class Facilitator extends Participant implements JsonSerializable
      * @var array<string>
      * List of (business)segments the actor operates in.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 50
      */

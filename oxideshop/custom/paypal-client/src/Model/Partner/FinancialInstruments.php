@@ -19,6 +19,7 @@ class FinancialInstruments implements JsonSerializable
      * @var array<Bank>
      * An array of banks attached to this managed account.
      *
+     * this is mandatory to be set
      * maxItems: 0
      * maxItems: 5
      */

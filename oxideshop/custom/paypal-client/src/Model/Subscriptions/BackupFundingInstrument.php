@@ -18,14 +18,17 @@ class BackupFundingInstrument implements JsonSerializable
     /**
      * @var CardResponse
      * The payment card to use to fund a payment. Card can be a credit or debit card.
+     *
+     * this is mandatory to be set
      */
     public $card;
 
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->card) || Assert::isInstanceOf($this->card, CardResponse::class, "card in BackupFundingInstrument must be instance of CardResponse $within");
-        !isset($this->card) || $this->card->validate(BackupFundingInstrument::class);
+        Assert::notNull($this->card, "card in BackupFundingInstrument must not be NULL $within");
+         Assert::isInstanceOf($this->card, CardResponse::class, "card in BackupFundingInstrument must be instance of CardResponse $within");
+         $this->card->validate(BackupFundingInstrument::class);
     }
 
     public function __construct()

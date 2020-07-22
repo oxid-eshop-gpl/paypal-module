@@ -44,6 +44,7 @@ class PaymentContextData implements JsonSerializable
      * @var array<Facilitator>
      * List of facilitators involved in the payment[s].
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 10
      */
@@ -53,6 +54,7 @@ class PaymentContextData implements JsonSerializable
      * @var array<PaymentUnit>
      * List of payment contract data.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 100
      */

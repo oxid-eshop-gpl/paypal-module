@@ -19,6 +19,7 @@ class ProvideSupportingInfo implements JsonSerializable
      * @var string
      * The notes that describe the defense.
      *
+     * this is mandatory to be set
      * minLength: 1
      * maxLength: 2000
      */
@@ -27,8 +28,9 @@ class ProvideSupportingInfo implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->notes) || Assert::minLength($this->notes, 1, "notes in ProvideSupportingInfo must have minlength of 1 $within");
-        !isset($this->notes) || Assert::maxLength($this->notes, 2000, "notes in ProvideSupportingInfo must have maxlength of 2000 $within");
+        Assert::notNull($this->notes, "notes in ProvideSupportingInfo must not be NULL $within");
+         Assert::minLength($this->notes, 1, "notes in ProvideSupportingInfo must have minlength of 1 $within");
+         Assert::maxLength($this->notes, 2000, "notes in ProvideSupportingInfo must have maxlength of 2000 $within");
     }
 
     public function __construct()

@@ -42,6 +42,8 @@ class FailedPaymentDetails implements JsonSerializable
     /**
      * @var Money
      * The currency and amount for a financial transaction, such as a balance or payment due.
+     *
+     * this is mandatory to be set
      */
     public $amount;
 
@@ -51,6 +53,7 @@ class FailedPaymentDetails implements JsonSerializable
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
      *
+     * this is mandatory to be set
      * minLength: 20
      * maxLength: 64
      */
@@ -88,12 +91,12 @@ class FailedPaymentDetails implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->amount) || Assert::notNull($this->amount->currency_code, "currency_code in amount must not be NULL within FailedPaymentDetails $within");
-        !isset($this->amount) || Assert::notNull($this->amount->value, "value in amount must not be NULL within FailedPaymentDetails $within");
-        !isset($this->amount) || Assert::isInstanceOf($this->amount, Money::class, "amount in FailedPaymentDetails must be instance of Money $within");
-        !isset($this->amount) || $this->amount->validate(FailedPaymentDetails::class);
-        !isset($this->time) || Assert::minLength($this->time, 20, "time in FailedPaymentDetails must have minlength of 20 $within");
-        !isset($this->time) || Assert::maxLength($this->time, 64, "time in FailedPaymentDetails must have maxlength of 64 $within");
+        Assert::notNull($this->amount, "amount in FailedPaymentDetails must not be NULL $within");
+         Assert::isInstanceOf($this->amount, Money::class, "amount in FailedPaymentDetails must be instance of Money $within");
+         $this->amount->validate(FailedPaymentDetails::class);
+        Assert::notNull($this->time, "time in FailedPaymentDetails must not be NULL $within");
+         Assert::minLength($this->time, 20, "time in FailedPaymentDetails must have minlength of 20 $within");
+         Assert::maxLength($this->time, 64, "time in FailedPaymentDetails must have maxlength of 64 $within");
         !isset($this->reason_code) || Assert::minLength($this->reason_code, 1, "reason_code in FailedPaymentDetails must have minlength of 1 $within");
         !isset($this->reason_code) || Assert::maxLength($this->reason_code, 120, "reason_code in FailedPaymentDetails must have maxlength of 120 $within");
         !isset($this->next_payment_retry_time) || Assert::minLength($this->next_payment_retry_time, 20, "next_payment_retry_time in FailedPaymentDetails must have minlength of 20 $within");

@@ -18,18 +18,24 @@ class Error implements JsonSerializable
     /**
      * @var string
      * The human-readable, unique name of the error.
+     *
+     * this is mandatory to be set
      */
     public $name;
 
     /**
      * @var string
      * The message that describes the error.
+     *
+     * this is mandatory to be set
      */
     public $message;
 
     /**
      * @var string
      * The PayPal internal ID. Used for correlation purposes.
+     *
+     * this is mandatory to be set
      */
     public $debug_id;
 
@@ -54,6 +60,9 @@ class Error implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
+        Assert::notNull($this->name, "name in Error must not be NULL $within");
+        Assert::notNull($this->message, "message in Error must not be NULL $within");
+        Assert::notNull($this->debug_id, "debug_id in Error must not be NULL $within");
         !isset($this->details) || Assert::isArray($this->details, "details in Error must be array $within");
 
                                 if (isset($this->details)){

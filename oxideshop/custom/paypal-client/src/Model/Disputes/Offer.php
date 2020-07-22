@@ -62,12 +62,8 @@ class Offer implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->buyer_requested_amount) || Assert::notNull($this->buyer_requested_amount->currency_code, "currency_code in buyer_requested_amount must not be NULL within Offer $within");
-        !isset($this->buyer_requested_amount) || Assert::notNull($this->buyer_requested_amount->value, "value in buyer_requested_amount must not be NULL within Offer $within");
         !isset($this->buyer_requested_amount) || Assert::isInstanceOf($this->buyer_requested_amount, Money::class, "buyer_requested_amount in Offer must be instance of Money $within");
         !isset($this->buyer_requested_amount) || $this->buyer_requested_amount->validate(Offer::class);
-        !isset($this->seller_offered_amount) || Assert::notNull($this->seller_offered_amount->currency_code, "currency_code in seller_offered_amount must not be NULL within Offer $within");
-        !isset($this->seller_offered_amount) || Assert::notNull($this->seller_offered_amount->value, "value in seller_offered_amount must not be NULL within Offer $within");
         !isset($this->seller_offered_amount) || Assert::isInstanceOf($this->seller_offered_amount, Money::class, "seller_offered_amount in Offer must be instance of Money $within");
         !isset($this->seller_offered_amount) || $this->seller_offered_amount->validate(Offer::class);
         !isset($this->offer_type) || Assert::minLength($this->offer_type, 1, "offer_type in Offer must have minlength of 1 $within");

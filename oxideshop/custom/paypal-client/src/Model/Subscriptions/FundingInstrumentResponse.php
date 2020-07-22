@@ -38,13 +38,8 @@ class FundingInstrumentResponse implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
         !isset($this->card) || Assert::isInstanceOf($this->card, CardResponse::class, "card in FundingInstrumentResponse must be instance of CardResponse $within");
         !isset($this->card) || $this->card->validate(FundingInstrumentResponse::class);
-        !isset($this->bank_account) || Assert::notNull($this->bank_account->id, "id in bank_account must not be NULL within FundingInstrumentResponse $within");
-        !isset($this->bank_account) || Assert::notNull($this->bank_account->last_n_chars, "last_n_chars in bank_account must not be NULL within FundingInstrumentResponse $within");
-        !isset($this->bank_account) || Assert::notNull($this->bank_account->bank_name, "bank_name in bank_account must not be NULL within FundingInstrumentResponse $within");
-        !isset($this->bank_account) || Assert::notNull($this->bank_account->country_code, "country_code in bank_account must not be NULL within FundingInstrumentResponse $within");
         !isset($this->bank_account) || Assert::isInstanceOf($this->bank_account, BankAccountResponse::class, "bank_account in FundingInstrumentResponse must be instance of BankAccountResponse $within");
         !isset($this->bank_account) || $this->bank_account->validate(FundingInstrumentResponse::class);
-        !isset($this->credit) || Assert::notNull($this->credit->id, "id in credit must not be NULL within FundingInstrumentResponse $within");
         !isset($this->credit) || Assert::isInstanceOf($this->credit, PaypalCredit::class, "credit in FundingInstrumentResponse must be instance of PaypalCredit $within");
         !isset($this->credit) || $this->credit->validate(FundingInstrumentResponse::class);
     }

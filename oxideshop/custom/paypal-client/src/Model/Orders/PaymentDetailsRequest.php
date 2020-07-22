@@ -27,6 +27,7 @@ class PaymentDetailsRequest implements JsonSerializable
      * purchase unit represents either a full or partial order that the customer intends to purchase from the
      * merchant.
      *
+     * this is mandatory to be set
      * maxItems: 1
      * maxItems: 10
      */

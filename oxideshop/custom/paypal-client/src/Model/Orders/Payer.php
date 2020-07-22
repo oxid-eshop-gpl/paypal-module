@@ -83,16 +83,12 @@ class Payer implements JsonSerializable
         !isset($this->email_address) || Assert::maxLength($this->email_address, 254, "email_address in Payer must have maxlength of 254 $within");
         !isset($this->payer_id) || Assert::minLength($this->payer_id, 13, "payer_id in Payer must have minlength of 13 $within");
         !isset($this->payer_id) || Assert::maxLength($this->payer_id, 13, "payer_id in Payer must have maxlength of 13 $within");
-        !isset($this->phone) || Assert::notNull($this->phone->phone_number, "phone_number in phone must not be NULL within Payer $within");
         !isset($this->phone) || Assert::isInstanceOf($this->phone, PhoneWithType::class, "phone in Payer must be instance of PhoneWithType $within");
         !isset($this->phone) || $this->phone->validate(Payer::class);
         !isset($this->birth_date) || Assert::minLength($this->birth_date, 10, "birth_date in Payer must have minlength of 10 $within");
         !isset($this->birth_date) || Assert::maxLength($this->birth_date, 10, "birth_date in Payer must have maxlength of 10 $within");
-        !isset($this->tax_info) || Assert::notNull($this->tax_info->tax_id, "tax_id in tax_info must not be NULL within Payer $within");
-        !isset($this->tax_info) || Assert::notNull($this->tax_info->tax_id_type, "tax_id_type in tax_info must not be NULL within Payer $within");
         !isset($this->tax_info) || Assert::isInstanceOf($this->tax_info, TaxInfo::class, "tax_info in Payer must be instance of TaxInfo $within");
         !isset($this->tax_info) || $this->tax_info->validate(Payer::class);
-        !isset($this->address) || Assert::notNull($this->address->country_code, "country_code in address must not be NULL within Payer $within");
         !isset($this->address) || Assert::isInstanceOf($this->address, AddressPortable::class, "address in Payer must be instance of AddressPortable $within");
         !isset($this->address) || $this->address->validate(Payer::class);
     }

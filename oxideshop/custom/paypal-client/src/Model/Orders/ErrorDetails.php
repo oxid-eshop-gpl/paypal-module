@@ -37,6 +37,8 @@ class ErrorDetails implements JsonSerializable
     /**
      * @var string
      * The unique, fine-grained application-level error code.
+     *
+     * this is mandatory to be set
      */
     public $issue;
 
@@ -50,6 +52,7 @@ class ErrorDetails implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
+        Assert::notNull($this->issue, "issue in ErrorDetails must not be NULL $within");
     }
 
     public function __construct()

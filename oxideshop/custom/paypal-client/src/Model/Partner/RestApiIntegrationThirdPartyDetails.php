@@ -20,6 +20,7 @@ class RestApiIntegrationThirdPartyDetails implements JsonSerializable
      * An array of features that partner can access, or use, in PayPal on behalf of the seller. The seller grants
      * permission for these features to the partner.
      *
+     * this is mandatory to be set
      * maxItems: 0
      * maxItems: 20
      */

@@ -137,8 +137,6 @@ class ReferredDisputeSummary implements JsonSerializable
                                     }
                                 }
 
-        !isset($this->dispute_amount) || Assert::notNull($this->dispute_amount->currency_code, "currency_code in dispute_amount must not be NULL within ReferredDisputeSummary $within");
-        !isset($this->dispute_amount) || Assert::notNull($this->dispute_amount->value, "value in dispute_amount must not be NULL within ReferredDisputeSummary $within");
         !isset($this->dispute_amount) || Assert::isInstanceOf($this->dispute_amount, Money::class, "dispute_amount in ReferredDisputeSummary must be instance of Money $within");
         !isset($this->dispute_amount) || $this->dispute_amount->validate(ReferredDisputeSummary::class);
         !isset($this->reason) || Assert::minLength($this->reason, 1, "reason in ReferredDisputeSummary must have minlength of 1 $within");

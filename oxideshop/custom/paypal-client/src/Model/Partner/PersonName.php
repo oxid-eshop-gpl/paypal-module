@@ -24,6 +24,7 @@ class PersonName extends Name implements JsonSerializable
      *
      * use one of constants defined in this class to set the value:
      * @see TYPE_LEGAL
+     * this is mandatory to be set
      * minLength: 1
      * maxLength: 255
      */
@@ -32,8 +33,9 @@ class PersonName extends Name implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->type) || Assert::minLength($this->type, 1, "type in PersonName must have minlength of 1 $within");
-        !isset($this->type) || Assert::maxLength($this->type, 255, "type in PersonName must have maxlength of 255 $within");
+        Assert::notNull($this->type, "type in PersonName must not be NULL $within");
+         Assert::minLength($this->type, 1, "type in PersonName must have minlength of 1 $within");
+         Assert::maxLength($this->type, 255, "type in PersonName must have maxlength of 255 $within");
     }
 
     public function __construct()

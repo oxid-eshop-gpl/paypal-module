@@ -20,6 +20,8 @@ class PlatformFee implements JsonSerializable
     /**
      * @var Money
      * The currency and amount for a financial transaction, such as a balance or payment due.
+     *
+     * this is mandatory to be set
      */
     public $amount;
 
@@ -33,10 +35,9 @@ class PlatformFee implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->amount) || Assert::notNull($this->amount->currency_code, "currency_code in amount must not be NULL within PlatformFee $within");
-        !isset($this->amount) || Assert::notNull($this->amount->value, "value in amount must not be NULL within PlatformFee $within");
-        !isset($this->amount) || Assert::isInstanceOf($this->amount, Money::class, "amount in PlatformFee must be instance of Money $within");
-        !isset($this->amount) || $this->amount->validate(PlatformFee::class);
+        Assert::notNull($this->amount, "amount in PlatformFee must not be NULL $within");
+         Assert::isInstanceOf($this->amount, Money::class, "amount in PlatformFee must be instance of Money $within");
+         $this->amount->validate(PlatformFee::class);
         !isset($this->payee) || Assert::isInstanceOf($this->payee, PayeeBase::class, "payee in PlatformFee must be instance of PayeeBase $within");
         !isset($this->payee) || $this->payee->validate(PlatformFee::class);
     }

@@ -44,6 +44,7 @@ class Patch implements JsonSerializable
      * @see OP_MOVE
      * @see OP_COPY
      * @see OP_TEST
+     * this is mandatory to be set
      */
     public $op;
 
@@ -70,6 +71,7 @@ class Patch implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
+        Assert::notNull($this->op, "op in Patch must not be NULL $within");
     }
 
     public function __construct()

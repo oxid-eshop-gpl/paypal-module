@@ -24,6 +24,7 @@ class VaultInstructionBase implements JsonSerializable
      *
      * use one of constants defined in this class to set the value:
      * @see CONFIRM_PAYMENT_TOKEN_ON_ORDER_COMPLETION
+     * this is mandatory to be set
      * minLength: 1
      * maxLength: 255
      */
@@ -32,8 +33,9 @@ class VaultInstructionBase implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->confirm_payment_token) || Assert::minLength($this->confirm_payment_token, 1, "confirm_payment_token in VaultInstructionBase must have minlength of 1 $within");
-        !isset($this->confirm_payment_token) || Assert::maxLength($this->confirm_payment_token, 255, "confirm_payment_token in VaultInstructionBase must have maxlength of 255 $within");
+        Assert::notNull($this->confirm_payment_token, "confirm_payment_token in VaultInstructionBase must not be NULL $within");
+         Assert::minLength($this->confirm_payment_token, 1, "confirm_payment_token in VaultInstructionBase must have minlength of 1 $within");
+         Assert::maxLength($this->confirm_payment_token, 255, "confirm_payment_token in VaultInstructionBase must have maxlength of 255 $within");
     }
 
     public function __construct()
