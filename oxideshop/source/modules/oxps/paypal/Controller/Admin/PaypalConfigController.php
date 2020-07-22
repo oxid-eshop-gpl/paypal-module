@@ -102,7 +102,7 @@ class PaypalConfigController extends AdminController
 
         return $this->buildSignUpLink(
             $config->getSandboxOxidPartnerId(),
-            $config->getSandboxClientId(),
+            $config->getSandboxOxidClientId(),
             $this->getReturnUrl()
         );
     }
@@ -119,7 +119,7 @@ class PaypalConfigController extends AdminController
     private function buildSignUpLink(string $partnerId, string $clientId, string $returnUrl): string
     {
         $params = [
-            'sellerNonce' => $this->createSellerNonce(),
+            'sellerNonce' => $this->createNonce(),
             'partnerId' => $partnerId,
             'product' => 'EXPRESS_CHECKOUT',
             'integrationType' => 'FO',
@@ -138,9 +138,27 @@ class PaypalConfigController extends AdminController
      *
      * @return string
      */
-    public function createSellerNonce(): string
+    public function createNonce(): string
     {
-        return md5(uniqid('', true) . '|' . microtime());
+        if (!empty(Registry::getSession()->getVariable('PAYPAL_MODULE_NONCE'))) {
+            return Registry::getSession()->getVariable('PAYPAL_MODULE_NONCE');
+        }
+
+        try {
+            // throws Exception if it was not possible to gather sufficient entropy.
+            $nonce = bin2hex(random_bytes(42));
+        } catch (\Exception $e) {
+            $nonce = md5(uniqid('', true) . '|' . microtime()) . substr(md5(mt_rand()), 0, 24);
+        }
+
+        Registry::getSession()->setVariable('PAYPAL_MODULE_NONCE', $nonce);
+
+        return $nonce;
+    }
+
+    public function invalidateNonce(): void
+    {
+        Registry::getSession()->deleteVariable('PAYPAL_MODULE_NONCE');
     }
 
     /**
