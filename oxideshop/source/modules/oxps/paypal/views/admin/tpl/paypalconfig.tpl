@@ -35,12 +35,7 @@
         [{assign var='liveMerchantSignUpLink' value=$oView->getLiveSignUpMerchantIntegrationLink()}]
         <p><a target="_blank"
               href="[{$liveMerchantSignUpLink}]"
-              data-paypal-button="PPLtBlue"
-              onclick="openPopup(
-                      '[{$liveMerchantSignUpLink}]',
-                      'onboardingPopupLive',
-                      { 'width': 800, 'height': 600, 'position': 'center' });
-                      return false;">
+              data-paypal-button="PPLtBlue">
                 [{oxmultilang ident="OXPS_PAYPAL_LIVE_BUTTON_CREDENTIALS"}]
            </a>
         </p>
@@ -49,12 +44,7 @@
         <p><a target="_blank"
               href="[{$sandboxMerchantSignUpLink}]"
               data-paypal-onboard-complete="onboardedCallbackSandbox"
-              data-paypal-button="PPLtBlue"
-              onclick="openPopup(
-                  '[{$sandboxMerchantSignUpLink}]',
-                  'onboardingPopupSandbox',
-                  { 'width': 800, 'height': 600, 'position': 'center' });
-                  return false;">
+              data-paypal-button="PPLtBlue">
               [{oxmultilang ident="OXPS_PAYPAL_SANDBOX_BUTTON_CREDENTIALS"}]
             </a>
         </p>
@@ -122,3 +112,4 @@
     </form>
 </div>
 [{include file="bottomitem.tpl"}]
+<script id="paypal-js" src="https://www.sandbox.paypal.com/webapps/merchantboarding/js/lib/lightbox/partner.js"></script>
