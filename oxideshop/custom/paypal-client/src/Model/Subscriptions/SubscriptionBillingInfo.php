@@ -20,7 +20,10 @@ class SubscriptionBillingInfo implements JsonSerializable
      */
     public $outstanding_balance;
 
-    /** @var array<CycleExecution> */
+    /**
+     * @var array<CycleExecution>
+     * The trial and regular billing executions.
+     */
     public $cycle_executions;
 
     /**
@@ -51,7 +54,11 @@ class SubscriptionBillingInfo implements JsonSerializable
      */
     public $final_payment_time;
 
-    /** @var integer */
+    /**
+     * @var integer
+     * The number of consecutive payment failures. Resets to `0` after a successful payment. If this reaches the
+     * `payment_failure_threshold` value, the subscription updates to the `SUSPENDED` state.
+     */
     public $failed_payments_count;
 
     /**

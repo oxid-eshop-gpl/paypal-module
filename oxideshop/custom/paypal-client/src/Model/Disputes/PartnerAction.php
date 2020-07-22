@@ -14,10 +14,40 @@ class PartnerAction implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /** The partner must provide the consumer with provisional credit. */
+    const NAME_PROVIDE_PROVISIONAL_CREDIT = 'PROVIDE_PROVISIONAL_CREDIT';
+
+    /** The partner denies dispute and must reverse the provisional credit. */
+    const NAME_DENY_DISPUTE = 'DENY_DISPUTE';
+
+    /** The partner accepts dispute and must provide permanent provisional credit to the consumer. */
+    const NAME_ACCEPT_DISPUTE = 'ACCEPT_DISPUTE';
+
+    /** The partner must write off the dispute. */
+    const NAME_WRITE_OFF = 'WRITE_OFF';
+
+    /** The action is pending and awaits partner processing. For this type of action, the partner must update the action's status after they complete the required actions. */
+    const STATUS_PENDING = 'PENDING';
+
+    /** The partner has processed the action. */
+    const STATUS_COMPLETED = 'COMPLETED';
+
+    /**
+     * @var string
+     * The ID for the action.
+     */
     public $id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The action name.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see NAME_PROVIDE_PROVISIONAL_CREDIT
+     * @see NAME_DENY_DISPUTE
+     * @see NAME_ACCEPT_DISPUTE
+     * @see NAME_WRITE_OFF
+     */
     public $name;
 
     /**
@@ -44,7 +74,14 @@ class PartnerAction implements JsonSerializable
      */
     public $due_time;
 
-    /** @var string */
+    /**
+     * @var string
+     * The status of the action.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see STATUS_PENDING
+     * @see STATUS_COMPLETED
+     */
     public $status;
 
     /**

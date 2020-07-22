@@ -14,16 +14,38 @@ class BankAccountResponse implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /** A savings account. */
+    const ACCOUNT_TYPE_SAVINGS = 'SAVINGS';
+
+    /** A checking account. */
+    const ACCOUNT_TYPE_CHECKING = 'CHECKING';
+
+    /**
+     * @var string
+     * The PayPal-generated ID for the bank account.
+     */
     public $id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The last four digits of the bank account number.
+     */
     public $last_n_chars;
 
-    /** @var string */
+    /**
+     * @var string
+     * The name of the bank to which the account is linked.
+     */
     public $bank_name;
 
-    /** @var string */
+    /**
+     * @var string
+     * The type of bank account.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see ACCOUNT_TYPE_SAVINGS
+     * @see ACCOUNT_TYPE_CHECKING
+     */
     public $account_type;
 
     /**

@@ -18,13 +18,22 @@ class BusinessPhoneDetail extends Phone implements JsonSerializable
     /** The customer service phone number. */
     const TYPE_CUSTOMER_SERVICE = 'CUSTOMER_SERVICE';
 
-    /** @var string */
+    /**
+     * @var string
+     * The name that the phone number is connected to.
+     */
     public $contact_name;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * Whether this phone number has been inactivated by the user.
+     */
     public $inactive;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * Whether this is the primary contact phone number of the user.
+     */
     public $primary;
 
     /**
@@ -36,6 +45,9 @@ class BusinessPhoneDetail extends Phone implements JsonSerializable
      */
     public $type;
 
-    /** @var array<string> */
+    /**
+     * @var array<string>
+     * Array of tags for this phone number.
+     */
     public $tags;
 }

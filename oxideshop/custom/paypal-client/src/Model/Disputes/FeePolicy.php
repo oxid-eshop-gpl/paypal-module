@@ -15,6 +15,23 @@ class FeePolicy implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /** No fee needs to be retained. */
+    const TRANSACTION_FEE_RETAIN_NO_FEE = 'RETAIN_NO_FEE';
+
+    /** All fees need to be retained. */
+    const TRANSACTION_FEE_RETAIN_ALL_FEE = 'RETAIN_ALL_FEE';
+
+    /** Fixed fee associated to the transaction needs to be retained and all other fees need to be returned. */
+    const TRANSACTION_FEE_RETAIN_FIXED_FEE = 'RETAIN_FIXED_FEE';
+
+    /**
+     * @var string
+     * Transaction fee policy.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see TRANSACTION_FEE_RETAIN_NO_FEE
+     * @see TRANSACTION_FEE_RETAIN_ALL_FEE
+     * @see TRANSACTION_FEE_RETAIN_FIXED_FEE
+     */
     public $transaction_fee;
 }

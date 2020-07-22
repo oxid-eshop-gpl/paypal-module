@@ -26,7 +26,16 @@ class ReferredDisputeSummary implements JsonSerializable
     /** The dispute is resolved. */
     const STATUS_CLOSED = 'CLOSED';
 
-    /** @var string */
+    /** A third-party claim. The dispute requires custom handling. */
+    const DISPUTE_FLOW_THIRD_PARTY_CLAIM = 'THIRD_PARTY_CLAIM';
+
+    /** A third-party dispute. The dispute does not require any special handling. Defaults to default procedures. */
+    const DISPUTE_FLOW_THIRD_PARTY_DISPUTE = 'THIRD_PARTY_DISPUTE';
+
+    /**
+     * @var string
+     * The ID of the PayPal-side dispute.
+     */
     public $dispute_id;
 
     /**
@@ -45,7 +54,10 @@ class ReferredDisputeSummary implements JsonSerializable
      */
     public $update_time;
 
-    /** @var array<ReferenceDispute> */
+    /**
+     * @var array<ReferenceDispute>
+     * The details about the partner disputes.
+     */
     public $reference_disputes;
 
     /**
@@ -76,9 +88,19 @@ class ReferredDisputeSummary implements JsonSerializable
      */
     public $status;
 
-    /** @var string */
+    /**
+     * @var string
+     * The dispute flow name.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see DISPUTE_FLOW_THIRD_PARTY_CLAIM
+     * @see DISPUTE_FLOW_THIRD_PARTY_DISPUTE
+     */
     public $dispute_flow;
 
-    /** @var array<array> */
+    /**
+     * @var array<array>
+     * An array of request-related [HATEOAS links](/docs/api/hateoas-links/).
+     */
     public $links;
 }

@@ -14,6 +14,9 @@ class AcknowledgeReturnItem implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The merchant provided notes. PayPal can but the consumer cannot view these notes.
+     */
     public $note;
 }

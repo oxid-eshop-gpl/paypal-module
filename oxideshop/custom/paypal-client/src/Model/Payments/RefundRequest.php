@@ -21,12 +21,24 @@ class RefundRequest implements JsonSerializable
      */
     public $amount;
 
-    /** @var string */
+    /**
+     * @var string
+     * The API caller-provided external invoice number for this order. Appears in both the payer's transaction
+     * history and the emails that the payer receives.
+     */
     public $invoice_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The API caller-provided external ID. Used to reconcile API caller-initiated transactions with PayPal
+     * transactions. Appears in transaction and settlement reports.
+     */
     public $custom_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The reason for the refund. Appears in both the payer's transaction history and the emails that the payer
+     * receives.
+     */
     public $note_to_payer;
 }

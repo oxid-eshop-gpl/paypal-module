@@ -23,15 +23,27 @@ class ActivityEntityInfo implements JsonSerializable
      */
     public $last_known_valid_transaction_date;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * Indicates whether the customer agreed to send the replaced card to the address associated to card.
+     */
     public $card_replacement_address_confirmed;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * Indicates whether the customer shared their card with someone else.
+     */
     public $card_shared_with_someone_else;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * Indicates whether the merchant has the customer's card details.
+     */
     public $merchant_has_card_details;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * Indicates whether the customer has changed their card settings.
+     */
     public $card_settings_changed;
 }

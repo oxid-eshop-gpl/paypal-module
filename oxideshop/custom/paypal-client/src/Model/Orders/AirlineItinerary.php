@@ -26,12 +26,26 @@ class AirlineItinerary implements JsonSerializable
      */
     public $passenger;
 
-    /** @var array<FlightLeg> */
+    /**
+     * @var array<FlightLeg>
+     * An array of the airline itinerary legs.
+     */
     public $flight_leg_details;
 
-    /** @var integer */
+    /**
+     * @var integer
+     * For direct airline integration, numeric code to identify each clearing record message in those cases where
+     * multiple clearing messages are allowed per authorized transaction. Applicable to multiple captures against an
+     * authorization. In the case of single capture against an authorization, the value should be 1. Also, this value
+     * must be less than or equal to the clearing count.
+     */
     public $clearing_sequence;
 
-    /** @var integer */
+    /**
+     * @var integer
+     * For direct airline integration, numeric code to identify the total number of multiple sequence clearing record
+     * messages associated with a single authorization request. Applicable to multiple captures against an
+     * authorization. In the case of single capture against an authorization the value should be 1.
+     */
     public $clearing_count;
 }

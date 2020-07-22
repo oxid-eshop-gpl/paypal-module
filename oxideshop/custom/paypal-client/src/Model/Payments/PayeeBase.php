@@ -30,6 +30,10 @@ class PayeeBase implements JsonSerializable
      */
     public $merchant_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The public ID for the payee- or merchant-created app. Introduced to support use cases, such as BrainTree
+     * integration with PayPal, where payee `email_address` or `merchant_id` is not available.
+     */
     public $client_id;
 }

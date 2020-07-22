@@ -14,7 +14,10 @@ class AuthorizationRequest implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The identifier of the order for this authorization.
+     */
     public $order_id;
 
     /**
@@ -40,16 +43,29 @@ class AuthorizationRequest implements JsonSerializable
      */
     public $payee;
 
-    /** @var string */
+    /**
+     * @var string
+     * Description of the authorization transaction.
+     */
     public $description;
 
-    /** @var string */
+    /**
+     * @var string
+     * The API caller-provided external ID. Used to reconcile API caller-initiated transactions with PayPal
+     * transactions. Appears in transaction and settlement reports.
+     */
     public $custom_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The API caller-provided external invoice ID for this order.
+     */
     public $invoice_id;
 
-    /** @var array<Item> */
+    /**
+     * @var array<Item>
+     * An array of items that the customer purchases from the merchant.
+     */
     public $items;
 
     /**

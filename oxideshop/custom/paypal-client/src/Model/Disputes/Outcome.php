@@ -14,10 +14,34 @@ class Outcome implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /** The customer is at fault. */
+    const FAULTY_PARTY_BUYER = 'BUYER';
+
+    /** The merchant is at fault. */
+    const FAULTY_PARTY_SELLER = 'SELLER';
+
+    /** The partner is at fault. */
+    const FAULTY_PARTY_PARTNER = 'PARTNER';
+
+    /** No specific party is at fault. */
+    const FAULTY_PARTY_NONE = 'NONE';
+
+    /**
+     * @var string
+     * The party that was at fault.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see FAULTY_PARTY_BUYER
+     * @see FAULTY_PARTY_SELLER
+     * @see FAULTY_PARTY_PARTNER
+     * @see FAULTY_PARTY_NONE
+     */
     public $faulty_party;
 
-    /** @var string */
+    /**
+     * @var string
+     * The reason for the decision.
+     */
     public $adjudication_reason;
 
     /**

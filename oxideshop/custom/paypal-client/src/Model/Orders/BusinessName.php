@@ -122,7 +122,10 @@ class BusinessName implements JsonSerializable
     /** The Yi alphabet. */
     const ORTHOGRAPHY_YIII = 'Yiii';
 
-    /** @var string */
+    /**
+     * @var string
+     * Required. The business name of the party.
+     */
     public $business_name;
 
     /**

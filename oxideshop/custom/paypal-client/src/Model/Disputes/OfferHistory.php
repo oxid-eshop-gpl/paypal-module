@@ -14,6 +14,21 @@ class OfferHistory implements JsonSerializable
 {
     use BaseModel;
 
+    /** The actor is the customer. */
+    const ACTOR_BUYER = 'BUYER';
+
+    /** The actor is the merchant. */
+    const ACTOR_SELLER = 'SELLER';
+
+    /** The merchant or customer proposed an offer. */
+    const EVENT_TYPE_PROPOSED = 'PROPOSED';
+
+    /** The merchant or customer accepted the offer. */
+    const EVENT_TYPE_ACCEPTED = 'ACCEPTED';
+
+    /** The merchant or customer rejected the offer. */
+    const EVENT_TYPE_DENIED = 'DENIED';
+
     /** The merchant must refund the customer without any item replacement or return. This offer type is valid in the chargeback phase and occurs when a merchant is willing to refund the dispute amount without any further action from customer. Omit the <code>refund_amount</code> and <code>return_shipping_address</code> parameters from the <a href="/docs/api/customer-disputes/v1/#disputes-actions_accept-claim">accept claim</a> call. */
     const OFFER_TYPE_REFUND = 'REFUND';
 
@@ -34,10 +49,25 @@ class OfferHistory implements JsonSerializable
      */
     public $offer_time;
 
-    /** @var string */
+    /**
+     * @var string
+     * The event-related actor.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see ACTOR_BUYER
+     * @see ACTOR_SELLER
+     */
     public $actor;
 
-    /** @var string */
+    /**
+     * @var string
+     * The type of the history event.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see EVENT_TYPE_PROPOSED
+     * @see EVENT_TYPE_ACCEPTED
+     * @see EVENT_TYPE_DENIED
+     */
     public $event_type;
 
     /**

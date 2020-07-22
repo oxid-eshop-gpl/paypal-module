@@ -14,6 +14,15 @@ class Product implements JsonSerializable
 {
     use BaseModel;
 
+    /** Physical goods */
+    const TYPE_PHYSICAL = 'PHYSICAL';
+
+    /** Digital goods */
+    const TYPE_DIGITAL = 'DIGITAL';
+
+    /** Product representing a service. Example: Tech Support */
+    const TYPE_SERVICE = 'SERVICE';
+
     /** A/C, Refrigeration Repair */
     const CATEGORY_AC_REFRIGERATION_REPAIR = 'AC_REFRIGERATION_REPAIR';
 
@@ -1352,16 +1361,33 @@ class Product implements JsonSerializable
     /** Women's clothing */
     const CATEGORY_WOMEN_CLOTHING = 'WOMEN_CLOTHING';
 
-    /** @var string */
+    /**
+     * @var string
+     * The ID of the product.
+     */
     public $id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The product name.
+     */
     public $name;
 
-    /** @var string */
+    /**
+     * @var string
+     * The product description.
+     */
     public $description;
 
-    /** @var string */
+    /**
+     * @var string
+     * The product type. Indicates whether the product is physical or digital goods, or a service.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see TYPE_PHYSICAL
+     * @see TYPE_DIGITAL
+     * @see TYPE_SERVICE
+     */
     public $type;
 
     /**
@@ -1818,10 +1844,16 @@ class Product implements JsonSerializable
      */
     public $category;
 
-    /** @var string */
+    /**
+     * @var string
+     * The image URL for the product.
+     */
     public $image_url;
 
-    /** @var string */
+    /**
+     * @var string
+     * The home page URL for the product.
+     */
     public $home_url;
 
     /**
@@ -1840,6 +1872,9 @@ class Product implements JsonSerializable
      */
     public $update_time;
 
-    /** @var array<array> */
+    /**
+     * @var array<array>
+     * An array of request-related [HATEOAS links](/docs/api/overview/#hateoas-links).
+     */
     public $links;
 }

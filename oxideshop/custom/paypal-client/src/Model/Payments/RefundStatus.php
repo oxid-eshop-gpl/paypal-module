@@ -14,7 +14,24 @@ class RefundStatus implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /** The refund was cancelled. */
+    const STATUS_CANCELLED = 'CANCELLED';
+
+    /** The refund is pending. For more information, see <code>status_details.reason</code>. */
+    const STATUS_PENDING = 'PENDING';
+
+    /** The funds for this transaction were debited to the customer's account. */
+    const STATUS_COMPLETED = 'COMPLETED';
+
+    /**
+     * @var string
+     * The status of the refund.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see STATUS_CANCELLED
+     * @see STATUS_PENDING
+     * @see STATUS_COMPLETED
+     */
     public $status;
 
     /**

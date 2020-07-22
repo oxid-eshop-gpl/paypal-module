@@ -41,7 +41,10 @@ class Order extends ActivityTimestamps implements JsonSerializable
     /** Some of the 'purchase_units' within the Order could not be successfully authorized or captured. This status is only applicable if you have multiple 'purchase_units' for an order. */
     const STATUS_PARTIALLY_COMPLETED = 'PARTIALLY_COMPLETED';
 
-    /** @var string */
+    /**
+     * @var string
+     * The ID of the order.
+     */
     public $id;
 
     /**
@@ -74,7 +77,12 @@ class Order extends ActivityTimestamps implements JsonSerializable
      */
     public $expiration_time;
 
-    /** @var array<PurchaseUnit> */
+    /**
+     * @var array<PurchaseUnit>
+     * An array of purchase units. Each purchase unit establishes a contract between a customer and merchant. Each
+     * purchase unit represents either a full or partial order that the customer intends to purchase from the
+     * merchant.
+     */
     public $purchase_units;
 
     /**
@@ -92,7 +100,17 @@ class Order extends ActivityTimestamps implements JsonSerializable
      */
     public $status;
 
-    /** @var array<array> */
+    /**
+     * @var array<array>
+     * An array of request-related HATEOAS links. To complete payer approval, use the `approve` link to redirect the
+     * payer. The API caller has 3 hours (default setting, this which can be changed by your account manager to
+     * 24/48/72 hours to accommodate your use case) from the time the order is created, to redirect your payer. Once
+     * redirected, the API caller has 72 hours for the payer to approve the order and either authorize or capture the
+     * order. If you are not using PayPal's Payment SDK (JS) (e.g.
+     * https://developer.paypal.com/docs/checkout/integrate/#4-set-up-the-transaction) to initiate the PayPal
+     * Checkout Experience (in context) ensure that you include application_context.return_url is specified or you
+     * will get "We're sorry, Things don't appear to be working at the moment" after the payer approves the payment.
+     */
     public $links;
 
     /**

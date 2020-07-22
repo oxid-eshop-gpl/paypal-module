@@ -26,9 +26,16 @@ class PersonAddressDetail extends AddressPortable implements JsonSerializable
      */
     public $type;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * Whether this is the primary address of the user. This cannot be directly set to `false`, but rather it is
+     * toggled `false` in the datastore when another address is set to primary.
+     */
     public $primary;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * Whether this address has been inactivated.
+     */
     public $inactive;
 }

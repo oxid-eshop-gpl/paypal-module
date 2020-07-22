@@ -62,13 +62,37 @@ class CardResponse implements JsonSerializable
     /** China union pay credit card. */
     const BRAND_CHINA_UNION_PAY = 'CHINA_UNION_PAY';
 
-    /** @var string */
+    /** A credit card. */
+    const TYPE_CREDIT = 'CREDIT';
+
+    /** A debit card. */
+    const TYPE_DEBIT = 'DEBIT';
+
+    /** A Prepaid card. */
+    const TYPE_PREPAID = 'PREPAID';
+
+    /** Card type cannot be determined. */
+    const TYPE_UNKNOWN = 'UNKNOWN';
+
+    /** A PayPal credit card. */
+    const ISSUER_PAYPAL = 'PAYPAL';
+
+    /**
+     * @var string
+     * The PayPal-generated ID for the card.
+     */
     public $id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The last digits of the payment card.
+     */
     public $last_n_chars;
 
-    /** @var string */
+    /**
+     * @var string
+     * The last digits of the payment card.
+     */
     public $last_digits;
 
     /**
@@ -95,12 +119,32 @@ class CardResponse implements JsonSerializable
      */
     public $brand;
 
-    /** @var string */
+    /**
+     * @var string
+     * The payment card type.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see TYPE_CREDIT
+     * @see TYPE_DEBIT
+     * @see TYPE_PREPAID
+     * @see TYPE_UNKNOWN
+     */
     public $type;
 
-    /** @var string */
+    /**
+     * @var string
+     * The issuer of the card instrument.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see ISSUER_PAYPAL
+     */
     public $issuer;
 
-    /** @var string */
+    /**
+     * @var string
+     * An acronym for Bank Identification Number (BIN), also known as IIN (Issuer Identification Number). It Is a
+     * standardized global numbering scheme (6 to 8 digits) used to identify a bank / institution that issued the
+     * card.
+     */
     public $bin;
 }

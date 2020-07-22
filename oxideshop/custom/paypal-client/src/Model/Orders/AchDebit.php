@@ -14,15 +14,37 @@ class AchDebit implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /** Bank account of type CHECKING. */
+    const ACCOUNT_TYPE_CHECKING = 'CHECKING';
+
+    /** Bank account of type SAVINGS. */
+    const ACCOUNT_TYPE_SAVINGS = 'SAVINGS';
+
+    /**
+     * @var string
+     * The US bank account number from which the payment will be debited.
+     */
     public $account_number;
 
-    /** @var string */
+    /**
+     * @var string
+     * The 9-digit ABA routing transit number for the bank at which the account is held.
+     */
     public $routing_number;
 
-    /** @var string */
+    /**
+     * @var string
+     * Represents the type of the bank account.  If not provided, default is CHECKING.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see ACCOUNT_TYPE_CHECKING
+     * @see ACCOUNT_TYPE_SAVINGS
+     */
     public $account_type;
 
-    /** @var string */
+    /**
+     * @var string
+     * Name of the person or business that owns the bank account.
+     */
     public $account_holder_name;
 }

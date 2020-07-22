@@ -32,6 +32,9 @@ class Buyer implements JsonSerializable
      */
     public $payer_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The customer's name.
+     */
     public $name;
 }

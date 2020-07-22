@@ -14,12 +14,21 @@ class AchDebitResponse implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The last 4 digits of the bank account number.
+     */
     public $last_digits;
 
-    /** @var string */
+    /**
+     * @var string
+     * The 9-digit ABA routing transit number for the bank at which the account is held.
+     */
     public $routing_number;
 
-    /** @var string */
+    /**
+     * @var string
+     * Name of the person or business that owns the bank account.
+     */
     public $account_holder_name;
 }

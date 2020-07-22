@@ -14,9 +14,15 @@ class PolicyDirective implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * Indicates the payment state decision. Can be ALLOW, DENY or ALLOW_WITH_HOLD.
+     */
     public $payment_decision;
 
-    /** @var array */
+    /**
+     * @var array<string>
+     * List of reasons for the payment decision.
+     */
     public $reason;
 }

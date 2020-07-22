@@ -14,7 +14,40 @@ class RegulationInfo implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /** No regulation. */
+    const REGULATION_COVERED_NONE = 'NONE';
+
+    /** E regulation. */
+    const REGULATION_COVERED_REG_E = 'REG_E';
+
+    /** Z regulation. */
+    const REGULATION_COVERED_REG_Z = 'REG_Z';
+
+    /** ZCAD regulation. */
+    const REGULATION_COVERED_REG_ZCAD = 'REG_ZCAD';
+
+    /** PPBP regulation. */
+    const REGULATION_COVERED_PPBP = 'PPBP';
+
+    /** Deferred claim regulation. */
+    const REGULATION_COVERED_DEFERRED_CLAIM = 'DEFERRED_CLAIM';
+
+    /** LUX AGGR regulation. */
+    const REGULATION_COVERED_LUX_AGGR = 'LUX_AGGR';
+
+    /**
+     * @var string
+     * The regulation under which the transaction is covered.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see REGULATION_COVERED_NONE
+     * @see REGULATION_COVERED_REG_E
+     * @see REGULATION_COVERED_REG_Z
+     * @see REGULATION_COVERED_REG_ZCAD
+     * @see REGULATION_COVERED_PPBP
+     * @see REGULATION_COVERED_DEFERRED_CLAIM
+     * @see REGULATION_COVERED_LUX_AGGR
+     */
     public $regulation_covered;
 
     /**

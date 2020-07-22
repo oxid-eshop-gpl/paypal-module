@@ -20,7 +20,10 @@ class OrderAuthorizeRequest implements JsonSerializable
      */
     public $payment_source;
 
-    /** @var string */
+    /**
+     * @var string
+     * The API caller-provided external ID for the purchase unit. Required for multiple purchase units.
+     */
     public $reference_id;
 
     /**

@@ -14,13 +14,24 @@ class AuthorizationDirectives implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var integer */
+    /**
+     * @var integer
+     * Honor period offset. This is the offset period (in seconds) starting from time of authorization after which
+     * held funds (if any) will be released automatically.
+     */
     public $honor_time_offset;
 
-    /** @var integer */
+    /**
+     * @var integer
+     * Expiry period offset. This is the offset period (in seconds) starting from time of authorization after which
+     * authorization is voided automatically.
+     */
     public $expiry_time_offset;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * Indicates if multiple captures can be allowed on an Authorization.
+     */
     public $allow_multiple_captures;
 
     /**

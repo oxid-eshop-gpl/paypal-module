@@ -47,7 +47,10 @@ class EligibilityRequestItem implements JsonSerializable
     /** Tickets for events, such as sports, concerts, and so on. */
     const CATEGORY_TICKETS = 'TICKETS';
 
-    /** @var string */
+    /**
+     * @var string
+     * The ID of the item.
+     */
     public $id;
 
     /**

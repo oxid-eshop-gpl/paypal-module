@@ -14,6 +14,24 @@ class CancellationDetails implements JsonSerializable
 {
     use BaseModel;
 
+    /** Cancelled the billing agreement. */
+    const CANCELLATION_MODE_CANCELLED_PAYPAL_BILLING_AGREEMENT = 'CANCELLED_PAYPAL_BILLING_AGREEMENT';
+
+    /** The item was cancelled on the merchant's website. */
+    const CANCELLATION_MODE_WEBSITE = 'WEBSITE';
+
+    /** The item was cancelled through either phone or fax. */
+    const CANCELLATION_MODE_PHONE = 'PHONE';
+
+    /** The item was cancelled through either email or text message. */
+    const CANCELLATION_MODE_EMAIL = 'EMAIL';
+
+    /** The item was cancelled via written communication. */
+    const CANCELLATION_MODE_WRITTEN = 'WRITTEN';
+
+    /** The item was cancelled in person. */
+    const CANCELLATION_MODE_IN_PERSON = 'IN_PERSON';
+
     /**
      * @var string
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
@@ -22,12 +40,29 @@ class CancellationDetails implements JsonSerializable
      */
     public $cancellation_date;
 
-    /** @var string */
+    /**
+     * @var string
+     * The cancellation number.
+     */
     public $cancellation_number;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * Indicates whether the dispute was canceled.
+     */
     public $cancelled;
 
-    /** @var string */
+    /**
+     * @var string
+     * Indicates the mode used for order cancellation.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see CANCELLATION_MODE_CANCELLED_PAYPAL_BILLING_AGREEMENT
+     * @see CANCELLATION_MODE_WEBSITE
+     * @see CANCELLATION_MODE_PHONE
+     * @see CANCELLATION_MODE_EMAIL
+     * @see CANCELLATION_MODE_WRITTEN
+     * @see CANCELLATION_MODE_IN_PERSON
+     */
     public $cancellation_mode;
 }

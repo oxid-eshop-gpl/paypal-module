@@ -14,7 +14,10 @@ class Transaction extends CaptureStatus implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The PayPal-generated transaction ID.
+     */
     public $id;
 
     /**

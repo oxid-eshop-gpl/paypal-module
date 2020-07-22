@@ -44,16 +44,30 @@ class ItemInfo implements JsonSerializable
     /** Other. */
     const REASON_OTHER = 'OTHER';
 
-    /** @var string */
+    /**
+     * @var string
+     * The item ID. If the merchant provides multiple pieces of evidence and the transaction has multiple item IDs,
+     * the merchant can use this value to associate a piece of evidence with an item ID.
+     */
     public $item_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The item description.
+     */
     public $item_description;
 
-    /** @var string */
+    /**
+     * @var string
+     * The count of the item in the dispute. Must be a whole number.
+     */
     public $item_quantity;
 
-    /** @var string */
+    /**
+     * @var string
+     * The ID of the transaction in the partner system. The partner transaction ID is returned at an item level
+     * because the partner might show different transactions for different items in the cart.
+     */
     public $partner_transaction_id;
 
     /**
@@ -82,6 +96,9 @@ class ItemInfo implements JsonSerializable
      */
     public $dispute_amount;
 
-    /** @var string */
+    /**
+     * @var string
+     * Any notes provided with the item.
+     */
     public $notes;
 }

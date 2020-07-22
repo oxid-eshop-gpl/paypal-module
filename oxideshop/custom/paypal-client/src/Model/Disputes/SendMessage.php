@@ -14,6 +14,9 @@ class SendMessage implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The message sent by the merchant to the other party.
+     */
     public $message;
 }

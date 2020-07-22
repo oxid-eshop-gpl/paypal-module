@@ -14,9 +14,22 @@ class LegalConsent implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /** The consent given by the customer to share their data with paypal. */
+    const TYPE_SHARE_DATA_CONSENT = 'SHARE_DATA_CONSENT';
+
+    /**
+     * @var string
+     * The type of consent. `SHARE_DATA_CONSENT` gives consent to you to share your customer's data with PayPal.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see TYPE_SHARE_DATA_CONSENT
+     */
     public $type;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * Indicates whether the customer agreed to share this type of data. To give consent, specify `true`. To withhold
+     * consent, specify `false`.
+     */
     public $granted;
 }

@@ -14,6 +14,9 @@ class SubscriptionSaveRequest implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The identifier of session for which subscription needs to be saved.
+     */
     public $token_id;
 }

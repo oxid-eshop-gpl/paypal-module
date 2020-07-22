@@ -14,7 +14,10 @@ class CardResponseWithBillingAddress extends CardResponse implements JsonSeriali
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The card holder's name as it appears on the card.
+     */
     public $name;
 
     /**

@@ -20,7 +20,10 @@ class BusinessNameDetail extends BusinessName implements JsonSerializable
     /** The legal name of the business. */
     const TYPE_LEGAL_NAME = 'LEGAL_NAME';
 
-    /** @var string */
+    /**
+     * @var string
+     * The encrypted ID for the business name.
+     */
     public $id;
 
     /**

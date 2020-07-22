@@ -40,7 +40,10 @@ class PricingDirective implements JsonSerializable
      */
     public $participant_type;
 
-    /** @var string */
+    /**
+     * @var string
+     * Account number of the preference owner.
+     */
     public $account_number;
 
     /**

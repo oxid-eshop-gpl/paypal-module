@@ -172,10 +172,17 @@ class ThreedsResult extends AuthenticationResultType implements JsonSerializable
      */
     public $card_brand;
 
-    /** @var string */
+    /**
+     * @var string
+     * This is the cardholder authentication value. The CAVV is unique to the cardholder and to the transaction that
+     * was authenticated.
+     */
     public $cavv;
 
-    /** @var string */
+    /**
+     * @var string
+     * Transaction identifier resulting from authentication processing.
+     */
     public $xid;
 
     /**
@@ -206,13 +213,22 @@ class ThreedsResult extends AuthenticationResultType implements JsonSerializable
      */
     public $pares_status;
 
-    /** @var string */
+    /**
+     * @var string
+     * The merchant name that was sent in the authentication request.
+     */
     public $merchant_name;
 
-    /** @var string */
+    /**
+     * @var string
+     * The 3DS version that was used to process the transaction.
+     */
     public $three_ds_version;
 
-    /** @var string */
+    /**
+     * @var string
+     * Unique transaction identifier assigned by the Directory Server (DS) to identify a single transaction.
+     */
     public $directory_server_transaction_id;
 
     /**
@@ -227,7 +243,10 @@ class ThreedsResult extends AuthenticationResultType implements JsonSerializable
      */
     public $authentication_type;
 
-    /** @var string */
+    /**
+     * @var string
+     * Unique transaction identifier assigned by the Access Control Server (ACS) to identify a single transaction.
+     */
     public $access_control_server_transaction_id;
 
     /**
@@ -240,10 +259,16 @@ class ThreedsResult extends AuthenticationResultType implements JsonSerializable
      */
     public $signature_verification_status;
 
-    /** @var string */
+    /**
+     * @var string
+     * The PayPal acquiring MID to be used for authorization.
+     */
     public $paypal_acquiring_mid;
 
-    /** @var string */
+    /**
+     * @var string
+     * The PayPal acquiring BIN to be used for authorization.
+     */
     public $paypal_acquiring_bin;
 
     /**
@@ -256,6 +281,9 @@ class ThreedsResult extends AuthenticationResultType implements JsonSerializable
      */
     public $cavv_algorithm;
 
-    /** @var string */
+    /**
+     * @var string
+     * Unique transaction identifier assigned by the 3DS Server to identify a single transaction.
+     */
     public $three_ds_server_transaction_id;
 }

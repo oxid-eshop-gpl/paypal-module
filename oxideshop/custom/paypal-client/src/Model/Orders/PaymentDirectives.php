@@ -48,13 +48,23 @@ class PaymentDirectives implements JsonSerializable
      */
     public $disbursement_type;
 
-    /** @var string */
+    /**
+     * @var string
+     * Identifier that links the transactions to be treated as one atomic unit for payment processing. All-or-none
+     * policy is enforced by this identifier.
+     */
     public $linked_group_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * Settlement account number where the funds finally get settled to.
+     */
     public $settlement_account_number;
 
-    /** @var string */
+    /**
+     * @var string
+     * Loss account number used for recovery of loss.
+     */
     public $loss_account_number;
 
     /**
@@ -67,19 +77,34 @@ class PaymentDirectives implements JsonSerializable
      */
     public $liability_type;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * Special deny setting to force decline a (compliance) pending transaction.
+     */
     public $special_deny;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * A directive to allow or deny transactions with duplicate invoice id (for the receiver account).
+     */
     public $allow_duplicate_invoice_id;
 
-    /** @var array<PolicyDirective> */
+    /**
+     * @var array<PolicyDirective>
+     * Policy directives indicating how to process the payment.
+     */
     public $policy_directives;
 
-    /** @var array<PaymentMethodDirective> */
+    /**
+     * @var array<PaymentMethodDirective>
+     * Directives for certain payment methods based on eligibility.
+     */
     public $payment_method_directives;
 
-    /** @var array<PricingDirective> */
+    /**
+     * @var array<PricingDirective>
+     * Pricing directives for the transaction.
+     */
     public $pricing_directives;
 
     /**
@@ -100,6 +125,10 @@ class PaymentDirectives implements JsonSerializable
      */
     public $currency_receiving_directive;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * Flag to indicate if immediate payment is required. A directive to fail the transaction if the payment goes to
+     * a pending state.
+     */
     public $immediate_payment_required;
 }

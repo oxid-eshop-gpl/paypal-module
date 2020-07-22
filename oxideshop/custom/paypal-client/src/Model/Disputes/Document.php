@@ -14,9 +14,15 @@ class Document implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The document name.
+     */
     public $name;
 
-    /** @var string */
+    /**
+     * @var string
+     * The document URI.
+     */
     public $url;
 }

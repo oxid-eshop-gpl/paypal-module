@@ -20,7 +20,10 @@ class BusinessEntity extends Business implements JsonSerializable
      */
     public $beneficial_owners;
 
-    /** @var array<OfficeBearer> */
+    /**
+     * @var array<OfficeBearer>
+     * List of Directors present as part of the business entity.
+     */
     public $office_bearers;
 
     /**
@@ -35,6 +38,9 @@ class BusinessEntity extends Business implements JsonSerializable
      */
     public $average_monthly_volume_range;
 
-    /** @var string */
+    /**
+     * @var string
+     * The business goals description. For example, a mission statement.
+     */
     public $business_description;
 }

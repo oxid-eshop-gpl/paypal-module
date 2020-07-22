@@ -21,6 +21,12 @@ class Money implements JsonSerializable
      */
     public $currency_code;
 
-    /** @var string */
+    /**
+     * @var string
+     * The value, which might be:<ul><li>An integer for currencies like `JPY` that are not typically
+     * fractional.</li><li>A decimal fraction for currencies like `TND` that are subdivided into
+     * thousandths.</li></ul>For the required number of decimal places for a currency code, see [Currency codes - ISO
+     * 4217](https://www.iso.org/iso-4217-currency-codes.html).
+     */
     public $value;
 }

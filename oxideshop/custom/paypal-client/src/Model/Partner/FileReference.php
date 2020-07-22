@@ -14,13 +14,23 @@ class FileReference implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The ID of the referenced file.
+     */
     public $id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The reference URL for the file.
+     */
     public $reference_url;
 
-    /** @var string */
+    /**
+     * @var string
+     * The [Internet Assigned Numbers Authority (IANA) media type of the
+     * file](https://www.iana.org/assignments/media-types/media-types.xhtml).
+     */
     public $content_type;
 
     /**
@@ -31,6 +41,9 @@ class FileReference implements JsonSerializable
      */
     public $create_time;
 
-    /** @var string */
+    /**
+     * @var string
+     * The size of the file, in bytes.
+     */
     public $size;
 }

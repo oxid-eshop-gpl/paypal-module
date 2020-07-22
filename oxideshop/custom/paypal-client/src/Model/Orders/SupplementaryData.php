@@ -14,7 +14,10 @@ class SupplementaryData implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var array<AirlineItinerary> */
+    /**
+     * @var array<AirlineItinerary>
+     * An array of airline itineraries' data, including ticket, passenger, and airline details.
+     */
     public $airline;
 
     /**

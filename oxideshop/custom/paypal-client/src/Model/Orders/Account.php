@@ -23,7 +23,10 @@ class Account implements JsonSerializable
     /** PayPal Premier account. */
     const TIER_PREMIER = 'PREMIER';
 
-    /** @var string */
+    /**
+     * @var string
+     * Unique account number.
+     */
     public $account_number;
 
     /**
@@ -45,7 +48,11 @@ class Account implements JsonSerializable
      */
     public $tier;
 
-    /** @var string */
+    /**
+     * @var string
+     * The registration_type fields represents how the account was created. Currently supported values are FULL,
+     * GUEST, ANONYMOUS. For more information about the meaning of each registration type, refer to the UserGuide.
+     */
     public $registration_type;
 
     /**
@@ -58,16 +65,30 @@ class Account implements JsonSerializable
      */
     public $legal_country_code;
 
-    /** @var array */
+    /**
+     * @var array<string>
+     * Array of tags stored for the account in User domain by other clients Eg: YOUTH_ACCOUNT, RESTRICTED, WAX_USER,
+     * MASSPAY_ENABLED etc.
+     */
     public $account_tags;
 
-    /** @var string */
+    /**
+     * @var string
+     * Status of account like OPEN, or CLOSED. For paypal accounts, the status is defined by User domain.
+     */
     public $status;
 
-    /** @var string */
+    /**
+     * @var string
+     * Pricing category for the account as defined by PalPal pricing.
+     */
     public $pricing_category;
 
-    /** @var string */
+    /**
+     * @var string
+     * The account's legal PayPal entity Eg: INC, EUROPE, CHINA etc. For paypal accounts, it is defined by User
+     * domain.
+     */
     public $legal_entity;
 
     /**

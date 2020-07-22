@@ -15,6 +15,9 @@ class RollOutStrategy implements JsonSerializable
 {
     use BaseModel;
 
+    /** The pricing change takes effect from the next billing payment after the effective time. */
+    const PROCESS_CHANGE_FROM_NEXT_PAYMENT = 'NEXT_PAYMENT';
+
     /**
      * @var string
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
@@ -23,6 +26,14 @@ class RollOutStrategy implements JsonSerializable
      */
     public $effective_time;
 
-    /** @var string */
+    /**
+     * @var string
+     * The date and time when this pricing change goes into effect, in [Internet date and time
+     * format](https://tools.ietf.org/html/rfc3339#section-5.6). Applies only if the plan's pricing scheme is
+     * updated.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see PROCESS_CHANGE_FROM_NEXT_PAYMENT
+     */
     public $process_change_from;
 }

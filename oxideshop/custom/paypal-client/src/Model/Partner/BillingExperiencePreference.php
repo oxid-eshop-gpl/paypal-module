@@ -14,9 +14,15 @@ class BillingExperiencePreference implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The ID of the payment web experience profile.
+     */
     public $experience_id;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * Indicates whether the partner has already displayed the billing context to the seller.
+     */
     public $billing_context_set;
 }

@@ -28,6 +28,10 @@ class ExchangeRate implements JsonSerializable
      */
     public $target_currency;
 
-    /** @var string */
+    /**
+     * @var string
+     * The target currency amount. Equivalent to one unit of the source currency. Formatted as integer or decimal
+     * value with one to 15 digits to the right of the decimal point.
+     */
     public $value;
 }

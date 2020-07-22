@@ -14,13 +14,22 @@ class ProductCollectionElement implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The ID of the product.
+     */
     public $id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The product name.
+     */
     public $name;
 
-    /** @var string */
+    /**
+     * @var string
+     * The product description.
+     */
     public $description;
 
     /**
@@ -31,6 +40,9 @@ class ProductCollectionElement implements JsonSerializable
      */
     public $create_time;
 
-    /** @var array<array> */
+    /**
+     * @var array<array>
+     * An array of request-related [HATEOAS links](/docs/api/overview/#hateoas-links).
+     */
     public $links;
 }

@@ -14,6 +14,19 @@ class Adjudicate implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /** Resolves the case in the customer's favor. Outcome is set to <code>RESOLVED_BUYER_FAVOR</code>. */
+    const ADJUDICATION_OUTCOME_BUYER_FAVOR = 'BUYER_FAVOR';
+
+    /** Resolves the case in the merchant's favor. Outcome is set to <code>RESOLVED_SELLER_FAVOR</code>. */
+    const ADJUDICATION_OUTCOME_SELLER_FAVOR = 'SELLER_FAVOR';
+
+    /**
+     * @var string
+     * The outcome of the adjudication.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see ADJUDICATION_OUTCOME_BUYER_FAVOR
+     * @see ADJUDICATION_OUTCOME_SELLER_FAVOR
+     */
     public $adjudication_outcome;
 }

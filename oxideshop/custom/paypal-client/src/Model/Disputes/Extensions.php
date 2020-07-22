@@ -39,7 +39,10 @@ class Extensions implements JsonSerializable
     /** The merchant was contacted in person. */
     const MERCHANT_CONTACTED_MODE_IN_PERSON = 'IN_PERSON';
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * Indicates that the merchant was contacted.
+     */
     public $merchant_contacted;
 
     /**

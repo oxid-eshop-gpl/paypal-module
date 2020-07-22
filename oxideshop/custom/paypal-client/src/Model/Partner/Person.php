@@ -14,13 +14,22 @@ class Person implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The encrypted party ID.
+     */
     public $id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The internal PayPal party ID.
+     */
     public $party_id;
 
-    /** @var array<PersonName> */
+    /**
+     * @var array<PersonName>
+     * The name of the person.
+     */
     public $names;
 
     /**
@@ -33,10 +42,16 @@ class Person implements JsonSerializable
      */
     public $citizenship;
 
-    /** @var array<PersonAddressDetail> */
+    /**
+     * @var array<PersonAddressDetail>
+     * The list of addresses associated with the person.
+     */
     public $addresses;
 
-    /** @var array<PersonPhoneDetail> */
+    /**
+     * @var array<PersonPhoneDetail>
+     * The list of phone numbers associated with the person.
+     */
     public $phones;
 
     /**
@@ -45,6 +60,10 @@ class Person implements JsonSerializable
      */
     public $birth_details;
 
-    /** @var array<PersonDocument> */
+    /**
+     * @var array<PersonDocument>
+     * A person's or party's related document data collected from the customer. For example SSN, ITIN, or business
+     * registration number collected from the user.
+     */
     public $documents;
 }

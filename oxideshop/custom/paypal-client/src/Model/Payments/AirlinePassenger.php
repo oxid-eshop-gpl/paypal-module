@@ -39,6 +39,10 @@ class AirlinePassenger implements JsonSerializable
      */
     public $country_code;
 
-    /** @var string */
+    /**
+     * @var string
+     * The card holder-supplied code to the merchant. Can be used for passing in the frequent flyer number of the
+     * customer.
+     */
     public $customer_code;
 }

@@ -39,6 +39,11 @@ class Verkkopankki implements JsonSerializable
      */
     public $country_code;
 
-    /** @var string */
+    /**
+     * @var string
+     * The name of the bank used to fund this payment. Valid bank names at the moment are Aktia, Danske Bank,
+     * Handelsbanken, Nordea, Oma Säästöpankki, Osuuspankki, POP Pankki, S-Pankki, Säästöpankki,
+     * Ålandsbanken.
+     */
     public $bank_name;
 }

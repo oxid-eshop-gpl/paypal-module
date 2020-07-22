@@ -33,7 +33,10 @@ class ReferralData extends Account implements JsonSerializable
      */
     public $preferred_language_code;
 
-    /** @var string */
+    /**
+     * @var string
+     * The partner's unique identifier for this customer in their system which can be used to track user in PayPal.
+     */
     public $tracking_id;
 
     /**
@@ -49,12 +52,22 @@ class ReferralData extends Account implements JsonSerializable
      */
     public $financial_instruments;
 
-    /** @var array<Operation> */
+    /**
+     * @var array<Operation>
+     * An array of operations to perform for the customer while they share their data.
+     */
     public $operations;
 
-    /** @var array<string> */
+    /**
+     * @var array<string>
+     * An array of PayPal products to which the partner wants to onboard the customer.
+     */
     public $products;
 
-    /** @var array<LegalConsent> */
+    /**
+     * @var array<LegalConsent>
+     * An array of all consents that the partner has received from this seller. If `SHARE_DATA_CONSENT` is not
+     * granted, PayPal does not store customer data.
+     */
     public $legal_consents;
 }

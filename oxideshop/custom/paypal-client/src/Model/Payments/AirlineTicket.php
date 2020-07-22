@@ -14,7 +14,10 @@ class AirlineTicket implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The airline-issued ticket number or ID.
+     */
     public $number;
 
     /**
@@ -26,16 +29,29 @@ class AirlineTicket implements JsonSerializable
      */
     public $issue_date;
 
-    /** @var string */
+    /**
+     * @var string
+     * The carrier code of the ticket issuer.
+     */
     public $issuing_carrier_code;
 
-    /** @var string */
+    /**
+     * @var string
+     * The name of the travel agency that issued the ticket.
+     */
     public $travel_agency_name;
 
-    /** @var string */
+    /**
+     * @var string
+     * The IATA number, also ARC number or ARC/IATA number. The unique code or number for the travel agency that
+     * issued this ticket.
+     */
     public $travel_agency_code;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * Indicates whether the ticket is restricted.
+     */
     public $restricted_ticket;
 
     /**

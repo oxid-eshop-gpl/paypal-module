@@ -34,12 +34,21 @@ class Facilitator extends Participant implements JsonSerializable
      */
     public $type;
 
-    /** @var string */
+    /**
+     * @var string
+     * OAuth 2.0 client_id of the facilitator app.
+     */
     public $client_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * A String Integration Identifier to identify a partner in the ecosystem.
+     */
     public $integration_identifier;
 
-    /** @var array */
+    /**
+     * @var array<string>
+     * List of (business)segments the actor operates in.
+     */
     public $segments;
 }

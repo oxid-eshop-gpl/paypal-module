@@ -14,10 +14,16 @@ class ReferralDataResponse implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The ID to access the customer's data shared by the partner with PayPal.
+     */
     public $partner_referral_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The payer ID of the partner who shared the referral data.
+     */
     public $submitter_payer_id;
 
     /**
@@ -26,6 +32,9 @@ class ReferralDataResponse implements JsonSerializable
      */
     public $referral_data;
 
-    /** @var array<array> */
+    /**
+     * @var array<array>
+     * An array of request-related [HATEOAS links](/docs/api/overview/#hateoas-links).
+     */
     public $links;
 }

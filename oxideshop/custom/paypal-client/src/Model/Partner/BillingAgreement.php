@@ -14,7 +14,10 @@ class BillingAgreement implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The billing agreement description.
+     */
     public $description;
 
     /**
@@ -23,12 +26,21 @@ class BillingAgreement implements JsonSerializable
      */
     public $billing_experience_preference;
 
-    /** @var string */
+    /**
+     * @var string
+     * The custom data for the billing agreement.
+     */
     public $merchant_custom_data;
 
-    /** @var string */
+    /**
+     * @var string
+     * The URL to which to redirect seller to accept the billing agreement.
+     */
     public $approval_url;
 
-    /** @var string */
+    /**
+     * @var string
+     * The billing agreement token for the agreement.
+     */
     public $ec_token;
 }

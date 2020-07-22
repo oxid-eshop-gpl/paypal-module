@@ -14,7 +14,13 @@ class PurchaseUnit implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The API caller-provided external ID for the purchase unit. Required for multiple purchase units when you must
+     * update the order through `PATCH`. If you omit this value and the order contains only one purchase unit, PayPal
+     * sets this value to `default`. <blockquote><strong>Note:</strong> If there are multiple purchase units,
+     * <code>reference_id</code> is required for each purchase unit.</blockquote>
+     */
     public $reference_id;
 
     /**
@@ -42,22 +48,53 @@ class PurchaseUnit implements JsonSerializable
      */
     public $payment_instruction;
 
-    /** @var string */
+    /**
+     * @var string
+     * The purchase description.
+     */
     public $description;
 
-    /** @var string */
+    /**
+     * @var string
+     * The API caller-provided external ID. Used to reconcile API caller-initiated transactions with PayPal
+     * transactions. Appears in transaction and settlement reports.
+     */
     public $custom_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The API caller-provided external invoice ID for this order.
+     */
     public $invoice_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The PayPal-generated ID for the purchase unit. This ID appears in both the payer's transaction history and the
+     * emails that the payer receives. In addition, this ID is available in transaction and settlement reports that
+     * merchants and API callers can use to reconcile transactions. This ID is only available when an order is saved
+     * by calling <code>v2/checkout/orders/id/save</code>.
+     */
     public $id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The payment descriptor on account transactions on the customer's credit card statement, that PayPal sends to
+     * processors. The maximum length of the soft descriptor information that you can pass in the API field is 22
+     * characters, in the following format:<pre>22 - len(PAYPAL * (8)) - len(<var>Descriptor in Payment Receiving
+     * Preferences of Merchant account</var> + 1)</pre>The PAYPAL prefix uses 8 characters.<br/><br/>The soft
+     * descriptor supports the following ASCII characters:<ul><li>Alphanumeric
+     * characters</li><li>Dashes</li><li>Asterisks</li><li>Periods (.)</li><li>Spaces</li></ul>For Wallet payments
+     * marketplace integrations:<ul><li>The merchant descriptor in the Payment Receiving Preferences must be the
+     * marketplace name.</li><li>You can't use the remaining space to show the customer service number.</li><li>The
+     * remaining spaces can be a combination of seller name and country.</li></ul><br/>For unbranded payments (Direct
+     * Card) marketplace integrations, use a combination of the seller name and phone number.
+     */
     public $soft_descriptor;
 
-    /** @var array<Item> */
+    /**
+     * @var array<Item>
+     * An array of items that the customer purchases from the merchant.
+     */
     public $items;
 
     /**

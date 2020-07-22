@@ -14,13 +14,22 @@ class UnauthorizedDisputeProperties implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * Indicates whether the customer changed their password after a spoof incident.
+     */
     public $password_changed;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * Indicates whether the customer changed their PIN after a spoof incident.
+     */
     public $pin_changed;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * Indicates whether the customer changed their answers to security questions after a spoof incident.
+     */
     public $security_questions_changed;
 
     /**
@@ -31,6 +40,9 @@ class UnauthorizedDisputeProperties implements JsonSerializable
      */
     public $review_sla;
 
-    /** @var array */
+    /**
+     * @var array<string>
+     * An array of transaction IDs that the user reported as unauthorized but that PayPal rejected.
+     */
     public $rejected_dispute_transactions;
 }

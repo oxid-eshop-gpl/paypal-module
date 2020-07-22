@@ -33,6 +33,9 @@ class BusinessIncorporation implements JsonSerializable
      */
     public $incorporation_date;
 
-    /** @var string */
+    /**
+     * @var string
+     * The province of incorporation.
+     */
     public $incorporation_province_code;
 }

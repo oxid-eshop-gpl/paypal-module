@@ -14,10 +14,30 @@ class ProductDetails implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /** The product was received. */
+    const PRODUCT_RECEIVED_YES = 'YES';
+
+    /** The product was not received. */
+    const PRODUCT_RECEIVED_NO = 'NO';
+
+    /** The product was returned. */
+    const PRODUCT_RECEIVED_RETURNED = 'RETURNED';
+
+    /**
+     * @var string
+     * The product description.
+     */
     public $description;
 
-    /** @var string */
+    /**
+     * @var string
+     * Indicates whether the product was, or was not, received or returned.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see PRODUCT_RECEIVED_YES
+     * @see PRODUCT_RECEIVED_NO
+     * @see PRODUCT_RECEIVED_RETURNED
+     */
     public $product_received;
 
     /**
@@ -28,10 +48,16 @@ class ProductDetails implements JsonSerializable
      */
     public $product_received_time;
 
-    /** @var array */
+    /**
+     * @var array<string>
+     * An array of sub-reasons for the product issue.
+     */
     public $sub_reasons;
 
-    /** @var string */
+    /**
+     * @var string
+     * The URL where the customer purchased the product.
+     */
     public $purchase_url;
 
     /**

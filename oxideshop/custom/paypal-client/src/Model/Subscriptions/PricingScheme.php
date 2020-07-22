@@ -14,10 +14,36 @@ class PricingScheme implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var integer */
+    /** The pricing scheme change is in progress. */
+    const STATUS_IN_PROGRESS = 'IN_PROGRESS';
+
+    /** The pricing scheme change is active. */
+    const STATUS_ACTIVE = 'ACTIVE';
+
+    /** The pricing scheme is inactive. */
+    const STATUS_INACTIVE = 'INACTIVE';
+
+    /** A volume-tiered model. */
+    const TIER_MODE_VOLUME = 'VOLUME';
+
+    /** A graduated-tiered model. */
+    const TIER_MODE_GRADUATED = 'GRADUATED';
+
+    /**
+     * @var integer
+     * The version of the pricing scheme.
+     */
     public $version;
 
-    /** @var string */
+    /**
+     * @var string
+     * The status of the pricing scheme.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see STATUS_IN_PROGRESS
+     * @see STATUS_ACTIVE
+     * @see STATUS_INACTIVE
+     */
     public $status;
 
     /**
@@ -26,10 +52,21 @@ class PricingScheme implements JsonSerializable
      */
     public $fixed_price;
 
-    /** @var string */
+    /**
+     * @var string
+     * The pricing model for tiered plan. The `tiers` parameter is required.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see TIER_MODE_VOLUME
+     * @see TIER_MODE_GRADUATED
+     */
     public $tier_mode;
 
-    /** @var array<PricingTier> */
+    /**
+     * @var array<PricingTier>
+     * An array of pricing tiers which are used for billing volume/graduated plans. tier_mode field has to be
+     * specified.
+     */
     public $tiers;
 
     /**

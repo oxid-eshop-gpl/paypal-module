@@ -14,19 +14,34 @@ class PaymentUnit implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * Unique Identifier for this payment unit scoped in current order.
+     */
     public $reference_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * Reference Id of the parent payment unit.
+     */
     public $parent_reference_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * Idempotency Id for the payment.
+     */
     public $idempotency_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * BN Code or Partner Attribution Id used for revenue attribution.
+     */
     public $partner_attribution_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * Payment Category PHYSICAL_GOODS, DIGITAL_GOODS, DONATIONS, PLATFORM_FEE Etc.
+     */
     public $payment_category;
 
     /**
@@ -40,7 +55,10 @@ class PaymentUnit implements JsonSerializable
      */
     public $amount;
 
-    /** @var array<Item> */
+    /**
+     * @var array<Item>
+     * List of purchase items.
+     */
     public $items;
 
     /**
@@ -49,16 +67,28 @@ class PaymentUnit implements JsonSerializable
      */
     public $shipping_details;
 
-    /** @var string */
+    /**
+     * @var string
+     * Free-form field for the use of clients.
+     */
     public $custom_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * Description of what is being paid for.
+     */
     public $description;
 
-    /** @var string */
+    /**
+     * @var string
+     * Invoice id to track this payment.
+     */
     public $invoice_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * Payment schedule category. Eg: FIRST_RECURRING, SUBSEQUENT_RECURRING, INSTALLMENT, UNSCHEDULED Etc.
+     */
     public $payment_schedule_category;
 
     /**
@@ -67,10 +97,19 @@ class PaymentUnit implements JsonSerializable
      */
     public $soft_descriptor_details;
 
-    /** @var string */
+    /**
+     * @var string
+     * The name of the originator company used in ACH settlement. While processing bank transactions as a third party
+     * processor, clients sending transactions to PayPal may or may not provide this info.
+     */
     public $biller_company_name;
 
-    /** @var string */
+    /**
+     * @var string
+     * The Id of the originator company used in ACH settlement. While processing bank transactions as a third party
+     * processor, clients sending transactions to PayPal may or may not provide this info. This Id is assigned by the
+     * banks to originator.
+     */
     public $biller_company_id;
 
     /**
@@ -79,7 +118,11 @@ class PaymentUnit implements JsonSerializable
      */
     public $odfi_details;
 
-    /** @var array<PaymentContextAttribute> */
+    /**
+     * @var array<PaymentContextAttribute>
+     * List of context attributes usually used to lookup as an alternative id or provides a relative context for a
+     * payment.
+     */
     public $context_attributes;
 
     /**

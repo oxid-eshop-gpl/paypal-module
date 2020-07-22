@@ -14,12 +14,21 @@ class ExtensionsTransactionHoldInfo implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * Indicates whether a temporary hold must be placed on the transaction.
+     */
     public $hold_required;
 
-    /** @var string */
+    /**
+     * @var string
+     * The temporary hold ID.
+     */
     public $id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The reason for the temporary hold on the dispute.
+     */
     public $reason;
 }

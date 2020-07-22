@@ -14,10 +14,70 @@ class TransactionInfo implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /** The transaction processing completed. */
+    const TRANSACTION_STATUS_COMPLETED = 'COMPLETED';
+
+    /** The items in the transaction are unclaimed. If they are not claimed within 30 days, the funds are returned to the sender. */
+    const TRANSACTION_STATUS_UNCLAIMED = 'UNCLAIMED';
+
+    /** The transaction was denied. */
+    const TRANSACTION_STATUS_DENIED = 'DENIED';
+
+    /** The transaction failed. */
+    const TRANSACTION_STATUS_FAILED = 'FAILED';
+
+    /** The transaction is on hold. */
+    const TRANSACTION_STATUS_HELD = 'HELD';
+
+    /** The transaction is waiting to be processed. */
+    const TRANSACTION_STATUS_PENDING = 'PENDING';
+
+    /** The payment for the transaction was partially refunded. */
+    const TRANSACTION_STATUS_PARTIALLY_REFUNDED = 'PARTIALLY_REFUNDED';
+
+    /** The payment for the transaction was successfully refunded. */
+    const TRANSACTION_STATUS_REFUNDED = 'REFUNDED';
+
+    /** The payment for the transaction was reversed due to a chargeback or other reversal type. */
+    const TRANSACTION_STATUS_REVERSED = 'REVERSED';
+
+    /** The transaction is cancelled. */
+    const TRANSACTION_STATUS_CANCELLED = 'CANCELLED';
+
+    /** Merchants are covered under seller protection provided they have responded with valid evidence. */
+    const SELLER_PROTECTION_TYPE_EXPANDED_SELLER_PROTECTION = 'EXPANDED_SELLER_PROTECTION';
+
+    /** Merchants are eligible for seller protection irrespective of them responding with the proof of shipment/delivery. */
+    const SELLER_PROTECTION_TYPE_EFFORTLESS_SELLER_PROTECTION = 'EFFORTLESS_SELLER_PROTECTION';
+
+    /** Merchants are protected in the subsequent case if an internal case is communicated as resolved in merchant favor. */
+    const SELLER_PROTECTION_TYPE_DOUBLE_JEOPARDY_PROTECTION = 'DOUBLE_JEOPARDY_PROTECTION';
+
+    /** Not applicable. */
+    const PROVISIONAL_CREDIT_STATUS_NOT_APPLICABLE = 'NOT_APPLICABLE';
+
+    /** The provisional credit was applied. */
+    const PROVISIONAL_CREDIT_STATUS_APPLIED = 'APPLIED';
+
+    /** The provisional credit was not applied. */
+    const PROVISIONAL_CREDIT_STATUS_NOT_APPLIED = 'NOT_APPLIED';
+
+    /** The provisional credit was refunded. */
+    const PROVISIONAL_CREDIT_STATUS_REVERSED = 'REVERSED';
+
+    /** The provisional credit in pending debit. */
+    const PROVISIONAL_CREDIT_STATUS_PENDING_DEBIT = 'PENDING_DEBIT';
+
+    /**
+     * @var string
+     * The ID, as seen by the customer, for this transaction.
+     */
     public $buyer_transaction_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The ID, as seen by the merchant, for this transaction.
+     */
     public $seller_transaction_id;
 
     /**
@@ -28,7 +88,22 @@ class TransactionInfo implements JsonSerializable
      */
     public $create_time;
 
-    /** @var string */
+    /**
+     * @var string
+     * The transaction status.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see TRANSACTION_STATUS_COMPLETED
+     * @see TRANSACTION_STATUS_UNCLAIMED
+     * @see TRANSACTION_STATUS_DENIED
+     * @see TRANSACTION_STATUS_FAILED
+     * @see TRANSACTION_STATUS_HELD
+     * @see TRANSACTION_STATUS_PENDING
+     * @see TRANSACTION_STATUS_PARTIALLY_REFUNDED
+     * @see TRANSACTION_STATUS_REFUNDED
+     * @see TRANSACTION_STATUS_REVERSED
+     * @see TRANSACTION_STATUS_CANCELLED
+     */
     public $transaction_status;
 
     /**
@@ -37,10 +112,16 @@ class TransactionInfo implements JsonSerializable
      */
     public $gross_amount;
 
-    /** @var string */
+    /**
+     * @var string
+     * The ID of the invoice for the payment.
+     */
     public $invoice_number;
 
-    /** @var string */
+    /**
+     * @var string
+     * A free-text field that is entered by the merchant during checkout.
+     */
     public $custom;
 
     /**
@@ -63,13 +144,27 @@ class TransactionInfo implements JsonSerializable
      */
     public $facilitator;
 
-    /** @var array<ItemInfo> */
+    /**
+     * @var array<ItemInfo>
+     * An array of items that were purchased as part of the transaction.
+     */
     public $items;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * Indicates whether the merchant is eligible for protection on the disputed transaction.
+     */
     public $seller_protection_eligible;
 
-    /** @var string */
+    /**
+     * @var string
+     * Indicates the type of protection the merchant is eligible on the disputed transaction.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see SELLER_PROTECTION_TYPE_EXPANDED_SELLER_PROTECTION
+     * @see SELLER_PROTECTION_TYPE_EFFORTLESS_SELLER_PROTECTION
+     * @see SELLER_PROTECTION_TYPE_DOUBLE_JEOPARDY_PROTECTION
+     */
     public $seller_protection_type;
 
     /**
@@ -78,6 +173,16 @@ class TransactionInfo implements JsonSerializable
      */
     public $regulation_info;
 
-    /** @var string */
+    /**
+     * @var string
+     * The provisional credit status.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see PROVISIONAL_CREDIT_STATUS_NOT_APPLICABLE
+     * @see PROVISIONAL_CREDIT_STATUS_APPLIED
+     * @see PROVISIONAL_CREDIT_STATUS_NOT_APPLIED
+     * @see PROVISIONAL_CREDIT_STATUS_REVERSED
+     * @see PROVISIONAL_CREDIT_STATUS_PENDING_DEBIT
+     */
     public $provisional_credit_status;
 }

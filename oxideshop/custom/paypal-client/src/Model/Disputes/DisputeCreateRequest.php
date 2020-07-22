@@ -73,7 +73,10 @@ class DisputeCreateRequest implements JsonSerializable
      */
     public $reference_dispute;
 
-    /** @var array<Evidence> */
+    /**
+     * @var array<Evidence>
+     * An array of partner-submitted evidence documents, such as tracking information.
+     */
     public $evidences;
 
     /**
@@ -102,6 +105,9 @@ class DisputeCreateRequest implements JsonSerializable
      */
     public $sub_reason;
 
-    /** @var array<Message> */
+    /**
+     * @var array<Message>
+     * An array of customer- or merchant-posted messages.
+     */
     public $messages;
 }

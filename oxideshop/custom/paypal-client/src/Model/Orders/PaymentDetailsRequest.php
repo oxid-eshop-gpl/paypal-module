@@ -20,6 +20,11 @@ class PaymentDetailsRequest implements JsonSerializable
      */
     public $payment_source;
 
-    /** @var array<UpdatePurchaseUnitRequest> */
+    /**
+     * @var array<UpdatePurchaseUnitRequest>
+     * An array of purchase units. Each purchase unit establishes a contract between a customer and merchant. Each
+     * purchase unit represents either a full or partial order that the customer intends to purchase from the
+     * merchant.
+     */
     public $purchase_units;
 }

@@ -43,6 +43,9 @@ class Bancontact implements JsonSerializable
      */
     public $iban_last_chars;
 
-    /** @var string */
+    /**
+     * @var string
+     * The last digits of the card used to fund the Bancontact payment.
+     */
     public $card_last_digits;
 }

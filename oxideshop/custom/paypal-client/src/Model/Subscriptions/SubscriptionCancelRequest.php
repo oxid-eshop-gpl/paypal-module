@@ -14,6 +14,9 @@ class SubscriptionCancelRequest implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The reason for the cancellation of a subscription.
+     */
     public $reason;
 }

@@ -15,12 +15,21 @@ class BusinessCategory implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * Industry standard category code of business.
+     */
     public $category;
 
-    /** @var string */
+    /**
+     * @var string
+     * Industry standard sub category of business.
+     */
     public $sub_category;
 
-    /** @var string */
+    /**
+     * @var string
+     * Industry standard merchant category code of business.
+     */
     public $mcc_code;
 }

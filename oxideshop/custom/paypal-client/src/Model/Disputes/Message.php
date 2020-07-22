@@ -14,7 +14,24 @@ class Message implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /** The customer posted the message. */
+    const POSTED_BY_BUYER = 'BUYER';
+
+    /** The merchant posted the message. */
+    const POSTED_BY_SELLER = 'SELLER';
+
+    /** The arbiter of the dispute posted the message. */
+    const POSTED_BY_ARBITER = 'ARBITER';
+
+    /**
+     * @var string
+     * Indicates whether the customer, merchant, or dispute arbiter posted the message.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see POSTED_BY_BUYER
+     * @see POSTED_BY_SELLER
+     * @see POSTED_BY_ARBITER
+     */
     public $posted_by;
 
     /**
@@ -25,6 +42,9 @@ class Message implements JsonSerializable
      */
     public $time_posted;
 
-    /** @var string */
+    /**
+     * @var string
+     * The message text.
+     */
     public $content;
 }

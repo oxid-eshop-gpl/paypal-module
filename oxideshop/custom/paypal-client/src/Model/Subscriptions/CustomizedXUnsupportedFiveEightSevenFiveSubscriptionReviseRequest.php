@@ -16,10 +16,16 @@ class CustomizedXUnsupportedFiveEightSevenFiveSubscriptionReviseRequest implemen
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The unique PayPal-generated ID for the plan.
+     */
     public $plan_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The quantity of the product or service in the subscription.
+     */
     public $quantity;
 
     /**

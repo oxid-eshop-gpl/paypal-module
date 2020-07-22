@@ -14,9 +14,15 @@ class BeneficialOwners implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var array<IndividualBeneficialOwner> */
+    /**
+     * @var array<IndividualBeneficialOwner>
+     * Individual beneficial owners.
+     */
     public $individual_beneficial_owners;
 
-    /** @var array<BusinessBeneficialOwner> */
+    /**
+     * @var array<BusinessBeneficialOwner>
+     * Business beneficial owners.
+     */
     public $business_beneficial_owners;
 }

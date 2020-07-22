@@ -50,7 +50,10 @@ class ExistingDispute implements JsonSerializable
     /** The dispute is resolved. */
     const STATUS_CLOSED = 'CLOSED';
 
-    /** @var string */
+    /**
+     * @var string
+     * The ID of the PayPal-side dispute.
+     */
     public $id;
 
     /**

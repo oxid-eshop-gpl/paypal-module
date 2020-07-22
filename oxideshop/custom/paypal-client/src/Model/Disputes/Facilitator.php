@@ -14,6 +14,9 @@ class Facilitator implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The name of the Facilitator.
+     */
     public $name;
 }

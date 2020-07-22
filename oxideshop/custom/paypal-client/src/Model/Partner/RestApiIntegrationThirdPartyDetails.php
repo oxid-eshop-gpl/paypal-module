@@ -14,6 +14,10 @@ class RestApiIntegrationThirdPartyDetails implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var array<string> */
+    /**
+     * @var array<string>
+     * An array of features that partner can access, or use, in PayPal on behalf of the seller. The seller grants
+     * permission for these features to the partner.
+     */
     public $features;
 }

@@ -64,6 +64,9 @@ class EligibleDisputeReason implements JsonSerializable
      */
     public $dispute_reason;
 
-    /** @var EligibleDisputeReasonAllowableLifeCycle */
+    /**
+     * @var EligibleDisputeReasonAllowableLifeCycle
+     * The details about the allowable lifecycle stage and the reason why it is allowed.
+     */
     public $allowable_life_cycle;
 }

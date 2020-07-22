@@ -14,7 +14,35 @@ class RefundInfo implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /** The customer received the refund. */
+    const RECIPIENT_BUYER = 'BUYER';
+
+    /** The merchant received the refund. */
+    const RECIPIENT_SELLER = 'SELLER';
+
+    /** The payout was made with the reversal of the original transaction, from the merchant to the customer. */
+    const PAYOUT_TYPE_REVERSAL = 'REVERSAL';
+
+    /** The payout was made through a courtesy credit. */
+    const PAYOUT_TYPE_COURTESY_CREDIT = 'COURTESY_CREDIT';
+
+    /** The payout was made through Seller Protection coverage. */
+    const PAYOUT_TYPE_SELLER_PROTECTION_COVERAGE = 'SELLER_PROTECTION_COVERAGE';
+
+    /** The transaction occurred on PayPal. */
+    const TRANSACTION_SOURCE_PAYPAL = 'PAYPAL';
+
+    /** The transaction occurred on a third-party site other than PayPal. */
+    const TRANSACTION_SOURCE_OTHER = 'OTHER';
+
+    /**
+     * @var string
+     * The payout recipient information.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see RECIPIENT_BUYER
+     * @see RECIPIENT_SELLER
+     */
     public $recipient;
 
     /**
@@ -31,15 +59,36 @@ class RefundInfo implements JsonSerializable
      */
     public $create_time;
 
-    /** @var string */
+    /**
+     * @var string
+     * The encrypted transaction ID, if available.
+     */
     public $transaction_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The type of payout.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see PAYOUT_TYPE_REVERSAL
+     * @see PAYOUT_TYPE_COURTESY_CREDIT
+     * @see PAYOUT_TYPE_SELLER_PROTECTION_COVERAGE
+     */
     public $payout_type;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * Indicates whether the merchant is eligible for protection on the disputed transaction.
+     */
     public $seller_protection_eligible;
 
-    /** @var string */
+    /**
+     * @var string
+     * The site where the transaction occurred.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see TRANSACTION_SOURCE_PAYPAL
+     * @see TRANSACTION_SOURCE_OTHER
+     */
     public $transaction_source;
 }

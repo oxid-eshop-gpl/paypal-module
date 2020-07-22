@@ -14,6 +14,9 @@ class CreateReferralDataResponse implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var array<array> */
+    /**
+     * @var array<array>
+     * An array of request-related [HATEOAS links](/docs/api/overview/#hateoas-links).
+     */
     public $links;
 }

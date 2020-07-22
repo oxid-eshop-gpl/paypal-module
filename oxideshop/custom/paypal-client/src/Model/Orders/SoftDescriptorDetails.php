@@ -14,12 +14,23 @@ class SoftDescriptorDetails implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * Soft Descriptor.
+     */
     public $soft_descriptor;
 
-    /** @var string */
+    /**
+     * @var string
+     * Contact type allows the merchant to specify the type of the additional information passing in the soft
+     * descriptor Eg : CITY/URL/PHONE.
+     */
     public $contact_type;
 
-    /** @var string */
+    /**
+     * @var string
+     * Contact value allows the merchant to provide the business location, business phone number or URL to the
+     * instrument holder.
+     */
     public $contact_value;
 }

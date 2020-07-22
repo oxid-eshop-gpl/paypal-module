@@ -14,7 +14,12 @@ class PurchaseUnitRequest implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The API caller-provided external ID for the purchase unit. Required for multiple purchase units when you must
+     * update the order through `PATCH`. If you omit this value and the order contains only one purchase unit, PayPal
+     * sets this value to `default`.
+     */
     public $reference_id;
 
     /**
@@ -42,19 +47,46 @@ class PurchaseUnitRequest implements JsonSerializable
      */
     public $payment_instruction;
 
-    /** @var string */
+    /**
+     * @var string
+     * The purchase description.
+     */
     public $description;
 
-    /** @var string */
+    /**
+     * @var string
+     * The API caller-provided external ID. Used to reconcile client transactions with PayPal transactions. Appears
+     * in transaction and settlement reports but is not visible to the payer.
+     */
     public $custom_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The API caller-provided external invoice number for this order. Appears in both the payer's transaction
+     * history and the emails that the payer receives.
+     */
     public $invoice_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The soft descriptor is the dynamic text used to construct the statement descriptor that appears on a payer's
+     * card statement.<br><br>If an Order is paid using the "PayPal Wallet", the statement descriptor will appear in
+     * following format on the payer's card statement:
+     * <code><var>PAYPAL_prefix</var>+(space)+<var>merchant_descriptor</var>+(space)+
+     * <var>soft_descriptor</var></code><blockquote><strong>Note:</strong> The merchant descriptor is the descriptor
+     * of the merchant’s payment receiving preferences which can be seen by logging into the merchant account
+     * https://www.sandbox.paypal.com/businessprofile/settings/info/edit</blockquote>The <code>PAYPAL</code> prefix
+     * uses 8 characters. Only the first 22 characters will be displayed in the statement. <br>For example,
+     * if:<ul><li>The PayPal prefix toggle is <code>PAYPAL *</code>.</li><li>The merchant descriptor in the profile
+     * is <code>Janes Gift</code>.</li><li>The soft descriptor is <code>800-123-1234</code>.</li></ul>Then, the
+     * statement descriptor on the card is <code>PAYPAL * Janes Gift 80</code>.
+     */
     public $soft_descriptor;
 
-    /** @var array<Item> */
+    /**
+     * @var array<Item>
+     * An array of items that the customer purchases from the merchant.
+     */
     public $items;
 
     /**

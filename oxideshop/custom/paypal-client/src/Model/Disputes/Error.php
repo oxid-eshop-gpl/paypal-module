@@ -14,21 +14,39 @@ class Error implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The human-readable, unique name of the error.
+     */
     public $name;
 
-    /** @var string */
+    /**
+     * @var string
+     * The message that describes the error.
+     */
     public $message;
 
-    /** @var string */
+    /**
+     * @var string
+     * The PayPal internal ID that is used for correlation purposes.
+     */
     public $debug_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The information link, or URI, that shows detailed information about this error for the developer.
+     */
     public $information_link;
 
-    /** @var array<ErrorDetails> */
+    /**
+     * @var array<ErrorDetails>
+     * An array of additional details about the error.
+     */
     public $details;
 
-    /** @var array<array> */
+    /**
+     * @var array<array>
+     * An array of request-related [HATEOAS links](/docs/api/overview/#hateoas-links).
+     */
     public $links;
 }

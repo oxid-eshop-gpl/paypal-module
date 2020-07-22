@@ -44,16 +44,29 @@ class DisputeEligibility implements JsonSerializable
     /** Other. */
     const RECOMMENDED_DISPUTE_REASON_OTHER = 'OTHER';
 
-    /** @var string */
+    /**
+     * @var string
+     * The seller transaction ID that is associated with the encrypted transaction ID that is passed in the request.
+     * The dispute creation is allowed on the buyer transaction ID, which must be passed in the create dispute call.
+     */
     public $seller_transaction_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The buyer transaction ID that is associated with the `encrypted_transaction_id` passed in the request.
+     */
     public $buyer_transaction_id;
 
-    /** @var array<EligibleDisputeReason> */
+    /**
+     * @var array<EligibleDisputeReason>
+     * An array of the eligible disputes with reasons.
+     */
     public $eligible_dispute_reasons;
 
-    /** @var array<IneligibleDisputeReason> */
+    /**
+     * @var array<IneligibleDisputeReason>
+     * An array of the ineligible disputes with ineligibility reasons.
+     */
     public $ineligible_dispute_reasons;
 
     /**

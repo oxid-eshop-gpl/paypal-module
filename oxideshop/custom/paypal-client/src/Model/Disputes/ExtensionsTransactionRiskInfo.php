@@ -14,12 +14,21 @@ class ExtensionsTransactionRiskInfo implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * Indicates whether the transaction is high risk and money must be recovered.
+     */
     public $high_risk;
 
-    /** @var string */
+    /**
+     * @var string
+     * The recoup ID.
+     */
     public $id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The reason for recoup for the dispute.
+     */
     public $reason;
 }

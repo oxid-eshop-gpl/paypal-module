@@ -14,13 +14,22 @@ class Party implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * Unique identifier for a party.
+     */
     public $id;
 
-    /** @var string */
+    /**
+     * @var string
+     * External identifier for a party, it could be venmo id, facebook email etc.
+     */
     public $external_id;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * Indicates if the party is primary Party.
+     */
     public $primary;
 
     /**
@@ -32,13 +41,22 @@ class Party implements JsonSerializable
      */
     public $primary_email;
 
-    /** @var array<string> */
+    /**
+     * @var array<string>
+     * Email addresses.
+     */
     public $emails;
 
-    /** @var array<PhoneInfo> */
+    /**
+     * @var array<PhoneInfo>
+     * Details of party's phone numbers.
+     */
     public $phones;
 
-    /** @var array<AddressWithConfirmation> */
+    /**
+     * @var array<AddressWithConfirmation>
+     * Details of party's addresses.
+     */
     public $addresses;
 
     /**

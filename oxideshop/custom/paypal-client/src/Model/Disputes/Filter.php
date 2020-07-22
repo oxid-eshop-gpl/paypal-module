@@ -23,13 +23,24 @@ class Filter implements JsonSerializable
      */
     public $email;
 
-    /** @var string */
+    /**
+     * @var string
+     * Filters the disputes in the response by the full name of a counter party.
+     */
     public $name;
 
-    /** @var string */
+    /**
+     * @var string
+     * Filters the disputes in the response by one or more reasons. Use a comma to separate multiple reasons. The
+     * response lists disputes that belong to any of the specified reasons.
+     */
     public $reasons;
 
-    /** @var string */
+    /**
+     * @var string
+     * Filters the disputes in the response by one or more statuses. Use a comma to separate multiple statuses. The
+     * response lists disputes with any of the specified statuses.
+     */
     public $statuses;
 
     /**

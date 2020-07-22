@@ -22,7 +22,10 @@ class PaymentInstruction implements JsonSerializable
     /** The funds are held for a finite number of days. The actual duration depends on the region and type of integration. You can release the funds through a referenced payout. Otherwise, the funds disbursed automatically after the specified duration. */
     const DISBURSEMENT_MODE_DELAYED = 'DELAYED';
 
-    /** @var array<PlatformFee> */
+    /**
+     * @var array<PlatformFee>
+     * An array of various fees, commissions, tips, or donations.
+     */
     public $platform_fees;
 
     /**

@@ -14,7 +14,10 @@ class SubscriptionRequestPost implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The ID of the plan.
+     */
     public $plan_id;
 
     /**
@@ -25,7 +28,10 @@ class SubscriptionRequestPost implements JsonSerializable
      */
     public $start_time;
 
-    /** @var string */
+    /**
+     * @var string
+     * The quantity of the product in the subscription.
+     */
     public $quantity;
 
     /**
@@ -40,7 +46,10 @@ class SubscriptionRequestPost implements JsonSerializable
      */
     public $subscriber;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * DEPRECATED. Indicates whether the subscription auto-renews after the billing cycles complete.
+     */
     public $auto_renewal;
 
     /**

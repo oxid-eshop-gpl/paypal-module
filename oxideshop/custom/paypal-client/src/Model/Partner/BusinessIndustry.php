@@ -14,12 +14,21 @@ class BusinessIndustry implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The customer's business category code. PayPal uses industry standard seller category codes.
+     */
     public $category;
 
-    /** @var string */
+    /**
+     * @var string
+     * The customer's business seller category code. PayPal uses industry standard seller category codes.
+     */
     public $mcc_code;
 
-    /** @var string */
+    /**
+     * @var string
+     * The customer's business subcategory code. PayPal uses industry standard seller subcategory codes.
+     */
     public $subcategory;
 }

@@ -14,6 +14,9 @@ class BusinessName implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * Required. The business name of the party.
+     */
     public $business_name;
 }

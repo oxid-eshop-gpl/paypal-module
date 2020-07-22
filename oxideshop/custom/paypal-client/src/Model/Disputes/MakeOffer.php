@@ -26,7 +26,10 @@ class MakeOffer implements JsonSerializable
     /** The merchant must send a replacement item to the customer with no additional refunds. This offer type is valid in the inquiry phase when a merchant is willing to replace the item without any refund. Omit the <code>offer_amount</code> parameter from the <a href="/docs/api/customer-disputes/v1/#disputes-actions_make-offer">make offer to resolve dispute</a> call. */
     const OFFER_TYPE_REPLACEMENT_WITHOUT_REFUND = 'REPLACEMENT_WITHOUT_REFUND';
 
-    /** @var string */
+    /**
+     * @var string
+     * The merchant's notes about the offer. PayPal can, but the customer cannot, view these notes.
+     */
     public $note;
 
     /**
@@ -44,7 +47,11 @@ class MakeOffer implements JsonSerializable
      */
     public $return_shipping_address;
 
-    /** @var string */
+    /**
+     * @var string
+     * The merchant-provided ID of the invoice for the refund. This optional value maps the refund to an invoice ID
+     * in the merchant's system.
+     */
     public $invoice_id;
 
     /**

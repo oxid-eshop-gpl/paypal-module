@@ -14,7 +14,10 @@ class UpdatePricingSchemeRequest implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var integer */
+    /**
+     * @var integer
+     * The billing cycle sequence.
+     */
     public $billing_cycle_sequence;
 
     /**

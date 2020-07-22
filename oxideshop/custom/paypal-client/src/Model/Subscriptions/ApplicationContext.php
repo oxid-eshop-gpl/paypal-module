@@ -15,7 +15,25 @@ class ApplicationContext implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /** Get the customer-provided shipping address on the PayPal site. */
+    const SHIPPING_PREFERENCE_GET_FROM_FILE = 'GET_FROM_FILE';
+
+    /** Redacts the shipping address from the PayPal site. Recommended for digital goods. */
+    const SHIPPING_PREFERENCE_NO_SHIPPING = 'NO_SHIPPING';
+
+    /** Get the merchant-provided address. The customer cannot change this address on the PayPal site. If merchant does not pass an address, customer can choose the address on PayPal pages. */
+    const SHIPPING_PREFERENCE_SET_PROVIDED_ADDRESS = 'SET_PROVIDED_ADDRESS';
+
+    /** After you redirect the customer to the PayPal subscription consent page, a <strong>Continue</strong> button appears. Use this option when you want to control the activation of the subscription and do not want PayPal to activate the subscription. */
+    const USER_ACTION_CONTINUE = 'CONTINUE';
+
+    /** After you redirect the customer to the PayPal subscription consent page, a <strong>Subscribe Now</strong> button appears. Use this option when you want PayPal to activate the subscription. */
+    const USER_ACTION_SUBSCRIBE_NOW = 'SUBSCRIBE_NOW';
+
+    /**
+     * @var string
+     * The label that overrides the business name in the PayPal account on the PayPal site.
+     */
     public $brand_name;
 
     /**
@@ -28,10 +46,25 @@ class ApplicationContext implements JsonSerializable
      */
     public $locale;
 
-    /** @var string */
+    /**
+     * @var string
+     * The location from which the shipping address is derived.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see SHIPPING_PREFERENCE_GET_FROM_FILE
+     * @see SHIPPING_PREFERENCE_NO_SHIPPING
+     * @see SHIPPING_PREFERENCE_SET_PROVIDED_ADDRESS
+     */
     public $shipping_preference;
 
-    /** @var string */
+    /**
+     * @var string
+     * Configures the label name to `Continue` or `Subscribe Now` for subscription consent experience.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see USER_ACTION_CONTINUE
+     * @see USER_ACTION_SUBSCRIBE_NOW
+     */
     public $user_action;
 
     /**
@@ -40,9 +73,15 @@ class ApplicationContext implements JsonSerializable
      */
     public $payment_method;
 
-    /** @var string */
+    /**
+     * @var string
+     * The URL where the customer is redirected after the customer approves the payment.
+     */
     public $return_url;
 
-    /** @var string */
+    /**
+     * @var string
+     * The URL where the customer is redirected after the customer cancels the payment.
+     */
     public $cancel_url;
 }

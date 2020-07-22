@@ -14,7 +14,10 @@ class ReferenceDispute implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The dispute ID of the partner dispute for which a PayPal dispute is created.
+     */
     public $id;
 
     /**

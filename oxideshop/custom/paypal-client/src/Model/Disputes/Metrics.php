@@ -14,6 +14,9 @@ class Metrics implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var array<Metric> */
+    /**
+     * @var array<Metric>
+     * An array of dimension and measurement metrics for disputes.
+     */
     public $metrics;
 }

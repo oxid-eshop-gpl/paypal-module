@@ -14,9 +14,33 @@ class PaypalCredit implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /** Bill Me Later. */
+    const TYPE_BILL_ME_LATER = 'BILL_ME_LATER';
+
+    /** PayPal Smart Connect. */
+    const TYPE_PAYPAL_SMART_CONNECT = 'PAYPAL_SMART_CONNECT';
+
+    /** EBAY MasterCard. */
+    const TYPE_EBAY_MASTERCARD = 'EBAY_MASTERCARD';
+
+    /** PayPal Extras MasterCard. */
+    const TYPE_PAYPAL_EXTRAS_MASTERCARD = 'PAYPAL_EXTRAS_MASTERCARD';
+
+    /**
+     * @var string
+     * The PayPal-generated ID for the credit instrument.
+     */
     public $id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The credit sub-types.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see TYPE_BILL_ME_LATER
+     * @see TYPE_PAYPAL_SMART_CONNECT
+     * @see TYPE_EBAY_MASTERCARD
+     * @see TYPE_PAYPAL_EXTRAS_MASTERCARD
+     */
     public $type;
 }

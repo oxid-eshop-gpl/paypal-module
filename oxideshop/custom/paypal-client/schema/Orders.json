@@ -9642,7 +9642,7 @@
               "description": "The transaction is initiated from Alternative Payment Zimpler."
             },
             {
-              "vaule": "PAYPAL_SITE",
+              "value": "PAYPAL_SITE",
               "description": "The action is initiated on PayPal.com website"
             },
             {

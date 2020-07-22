@@ -20,6 +20,9 @@ class ShippingDetails implements JsonSerializable
      */
     public $shipping_address;
 
-    /** @var array<ShippingOption> */
+    /**
+     * @var array<ShippingOption>
+     * An array of shipping options that the payee or merchant offers to the payer to ship or pick up their items.
+     */
     public $options;
 }

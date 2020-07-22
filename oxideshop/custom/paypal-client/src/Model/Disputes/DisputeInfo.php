@@ -170,7 +170,10 @@ class DisputeInfo implements JsonSerializable
     /** Other. */
     const DISPUTE_FLOW_OTHER = 'OTHER';
 
-    /** @var string */
+    /**
+     * @var string
+     * The ID of the dispute.
+     */
     public $dispute_id;
 
     /**
@@ -189,10 +192,16 @@ class DisputeInfo implements JsonSerializable
      */
     public $update_time;
 
-    /** @var array<TransactionInfo> */
+    /**
+     * @var array<TransactionInfo>
+     * An array of transactions for which disputes were created.
+     */
     public $disputed_transactions;
 
-    /** @var array<AccountActivity> */
+    /**
+     * @var array<AccountActivity>
+     * An array of merchant account activities.
+     */
     public $disputed_account_activities;
 
     /**
@@ -255,7 +264,12 @@ class DisputeInfo implements JsonSerializable
      */
     public $dispute_fee;
 
-    /** @var string */
+    /**
+     * @var string
+     * The code that identifies the reason for the credit card chargeback. Each card issuer follows their own
+     * standards for defining reason type, code, and its format. For more details about the external reason code, see
+     * the card issue site. Available for only unbranded transactions.
+     */
     public $external_reason_code;
 
     /**
@@ -286,7 +300,10 @@ class DisputeInfo implements JsonSerializable
      */
     public $dispute_channel;
 
-    /** @var array<Message> */
+    /**
+     * @var array<Message>
+     * An array of customer- or merchant-posted messages for the dispute.
+     */
     public $messages;
 
     /**
@@ -296,7 +313,10 @@ class DisputeInfo implements JsonSerializable
      */
     public $extensions;
 
-    /** @var array<Evidence> */
+    /**
+     * @var array<Evidence>
+     * An array of evidence documents.
+     */
     public $evidences;
 
     /**
@@ -315,7 +335,10 @@ class DisputeInfo implements JsonSerializable
      */
     public $seller_response_due_date;
 
-    /** @var array<History> */
+    /**
+     * @var array<History>
+     * An array of history objects.
+     */
     public $history;
 
     /**
@@ -368,12 +391,21 @@ class DisputeInfo implements JsonSerializable
      */
     public $communication_details;
 
-    /** @var array<PartnerAction> */
+    /**
+     * @var array<PartnerAction>
+     * An array of all the actions that are associated to this dispute.
+     */
     public $partner_actions;
 
-    /** @var array<SupportingInfo> */
+    /**
+     * @var array<SupportingInfo>
+     * An array of all the supporting information that are associated to this dispute.
+     */
     public $supporting_info;
 
-    /** @var array<array> */
+    /**
+     * @var array<array>
+     * An array of request-related [HATEOAS links](/docs/api/hateoas-links/).
+     */
     public $links;
 }

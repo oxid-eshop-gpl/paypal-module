@@ -14,6 +14,9 @@ class DenyOffer implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The customer notes about the denial of offer. PayPal can but the merchant cannot view these notes.
+     */
     public $note;
 }

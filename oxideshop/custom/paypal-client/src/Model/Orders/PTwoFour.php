@@ -39,12 +39,21 @@ class PTwoFour implements JsonSerializable
      */
     public $country_code;
 
-    /** @var string */
+    /**
+     * @var string
+     * P24 generated payment description.
+     */
     public $payment_descriptor;
 
-    /** @var string */
+    /**
+     * @var string
+     * Numeric identifier of the payment scheme or bank used for the payment.
+     */
     public $method_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * Friendly name of the payment scheme or bank used for the payment
+     */
     public $method_description;
 }

@@ -30,21 +30,40 @@ class Business implements JsonSerializable
      */
     public $business_incorporation;
 
-    /** @var array<BusinessNameDetail> */
+    /**
+     * @var array<BusinessNameDetail>
+     * Name of the business.
+     */
     public $names;
 
-    /** @var array<Email> */
+    /**
+     * @var array<Email>
+     * Email addresses of the business.
+     */
     public $emails;
 
-    /** @var string */
+    /**
+     * @var string
+     * Website of the business.
+     */
     public $website;
 
-    /** @var array<BusinessAddressDetail> */
+    /**
+     * @var array<BusinessAddressDetail>
+     * List of addresses associated with the business entity.
+     */
     public $addresses;
 
-    /** @var array<BusinessPhoneDetail> */
+    /**
+     * @var array<BusinessPhoneDetail>
+     * List of phone number associated with the business.
+     */
     public $phones;
 
-    /** @var array<BusinessDocument> */
+    /**
+     * @var array<BusinessDocument>
+     * Business Party related Document data collected from the customer.. For example SSN, ITIN, Business
+     * registration number that were collected from the user.
+     */
     public $documents;
 }

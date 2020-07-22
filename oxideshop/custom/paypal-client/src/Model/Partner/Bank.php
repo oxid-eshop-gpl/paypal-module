@@ -14,13 +14,32 @@ class Bank implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /** Checking account. */
+    const ACCOUNT_TYPE_CHECKING = 'CHECKING';
+
+    /** Savings account. */
+    const ACCOUNT_TYPE_SAVINGS = 'SAVINGS';
+
+    /**
+     * @var string
+     * The user-provided short name for the user's bank account.
+     */
     public $nick_name;
 
-    /** @var string */
+    /**
+     * @var string
+     * The bank account number.
+     */
     public $account_number;
 
-    /** @var string */
+    /**
+     * @var string
+     * The type of bank account.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see ACCOUNT_TYPE_CHECKING
+     * @see ACCOUNT_TYPE_SAVINGS
+     */
     public $account_type;
 
     /**
@@ -30,7 +49,12 @@ class Bank implements JsonSerializable
      */
     public $currency_code;
 
-    /** @var array<Identifier> */
+    /**
+     * @var array<Identifier>
+     * An array of instrument institute attributes. Used with the account number to uniquely identify the instrument.
+     * Value is:<ul><li>For banks with IBAN information, the IBAN number.</li><li>For banks with BBAN information,
+     * the BBAN number.</li><li>For banks with both IBAN and BBAN information, the IBAN number.</li></ul>
+     */
     public $identifiers;
 
     /**

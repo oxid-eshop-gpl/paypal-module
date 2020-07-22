@@ -14,10 +14,22 @@ class SubscriptionCaptureRequest implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /** The outstanding balance that the subscriber must clear. */
+    const CAPTURE_TYPE_OUTSTANDING_BALANCE = 'OUTSTANDING_BALANCE';
+
+    /**
+     * @var string
+     * The reason or note for the subscription charge.
+     */
     public $note;
 
-    /** @var string */
+    /**
+     * @var string
+     * The type of capture.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see CAPTURE_TYPE_OUTSTANDING_BALANCE
+     */
     public $capture_type;
 
     /**

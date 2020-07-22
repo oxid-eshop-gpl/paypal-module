@@ -14,7 +14,10 @@ class UpdatePurchaseUnitRequest implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The API caller-provided external ID for the purchase unit.
+     */
     public $reference_id;
 
     /**

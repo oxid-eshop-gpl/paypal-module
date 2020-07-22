@@ -14,6 +14,12 @@ class BillingCycle implements JsonSerializable
 {
     use BaseModel;
 
+    /** A regular billing cycle. */
+    const TENURE_TYPE_REGULAR = 'REGULAR';
+
+    /** A trial billing cycle. */
+    const TENURE_TYPE_TRIAL = 'TRIAL';
+
     /**
      * @var PricingScheme
      * The pricing scheme details.
@@ -26,12 +32,31 @@ class BillingCycle implements JsonSerializable
      */
     public $frequency;
 
-    /** @var string */
+    /**
+     * @var string
+     * The tenure type of the billing cycle. In case of a plan having trial cycle, only 2 trial cycles are allowed
+     * per plan.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see TENURE_TYPE_REGULAR
+     * @see TENURE_TYPE_TRIAL
+     */
     public $tenure_type;
 
-    /** @var integer */
+    /**
+     * @var integer
+     * The order in which this cycle is to run among other billing cycles. For example, a trial billing cycle has a
+     * `sequence` of `1` while a regular billing cycle has a `sequence` of `2`, so that trial cycle runs before the
+     * regular cycle.
+     */
     public $sequence;
 
-    /** @var integer */
+    /**
+     * @var integer
+     * The number of times this billing cycle gets executed. Trial billing cycles can only be executed a finite
+     * number of times (value between <code>1</code> and <code>999</code> for <code>total_cycles</code>). Regular
+     * billing cycles can be executed infinite times (value of <code>0</code> for <code>total_cycles</code>) or a
+     * finite number of times (value between <code>1</code> and <code>999</code> for <code>total_cycles</code>).
+     */
     public $total_cycles;
 }

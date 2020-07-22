@@ -20,10 +20,16 @@ class Subscription extends SubscriptionStatus implements JsonSerializable
     /** Vendor currency conversion. */
     const PREFERRED_CURRENCY_CONVERSION_VENDOR = 'VENDOR';
 
-    /** @var string */
+    /**
+     * @var string
+     * The PayPal-generated ID for the subscription.
+     */
     public $id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The ID of the plan.
+     */
     public $plan_id;
 
     /**
@@ -34,7 +40,10 @@ class Subscription extends SubscriptionStatus implements JsonSerializable
      */
     public $start_time;
 
-    /** @var string */
+    /**
+     * @var string
+     * The quantity of the product in the subscription.
+     */
     public $quantity;
 
     /**
@@ -61,7 +70,10 @@ class Subscription extends SubscriptionStatus implements JsonSerializable
      */
     public $billing_info;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * DEPRECATED. Indicates whether the subscription auto-renews after the billing cycles complete.
+     */
     public $auto_renewal;
 
     /**
@@ -96,6 +108,9 @@ class Subscription extends SubscriptionStatus implements JsonSerializable
      */
     public $preferred_funding_source;
 
-    /** @var array<array> */
+    /**
+     * @var array<array>
+     * An array of request-related [HATEOAS links](/docs/api/reference/api-responses/#hateoas-links).
+     */
     public $links;
 }

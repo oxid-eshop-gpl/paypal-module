@@ -14,7 +14,10 @@ class Refund extends RefundStatus implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The PayPal-generated ID for the refund.
+     */
     public $id;
 
     /**
@@ -23,16 +26,30 @@ class Refund extends RefundStatus implements JsonSerializable
      */
     public $amount;
 
-    /** @var string */
+    /**
+     * @var string
+     * The API caller-provided external invoice number for this order. Appears in both the payer's transaction
+     * history and the emails that the payer receives.
+     */
     public $invoice_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The reason for the refund. Appears in both the payer's transaction history and the emails that the payer
+     * receives.
+     */
     public $note_to_payer;
 
-    /** @var RefundSellerPayableBreakdown */
+    /**
+     * @var RefundSellerPayableBreakdown
+     * The breakdown of the refund.
+     */
     public $seller_payable_breakdown;
 
-    /** @var array<array> */
+    /**
+     * @var array<array>
+     * An array of related [HATEOAS links](/docs/api/reference/api-responses/#hateoas-links).
+     */
     public $links;
 
     /**

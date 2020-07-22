@@ -17,12 +17,22 @@ class Eligibility implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The encrypted transaction ID. The response lists the eligible and ineligible dispute reasons.
+     */
     public $encrypted_transaction_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The ID of the dispute. The response lists the eligible and ineligible dispute reasons. The customer can use
+     * the eligible reasons to update the dispute.
+     */
     public $dispute_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * Customer provided description of the issue.
+     */
     public $buyer_note;
 }

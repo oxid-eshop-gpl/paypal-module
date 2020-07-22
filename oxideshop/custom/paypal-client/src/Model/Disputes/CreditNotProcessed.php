@@ -14,7 +14,20 @@ class CreditNotProcessed implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /** The product has an issue. */
+    const ISSUE_TYPE_PRODUCT = 'PRODUCT';
+
+    /** The service has an issue. */
+    const ISSUE_TYPE_SERVICE = 'SERVICE';
+
+    /**
+     * @var string
+     * The issue type.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see ISSUE_TYPE_PRODUCT
+     * @see ISSUE_TYPE_SERVICE
+     */
     public $issue_type;
 
     /**

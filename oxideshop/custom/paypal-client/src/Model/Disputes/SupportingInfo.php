@@ -14,13 +14,36 @@ class SupportingInfo implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /** Information was submitted by the customer. */
+    const SOURCE_SUBMITTED_BY_BUYER = 'SUBMITTED_BY_BUYER';
+
+    /** Information was submitted by the merchant. */
+    const SOURCE_SUBMITTED_BY_SELLER = 'SUBMITTED_BY_SELLER';
+
+    /** Information was submitted by the partner. */
+    const SOURCE_SUBMITTED_BY_PARTNER = 'SUBMITTED_BY_PARTNER';
+
+    /**
+     * @var string
+     * Any supporting notes.
+     */
     public $notes;
 
-    /** @var array<Document> */
+    /**
+     * @var array<Document>
+     * An array of metadata for the documents which were uploaded as supporting information for the dispute.
+     */
     public $documents;
 
-    /** @var string */
+    /**
+     * @var string
+     * The source of the Information.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see SOURCE_SUBMITTED_BY_BUYER
+     * @see SOURCE_SUBMITTED_BY_SELLER
+     * @see SOURCE_SUBMITTED_BY_PARTNER
+     */
     public $source;
 
     /**

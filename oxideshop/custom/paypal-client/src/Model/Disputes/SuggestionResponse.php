@@ -15,12 +15,21 @@ class SuggestionResponse implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var array */
+    /**
+     * @var array<string>
+     * An array of auto complete values for the given search_text if present.
+     */
     public $suggestions;
 
-    /** @var string */
+    /**
+     * @var string
+     * The possible DidYouMean value if there are no suggestions for given search_text.
+     */
     public $corrected_search_text;
 
-    /** @var array<array> */
+    /**
+     * @var array<array>
+     * An array of request-related [HATEOAS links](/docs/api/hateoas-links/).
+     */
     public $links;
 }

@@ -24,9 +24,16 @@ class DocumentIssuer implements JsonSerializable
      */
     public $country_code;
 
-    /** @var string */
+    /**
+     * @var string
+     * The [state or province code that issued the identity document](/docs/integration/direct/rest/state-codes/), as
+     * defined by [ISO 3166-2:2013](https://www.iso.org/standard/63546.html).
+     */
     public $province_code;
 
-    /** @var string */
+    /**
+     * @var string
+     * The entity that issued the identity document. For example, `registration authority`.
+     */
     public $authority;
 }

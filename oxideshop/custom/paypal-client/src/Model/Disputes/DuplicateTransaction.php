@@ -14,7 +14,10 @@ class DuplicateTransaction implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * If `true`, indicates that a duplicate transaction was received.
+     */
     public $received_duplicate;
 
     /**

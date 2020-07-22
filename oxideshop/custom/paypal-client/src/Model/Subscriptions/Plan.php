@@ -14,28 +14,77 @@ class Plan implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /** The plan was created. You cannot create subscriptions for a plan in this state. */
+    const STATUS_CREATED = 'CREATED';
+
+    /** The plan is inactive. */
+    const STATUS_INACTIVE = 'INACTIVE';
+
+    /** The plan is active. You can only create subscriptions for a plan in this state. */
+    const STATUS_ACTIVE = 'ACTIVE';
+
+    /** A licensed plan. */
+    const USAGE_TYPE_LICENSED = 'LICENSED';
+
+    /** A metered plan. */
+    const USAGE_TYPE_METERED = 'METERED';
+
+    /**
+     * @var string
+     * The unique PayPal-generated ID for the plan.
+     */
     public $id;
 
-    /** @var integer */
+    /**
+     * @var integer
+     * The version of the plan.
+     */
     public $version;
 
-    /** @var string */
+    /**
+     * @var string
+     * The ID for the product.
+     */
     public $product_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The plan name.
+     */
     public $name;
 
-    /** @var string */
+    /**
+     * @var string
+     * The plan status.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see STATUS_CREATED
+     * @see STATUS_INACTIVE
+     * @see STATUS_ACTIVE
+     */
     public $status;
 
-    /** @var string */
+    /**
+     * @var string
+     * The detailed description of the plan.
+     */
     public $description;
 
-    /** @var string */
+    /**
+     * @var string
+     * The type of the plan, which indicates the billing pattern.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see USAGE_TYPE_LICENSED
+     * @see USAGE_TYPE_METERED
+     */
     public $usage_type;
 
-    /** @var array<BillingCycle> */
+    /**
+     * @var array<BillingCycle>
+     * An array of billing cycles for trial billing and regular billing. A plan can have at most two trial cycles and
+     * only one regular cycle.
+     */
     public $billing_cycles;
 
     /**
@@ -50,7 +99,10 @@ class Plan implements JsonSerializable
      */
     public $taxes;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * Indicates whether you can subscribe to this plan by providing a quantity for the goods or service.
+     */
     public $quantity_supported;
 
     /**
@@ -75,6 +127,9 @@ class Plan implements JsonSerializable
      */
     public $update_time;
 
-    /** @var array<array> */
+    /**
+     * @var array<array>
+     * An array of request-related [HATEOAS links](/docs/api/reference/api-responses/#hateoas-links).
+     */
     public $links;
 }

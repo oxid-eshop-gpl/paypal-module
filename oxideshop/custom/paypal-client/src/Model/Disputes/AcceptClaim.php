@@ -14,13 +14,49 @@ class AcceptClaim implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /** Merchant is accepting customer's claim as they could not ship the item back to the customer */
+    const ACCEPT_CLAIM_REASON_DID_NOT_SHIP_ITEM = 'DID_NOT_SHIP_ITEM';
+
+    /** Merchant is accepting customer's claim as it is taking too long for merchant to fulfil the order */
+    const ACCEPT_CLAIM_REASON_TOO_TIME_CONSUMING = 'TOO_TIME_CONSUMING';
+
+    /** Merchant is accepting customer's claim as the item is lost in mail or transit */
+    const ACCEPT_CLAIM_REASON_LOST_IN_MAIL = 'LOST_IN_MAIL';
+
+    /** Merchant is accepting customer's claim as the merchant is not able to find sufficient evidence to win this dispute */
+    const ACCEPT_CLAIM_REASON_NOT_ABLE_TO_WIN = 'NOT_ABLE_TO_WIN';
+
+    /** Merchant is accepting customer’s claims to follow their internal company policy */
+    const ACCEPT_CLAIM_REASON_COMPANY_POLICY = 'COMPANY_POLICY';
+
+    /** This is the default value merchant can use if none of the above reasons apply */
+    const ACCEPT_CLAIM_REASON_REASON_NOT_SET = 'REASON_NOT_SET';
+
+    /**
+     * @var string
+     * The merchant's notes about the claim. PayPal can, but the customer cannot, view these notes.
+     */
     public $note;
 
-    /** @var string */
+    /**
+     * @var string
+     * The merchant's reason for acceptance of the customer's claim.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see ACCEPT_CLAIM_REASON_DID_NOT_SHIP_ITEM
+     * @see ACCEPT_CLAIM_REASON_TOO_TIME_CONSUMING
+     * @see ACCEPT_CLAIM_REASON_LOST_IN_MAIL
+     * @see ACCEPT_CLAIM_REASON_NOT_ABLE_TO_WIN
+     * @see ACCEPT_CLAIM_REASON_COMPANY_POLICY
+     * @see ACCEPT_CLAIM_REASON_REASON_NOT_SET
+     */
     public $accept_claim_reason;
 
-    /** @var string */
+    /**
+     * @var string
+     * The merchant-provided ID of the invoice for the refund. This optional value is used to map the refund to an
+     * invoice ID in the merchant's system.
+     */
     public $invoice_id;
 
     /**

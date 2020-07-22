@@ -15,18 +15,33 @@ class PartnerConfigOverride implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The partner logo URL to display in the customer's onboarding flow.
+     */
     public $partner_logo_url;
 
-    /** @var string */
+    /**
+     * @var string
+     * The URL to which to redirect the customer upon completion of the onboarding process.
+     */
     public $return_url;
 
-    /** @var string */
+    /**
+     * @var string
+     * The description of the return URL.
+     */
     public $return_url_description;
 
-    /** @var string */
+    /**
+     * @var string
+     * If `renew_action_url` expires, redirect the customer to this URL.
+     */
     public $action_renewal_url;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * Indicates whether to show an add credit card page.
+     */
     public $show_add_credit_card;
 }

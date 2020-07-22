@@ -52,7 +52,10 @@ class IdentityDocument implements JsonSerializable
      */
     public $issuer;
 
-    /** @var string */
+    /**
+     * @var string
+     * The document number, such as the passport number.
+     */
     public $id_number;
 
     /**

@@ -14,6 +14,9 @@ class ProvideSupportingInfo implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The notes that describe the defense.
+     */
     public $notes;
 }

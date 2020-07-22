@@ -14,7 +14,16 @@ class CreditFinancingOffer implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /** Issued by PayPal. */
+    const ISSUER_PAYPAL = 'PAYPAL';
+
+    /**
+     * @var string
+     * The issuer of the credit financing offer.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see ISSUER_PAYPAL
+     */
     public $issuer;
 
     /**
@@ -29,9 +38,15 @@ class CreditFinancingOffer implements JsonSerializable
      */
     public $total_interest;
 
-    /** @var CreditFinancingOfferInstallmentDetails */
+    /**
+     * @var CreditFinancingOfferInstallmentDetails
+     * The payer-approved installment payment plan details.
+     */
     public $installment_details;
 
-    /** @var integer */
+    /**
+     * @var integer
+     * The payer-selected financing term, in months.
+     */
     public $term;
 }

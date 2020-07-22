@@ -14,7 +14,10 @@ class ApplePayCardResponse extends CardResponse implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The card holder's name as it appears on the card.
+     */
     public $name;
 
     /**

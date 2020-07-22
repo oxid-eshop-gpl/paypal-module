@@ -14,6 +14,9 @@ class SubscriptionActivateRequest implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The reason for activation of a subscription. Required to reactivate the subscription.
+     */
     public $reason;
 }

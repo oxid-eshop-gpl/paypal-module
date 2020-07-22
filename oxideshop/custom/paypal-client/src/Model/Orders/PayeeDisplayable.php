@@ -31,6 +31,10 @@ class PayeeDisplayable implements JsonSerializable
      */
     public $business_phone;
 
-    /** @var string */
+    /**
+     * @var string
+     * The name of the merchant. Appears to the customer in checkout, payment transactions, email receipts, and
+     * transaction history.
+     */
     public $brand_name;
 }

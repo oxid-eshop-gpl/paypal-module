@@ -14,6 +14,15 @@ class RefundStatusDetails implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /** The customer's account is funded through an eCheck, which has not yet cleared. */
+    const REASON_ECHECK = 'ECHECK';
+
+    /**
+     * @var string
+     * The reason why the refund has the `PENDING` or `FAILED` status.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see REASON_ECHECK
+     */
     public $reason;
 }

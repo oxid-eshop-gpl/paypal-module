@@ -14,13 +14,64 @@ class Transaction implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /** The transaction processing is complete. */
+    const STATUS_COMPLETED = 'COMPLETED';
+
+    /** The items in the transaction are unclaimed. If they are not claimed within 30 days, the funds are returned to the sender. */
+    const STATUS_UNCLAIMED = 'UNCLAIMED';
+
+    /** The transaction was denied. */
+    const STATUS_DENIED = 'DENIED';
+
+    /** The transaction failed. */
+    const STATUS_FAILED = 'FAILED';
+
+    /** The transaction is on hold. */
+    const STATUS_HELD = 'HELD';
+
+    /** The transaction is waiting to be processed. */
+    const STATUS_PENDING = 'PENDING';
+
+    /** The payment for the transaction was partially refunded. */
+    const STATUS_PARTIALLY_REFUNDED = 'PARTIALLY_REFUNDED';
+
+    /** The payment for the transaction was successfully refunded. */
+    const STATUS_REFUNDED = 'REFUNDED';
+
+    /** The payment for the transaction was reversed due to a chargeback or another type of reversal. */
+    const STATUS_REVERSED = 'REVERSED';
+
+    /** The payment for the transaction was canceled. */
+    const STATUS_CANCELED = 'CANCELED';
+
+    /**
+     * @var string
+     * The ID of the PayPal transaction.
+     */
     public $id;
 
-    /** @var array<ItemInfo> */
+    /**
+     * @var array<ItemInfo>
+     * An array of items in the transaction in the dispute.
+     */
     public $items;
 
-    /** @var string */
+    /**
+     * @var string
+     * The transaction status.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see STATUS_COMPLETED
+     * @see STATUS_UNCLAIMED
+     * @see STATUS_DENIED
+     * @see STATUS_FAILED
+     * @see STATUS_HELD
+     * @see STATUS_PENDING
+     * @see STATUS_PARTIALLY_REFUNDED
+     * @see STATUS_REFUNDED
+     * @see STATUS_REVERSED
+     * @see STATUS_CANCELED
+     */
     public $status;
 
     /**

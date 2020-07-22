@@ -26,7 +26,10 @@ class AdjudicationInfo implements JsonSerializable
      */
     public $dispute_amount;
 
-    /** @var array<ItemInfo> */
+    /**
+     * @var array<ItemInfo>
+     * An array of items in the transaction that is in dispute.
+     */
     public $items;
 
     /**
@@ -42,7 +45,10 @@ class AdjudicationInfo implements JsonSerializable
      */
     public $extensions;
 
-    /** @var array<Evidence> */
+    /**
+     * @var array<Evidence>
+     * An array of partner-submitted evidences, such as tracking information.
+     */
     public $evidences;
 
     /**
@@ -57,9 +63,15 @@ class AdjudicationInfo implements JsonSerializable
      */
     public $dispute_reason;
 
-    /** @var string */
+    /**
+     * @var string
+     * The reason that the dispute was closed.
+     */
     public $closure_reason;
 
-    /** @var array<Message> */
+    /**
+     * @var array<Message>
+     * An array of customer- or merchant-posted messages.
+     */
     public $messages;
 }

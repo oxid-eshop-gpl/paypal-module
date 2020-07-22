@@ -62,13 +62,22 @@ class Card implements JsonSerializable
     /** China union pay credit card. */
     const CARD_TYPE_CHINA_UNION_PAY = 'CHINA_UNION_PAY';
 
-    /** @var string */
+    /**
+     * @var string
+     * The PayPal-generated ID for the card.
+     */
     public $id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The card holder's name as it appears on the card.
+     */
     public $name;
 
-    /** @var string */
+    /**
+     * @var string
+     * The primary account number (PAN) for the payment card.
+     */
     public $number;
 
     /**
@@ -78,10 +87,16 @@ class Card implements JsonSerializable
      */
     public $expiry;
 
-    /** @var string */
+    /**
+     * @var string
+     * The three- or four-digit security code of the card. Also known as the CVV, CVC, CVN, CVE, or CID.
+     */
     public $security_code;
 
-    /** @var string */
+    /**
+     * @var string
+     * The last digits of the payment card.
+     */
     public $last_digits;
 
     /**
@@ -117,6 +132,9 @@ class Card implements JsonSerializable
      */
     public $billing_address;
 
-    /** @var array<ThreedsResult> */
+    /**
+     * @var array<ThreedsResult>
+     * A list of authentication results.
+     */
     public $authentication_results;
 }

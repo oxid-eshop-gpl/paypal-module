@@ -14,7 +14,10 @@ class Authorization extends AuthorizationStatus implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The PayPal-generated ID for the authorized payment.
+     */
     public $id;
 
     /**
@@ -23,13 +26,24 @@ class Authorization extends AuthorizationStatus implements JsonSerializable
      */
     public $amount;
 
-    /** @var string */
+    /**
+     * @var string
+     * The API caller-provided external invoice number for this order. Appears in both the payer's transaction
+     * history and the emails that the payer receives.
+     */
     public $invoice_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The API caller-provided external ID. Used to reconcile API caller-initiated transactions with PayPal
+     * transactions. Appears in transaction and settlement reports.
+     */
     public $custom_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The PayPal-generated alternate ID for the authorized payment. For example, used for UATP airline integration.
+     */
     public $alternate_id;
 
     /**
@@ -47,7 +61,10 @@ class Authorization extends AuthorizationStatus implements JsonSerializable
      */
     public $expiration_time;
 
-    /** @var array<array> */
+    /**
+     * @var array<array>
+     * An array of related [HATEOAS links](/docs/api/reference/api-responses/#hateoas-links).
+     */
     public $links;
 
     /**

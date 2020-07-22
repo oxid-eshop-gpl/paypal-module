@@ -20,7 +20,10 @@ class Capture extends CaptureStatus implements JsonSerializable
     /** The funds are held for a finite number of days. The actual duration depends on the region and type of integration. You can release the funds through a referenced payout. Otherwise, the funds disbursed automatically after the specified duration. */
     const DISBURSEMENT_MODE_DELAYED = 'DELAYED';
 
-    /** @var string */
+    /**
+     * @var string
+     * The PayPal-generated ID for the captured payment.
+     */
     public $id;
 
     /**
@@ -35,10 +38,18 @@ class Capture extends CaptureStatus implements JsonSerializable
      */
     public $parent_transaction;
 
-    /** @var string */
+    /**
+     * @var string
+     * The API caller-provided external invoice number for this order. Appears in both the payer's transaction
+     * history and the emails that the payer receives.
+     */
     public $invoice_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The API caller-provided external ID. Used to reconcile API caller-initiated transactions with PayPal
+     * transactions. Appears in transaction and settlement reports.
+     */
     public $custom_id;
 
     /**
@@ -48,7 +59,12 @@ class Capture extends CaptureStatus implements JsonSerializable
      */
     public $seller_protection;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * Indicates whether you can make additional captures against the authorized payment. Set to `true` if you do not
+     * intend to capture additional payments against the authorization. Set to `false` if you intend to capture
+     * additional payments against the authorization.
+     */
     public $final_capture;
 
     /**
@@ -73,7 +89,10 @@ class Capture extends CaptureStatus implements JsonSerializable
      */
     public $error;
 
-    /** @var array<array> */
+    /**
+     * @var array<array>
+     * An array of related [HATEOAS links](/docs/api/reference/api-responses/#hateoas-links).
+     */
     public $links;
 
     /**

@@ -14,15 +14,28 @@ class Patch implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The operation to complete.
+     */
     public $op;
 
-    /** @var string */
+    /**
+     * @var string
+     * The JSON pointer to the target document location at which to complete the operation.
+     */
     public $path;
 
-    /** @var number|integer|string|boolean|null|array|object */
+    /**
+     * @var number|integer|string|boolean|null|array|object
+     * The value to apply. The `remove` operation does not require a value.
+     */
     public $value;
 
-    /** @var string */
+    /**
+     * @var string
+     * The JSON pointer to the target document location from which to move the value. Required for the `move`
+     * operation.
+     */
     public $from;
 }

@@ -20,10 +20,18 @@ class ShippingOption implements JsonSerializable
     /** The payer intends to pick up the items at a specified address. For example, a store address. */
     const TYPE_PICKUP = 'PICKUP';
 
-    /** @var string */
+    /**
+     * @var string
+     * A unique ID that identifies a payer-selected shipping option.
+     */
     public $id;
 
-    /** @var string */
+    /**
+     * @var string
+     * A description that the payer sees, which helps them choose an appropriate shipping option. For example, `Free
+     * Shipping`, `USPS Priority Shipping`, `Expédition prioritaire USPS`, or `USPS yōuxiān fā huò`. Localize
+     * this description to the payer's locale.
+     */
     public $label;
 
     /**
@@ -42,6 +50,13 @@ class ShippingOption implements JsonSerializable
      */
     public $amount;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * If the API request sets `selected = true`, it represents the shipping option that the payee or merchant
+     * expects to be pre-selected for the payer when they first view the `shipping.options` in the PayPal Checkout
+     * experience. As part of the response if a `shipping.option` contains `selected=true`, it represents the
+     * shipping option that the payer selected during the course of checkout with PayPal. Only one `shipping.option`
+     * can be set to `selected=true`.
+     */
     public $selected;
 }

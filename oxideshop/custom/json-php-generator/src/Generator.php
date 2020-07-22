@@ -280,48 +280,38 @@ class Generator
                         }
                     }
                     if ($parameter['type'] === 'array') {
-                        if (isset($parameter['items']['$ref'])) {
-                            $ref = $this->getRefNameFromRefString($parameter['items']['$ref']);
-                            if (isset($this->references[$ref])) {
-                                $itemType = $this->references[$ref];
-                                $parameter['type'] = "array<$itemType>";
+                        if (isset($parameter['items'])) {
+                            $arrayItemsDef = $parameter['items'];
+                            $itemType = "mixed";
+                            if (isset($arrayItemsDef['$ref'])) {
+                                $ref = $this->getRefNameFromRefString($parameter['items']['$ref']);
+                                if (isset($this->references[$ref])) {
+                                    $itemType = $this->references[$ref];
+                                }
                             }
+                            if (isset($arrayItemsDef['type'])) {
+                                $itemType = $arrayItemsDef['type'];
+                            }
+                            $parameter['type'] = "array<$itemType>";
+
                         }
                     }
                     if (is_array($parameter['type'])) {
                         $parameter['type'] = implode('|', $parameter['type']);
                     }
 
-                    $class->addProperty($name)
-                        ->setVisibility('public')
-                        ->setComment('@var ' . $parameter['type']);
+                    $propType = $parameter['type'];
+                    $propDef = $parameter;
+                    $this->addProperty($propDef, $name, $class, $propType);
+
                 } else {
                     // use the $this->references[] map here when you come across a reference
                     if (!empty($parameter['$ref'])) {
                         $ref = $this->getRefNameFromRefString($parameter['$ref']);
                         if (isset($this->references[$ref])) {
-                            $property = $class->addProperty($name)
-                                ->setVisibility('public')
-                                ->setComment('@var ' . $this->references[$ref]);
+                            $propType = $this->references[$ref];
                             $propDef = $this->definitions[$ref];
-                            if (isset($propDef['description'])) {
-                                $propDesc = $propDef['description'];
-                                $property->addComment($this->formatComment($propDesc));
-                            }
-                            if (isset($propDef['x-enum'])) {
-                                $enums = $propDef['x-enum'];
-                                $property->addComment("use one of constants defined in this class to set the value:");
-                                foreach ($enums as $constantDef) {
-                                    $value = $constantDef['value'];
-                                    $constantName = $this->cleanConstantName($name . '_' . $value);
-                                    $property->addComment("@see $constantName");
-                                    $classConstant = $class->addConstant($constantName, $value);
-                                    if (isset($constantDef['description'])) {
-                                        $classConstant->addComment($constantDef['description']);
-                                    }
-                                }
-                            }
-
+                            $this->addProperty($propDef, $name, $class, $propType);
                         }
                     }
                 }
@@ -363,6 +353,39 @@ class Generator
     {
         $comment = preg_replace("/(.{1,110})(?:\n|$| )/", "$1\n", $comment);
         return $comment;
+    }
+
+    /**
+     * @param $propDef
+     * @param $property
+     * @param $name
+     * @param \Nette\PhpGenerator\ClassType $class
+     */
+    private function addProperty($propDef, $name, \Nette\PhpGenerator\ClassType $class, $propType): void
+    {
+        $property = $class->addProperty($name)
+            ->setVisibility('public')
+            ->setComment('@var ' . $propType);
+
+        if (isset($propDef['description'])) {
+            $propDesc = $propDef['description'];
+            $property->addComment($this->formatComment($propDesc));
+        }
+        if (isset($propDef['x-enum'])) {
+            $enums = $propDef['x-enum'];
+            $property->addComment("use one of constants defined in this class to set the value:");
+            foreach ($enums as $constantDef) {
+                if (isset($constantDef['value']) ) {
+                    $value = $constantDef['value'];
+                    $constantName = $this->cleanConstantName($name . '_' . $value);
+                    $property->addComment("@see $constantName");
+                    $classConstant = $class->addConstant($constantName, $value);
+                    if (isset($constantDef['description'])) {
+                        $classConstant->addComment($constantDef['description']);
+                    }
+                }
+            }
+        }
     }
 }
 

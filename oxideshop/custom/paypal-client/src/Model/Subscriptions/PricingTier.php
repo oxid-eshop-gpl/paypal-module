@@ -14,10 +14,16 @@ class PricingTier implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The starting quantity for the tier.
+     */
     public $starting_quantity;
 
-    /** @var string */
+    /**
+     * @var string
+     * The ending quantity for the tier. Optional for the last tier.
+     */
     public $ending_quantity;
 
     /**

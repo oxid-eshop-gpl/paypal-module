@@ -15,12 +15,22 @@ class PaymentCollection implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var array<AuthorizationWithAdditionalData> */
+    /**
+     * @var array<AuthorizationWithAdditionalData>
+     * An array of authorized payments for a purchase unit. A purchase unit can have zero or more authorized
+     * payments.
+     */
     public $authorizations;
 
-    /** @var array<Capture> */
+    /**
+     * @var array<Capture>
+     * An array of captured payments for a purchase unit. A purchase unit can have zero or more captured payments.
+     */
     public $captures;
 
-    /** @var array<Refund> */
+    /**
+     * @var array<Refund>
+     * An array of refunds for a purchase unit. A purchase unit can have zero or more refunds.
+     */
     public $refunds;
 }

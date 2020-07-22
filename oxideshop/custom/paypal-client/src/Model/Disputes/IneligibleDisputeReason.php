@@ -64,6 +64,9 @@ class IneligibleDisputeReason implements JsonSerializable
      */
     public $dispute_reason;
 
-    /** @var string */
+    /**
+     * @var string
+     * The reason that the dispute cannot be created.
+     */
     public $ineligibility_reason;
 }

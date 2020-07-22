@@ -16,9 +16,15 @@ class EligibilityRequest implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The encrypted transaction ID.
+     */
     public $transaction_id;
 
-    /** @var array<EligibilityRequestItem> */
+    /**
+     * @var array<EligibilityRequestItem>
+     * An array of the items in the disputed transaction.
+     */
     public $disputed_items;
 }

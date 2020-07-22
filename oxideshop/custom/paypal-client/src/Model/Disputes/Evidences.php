@@ -14,7 +14,10 @@ class Evidences implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var array<Evidence> */
+    /**
+     * @var array<Evidence>
+     * An array of evidences for the dispute.
+     */
     public $evidences;
 
     /**

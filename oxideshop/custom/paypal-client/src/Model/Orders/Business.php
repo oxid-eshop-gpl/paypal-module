@@ -86,7 +86,10 @@ class Business extends Party implements JsonSerializable
     /** A group of private owners who have registered their bsuiness. */
     const TYPE_REGISTERED_COOPERATIVE = 'REGISTERED_COOPERATIVE';
 
-    /** @var array<BusinessName> */
+    /**
+     * @var array<BusinessName>
+     * Names of business.
+     */
     public $names;
 
     /**
@@ -128,16 +131,28 @@ class Business extends Party implements JsonSerializable
      */
     public $category;
 
-    /** @var array<BusinessIdentification> */
+    /**
+     * @var array<BusinessIdentification>
+     * Identification details for the business.
+     */
     public $identifications;
 
-    /** @var string */
+    /**
+     * @var string
+     * Description of business.
+     */
     public $description;
 
-    /** @var array<Person> */
+    /**
+     * @var array<Person>
+     * Beneficial owners of the business.
+     */
     public $owners;
 
-    /** @var string */
+    /**
+     * @var string
+     * Web site url (online presence) for the business.
+     */
     public $url;
 
     /**

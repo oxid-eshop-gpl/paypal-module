@@ -14,9 +14,15 @@ class RiskAssessment implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var integer */
+    /**
+     * @var integer
+     * The fine-grained numeric evaluation. Value is from `0` to `999`.
+     */
     public $score;
 
-    /** @var array */
+    /**
+     * @var array<string>
+     * An array of risk assessment reasons.
+     */
     public $reasons;
 }

@@ -14,12 +14,21 @@ class PaymentMethodDirective implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * Indicates the type of payment processing. Eg: CUSTOM_CARD_PROCESSING, CUSTOM_BANK_PROCESSING.
+     */
     public $payment_processing_type;
 
-    /** @var string */
+    /**
+     * @var string
+     * Defines the payment processing decision as ALLOW, DENY, UNKNOWN.
+     */
     public $processing_decision;
 
-    /** @var array */
+    /**
+     * @var array<string>
+     * Reasons for the decision. Usually set for a DENY decision.
+     */
     public $reason;
 }

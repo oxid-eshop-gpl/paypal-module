@@ -14,15 +14,27 @@ class ReferredDisputes implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var array<ReferredDisputeSummary> */
+    /**
+     * @var array<ReferredDisputeSummary>
+     * An array of disputes that match the filter criteria. Sorted in latest to earliest creation time order.
+     */
     public $items;
 
-    /** @var integer */
+    /**
+     * @var integer
+     * The total number of items/Disputes available for the given search criteria.
+     */
     public $total_items;
 
-    /** @var integer */
+    /**
+     * @var integer
+     * The total number of pages in the response.
+     */
     public $total_pages;
 
-    /** @var array<array> */
+    /**
+     * @var array<array>
+     * An array of request-related [HATEOAS links](/docs/api/hateoas-links/).
+     */
     public $links;
 }

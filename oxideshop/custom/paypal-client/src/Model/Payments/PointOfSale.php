@@ -14,9 +14,15 @@ class PointOfSale implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The API caller-provided external store identification number.
+     */
     public $store_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The API caller-provided external terminal identification number.
+     */
     public $terminal_id;
 }

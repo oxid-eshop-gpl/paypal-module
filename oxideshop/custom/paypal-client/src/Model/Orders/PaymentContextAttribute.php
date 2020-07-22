@@ -14,9 +14,15 @@ class PaymentContextAttribute implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * Context attribute name.
+     */
     public $name;
 
-    /** @var string */
+    /**
+     * @var string
+     * Context attribute value.
+     */
     public $value;
 }

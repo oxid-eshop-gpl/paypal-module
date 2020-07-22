@@ -39,6 +39,11 @@ class VerkkopankkiRequest implements JsonSerializable
      */
     public $country_code;
 
-    /** @var string */
+    /**
+     * @var string
+     * The numeric bank identifier of the account holder associated with this payment method. Valid bank ids at the
+     * moment are 50 (Aktia), 3 (Danske Bank), 6 (Handelsbanken), 1 Nordea, 61 (Oma Säästöpankki), 2
+     * (Osuuspankki), 51 (POP Pankki), (10) S-Pankki, (52) Säästöpankki, (5) Ålandsbanken
+     */
     public $bank_id;
 }

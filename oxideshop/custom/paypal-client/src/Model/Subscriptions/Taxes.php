@@ -21,6 +21,9 @@ class Taxes implements JsonSerializable
      */
     public $percentage;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * Indicates whether the tax was already included in the billing amount.
+     */
     public $inclusive;
 }

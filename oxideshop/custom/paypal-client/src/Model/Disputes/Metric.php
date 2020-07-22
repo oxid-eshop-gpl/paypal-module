@@ -14,12 +14,21 @@ class Metric implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The group name for a dimension.
+     */
     public $key;
 
-    /** @var integer */
+    /**
+     * @var integer
+     * The count of items in a group.
+     */
     public $count;
 
-    /** @var array<Money> */
+    /**
+     * @var array<Money>
+     * An array of the sums of amounts for each currency.
+     */
     public $amount;
 }

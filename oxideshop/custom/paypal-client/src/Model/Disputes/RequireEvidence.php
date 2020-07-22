@@ -17,6 +17,19 @@ class RequireEvidence implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /** Changes the status of the dispute to <code>WAITING_FOR_BUYER_RESPONSE</code>. */
+    const ACTION_BUYER_EVIDENCE = 'BUYER_EVIDENCE';
+
+    /** Changes the status of the dispute to <code>WAITING_FOR_SELLER_RESPONSE</code>. */
+    const ACTION_SELLER_EVIDENCE = 'SELLER_EVIDENCE';
+
+    /**
+     * @var string
+     * The action. Indicates whether the state change enables the customer or merchant to submit evidence.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see ACTION_BUYER_EVIDENCE
+     * @see ACTION_SELLER_EVIDENCE
+     */
     public $action;
 }

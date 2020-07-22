@@ -15,7 +15,19 @@ class CustomizedXUnsupportedNineEightNineFourApplicationContext implements JsonS
 {
     use BaseModel;
 
-    /** @var string */
+    /** Get the customer-provided shipping address on the PayPal site. */
+    const SHIPPING_PREFERENCE_GET_FROM_FILE = 'GET_FROM_FILE';
+
+    /** Redacts the shipping address from the PayPal site. Recommended for digital goods. */
+    const SHIPPING_PREFERENCE_NO_SHIPPING = 'NO_SHIPPING';
+
+    /** Get the merchant-provided address. The customer cannot change this address on the PayPal site. If merchant does not pass an address, customer can choose the address on PayPal pages. */
+    const SHIPPING_PREFERENCE_SET_PROVIDED_ADDRESS = 'SET_PROVIDED_ADDRESS';
+
+    /**
+     * @var string
+     * The label that overrides the business name in the PayPal account on the PayPal site.
+     */
     public $brand_name;
 
     /**
@@ -28,7 +40,15 @@ class CustomizedXUnsupportedNineEightNineFourApplicationContext implements JsonS
      */
     public $locale;
 
-    /** @var string */
+    /**
+     * @var string
+     * The location from which the shipping address is derived.
+     *
+     * use one of constants defined in this class to set the value:
+     * @see SHIPPING_PREFERENCE_GET_FROM_FILE
+     * @see SHIPPING_PREFERENCE_NO_SHIPPING
+     * @see SHIPPING_PREFERENCE_SET_PROVIDED_ADDRESS
+     */
     public $shipping_preference;
 
     /**
@@ -37,9 +57,15 @@ class CustomizedXUnsupportedNineEightNineFourApplicationContext implements JsonS
      */
     public $payment_method;
 
-    /** @var string */
+    /**
+     * @var string
+     * The URL where the customer is redirected after the customer approves the payment.
+     */
     public $return_url;
 
-    /** @var string */
+    /**
+     * @var string
+     * The URL where the customer is redirected after the customer cancels the payment.
+     */
     public $cancel_url;
 }

@@ -23,7 +23,10 @@ class CommunicationDetails implements JsonSerializable
      */
     public $email;
 
-    /** @var string */
+    /**
+     * @var string
+     * The merchant provided notes that are visible to both the customer and PayPal.
+     */
     public $note;
 
     /**

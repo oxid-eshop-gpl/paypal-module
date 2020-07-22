@@ -14,16 +14,30 @@ class Document implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The encrypted identifier for the document.
+     */
     public $id;
 
-    /** @var array */
+    /**
+     * @var array<string>
+     * The document labels. A document could be classfied to multiple categories. For example, a bill document can be
+     * classfified as `BILL DOCUMENT` and `UTILITY DOCUMENT`.
+     */
     public $labels;
 
-    /** @var string */
+    /**
+     * @var string
+     * The file name.
+     */
     public $name;
 
-    /** @var string */
+    /**
+     * @var string
+     * The number for the document. It is the ID number if the document is `ID CARD`, the passport number if the
+     * document is `PASSPORT`, etc.
+     */
     public $identification_number;
 
     /**
@@ -54,9 +68,16 @@ class Document implements JsonSerializable
      */
     public $issuing_country_code;
 
-    /** @var array<FileReference> */
+    /**
+     * @var array<FileReference>
+     * The files contained in the document. For example, a document could be represented by a front page file and a
+     * back page file, etc.
+     */
     public $files;
 
-    /** @var array<array> */
+    /**
+     * @var array<array>
+     * The HATEOAS links.
+     */
     public $links;
 }

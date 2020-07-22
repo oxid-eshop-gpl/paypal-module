@@ -24,9 +24,15 @@ class Seller implements JsonSerializable
      */
     public $email;
 
-    /** @var string */
+    /**
+     * @var string
+     * The PayPal account ID for the merchant.
+     */
     public $merchant_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The name of the merchant.
+     */
     public $name;
 }

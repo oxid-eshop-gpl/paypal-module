@@ -28,9 +28,15 @@ class Refund implements JsonSerializable
      */
     public $transaction_time;
 
-    /** @var string */
+    /**
+     * @var string
+     * The ID of the transaction for the refund, as it appears to the merchant.
+     */
     public $transaction_id;
 
-    /** @var string */
+    /**
+     * @var string
+     * The ID of the invoice for the refund.
+     */
     public $invoice_number;
 }

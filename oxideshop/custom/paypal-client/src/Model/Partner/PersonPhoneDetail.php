@@ -30,16 +30,28 @@ class PersonPhoneDetail extends Phone implements JsonSerializable
     /** A pager. */
     const TYPE_PAGER = 'PAGER';
 
-    /** @var string */
+    /**
+     * @var string
+     * The name that the phone number is connected to.
+     */
     public $contact_name;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * Whether this phone number has been inactivated by the user.
+     */
     public $inactive;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * Whether this is the primary contact phone number of the user.
+     */
     public $primary;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     * Whether this is the primary mobile phone number of the user.
+     */
     public $primary_mobile;
 
     /**
@@ -55,6 +67,9 @@ class PersonPhoneDetail extends Phone implements JsonSerializable
      */
     public $type;
 
-    /** @var array<string> */
+    /**
+     * @var array<string>
+     * Array of tags for this phone number.
+     */
     public $tags;
 }

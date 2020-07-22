@@ -14,6 +14,9 @@ class SubscriptionSuspendRequest implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The reason for suspenson of the subscription.
+     */
     public $reason;
 }

@@ -14,10 +14,16 @@ class BusinessIdentification implements JsonSerializable
 {
     use BaseModel;
 
-    /** @var string */
+    /**
+     * @var string
+     * The type of identification number. Eg: TAX_IDENTIFICATION_NUMBER, BUSINESS_REGISTRATION_NUMBER.
+     */
     public $type;
 
-    /** @var string */
+    /**
+     * @var string
+     * The number or value of the identifier.
+     */
     public $identifier;
 
     /**
