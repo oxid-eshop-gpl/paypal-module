@@ -60,12 +60,17 @@ class AdjudicationInfo implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see DISPUTE_REASON_MERCHANDISE_OR_SERVICE_NOT_RECEIVED
      * @see DISPUTE_REASON_MERCHANDISE_OR_SERVICE_NOT_AS_DESCRIBED
+     * minLength: 1
+     * maxLength: 255
      */
     public $dispute_reason;
 
     /**
      * @var string
      * The reason that the dispute was closed.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $closure_reason;
 

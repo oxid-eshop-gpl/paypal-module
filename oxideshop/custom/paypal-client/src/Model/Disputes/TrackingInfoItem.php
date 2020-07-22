@@ -32,18 +32,27 @@ class TrackingInfoItem implements JsonSerializable
     /**
      * @var string
      * The name of the carrier for the shipment of the transaction for this dispute.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $carrier_name;
 
     /**
      * @var string
      * The URL to track the item shipment.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $tracking_url;
 
     /**
      * @var string
      * The tracking number for the dispute-related transaction shipment.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $tracking_number;
 
@@ -57,12 +66,17 @@ class TrackingInfoItem implements JsonSerializable
      * @see TRACKING_STATUS_IN_TRANSIT
      * @see TRACKING_STATUS_LOST
      * @see TRACKING_STATUS_DELIVERED
+     * minLength: 1
+     * maxLength: 255
      */
     public $tracking_status;
 
     /**
      * @var string
      * Any notes about the tracking information.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $note;
 
@@ -71,6 +85,9 @@ class TrackingInfoItem implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $posted_time;
 }

@@ -20,12 +20,18 @@ class Filter implements JsonSerializable
      * and 255 characters are allowed after the <code>@</code> sign. However, the generally accepted maximum length
      * for an email address is 254 characters. The pattern verifies that an unquoted <code>@</code> sign
      * exists.</blockquote>
+     *
+     * minLength: 3
+     * maxLength: 254
      */
     public $email;
 
     /**
      * @var string
      * Filters the disputes in the response by the full name of a counter party.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $name;
 
@@ -33,6 +39,9 @@ class Filter implements JsonSerializable
      * @var string
      * Filters the disputes in the response by one or more reasons. Use a comma to separate multiple reasons. The
      * response lists disputes that belong to any of the specified reasons.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $reasons;
 
@@ -40,6 +49,9 @@ class Filter implements JsonSerializable
      * @var string
      * Filters the disputes in the response by one or more statuses. Use a comma to separate multiple statuses. The
      * response lists disputes with any of the specified statuses.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $statuses;
 
@@ -48,6 +60,9 @@ class Filter implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $create_time_before;
 
@@ -56,6 +71,9 @@ class Filter implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $create_time_after;
 
@@ -64,6 +82,9 @@ class Filter implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $update_time_before;
 
@@ -72,6 +93,9 @@ class Filter implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $update_time_after;
 
@@ -80,6 +104,9 @@ class Filter implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $response_due_date_before;
 
@@ -88,6 +115,9 @@ class Filter implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $response_due_date_after;
 

@@ -23,6 +23,8 @@ class LegalConsent implements JsonSerializable
      *
      * use one of constants defined in this class to set the value:
      * @see TYPE_SHARE_DATA_CONSENT
+     * minLength: 1
+     * maxLength: 127
      */
     public $type;
 

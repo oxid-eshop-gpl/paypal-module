@@ -17,12 +17,18 @@ class PaymentContextAttribute implements JsonSerializable
     /**
      * @var string
      * Context attribute name.
+     *
+     * minLength: 1
+     * maxLength: 127
      */
     public $name;
 
     /**
      * @var string
      * Context attribute value.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $value;
 }

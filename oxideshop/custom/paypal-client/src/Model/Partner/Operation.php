@@ -36,6 +36,8 @@ class Operation implements JsonSerializable
      * @see OPERATION_BANK_ADDITION
      * @see OPERATION_BILLING_AGREEMENT
      * @see OPERATION_CONTEXTUAL_MARKETING_CONSENT
+     * minLength: 1
+     * maxLength: 255
      */
     public $operation;
 

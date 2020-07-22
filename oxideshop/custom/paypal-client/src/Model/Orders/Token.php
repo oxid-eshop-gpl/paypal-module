@@ -38,6 +38,9 @@ class Token implements JsonSerializable
     /**
      * @var string
      * The PayPal-generated ID for the token.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $id;
 
@@ -53,6 +56,8 @@ class Token implements JsonSerializable
      * @see TYPE_PAYPAL_TRANSACTION_ID
      * @see TYPE_PNREF
      * @see TYPE_AUTHORIZATION_ID
+     * minLength: 1
+     * maxLength: 255
      */
     public $type;
 }

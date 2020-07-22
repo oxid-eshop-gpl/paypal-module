@@ -63,6 +63,8 @@ class ThreeDSecureAuthenticationResponse implements JsonSerializable
      * @see AUTHENTICATION_STATUS_R
      * @see AUTHENTICATION_STATUS_D
      * @see AUTHENTICATION_STATUS_I
+     * minLength: 1
+     * maxLength: 255
      */
     public $authentication_status;
 
@@ -75,6 +77,8 @@ class ThreeDSecureAuthenticationResponse implements JsonSerializable
      * @see ENROLLMENT_STATUS_N
      * @see ENROLLMENT_STATUS_U
      * @see ENROLLMENT_STATUS_B
+     * minLength: 1
+     * maxLength: 255
      */
     public $enrollment_status;
 }

@@ -17,6 +17,9 @@ class SubscriptionActivateRequest implements JsonSerializable
     /**
      * @var string
      * The reason for activation of a subscription. Required to reactivate the subscription.
+     *
+     * minLength: 1
+     * maxLength: 128
      */
     public $reason;
 }

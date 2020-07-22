@@ -23,6 +23,9 @@ class RollOutStrategy implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $effective_time;
 
@@ -34,6 +37,8 @@ class RollOutStrategy implements JsonSerializable
      *
      * use one of constants defined in this class to set the value:
      * @see PROCESS_CHANGE_FROM_NEXT_PAYMENT
+     * minLength: 1
+     * maxLength: 30
      */
     public $process_change_from;
 }

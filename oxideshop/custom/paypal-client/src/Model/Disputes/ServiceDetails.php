@@ -26,6 +26,9 @@ class ServiceDetails implements JsonSerializable
     /**
      * @var string
      * The service description.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $description;
 
@@ -37,12 +40,17 @@ class ServiceDetails implements JsonSerializable
      * @see SERVICE_STARTED_YES
      * @see SERVICE_STARTED_NO
      * @see SERVICE_STARTED_CANCELLED
+     * minLength: 1
+     * maxLength: 255
      */
     public $service_started;
 
     /**
      * @var string
      * The customer specified note about the service usage.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $note;
 
@@ -55,6 +63,9 @@ class ServiceDetails implements JsonSerializable
     /**
      * @var string
      * The URL of the merchant or marketplace site where the customer purchased the service.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $purchase_url;
 }

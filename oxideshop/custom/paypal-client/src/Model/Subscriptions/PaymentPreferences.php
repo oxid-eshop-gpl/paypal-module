@@ -33,6 +33,8 @@ class PaymentPreferences implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see SERVICE_TYPE_PREPAID
      * @see SERVICE_TYPE_POSTPAID
+     * minLength: 1
+     * maxLength: 24
      */
     public $service_type;
 
@@ -55,6 +57,8 @@ class PaymentPreferences implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see SETUP_FEE_FAILURE_ACTION_CONTINUE
      * @see SETUP_FEE_FAILURE_ACTION_CANCEL
+     * minLength: 1
+     * maxLength: 24
      */
     public $setup_fee_failure_action;
 

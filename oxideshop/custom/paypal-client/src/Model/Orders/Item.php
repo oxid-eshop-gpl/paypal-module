@@ -26,6 +26,9 @@ class Item implements JsonSerializable
     /**
      * @var string
      * The item name or title.
+     *
+     * minLength: 1
+     * maxLength: 127
      */
     public $name;
 
@@ -44,18 +47,24 @@ class Item implements JsonSerializable
     /**
      * @var string
      * The item quantity. Must be a whole number.
+     *
+     * maxLength: 10
      */
     public $quantity;
 
     /**
      * @var string
      * The detailed item description.
+     *
+     * maxLength: 127
      */
     public $description;
 
     /**
      * @var string
      * The stock keeping unit (SKU) for the item.
+     *
+     * maxLength: 127
      */
     public $sku;
 
@@ -67,6 +76,8 @@ class Item implements JsonSerializable
      * @see CATEGORY_DIGITAL_GOODS
      * @see CATEGORY_PHYSICAL_GOODS
      * @see CATEGORY_DONATION
+     * minLength: 1
+     * maxLength: 20
      */
     public $category;
 }

@@ -23,6 +23,9 @@ class VaultResponse implements JsonSerializable
     /**
      * @var string
      * The PayPal-generated ID for the saved payment source.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $id;
 
@@ -33,6 +36,8 @@ class VaultResponse implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see STATUS_CREATED
      * @see STATUS_APPROVED
+     * minLength: 1
+     * maxLength: 255
      */
     public $status;
 }

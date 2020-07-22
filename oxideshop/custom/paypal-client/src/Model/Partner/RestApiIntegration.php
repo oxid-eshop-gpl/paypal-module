@@ -33,6 +33,8 @@ class RestApiIntegration implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see INTEGRATION_METHOD_BRAINTREE
      * @see INTEGRATION_METHOD_PAYPAL
+     * minLength: 1
+     * maxLength: 255
      */
     public $integration_method;
 
@@ -44,6 +46,8 @@ class RestApiIntegration implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see INTEGRATION_TYPE_FIRST_PARTY
      * @see INTEGRATION_TYPE_THIRD_PARTY
+     * minLength: 1
+     * maxLength: 255
      */
     public $integration_type;
 

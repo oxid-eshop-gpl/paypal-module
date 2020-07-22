@@ -71,12 +71,18 @@ class TransactionInfo implements JsonSerializable
     /**
      * @var string
      * The ID, as seen by the customer, for this transaction.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $buyer_transaction_id;
 
     /**
      * @var string
      * The ID, as seen by the merchant, for this transaction.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $seller_transaction_id;
 
@@ -85,6 +91,9 @@ class TransactionInfo implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $create_time;
 
@@ -103,6 +112,8 @@ class TransactionInfo implements JsonSerializable
      * @see TRANSACTION_STATUS_REFUNDED
      * @see TRANSACTION_STATUS_REVERSED
      * @see TRANSACTION_STATUS_CANCELLED
+     * minLength: 1
+     * maxLength: 255
      */
     public $transaction_status;
 
@@ -115,12 +126,18 @@ class TransactionInfo implements JsonSerializable
     /**
      * @var string
      * The ID of the invoice for the payment.
+     *
+     * minLength: 1
+     * maxLength: 127
      */
     public $invoice_number;
 
     /**
      * @var string
      * A free-text field that is entered by the merchant during checkout.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $custom;
 
@@ -164,6 +181,8 @@ class TransactionInfo implements JsonSerializable
      * @see SELLER_PROTECTION_TYPE_EXPANDED_SELLER_PROTECTION
      * @see SELLER_PROTECTION_TYPE_EFFORTLESS_SELLER_PROTECTION
      * @see SELLER_PROTECTION_TYPE_DOUBLE_JEOPARDY_PROTECTION
+     * minLength: 1
+     * maxLength: 255
      */
     public $seller_protection_type;
 
@@ -183,6 +202,8 @@ class TransactionInfo implements JsonSerializable
      * @see PROVISIONAL_CREDIT_STATUS_NOT_APPLIED
      * @see PROVISIONAL_CREDIT_STATUS_REVERSED
      * @see PROVISIONAL_CREDIT_STATUS_PENDING_DEBIT
+     * minLength: 1
+     * maxLength: 255
      */
     public $provisional_credit_status;
 }

@@ -17,6 +17,9 @@ class Verkkopankki implements JsonSerializable
     /**
      * @var string
      * The full name representation like Mr J Smith
+     *
+     * minLength: 3
+     * maxLength: 300
      */
     public $name;
 
@@ -26,6 +29,9 @@ class Verkkopankki implements JsonSerializable
      * and 255 characters are allowed after the <code>@</code> sign. However, the generally accepted maximum length
      * for an email address is 254 characters. The pattern verifies that an unquoted <code>@</code> sign
      * exists.</blockquote>
+     *
+     * minLength: 3
+     * maxLength: 254
      */
     public $email;
 
@@ -36,6 +42,9 @@ class Verkkopankki implements JsonSerializable
      * <code>UK</code> as used in the top-level domain names for that country. Use the `C2` country code for China
      * worldwide for comparable uncontrolled price (CUP) method, bank card, and cross-border
      * transactions.</blockquote>
+     *
+     * minLength: 2
+     * maxLength: 2
      */
     public $country_code;
 
@@ -44,6 +53,9 @@ class Verkkopankki implements JsonSerializable
      * The name of the bank used to fund this payment. Valid bank names at the moment are Aktia, Danske Bank,
      * Handelsbanken, Nordea, Oma Säästöpankki, Osuuspankki, POP Pankki, S-Pankki, Säästöpankki,
      * Ålandsbanken.
+     *
+     * minLength: 1
+     * maxLength: 300
      */
     public $bank_name;
 }

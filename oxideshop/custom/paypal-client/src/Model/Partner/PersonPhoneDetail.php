@@ -33,6 +33,9 @@ class PersonPhoneDetail extends Phone implements JsonSerializable
     /**
      * @var string
      * The name that the phone number is connected to.
+     *
+     * minLength: 1
+     * maxLength: 900
      */
     public $contact_name;
 

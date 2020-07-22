@@ -23,6 +23,8 @@ class ShippingOption implements JsonSerializable
     /**
      * @var string
      * A unique ID that identifies a payer-selected shipping option.
+     *
+     * maxLength: 127
      */
     public $id;
 
@@ -31,6 +33,8 @@ class ShippingOption implements JsonSerializable
      * A description that the payer sees, which helps them choose an appropriate shipping option. For example, `Free
      * Shipping`, `USPS Priority Shipping`, `Expédition prioritaire USPS`, or `USPS yōuxiān fā huò`. Localize
      * this description to the payer's locale.
+     *
+     * maxLength: 127
      */
     public $label;
 

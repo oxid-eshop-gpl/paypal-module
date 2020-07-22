@@ -25,18 +25,27 @@ class Refund implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $transaction_time;
 
     /**
      * @var string
      * The ID of the transaction for the refund, as it appears to the merchant.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $transaction_id;
 
     /**
      * @var string
      * The ID of the invoice for the refund.
+     *
+     * minLength: 1
+     * maxLength: 127
      */
     public $invoice_number;
 }

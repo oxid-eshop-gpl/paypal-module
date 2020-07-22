@@ -17,12 +17,18 @@ class PricingTier implements JsonSerializable
     /**
      * @var string
      * The starting quantity for the tier.
+     *
+     * minLength: 1
+     * maxLength: 32
      */
     public $starting_quantity;
 
     /**
      * @var string
      * The ending quantity for the tier. Optional for the last tier.
+     *
+     * minLength: 1
+     * maxLength: 32
      */
     public $ending_quantity;
 

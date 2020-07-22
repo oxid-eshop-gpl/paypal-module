@@ -20,6 +20,9 @@ class Eligibility implements JsonSerializable
     /**
      * @var string
      * The encrypted transaction ID. The response lists the eligible and ineligible dispute reasons.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $encrypted_transaction_id;
 
@@ -27,12 +30,18 @@ class Eligibility implements JsonSerializable
      * @var string
      * The ID of the dispute. The response lists the eligible and ineligible dispute reasons. The customer can use
      * the eligible reasons to update the dispute.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $dispute_id;
 
     /**
      * @var string
      * Customer provided description of the issue.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $buyer_note;
 }

@@ -21,6 +21,9 @@ class Buyer implements JsonSerializable
      * and 255 characters are allowed after the <code>@</code> sign. However, the generally accepted maximum length
      * for an email address is 254 characters. The pattern verifies that an unquoted <code>@</code> sign
      * exists.</blockquote>
+     *
+     * minLength: 3
+     * maxLength: 254
      */
     public $email;
 
@@ -29,12 +32,18 @@ class Buyer implements JsonSerializable
      * The PayPal payer ID, which is a masked version of the PayPal account number intended for use with third
      * parties. The account number is reversibly encrypted and a proprietary variant of Base32 is used to encode the
      * result.
+     *
+     * minLength: 13
+     * maxLength: 13
      */
     public $payer_id;
 
     /**
      * @var string
      * The customer's name.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $name;
 }

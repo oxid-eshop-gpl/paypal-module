@@ -20,6 +20,9 @@ class SubscriptionCaptureRequest implements JsonSerializable
     /**
      * @var string
      * The reason or note for the subscription charge.
+     *
+     * minLength: 1
+     * maxLength: 128
      */
     public $note;
 
@@ -29,6 +32,8 @@ class SubscriptionCaptureRequest implements JsonSerializable
      *
      * use one of constants defined in this class to set the value:
      * @see CAPTURE_TYPE_OUTSTANDING_BALANCE
+     * minLength: 1
+     * maxLength: 24
      */
     public $capture_type;
 

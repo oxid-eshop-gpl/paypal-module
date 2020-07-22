@@ -23,6 +23,8 @@ class PersonAddressDetail extends AddressPortable implements JsonSerializable
      *
      * use one of constants defined in this class to set the value:
      * @see TYPE_HOME
+     * minLength: 1
+     * maxLength: 255
      */
     public $type;
 

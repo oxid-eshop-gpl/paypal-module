@@ -17,6 +17,9 @@ class PTwoFour implements JsonSerializable
     /**
      * @var string
      * The full name representation like Mr J Smith
+     *
+     * minLength: 3
+     * maxLength: 300
      */
     public $name;
 
@@ -26,6 +29,9 @@ class PTwoFour implements JsonSerializable
      * and 255 characters are allowed after the <code>@</code> sign. However, the generally accepted maximum length
      * for an email address is 254 characters. The pattern verifies that an unquoted <code>@</code> sign
      * exists.</blockquote>
+     *
+     * minLength: 3
+     * maxLength: 254
      */
     public $email;
 
@@ -36,24 +42,36 @@ class PTwoFour implements JsonSerializable
      * <code>UK</code> as used in the top-level domain names for that country. Use the `C2` country code for China
      * worldwide for comparable uncontrolled price (CUP) method, bank card, and cross-border
      * transactions.</blockquote>
+     *
+     * minLength: 2
+     * maxLength: 2
      */
     public $country_code;
 
     /**
      * @var string
      * P24 generated payment description.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $payment_descriptor;
 
     /**
      * @var string
      * Numeric identifier of the payment scheme or bank used for the payment.
+     *
+     * minLength: 1
+     * maxLength: 300
      */
     public $method_id;
 
     /**
      * @var string
      * Friendly name of the payment scheme or bank used for the payment
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $method_description;
 }

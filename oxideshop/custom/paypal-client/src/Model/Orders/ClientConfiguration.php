@@ -129,6 +129,8 @@ class ClientConfiguration implements JsonSerializable
      * @see PRODUCT_CODE_VAULT
      * @see PRODUCT_CODE_INVOICING
      * @see PRODUCT_CODE_PAYPAL_IDENTITY_LINKING
+     * minLength: 1
+     * maxLength: 255
      */
     public $product_code;
 
@@ -140,6 +142,8 @@ class ClientConfiguration implements JsonSerializable
      * @see PRODUCT_FEATURE_NONE
      * @see PRODUCT_FEATURE_ORDERS
      * @see PRODUCT_FEATURE_BILLING_AGREEMENTS
+     * minLength: 1
+     * maxLength: 255
      */
     public $product_feature;
 
@@ -162,6 +166,8 @@ class ClientConfiguration implements JsonSerializable
      * @see API_RECURRING_PAYMENTS_V1
      * @see API_LEGACY_RECURRING_PAYMENTS
      * @see API_NONE
+     * minLength: 1
+     * maxLength: 255
      */
     public $api;
 
@@ -176,6 +182,8 @@ class ClientConfiguration implements JsonSerializable
      * @see INTEGRATION_ARTIFACT_BRAINTREE_VZERO
      * @see INTEGRATION_ARTIFACT_NATIVE_SDK
      * @see INTEGRATION_ARTIFACT_NONE
+     * minLength: 1
+     * maxLength: 255
      */
     public $integration_artifact;
 

@@ -19,6 +19,8 @@ class PurchaseUnitRequest implements JsonSerializable
      * The API caller-provided external ID for the purchase unit. Required for multiple purchase units when you must
      * update the order through `PATCH`. If you omit this value and the order contains only one purchase unit, PayPal
      * sets this value to `default`.
+     *
+     * maxLength: 256
      */
     public $reference_id;
 
@@ -50,6 +52,8 @@ class PurchaseUnitRequest implements JsonSerializable
     /**
      * @var string
      * The purchase description.
+     *
+     * maxLength: 127
      */
     public $description;
 
@@ -57,6 +61,8 @@ class PurchaseUnitRequest implements JsonSerializable
      * @var string
      * The API caller-provided external ID. Used to reconcile client transactions with PayPal transactions. Appears
      * in transaction and settlement reports but is not visible to the payer.
+     *
+     * maxLength: 127
      */
     public $custom_id;
 
@@ -64,6 +70,8 @@ class PurchaseUnitRequest implements JsonSerializable
      * @var string
      * The API caller-provided external invoice number for this order. Appears in both the payer's transaction
      * history and the emails that the payer receives.
+     *
+     * maxLength: 127
      */
     public $invoice_id;
 
@@ -80,6 +88,8 @@ class PurchaseUnitRequest implements JsonSerializable
      * if:<ul><li>The PayPal prefix toggle is <code>PAYPAL *</code>.</li><li>The merchant descriptor in the profile
      * is <code>Janes Gift</code>.</li><li>The soft descriptor is <code>800-123-1234</code>.</li></ul>Then, the
      * statement descriptor on the card is <code>PAYPAL * Janes Gift 80</code>.
+     *
+     * maxLength: 22
      */
     public $soft_descriptor;
 

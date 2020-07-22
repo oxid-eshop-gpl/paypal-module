@@ -23,6 +23,8 @@ class Email implements JsonSerializable
      *
      * use one of constants defined in this class to set the value:
      * @see TYPE_CUSTOMER_SERVICE
+     * minLength: 1
+     * maxLength: 50
      */
     public $type;
 
@@ -32,6 +34,9 @@ class Email implements JsonSerializable
      * and 255 characters are allowed after the <code>@</code> sign. However, the generally accepted maximum length
      * for an email address is 254 characters. The pattern verifies that an unquoted <code>@</code> sign
      * exists.</blockquote>
+     *
+     * minLength: 3
+     * maxLength: 254
      */
     public $email;
 }

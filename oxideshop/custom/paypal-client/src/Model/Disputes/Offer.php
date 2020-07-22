@@ -47,6 +47,8 @@ class Offer implements JsonSerializable
      * @see OFFER_TYPE_REFUND_WITH_RETURN
      * @see OFFER_TYPE_REFUND_WITH_REPLACEMENT
      * @see OFFER_TYPE_REPLACEMENT_WITHOUT_REFUND
+     * minLength: 1
+     * maxLength: 255
      */
     public $offer_type;
 

@@ -20,6 +20,9 @@ class ReferralData extends Account implements JsonSerializable
      * and 255 characters are allowed after the <code>@</code> sign. However, the generally accepted maximum length
      * for an email address is 254 characters. The pattern verifies that an unquoted <code>@</code> sign
      * exists.</blockquote>
+     *
+     * minLength: 3
+     * maxLength: 254
      */
     public $email;
 
@@ -30,12 +33,18 @@ class ReferralData extends Account implements JsonSerializable
      * language code](https://www.loc.gov/standards/iso639-2/php/code_list.php), the optional [ISO-15924 script
      * tag](https://www.unicode.org/iso15924/codelists.html), and the [ISO-3166 alpha-2 country
      * code](/docs/integration/direct/rest/country-codes/).
+     *
+     * minLength: 2
+     * maxLength: 10
      */
     public $preferred_language_code;
 
     /**
      * @var string
      * The partner's unique identifier for this customer in their system which can be used to track user in PayPal.
+     *
+     * minLength: 1
+     * maxLength: 127
      */
     public $tracking_id;
 

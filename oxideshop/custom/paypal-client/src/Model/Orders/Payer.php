@@ -26,12 +26,17 @@ class Payer implements JsonSerializable
      * and 255 characters are allowed after the <code>@</code> sign. However, the generally accepted maximum length
      * for an email address is 254 characters. The pattern verifies that an unquoted <code>@</code> sign
      * exists.</blockquote>
+     *
+     * maxLength: 254
      */
     public $email_address;
 
     /**
      * @var string
      * The account identifier for a PayPal account.
+     *
+     * minLength: 13
+     * maxLength: 13
      */
     public $payer_id;
 
@@ -47,6 +52,9 @@ class Payer implements JsonSerializable
      * represent special legal values, such as a date of birth, you should use dates with no associated time or
      * time-zone data. Whenever possible, use the standard `date_time` type. This regular expression does not
      * validate all dates. For example, February 31 is valid and nothing is known about leap years.
+     *
+     * minLength: 10
+     * maxLength: 10
      */
     public $birth_date;
 

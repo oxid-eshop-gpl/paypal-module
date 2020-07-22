@@ -71,12 +71,17 @@ class Card implements JsonSerializable
     /**
      * @var string
      * The card holder's name as it appears on the card.
+     *
+     * maxLength: 300
      */
     public $name;
 
     /**
      * @var string
      * The primary account number (PAN) for the payment card.
+     *
+     * minLength: 13
+     * maxLength: 19
      */
     public $number;
 
@@ -84,6 +89,9 @@ class Card implements JsonSerializable
      * @var string
      * The year and month, in ISO-8601 `YYYY-MM` date format. See [Internet date and time
      * format](https://tools.ietf.org/html/rfc3339#section-5.6).
+     *
+     * minLength: 7
+     * maxLength: 7
      */
     public $expiry;
 
@@ -120,6 +128,8 @@ class Card implements JsonSerializable
      * @see CARD_TYPE_ELECTRON
      * @see CARD_TYPE_CETELEM
      * @see CARD_TYPE_CHINA_UNION_PAY
+     * minLength: 1
+     * maxLength: 255
      */
     public $card_type;
 

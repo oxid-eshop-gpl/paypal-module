@@ -50,6 +50,9 @@ class EligibilityRequestItem implements JsonSerializable
     /**
      * @var string
      * The ID of the item.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $id;
 
@@ -69,6 +72,8 @@ class EligibilityRequestItem implements JsonSerializable
      * @see CATEGORY_VIRTUAL_GOODS
      * @see CATEGORY_OTHER_INTANGIBLES
      * @see CATEGORY_TICKETS
+     * minLength: 1
+     * maxLength: 255
      */
     public $category;
 }

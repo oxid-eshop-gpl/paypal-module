@@ -17,6 +17,9 @@ class SendMessage implements JsonSerializable
     /**
      * @var string
      * The message sent by the merchant to the other party.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $message;
 }

@@ -17,12 +17,18 @@ class PointOfSale implements JsonSerializable
     /**
      * @var string
      * The API caller-provided external store identification number.
+     *
+     * minLength: 1
+     * maxLength: 50
      */
     public $store_id;
 
     /**
      * @var string
      * The API caller-provided external terminal identification number.
+     *
+     * minLength: 1
+     * maxLength: 50
      */
     public $terminal_id;
 }

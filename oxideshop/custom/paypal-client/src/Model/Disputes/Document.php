@@ -17,12 +17,18 @@ class Document implements JsonSerializable
     /**
      * @var string
      * The document name.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $name;
 
     /**
      * @var string
      * The document URI.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $url;
 }

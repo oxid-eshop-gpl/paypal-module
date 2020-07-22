@@ -61,12 +61,16 @@ class ChangeReason implements JsonSerializable
      * @see REASON_CANCELED_RECURRING_BILLING
      * @see REASON_PROBLEM_WITH_REMITTANCE
      * @see REASON_OTHER
+     * minLength: 1
+     * maxLength: 255
      */
     public $reason;
 
     /**
      * @var string
      * A note.
+     *
+     * maxLength: 1048576
      */
     public $note;
 

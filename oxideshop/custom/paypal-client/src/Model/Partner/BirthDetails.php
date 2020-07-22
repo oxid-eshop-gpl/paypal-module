@@ -20,6 +20,9 @@ class BirthDetails implements JsonSerializable
      * represent special legal values, such as a date of birth, you should use dates with no associated time or
      * time-zone data. Whenever possible, use the standard `date_time` type. This regular expression does not
      * validate all dates. For example, February 31 is valid and nothing is known about leap years.
+     *
+     * minLength: 10
+     * maxLength: 10
      */
     public $date_of_birth;
 }

@@ -45,6 +45,9 @@ class Business implements JsonSerializable
     /**
      * @var string
      * Website of the business.
+     *
+     * minLength: 1
+     * maxLength: 50
      */
     public $website;
 

@@ -17,12 +17,18 @@ class PaymentMethodDirective implements JsonSerializable
     /**
      * @var string
      * Indicates the type of payment processing. Eg: CUSTOM_CARD_PROCESSING, CUSTOM_BANK_PROCESSING.
+     *
+     * minLength: 1
+     * maxLength: 127
      */
     public $payment_processing_type;
 
     /**
      * @var string
      * Defines the payment processing decision as ALLOW, DENY, UNKNOWN.
+     *
+     * minLength: 1
+     * maxLength: 30
      */
     public $processing_decision;
 

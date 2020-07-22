@@ -30,6 +30,8 @@ class RequireEvidence implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see ACTION_BUYER_EVIDENCE
      * @see ACTION_SELLER_EVIDENCE
+     * minLength: 1
+     * maxLength: 255
      */
     public $action;
 }

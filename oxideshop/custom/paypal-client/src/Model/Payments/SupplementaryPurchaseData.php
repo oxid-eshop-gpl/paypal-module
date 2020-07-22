@@ -19,6 +19,8 @@ class SupplementaryPurchaseData implements JsonSerializable
      * @var string
      * The API caller-provided external invoice number for this order. Appears in both the payer's transaction
      * history and the emails that the payer receives.
+     *
+     * maxLength: 127
      */
     public $invoice_id;
 
@@ -26,6 +28,8 @@ class SupplementaryPurchaseData implements JsonSerializable
      * @var string
      * The API caller-provided external ID. Used to reconcile API caller-initiated transactions with PayPal
      * transactions. Appears in transaction and settlement reports.
+     *
+     * maxLength: 127
      */
     public $custom_id;
 
@@ -33,6 +37,8 @@ class SupplementaryPurchaseData implements JsonSerializable
      * @var string
      * An informational note about this settlement. Appears in both the payer's transaction history and the emails
      * that the payer receives.
+     *
+     * maxLength: 255
      */
     public $note_to_payer;
 
@@ -41,6 +47,8 @@ class SupplementaryPurchaseData implements JsonSerializable
      * <strong>Note:</strong> This field has been marked INTERNAL to ensure backward compatibility, please do not use
      * this for any future integrations as this field is not supported for this end point. The payment descriptor
      * that appears on the customer's credit card statement for this transaction.
+     *
+     * maxLength: 22
      */
     public $soft_descriptor;
 }

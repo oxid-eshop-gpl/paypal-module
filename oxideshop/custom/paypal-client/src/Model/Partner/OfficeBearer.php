@@ -43,6 +43,8 @@ class OfficeBearer extends Person implements JsonSerializable
      * @see ROLE_SECRETARY
      * @see ROLE_TREASURER
      * @see ROLE_TRUSTEE
+     * minLength: 1
+     * maxLength: 255
      */
     public $role;
 }

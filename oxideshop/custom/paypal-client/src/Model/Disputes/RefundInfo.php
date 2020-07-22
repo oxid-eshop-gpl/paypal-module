@@ -42,6 +42,8 @@ class RefundInfo implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see RECIPIENT_BUYER
      * @see RECIPIENT_SELLER
+     * minLength: 1
+     * maxLength: 255
      */
     public $recipient;
 
@@ -56,12 +58,18 @@ class RefundInfo implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $create_time;
 
     /**
      * @var string
      * The encrypted transaction ID, if available.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $transaction_id;
 
@@ -73,6 +81,8 @@ class RefundInfo implements JsonSerializable
      * @see PAYOUT_TYPE_REVERSAL
      * @see PAYOUT_TYPE_COURTESY_CREDIT
      * @see PAYOUT_TYPE_SELLER_PROTECTION_COVERAGE
+     * minLength: 1
+     * maxLength: 255
      */
     public $payout_type;
 
@@ -89,6 +99,8 @@ class RefundInfo implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see TRANSACTION_SOURCE_PAYPAL
      * @see TRANSACTION_SOURCE_OTHER
+     * minLength: 1
+     * maxLength: 255
      */
     public $transaction_source;
 }

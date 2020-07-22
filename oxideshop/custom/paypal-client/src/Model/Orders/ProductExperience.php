@@ -204,6 +204,8 @@ class ProductExperience implements JsonSerializable
      * @see USER_EXPERIENCE_FLOW_INLINE
      * @see USER_EXPERIENCE_FLOW_NATIVE
      * @see USER_EXPERIENCE_FLOW_FULL_PAGE
+     * minLength: 1
+     * maxLength: 255
      */
     public $user_experience_flow;
 
@@ -231,6 +233,8 @@ class ProductExperience implements JsonSerializable
      * @see ENTRY_POINT_PAY_WITH_ALTPAY_ZIMPLER
      * @see ENTRY_POINT_PAYPAL_SITE
      * @see ENTRY_POINT_UNKNOWN
+     * minLength: 1
+     * maxLength: 255
      */
     public $entry_point;
 
@@ -258,6 +262,8 @@ class ProductExperience implements JsonSerializable
      * @see PAYMENT_METHOD_PAY_WITH_ALTPAY_WECHATPAY
      * @see PAYMENT_METHOD_PAY_WITH_ALTPAY_ZIMPLER
      * @see PAYMENT_METHOD_UNKNOWN
+     * minLength: 1
+     * maxLength: 255
      */
     public $payment_method;
 
@@ -270,6 +276,8 @@ class ProductExperience implements JsonSerializable
      * @see CHANNEL_MOBILE_WEB
      * @see CHANNEL_MOBILE_APP
      * @see CHANNEL_BATCH
+     * minLength: 1
+     * maxLength: 255
      */
     public $channel;
 
@@ -292,6 +300,8 @@ class ProductExperience implements JsonSerializable
      * @see PRODUCT_FLOW_BUYER_APPROVAL_SUBSCRIPTIONS_PRICING_CHANGE
      * @see PRODUCT_FLOW_BUYER_INSTRUMENT_AUTHENTICATION_BILLING_AGREEMENT
      * @see PRODUCT_FLOW_NEGATIVE_BALANCE_COLLECTION
+     * minLength: 1
+     * maxLength: 255
      */
     public $product_flow;
 }

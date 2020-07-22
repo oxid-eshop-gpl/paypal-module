@@ -17,6 +17,9 @@ class SubscriptionSuspendRequest implements JsonSerializable
     /**
      * @var string
      * The reason for suspenson of the subscription.
+     *
+     * minLength: 1
+     * maxLength: 128
      */
     public $reason;
 }

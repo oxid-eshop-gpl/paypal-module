@@ -25,6 +25,9 @@ class ReturnDetails implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $return_time;
 
@@ -35,6 +38,8 @@ class ReturnDetails implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see MODE_SHIPPED
      * @see MODE_IN_PERSON
+     * minLength: 1
+     * maxLength: 255
      */
     public $mode;
 
@@ -47,6 +52,9 @@ class ReturnDetails implements JsonSerializable
     /**
      * @var string
      * The confirmation number for the item return.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $return_confirmation_number;
 

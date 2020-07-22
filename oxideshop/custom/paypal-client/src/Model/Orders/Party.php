@@ -17,12 +17,18 @@ class Party implements JsonSerializable
     /**
      * @var string
      * Unique identifier for a party.
+     *
+     * minLength: 1
+     * maxLength: 30
      */
     public $id;
 
     /**
      * @var string
      * External identifier for a party, it could be venmo id, facebook email etc.
+     *
+     * minLength: 1
+     * maxLength: 30
      */
     public $external_id;
 
@@ -38,6 +44,9 @@ class Party implements JsonSerializable
      * and 255 characters are allowed after the <code>@</code> sign. However, the generally accepted maximum length
      * for an email address is 254 characters. The pattern verifies that an unquoted <code>@</code> sign
      * exists.</blockquote>
+     *
+     * minLength: 3
+     * maxLength: 254
      */
     public $primary_email;
 
@@ -64,6 +73,9 @@ class Party implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $create_time;
 
@@ -72,6 +84,9 @@ class Party implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $update_time;
 }

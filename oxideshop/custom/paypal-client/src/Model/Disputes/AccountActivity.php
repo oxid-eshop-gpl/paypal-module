@@ -101,6 +101,9 @@ class AccountActivity implements JsonSerializable
     /**
      * @var string
      * The ID of the activity log entry.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $id;
 
@@ -109,6 +112,9 @@ class AccountActivity implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $create_time;
 
@@ -124,6 +130,8 @@ class AccountActivity implements JsonSerializable
      * @see ENTITY_TYPE_FUNDING_INSTRUMENT
      * @see ENTITY_TYPE_OTHER
      * @see ENTITY_TYPE_DEVICE
+     * minLength: 1
+     * maxLength: 255
      */
     public $entity_type;
 
@@ -143,6 +151,8 @@ class AccountActivity implements JsonSerializable
      * @see ENTITY_SUBTYPE_WORKING_CAPITAL
      * @see ENTITY_SUBTYPE_REVOLVING_CREDIT
      * @see ENTITY_SUBTYPE_CLOSE_ENDED_CREDIT
+     * minLength: 1
+     * maxLength: 255
      */
     public $entity_subtype;
 
@@ -162,12 +172,17 @@ class AccountActivity implements JsonSerializable
      * @see ACTION_PERFORMED_DEACTIVATED
      * @see ACTION_PERFORMED_REACTIVATED
      * @see ACTION_PERFORMED_REOPENED
+     * minLength: 1
+     * maxLength: 255
      */
     public $action_performed;
 
     /**
      * @var string
      * The entity ID of the reported item. For example, the card ID.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $entity_id;
 

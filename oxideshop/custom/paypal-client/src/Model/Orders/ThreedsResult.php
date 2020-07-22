@@ -141,6 +141,8 @@ class ThreedsResult extends AuthenticationResultType implements JsonSerializable
      * @see ECI_FLAG_FULLY_AUTHENTICATED_TRANSACTION
      * @see ECI_FLAG_ATTEMPTED_AUTHENTICATION_TRANSACTION
      * @see ECI_FLAG_NON_3D_SECURE_TRANSACTION
+     * minLength: 1
+     * maxLength: 255
      */
     public $eci_flag;
 
@@ -152,6 +154,8 @@ class ThreedsResult extends AuthenticationResultType implements JsonSerializable
      * @see UCAF_INDICATOR_NON_SECURECODE_TRANSACTION
      * @see UCAF_INDICATOR_MERCHANT_ONLY_SECURECODE_TRANSACTION
      * @see UCAF_INDICATOR_FULLY_AUTHENTICATED_SECURECODE
+     * minLength: 1
+     * maxLength: 255
      */
     public $ucaf_indicator;
 
@@ -169,6 +173,8 @@ class ThreedsResult extends AuthenticationResultType implements JsonSerializable
      * @see CARD_BRAND_VISA
      * @see CARD_BRAND_ELECTRON
      * @see CARD_BRAND_ELO
+     * minLength: 1
+     * maxLength: 255
      */
     public $card_brand;
 
@@ -176,12 +182,18 @@ class ThreedsResult extends AuthenticationResultType implements JsonSerializable
      * @var string
      * This is the cardholder authentication value. The CAVV is unique to the cardholder and to the transaction that
      * was authenticated.
+     *
+     * minLength: 1
+     * maxLength: 40
      */
     public $cavv;
 
     /**
      * @var string
      * Transaction identifier resulting from authentication processing.
+     *
+     * minLength: 1
+     * maxLength: 40
      */
     public $xid;
 
@@ -194,6 +206,8 @@ class ThreedsResult extends AuthenticationResultType implements JsonSerializable
      * @see ENROLLED_N
      * @see ENROLLED_U
      * @see ENROLLED_B
+     * minLength: 1
+     * maxLength: 255
      */
     public $enrolled;
 
@@ -210,24 +224,35 @@ class ThreedsResult extends AuthenticationResultType implements JsonSerializable
      * @see PARES_STATUS_R
      * @see PARES_STATUS_D
      * @see PARES_STATUS_I
+     * minLength: 1
+     * maxLength: 255
      */
     public $pares_status;
 
     /**
      * @var string
      * The merchant name that was sent in the authentication request.
+     *
+     * minLength: 1
+     * maxLength: 25
      */
     public $merchant_name;
 
     /**
      * @var string
      * The 3DS version that was used to process the transaction.
+     *
+     * minLength: 1
+     * maxLength: 10
      */
     public $three_ds_version;
 
     /**
      * @var string
      * Unique transaction identifier assigned by the Directory Server (DS) to identify a single transaction.
+     *
+     * minLength: 1
+     * maxLength: 36
      */
     public $directory_server_transaction_id;
 
@@ -240,12 +265,17 @@ class ThreedsResult extends AuthenticationResultType implements JsonSerializable
      * @see AUTHENTICATION_TYPE_DYNAMIC
      * @see AUTHENTICATION_TYPE_OUT_OF_BAND
      * @see AUTHENTICATION_TYPE_DECOUPLED
+     * minLength: 1
+     * maxLength: 255
      */
     public $authentication_type;
 
     /**
      * @var string
      * Unique transaction identifier assigned by the Access Control Server (ACS) to identify a single transaction.
+     *
+     * minLength: 1
+     * maxLength: 36
      */
     public $access_control_server_transaction_id;
 
@@ -256,18 +286,26 @@ class ThreedsResult extends AuthenticationResultType implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see SIGNATURE_VERIFICATION_STATUS_YES
      * @see SIGNATURE_VERIFICATION_STATUS_NO
+     * minLength: 1
+     * maxLength: 50
      */
     public $signature_verification_status;
 
     /**
      * @var string
      * The PayPal acquiring MID to be used for authorization.
+     *
+     * minLength: 1
+     * maxLength: 25
      */
     public $paypal_acquiring_mid;
 
     /**
      * @var string
      * The PayPal acquiring BIN to be used for authorization.
+     *
+     * minLength: 1
+     * maxLength: 6
      */
     public $paypal_acquiring_bin;
 
@@ -278,12 +316,17 @@ class ThreedsResult extends AuthenticationResultType implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see CAVV_ALGORITHM_CVV_WITH_ATN
      * @see CAVV_ALGORITHM_MASTERCARD_SPA_ALGORITHM
+     * minLength: 1
+     * maxLength: 255
      */
     public $cavv_algorithm;
 
     /**
      * @var string
      * Unique transaction identifier assigned by the 3DS Server to identify a single transaction.
+     *
+     * minLength: 1
+     * maxLength: 36
      */
     public $three_ds_server_transaction_id;
 }

@@ -21,6 +21,8 @@ class PayeeDisplayable implements JsonSerializable
      * and 255 characters are allowed after the <code>@</code> sign. However, the generally accepted maximum length
      * for an email address is 254 characters. The pattern verifies that an unquoted <code>@</code> sign
      * exists.</blockquote>
+     *
+     * maxLength: 254
      */
     public $business_email;
 
@@ -35,6 +37,8 @@ class PayeeDisplayable implements JsonSerializable
      * @var string
      * The name of the merchant. Appears to the customer in checkout, payment transactions, email receipts, and
      * transaction history.
+     *
+     * maxLength: 127
      */
     public $brand_name;
 }

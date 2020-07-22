@@ -20,24 +20,32 @@ class AddressPortableAddressDetails implements JsonSerializable
     /**
      * @var string
      * The street number.
+     *
+     * maxLength: 100
      */
     public $street_number;
 
     /**
      * @var string
      * The street name. Just `Drury` in `Drury Lane`.
+     *
+     * maxLength: 100
      */
     public $street_name;
 
     /**
      * @var string
      * The street type. For example, avenue, boulevard, road, or expressway.
+     *
+     * maxLength: 100
      */
     public $street_type;
 
     /**
      * @var string
      * The delivery service. Post office box, bag number, or post office name.
+     *
+     * maxLength: 100
      */
     public $delivery_service;
 
@@ -45,6 +53,8 @@ class AddressPortableAddressDetails implements JsonSerializable
      * @var string
      * A named locations that represents the premise. Usually a building name or number or collection of buildings
      * with a common name or number. For example, <code>Craven House</code>.
+     *
+     * maxLength: 100
      */
     public $building_name;
 
@@ -52,6 +62,8 @@ class AddressPortableAddressDetails implements JsonSerializable
      * @var string
      * The first-order entity below a named building or location that represents the sub-premise. Usually a single
      * building within a collection of buildings with a common name. Can be a flat, story, floor, room, or apartment.
+     *
+     * maxLength: 100
      */
     public $sub_building;
 }

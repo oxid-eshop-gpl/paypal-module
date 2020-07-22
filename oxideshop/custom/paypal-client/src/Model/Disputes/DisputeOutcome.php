@@ -47,12 +47,17 @@ class DisputeOutcome implements JsonSerializable
      * @see OUTCOME_CODE_ACCEPTED
      * @see OUTCOME_CODE_DENIED
      * @see OUTCOME_CODE_NONE
+     * minLength: 1
+     * maxLength: 255
      */
     public $outcome_code;
 
     /**
      * @var string
      * The justification for the adjudication outcome.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $outcome_reason;
 

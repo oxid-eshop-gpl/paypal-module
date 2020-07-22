@@ -17,6 +17,9 @@ class SoftDescriptorDetails implements JsonSerializable
     /**
      * @var string
      * Soft Descriptor.
+     *
+     * minLength: 1
+     * maxLength: 30
      */
     public $soft_descriptor;
 
@@ -24,6 +27,9 @@ class SoftDescriptorDetails implements JsonSerializable
      * @var string
      * Contact type allows the merchant to specify the type of the additional information passing in the soft
      * descriptor Eg : CITY/URL/PHONE.
+     *
+     * minLength: 1
+     * maxLength: 127
      */
     public $contact_type;
 
@@ -31,6 +37,9 @@ class SoftDescriptorDetails implements JsonSerializable
      * @var string
      * Contact value allows the merchant to provide the business location, business phone number or URL to the
      * instrument holder.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $contact_value;
 }

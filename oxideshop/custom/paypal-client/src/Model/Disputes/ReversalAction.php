@@ -57,12 +57,18 @@ class ReversalAction implements JsonSerializable
     /**
      * @var string
      * The ID of the entity that was changed as part of the reversal action.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $id;
 
     /**
      * @var string
      * The ID of the activity log entry that was created for the reversal action that was carried out by the system.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $original_activity_id;
 
@@ -76,6 +82,8 @@ class ReversalAction implements JsonSerializable
      * @see ENTITY_TYPE_ADDRESS
      * @see ENTITY_TYPE_ACCOUNT
      * @see ENTITY_TYPE_FUNDING_INSTRUMENT
+     * minLength: 1
+     * maxLength: 255
      */
     public $entity_type;
 
@@ -87,6 +95,8 @@ class ReversalAction implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see ENTITY_SUBTYPE_CREDIT_CARD
      * @see ENTITY_SUBTYPE_BANK_ACCOUNT
+     * minLength: 1
+     * maxLength: 255
      */
     public $entity_subtype;
 
@@ -101,12 +111,17 @@ class ReversalAction implements JsonSerializable
      * @see ACTION_PERFORMED_EDITED
      * @see ACTION_PERFORMED_UPGRADED
      * @see ACTION_PERFORMED_DOWNGRADED
+     * minLength: 1
+     * maxLength: 255
      */
     public $action_performed;
 
     /**
      * @var string
      * The status.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $status;
 }

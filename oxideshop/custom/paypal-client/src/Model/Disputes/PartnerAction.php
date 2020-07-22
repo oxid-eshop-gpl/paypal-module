@@ -35,6 +35,9 @@ class PartnerAction implements JsonSerializable
     /**
      * @var string
      * The ID for the action.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $id;
 
@@ -47,6 +50,8 @@ class PartnerAction implements JsonSerializable
      * @see NAME_DENY_DISPUTE
      * @see NAME_ACCEPT_DISPUTE
      * @see NAME_WRITE_OFF
+     * minLength: 1
+     * maxLength: 255
      */
     public $name;
 
@@ -55,6 +60,9 @@ class PartnerAction implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $create_time;
 
@@ -63,6 +71,9 @@ class PartnerAction implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $update_time;
 
@@ -71,6 +82,9 @@ class PartnerAction implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $due_time;
 
@@ -81,6 +95,8 @@ class PartnerAction implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see STATUS_PENDING
      * @see STATUS_COMPLETED
+     * minLength: 1
+     * maxLength: 255
      */
     public $status;
 

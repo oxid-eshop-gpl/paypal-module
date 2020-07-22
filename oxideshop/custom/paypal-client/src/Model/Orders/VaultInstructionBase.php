@@ -23,6 +23,8 @@ class VaultInstructionBase implements JsonSerializable
      *
      * use one of constants defined in this class to set the value:
      * @see CONFIRM_PAYMENT_TOKEN_ON_ORDER_COMPLETION
+     * minLength: 1
+     * maxLength: 255
      */
     public $confirm_payment_token;
 }

@@ -32,12 +32,18 @@ class PlanRequestPOST implements JsonSerializable
     /**
      * @var string
      * The ID of the product.
+     *
+     * minLength: 6
+     * maxLength: 50
      */
     public $product_id;
 
     /**
      * @var string
      * The plan name.
+     *
+     * minLength: 1
+     * maxLength: 127
      */
     public $name;
 
@@ -49,12 +55,17 @@ class PlanRequestPOST implements JsonSerializable
      * @see STATUS_CREATED
      * @see STATUS_INACTIVE
      * @see STATUS_ACTIVE
+     * minLength: 1
+     * maxLength: 24
      */
     public $status;
 
     /**
      * @var string
      * The detailed description of the plan.
+     *
+     * minLength: 1
+     * maxLength: 127
      */
     public $description;
 
@@ -65,6 +76,8 @@ class PlanRequestPOST implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see USAGE_TYPE_LICENSED
      * @see USAGE_TYPE_METERED
+     * minLength: 1
+     * maxLength: 24
      */
     public $usage_type;
 

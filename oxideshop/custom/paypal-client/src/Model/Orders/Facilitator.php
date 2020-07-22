@@ -31,18 +31,26 @@ class Facilitator extends Participant implements JsonSerializable
      * @see TYPE_API_CALLER
      * @see TYPE_PARTNER
      * @see TYPE_INTERNAL
+     * minLength: 1
+     * maxLength: 255
      */
     public $type;
 
     /**
      * @var string
      * OAuth 2.0 client_id of the facilitator app.
+     *
+     * minLength: 1
+     * maxLength: 128
      */
     public $client_id;
 
     /**
      * @var string
      * A String Integration Identifier to identify a partner in the ecosystem.
+     *
+     * minLength: 1
+     * maxLength: 127
      */
     public $integration_identifier;
 

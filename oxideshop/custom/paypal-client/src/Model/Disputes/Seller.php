@@ -21,18 +21,27 @@ class Seller implements JsonSerializable
      * and 255 characters are allowed after the <code>@</code> sign. However, the generally accepted maximum length
      * for an email address is 254 characters. The pattern verifies that an unquoted <code>@</code> sign
      * exists.</blockquote>
+     *
+     * minLength: 3
+     * maxLength: 254
      */
     public $email;
 
     /**
      * @var string
      * The PayPal account ID for the merchant.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $merchant_id;
 
     /**
      * @var string
      * The name of the merchant.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $name;
 }

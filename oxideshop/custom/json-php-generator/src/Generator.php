@@ -386,6 +386,12 @@ class Generator
                 }
             }
         }
+        if (isset($propDef['minLength']) && $propDef['minLength'] > 0) {
+            $property->addComment("minLength: " . $propDef['minLength']);
+        }
+        if (isset($propDef['maxLength'])) {
+            $property->addComment("maxLength: " . $propDef['maxLength']);
+        }
     }
 }
 

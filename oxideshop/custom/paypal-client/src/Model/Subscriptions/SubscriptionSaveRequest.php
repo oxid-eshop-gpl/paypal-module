@@ -17,6 +17,9 @@ class SubscriptionSaveRequest implements JsonSerializable
     /**
      * @var string
      * The identifier of session for which subscription needs to be saved.
+     *
+     * minLength: 3
+     * maxLength: 50
      */
     public $token_id;
 }

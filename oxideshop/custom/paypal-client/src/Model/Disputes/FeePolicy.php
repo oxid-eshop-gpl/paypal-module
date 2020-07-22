@@ -32,6 +32,8 @@ class FeePolicy implements JsonSerializable
      * @see TRANSACTION_FEE_RETAIN_NO_FEE
      * @see TRANSACTION_FEE_RETAIN_ALL_FEE
      * @see TRANSACTION_FEE_RETAIN_FIXED_FEE
+     * minLength: 1
+     * maxLength: 255
      */
     public $transaction_fee;
 }

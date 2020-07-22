@@ -35,12 +35,17 @@ class Outcome implements JsonSerializable
      * @see FAULTY_PARTY_SELLER
      * @see FAULTY_PARTY_PARTNER
      * @see FAULTY_PARTY_NONE
+     * minLength: 1
+     * maxLength: 255
      */
     public $faulty_party;
 
     /**
      * @var string
      * The reason for the decision.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $adjudication_reason;
 
@@ -49,6 +54,9 @@ class Outcome implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $resolution_date;
 }

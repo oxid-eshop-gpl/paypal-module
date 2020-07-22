@@ -17,18 +17,27 @@ class BusinessIndustry implements JsonSerializable
     /**
      * @var string
      * The customer's business category code. PayPal uses industry standard seller category codes.
+     *
+     * minLength: 1
+     * maxLength: 20
      */
     public $category;
 
     /**
      * @var string
      * The customer's business seller category code. PayPal uses industry standard seller category codes.
+     *
+     * minLength: 1
+     * maxLength: 20
      */
     public $mcc_code;
 
     /**
      * @var string
      * The customer's business subcategory code. PayPal uses industry standard seller subcategory codes.
+     *
+     * minLength: 1
+     * maxLength: 20
      */
     public $subcategory;
 }

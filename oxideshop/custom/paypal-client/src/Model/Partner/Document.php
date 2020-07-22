@@ -17,6 +17,9 @@ class Document implements JsonSerializable
     /**
      * @var string
      * The encrypted identifier for the document.
+     *
+     * minLength: 1
+     * maxLength: 20
      */
     public $id;
 
@@ -30,6 +33,9 @@ class Document implements JsonSerializable
     /**
      * @var string
      * The file name.
+     *
+     * minLength: 1
+     * maxLength: 100
      */
     public $name;
 
@@ -37,6 +43,9 @@ class Document implements JsonSerializable
      * @var string
      * The number for the document. It is the ID number if the document is `ID CARD`, the passport number if the
      * document is `PASSPORT`, etc.
+     *
+     * minLength: 1
+     * maxLength: 100
      */
     public $identification_number;
 
@@ -46,6 +55,9 @@ class Document implements JsonSerializable
      * represent special legal values, such as a date of birth, you should use dates with no associated time or
      * time-zone data. Whenever possible, use the standard `date_time` type. This regular expression does not
      * validate all dates. For example, February 31 is valid and nothing is known about leap years.
+     *
+     * minLength: 10
+     * maxLength: 10
      */
     public $issue_date;
 
@@ -55,6 +67,9 @@ class Document implements JsonSerializable
      * represent special legal values, such as a date of birth, you should use dates with no associated time or
      * time-zone data. Whenever possible, use the standard `date_time` type. This regular expression does not
      * validate all dates. For example, February 31 is valid and nothing is known about leap years.
+     *
+     * minLength: 10
+     * maxLength: 10
      */
     public $expiry_date;
 
@@ -65,6 +80,9 @@ class Document implements JsonSerializable
      * <code>UK</code> as used in the top-level domain names for that country. Use the `C2` country code for China
      * worldwide for comparable uncontrolled price (CUP) method, bank card, and cross-border
      * transactions.</blockquote>
+     *
+     * minLength: 2
+     * maxLength: 2
      */
     public $issuing_country_code;
 

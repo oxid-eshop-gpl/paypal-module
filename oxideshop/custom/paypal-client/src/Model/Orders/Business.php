@@ -121,6 +121,8 @@ class Business extends Party implements JsonSerializable
      * @see TYPE_PUBLIC_CORPORATION
      * @see TYPE_PUBLIC_PARTNERSHIP
      * @see TYPE_REGISTERED_COOPERATIVE
+     * minLength: 1
+     * maxLength: 255
      */
     public $type;
 
@@ -140,6 +142,9 @@ class Business extends Party implements JsonSerializable
     /**
      * @var string
      * Description of business.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $description;
 
@@ -152,6 +157,9 @@ class Business extends Party implements JsonSerializable
     /**
      * @var string
      * Web site url (online presence) for the business.
+     *
+     * minLength: 1
+     * maxLength: 100
      */
     public $url;
 

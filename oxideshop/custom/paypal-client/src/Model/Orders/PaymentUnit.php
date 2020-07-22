@@ -17,30 +17,45 @@ class PaymentUnit implements JsonSerializable
     /**
      * @var string
      * Unique Identifier for this payment unit scoped in current order.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $reference_id;
 
     /**
      * @var string
      * Reference Id of the parent payment unit.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $parent_reference_id;
 
     /**
      * @var string
      * Idempotency Id for the payment.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $idempotency_id;
 
     /**
      * @var string
      * BN Code or Partner Attribution Id used for revenue attribution.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $partner_attribution_id;
 
     /**
      * @var string
      * Payment Category PHYSICAL_GOODS, DIGITAL_GOODS, DONATIONS, PLATFORM_FEE Etc.
+     *
+     * minLength: 1
+     * maxLength: 127
      */
     public $payment_category;
 
@@ -70,24 +85,36 @@ class PaymentUnit implements JsonSerializable
     /**
      * @var string
      * Free-form field for the use of clients.
+     *
+     * minLength: 1
+     * maxLength: 127
      */
     public $custom_id;
 
     /**
      * @var string
      * Description of what is being paid for.
+     *
+     * minLength: 1
+     * maxLength: 127
      */
     public $description;
 
     /**
      * @var string
      * Invoice id to track this payment.
+     *
+     * minLength: 1
+     * maxLength: 256
      */
     public $invoice_id;
 
     /**
      * @var string
      * Payment schedule category. Eg: FIRST_RECURRING, SUBSEQUENT_RECURRING, INSTALLMENT, UNSCHEDULED Etc.
+     *
+     * minLength: 1
+     * maxLength: 127
      */
     public $payment_schedule_category;
 
@@ -101,6 +128,9 @@ class PaymentUnit implements JsonSerializable
      * @var string
      * The name of the originator company used in ACH settlement. While processing bank transactions as a third party
      * processor, clients sending transactions to PayPal may or may not provide this info.
+     *
+     * minLength: 1
+     * maxLength: 16
      */
     public $biller_company_name;
 
@@ -109,6 +139,9 @@ class PaymentUnit implements JsonSerializable
      * The Id of the originator company used in ACH settlement. While processing bank transactions as a third party
      * processor, clients sending transactions to PayPal may or may not provide this info. This Id is assigned by the
      * banks to originator.
+     *
+     * minLength: 1
+     * maxLength: 10
      */
     public $biller_company_id;
 

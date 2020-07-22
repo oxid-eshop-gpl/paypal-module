@@ -35,6 +35,9 @@ class ExternalCaseProperties implements JsonSerializable
     /**
      * @var string
      * The external claim ID.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $reference_id;
 
@@ -46,6 +49,8 @@ class ExternalCaseProperties implements JsonSerializable
      * @see EXTERNAL_TYPE_BANK_RETURN
      * @see EXTERNAL_TYPE_DIRECT_DEBIT_REVERSAL
      * @see EXTERNAL_TYPE_CREDIT_CARD_DISPUTE
+     * minLength: 1
+     * maxLength: 255
      */
     public $external_type;
 
@@ -57,6 +62,8 @@ class ExternalCaseProperties implements JsonSerializable
      * @see RECOVERY_TYPE_RECOVERED_FROM_SELLER
      * @see RECOVERY_TYPE_RECOVERED_FROM_BUYER
      * @see RECOVERY_TYPE_NO_RECOVERY
+     * minLength: 1
+     * maxLength: 255
      */
     public $recovery_type;
 

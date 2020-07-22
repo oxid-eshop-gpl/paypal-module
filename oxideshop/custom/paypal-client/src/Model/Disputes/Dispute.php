@@ -155,6 +155,9 @@ class Dispute implements JsonSerializable
     /**
      * @var string
      * The ID of the dispute.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $dispute_id;
 
@@ -163,6 +166,9 @@ class Dispute implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $create_time;
 
@@ -171,6 +177,9 @@ class Dispute implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $update_time;
 
@@ -203,6 +212,8 @@ class Dispute implements JsonSerializable
      * @see REASON_CANCELED_RECURRING_BILLING
      * @see REASON_PROBLEM_WITH_REMITTANCE
      * @see REASON_OTHER
+     * minLength: 1
+     * maxLength: 255
      */
     public $reason;
 
@@ -217,6 +228,8 @@ class Dispute implements JsonSerializable
      * @see STATUS_UNDER_REVIEW
      * @see STATUS_RESOLVED
      * @see STATUS_OTHER
+     * minLength: 1
+     * maxLength: 255
      */
     public $status;
 
@@ -244,6 +257,9 @@ class Dispute implements JsonSerializable
      * The code that identifies the reason for the credit card chargeback. Each card issuer follows their own
      * standards for defining reason type, code, and its format. For more details about the external reason code, see
      * the card issue site. Available for only unbranded transactions.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $external_reason_code;
 
@@ -262,6 +278,8 @@ class Dispute implements JsonSerializable
      * @see DISPUTE_LIFE_CYCLE_STAGE_CHARGEBACK
      * @see DISPUTE_LIFE_CYCLE_STAGE_PRE_ARBITRATION
      * @see DISPUTE_LIFE_CYCLE_STAGE_ARBITRATION
+     * minLength: 1
+     * maxLength: 255
      */
     public $dispute_life_cycle_stage;
 
@@ -272,6 +290,8 @@ class Dispute implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see DISPUTE_CHANNEL_INTERNAL
      * @see DISPUTE_CHANNEL_EXTERNAL
+     * minLength: 1
+     * maxLength: 255
      */
     public $dispute_channel;
 
@@ -299,6 +319,9 @@ class Dispute implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $buyer_response_due_date;
 
@@ -307,6 +330,9 @@ class Dispute implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $seller_response_due_date;
 
@@ -345,6 +371,8 @@ class Dispute implements JsonSerializable
      * @see DISPUTE_FLOW_UNKNOWN_FAXES
      * @see DISPUTE_FLOW_VETTING
      * @see DISPUTE_FLOW_OTHER
+     * minLength: 1
+     * maxLength: 255
      */
     public $dispute_flow;
 

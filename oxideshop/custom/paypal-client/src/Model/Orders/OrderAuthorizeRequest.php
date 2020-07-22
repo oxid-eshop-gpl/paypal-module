@@ -23,6 +23,8 @@ class OrderAuthorizeRequest implements JsonSerializable
     /**
      * @var string
      * The API caller-provided external ID for the purchase unit. Required for multiple purchase units.
+     *
+     * maxLength: 256
      */
     public $reference_id;
 

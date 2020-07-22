@@ -30,6 +30,9 @@ class VaultPaypalWalletBase implements JsonSerializable
      * @var string
      * The description displayed to PayPal consumer on the approval flow for PayPal, as well as on the PayPal payment
      * token management experience on PayPal.com.
+     *
+     * minLength: 1
+     * maxLength: 128
      */
     public $description;
 
@@ -44,6 +47,9 @@ class VaultPaypalWalletBase implements JsonSerializable
      * product_label with the same charge pattern can be leveraged. Business can decide to use custom name for the
      * product_label. If no product_label is specified, default policies will apply for PayPal payment method,
      * irrespective of the nature of the business.
+     *
+     * minLength: 1
+     * maxLength: 25
      */
     public $product_label;
 
@@ -60,6 +66,8 @@ class VaultPaypalWalletBase implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see USAGE_TYPE_MERCHANT
      * @see USAGE_TYPE_PLATFORM
+     * minLength: 1
+     * maxLength: 255
      */
     public $usage_type;
 
@@ -71,6 +79,8 @@ class VaultPaypalWalletBase implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see CUSTOMER_TYPE_CONSUMER
      * @see CUSTOMER_TYPE_BUSINESS
+     * minLength: 1
+     * maxLength: 255
      */
     public $customer_type;
 

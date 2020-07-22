@@ -23,12 +23,18 @@ class Subscription extends SubscriptionStatus implements JsonSerializable
     /**
      * @var string
      * The PayPal-generated ID for the subscription.
+     *
+     * minLength: 3
+     * maxLength: 50
      */
     public $id;
 
     /**
      * @var string
      * The ID of the plan.
+     *
+     * minLength: 3
+     * maxLength: 50
      */
     public $plan_id;
 
@@ -37,12 +43,18 @@ class Subscription extends SubscriptionStatus implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $start_time;
 
     /**
      * @var string
      * The quantity of the product in the subscription.
+     *
+     * minLength: 1
+     * maxLength: 32
      */
     public $quantity;
 
@@ -81,6 +93,9 @@ class Subscription extends SubscriptionStatus implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $create_time;
 
@@ -89,6 +104,9 @@ class Subscription extends SubscriptionStatus implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $update_time;
 

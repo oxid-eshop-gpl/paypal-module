@@ -17,6 +17,9 @@ class UpdatePurchaseUnitRequest implements JsonSerializable
     /**
      * @var string
      * The API caller-provided external ID for the purchase unit.
+     *
+     * minLength: 1
+     * maxLength: 256
      */
     public $reference_id;
 

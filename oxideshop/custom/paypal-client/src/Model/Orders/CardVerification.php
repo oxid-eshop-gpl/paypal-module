@@ -26,6 +26,8 @@ class CardVerification implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see METHOD_3D_SECURE
      * @see METHOD_AVS_CVV
+     * minLength: 1
+     * maxLength: 255
      */
     public $method;
 }

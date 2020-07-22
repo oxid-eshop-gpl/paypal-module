@@ -51,6 +51,7 @@ class PaymentMethod implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see PAYER_SELECTED_PAYPAL_CREDIT
      * @see PAYER_SELECTED_PAYPAL
+     * minLength: 1
      */
     public $payer_selected;
 
@@ -61,6 +62,7 @@ class PaymentMethod implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see PAYEE_PREFERRED_UNRESTRICTED
      * @see PAYEE_PREFERRED_IMMEDIATE_PAYMENT_REQUIRED
+     * minLength: 1
      */
     public $payee_preferred;
 
@@ -79,6 +81,8 @@ class PaymentMethod implements JsonSerializable
      * @see CATEGORY_CUSTOMER_PRESENT_UNSCHEDULED
      * @see CATEGORY_CUSTOMER_NOT_PRESENT_UNSCHEDULED
      * @see CATEGORY_MAIL_ORDER_TELEPHONE_ORDER
+     * minLength: 3
+     * maxLength: 255
      */
     public $category;
 }

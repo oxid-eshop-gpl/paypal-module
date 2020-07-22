@@ -39,6 +39,8 @@ class Frequency implements JsonSerializable
      * @see INTERVAL_UNIT_SEMI_MONTH
      * @see INTERVAL_UNIT_MONTH
      * @see INTERVAL_UNIT_YEAR
+     * minLength: 1
+     * maxLength: 24
      */
     public $interval_unit;
 

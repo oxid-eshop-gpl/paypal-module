@@ -125,6 +125,8 @@ class BusinessName implements JsonSerializable
     /**
      * @var string
      * Required. The business name of the party.
+     *
+     * maxLength: 300
      */
     public $business_name;
 
@@ -170,6 +172,8 @@ class BusinessName implements JsonSerializable
      * @see ORTHOGRAPHY_THAI
      * @see ORTHOGRAPHY_TIBT
      * @see ORTHOGRAPHY_YIII
+     * minLength: 4
+     * maxLength: 4
      */
     public $orthography;
 }

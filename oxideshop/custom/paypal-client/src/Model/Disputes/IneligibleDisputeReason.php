@@ -61,12 +61,17 @@ class IneligibleDisputeReason implements JsonSerializable
      * @see DISPUTE_REASON_CANCELED_RECURRING_BILLING
      * @see DISPUTE_REASON_PROBLEM_WITH_REMITTANCE
      * @see DISPUTE_REASON_OTHER
+     * minLength: 1
+     * maxLength: 255
      */
     public $dispute_reason;
 
     /**
      * @var string
      * The reason that the dispute cannot be created.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $ineligibility_reason;
 }

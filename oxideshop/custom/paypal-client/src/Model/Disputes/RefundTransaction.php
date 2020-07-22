@@ -50,6 +50,9 @@ class RefundTransaction implements JsonSerializable
     /**
      * @var string
      * The ID of the PayPal refund transaction.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $id;
 
@@ -69,6 +72,8 @@ class RefundTransaction implements JsonSerializable
      * @see STATUS_REVERSED
      * @see STATUS_CANCELED
      * @see STATUS_OTHER
+     * minLength: 1
+     * maxLength: 255
      */
     public $status;
 
@@ -83,6 +88,9 @@ class RefundTransaction implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $create_time;
 }

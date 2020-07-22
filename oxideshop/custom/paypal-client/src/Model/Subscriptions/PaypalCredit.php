@@ -29,6 +29,9 @@ class PaypalCredit implements JsonSerializable
     /**
      * @var string
      * The PayPal-generated ID for the credit instrument.
+     *
+     * minLength: 4
+     * maxLength: 25
      */
     public $id;
 
@@ -41,6 +44,8 @@ class PaypalCredit implements JsonSerializable
      * @see TYPE_PAYPAL_SMART_CONNECT
      * @see TYPE_EBAY_MASTERCARD
      * @see TYPE_PAYPAL_EXTRAS_MASTERCARD
+     * minLength: 1
+     * maxLength: 50
      */
     public $type;
 }

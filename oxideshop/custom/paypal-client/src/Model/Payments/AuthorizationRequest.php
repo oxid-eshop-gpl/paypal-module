@@ -46,6 +46,8 @@ class AuthorizationRequest implements JsonSerializable
     /**
      * @var string
      * Description of the authorization transaction.
+     *
+     * maxLength: 127
      */
     public $description;
 
@@ -53,12 +55,16 @@ class AuthorizationRequest implements JsonSerializable
      * @var string
      * The API caller-provided external ID. Used to reconcile API caller-initiated transactions with PayPal
      * transactions. Appears in transaction and settlement reports.
+     *
+     * maxLength: 127
      */
     public $custom_id;
 
     /**
      * @var string
      * The API caller-provided external invoice ID for this order.
+     *
+     * maxLength: 127
      */
     public $invoice_id;
 

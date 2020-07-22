@@ -35,6 +35,9 @@ class AcceptClaim implements JsonSerializable
     /**
      * @var string
      * The merchant's notes about the claim. PayPal can, but the customer cannot, view these notes.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $note;
 
@@ -49,6 +52,8 @@ class AcceptClaim implements JsonSerializable
      * @see ACCEPT_CLAIM_REASON_NOT_ABLE_TO_WIN
      * @see ACCEPT_CLAIM_REASON_COMPANY_POLICY
      * @see ACCEPT_CLAIM_REASON_REASON_NOT_SET
+     * minLength: 1
+     * maxLength: 255
      */
     public $accept_claim_reason;
 
@@ -56,6 +61,9 @@ class AcceptClaim implements JsonSerializable
      * @var string
      * The merchant-provided ID of the invoice for the refund. This optional value is used to map the refund to an
      * invoice ID in the merchant's system.
+     *
+     * minLength: 1
+     * maxLength: 127
      */
     public $invoice_id;
 

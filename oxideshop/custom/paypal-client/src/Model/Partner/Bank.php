@@ -23,12 +23,18 @@ class Bank implements JsonSerializable
     /**
      * @var string
      * The user-provided short name for the user's bank account.
+     *
+     * minLength: 1
+     * maxLength: 50
      */
     public $nick_name;
 
     /**
      * @var string
      * The bank account number.
+     *
+     * minLength: 1
+     * maxLength: 50
      */
     public $account_number;
 
@@ -39,6 +45,8 @@ class Bank implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see ACCOUNT_TYPE_CHECKING
      * @see ACCOUNT_TYPE_SAVINGS
+     * minLength: 1
+     * maxLength: 50
      */
     public $account_type;
 
@@ -46,6 +54,9 @@ class Bank implements JsonSerializable
      * @var string
      * The [three-character ISO-4217 currency code](/docs/integration/direct/rest/currency-codes/) that identifies
      * the currency.
+     *
+     * minLength: 3
+     * maxLength: 3
      */
     public $currency_code;
 

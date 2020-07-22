@@ -48,12 +48,18 @@ class DisputeEligibility implements JsonSerializable
      * @var string
      * The seller transaction ID that is associated with the encrypted transaction ID that is passed in the request.
      * The dispute creation is allowed on the buyer transaction ID, which must be passed in the create dispute call.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $seller_transaction_id;
 
     /**
      * @var string
      * The buyer transaction ID that is associated with the `encrypted_transaction_id` passed in the request.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $buyer_transaction_id;
 
@@ -86,6 +92,8 @@ class DisputeEligibility implements JsonSerializable
      * @see RECOMMENDED_DISPUTE_REASON_CANCELED_RECURRING_BILLING
      * @see RECOMMENDED_DISPUTE_REASON_PROBLEM_WITH_REMITTANCE
      * @see RECOMMENDED_DISPUTE_REASON_OTHER
+     * minLength: 1
+     * maxLength: 255
      */
     public $recommended_dispute_reason;
 }

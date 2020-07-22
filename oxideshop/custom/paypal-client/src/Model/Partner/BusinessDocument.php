@@ -55,6 +55,8 @@ class BusinessDocument extends Document implements JsonSerializable
      * @see TYPE_CNPJ
      * @see TYPE_CPF
      * @see TYPE_PAN
+     * minLength: 1
+     * maxLength: 255
      */
     public $type;
 }

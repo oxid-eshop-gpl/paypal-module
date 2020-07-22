@@ -136,6 +136,8 @@ class BusinessTypeInfo implements JsonSerializable
      * @see TYPE_PUBLIC_CORPORATION
      * @see TYPE_PUBLIC_PARTNERSHIP
      * @see TYPE_REGISTERED_COOPERATIVE
+     * minLength: 1
+     * maxLength: 255
      */
     public $type;
 
@@ -151,6 +153,8 @@ class BusinessTypeInfo implements JsonSerializable
      * @see SUBTYPE_GOVT_TYPE_ESTD_COMM
      * @see SUBTYPE_GOVT_TYPE_ESTD_FC
      * @see SUBTYPE_GOVT_TYPE_ESTD_ST_TR
+     * minLength: 1
+     * maxLength: 255
      */
     public $subtype;
 }

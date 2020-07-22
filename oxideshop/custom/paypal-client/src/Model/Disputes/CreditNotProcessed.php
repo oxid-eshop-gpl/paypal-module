@@ -27,6 +27,8 @@ class CreditNotProcessed implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see ISSUE_TYPE_PRODUCT
      * @see ISSUE_TYPE_SERVICE
+     * minLength: 1
+     * maxLength: 255
      */
     public $issue_type;
 

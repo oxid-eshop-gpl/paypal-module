@@ -17,6 +17,9 @@ class Customer implements JsonSerializable
     /**
      * @var string
      * The unique ID for a customer in merchant's or partner's system of records.
+     *
+     * minLength: 1
+     * maxLength: 22
      */
     public $id;
 }

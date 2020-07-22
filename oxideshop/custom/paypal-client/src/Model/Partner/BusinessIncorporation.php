@@ -21,6 +21,9 @@ class BusinessIncorporation implements JsonSerializable
      * <code>UK</code> as used in the top-level domain names for that country. Use the `C2` country code for China
      * worldwide for comparable uncontrolled price (CUP) method, bank card, and cross-border
      * transactions.</blockquote>
+     *
+     * minLength: 2
+     * maxLength: 2
      */
     public $incorporation_country_code;
 
@@ -30,12 +33,18 @@ class BusinessIncorporation implements JsonSerializable
      * represent special legal values, such as a date of birth, you should use dates with no associated time or
      * time-zone data. Whenever possible, use the standard `date_time` type. This regular expression does not
      * validate all dates. For example, February 31 is valid and nothing is known about leap years.
+     *
+     * minLength: 10
+     * maxLength: 10
      */
     public $incorporation_date;
 
     /**
      * @var string
      * The province of incorporation.
+     *
+     * minLength: 1
+     * maxLength: 50
      */
     public $incorporation_province_code;
 }

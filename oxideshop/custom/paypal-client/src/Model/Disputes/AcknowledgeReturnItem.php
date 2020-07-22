@@ -17,6 +17,9 @@ class AcknowledgeReturnItem implements JsonSerializable
     /**
      * @var string
      * The merchant provided notes. PayPal can but the consumer cannot view these notes.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $note;
 }

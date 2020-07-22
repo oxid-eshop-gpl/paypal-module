@@ -37,6 +37,8 @@ class ClassicApiIntegration implements JsonSerializable
      * @see INTEGRATION_TYPE_THIRD_PARTY
      * @see INTEGRATION_TYPE_FIRST_PARTY_INTEGRATED
      * @see INTEGRATION_TYPE_FIRST_PARTY_NON_INTEGRATED
+     * minLength: 1
+     * maxLength: 128
      */
     public $integration_type;
 
@@ -56,6 +58,8 @@ class ClassicApiIntegration implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see FIRST_PARTY_DETAILS_SIGNATURE
      * @see FIRST_PARTY_DETAILS_CERTIFICATE
+     * minLength: 1
+     * maxLength: 128
      */
     public $first_party_details;
 }

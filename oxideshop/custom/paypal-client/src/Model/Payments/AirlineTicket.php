@@ -17,6 +17,9 @@ class AirlineTicket implements JsonSerializable
     /**
      * @var string
      * The airline-issued ticket number or ID.
+     *
+     * minLength: 1
+     * maxLength: 16
      */
     public $number;
 
@@ -26,18 +29,27 @@ class AirlineTicket implements JsonSerializable
      * represent special legal values, such as a date of birth, you should use dates with no associated time or
      * time-zone data. Whenever possible, use the standard `date_time` type. This regular expression does not
      * validate all dates. For example, February 31 is valid and nothing is known about leap years.
+     *
+     * minLength: 10
+     * maxLength: 10
      */
     public $issue_date;
 
     /**
      * @var string
      * The carrier code of the ticket issuer.
+     *
+     * minLength: 2
+     * maxLength: 2
      */
     public $issuing_carrier_code;
 
     /**
      * @var string
      * The name of the travel agency that issued the ticket.
+     *
+     * minLength: 1
+     * maxLength: 25
      */
     public $travel_agency_name;
 
@@ -45,6 +57,9 @@ class AirlineTicket implements JsonSerializable
      * @var string
      * The IATA number, also ARC number or ARC/IATA number. The unique code or number for the travel agency that
      * issued this ticket.
+     *
+     * minLength: 1
+     * maxLength: 8
      */
     public $travel_agency_code;
 

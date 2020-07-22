@@ -86,6 +86,8 @@ class CardResponse implements JsonSerializable
     /**
      * @var string
      * The last digits of the payment card.
+     *
+     * minLength: 2
      */
     public $last_n_chars;
 
@@ -116,6 +118,8 @@ class CardResponse implements JsonSerializable
      * @see BRAND_ELECTRON
      * @see BRAND_CETELEM
      * @see BRAND_CHINA_UNION_PAY
+     * minLength: 1
+     * maxLength: 255
      */
     public $brand;
 
@@ -145,6 +149,9 @@ class CardResponse implements JsonSerializable
      * An acronym for Bank Identification Number (BIN), also known as IIN (Issuer Identification Number). It Is a
      * standardized global numbering scheme (6 to 8 digits) used to identify a bank / institution that issued the
      * card.
+     *
+     * minLength: 6
+     * maxLength: 8
      */
     public $bin;
 }

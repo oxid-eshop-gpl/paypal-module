@@ -18,6 +18,9 @@ class ExchangeRate implements JsonSerializable
      * @var string
      * The [three-character ISO-4217 currency code](/docs/integration/direct/rest/currency-codes/) that identifies
      * the currency.
+     *
+     * minLength: 3
+     * maxLength: 3
      */
     public $source_currency;
 
@@ -25,6 +28,9 @@ class ExchangeRate implements JsonSerializable
      * @var string
      * The [three-character ISO-4217 currency code](/docs/integration/direct/rest/currency-codes/) that identifies
      * the currency.
+     *
+     * minLength: 3
+     * maxLength: 3
      */
     public $target_currency;
 

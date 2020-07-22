@@ -18,24 +18,36 @@ class PartnerConfigOverride implements JsonSerializable
     /**
      * @var string
      * The partner logo URL to display in the customer's onboarding flow.
+     *
+     * minLength: 1
+     * maxLength: 127
      */
     public $partner_logo_url;
 
     /**
      * @var string
      * The URL to which to redirect the customer upon completion of the onboarding process.
+     *
+     * minLength: 1
+     * maxLength: 127
      */
     public $return_url;
 
     /**
      * @var string
      * The description of the return URL.
+     *
+     * minLength: 1
+     * maxLength: 127
      */
     public $return_url_description;
 
     /**
      * @var string
      * If `renew_action_url` expires, redirect the customer to this URL.
+     *
+     * minLength: 1
+     * maxLength: 127
      */
     public $action_renewal_url;
 

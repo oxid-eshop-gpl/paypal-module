@@ -17,6 +17,9 @@ class GiropayRequest implements JsonSerializable
     /**
      * @var string
      * The full name representation like Mr J Smith
+     *
+     * minLength: 3
+     * maxLength: 300
      */
     public $name;
 
@@ -27,6 +30,9 @@ class GiropayRequest implements JsonSerializable
      * <code>UK</code> as used in the top-level domain names for that country. Use the `C2` country code for China
      * worldwide for comparable uncontrolled price (CUP) method, bank card, and cross-border
      * transactions.</blockquote>
+     *
+     * minLength: 2
+     * maxLength: 2
      */
     public $country_code;
 
@@ -34,6 +40,9 @@ class GiropayRequest implements JsonSerializable
      * @var string
      * The business identification code (BIC). In payments systems, a BIC is used to identify a specific business,
      * most commonly a bank
+     *
+     * minLength: 8
+     * maxLength: 11
      */
     public $bic;
 }

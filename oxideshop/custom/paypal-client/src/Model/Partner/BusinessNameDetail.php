@@ -23,6 +23,9 @@ class BusinessNameDetail extends BusinessName implements JsonSerializable
     /**
      * @var string
      * The encrypted ID for the business name.
+     *
+     * minLength: 1
+     * maxLength: 20
      */
     public $id;
 
@@ -33,6 +36,8 @@ class BusinessNameDetail extends BusinessName implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see TYPE_DOING_BUSINESS_AS
      * @see TYPE_LEGAL_NAME
+     * minLength: 1
+     * maxLength: 255
      */
     public $type;
 }

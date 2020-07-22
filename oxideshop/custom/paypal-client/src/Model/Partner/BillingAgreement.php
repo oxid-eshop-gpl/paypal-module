@@ -17,6 +17,9 @@ class BillingAgreement implements JsonSerializable
     /**
      * @var string
      * The billing agreement description.
+     *
+     * minLength: 1
+     * maxLength: 125
      */
     public $description;
 
@@ -29,18 +32,27 @@ class BillingAgreement implements JsonSerializable
     /**
      * @var string
      * The custom data for the billing agreement.
+     *
+     * minLength: 1
+     * maxLength: 125
      */
     public $merchant_custom_data;
 
     /**
      * @var string
      * The URL to which to redirect seller to accept the billing agreement.
+     *
+     * minLength: 1
+     * maxLength: 125
      */
     public $approval_url;
 
     /**
      * @var string
      * The billing agreement token for the agreement.
+     *
+     * minLength: 1
+     * maxLength: 50
      */
     public $ec_token;
 }

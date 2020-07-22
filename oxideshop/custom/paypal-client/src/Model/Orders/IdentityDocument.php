@@ -43,6 +43,8 @@ class IdentityDocument implements JsonSerializable
      * @see TYPE_TAX_IDENTIFICATION_NUMBER
      * @see TYPE_PASSPORT_NUMBER
      * @see TYPE_SSN4
+     * minLength: 1
+     * maxLength: 255
      */
     public $type;
 
@@ -55,6 +57,9 @@ class IdentityDocument implements JsonSerializable
     /**
      * @var string
      * The document number, such as the passport number.
+     *
+     * minLength: 1
+     * maxLength: 100
      */
     public $id_number;
 
@@ -64,6 +69,9 @@ class IdentityDocument implements JsonSerializable
      * represent special legal values, such as a date of birth, you should use dates with no associated time or
      * time-zone data. Whenever possible, use the standard `date_time` type. This regular expression does not
      * validate all dates. For example, February 31 is valid and nothing is known about leap years.
+     *
+     * minLength: 10
+     * maxLength: 10
      */
     public $issued_date;
 
@@ -73,6 +81,9 @@ class IdentityDocument implements JsonSerializable
      * represent special legal values, such as a date of birth, you should use dates with no associated time or
      * time-zone data. Whenever possible, use the standard `date_time` type. This regular expression does not
      * validate all dates. For example, February 31 is valid and nothing is known about leap years.
+     *
+     * minLength: 10
+     * maxLength: 10
      */
     public $expiration_date;
 }

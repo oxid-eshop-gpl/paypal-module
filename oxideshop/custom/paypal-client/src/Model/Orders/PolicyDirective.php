@@ -17,6 +17,9 @@ class PolicyDirective implements JsonSerializable
     /**
      * @var string
      * Indicates the payment state decision. Can be ALLOW, DENY or ALLOW_WITH_HOLD.
+     *
+     * minLength: 1
+     * maxLength: 30
      */
     public $payment_decision;
 

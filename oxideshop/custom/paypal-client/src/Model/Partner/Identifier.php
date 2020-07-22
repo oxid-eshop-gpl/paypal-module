@@ -68,12 +68,17 @@ class Identifier implements JsonSerializable
      * @see TYPE_BBAN_ENCRYPTED
      * @see TYPE_BBAN_HMAC
      * @see TYPE_AGGREGATOR_YODLEE
+     * minLength: 1
+     * maxLength: 125
      */
     public $type;
 
     /**
      * @var string
      * The value of account identifier.
+     *
+     * minLength: 1
+     * maxLength: 125
      */
     public $value;
 }

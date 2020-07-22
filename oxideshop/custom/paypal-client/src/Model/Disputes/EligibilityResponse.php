@@ -49,6 +49,8 @@ class EligibilityResponse implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see ALLOWABLE_LIFE_CYCLE_INQUIRY
      * @see ALLOWABLE_LIFE_CYCLE_CHARGEBACK
+     * minLength: 1
+     * maxLength: 255
      */
     public $allowable_life_cycle;
 
@@ -62,6 +64,8 @@ class EligibilityResponse implements JsonSerializable
      * @see INELIGIBILITY_REASON_COUNTERPARTY_NOT_DISPUTABLE
      * @see INELIGIBILITY_REASON_DISPUTE_ALREADY_EXISTS
      * @see INELIGIBILITY_REASON_INVALID_TRANSACTION_STATUS
+     * minLength: 1
+     * maxLength: 255
      */
     public $ineligibility_reason;
 

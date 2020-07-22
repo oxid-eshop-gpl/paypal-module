@@ -32,6 +32,9 @@ class UpdateCaptureRequest implements JsonSerializable
     /**
      * @var string
      * The transaction ID for the captured payment.
+     *
+     * minLength: 1
+     * maxLength: 20
      */
     public $id;
 
@@ -45,6 +48,8 @@ class UpdateCaptureRequest implements JsonSerializable
      * @see STATUS_PARTIALLY_REFUNDED
      * @see STATUS_PENDING
      * @see STATUS_REFUNDED
+     * minLength: 1
+     * maxLength: 127
      */
     public $status;
 

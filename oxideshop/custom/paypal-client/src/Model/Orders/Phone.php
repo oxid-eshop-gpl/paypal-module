@@ -21,6 +21,9 @@ class Phone implements JsonSerializable
      * format](https://www.itu.int/rec/T-REC-E.164/en). The combined length of the CC and the national number must
      * not be greater than 15 digits. The national number consists of a national destination code (NDC) and
      * subscriber number (SN).
+     *
+     * minLength: 1
+     * maxLength: 3
      */
     public $country_code;
 
@@ -30,12 +33,18 @@ class Phone implements JsonSerializable
      * format](https://www.itu.int/rec/T-REC-E.164/en). The combined length of the country calling code (CC) and the
      * national number must not be greater than 15 digits. The national number consists of a national destination
      * code (NDC) and subscriber number (SN).
+     *
+     * minLength: 1
+     * maxLength: 14
      */
     public $national_number;
 
     /**
      * @var string
      * The extension number.
+     *
+     * minLength: 1
+     * maxLength: 15
      */
     public $extension_number;
 }

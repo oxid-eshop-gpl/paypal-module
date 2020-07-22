@@ -27,6 +27,8 @@ class EligibleDisputeReasonAllowableLifeCycle implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see STAGE_INQUIRY
      * @see STAGE_CHARGEBACK
+     * minLength: 1
+     * maxLength: 255
      */
     public $stage;
 
@@ -34,6 +36,9 @@ class EligibleDisputeReasonAllowableLifeCycle implements JsonSerializable
      * @var string
      * The reason why dispute creation is allowed in this lifecycle stage. Value is `SELLER_OPTED_OUT_OF_DISPUTE`,
      * `LOCKED_SELLER`, `RESTRICTED_SELLER`, or `DISPUTE_DISABLED_PARTNER`.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $reason;
 }

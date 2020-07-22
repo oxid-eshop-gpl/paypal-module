@@ -23,12 +23,18 @@ class ExtensionsTransactionRiskInfo implements JsonSerializable
     /**
      * @var string
      * The recoup ID.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $id;
 
     /**
      * @var string
      * The reason for recoup for the dispute.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $reason;
 }

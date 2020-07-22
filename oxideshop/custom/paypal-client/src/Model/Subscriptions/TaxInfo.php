@@ -25,6 +25,8 @@ class TaxInfo implements JsonSerializable
      * @var string
      * The customer's tax ID. Supported for the PayPal payment method only. Typically, the tax ID is 11 characters
      * long for individuals and 14 characters long for businesses.
+     *
+     * maxLength: 14
      */
     public $tax_id;
 

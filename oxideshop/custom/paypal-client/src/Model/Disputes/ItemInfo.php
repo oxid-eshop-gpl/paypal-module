@@ -48,18 +48,26 @@ class ItemInfo implements JsonSerializable
      * @var string
      * The item ID. If the merchant provides multiple pieces of evidence and the transaction has multiple item IDs,
      * the merchant can use this value to associate a piece of evidence with an item ID.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $item_id;
 
     /**
      * @var string
      * The item description.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $item_description;
 
     /**
      * @var string
      * The count of the item in the dispute. Must be a whole number.
+     *
+     * maxLength: 10
      */
     public $item_quantity;
 
@@ -67,6 +75,9 @@ class ItemInfo implements JsonSerializable
      * @var string
      * The ID of the transaction in the partner system. The partner transaction ID is returned at an item level
      * because the partner might show different transactions for different items in the cart.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $partner_transaction_id;
 
@@ -87,6 +98,8 @@ class ItemInfo implements JsonSerializable
      * @see REASON_CANCELED_RECURRING_BILLING
      * @see REASON_PROBLEM_WITH_REMITTANCE
      * @see REASON_OTHER
+     * minLength: 1
+     * maxLength: 255
      */
     public $reason;
 
@@ -99,6 +112,9 @@ class ItemInfo implements JsonSerializable
     /**
      * @var string
      * Any notes provided with the item.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $notes;
 }

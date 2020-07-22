@@ -17,12 +17,18 @@ class Person implements JsonSerializable
     /**
      * @var string
      * The encrypted party ID.
+     *
+     * minLength: 1
+     * maxLength: 20
      */
     public $id;
 
     /**
      * @var string
      * The internal PayPal party ID.
+     *
+     * minLength: 1
+     * maxLength: 20
      */
     public $party_id;
 
@@ -39,6 +45,9 @@ class Person implements JsonSerializable
      * <code>UK</code> as used in the top-level domain names for that country. Use the `C2` country code for China
      * worldwide for comparable uncontrolled price (CUP) method, bank card, and cross-border
      * transactions.</blockquote>
+     *
+     * minLength: 2
+     * maxLength: 2
      */
     public $citizenship;
 

@@ -17,6 +17,9 @@ class CardResponseWithBillingAddress extends CardResponse implements JsonSeriali
     /**
      * @var string
      * The card holder's name as it appears on the card.
+     *
+     * minLength: 2
+     * maxLength: 300
      */
     public $name;
 

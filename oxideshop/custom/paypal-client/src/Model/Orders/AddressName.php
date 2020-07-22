@@ -17,6 +17,9 @@ class AddressName extends AddressPortable implements JsonSerializable
     /**
      * @var string
      * The name on the address, for example,  Mr J. Smith.
+     *
+     * minLength: 1
+     * maxLength: 200
      */
     public $addressee;
 }

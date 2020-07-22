@@ -26,6 +26,9 @@ class ProductDetails implements JsonSerializable
     /**
      * @var string
      * The product description.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $description;
 
@@ -37,6 +40,8 @@ class ProductDetails implements JsonSerializable
      * @see PRODUCT_RECEIVED_YES
      * @see PRODUCT_RECEIVED_NO
      * @see PRODUCT_RECEIVED_RETURNED
+     * minLength: 1
+     * maxLength: 255
      */
     public $product_received;
 
@@ -45,6 +50,9 @@ class ProductDetails implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $product_received_time;
 
@@ -57,6 +65,9 @@ class ProductDetails implements JsonSerializable
     /**
      * @var string
      * The URL where the customer purchased the product.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $purchase_url;
 

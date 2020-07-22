@@ -35,6 +35,8 @@ class BankAccountResponse implements JsonSerializable
     /**
      * @var string
      * The name of the bank to which the account is linked.
+     *
+     * maxLength: 64
      */
     public $bank_name;
 
@@ -55,6 +57,9 @@ class BankAccountResponse implements JsonSerializable
      * <code>UK</code> as used in the top-level domain names for that country. Use the `C2` country code for China
      * worldwide for comparable uncontrolled price (CUP) method, bank card, and cross-border
      * transactions.</blockquote>
+     *
+     * minLength: 2
+     * maxLength: 2
      */
     public $country_code;
 

@@ -59,6 +59,8 @@ class PaymentByOtherMeans implements JsonSerializable
      * @see PAYMENT_METHOD_DEBIT_CARD
      * @see PAYMENT_METHOD_GIFT_CARD
      * @see PAYMENT_METHOD_BANK_TRANSFER
+     * minLength: 1
+     * maxLength: 255
      */
     public $payment_method;
 
@@ -67,6 +69,9 @@ class PaymentByOtherMeans implements JsonSerializable
      * Last 2-4 characters of the payment instrument. For payment_method CHECK, payment_instrument_suffix entered
      * must be of minimum length 2-4 characters. For payment_method CREDIT_CARD, DEBIT_CARD, GIFT_CARD,
      * BANK_TRANSFER, payment_instrument_suffix entered must be of length 4.
+     *
+     * minLength: 2
+     * maxLength: 4
      */
     public $payment_instrument_suffix;
 }

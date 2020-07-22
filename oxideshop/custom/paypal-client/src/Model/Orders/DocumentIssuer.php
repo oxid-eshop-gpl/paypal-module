@@ -21,6 +21,9 @@ class DocumentIssuer implements JsonSerializable
      * <code>UK</code> as used in the top-level domain names for that country. Use the `C2` country code for China
      * worldwide for comparable uncontrolled price (CUP) method, bank card, and cross-border
      * transactions.</blockquote>
+     *
+     * minLength: 2
+     * maxLength: 2
      */
     public $country_code;
 
@@ -28,12 +31,18 @@ class DocumentIssuer implements JsonSerializable
      * @var string
      * The [state or province code that issued the identity document](/docs/integration/direct/rest/state-codes/), as
      * defined by [ISO 3166-2:2013](https://www.iso.org/standard/63546.html).
+     *
+     * minLength: 5
+     * maxLength: 6
      */
     public $province_code;
 
     /**
      * @var string
      * The entity that issued the identity document. For example, `registration authority`.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $authority;
 }

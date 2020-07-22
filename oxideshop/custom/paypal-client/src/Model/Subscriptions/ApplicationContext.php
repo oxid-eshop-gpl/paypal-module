@@ -33,6 +33,9 @@ class ApplicationContext implements JsonSerializable
     /**
      * @var string
      * The label that overrides the business name in the PayPal account on the PayPal site.
+     *
+     * minLength: 1
+     * maxLength: 127
      */
     public $brand_name;
 
@@ -43,6 +46,9 @@ class ApplicationContext implements JsonSerializable
      * language code](https://www.loc.gov/standards/iso639-2/php/code_list.php), the optional [ISO-15924 script
      * tag](https://www.unicode.org/iso15924/codelists.html), and the [ISO-3166 alpha-2 country
      * code](/docs/integration/direct/rest/country-codes/).
+     *
+     * minLength: 2
+     * maxLength: 10
      */
     public $locale;
 
@@ -54,6 +60,8 @@ class ApplicationContext implements JsonSerializable
      * @see SHIPPING_PREFERENCE_GET_FROM_FILE
      * @see SHIPPING_PREFERENCE_NO_SHIPPING
      * @see SHIPPING_PREFERENCE_SET_PROVIDED_ADDRESS
+     * minLength: 1
+     * maxLength: 24
      */
     public $shipping_preference;
 
@@ -64,6 +72,8 @@ class ApplicationContext implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see USER_ACTION_CONTINUE
      * @see USER_ACTION_SUBSCRIBE_NOW
+     * minLength: 1
+     * maxLength: 24
      */
     public $user_action;
 
@@ -76,12 +86,18 @@ class ApplicationContext implements JsonSerializable
     /**
      * @var string
      * The URL where the customer is redirected after the customer approves the payment.
+     *
+     * minLength: 10
+     * maxLength: 4000
      */
     public $return_url;
 
     /**
      * @var string
      * The URL where the customer is redirected after the customer cancels the payment.
+     *
+     * minLength: 10
+     * maxLength: 4000
      */
     public $cancel_url;
 }

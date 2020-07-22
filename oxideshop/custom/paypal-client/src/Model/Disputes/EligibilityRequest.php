@@ -19,6 +19,9 @@ class EligibilityRequest implements JsonSerializable
     /**
      * @var string
      * The encrypted transaction ID.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $transaction_id;
 

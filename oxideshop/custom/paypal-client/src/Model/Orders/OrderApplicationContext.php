@@ -44,6 +44,8 @@ class OrderApplicationContext implements JsonSerializable
     /**
      * @var string
      * The label that overrides the business name in the PayPal account on the PayPal site.
+     *
+     * maxLength: 127
      */
     public $brand_name;
 
@@ -54,6 +56,9 @@ class OrderApplicationContext implements JsonSerializable
      * language code](https://www.loc.gov/standards/iso639-2/php/code_list.php), the optional [ISO-15924 script
      * tag](https://www.unicode.org/iso15924/codelists.html), and the [ISO-3166 alpha-2 country
      * code](/docs/integration/direct/rest/country-codes/).
+     *
+     * minLength: 2
+     * maxLength: 10
      */
     public $locale;
 
@@ -112,6 +117,8 @@ class OrderApplicationContext implements JsonSerializable
     /**
      * @var string
      * The internal client-generated token.
+     *
+     * maxLength: 19
      */
     public $payment_token;
 

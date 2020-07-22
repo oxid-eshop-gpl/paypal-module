@@ -21,6 +21,9 @@ class BusinessPhoneDetail extends Phone implements JsonSerializable
     /**
      * @var string
      * The name that the phone number is connected to.
+     *
+     * minLength: 1
+     * maxLength: 900
      */
     public $contact_name;
 
@@ -42,6 +45,8 @@ class BusinessPhoneDetail extends Phone implements JsonSerializable
      *
      * use one of constants defined in this class to set the value:
      * @see TYPE_CUSTOMER_SERVICE
+     * minLength: 1
+     * maxLength: 255
      */
     public $type;
 

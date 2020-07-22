@@ -23,12 +23,18 @@ class ExtensionsTransactionHoldInfo implements JsonSerializable
     /**
      * @var string
      * The temporary hold ID.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $id;
 
     /**
      * @var string
      * The reason for the temporary hold on the dispute.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $reason;
 }

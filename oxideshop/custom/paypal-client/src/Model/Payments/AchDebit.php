@@ -23,12 +23,18 @@ class AchDebit implements JsonSerializable
     /**
      * @var string
      * The US bank account number from which the payment will be debited.
+     *
+     * minLength: 3
+     * maxLength: 17
      */
     public $account_number;
 
     /**
      * @var string
      * The 9-digit ABA routing transit number for the bank at which the account is held.
+     *
+     * minLength: 9
+     * maxLength: 9
      */
     public $routing_number;
 
@@ -39,12 +45,17 @@ class AchDebit implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see ACCOUNT_TYPE_CHECKING
      * @see ACCOUNT_TYPE_SAVINGS
+     * minLength: 1
+     * maxLength: 255
      */
     public $account_type;
 
     /**
      * @var string
      * Name of the person or business that owns the bank account.
+     *
+     * minLength: 1
+     * maxLength: 300
      */
     public $account_holder_name;
 }

@@ -20,6 +20,8 @@ class PurchaseUnit implements JsonSerializable
      * update the order through `PATCH`. If you omit this value and the order contains only one purchase unit, PayPal
      * sets this value to `default`. <blockquote><strong>Note:</strong> If there are multiple purchase units,
      * <code>reference_id</code> is required for each purchase unit.</blockquote>
+     *
+     * maxLength: 256
      */
     public $reference_id;
 
@@ -51,6 +53,8 @@ class PurchaseUnit implements JsonSerializable
     /**
      * @var string
      * The purchase description.
+     *
+     * maxLength: 127
      */
     public $description;
 
@@ -58,12 +62,16 @@ class PurchaseUnit implements JsonSerializable
      * @var string
      * The API caller-provided external ID. Used to reconcile API caller-initiated transactions with PayPal
      * transactions. Appears in transaction and settlement reports.
+     *
+     * maxLength: 127
      */
     public $custom_id;
 
     /**
      * @var string
      * The API caller-provided external invoice ID for this order.
+     *
+     * maxLength: 127
      */
     public $invoice_id;
 
@@ -73,6 +81,8 @@ class PurchaseUnit implements JsonSerializable
      * emails that the payer receives. In addition, this ID is available in transaction and settlement reports that
      * merchants and API callers can use to reconcile transactions. This ID is only available when an order is saved
      * by calling <code>v2/checkout/orders/id/save</code>.
+     *
+     * maxLength: 19
      */
     public $id;
 
@@ -88,6 +98,8 @@ class PurchaseUnit implements JsonSerializable
      * marketplace name.</li><li>You can't use the remaining space to show the customer service number.</li><li>The
      * remaining spaces can be a combination of seller name and country.</li></ul><br/>For unbranded payments (Direct
      * Card) marketplace integrations, use a combination of the seller name and phone number.
+     *
+     * maxLength: 22
      */
     public $soft_descriptor;
 

@@ -51,6 +51,8 @@ class DisputeCreateRequest implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see DISPUTE_FLOW_THIRD_PARTY_CLAIM
      * @see DISPUTE_FLOW_THIRD_PARTY_DISPUTE
+     * minLength: 1
+     * maxLength: 255
      */
     public $dispute_flow;
 
@@ -88,6 +90,8 @@ class DisputeCreateRequest implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see REASON_MERCHANDISE_OR_SERVICE_NOT_RECEIVED
      * @see REASON_MERCHANDISE_OR_SERVICE_NOT_AS_DESCRIBED
+     * minLength: 1
+     * maxLength: 255
      */
     public $reason;
 
@@ -102,6 +106,8 @@ class DisputeCreateRequest implements JsonSerializable
      * @see SUB_REASON_MATERIALLY_DIFFERENT
      * @see SUB_REASON_UNUSABLE
      * @see SUB_REASON_EXCESSIVE_SURCHARGE
+     * minLength: 1
+     * maxLength: 255
      */
     public $sub_reason;
 

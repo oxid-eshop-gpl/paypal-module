@@ -27,6 +27,8 @@ class PaypalWallet implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see PAYMENT_METHOD_PREFERENCE_UNRESTRICTED
      * @see PAYMENT_METHOD_PREFERENCE_IMMEDIATE_PAYMENT_REQUIRED
+     * minLength: 1
+     * maxLength: 255
      */
     public $payment_method_preference;
 

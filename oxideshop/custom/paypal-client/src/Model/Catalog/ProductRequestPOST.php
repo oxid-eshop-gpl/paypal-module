@@ -1365,18 +1365,27 @@ class ProductRequestPOST implements JsonSerializable
      * @var string
      * The ID of the product. You can specify the SKU for the product. If you omit the ID, the system generates it.
      * System-generated IDs have the `PROD-` prefix.
+     *
+     * minLength: 6
+     * maxLength: 50
      */
     public $id;
 
     /**
      * @var string
      * The product name.
+     *
+     * minLength: 1
+     * maxLength: 127
      */
     public $name;
 
     /**
      * @var string
      * The product description.
+     *
+     * minLength: 1
+     * maxLength: 256
      */
     public $description;
 
@@ -1388,6 +1397,8 @@ class ProductRequestPOST implements JsonSerializable
      * @see TYPE_PHYSICAL
      * @see TYPE_DIGITAL
      * @see TYPE_SERVICE
+     * minLength: 1
+     * maxLength: 24
      */
     public $type;
 
@@ -1842,18 +1853,26 @@ class ProductRequestPOST implements JsonSerializable
      * @see CATEGORY_WIRE_TRANSFER_AND_MONEY_ORDER
      * @see CATEGORY_WOMEN_ACCESSORY_SPECIALITY
      * @see CATEGORY_WOMEN_CLOTHING
+     * minLength: 4
+     * maxLength: 256
      */
     public $category;
 
     /**
      * @var string
      * The image URL for the product.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $image_url;
 
     /**
      * @var string
      * The home page URL for the product.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $home_url;
 }

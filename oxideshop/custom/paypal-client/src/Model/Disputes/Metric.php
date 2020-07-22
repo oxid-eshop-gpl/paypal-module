@@ -17,6 +17,9 @@ class Metric implements JsonSerializable
     /**
      * @var string
      * The group name for a dimension.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $key;
 

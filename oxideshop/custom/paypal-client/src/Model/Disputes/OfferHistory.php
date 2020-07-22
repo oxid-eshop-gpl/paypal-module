@@ -46,6 +46,9 @@ class OfferHistory implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $offer_time;
 
@@ -56,6 +59,8 @@ class OfferHistory implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see ACTOR_BUYER
      * @see ACTOR_SELLER
+     * minLength: 1
+     * maxLength: 255
      */
     public $actor;
 
@@ -67,6 +72,8 @@ class OfferHistory implements JsonSerializable
      * @see EVENT_TYPE_PROPOSED
      * @see EVENT_TYPE_ACCEPTED
      * @see EVENT_TYPE_DENIED
+     * minLength: 1
+     * maxLength: 255
      */
     public $event_type;
 
@@ -79,6 +86,8 @@ class OfferHistory implements JsonSerializable
      * @see OFFER_TYPE_REFUND_WITH_RETURN
      * @see OFFER_TYPE_REFUND_WITH_REPLACEMENT
      * @see OFFER_TYPE_REPLACEMENT_WITHOUT_REFUND
+     * minLength: 1
+     * maxLength: 255
      */
     public $offer_type;
 

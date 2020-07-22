@@ -21,12 +21,16 @@ class AddressPortable implements JsonSerializable
      * @var string
      * The first line of the address. For example, number or street. For example, `173 Drury Lane`. Required for data
      * entry and compliance and risk checks. Must contain the full address.
+     *
+     * maxLength: 300
      */
     public $address_line_1;
 
     /**
      * @var string
      * The second line of the address. For example, suite or apartment number.
+     *
+     * maxLength: 300
      */
     public $address_line_2;
 
@@ -34,6 +38,8 @@ class AddressPortable implements JsonSerializable
      * @var string
      * The third line of the address, if needed. For example, a street complement for Brazil, direction text, such as
      * `next to Walmart`, or a landmark in an Indian address.
+     *
+     * maxLength: 100
      */
     public $address_line_3;
 
@@ -42,6 +48,8 @@ class AddressPortable implements JsonSerializable
      * The neighborhood, ward, or district. Smaller than `admin_area_level_3` or `sub_locality`. Value is:<ul><li>The
      * postal sorting code for Guernsey and many French territories, such as French Guiana.</li><li>The fine-grained
      * administrative levels in China.</li></ul>
+     *
+     * maxLength: 100
      */
     public $admin_area_4;
 
@@ -50,12 +58,16 @@ class AddressPortable implements JsonSerializable
      * A sub-locality, suburb, neighborhood, or district. Smaller than `admin_area_level_2`. Value is:<ul><li>Brazil.
      * Suburb, bairro, or neighborhood.</li><li>India. Sub-locality or district. Street name information is not
      * always available but a sub-locality or district can be a very small area.</li></ul>
+     *
+     * maxLength: 100
      */
     public $admin_area_3;
 
     /**
      * @var string
      * A city, town, or village. Smaller than `admin_area_level_1`.
+     *
+     * maxLength: 120
      */
     public $admin_area_2;
 
@@ -65,6 +77,8 @@ class AddressPortable implements JsonSerializable
      * Format for postal delivery. For example, `CA` and not `California`. Value, by country, is:<ul><li>UK. A
      * county.</li><li>US. A state.</li><li>Canada. A province.</li><li>Japan. A prefecture.</li><li>Switzerland. A
      * kanton.</li></ul>
+     *
+     * maxLength: 300
      */
     public $admin_area_1;
 
@@ -72,6 +86,8 @@ class AddressPortable implements JsonSerializable
      * @var string
      * The postal code, which is the zip code or equivalent. Typically required for countries with a postal code or
      * an equivalent. See [postal code](https://en.wikipedia.org/wiki/Postal_code).
+     *
+     * maxLength: 60
      */
     public $postal_code;
 
@@ -82,6 +98,9 @@ class AddressPortable implements JsonSerializable
      * <code>UK</code> as used in the top-level domain names for that country. Use the `C2` country code for China
      * worldwide for comparable uncontrolled price (CUP) method, bank card, and cross-border
      * transactions.</blockquote>
+     *
+     * minLength: 2
+     * maxLength: 2
      */
     public $country_code;
 

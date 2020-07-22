@@ -35,6 +35,8 @@ class AuthenticationResponse implements JsonSerializable
      * @see LIABILITY_SHIFT_NO
      * @see LIABILITY_SHIFT_POSSIBLE
      * @see LIABILITY_SHIFT_UNKNOWN
+     * minLength: 1
+     * maxLength: 255
      */
     public $liability_shift;
 

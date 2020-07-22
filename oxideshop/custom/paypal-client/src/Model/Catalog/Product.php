@@ -1364,18 +1364,27 @@ class Product implements JsonSerializable
     /**
      * @var string
      * The ID of the product.
+     *
+     * minLength: 6
+     * maxLength: 50
      */
     public $id;
 
     /**
      * @var string
      * The product name.
+     *
+     * minLength: 1
+     * maxLength: 127
      */
     public $name;
 
     /**
      * @var string
      * The product description.
+     *
+     * minLength: 1
+     * maxLength: 256
      */
     public $description;
 
@@ -1387,6 +1396,8 @@ class Product implements JsonSerializable
      * @see TYPE_PHYSICAL
      * @see TYPE_DIGITAL
      * @see TYPE_SERVICE
+     * minLength: 1
+     * maxLength: 24
      */
     public $type;
 
@@ -1841,18 +1852,26 @@ class Product implements JsonSerializable
      * @see CATEGORY_WIRE_TRANSFER_AND_MONEY_ORDER
      * @see CATEGORY_WOMEN_ACCESSORY_SPECIALITY
      * @see CATEGORY_WOMEN_CLOTHING
+     * minLength: 4
+     * maxLength: 256
      */
     public $category;
 
     /**
      * @var string
      * The image URL for the product.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $image_url;
 
     /**
      * @var string
      * The home page URL for the product.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $home_url;
 
@@ -1861,6 +1880,9 @@ class Product implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $create_time;
 
@@ -1869,6 +1891,9 @@ class Product implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $update_time;
 

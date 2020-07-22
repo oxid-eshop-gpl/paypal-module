@@ -49,6 +49,8 @@ class Capture extends CaptureStatus implements JsonSerializable
      * @var string
      * The API caller-provided external ID. Used to reconcile API caller-initiated transactions with PayPal
      * transactions. Appears in transaction and settlement reports.
+     *
+     * maxLength: 127
      */
     public $custom_id;
 
@@ -112,6 +114,9 @@ class Capture extends CaptureStatus implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $create_time;
 
@@ -120,6 +125,9 @@ class Capture extends CaptureStatus implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $update_time;
 }

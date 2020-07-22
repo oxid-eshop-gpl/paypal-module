@@ -17,6 +17,8 @@ class BusinessName implements JsonSerializable
     /**
      * @var string
      * Required. The business name of the party.
+     *
+     * maxLength: 300
      */
     public $business_name;
 }

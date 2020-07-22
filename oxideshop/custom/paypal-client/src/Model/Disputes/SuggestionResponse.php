@@ -24,6 +24,9 @@ class SuggestionResponse implements JsonSerializable
     /**
      * @var string
      * The possible DidYouMean value if there are no suggestions for given search_text.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $corrected_search_text;
 

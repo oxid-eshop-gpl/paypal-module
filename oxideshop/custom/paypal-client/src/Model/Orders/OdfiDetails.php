@@ -60,6 +60,8 @@ class OdfiDetails implements JsonSerializable
      * @see STANDARD_ENTRY_CLASS_CODE_RCK
      * @see STANDARD_ENTRY_CLASS_CODE_TEL
      * @see STANDARD_ENTRY_CLASS_CODE_WEB
+     * minLength: 1
+     * maxLength: 3
      */
     public $standard_entry_class_code;
 }

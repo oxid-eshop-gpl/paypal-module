@@ -17,6 +17,9 @@ class AcceptOffer implements JsonSerializable
     /**
      * @var string
      * The customer notes about accepting of offer. PayPal can but the merchant cannot view these notes.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $note;
 }

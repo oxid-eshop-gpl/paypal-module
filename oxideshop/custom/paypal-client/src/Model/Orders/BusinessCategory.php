@@ -18,18 +18,27 @@ class BusinessCategory implements JsonSerializable
     /**
      * @var string
      * Industry standard category code of business.
+     *
+     * minLength: 1
+     * maxLength: 50
      */
     public $category;
 
     /**
      * @var string
      * Industry standard sub category of business.
+     *
+     * minLength: 1
+     * maxLength: 50
      */
     public $sub_category;
 
     /**
      * @var string
      * Industry standard merchant category code of business.
+     *
+     * minLength: 1
+     * maxLength: 4
      */
     public $mcc_code;
 }

@@ -41,6 +41,9 @@ class BusinessEntity extends Business implements JsonSerializable
     /**
      * @var string
      * The business goals description. For example, a mission statement.
+     *
+     * minLength: 1
+     * maxLength: 256
      */
     public $business_description;
 }

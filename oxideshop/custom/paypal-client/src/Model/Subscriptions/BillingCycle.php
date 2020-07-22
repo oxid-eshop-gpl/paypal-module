@@ -40,6 +40,8 @@ class BillingCycle implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see TENURE_TYPE_REGULAR
      * @see TENURE_TYPE_TRIAL
+     * minLength: 1
+     * maxLength: 24
      */
     public $tenure_type;
 

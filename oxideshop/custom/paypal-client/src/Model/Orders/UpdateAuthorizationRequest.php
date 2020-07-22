@@ -38,6 +38,9 @@ class UpdateAuthorizationRequest implements JsonSerializable
     /**
      * @var string
      * The unique transaction ID for the authorized payment.
+     *
+     * minLength: 1
+     * maxLength: 20
      */
     public $id;
 
@@ -53,6 +56,8 @@ class UpdateAuthorizationRequest implements JsonSerializable
      * @see STATUS_PARTIALLY_CAPTURED
      * @see STATUS_VOIDED
      * @see STATUS_PENDING
+     * minLength: 1
+     * maxLength: 127
      */
     public $status;
 

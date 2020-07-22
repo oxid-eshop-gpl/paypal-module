@@ -17,6 +17,9 @@ class Facilitator implements JsonSerializable
     /**
      * @var string
      * The name of the Facilitator.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $name;
 }

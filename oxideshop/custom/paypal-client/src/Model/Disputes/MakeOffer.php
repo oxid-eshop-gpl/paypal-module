@@ -29,6 +29,9 @@ class MakeOffer implements JsonSerializable
     /**
      * @var string
      * The merchant's notes about the offer. PayPal can, but the customer cannot, view these notes.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $note;
 
@@ -51,6 +54,9 @@ class MakeOffer implements JsonSerializable
      * @var string
      * The merchant-provided ID of the invoice for the refund. This optional value maps the refund to an invoice ID
      * in the merchant's system.
+     *
+     * minLength: 1
+     * maxLength: 127
      */
     public $invoice_id;
 
@@ -63,6 +69,8 @@ class MakeOffer implements JsonSerializable
      * @see OFFER_TYPE_REFUND_WITH_RETURN
      * @see OFFER_TYPE_REFUND_WITH_REPLACEMENT
      * @see OFFER_TYPE_REPLACEMENT_WITHOUT_REFUND
+     * minLength: 1
+     * maxLength: 255
      */
     public $offer_type;
 }

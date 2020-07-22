@@ -499,6 +499,8 @@ class TrackingInfo implements JsonSerializable
      * @see CARRIER_NAME_NL_ABC_MAIL
      * @see CARRIER_NAME_HK_FOUR_PX_EXPRESS
      * @see CARRIER_NAME_HK_FLYT_EXPRESS
+     * minLength: 1
+     * maxLength: 255
      */
     public $carrier_name;
 
@@ -506,18 +508,27 @@ class TrackingInfo implements JsonSerializable
      * @var string
      * The name of carrier in free-form text for unavailable carriers. This field is mandatory when
      * <code>carrier_name</code> is <code>OTHER</code>.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $carrier_name_other;
 
     /**
      * @var string
      * The URL to track the dispute-related transaction shipment.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $tracking_url;
 
     /**
      * @var string
      * The number to track the dispute-related transaction shipment.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $tracking_number;
 }

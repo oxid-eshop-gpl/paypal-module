@@ -41,6 +41,9 @@ class Escalate implements JsonSerializable
     /**
      * @var string
      * The notes about the escalation of the dispute to a claim.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $note;
 
@@ -57,6 +60,8 @@ class Escalate implements JsonSerializable
      * @see BUYER_ESCALATION_REASON_REFUND_AMOUNT_IS_DIFFERENT
      * @see BUYER_ESCALATION_REASON_TRACKING_ID_INVALID
      * @see BUYER_ESCALATION_REASON_OTHER
+     * minLength: 1
+     * maxLength: 255
      */
     public $buyer_escalation_reason;
 

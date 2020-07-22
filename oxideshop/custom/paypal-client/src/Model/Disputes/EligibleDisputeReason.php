@@ -61,6 +61,8 @@ class EligibleDisputeReason implements JsonSerializable
      * @see DISPUTE_REASON_CANCELED_RECURRING_BILLING
      * @see DISPUTE_REASON_PROBLEM_WITH_REMITTANCE
      * @see DISPUTE_REASON_OTHER
+     * minLength: 1
+     * maxLength: 255
      */
     public $dispute_reason;
 

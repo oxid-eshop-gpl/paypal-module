@@ -18,6 +18,9 @@ class Money implements JsonSerializable
      * @var string
      * The [three-character ISO-4217 currency code](/docs/integration/direct/rest/currency-codes/) that identifies
      * the currency.
+     *
+     * minLength: 3
+     * maxLength: 3
      */
     public $currency_code;
 
@@ -27,6 +30,8 @@ class Money implements JsonSerializable
      * fractional.</li><li>A decimal fraction for currencies like `TND` that are subdivided into
      * thousandths.</li></ul>For the required number of decimal places for a currency code, see [Currency codes - ISO
      * 4217](https://www.iso.org/iso-4217-currency-codes.html).
+     *
+     * maxLength: 32
      */
     public $value;
 }

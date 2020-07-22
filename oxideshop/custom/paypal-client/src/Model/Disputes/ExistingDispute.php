@@ -53,6 +53,9 @@ class ExistingDispute implements JsonSerializable
     /**
      * @var string
      * The ID of the PayPal-side dispute.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $id;
 
@@ -61,6 +64,9 @@ class ExistingDispute implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $create_time;
 
@@ -69,6 +75,9 @@ class ExistingDispute implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $update_time;
 
@@ -87,6 +96,8 @@ class ExistingDispute implements JsonSerializable
      * @see REASON_CANCELED_RECURRING_BILLING
      * @see REASON_PROBLEM_WITH_REMITTANCE
      * @see REASON_OTHER
+     * minLength: 1
+     * maxLength: 255
      */
     public $reason;
 
@@ -97,6 +108,8 @@ class ExistingDispute implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see STATUS_OPEN
      * @see STATUS_CLOSED
+     * minLength: 1
+     * maxLength: 255
      */
     public $status;
 }

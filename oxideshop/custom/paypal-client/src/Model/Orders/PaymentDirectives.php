@@ -45,6 +45,8 @@ class PaymentDirectives implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see DISBURSEMENT_TYPE_INSTANT
      * @see DISBURSEMENT_TYPE_DELAYED
+     * minLength: 1
+     * maxLength: 255
      */
     public $disbursement_type;
 
@@ -52,18 +54,27 @@ class PaymentDirectives implements JsonSerializable
      * @var string
      * Identifier that links the transactions to be treated as one atomic unit for payment processing. All-or-none
      * policy is enforced by this identifier.
+     *
+     * minLength: 1
+     * maxLength: 10
      */
     public $linked_group_id;
 
     /**
      * @var string
      * Settlement account number where the funds finally get settled to.
+     *
+     * minLength: 1
+     * maxLength: 30
      */
     public $settlement_account_number;
 
     /**
      * @var string
      * Loss account number used for recovery of loss.
+     *
+     * minLength: 1
+     * maxLength: 30
      */
     public $loss_account_number;
 
@@ -74,6 +85,8 @@ class PaymentDirectives implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see LIABILITY_TYPE_FULL
      * @see LIABILITY_TYPE_PARTIAL
+     * minLength: 1
+     * maxLength: 255
      */
     public $liability_type;
 
@@ -122,6 +135,8 @@ class PaymentDirectives implements JsonSerializable
      * @see CURRENCY_RECEIVING_DIRECTIVE_DENY
      * @see CURRENCY_RECEIVING_DIRECTIVE_HOLD
      * @see CURRENCY_RECEIVING_DIRECTIVE_ACCEPT_OPEN
+     * minLength: 1
+     * maxLength: 255
      */
     public $currency_receiving_directive;
 

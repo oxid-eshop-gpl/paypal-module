@@ -27,6 +27,8 @@ class Adjudicate implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see ADJUDICATION_OUTCOME_BUYER_FAVOR
      * @see ADJUDICATION_OUTCOME_SELLER_FAVOR
+     * minLength: 1
+     * maxLength: 255
      */
     public $adjudication_outcome;
 }

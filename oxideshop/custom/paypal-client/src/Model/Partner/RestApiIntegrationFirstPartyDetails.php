@@ -24,6 +24,9 @@ class RestApiIntegrationFirstPartyDetails implements JsonSerializable
     /**
      * @var string
      * S256 - The code verifier must be high-entropy cryptographic random string with a byte length of 43-128 range.
+     *
+     * minLength: 44
+     * maxLength: 128
      */
     public $seller_nonce;
 }

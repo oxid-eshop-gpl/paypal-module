@@ -17,6 +17,9 @@ class BillingExperiencePreference implements JsonSerializable
     /**
      * @var string
      * The ID of the payment web experience profile.
+     *
+     * minLength: 1
+     * maxLength: 20
      */
     public $experience_id;
 

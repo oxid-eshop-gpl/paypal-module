@@ -17,6 +17,9 @@ class SubscriptionCancelRequest implements JsonSerializable
     /**
      * @var string
      * The reason for the cancellation of a subscription.
+     *
+     * minLength: 1
+     * maxLength: 128
      */
     public $reason;
 }

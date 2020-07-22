@@ -32,6 +32,8 @@ class Cancel implements JsonSerializable
     /**
      * @var string
      * The note, if any, about why the merchant canceled the dispute.
+     *
+     * maxLength: 1048576
      */
     public $note;
 
@@ -52,6 +54,8 @@ class Cancel implements JsonSerializable
      * @see CANCELLATION_REASON_OTHER
      * @see CANCELLATION_REASON_SHIPMENT_INFO_RECEIVED
      * @see CANCELLATION_REASON_REPLACEMENT_RECEIVED
+     * minLength: 1
+     * maxLength: 255
      */
     public $cancellation_reason;
 }

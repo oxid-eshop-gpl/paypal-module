@@ -55,12 +55,17 @@ class SubscriptionStatus implements JsonSerializable
      * @see STATUS_SUSPENDED
      * @see STATUS_CANCELLED
      * @see STATUS_EXPIRED
+     * minLength: 1
+     * maxLength: 24
      */
     public $status;
 
     /**
      * @var string
      * The reason or notes for the status of the subscription.
+     *
+     * minLength: 1
+     * maxLength: 128
      */
     public $status_change_note;
 
@@ -69,6 +74,9 @@ class SubscriptionStatus implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $status_update_time;
 
@@ -81,6 +89,8 @@ class SubscriptionStatus implements JsonSerializable
      * @see STATUS_CHANGED_BY_BUYER
      * @see STATUS_CHANGED_BY_MERCHANT
      * @see STATUS_CHANGED_BY_FACILITATOR
+     * minLength: 1
+     * maxLength: 24
      */
     public $status_changed_by;
 }

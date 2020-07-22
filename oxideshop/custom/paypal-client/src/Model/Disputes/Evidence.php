@@ -278,6 +278,8 @@ class Evidence implements JsonSerializable
      * @see EVIDENCE_TYPE_LOST_CARD_DETAILS
      * @see EVIDENCE_TYPE_LAST_VALID_TRANSACTION_DETAILS
      * @see EVIDENCE_TYPE_OTHER
+     * minLength: 1
+     * maxLength: 255
      */
     public $evidence_type;
 
@@ -296,6 +298,8 @@ class Evidence implements JsonSerializable
     /**
      * @var string
      * Any evidence-related notes.
+     *
+     * maxLength: 2000
      */
     public $notes;
 
@@ -309,6 +313,8 @@ class Evidence implements JsonSerializable
      * @see SOURCE_SUBMITTED_BY_BUYER
      * @see SOURCE_SUBMITTED_BY_SELLER
      * @see SOURCE_SUBMITTED_BY_PARTNER
+     * minLength: 1
+     * maxLength: 255
      */
     public $source;
 
@@ -317,6 +323,9 @@ class Evidence implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $date;
 
@@ -324,6 +333,9 @@ class Evidence implements JsonSerializable
      * @var string
      * The item ID. If the merchant provides multiple pieces of evidence and the transaction has multiple item IDs,
      * the merchant can use this value to associate a piece of evidence with an item ID.
+     *
+     * minLength: 1
+     * maxLength: 255
      */
     public $item_id;
 }

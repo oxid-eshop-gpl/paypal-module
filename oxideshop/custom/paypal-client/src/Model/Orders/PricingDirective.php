@@ -37,12 +37,17 @@ class PricingDirective implements JsonSerializable
      * @see PARTICIPANT_TYPE_SENDER
      * @see PARTICIPANT_TYPE_RECEIVER
      * @see PARTICIPANT_TYPE_FACILITATOR
+     * minLength: 1
+     * maxLength: 255
      */
     public $participant_type;
 
     /**
      * @var string
      * Account number of the preference owner.
+     *
+     * minLength: 1
+     * maxLength: 30
      */
     public $account_number;
 
@@ -53,6 +58,8 @@ class PricingDirective implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see TYPE_BLENDED
      * @see TYPE_IC_PLUS
+     * minLength: 1
+     * maxLength: 255
      */
     public $type;
 }

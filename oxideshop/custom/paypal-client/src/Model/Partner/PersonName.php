@@ -23,6 +23,8 @@ class PersonName extends Name implements JsonSerializable
      *
      * use one of constants defined in this class to set the value:
      * @see TYPE_LEGAL
+     * minLength: 1
+     * maxLength: 255
      */
     public $type;
 }

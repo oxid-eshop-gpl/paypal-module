@@ -32,6 +32,9 @@ class Plan implements JsonSerializable
     /**
      * @var string
      * The unique PayPal-generated ID for the plan.
+     *
+     * minLength: 3
+     * maxLength: 50
      */
     public $id;
 
@@ -44,12 +47,18 @@ class Plan implements JsonSerializable
     /**
      * @var string
      * The ID for the product.
+     *
+     * minLength: 6
+     * maxLength: 50
      */
     public $product_id;
 
     /**
      * @var string
      * The plan name.
+     *
+     * minLength: 1
+     * maxLength: 127
      */
     public $name;
 
@@ -61,12 +70,17 @@ class Plan implements JsonSerializable
      * @see STATUS_CREATED
      * @see STATUS_INACTIVE
      * @see STATUS_ACTIVE
+     * minLength: 1
+     * maxLength: 24
      */
     public $status;
 
     /**
      * @var string
      * The detailed description of the plan.
+     *
+     * minLength: 1
+     * maxLength: 127
      */
     public $description;
 
@@ -77,6 +91,8 @@ class Plan implements JsonSerializable
      * use one of constants defined in this class to set the value:
      * @see USAGE_TYPE_LICENSED
      * @see USAGE_TYPE_METERED
+     * minLength: 1
+     * maxLength: 24
      */
     public $usage_type;
 
@@ -116,6 +132,9 @@ class Plan implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $create_time;
 
@@ -124,6 +143,9 @@ class Plan implements JsonSerializable
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
+     *
+     * minLength: 20
+     * maxLength: 64
      */
     public $update_time;
 

@@ -17,6 +17,9 @@ class ProvideSupportingInfo implements JsonSerializable
     /**
      * @var string
      * The notes that describe the defense.
+     *
+     * minLength: 1
+     * maxLength: 2000
      */
     public $notes;
 }
