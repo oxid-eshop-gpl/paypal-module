@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * A customer request to accept the offer made by the merchant.
@@ -23,9 +24,14 @@ class AcceptOffer implements JsonSerializable
      */
     public $note;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->note) || strlen($this->note) >= 1);
-        assert(!isset($this->note) || strlen($this->note) <= 2000);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->note) || Assert::minLength($this->note, 1, "note in AcceptOffer must have minlength of 1 $within");
+        !isset($this->note) || Assert::maxLength($this->note, 2000, "note in AcceptOffer must have maxlength of 2000 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

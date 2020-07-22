@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The error details.
@@ -50,7 +51,21 @@ class Error implements JsonSerializable
      */
     public $links;
 
-    public function validate()
+    public function validate($from = null)
+    {
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->details) || Assert::isArray($this->details, "details in Error must be array $within");
+
+                                if (isset($this->details)){
+                                    foreach ($this->details as $item) {
+                                        $item->validate(Error::class);
+                                    }
+                                }
+
+        !isset($this->links) || Assert::isArray($this->links, "links in Error must be array $within");
+    }
+
+    public function __construct()
     {
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Catalog;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The details for a product in the collection response.
@@ -58,15 +59,21 @@ class ProductCollectionElement implements JsonSerializable
      */
     public $links;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->id) || strlen($this->id) >= 6);
-        assert(!isset($this->id) || strlen($this->id) <= 50);
-        assert(!isset($this->name) || strlen($this->name) >= 1);
-        assert(!isset($this->name) || strlen($this->name) <= 127);
-        assert(!isset($this->description) || strlen($this->description) >= 1);
-        assert(!isset($this->description) || strlen($this->description) <= 256);
-        assert(!isset($this->create_time) || strlen($this->create_time) >= 20);
-        assert(!isset($this->create_time) || strlen($this->create_time) <= 64);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->id) || Assert::minLength($this->id, 6, "id in ProductCollectionElement must have minlength of 6 $within");
+        !isset($this->id) || Assert::maxLength($this->id, 50, "id in ProductCollectionElement must have maxlength of 50 $within");
+        !isset($this->name) || Assert::minLength($this->name, 1, "name in ProductCollectionElement must have minlength of 1 $within");
+        !isset($this->name) || Assert::maxLength($this->name, 127, "name in ProductCollectionElement must have maxlength of 127 $within");
+        !isset($this->description) || Assert::minLength($this->description, 1, "description in ProductCollectionElement must have minlength of 1 $within");
+        !isset($this->description) || Assert::maxLength($this->description, 256, "description in ProductCollectionElement must have maxlength of 256 $within");
+        !isset($this->create_time) || Assert::minLength($this->create_time, 20, "create_time in ProductCollectionElement must have minlength of 20 $within");
+        !isset($this->create_time) || Assert::maxLength($this->create_time, 64, "create_time in ProductCollectionElement must have maxlength of 64 $within");
+        !isset($this->links) || Assert::isArray($this->links, "links in ProductCollectionElement must be array $within");
+    }
+
+    public function __construct()
+    {
     }
 }

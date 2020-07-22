@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The payment source definition. To be eligible to create subscription using debit or credit card, you will need
@@ -22,8 +23,16 @@ class PaymentSource implements JsonSerializable
      */
     public $card;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(isset($this->card));
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->card) || Assert::notNull($this->card->number, "number in card must not be NULL within PaymentSource $within");
+        !isset($this->card) || Assert::notNull($this->card->expiry, "expiry in card must not be NULL within PaymentSource $within");
+        !isset($this->card) || Assert::isInstanceOf($this->card, Card::class, "card in PaymentSource must be instance of Card $within");
+        !isset($this->card) || $this->card->validate(PaymentSource::class);
+    }
+
+    public function __construct()
+    {
     }
 }

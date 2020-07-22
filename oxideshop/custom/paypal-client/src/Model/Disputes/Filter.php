@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * A set of filters that you can use to filter the disputes in the response.
@@ -133,29 +134,40 @@ class Filter implements JsonSerializable
      */
     public $dispute_amount_lte;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->email) || strlen($this->email) >= 3);
-        assert(!isset($this->email) || strlen($this->email) <= 254);
-        assert(!isset($this->name) || strlen($this->name) >= 1);
-        assert(!isset($this->name) || strlen($this->name) <= 2000);
-        assert(!isset($this->reasons) || strlen($this->reasons) >= 1);
-        assert(!isset($this->reasons) || strlen($this->reasons) <= 2000);
-        assert(!isset($this->statuses) || strlen($this->statuses) >= 1);
-        assert(!isset($this->statuses) || strlen($this->statuses) <= 2000);
-        assert(!isset($this->create_time_before) || strlen($this->create_time_before) >= 20);
-        assert(!isset($this->create_time_before) || strlen($this->create_time_before) <= 64);
-        assert(!isset($this->create_time_after) || strlen($this->create_time_after) >= 20);
-        assert(!isset($this->create_time_after) || strlen($this->create_time_after) <= 64);
-        assert(!isset($this->update_time_before) || strlen($this->update_time_before) >= 20);
-        assert(!isset($this->update_time_before) || strlen($this->update_time_before) <= 64);
-        assert(!isset($this->update_time_after) || strlen($this->update_time_after) >= 20);
-        assert(!isset($this->update_time_after) || strlen($this->update_time_after) <= 64);
-        assert(!isset($this->response_due_date_before) || strlen($this->response_due_date_before) >= 20);
-        assert(!isset($this->response_due_date_before) || strlen($this->response_due_date_before) <= 64);
-        assert(!isset($this->response_due_date_after) || strlen($this->response_due_date_after) >= 20);
-        assert(!isset($this->response_due_date_after) || strlen($this->response_due_date_after) <= 64);
-        assert(isset($this->dispute_amount_gte));
-        assert(isset($this->dispute_amount_lte));
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->email) || Assert::minLength($this->email, 3, "email in Filter must have minlength of 3 $within");
+        !isset($this->email) || Assert::maxLength($this->email, 254, "email in Filter must have maxlength of 254 $within");
+        !isset($this->name) || Assert::minLength($this->name, 1, "name in Filter must have minlength of 1 $within");
+        !isset($this->name) || Assert::maxLength($this->name, 2000, "name in Filter must have maxlength of 2000 $within");
+        !isset($this->reasons) || Assert::minLength($this->reasons, 1, "reasons in Filter must have minlength of 1 $within");
+        !isset($this->reasons) || Assert::maxLength($this->reasons, 2000, "reasons in Filter must have maxlength of 2000 $within");
+        !isset($this->statuses) || Assert::minLength($this->statuses, 1, "statuses in Filter must have minlength of 1 $within");
+        !isset($this->statuses) || Assert::maxLength($this->statuses, 2000, "statuses in Filter must have maxlength of 2000 $within");
+        !isset($this->create_time_before) || Assert::minLength($this->create_time_before, 20, "create_time_before in Filter must have minlength of 20 $within");
+        !isset($this->create_time_before) || Assert::maxLength($this->create_time_before, 64, "create_time_before in Filter must have maxlength of 64 $within");
+        !isset($this->create_time_after) || Assert::minLength($this->create_time_after, 20, "create_time_after in Filter must have minlength of 20 $within");
+        !isset($this->create_time_after) || Assert::maxLength($this->create_time_after, 64, "create_time_after in Filter must have maxlength of 64 $within");
+        !isset($this->update_time_before) || Assert::minLength($this->update_time_before, 20, "update_time_before in Filter must have minlength of 20 $within");
+        !isset($this->update_time_before) || Assert::maxLength($this->update_time_before, 64, "update_time_before in Filter must have maxlength of 64 $within");
+        !isset($this->update_time_after) || Assert::minLength($this->update_time_after, 20, "update_time_after in Filter must have minlength of 20 $within");
+        !isset($this->update_time_after) || Assert::maxLength($this->update_time_after, 64, "update_time_after in Filter must have maxlength of 64 $within");
+        !isset($this->response_due_date_before) || Assert::minLength($this->response_due_date_before, 20, "response_due_date_before in Filter must have minlength of 20 $within");
+        !isset($this->response_due_date_before) || Assert::maxLength($this->response_due_date_before, 64, "response_due_date_before in Filter must have maxlength of 64 $within");
+        !isset($this->response_due_date_after) || Assert::minLength($this->response_due_date_after, 20, "response_due_date_after in Filter must have minlength of 20 $within");
+        !isset($this->response_due_date_after) || Assert::maxLength($this->response_due_date_after, 64, "response_due_date_after in Filter must have maxlength of 64 $within");
+        !isset($this->dispute_amount_gte) || Assert::notNull($this->dispute_amount_gte->currency_code, "currency_code in dispute_amount_gte must not be NULL within Filter $within");
+        !isset($this->dispute_amount_gte) || Assert::notNull($this->dispute_amount_gte->value, "value in dispute_amount_gte must not be NULL within Filter $within");
+        !isset($this->dispute_amount_gte) || Assert::isInstanceOf($this->dispute_amount_gte, Money::class, "dispute_amount_gte in Filter must be instance of Money $within");
+        !isset($this->dispute_amount_gte) || $this->dispute_amount_gte->validate(Filter::class);
+        !isset($this->dispute_amount_lte) || Assert::notNull($this->dispute_amount_lte->currency_code, "currency_code in dispute_amount_lte must not be NULL within Filter $within");
+        !isset($this->dispute_amount_lte) || Assert::notNull($this->dispute_amount_lte->value, "value in dispute_amount_lte must not be NULL within Filter $within");
+        !isset($this->dispute_amount_lte) || Assert::isInstanceOf($this->dispute_amount_lte, Money::class, "dispute_amount_lte in Filter must be instance of Money $within");
+        !isset($this->dispute_amount_lte) || $this->dispute_amount_lte->validate(Filter::class);
+    }
+
+    public function __construct()
+    {
     }
 }

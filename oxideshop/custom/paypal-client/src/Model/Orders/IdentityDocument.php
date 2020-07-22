@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The identity document.
@@ -87,16 +88,23 @@ class IdentityDocument implements JsonSerializable
      */
     public $expiration_date;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->type) || strlen($this->type) >= 1);
-        assert(!isset($this->type) || strlen($this->type) <= 255);
-        assert(isset($this->issuer));
-        assert(!isset($this->id_number) || strlen($this->id_number) >= 1);
-        assert(!isset($this->id_number) || strlen($this->id_number) <= 100);
-        assert(!isset($this->issued_date) || strlen($this->issued_date) >= 10);
-        assert(!isset($this->issued_date) || strlen($this->issued_date) <= 10);
-        assert(!isset($this->expiration_date) || strlen($this->expiration_date) >= 10);
-        assert(!isset($this->expiration_date) || strlen($this->expiration_date) <= 10);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->type) || Assert::minLength($this->type, 1, "type in IdentityDocument must have minlength of 1 $within");
+        !isset($this->type) || Assert::maxLength($this->type, 255, "type in IdentityDocument must have maxlength of 255 $within");
+        !isset($this->issuer) || Assert::notNull($this->issuer->country_code, "country_code in issuer must not be NULL within IdentityDocument $within");
+        !isset($this->issuer) || Assert::isInstanceOf($this->issuer, DocumentIssuer::class, "issuer in IdentityDocument must be instance of DocumentIssuer $within");
+        !isset($this->issuer) || $this->issuer->validate(IdentityDocument::class);
+        !isset($this->id_number) || Assert::minLength($this->id_number, 1, "id_number in IdentityDocument must have minlength of 1 $within");
+        !isset($this->id_number) || Assert::maxLength($this->id_number, 100, "id_number in IdentityDocument must have maxlength of 100 $within");
+        !isset($this->issued_date) || Assert::minLength($this->issued_date, 10, "issued_date in IdentityDocument must have minlength of 10 $within");
+        !isset($this->issued_date) || Assert::maxLength($this->issued_date, 10, "issued_date in IdentityDocument must have maxlength of 10 $within");
+        !isset($this->expiration_date) || Assert::minLength($this->expiration_date, 10, "expiration_date in IdentityDocument must have minlength of 10 $within");
+        !isset($this->expiration_date) || Assert::maxLength($this->expiration_date, 10, "expiration_date in IdentityDocument must have maxlength of 10 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

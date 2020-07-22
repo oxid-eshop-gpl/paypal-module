@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * An email address at which the person or business can be contacted.
@@ -40,11 +41,16 @@ class Email implements JsonSerializable
      */
     public $email;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->type) || strlen($this->type) >= 1);
-        assert(!isset($this->type) || strlen($this->type) <= 50);
-        assert(!isset($this->email) || strlen($this->email) >= 3);
-        assert(!isset($this->email) || strlen($this->email) <= 254);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->type) || Assert::minLength($this->type, 1, "type in Email must have minlength of 1 $within");
+        !isset($this->type) || Assert::maxLength($this->type, 50, "type in Email must have maxlength of 50 $within");
+        !isset($this->email) || Assert::minLength($this->email, 3, "email in Email must have minlength of 3 $within");
+        !isset($this->email) || Assert::maxLength($this->email, 254, "email in Email must have maxlength of 254 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Payment data for a purchase unit.
@@ -73,6 +74,9 @@ class PaymentUnit implements JsonSerializable
     /**
      * @var array<Item>
      * List of purchase items.
+     *
+     * maxItems: 1
+     * maxItems: 10
      */
     public $items;
 
@@ -155,6 +159,9 @@ class PaymentUnit implements JsonSerializable
      * @var array<PaymentContextAttribute>
      * List of context attributes usually used to lookup as an alternative id or provides a relative context for a
      * payment.
+     *
+     * maxItems: 1
+     * maxItems: 50
      */
     public $context_attributes;
 
@@ -170,29 +177,68 @@ class PaymentUnit implements JsonSerializable
      */
     public $payment_directives;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->reference_id) || strlen($this->reference_id) >= 1);
-        assert(!isset($this->reference_id) || strlen($this->reference_id) <= 255);
-        assert(!isset($this->parent_reference_id) || strlen($this->parent_reference_id) >= 1);
-        assert(!isset($this->parent_reference_id) || strlen($this->parent_reference_id) <= 255);
-        assert(!isset($this->idempotency_id) || strlen($this->idempotency_id) >= 1);
-        assert(!isset($this->idempotency_id) || strlen($this->idempotency_id) <= 255);
-        assert(!isset($this->partner_attribution_id) || strlen($this->partner_attribution_id) >= 1);
-        assert(!isset($this->partner_attribution_id) || strlen($this->partner_attribution_id) <= 255);
-        assert(!isset($this->payment_category) || strlen($this->payment_category) >= 1);
-        assert(!isset($this->payment_category) || strlen($this->payment_category) <= 127);
-        assert(!isset($this->custom_id) || strlen($this->custom_id) >= 1);
-        assert(!isset($this->custom_id) || strlen($this->custom_id) <= 127);
-        assert(!isset($this->description) || strlen($this->description) >= 1);
-        assert(!isset($this->description) || strlen($this->description) <= 127);
-        assert(!isset($this->invoice_id) || strlen($this->invoice_id) >= 1);
-        assert(!isset($this->invoice_id) || strlen($this->invoice_id) <= 256);
-        assert(!isset($this->payment_schedule_category) || strlen($this->payment_schedule_category) >= 1);
-        assert(!isset($this->payment_schedule_category) || strlen($this->payment_schedule_category) <= 127);
-        assert(!isset($this->biller_company_name) || strlen($this->biller_company_name) >= 1);
-        assert(!isset($this->biller_company_name) || strlen($this->biller_company_name) <= 16);
-        assert(!isset($this->biller_company_id) || strlen($this->biller_company_id) >= 1);
-        assert(!isset($this->biller_company_id) || strlen($this->biller_company_id) <= 10);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->reference_id) || Assert::minLength($this->reference_id, 1, "reference_id in PaymentUnit must have minlength of 1 $within");
+        !isset($this->reference_id) || Assert::maxLength($this->reference_id, 255, "reference_id in PaymentUnit must have maxlength of 255 $within");
+        !isset($this->parent_reference_id) || Assert::minLength($this->parent_reference_id, 1, "parent_reference_id in PaymentUnit must have minlength of 1 $within");
+        !isset($this->parent_reference_id) || Assert::maxLength($this->parent_reference_id, 255, "parent_reference_id in PaymentUnit must have maxlength of 255 $within");
+        !isset($this->idempotency_id) || Assert::minLength($this->idempotency_id, 1, "idempotency_id in PaymentUnit must have minlength of 1 $within");
+        !isset($this->idempotency_id) || Assert::maxLength($this->idempotency_id, 255, "idempotency_id in PaymentUnit must have maxlength of 255 $within");
+        !isset($this->partner_attribution_id) || Assert::minLength($this->partner_attribution_id, 1, "partner_attribution_id in PaymentUnit must have minlength of 1 $within");
+        !isset($this->partner_attribution_id) || Assert::maxLength($this->partner_attribution_id, 255, "partner_attribution_id in PaymentUnit must have maxlength of 255 $within");
+        !isset($this->payment_category) || Assert::minLength($this->payment_category, 1, "payment_category in PaymentUnit must have minlength of 1 $within");
+        !isset($this->payment_category) || Assert::maxLength($this->payment_category, 127, "payment_category in PaymentUnit must have maxlength of 127 $within");
+        !isset($this->amount) || Assert::isInstanceOf($this->amount, AmountWithBreakdown::class, "amount in PaymentUnit must be instance of AmountWithBreakdown $within");
+        !isset($this->amount) || $this->amount->validate(PaymentUnit::class);
+        Assert::notNull($this->items, "items in PaymentUnit must not be NULL $within");
+         Assert::minCount($this->items, 1, "items in PaymentUnit must have min. count of 1 $within");
+         Assert::maxCount($this->items, 10, "items in PaymentUnit must have max. count of 10 $within");
+         Assert::isArray($this->items, "items in PaymentUnit must be array $within");
+
+                                if (isset($this->items)){
+                                    foreach ($this->items as $item) {
+                                        $item->validate(PaymentUnit::class);
+                                    }
+                                }
+
+        !isset($this->shipping_details) || Assert::isInstanceOf($this->shipping_details, ShippingDetails::class, "shipping_details in PaymentUnit must be instance of ShippingDetails $within");
+        !isset($this->shipping_details) || $this->shipping_details->validate(PaymentUnit::class);
+        !isset($this->custom_id) || Assert::minLength($this->custom_id, 1, "custom_id in PaymentUnit must have minlength of 1 $within");
+        !isset($this->custom_id) || Assert::maxLength($this->custom_id, 127, "custom_id in PaymentUnit must have maxlength of 127 $within");
+        !isset($this->description) || Assert::minLength($this->description, 1, "description in PaymentUnit must have minlength of 1 $within");
+        !isset($this->description) || Assert::maxLength($this->description, 127, "description in PaymentUnit must have maxlength of 127 $within");
+        !isset($this->invoice_id) || Assert::minLength($this->invoice_id, 1, "invoice_id in PaymentUnit must have minlength of 1 $within");
+        !isset($this->invoice_id) || Assert::maxLength($this->invoice_id, 256, "invoice_id in PaymentUnit must have maxlength of 256 $within");
+        !isset($this->payment_schedule_category) || Assert::minLength($this->payment_schedule_category, 1, "payment_schedule_category in PaymentUnit must have minlength of 1 $within");
+        !isset($this->payment_schedule_category) || Assert::maxLength($this->payment_schedule_category, 127, "payment_schedule_category in PaymentUnit must have maxlength of 127 $within");
+        !isset($this->soft_descriptor_details) || Assert::isInstanceOf($this->soft_descriptor_details, SoftDescriptorDetails::class, "soft_descriptor_details in PaymentUnit must be instance of SoftDescriptorDetails $within");
+        !isset($this->soft_descriptor_details) || $this->soft_descriptor_details->validate(PaymentUnit::class);
+        !isset($this->biller_company_name) || Assert::minLength($this->biller_company_name, 1, "biller_company_name in PaymentUnit must have minlength of 1 $within");
+        !isset($this->biller_company_name) || Assert::maxLength($this->biller_company_name, 16, "biller_company_name in PaymentUnit must have maxlength of 16 $within");
+        !isset($this->biller_company_id) || Assert::minLength($this->biller_company_id, 1, "biller_company_id in PaymentUnit must have minlength of 1 $within");
+        !isset($this->biller_company_id) || Assert::maxLength($this->biller_company_id, 10, "biller_company_id in PaymentUnit must have maxlength of 10 $within");
+        !isset($this->odfi_details) || Assert::isInstanceOf($this->odfi_details, OdfiDetails::class, "odfi_details in PaymentUnit must be instance of OdfiDetails $within");
+        !isset($this->odfi_details) || $this->odfi_details->validate(PaymentUnit::class);
+        Assert::notNull($this->context_attributes, "context_attributes in PaymentUnit must not be NULL $within");
+         Assert::minCount($this->context_attributes, 1, "context_attributes in PaymentUnit must have min. count of 1 $within");
+         Assert::maxCount($this->context_attributes, 50, "context_attributes in PaymentUnit must have max. count of 50 $within");
+         Assert::isArray($this->context_attributes, "context_attributes in PaymentUnit must be array $within");
+
+                                if (isset($this->context_attributes)){
+                                    foreach ($this->context_attributes as $item) {
+                                        $item->validate(PaymentUnit::class);
+                                    }
+                                }
+
+        !isset($this->receiver) || Assert::isInstanceOf($this->receiver, Participant::class, "receiver in PaymentUnit must be instance of Participant $within");
+        !isset($this->receiver) || $this->receiver->validate(PaymentUnit::class);
+        !isset($this->payment_directives) || Assert::isInstanceOf($this->payment_directives, PaymentDirectives::class, "payment_directives in PaymentUnit must be instance of PaymentDirectives $within");
+        !isset($this->payment_directives) || $this->payment_directives->validate(PaymentUnit::class);
+    }
+
+    public function __construct()
+    {
     }
 }

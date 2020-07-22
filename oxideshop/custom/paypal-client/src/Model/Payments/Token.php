@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The tokenized payment source to fund a payment.
@@ -61,11 +62,16 @@ class Token implements JsonSerializable
      */
     public $type;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->id) || strlen($this->id) >= 1);
-        assert(!isset($this->id) || strlen($this->id) <= 255);
-        assert(!isset($this->type) || strlen($this->type) >= 1);
-        assert(!isset($this->type) || strlen($this->type) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->id) || Assert::minLength($this->id, 1, "id in Token must have minlength of 1 $within");
+        !isset($this->id) || Assert::maxLength($this->id, 255, "id in Token must have maxlength of 255 $within");
+        !isset($this->type) || Assert::minLength($this->type, 1, "type in Token must have minlength of 1 $within");
+        !isset($this->type) || Assert::maxLength($this->type, 255, "type in Token must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

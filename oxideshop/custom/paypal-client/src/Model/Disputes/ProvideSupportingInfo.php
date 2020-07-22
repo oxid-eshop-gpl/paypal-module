@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The provide supporting information request details.
@@ -23,9 +24,14 @@ class ProvideSupportingInfo implements JsonSerializable
      */
     public $notes;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->notes) || strlen($this->notes) >= 1);
-        assert(!isset($this->notes) || strlen($this->notes) <= 2000);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->notes) || Assert::minLength($this->notes, 1, "notes in ProvideSupportingInfo must have minlength of 1 $within");
+        !isset($this->notes) || Assert::maxLength($this->notes, 2000, "notes in ProvideSupportingInfo must have maxlength of 2000 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Auth directives for the transaction.
@@ -40,7 +41,14 @@ class AuthorizationDirectives implements JsonSerializable
      */
     public $tolerance;
 
-    public function validate()
+    public function validate($from = null)
+    {
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->tolerance) || Assert::isInstanceOf($this->tolerance, AuthTolerance::class, "tolerance in AuthorizationDirectives must be instance of AuthTolerance $within");
+        !isset($this->tolerance) || $this->tolerance->validate(AuthorizationDirectives::class);
+    }
+
+    public function __construct()
     {
     }
 }

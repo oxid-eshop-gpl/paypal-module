@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Basic vault instruction specification that can be extended by specific payment sources that supports vaulting.
@@ -28,9 +29,14 @@ class VaultInstructionBase implements JsonSerializable
      */
     public $confirm_payment_token;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->confirm_payment_token) || strlen($this->confirm_payment_token) >= 1);
-        assert(!isset($this->confirm_payment_token) || strlen($this->confirm_payment_token) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->confirm_payment_token) || Assert::minLength($this->confirm_payment_token, 1, "confirm_payment_token in VaultInstructionBase must have minlength of 1 $within");
+        !isset($this->confirm_payment_token) || Assert::maxLength($this->confirm_payment_token, 255, "confirm_payment_token in VaultInstructionBase must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

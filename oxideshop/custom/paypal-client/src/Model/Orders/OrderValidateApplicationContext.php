@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Customizes the payer experience during the approval process for the payment with
@@ -24,7 +25,12 @@ class OrderValidateApplicationContext implements JsonSerializable
      */
     public $vault = false;
 
-    public function validate()
+    public function validate($from = null)
+    {
+        $within = isset($from) ? "within $from" : "";
+    }
+
+    public function __construct()
     {
     }
 }

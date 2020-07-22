@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The create plan request details.
@@ -85,6 +86,9 @@ class PlanRequestPOST implements JsonSerializable
      * @var array<BillingCycle>
      * An array of billing cycles for trial billing and regular billing. A plan can have at most two trial cycles and
      * only one regular cycle.
+     *
+     * maxItems: 1
+     * maxItems: 12
      */
     public $billing_cycles;
 
@@ -106,18 +110,38 @@ class PlanRequestPOST implements JsonSerializable
      */
     public $quantity_supported = false;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->product_id) || strlen($this->product_id) >= 6);
-        assert(!isset($this->product_id) || strlen($this->product_id) <= 50);
-        assert(!isset($this->name) || strlen($this->name) >= 1);
-        assert(!isset($this->name) || strlen($this->name) <= 127);
-        assert(!isset($this->status) || strlen($this->status) >= 1);
-        assert(!isset($this->status) || strlen($this->status) <= 24);
-        assert(!isset($this->description) || strlen($this->description) >= 1);
-        assert(!isset($this->description) || strlen($this->description) <= 127);
-        assert(!isset($this->usage_type) || strlen($this->usage_type) >= 1);
-        assert(!isset($this->usage_type) || strlen($this->usage_type) <= 24);
-        assert(isset($this->taxes));
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->product_id) || Assert::minLength($this->product_id, 6, "product_id in PlanRequestPOST must have minlength of 6 $within");
+        !isset($this->product_id) || Assert::maxLength($this->product_id, 50, "product_id in PlanRequestPOST must have maxlength of 50 $within");
+        !isset($this->name) || Assert::minLength($this->name, 1, "name in PlanRequestPOST must have minlength of 1 $within");
+        !isset($this->name) || Assert::maxLength($this->name, 127, "name in PlanRequestPOST must have maxlength of 127 $within");
+        !isset($this->status) || Assert::minLength($this->status, 1, "status in PlanRequestPOST must have minlength of 1 $within");
+        !isset($this->status) || Assert::maxLength($this->status, 24, "status in PlanRequestPOST must have maxlength of 24 $within");
+        !isset($this->description) || Assert::minLength($this->description, 1, "description in PlanRequestPOST must have minlength of 1 $within");
+        !isset($this->description) || Assert::maxLength($this->description, 127, "description in PlanRequestPOST must have maxlength of 127 $within");
+        !isset($this->usage_type) || Assert::minLength($this->usage_type, 1, "usage_type in PlanRequestPOST must have minlength of 1 $within");
+        !isset($this->usage_type) || Assert::maxLength($this->usage_type, 24, "usage_type in PlanRequestPOST must have maxlength of 24 $within");
+        Assert::notNull($this->billing_cycles, "billing_cycles in PlanRequestPOST must not be NULL $within");
+         Assert::minCount($this->billing_cycles, 1, "billing_cycles in PlanRequestPOST must have min. count of 1 $within");
+         Assert::maxCount($this->billing_cycles, 12, "billing_cycles in PlanRequestPOST must have max. count of 12 $within");
+         Assert::isArray($this->billing_cycles, "billing_cycles in PlanRequestPOST must be array $within");
+
+                                if (isset($this->billing_cycles)){
+                                    foreach ($this->billing_cycles as $item) {
+                                        $item->validate(PlanRequestPOST::class);
+                                    }
+                                }
+
+        !isset($this->payment_preferences) || Assert::isInstanceOf($this->payment_preferences, PaymentPreferences::class, "payment_preferences in PlanRequestPOST must be instance of PaymentPreferences $within");
+        !isset($this->payment_preferences) || $this->payment_preferences->validate(PlanRequestPOST::class);
+        !isset($this->taxes) || Assert::notNull($this->taxes->percentage, "percentage in taxes must not be NULL within PlanRequestPOST $within");
+        !isset($this->taxes) || Assert::isInstanceOf($this->taxes, Taxes::class, "taxes in PlanRequestPOST must be instance of Taxes $within");
+        !isset($this->taxes) || $this->taxes->validate(PlanRequestPOST::class);
+    }
+
+    public function __construct()
+    {
     }
 }

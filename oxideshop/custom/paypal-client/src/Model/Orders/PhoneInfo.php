@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Phone information.
@@ -53,8 +54,16 @@ class PhoneInfo implements JsonSerializable
      */
     public $phone_type;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(isset($this->phone_number));
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->phone_number) || Assert::notNull($this->phone_number->country_code, "country_code in phone_number must not be NULL within PhoneInfo $within");
+        !isset($this->phone_number) || Assert::notNull($this->phone_number->national_number, "national_number in phone_number must not be NULL within PhoneInfo $within");
+        !isset($this->phone_number) || Assert::isInstanceOf($this->phone_number, Phone::class, "phone_number in PhoneInfo must be instance of Phone $within");
+        !isset($this->phone_number) || $this->phone_number->validate(PhoneInfo::class);
+    }
+
+    public function __construct()
+    {
     }
 }

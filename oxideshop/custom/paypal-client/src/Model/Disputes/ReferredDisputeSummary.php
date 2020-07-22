@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The dispute details.
@@ -119,20 +120,37 @@ class ReferredDisputeSummary implements JsonSerializable
      */
     public $links;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->dispute_id) || strlen($this->dispute_id) >= 6);
-        assert(!isset($this->dispute_id) || strlen($this->dispute_id) <= 20);
-        assert(!isset($this->create_time) || strlen($this->create_time) >= 20);
-        assert(!isset($this->create_time) || strlen($this->create_time) <= 64);
-        assert(!isset($this->update_time) || strlen($this->update_time) >= 20);
-        assert(!isset($this->update_time) || strlen($this->update_time) <= 64);
-        assert(isset($this->dispute_amount));
-        assert(!isset($this->reason) || strlen($this->reason) >= 1);
-        assert(!isset($this->reason) || strlen($this->reason) <= 255);
-        assert(!isset($this->status) || strlen($this->status) >= 1);
-        assert(!isset($this->status) || strlen($this->status) <= 255);
-        assert(!isset($this->dispute_flow) || strlen($this->dispute_flow) >= 1);
-        assert(!isset($this->dispute_flow) || strlen($this->dispute_flow) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->dispute_id) || Assert::minLength($this->dispute_id, 6, "dispute_id in ReferredDisputeSummary must have minlength of 6 $within");
+        !isset($this->dispute_id) || Assert::maxLength($this->dispute_id, 20, "dispute_id in ReferredDisputeSummary must have maxlength of 20 $within");
+        !isset($this->create_time) || Assert::minLength($this->create_time, 20, "create_time in ReferredDisputeSummary must have minlength of 20 $within");
+        !isset($this->create_time) || Assert::maxLength($this->create_time, 64, "create_time in ReferredDisputeSummary must have maxlength of 64 $within");
+        !isset($this->update_time) || Assert::minLength($this->update_time, 20, "update_time in ReferredDisputeSummary must have minlength of 20 $within");
+        !isset($this->update_time) || Assert::maxLength($this->update_time, 64, "update_time in ReferredDisputeSummary must have maxlength of 64 $within");
+        !isset($this->reference_disputes) || Assert::isArray($this->reference_disputes, "reference_disputes in ReferredDisputeSummary must be array $within");
+
+                                if (isset($this->reference_disputes)){
+                                    foreach ($this->reference_disputes as $item) {
+                                        $item->validate(ReferredDisputeSummary::class);
+                                    }
+                                }
+
+        !isset($this->dispute_amount) || Assert::notNull($this->dispute_amount->currency_code, "currency_code in dispute_amount must not be NULL within ReferredDisputeSummary $within");
+        !isset($this->dispute_amount) || Assert::notNull($this->dispute_amount->value, "value in dispute_amount must not be NULL within ReferredDisputeSummary $within");
+        !isset($this->dispute_amount) || Assert::isInstanceOf($this->dispute_amount, Money::class, "dispute_amount in ReferredDisputeSummary must be instance of Money $within");
+        !isset($this->dispute_amount) || $this->dispute_amount->validate(ReferredDisputeSummary::class);
+        !isset($this->reason) || Assert::minLength($this->reason, 1, "reason in ReferredDisputeSummary must have minlength of 1 $within");
+        !isset($this->reason) || Assert::maxLength($this->reason, 255, "reason in ReferredDisputeSummary must have maxlength of 255 $within");
+        !isset($this->status) || Assert::minLength($this->status, 1, "status in ReferredDisputeSummary must have minlength of 1 $within");
+        !isset($this->status) || Assert::maxLength($this->status, 255, "status in ReferredDisputeSummary must have maxlength of 255 $within");
+        !isset($this->dispute_flow) || Assert::minLength($this->dispute_flow, 1, "dispute_flow in ReferredDisputeSummary must have minlength of 1 $within");
+        !isset($this->dispute_flow) || Assert::maxLength($this->dispute_flow, 255, "dispute_flow in ReferredDisputeSummary must have maxlength of 255 $within");
+        !isset($this->links) || Assert::isArray($this->links, "links in ReferredDisputeSummary must be array $within");
+    }
+
+    public function __construct()
+    {
     }
 }

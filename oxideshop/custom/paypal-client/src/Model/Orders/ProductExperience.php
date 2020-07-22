@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The product experiences that a user completes on a PayPal transaction.
@@ -305,17 +306,22 @@ class ProductExperience implements JsonSerializable
      */
     public $product_flow;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->user_experience_flow) || strlen($this->user_experience_flow) >= 1);
-        assert(!isset($this->user_experience_flow) || strlen($this->user_experience_flow) <= 255);
-        assert(!isset($this->entry_point) || strlen($this->entry_point) >= 1);
-        assert(!isset($this->entry_point) || strlen($this->entry_point) <= 255);
-        assert(!isset($this->payment_method) || strlen($this->payment_method) >= 1);
-        assert(!isset($this->payment_method) || strlen($this->payment_method) <= 255);
-        assert(!isset($this->channel) || strlen($this->channel) >= 1);
-        assert(!isset($this->channel) || strlen($this->channel) <= 255);
-        assert(!isset($this->product_flow) || strlen($this->product_flow) >= 1);
-        assert(!isset($this->product_flow) || strlen($this->product_flow) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->user_experience_flow) || Assert::minLength($this->user_experience_flow, 1, "user_experience_flow in ProductExperience must have minlength of 1 $within");
+        !isset($this->user_experience_flow) || Assert::maxLength($this->user_experience_flow, 255, "user_experience_flow in ProductExperience must have maxlength of 255 $within");
+        !isset($this->entry_point) || Assert::minLength($this->entry_point, 1, "entry_point in ProductExperience must have minlength of 1 $within");
+        !isset($this->entry_point) || Assert::maxLength($this->entry_point, 255, "entry_point in ProductExperience must have maxlength of 255 $within");
+        !isset($this->payment_method) || Assert::minLength($this->payment_method, 1, "payment_method in ProductExperience must have minlength of 1 $within");
+        !isset($this->payment_method) || Assert::maxLength($this->payment_method, 255, "payment_method in ProductExperience must have maxlength of 255 $within");
+        !isset($this->channel) || Assert::minLength($this->channel, 1, "channel in ProductExperience must have minlength of 1 $within");
+        !isset($this->channel) || Assert::maxLength($this->channel, 255, "channel in ProductExperience must have maxlength of 255 $within");
+        !isset($this->product_flow) || Assert::minLength($this->product_flow, 1, "product_flow in ProductExperience must have minlength of 1 $within");
+        !isset($this->product_flow) || Assert::maxLength($this->product_flow, 255, "product_flow in ProductExperience must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The billing cycle details.
@@ -62,10 +63,19 @@ class BillingCycle implements JsonSerializable
      */
     public $total_cycles = 1;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(isset($this->frequency));
-        assert(!isset($this->tenure_type) || strlen($this->tenure_type) >= 1);
-        assert(!isset($this->tenure_type) || strlen($this->tenure_type) <= 24);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->pricing_scheme) || Assert::isInstanceOf($this->pricing_scheme, PricingScheme::class, "pricing_scheme in BillingCycle must be instance of PricingScheme $within");
+        !isset($this->pricing_scheme) || $this->pricing_scheme->validate(BillingCycle::class);
+        !isset($this->frequency) || Assert::notNull($this->frequency->interval_unit, "interval_unit in frequency must not be NULL within BillingCycle $within");
+        !isset($this->frequency) || Assert::isInstanceOf($this->frequency, Frequency::class, "frequency in BillingCycle must be instance of Frequency $within");
+        !isset($this->frequency) || $this->frequency->validate(BillingCycle::class);
+        !isset($this->tenure_type) || Assert::minLength($this->tenure_type, 1, "tenure_type in BillingCycle must have minlength of 1 $within");
+        !isset($this->tenure_type) || Assert::maxLength($this->tenure_type, 24, "tenure_type in BillingCycle must have maxlength of 24 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

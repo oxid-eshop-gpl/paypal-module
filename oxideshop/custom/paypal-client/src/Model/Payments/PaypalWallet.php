@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * A resource that identies that a paypal wallet is used for payment.
@@ -38,9 +39,16 @@ class PaypalWallet implements JsonSerializable
      */
     public $attributes;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->payment_method_preference) || strlen($this->payment_method_preference) >= 1);
-        assert(!isset($this->payment_method_preference) || strlen($this->payment_method_preference) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->payment_method_preference) || Assert::minLength($this->payment_method_preference, 1, "payment_method_preference in PaypalWallet must have minlength of 1 $within");
+        !isset($this->payment_method_preference) || Assert::maxLength($this->payment_method_preference, 255, "payment_method_preference in PaypalWallet must have maxlength of 255 $within");
+        !isset($this->attributes) || Assert::isInstanceOf($this->attributes, PaypalWalletAttributes::class, "attributes in PaypalWallet must be instance of PaypalWalletAttributes $within");
+        !isset($this->attributes) || $this->attributes->validate(PaypalWallet::class);
+    }
+
+    public function __construct()
+    {
     }
 }

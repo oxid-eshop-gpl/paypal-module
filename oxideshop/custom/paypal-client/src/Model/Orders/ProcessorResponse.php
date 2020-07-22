@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The processor information. Might be required for payment requests, such as direct credit card transactions.
@@ -743,7 +744,12 @@ class ProcessorResponse implements JsonSerializable
      */
     public $payment_advice_code;
 
-    public function validate()
+    public function validate($from = null)
+    {
+        $within = isset($from) ? "within $from" : "";
+    }
+
+    public function __construct()
     {
     }
 }

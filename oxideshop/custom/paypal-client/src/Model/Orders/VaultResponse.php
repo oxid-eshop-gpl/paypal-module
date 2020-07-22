@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The details about a saved payment source.
@@ -41,11 +42,16 @@ class VaultResponse implements JsonSerializable
      */
     public $status;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->id) || strlen($this->id) >= 1);
-        assert(!isset($this->id) || strlen($this->id) <= 255);
-        assert(!isset($this->status) || strlen($this->status) >= 1);
-        assert(!isset($this->status) || strlen($this->status) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->id) || Assert::minLength($this->id, 1, "id in VaultResponse must have minlength of 1 $within");
+        !isset($this->id) || Assert::maxLength($this->id, 255, "id in VaultResponse must have maxlength of 255 $within");
+        !isset($this->status) || Assert::minLength($this->status, 1, "status in VaultResponse must have minlength of 1 $within");
+        !isset($this->status) || Assert::maxLength($this->status, 255, "status in VaultResponse must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

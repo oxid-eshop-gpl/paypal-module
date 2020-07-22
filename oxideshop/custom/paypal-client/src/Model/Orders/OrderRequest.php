@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The order request details.
@@ -60,6 +61,9 @@ class OrderRequest implements JsonSerializable
      * @var array<PurchaseUnitRequest>
      * An array of purchase units. Each purchase unit establishes a contract between a payer and the payee. Each
      * purchase unit represents either a full or partial order that the payer intends to purchase from the payee.
+     *
+     * maxItems: 1
+     * maxItems: 10
      */
     public $purchase_units;
 
@@ -78,7 +82,29 @@ class OrderRequest implements JsonSerializable
      */
     public $application_context;
 
-    public function validate()
+    public function validate($from = null)
+    {
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->payer) || Assert::isInstanceOf($this->payer, Payer::class, "payer in OrderRequest must be instance of Payer $within");
+        !isset($this->payer) || $this->payer->validate(OrderRequest::class);
+        Assert::notNull($this->purchase_units, "purchase_units in OrderRequest must not be NULL $within");
+         Assert::minCount($this->purchase_units, 1, "purchase_units in OrderRequest must have min. count of 1 $within");
+         Assert::maxCount($this->purchase_units, 10, "purchase_units in OrderRequest must have max. count of 10 $within");
+         Assert::isArray($this->purchase_units, "purchase_units in OrderRequest must be array $within");
+
+                                if (isset($this->purchase_units)){
+                                    foreach ($this->purchase_units as $item) {
+                                        $item->validate(OrderRequest::class);
+                                    }
+                                }
+
+        !isset($this->payment_source) || Assert::isInstanceOf($this->payment_source, PaymentSource::class, "payment_source in OrderRequest must be instance of PaymentSource $within");
+        !isset($this->payment_source) || $this->payment_source->validate(OrderRequest::class);
+        !isset($this->application_context) || Assert::isInstanceOf($this->application_context, OrderApplicationContext::class, "application_context in OrderRequest must be instance of OrderApplicationContext $within");
+        !isset($this->application_context) || $this->application_context->validate(OrderRequest::class);
+    }
+
+    public function __construct()
     {
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Sandbox only. Updates the state of a dispute, by ID, to either <code>WAITING_FOR_BUYER_RESPONSE</code> or
@@ -35,9 +36,14 @@ class RequireEvidence implements JsonSerializable
      */
     public $action;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->action) || strlen($this->action) >= 1);
-        assert(!isset($this->action) || strlen($this->action) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->action) || Assert::minLength($this->action, 1, "action in RequireEvidence must have minlength of 1 $within");
+        !isset($this->action) || Assert::maxLength($this->action, 255, "action in RequireEvidence must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The date and time of the last known transaction or when other entity-related information was updated, in
@@ -50,9 +51,14 @@ class ActivityEntityInfo implements JsonSerializable
      */
     public $card_settings_changed;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->last_known_valid_transaction_date) || strlen($this->last_known_valid_transaction_date) >= 20);
-        assert(!isset($this->last_known_valid_transaction_date) || strlen($this->last_known_valid_transaction_date) <= 64);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->last_known_valid_transaction_date) || Assert::minLength($this->last_known_valid_transaction_date, 20, "last_known_valid_transaction_date in ActivityEntityInfo must have minlength of 20 $within");
+        !isset($this->last_known_valid_transaction_date) || Assert::maxLength($this->last_known_valid_transaction_date, 64, "last_known_valid_transaction_date in ActivityEntityInfo must have maxlength of 64 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

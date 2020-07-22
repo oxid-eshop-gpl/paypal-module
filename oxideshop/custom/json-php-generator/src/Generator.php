@@ -6,6 +6,7 @@ use Exception;
 use JsonSerializable;
 use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\PsrPrinter;
+use Webmozart\Assert\Assert;
 
 class Generator
 {
@@ -213,6 +214,7 @@ class Generator
     private function generateModelClass($namespace, $subNameSpace, $defName, $defs): void
     {
         $ns = new PhpNamespace($namespace . '\\' . $subNameSpace);
+        $ns->addUse(Assert::class);
         $className = $this->calculateClassName($defName, $defs);
         if ($className == "array") {
             return;
@@ -260,7 +262,11 @@ class Generator
         }
 
         if (isset($defs['properties'])) {
-            $class->addMethod('validate');
+            $validateMethod = $class->addMethod('validate')->setVisibility('public');
+            $constructor = $class->addMethod("__construct")->setVisibility('public');
+
+            $validateMethod->addParameter("from")->setDefaultValue(null);
+            $validateMethod->addBody('$within = isset($from) ? "within $from" : ""; ');
             foreach ($defs['properties'] as $name => $parameter) {
                 if (isset($parameter['type'])) {
                     if ($parameter['type'] === 'object') {
@@ -366,6 +372,7 @@ class Generator
     private function addProperty($propDef, $name, \Nette\PhpGenerator\ClassType $class, $propType): void
     {
         $validateMethod = $class->getMethod('validate');
+        $constructor = $class->getMethod('__construct');
         $property = $class->addProperty($name)
             ->setVisibility('public')
             ->setComment('@var ' . $propType);
@@ -392,21 +399,81 @@ class Generator
         if (isset($propDef['default'])) {
             $property->setValue($propDef['default']);
         }
-        if (isset($propDef['required'])) {
-            $validateMethod->addBody("assert(isset(\$this->$name));");
+        $emptyOr = "!isset(\$this->$name) ||";
+        $className = $class->getName();
+
+        //purchase_units do have set minItems and are required but the schema does not explicitly set required to true
+        if (isset($propDef['minItems'])) {
+            $validateMethod->addBody("Assert::notNull(\$this->$name, \"$name in $className must not be NULL \$within\");");
+            if ($this->isObjectType($propType)) {
+                //$constructor->addBody("\$this->$name = new ${propType}();");
+            }
+            $emptyOr = "";
         }
+
+        if (isset($propDef['required']) && is_array($propDef['required'])) {
+            foreach ($propDef['required'] as $subProp) {
+                $validateMethod->addBody("$emptyOr Assert::notNull(\$this->$name->$subProp, \"$subProp in $name must not be NULL within $className \$within\");");
+            }
+            //validate sub properties
+        }
+
+
+        if (isset($propDef['minItems'])) {
+            $minItems = $propDef['minItems'];
+            $property->addComment("maxItems: " . $minItems);
+            $validateMethod->addBody("$emptyOr Assert::minCount(\$this->$name, $minItems, \"$name in $className must have min. count of $minItems \$within\");");
+        }
+
+        if (isset($propDef['maxItems'])) {
+            $maxItems = $propDef['maxItems'];
+            $property->addComment("maxItems: " . $maxItems);
+            $validateMethod->addBody("$emptyOr Assert::maxCount(\$this->$name, $maxItems, \"$name in $className must have max. count of $maxItems \$within\");");
+        }
+
         if (isset($propDef['minLength']) && $propDef['minLength'] > 0) {
             $minLength = $propDef['minLength'];
             $property->addComment("minLength: " . $minLength);
-            $validateMethod->addBody("assert(!isset(\$this->$name) || strlen(\$this->$name) >= $minLength);");
+            $validateMethod->addBody("$emptyOr Assert::minLength(\$this->$name, $minLength, \"$name in $className must have minlength of $minLength \$within\");");
         }
         if (isset($propDef['maxLength'])) {
             assert(!isset($this->value) || $this->value < 0);
             $maxLength = $propDef['maxLength'];
-            $validateMethod->addBody("assert(!isset(\$this->$name) || strlen(\$this->$name) <= $maxLength);");
+            $validateMethod->addBody("$emptyOr Assert::maxLength(\$this->$name, $maxLength, \"$name in $className must have maxlength of $maxLength \$within\");");
             $property->addComment("maxLength: " . $maxLength);
         }
 
+        if ($this->isObjectType($propType)){
+            $validateMethod->addBody("$emptyOr Assert::isInstanceOf(\$this->$name, $propType::class, \"$name in $className must be instance of $propType \$within\");");
+            $validateMethod->addBody("$emptyOr \$this->${name}->validate($className::class);");
+        }
+        if (strpos($propType, 'array') === 0) {
+            $validateMethod->addBody("$emptyOr Assert::isArray(\$this->$name, \"$name in $className must be array \$within\");");
+            if (preg_match("/array<(.*)>/", $propType, $matches)) {
+                $itemType = $matches[1];
+                if ($this->isObjectType($itemType)) {
+                    $validateMethod->addBody("
+                        if (isset(\$this->$name)){
+                            foreach (\$this->$name as \$item) {
+                                \$item->validate($className::class);
+                            }
+                        }
+                        ");
+                }
+            }
+        }
+
+    }
+
+    private function isObjectType($propType)
+    {
+        if (strpos($propType, '|') !== false) {
+            return false;
+        }
+        if (strpos($propType, 'array') === 0) {
+            return false;
+        }
+        return $propType != "string" && $propType != "integer" && $propType != "mixed" && $propType != "boolean";
     }
 }
 

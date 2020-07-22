@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * For a new third-party case, lists the eligible and ineligible dispute reasons. The customer can use the
@@ -31,9 +32,21 @@ class EligibilityRequest implements JsonSerializable
      */
     public $disputed_items;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->transaction_id) || strlen($this->transaction_id) >= 1);
-        assert(!isset($this->transaction_id) || strlen($this->transaction_id) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->transaction_id) || Assert::minLength($this->transaction_id, 1, "transaction_id in EligibilityRequest must have minlength of 1 $within");
+        !isset($this->transaction_id) || Assert::maxLength($this->transaction_id, 255, "transaction_id in EligibilityRequest must have maxlength of 255 $within");
+        !isset($this->disputed_items) || Assert::isArray($this->disputed_items, "disputed_items in EligibilityRequest must be array $within");
+
+                                if (isset($this->disputed_items)){
+                                    foreach ($this->disputed_items as $item) {
+                                        $item->validate(EligibilityRequest::class);
+                                    }
+                                }
+    }
+
+    public function __construct()
+    {
     }
 }

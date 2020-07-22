@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The business name of the party.
@@ -177,10 +178,15 @@ class BusinessName implements JsonSerializable
      */
     public $orthography;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->business_name) || strlen($this->business_name) <= 300);
-        assert(!isset($this->orthography) || strlen($this->orthography) >= 4);
-        assert(!isset($this->orthography) || strlen($this->orthography) <= 4);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->business_name) || Assert::maxLength($this->business_name, 300, "business_name in BusinessName must have maxlength of 300 $within");
+        !isset($this->orthography) || Assert::minLength($this->orthography, 4, "orthography in BusinessName must have minlength of 4 $within");
+        !isset($this->orthography) || Assert::maxLength($this->orthography, 4, "orthography in BusinessName must have maxlength of 4 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * A payment source that has additional authentication challenges.
@@ -20,7 +21,13 @@ class ExtendedPaymentSource extends PaymentSource implements JsonSerializable
      */
     public $contingencies;
 
-    public function validate()
+    public function validate($from = null)
+    {
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->contingencies) || Assert::isArray($this->contingencies, "contingencies in ExtendedPaymentSource must be array $within");
+    }
+
+    public function __construct()
     {
     }
 }

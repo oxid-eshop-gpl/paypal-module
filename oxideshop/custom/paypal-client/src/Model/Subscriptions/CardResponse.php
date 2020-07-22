@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The payment card to use to fund a payment. Card can be a credit or debit card.
@@ -155,12 +156,17 @@ class CardResponse implements JsonSerializable
      */
     public $bin;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->last_n_chars) || strlen($this->last_n_chars) >= 2);
-        assert(!isset($this->brand) || strlen($this->brand) >= 1);
-        assert(!isset($this->brand) || strlen($this->brand) <= 255);
-        assert(!isset($this->bin) || strlen($this->bin) >= 6);
-        assert(!isset($this->bin) || strlen($this->bin) <= 8);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->last_n_chars) || Assert::minLength($this->last_n_chars, 2, "last_n_chars in CardResponse must have minlength of 2 $within");
+        !isset($this->brand) || Assert::minLength($this->brand, 1, "brand in CardResponse must have minlength of 1 $within");
+        !isset($this->brand) || Assert::maxLength($this->brand, 255, "brand in CardResponse must have maxlength of 255 $within");
+        !isset($this->bin) || Assert::minLength($this->bin, 6, "bin in CardResponse must have minlength of 6 $within");
+        !isset($this->bin) || Assert::maxLength($this->bin, 8, "bin in CardResponse must have maxlength of 8 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

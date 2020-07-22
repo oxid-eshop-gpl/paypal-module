@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The API caller can opt in to verify the card through PayPal offered verification services (e.g. Smart Dollar
@@ -31,9 +32,14 @@ class CardVerification implements JsonSerializable
      */
     public $method;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->method) || strlen($this->method) >= 1);
-        assert(!isset($this->method) || strlen($this->method) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->method) || Assert::minLength($this->method, 1, "method in CardVerification must have minlength of 1 $within");
+        !isset($this->method) || Assert::maxLength($this->method, 255, "method in CardVerification must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The shared referral data.
@@ -20,7 +21,13 @@ class CreateReferralDataResponse implements JsonSerializable
      */
     public $links;
 
-    public function validate()
+    public function validate($from = null)
+    {
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->links) || Assert::isArray($this->links, "links in CreateReferralDataResponse must be array $within");
+    }
+
+    public function __construct()
     {
     }
 }

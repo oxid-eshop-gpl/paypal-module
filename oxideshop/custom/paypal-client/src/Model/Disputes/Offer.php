@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The merchant-proposed offer for a dispute.
@@ -58,11 +59,29 @@ class Offer implements JsonSerializable
      */
     public $history;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(isset($this->buyer_requested_amount));
-        assert(isset($this->seller_offered_amount));
-        assert(!isset($this->offer_type) || strlen($this->offer_type) >= 1);
-        assert(!isset($this->offer_type) || strlen($this->offer_type) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->buyer_requested_amount) || Assert::notNull($this->buyer_requested_amount->currency_code, "currency_code in buyer_requested_amount must not be NULL within Offer $within");
+        !isset($this->buyer_requested_amount) || Assert::notNull($this->buyer_requested_amount->value, "value in buyer_requested_amount must not be NULL within Offer $within");
+        !isset($this->buyer_requested_amount) || Assert::isInstanceOf($this->buyer_requested_amount, Money::class, "buyer_requested_amount in Offer must be instance of Money $within");
+        !isset($this->buyer_requested_amount) || $this->buyer_requested_amount->validate(Offer::class);
+        !isset($this->seller_offered_amount) || Assert::notNull($this->seller_offered_amount->currency_code, "currency_code in seller_offered_amount must not be NULL within Offer $within");
+        !isset($this->seller_offered_amount) || Assert::notNull($this->seller_offered_amount->value, "value in seller_offered_amount must not be NULL within Offer $within");
+        !isset($this->seller_offered_amount) || Assert::isInstanceOf($this->seller_offered_amount, Money::class, "seller_offered_amount in Offer must be instance of Money $within");
+        !isset($this->seller_offered_amount) || $this->seller_offered_amount->validate(Offer::class);
+        !isset($this->offer_type) || Assert::minLength($this->offer_type, 1, "offer_type in Offer must have minlength of 1 $within");
+        !isset($this->offer_type) || Assert::maxLength($this->offer_type, 255, "offer_type in Offer must have maxlength of 255 $within");
+        !isset($this->history) || Assert::isArray($this->history, "history in Offer must be array $within");
+
+                                if (isset($this->history)){
+                                    foreach ($this->history as $item) {
+                                        $item->validate(Offer::class);
+                                    }
+                                }
+    }
+
+    public function __construct()
+    {
     }
 }

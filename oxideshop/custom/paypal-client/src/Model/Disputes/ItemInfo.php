@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The information for a purchased item in a disputed transaction.
@@ -118,19 +119,27 @@ class ItemInfo implements JsonSerializable
      */
     public $notes;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->item_id) || strlen($this->item_id) >= 1);
-        assert(!isset($this->item_id) || strlen($this->item_id) <= 255);
-        assert(!isset($this->item_description) || strlen($this->item_description) >= 1);
-        assert(!isset($this->item_description) || strlen($this->item_description) <= 2000);
-        assert(!isset($this->item_quantity) || strlen($this->item_quantity) <= 10);
-        assert(!isset($this->partner_transaction_id) || strlen($this->partner_transaction_id) >= 1);
-        assert(!isset($this->partner_transaction_id) || strlen($this->partner_transaction_id) <= 255);
-        assert(!isset($this->reason) || strlen($this->reason) >= 1);
-        assert(!isset($this->reason) || strlen($this->reason) <= 255);
-        assert(isset($this->dispute_amount));
-        assert(!isset($this->notes) || strlen($this->notes) >= 1);
-        assert(!isset($this->notes) || strlen($this->notes) <= 2000);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->item_id) || Assert::minLength($this->item_id, 1, "item_id in ItemInfo must have minlength of 1 $within");
+        !isset($this->item_id) || Assert::maxLength($this->item_id, 255, "item_id in ItemInfo must have maxlength of 255 $within");
+        !isset($this->item_description) || Assert::minLength($this->item_description, 1, "item_description in ItemInfo must have minlength of 1 $within");
+        !isset($this->item_description) || Assert::maxLength($this->item_description, 2000, "item_description in ItemInfo must have maxlength of 2000 $within");
+        !isset($this->item_quantity) || Assert::maxLength($this->item_quantity, 10, "item_quantity in ItemInfo must have maxlength of 10 $within");
+        !isset($this->partner_transaction_id) || Assert::minLength($this->partner_transaction_id, 1, "partner_transaction_id in ItemInfo must have minlength of 1 $within");
+        !isset($this->partner_transaction_id) || Assert::maxLength($this->partner_transaction_id, 255, "partner_transaction_id in ItemInfo must have maxlength of 255 $within");
+        !isset($this->reason) || Assert::minLength($this->reason, 1, "reason in ItemInfo must have minlength of 1 $within");
+        !isset($this->reason) || Assert::maxLength($this->reason, 255, "reason in ItemInfo must have maxlength of 255 $within");
+        !isset($this->dispute_amount) || Assert::notNull($this->dispute_amount->currency_code, "currency_code in dispute_amount must not be NULL within ItemInfo $within");
+        !isset($this->dispute_amount) || Assert::notNull($this->dispute_amount->value, "value in dispute_amount must not be NULL within ItemInfo $within");
+        !isset($this->dispute_amount) || Assert::isInstanceOf($this->dispute_amount, Money::class, "dispute_amount in ItemInfo must be instance of Money $within");
+        !isset($this->dispute_amount) || $this->dispute_amount->validate(ItemInfo::class);
+        !isset($this->notes) || Assert::minLength($this->notes, 1, "notes in ItemInfo must have minlength of 1 $within");
+        !isset($this->notes) || Assert::maxLength($this->notes, 2000, "notes in ItemInfo must have maxlength of 2000 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

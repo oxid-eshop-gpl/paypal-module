@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The level of protection offered as defined by [PayPal Seller Protection for
@@ -42,7 +43,13 @@ class SellerProtection implements JsonSerializable
      */
     public $dispute_categories;
 
-    public function validate()
+    public function validate($from = null)
+    {
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->dispute_categories) || Assert::isArray($this->dispute_categories, "dispute_categories in SellerProtection must be array $within");
+    }
+
+    public function __construct()
     {
     }
 }

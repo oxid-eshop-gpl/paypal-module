@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Results of Authentication such as 3D Secure.
@@ -46,9 +47,16 @@ class AuthenticationResponse implements JsonSerializable
      */
     public $three_d_secure;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->liability_shift) || strlen($this->liability_shift) >= 1);
-        assert(!isset($this->liability_shift) || strlen($this->liability_shift) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->liability_shift) || Assert::minLength($this->liability_shift, 1, "liability_shift in AuthenticationResponse must have minlength of 1 $within");
+        !isset($this->liability_shift) || Assert::maxLength($this->liability_shift, 255, "liability_shift in AuthenticationResponse must have maxlength of 255 $within");
+        !isset($this->three_d_secure) || Assert::isInstanceOf($this->three_d_secure, ThreeDSecureAuthenticationResponse::class, "three_d_secure in AuthenticationResponse must be instance of ThreeDSecureAuthenticationResponse $within");
+        !isset($this->three_d_secure) || $this->three_d_secure->validate(AuthenticationResponse::class);
+    }
+
+    public function __construct()
+    {
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The preference to customize the web experience of the customer by overriding that is set at the Partner's
@@ -57,15 +58,20 @@ class PartnerConfigOverride implements JsonSerializable
      */
     public $show_add_credit_card;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->partner_logo_url) || strlen($this->partner_logo_url) >= 1);
-        assert(!isset($this->partner_logo_url) || strlen($this->partner_logo_url) <= 127);
-        assert(!isset($this->return_url) || strlen($this->return_url) >= 1);
-        assert(!isset($this->return_url) || strlen($this->return_url) <= 127);
-        assert(!isset($this->return_url_description) || strlen($this->return_url_description) >= 1);
-        assert(!isset($this->return_url_description) || strlen($this->return_url_description) <= 127);
-        assert(!isset($this->action_renewal_url) || strlen($this->action_renewal_url) >= 1);
-        assert(!isset($this->action_renewal_url) || strlen($this->action_renewal_url) <= 127);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->partner_logo_url) || Assert::minLength($this->partner_logo_url, 1, "partner_logo_url in PartnerConfigOverride must have minlength of 1 $within");
+        !isset($this->partner_logo_url) || Assert::maxLength($this->partner_logo_url, 127, "partner_logo_url in PartnerConfigOverride must have maxlength of 127 $within");
+        !isset($this->return_url) || Assert::minLength($this->return_url, 1, "return_url in PartnerConfigOverride must have minlength of 1 $within");
+        !isset($this->return_url) || Assert::maxLength($this->return_url, 127, "return_url in PartnerConfigOverride must have maxlength of 127 $within");
+        !isset($this->return_url_description) || Assert::minLength($this->return_url_description, 1, "return_url_description in PartnerConfigOverride must have minlength of 1 $within");
+        !isset($this->return_url_description) || Assert::maxLength($this->return_url_description, 127, "return_url_description in PartnerConfigOverride must have maxlength of 127 $within");
+        !isset($this->action_renewal_url) || Assert::minLength($this->action_renewal_url, 1, "action_renewal_url in PartnerConfigOverride must have minlength of 1 $within");
+        !isset($this->action_renewal_url) || Assert::maxLength($this->action_renewal_url, 127, "action_renewal_url in PartnerConfigOverride must have maxlength of 127 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

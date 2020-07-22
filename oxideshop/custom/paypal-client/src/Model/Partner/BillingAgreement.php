@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The details of the billing agreement between the partner and a seller.
@@ -56,15 +57,22 @@ class BillingAgreement implements JsonSerializable
      */
     public $ec_token;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->description) || strlen($this->description) >= 1);
-        assert(!isset($this->description) || strlen($this->description) <= 125);
-        assert(!isset($this->merchant_custom_data) || strlen($this->merchant_custom_data) >= 1);
-        assert(!isset($this->merchant_custom_data) || strlen($this->merchant_custom_data) <= 125);
-        assert(!isset($this->approval_url) || strlen($this->approval_url) >= 1);
-        assert(!isset($this->approval_url) || strlen($this->approval_url) <= 125);
-        assert(!isset($this->ec_token) || strlen($this->ec_token) >= 1);
-        assert(!isset($this->ec_token) || strlen($this->ec_token) <= 50);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->description) || Assert::minLength($this->description, 1, "description in BillingAgreement must have minlength of 1 $within");
+        !isset($this->description) || Assert::maxLength($this->description, 125, "description in BillingAgreement must have maxlength of 125 $within");
+        !isset($this->billing_experience_preference) || Assert::isInstanceOf($this->billing_experience_preference, BillingExperiencePreference::class, "billing_experience_preference in BillingAgreement must be instance of BillingExperiencePreference $within");
+        !isset($this->billing_experience_preference) || $this->billing_experience_preference->validate(BillingAgreement::class);
+        !isset($this->merchant_custom_data) || Assert::minLength($this->merchant_custom_data, 1, "merchant_custom_data in BillingAgreement must have minlength of 1 $within");
+        !isset($this->merchant_custom_data) || Assert::maxLength($this->merchant_custom_data, 125, "merchant_custom_data in BillingAgreement must have maxlength of 125 $within");
+        !isset($this->approval_url) || Assert::minLength($this->approval_url, 1, "approval_url in BillingAgreement must have minlength of 1 $within");
+        !isset($this->approval_url) || Assert::maxLength($this->approval_url, 125, "approval_url in BillingAgreement must have maxlength of 125 $within");
+        !isset($this->ec_token) || Assert::minLength($this->ec_token, 1, "ec_token in BillingAgreement must have minlength of 1 $within");
+        !isset($this->ec_token) || Assert::maxLength($this->ec_token, 50, "ec_token in BillingAgreement must have maxlength of 50 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

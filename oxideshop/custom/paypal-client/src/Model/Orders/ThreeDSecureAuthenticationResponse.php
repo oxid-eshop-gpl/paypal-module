@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Results of 3D Secure Authentication.
@@ -82,11 +83,16 @@ class ThreeDSecureAuthenticationResponse implements JsonSerializable
      */
     public $enrollment_status;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->authentication_status) || strlen($this->authentication_status) >= 1);
-        assert(!isset($this->authentication_status) || strlen($this->authentication_status) <= 255);
-        assert(!isset($this->enrollment_status) || strlen($this->enrollment_status) >= 1);
-        assert(!isset($this->enrollment_status) || strlen($this->enrollment_status) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->authentication_status) || Assert::minLength($this->authentication_status, 1, "authentication_status in ThreeDSecureAuthenticationResponse must have minlength of 1 $within");
+        !isset($this->authentication_status) || Assert::maxLength($this->authentication_status, 255, "authentication_status in ThreeDSecureAuthenticationResponse must have maxlength of 255 $within");
+        !isset($this->enrollment_status) || Assert::minLength($this->enrollment_status, 1, "enrollment_status in ThreeDSecureAuthenticationResponse must have minlength of 1 $within");
+        !isset($this->enrollment_status) || Assert::maxLength($this->enrollment_status, 255, "enrollment_status in ThreeDSecureAuthenticationResponse must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Facilitator involved in the Payment. Usually the API caller. Example: AliExpress, facebook, eBay.
@@ -57,16 +58,28 @@ class Facilitator extends Participant implements JsonSerializable
     /**
      * @var array<string>
      * List of (business)segments the actor operates in.
+     *
+     * maxItems: 1
+     * maxItems: 50
      */
     public $segments;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->type) || strlen($this->type) >= 1);
-        assert(!isset($this->type) || strlen($this->type) <= 255);
-        assert(!isset($this->client_id) || strlen($this->client_id) >= 1);
-        assert(!isset($this->client_id) || strlen($this->client_id) <= 128);
-        assert(!isset($this->integration_identifier) || strlen($this->integration_identifier) >= 1);
-        assert(!isset($this->integration_identifier) || strlen($this->integration_identifier) <= 127);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->type) || Assert::minLength($this->type, 1, "type in Facilitator must have minlength of 1 $within");
+        !isset($this->type) || Assert::maxLength($this->type, 255, "type in Facilitator must have maxlength of 255 $within");
+        !isset($this->client_id) || Assert::minLength($this->client_id, 1, "client_id in Facilitator must have minlength of 1 $within");
+        !isset($this->client_id) || Assert::maxLength($this->client_id, 128, "client_id in Facilitator must have maxlength of 128 $within");
+        !isset($this->integration_identifier) || Assert::minLength($this->integration_identifier, 1, "integration_identifier in Facilitator must have minlength of 1 $within");
+        !isset($this->integration_identifier) || Assert::maxLength($this->integration_identifier, 127, "integration_identifier in Facilitator must have maxlength of 127 $within");
+        Assert::notNull($this->segments, "segments in Facilitator must not be NULL $within");
+         Assert::minCount($this->segments, 1, "segments in Facilitator must have min. count of 1 $within");
+         Assert::maxCount($this->segments, 50, "segments in Facilitator must have max. count of 50 $within");
+         Assert::isArray($this->segments, "segments in Facilitator must be array $within");
+    }
+
+    public function __construct()
+    {
     }
 }

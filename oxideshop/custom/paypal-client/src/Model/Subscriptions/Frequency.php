@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The frequency of the billing cycle.
@@ -56,9 +57,14 @@ class Frequency implements JsonSerializable
      */
     public $interval_count = 1;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->interval_unit) || strlen($this->interval_unit) >= 1);
-        assert(!isset($this->interval_unit) || strlen($this->interval_unit) <= 24);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->interval_unit) || Assert::minLength($this->interval_unit, 1, "interval_unit in Frequency must have minlength of 1 $within");
+        !isset($this->interval_unit) || Assert::maxLength($this->interval_unit, 24, "interval_unit in Frequency must have maxlength of 24 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

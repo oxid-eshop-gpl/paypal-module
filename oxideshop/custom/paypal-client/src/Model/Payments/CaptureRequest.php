@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Captures either a portion or the full authorized amount of an authorized payment.
@@ -42,8 +43,20 @@ class CaptureRequest extends SupplementaryPurchaseData implements JsonSerializab
      */
     public $supplementary_data;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(isset($this->amount));
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->amount) || Assert::notNull($this->amount->currency_code, "currency_code in amount must not be NULL within CaptureRequest $within");
+        !isset($this->amount) || Assert::notNull($this->amount->value, "value in amount must not be NULL within CaptureRequest $within");
+        !isset($this->amount) || Assert::isInstanceOf($this->amount, Money::class, "amount in CaptureRequest must be instance of Money $within");
+        !isset($this->amount) || $this->amount->validate(CaptureRequest::class);
+        !isset($this->payment_instruction) || Assert::isInstanceOf($this->payment_instruction, PaymentInstruction::class, "payment_instruction in CaptureRequest must be instance of PaymentInstruction $within");
+        !isset($this->payment_instruction) || $this->payment_instruction->validate(CaptureRequest::class);
+        !isset($this->supplementary_data) || Assert::isInstanceOf($this->supplementary_data, SupplementaryData::class, "supplementary_data in CaptureRequest must be instance of SupplementaryData $within");
+        !isset($this->supplementary_data) || $this->supplementary_data->validate(CaptureRequest::class);
+    }
+
+    public function __construct()
+    {
     }
 }

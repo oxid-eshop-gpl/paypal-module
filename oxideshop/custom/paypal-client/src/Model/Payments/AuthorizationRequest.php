@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Authorizes either a portion or the full amount of a saved order.
@@ -80,10 +81,31 @@ class AuthorizationRequest implements JsonSerializable
      */
     public $shipping;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->description) || strlen($this->description) <= 127);
-        assert(!isset($this->custom_id) || strlen($this->custom_id) <= 127);
-        assert(!isset($this->invoice_id) || strlen($this->invoice_id) <= 127);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->payment_source) || Assert::isInstanceOf($this->payment_source, PaymentSource::class, "payment_source in AuthorizationRequest must be instance of PaymentSource $within");
+        !isset($this->payment_source) || $this->payment_source->validate(AuthorizationRequest::class);
+        !isset($this->amount) || Assert::isInstanceOf($this->amount, AmountWithBreakdown::class, "amount in AuthorizationRequest must be instance of AmountWithBreakdown $within");
+        !isset($this->amount) || $this->amount->validate(AuthorizationRequest::class);
+        !isset($this->payee) || Assert::isInstanceOf($this->payee, Payee::class, "payee in AuthorizationRequest must be instance of Payee $within");
+        !isset($this->payee) || $this->payee->validate(AuthorizationRequest::class);
+        !isset($this->description) || Assert::maxLength($this->description, 127, "description in AuthorizationRequest must have maxlength of 127 $within");
+        !isset($this->custom_id) || Assert::maxLength($this->custom_id, 127, "custom_id in AuthorizationRequest must have maxlength of 127 $within");
+        !isset($this->invoice_id) || Assert::maxLength($this->invoice_id, 127, "invoice_id in AuthorizationRequest must have maxlength of 127 $within");
+        !isset($this->items) || Assert::isArray($this->items, "items in AuthorizationRequest must be array $within");
+
+                                if (isset($this->items)){
+                                    foreach ($this->items as $item) {
+                                        $item->validate(AuthorizationRequest::class);
+                                    }
+                                }
+
+        !isset($this->shipping) || Assert::isInstanceOf($this->shipping, ShippingDetail::class, "shipping in AuthorizationRequest must be instance of ShippingDetail $within");
+        !isset($this->shipping) || $this->shipping->validate(AuthorizationRequest::class);
+    }
+
+    public function __construct()
+    {
     }
 }

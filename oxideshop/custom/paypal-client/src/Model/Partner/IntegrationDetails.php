@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The integration details for the partner and customer relationship. Required if `operation` is
@@ -27,7 +28,16 @@ class IntegrationDetails implements JsonSerializable
      */
     public $rest_api_integration;
 
-    public function validate()
+    public function validate($from = null)
+    {
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->classic_api_integration) || Assert::isInstanceOf($this->classic_api_integration, ClassicApiIntegration::class, "classic_api_integration in IntegrationDetails must be instance of ClassicApiIntegration $within");
+        !isset($this->classic_api_integration) || $this->classic_api_integration->validate(IntegrationDetails::class);
+        !isset($this->rest_api_integration) || Assert::isInstanceOf($this->rest_api_integration, RestApiIntegration::class, "rest_api_integration in IntegrationDetails must be instance of RestApiIntegration $within");
+        !isset($this->rest_api_integration) || $this->rest_api_integration->validate(IntegrationDetails::class);
+    }
+
+    public function __construct()
     {
     }
 }

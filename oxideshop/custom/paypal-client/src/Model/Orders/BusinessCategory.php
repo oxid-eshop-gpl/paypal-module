@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Business category information. Refer:
@@ -42,13 +43,18 @@ class BusinessCategory implements JsonSerializable
      */
     public $mcc_code;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->category) || strlen($this->category) >= 1);
-        assert(!isset($this->category) || strlen($this->category) <= 50);
-        assert(!isset($this->sub_category) || strlen($this->sub_category) >= 1);
-        assert(!isset($this->sub_category) || strlen($this->sub_category) <= 50);
-        assert(!isset($this->mcc_code) || strlen($this->mcc_code) >= 1);
-        assert(!isset($this->mcc_code) || strlen($this->mcc_code) <= 4);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->category) || Assert::minLength($this->category, 1, "category in BusinessCategory must have minlength of 1 $within");
+        !isset($this->category) || Assert::maxLength($this->category, 50, "category in BusinessCategory must have maxlength of 50 $within");
+        !isset($this->sub_category) || Assert::minLength($this->sub_category, 1, "sub_category in BusinessCategory must have minlength of 1 $within");
+        !isset($this->sub_category) || Assert::maxLength($this->sub_category, 50, "sub_category in BusinessCategory must have maxlength of 50 $within");
+        !isset($this->mcc_code) || Assert::minLength($this->mcc_code, 1, "mcc_code in BusinessCategory must have minlength of 1 $within");
+        !isset($this->mcc_code) || Assert::maxLength($this->mcc_code, 4, "mcc_code in BusinessCategory must have maxlength of 4 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

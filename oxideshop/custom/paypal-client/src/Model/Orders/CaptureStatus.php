@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The status of a captured payment.
@@ -52,7 +53,14 @@ class CaptureStatus implements JsonSerializable
      */
     public $status_details;
 
-    public function validate()
+    public function validate($from = null)
+    {
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->status_details) || Assert::isInstanceOf($this->status_details, CaptureStatusDetails::class, "status_details in CaptureStatus must be instance of CaptureStatusDetails $within");
+        !isset($this->status_details) || $this->status_details->validate(CaptureStatus::class);
+    }
+
+    public function __construct()
     {
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The purchase unit details. Used to capture required information for the payment contract.
@@ -30,9 +31,16 @@ class UpdatePurchaseUnitRequest implements JsonSerializable
      */
     public $payments;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->reference_id) || strlen($this->reference_id) >= 1);
-        assert(!isset($this->reference_id) || strlen($this->reference_id) <= 256);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->reference_id) || Assert::minLength($this->reference_id, 1, "reference_id in UpdatePurchaseUnitRequest must have minlength of 1 $within");
+        !isset($this->reference_id) || Assert::maxLength($this->reference_id, 256, "reference_id in UpdatePurchaseUnitRequest must have maxlength of 256 $within");
+        !isset($this->payments) || Assert::isInstanceOf($this->payments, UpdatePaymentCollectionRequest::class, "payments in UpdatePurchaseUnitRequest must be instance of UpdatePaymentCollectionRequest $within");
+        !isset($this->payments) || $this->payments->validate(UpdatePurchaseUnitRequest::class);
+    }
+
+    public function __construct()
+    {
     }
 }

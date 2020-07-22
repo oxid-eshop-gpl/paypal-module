@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * ODFI acts as the interface between the Federal Reserve or ACH network and the originator of the transaction.
@@ -65,9 +66,14 @@ class OdfiDetails implements JsonSerializable
      */
     public $standard_entry_class_code;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->standard_entry_class_code) || strlen($this->standard_entry_class_code) >= 1);
-        assert(!isset($this->standard_entry_class_code) || strlen($this->standard_entry_class_code) <= 3);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->standard_entry_class_code) || Assert::minLength($this->standard_entry_class_code, 1, "standard_entry_class_code in OdfiDetails must have minlength of 1 $within");
+        !isset($this->standard_entry_class_code) || Assert::maxLength($this->standard_entry_class_code, 3, "standard_entry_class_code in OdfiDetails must have maxlength of 3 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

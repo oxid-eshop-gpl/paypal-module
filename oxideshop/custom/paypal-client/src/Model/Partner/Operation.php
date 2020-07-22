@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The required operation to share data.
@@ -54,9 +55,18 @@ class Operation implements JsonSerializable
      */
     public $billing_agreement;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->operation) || strlen($this->operation) >= 1);
-        assert(!isset($this->operation) || strlen($this->operation) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->operation) || Assert::minLength($this->operation, 1, "operation in Operation must have minlength of 1 $within");
+        !isset($this->operation) || Assert::maxLength($this->operation, 255, "operation in Operation must have maxlength of 255 $within");
+        !isset($this->api_integration_preference) || Assert::isInstanceOf($this->api_integration_preference, IntegrationDetails::class, "api_integration_preference in Operation must be instance of IntegrationDetails $within");
+        !isset($this->api_integration_preference) || $this->api_integration_preference->validate(Operation::class);
+        !isset($this->billing_agreement) || Assert::isInstanceOf($this->billing_agreement, BillingAgreement::class, "billing_agreement in Operation must be instance of BillingAgreement $within");
+        !isset($this->billing_agreement) || $this->billing_agreement->validate(Operation::class);
+    }
+
+    public function __construct()
+    {
     }
 }

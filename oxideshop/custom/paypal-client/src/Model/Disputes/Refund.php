@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The refund details.
@@ -49,14 +50,22 @@ class Refund implements JsonSerializable
      */
     public $invoice_number;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(isset($this->gross_amount));
-        assert(!isset($this->transaction_time) || strlen($this->transaction_time) >= 20);
-        assert(!isset($this->transaction_time) || strlen($this->transaction_time) <= 64);
-        assert(!isset($this->transaction_id) || strlen($this->transaction_id) >= 1);
-        assert(!isset($this->transaction_id) || strlen($this->transaction_id) <= 255);
-        assert(!isset($this->invoice_number) || strlen($this->invoice_number) >= 1);
-        assert(!isset($this->invoice_number) || strlen($this->invoice_number) <= 127);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->gross_amount) || Assert::notNull($this->gross_amount->currency_code, "currency_code in gross_amount must not be NULL within Refund $within");
+        !isset($this->gross_amount) || Assert::notNull($this->gross_amount->value, "value in gross_amount must not be NULL within Refund $within");
+        !isset($this->gross_amount) || Assert::isInstanceOf($this->gross_amount, Money::class, "gross_amount in Refund must be instance of Money $within");
+        !isset($this->gross_amount) || $this->gross_amount->validate(Refund::class);
+        !isset($this->transaction_time) || Assert::minLength($this->transaction_time, 20, "transaction_time in Refund must have minlength of 20 $within");
+        !isset($this->transaction_time) || Assert::maxLength($this->transaction_time, 64, "transaction_time in Refund must have maxlength of 64 $within");
+        !isset($this->transaction_id) || Assert::minLength($this->transaction_id, 1, "transaction_id in Refund must have minlength of 1 $within");
+        !isset($this->transaction_id) || Assert::maxLength($this->transaction_id, 255, "transaction_id in Refund must have maxlength of 255 $within");
+        !isset($this->invoice_number) || Assert::minLength($this->invoice_number, 1, "invoice_number in Refund must have minlength of 1 $within");
+        !isset($this->invoice_number) || Assert::maxLength($this->invoice_number, 127, "invoice_number in Refund must have maxlength of 127 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

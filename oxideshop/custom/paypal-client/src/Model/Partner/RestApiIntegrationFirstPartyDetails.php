@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The integration details for PayPal first party REST endpoints.
@@ -30,9 +31,15 @@ class RestApiIntegrationFirstPartyDetails implements JsonSerializable
      */
     public $seller_nonce;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->seller_nonce) || strlen($this->seller_nonce) >= 44);
-        assert(!isset($this->seller_nonce) || strlen($this->seller_nonce) <= 128);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->features) || Assert::isArray($this->features, "features in RestApiIntegrationFirstPartyDetails must be array $within");
+        !isset($this->seller_nonce) || Assert::minLength($this->seller_nonce, 44, "seller_nonce in RestApiIntegrationFirstPartyDetails must have minlength of 44 $within");
+        !isset($this->seller_nonce) || Assert::maxLength($this->seller_nonce, 128, "seller_nonce in RestApiIntegrationFirstPartyDetails must have maxlength of 128 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

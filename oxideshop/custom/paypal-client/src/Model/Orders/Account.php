@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Encapsulates the properties of user account.
@@ -83,6 +84,9 @@ class Account implements JsonSerializable
      * @var array<string>
      * Array of tags stored for the account in User domain by other clients Eg: YOUTH_ACCOUNT, RESTRICTED, WAX_USER,
      * MASSPAY_ENABLED etc.
+     *
+     * maxItems: 1
+     * maxItems: 100
      */
     public $account_tags;
 
@@ -125,25 +129,34 @@ class Account implements JsonSerializable
      */
     public $time_created;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->account_number) || strlen($this->account_number) >= 1);
-        assert(!isset($this->account_number) || strlen($this->account_number) <= 20);
-        assert(!isset($this->account_id) || strlen($this->account_id) >= 13);
-        assert(!isset($this->account_id) || strlen($this->account_id) <= 13);
-        assert(!isset($this->tier) || strlen($this->tier) >= 1);
-        assert(!isset($this->tier) || strlen($this->tier) <= 100);
-        assert(!isset($this->registration_type) || strlen($this->registration_type) >= 1);
-        assert(!isset($this->registration_type) || strlen($this->registration_type) <= 255);
-        assert(!isset($this->legal_country_code) || strlen($this->legal_country_code) >= 2);
-        assert(!isset($this->legal_country_code) || strlen($this->legal_country_code) <= 2);
-        assert(!isset($this->status) || strlen($this->status) >= 1);
-        assert(!isset($this->status) || strlen($this->status) <= 30);
-        assert(!isset($this->pricing_category) || strlen($this->pricing_category) >= 1);
-        assert(!isset($this->pricing_category) || strlen($this->pricing_category) <= 30);
-        assert(!isset($this->legal_entity) || strlen($this->legal_entity) >= 1);
-        assert(!isset($this->legal_entity) || strlen($this->legal_entity) <= 30);
-        assert(!isset($this->time_created) || strlen($this->time_created) >= 20);
-        assert(!isset($this->time_created) || strlen($this->time_created) <= 64);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->account_number) || Assert::minLength($this->account_number, 1, "account_number in Account must have minlength of 1 $within");
+        !isset($this->account_number) || Assert::maxLength($this->account_number, 20, "account_number in Account must have maxlength of 20 $within");
+        !isset($this->account_id) || Assert::minLength($this->account_id, 13, "account_id in Account must have minlength of 13 $within");
+        !isset($this->account_id) || Assert::maxLength($this->account_id, 13, "account_id in Account must have maxlength of 13 $within");
+        !isset($this->tier) || Assert::minLength($this->tier, 1, "tier in Account must have minlength of 1 $within");
+        !isset($this->tier) || Assert::maxLength($this->tier, 100, "tier in Account must have maxlength of 100 $within");
+        !isset($this->registration_type) || Assert::minLength($this->registration_type, 1, "registration_type in Account must have minlength of 1 $within");
+        !isset($this->registration_type) || Assert::maxLength($this->registration_type, 255, "registration_type in Account must have maxlength of 255 $within");
+        !isset($this->legal_country_code) || Assert::minLength($this->legal_country_code, 2, "legal_country_code in Account must have minlength of 2 $within");
+        !isset($this->legal_country_code) || Assert::maxLength($this->legal_country_code, 2, "legal_country_code in Account must have maxlength of 2 $within");
+        Assert::notNull($this->account_tags, "account_tags in Account must not be NULL $within");
+         Assert::minCount($this->account_tags, 1, "account_tags in Account must have min. count of 1 $within");
+         Assert::maxCount($this->account_tags, 100, "account_tags in Account must have max. count of 100 $within");
+         Assert::isArray($this->account_tags, "account_tags in Account must be array $within");
+        !isset($this->status) || Assert::minLength($this->status, 1, "status in Account must have minlength of 1 $within");
+        !isset($this->status) || Assert::maxLength($this->status, 30, "status in Account must have maxlength of 30 $within");
+        !isset($this->pricing_category) || Assert::minLength($this->pricing_category, 1, "pricing_category in Account must have minlength of 1 $within");
+        !isset($this->pricing_category) || Assert::maxLength($this->pricing_category, 30, "pricing_category in Account must have maxlength of 30 $within");
+        !isset($this->legal_entity) || Assert::minLength($this->legal_entity, 1, "legal_entity in Account must have minlength of 1 $within");
+        !isset($this->legal_entity) || Assert::maxLength($this->legal_entity, 30, "legal_entity in Account must have maxlength of 30 $within");
+        !isset($this->time_created) || Assert::minLength($this->time_created, 20, "time_created in Account must have minlength of 20 $within");
+        !isset($this->time_created) || Assert::maxLength($this->time_created, 64, "time_created in Account must have maxlength of 64 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

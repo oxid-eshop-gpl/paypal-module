@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The platform or partner fee, commission, or brokerage fee that is associated with the transaction. Not a
@@ -29,8 +30,18 @@ class PlatformFee implements JsonSerializable
      */
     public $payee;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(isset($this->amount));
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->amount) || Assert::notNull($this->amount->currency_code, "currency_code in amount must not be NULL within PlatformFee $within");
+        !isset($this->amount) || Assert::notNull($this->amount->value, "value in amount must not be NULL within PlatformFee $within");
+        !isset($this->amount) || Assert::isInstanceOf($this->amount, Money::class, "amount in PlatformFee must be instance of Money $within");
+        !isset($this->amount) || $this->amount->validate(PlatformFee::class);
+        !isset($this->payee) || Assert::isInstanceOf($this->payee, PayeeBase::class, "payee in PlatformFee must be instance of PayeeBase $within");
+        !isset($this->payee) || $this->payee->validate(PlatformFee::class);
+    }
+
+    public function __construct()
+    {
     }
 }

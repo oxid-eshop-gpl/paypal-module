@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The referred dispute details.
@@ -117,13 +118,39 @@ class DisputeCreateRequest implements JsonSerializable
      */
     public $messages;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->dispute_flow) || strlen($this->dispute_flow) >= 1);
-        assert(!isset($this->dispute_flow) || strlen($this->dispute_flow) <= 255);
-        assert(!isset($this->reason) || strlen($this->reason) >= 1);
-        assert(!isset($this->reason) || strlen($this->reason) <= 255);
-        assert(!isset($this->sub_reason) || strlen($this->sub_reason) >= 1);
-        assert(!isset($this->sub_reason) || strlen($this->sub_reason) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->dispute_flow) || Assert::minLength($this->dispute_flow, 1, "dispute_flow in DisputeCreateRequest must have minlength of 1 $within");
+        !isset($this->dispute_flow) || Assert::maxLength($this->dispute_flow, 255, "dispute_flow in DisputeCreateRequest must have maxlength of 255 $within");
+        !isset($this->extensions) || Assert::isInstanceOf($this->extensions, Extensions::class, "extensions in DisputeCreateRequest must be instance of Extensions $within");
+        !isset($this->extensions) || $this->extensions->validate(DisputeCreateRequest::class);
+        !isset($this->transaction) || Assert::isInstanceOf($this->transaction, Transaction::class, "transaction in DisputeCreateRequest must be instance of Transaction $within");
+        !isset($this->transaction) || $this->transaction->validate(DisputeCreateRequest::class);
+        !isset($this->reference_dispute) || Assert::isInstanceOf($this->reference_dispute, ReferenceDispute::class, "reference_dispute in DisputeCreateRequest must be instance of ReferenceDispute $within");
+        !isset($this->reference_dispute) || $this->reference_dispute->validate(DisputeCreateRequest::class);
+        !isset($this->evidences) || Assert::isArray($this->evidences, "evidences in DisputeCreateRequest must be array $within");
+
+                                if (isset($this->evidences)){
+                                    foreach ($this->evidences as $item) {
+                                        $item->validate(DisputeCreateRequest::class);
+                                    }
+                                }
+
+        !isset($this->reason) || Assert::minLength($this->reason, 1, "reason in DisputeCreateRequest must have minlength of 1 $within");
+        !isset($this->reason) || Assert::maxLength($this->reason, 255, "reason in DisputeCreateRequest must have maxlength of 255 $within");
+        !isset($this->sub_reason) || Assert::minLength($this->sub_reason, 1, "sub_reason in DisputeCreateRequest must have minlength of 1 $within");
+        !isset($this->sub_reason) || Assert::maxLength($this->sub_reason, 255, "sub_reason in DisputeCreateRequest must have maxlength of 255 $within");
+        !isset($this->messages) || Assert::isArray($this->messages, "messages in DisputeCreateRequest must be array $within");
+
+                                if (isset($this->messages)){
+                                    foreach ($this->messages as $item) {
+                                        $item->validate(DisputeCreateRequest::class);
+                                    }
+                                }
+    }
+
+    public function __construct()
+    {
     }
 }

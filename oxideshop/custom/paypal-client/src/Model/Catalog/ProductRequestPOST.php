@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Catalog;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The create product request details.
@@ -1876,21 +1877,26 @@ class ProductRequestPOST implements JsonSerializable
      */
     public $home_url;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->id) || strlen($this->id) >= 6);
-        assert(!isset($this->id) || strlen($this->id) <= 50);
-        assert(!isset($this->name) || strlen($this->name) >= 1);
-        assert(!isset($this->name) || strlen($this->name) <= 127);
-        assert(!isset($this->description) || strlen($this->description) >= 1);
-        assert(!isset($this->description) || strlen($this->description) <= 256);
-        assert(!isset($this->type) || strlen($this->type) >= 1);
-        assert(!isset($this->type) || strlen($this->type) <= 24);
-        assert(!isset($this->category) || strlen($this->category) >= 4);
-        assert(!isset($this->category) || strlen($this->category) <= 256);
-        assert(!isset($this->image_url) || strlen($this->image_url) >= 1);
-        assert(!isset($this->image_url) || strlen($this->image_url) <= 2000);
-        assert(!isset($this->home_url) || strlen($this->home_url) >= 1);
-        assert(!isset($this->home_url) || strlen($this->home_url) <= 2000);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->id) || Assert::minLength($this->id, 6, "id in ProductRequestPOST must have minlength of 6 $within");
+        !isset($this->id) || Assert::maxLength($this->id, 50, "id in ProductRequestPOST must have maxlength of 50 $within");
+        !isset($this->name) || Assert::minLength($this->name, 1, "name in ProductRequestPOST must have minlength of 1 $within");
+        !isset($this->name) || Assert::maxLength($this->name, 127, "name in ProductRequestPOST must have maxlength of 127 $within");
+        !isset($this->description) || Assert::minLength($this->description, 1, "description in ProductRequestPOST must have minlength of 1 $within");
+        !isset($this->description) || Assert::maxLength($this->description, 256, "description in ProductRequestPOST must have maxlength of 256 $within");
+        !isset($this->type) || Assert::minLength($this->type, 1, "type in ProductRequestPOST must have minlength of 1 $within");
+        !isset($this->type) || Assert::maxLength($this->type, 24, "type in ProductRequestPOST must have maxlength of 24 $within");
+        !isset($this->category) || Assert::minLength($this->category, 4, "category in ProductRequestPOST must have minlength of 4 $within");
+        !isset($this->category) || Assert::maxLength($this->category, 256, "category in ProductRequestPOST must have maxlength of 256 $within");
+        !isset($this->image_url) || Assert::minLength($this->image_url, 1, "image_url in ProductRequestPOST must have minlength of 1 $within");
+        !isset($this->image_url) || Assert::maxLength($this->image_url, 2000, "image_url in ProductRequestPOST must have maxlength of 2000 $within");
+        !isset($this->home_url) || Assert::minLength($this->home_url, 1, "home_url in ProductRequestPOST must have minlength of 1 $within");
+        !isset($this->home_url) || Assert::maxLength($this->home_url, 2000, "home_url in ProductRequestPOST must have maxlength of 2000 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

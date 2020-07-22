@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The integration details for PayPal CLASSIC endpoints.
@@ -63,11 +64,18 @@ class ClassicApiIntegration implements JsonSerializable
      */
     public $first_party_details;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->integration_type) || strlen($this->integration_type) >= 1);
-        assert(!isset($this->integration_type) || strlen($this->integration_type) <= 128);
-        assert(!isset($this->first_party_details) || strlen($this->first_party_details) >= 1);
-        assert(!isset($this->first_party_details) || strlen($this->first_party_details) <= 128);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->integration_type) || Assert::minLength($this->integration_type, 1, "integration_type in ClassicApiIntegration must have minlength of 1 $within");
+        !isset($this->integration_type) || Assert::maxLength($this->integration_type, 128, "integration_type in ClassicApiIntegration must have maxlength of 128 $within");
+        !isset($this->third_party_details) || Assert::isInstanceOf($this->third_party_details, ClassicApiIntegrationThirdPartyDetails::class, "third_party_details in ClassicApiIntegration must be instance of ClassicApiIntegrationThirdPartyDetails $within");
+        !isset($this->third_party_details) || $this->third_party_details->validate(ClassicApiIntegration::class);
+        !isset($this->first_party_details) || Assert::minLength($this->first_party_details, 1, "first_party_details in ClassicApiIntegration must have minlength of 1 $within");
+        !isset($this->first_party_details) || Assert::maxLength($this->first_party_details, 128, "first_party_details in ClassicApiIntegration must have maxlength of 128 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

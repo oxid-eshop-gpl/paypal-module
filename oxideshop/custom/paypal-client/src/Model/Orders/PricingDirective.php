@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Pricing directive for transaction indication the source and type of pricing.
@@ -63,13 +64,18 @@ class PricingDirective implements JsonSerializable
      */
     public $type;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->participant_type) || strlen($this->participant_type) >= 1);
-        assert(!isset($this->participant_type) || strlen($this->participant_type) <= 255);
-        assert(!isset($this->account_number) || strlen($this->account_number) >= 1);
-        assert(!isset($this->account_number) || strlen($this->account_number) <= 30);
-        assert(!isset($this->type) || strlen($this->type) >= 1);
-        assert(!isset($this->type) || strlen($this->type) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->participant_type) || Assert::minLength($this->participant_type, 1, "participant_type in PricingDirective must have minlength of 1 $within");
+        !isset($this->participant_type) || Assert::maxLength($this->participant_type, 255, "participant_type in PricingDirective must have maxlength of 255 $within");
+        !isset($this->account_number) || Assert::minLength($this->account_number, 1, "account_number in PricingDirective must have minlength of 1 $within");
+        !isset($this->account_number) || Assert::maxLength($this->account_number, 30, "account_number in PricingDirective must have maxlength of 30 $within");
+        !isset($this->type) || Assert::minLength($this->type, 1, "type in PricingDirective must have minlength of 1 $within");
+        !isset($this->type) || Assert::maxLength($this->type, 255, "type in PricingDirective must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Indicates the form of authentication used on the financial instrument.
@@ -26,7 +27,12 @@ class AuthenticationResultType implements JsonSerializable
      */
     public $type;
 
-    public function validate()
+    public function validate($from = null)
+    {
+        $within = isset($from) ? "within $from" : "";
+    }
+
+    public function __construct()
     {
     }
 }

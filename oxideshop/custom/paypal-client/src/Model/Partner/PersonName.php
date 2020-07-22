@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The name of the person.
@@ -28,9 +29,14 @@ class PersonName extends Name implements JsonSerializable
      */
     public $type;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->type) || strlen($this->type) >= 1);
-        assert(!isset($this->type) || strlen($this->type) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->type) || Assert::minLength($this->type, 1, "type in PersonName must have minlength of 1 $within");
+        !isset($this->type) || Assert::maxLength($this->type, 255, "type in PersonName must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

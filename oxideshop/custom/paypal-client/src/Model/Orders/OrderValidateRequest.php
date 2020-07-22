@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Completes an action for an order.
@@ -29,7 +30,16 @@ class OrderValidateRequest implements JsonSerializable
      */
     public $application_context;
 
-    public function validate()
+    public function validate($from = null)
+    {
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->payment_source) || Assert::isInstanceOf($this->payment_source, ExtendedPaymentSource::class, "payment_source in OrderValidateRequest must be instance of ExtendedPaymentSource $within");
+        !isset($this->payment_source) || $this->payment_source->validate(OrderValidateRequest::class);
+        !isset($this->application_context) || Assert::isInstanceOf($this->application_context, OrderValidateApplicationContext::class, "application_context in OrderValidateRequest must be instance of OrderValidateApplicationContext $within");
+        !isset($this->application_context) || $this->application_context->validate(OrderValidateRequest::class);
+    }
+
+    public function __construct()
     {
     }
 }

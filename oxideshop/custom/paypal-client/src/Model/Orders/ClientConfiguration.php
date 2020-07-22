@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Client configuration that captures the product flows and specific experiences that a user completes a paypal
@@ -193,15 +194,22 @@ class ClientConfiguration implements JsonSerializable
      */
     public $experience;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->product_code) || strlen($this->product_code) >= 1);
-        assert(!isset($this->product_code) || strlen($this->product_code) <= 255);
-        assert(!isset($this->product_feature) || strlen($this->product_feature) >= 1);
-        assert(!isset($this->product_feature) || strlen($this->product_feature) <= 255);
-        assert(!isset($this->api) || strlen($this->api) >= 1);
-        assert(!isset($this->api) || strlen($this->api) <= 255);
-        assert(!isset($this->integration_artifact) || strlen($this->integration_artifact) >= 1);
-        assert(!isset($this->integration_artifact) || strlen($this->integration_artifact) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->product_code) || Assert::minLength($this->product_code, 1, "product_code in ClientConfiguration must have minlength of 1 $within");
+        !isset($this->product_code) || Assert::maxLength($this->product_code, 255, "product_code in ClientConfiguration must have maxlength of 255 $within");
+        !isset($this->product_feature) || Assert::minLength($this->product_feature, 1, "product_feature in ClientConfiguration must have minlength of 1 $within");
+        !isset($this->product_feature) || Assert::maxLength($this->product_feature, 255, "product_feature in ClientConfiguration must have maxlength of 255 $within");
+        !isset($this->api) || Assert::minLength($this->api, 1, "api in ClientConfiguration must have minlength of 1 $within");
+        !isset($this->api) || Assert::maxLength($this->api, 255, "api in ClientConfiguration must have maxlength of 255 $within");
+        !isset($this->integration_artifact) || Assert::minLength($this->integration_artifact, 1, "integration_artifact in ClientConfiguration must have minlength of 1 $within");
+        !isset($this->integration_artifact) || Assert::maxLength($this->integration_artifact, 255, "integration_artifact in ClientConfiguration must have maxlength of 255 $within");
+        !isset($this->experience) || Assert::isInstanceOf($this->experience, ProductExperience::class, "experience in ClientConfiguration must be instance of ProductExperience $within");
+        !isset($this->experience) || $this->experience->validate(ClientConfiguration::class);
+    }
+
+    public function __construct()
+    {
     }
 }

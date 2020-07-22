@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The history of the dispute.
@@ -125,13 +126,18 @@ class History implements JsonSerializable
      */
     public $event_type;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->date) || strlen($this->date) >= 20);
-        assert(!isset($this->date) || strlen($this->date) <= 64);
-        assert(!isset($this->actor) || strlen($this->actor) >= 1);
-        assert(!isset($this->actor) || strlen($this->actor) <= 255);
-        assert(!isset($this->event_type) || strlen($this->event_type) >= 1);
-        assert(!isset($this->event_type) || strlen($this->event_type) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->date) || Assert::minLength($this->date, 20, "date in History must have minlength of 20 $within");
+        !isset($this->date) || Assert::maxLength($this->date, 64, "date in History must have maxlength of 64 $within");
+        !isset($this->actor) || Assert::minLength($this->actor, 1, "actor in History must have minlength of 1 $within");
+        !isset($this->actor) || Assert::maxLength($this->actor, 255, "actor in History must have maxlength of 255 $within");
+        !isset($this->event_type) || Assert::minLength($this->event_type, 1, "event_type in History must have minlength of 1 $within");
+        !isset($this->event_type) || Assert::maxLength($this->event_type, 255, "event_type in History must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

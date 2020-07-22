@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The system action that reverses the impact of the unauthorized event. Includes the system-defined details of
@@ -125,19 +126,24 @@ class ReversalAction implements JsonSerializable
      */
     public $status;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->id) || strlen($this->id) >= 1);
-        assert(!isset($this->id) || strlen($this->id) <= 255);
-        assert(!isset($this->original_activity_id) || strlen($this->original_activity_id) >= 1);
-        assert(!isset($this->original_activity_id) || strlen($this->original_activity_id) <= 255);
-        assert(!isset($this->entity_type) || strlen($this->entity_type) >= 1);
-        assert(!isset($this->entity_type) || strlen($this->entity_type) <= 255);
-        assert(!isset($this->entity_subtype) || strlen($this->entity_subtype) >= 1);
-        assert(!isset($this->entity_subtype) || strlen($this->entity_subtype) <= 255);
-        assert(!isset($this->action_performed) || strlen($this->action_performed) >= 1);
-        assert(!isset($this->action_performed) || strlen($this->action_performed) <= 255);
-        assert(!isset($this->status) || strlen($this->status) >= 1);
-        assert(!isset($this->status) || strlen($this->status) <= 2000);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->id) || Assert::minLength($this->id, 1, "id in ReversalAction must have minlength of 1 $within");
+        !isset($this->id) || Assert::maxLength($this->id, 255, "id in ReversalAction must have maxlength of 255 $within");
+        !isset($this->original_activity_id) || Assert::minLength($this->original_activity_id, 1, "original_activity_id in ReversalAction must have minlength of 1 $within");
+        !isset($this->original_activity_id) || Assert::maxLength($this->original_activity_id, 255, "original_activity_id in ReversalAction must have maxlength of 255 $within");
+        !isset($this->entity_type) || Assert::minLength($this->entity_type, 1, "entity_type in ReversalAction must have minlength of 1 $within");
+        !isset($this->entity_type) || Assert::maxLength($this->entity_type, 255, "entity_type in ReversalAction must have maxlength of 255 $within");
+        !isset($this->entity_subtype) || Assert::minLength($this->entity_subtype, 1, "entity_subtype in ReversalAction must have minlength of 1 $within");
+        !isset($this->entity_subtype) || Assert::maxLength($this->entity_subtype, 255, "entity_subtype in ReversalAction must have maxlength of 255 $within");
+        !isset($this->action_performed) || Assert::minLength($this->action_performed, 1, "action_performed in ReversalAction must have minlength of 1 $within");
+        !isset($this->action_performed) || Assert::maxLength($this->action_performed, 255, "action_performed in ReversalAction must have maxlength of 255 $within");
+        !isset($this->status) || Assert::minLength($this->status, 1, "status in ReversalAction must have minlength of 1 $within");
+        !isset($this->status) || Assert::maxLength($this->status, 2000, "status in ReversalAction must have maxlength of 2000 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

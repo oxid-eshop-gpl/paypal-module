@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The JSON patch object to apply partial updates to resources.
@@ -39,7 +40,12 @@ class Patch implements JsonSerializable
      */
     public $from;
 
-    public function validate()
+    public function validate($from = null)
+    {
+        $within = isset($from) ? "within $from" : "";
+    }
+
+    public function __construct()
     {
     }
 }

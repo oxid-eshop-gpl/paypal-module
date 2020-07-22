@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The partner-provided details that were used for adjudication on the partner's side.
@@ -80,13 +81,49 @@ class AdjudicationInfo implements JsonSerializable
      */
     public $messages;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(isset($this->dispute_amount));
-        assert(isset($this->outcome));
-        assert(!isset($this->dispute_reason) || strlen($this->dispute_reason) >= 1);
-        assert(!isset($this->dispute_reason) || strlen($this->dispute_reason) <= 255);
-        assert(!isset($this->closure_reason) || strlen($this->closure_reason) >= 1);
-        assert(!isset($this->closure_reason) || strlen($this->closure_reason) <= 2000);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->dispute_amount) || Assert::notNull($this->dispute_amount->currency_code, "currency_code in dispute_amount must not be NULL within AdjudicationInfo $within");
+        !isset($this->dispute_amount) || Assert::notNull($this->dispute_amount->value, "value in dispute_amount must not be NULL within AdjudicationInfo $within");
+        !isset($this->dispute_amount) || Assert::isInstanceOf($this->dispute_amount, Money::class, "dispute_amount in AdjudicationInfo must be instance of Money $within");
+        !isset($this->dispute_amount) || $this->dispute_amount->validate(AdjudicationInfo::class);
+        !isset($this->items) || Assert::isArray($this->items, "items in AdjudicationInfo must be array $within");
+
+                                if (isset($this->items)){
+                                    foreach ($this->items as $item) {
+                                        $item->validate(AdjudicationInfo::class);
+                                    }
+                                }
+
+        !isset($this->outcome) || Assert::notNull($this->outcome->faulty_party, "faulty_party in outcome must not be NULL within AdjudicationInfo $within");
+        !isset($this->outcome) || Assert::notNull($this->outcome->adjudication_reason, "adjudication_reason in outcome must not be NULL within AdjudicationInfo $within");
+        !isset($this->outcome) || Assert::isInstanceOf($this->outcome, Outcome::class, "outcome in AdjudicationInfo must be instance of Outcome $within");
+        !isset($this->outcome) || $this->outcome->validate(AdjudicationInfo::class);
+        !isset($this->extensions) || Assert::isInstanceOf($this->extensions, Extensions::class, "extensions in AdjudicationInfo must be instance of Extensions $within");
+        !isset($this->extensions) || $this->extensions->validate(AdjudicationInfo::class);
+        !isset($this->evidences) || Assert::isArray($this->evidences, "evidences in AdjudicationInfo must be array $within");
+
+                                if (isset($this->evidences)){
+                                    foreach ($this->evidences as $item) {
+                                        $item->validate(AdjudicationInfo::class);
+                                    }
+                                }
+
+        !isset($this->dispute_reason) || Assert::minLength($this->dispute_reason, 1, "dispute_reason in AdjudicationInfo must have minlength of 1 $within");
+        !isset($this->dispute_reason) || Assert::maxLength($this->dispute_reason, 255, "dispute_reason in AdjudicationInfo must have maxlength of 255 $within");
+        !isset($this->closure_reason) || Assert::minLength($this->closure_reason, 1, "closure_reason in AdjudicationInfo must have minlength of 1 $within");
+        !isset($this->closure_reason) || Assert::maxLength($this->closure_reason, 2000, "closure_reason in AdjudicationInfo must have maxlength of 2000 $within");
+        !isset($this->messages) || Assert::isArray($this->messages, "messages in AdjudicationInfo must be array $within");
+
+                                if (isset($this->messages)){
+                                    foreach ($this->messages as $item) {
+                                        $item->validate(AdjudicationInfo::class);
+                                    }
+                                }
+    }
+
+    public function __construct()
+    {
     }
 }

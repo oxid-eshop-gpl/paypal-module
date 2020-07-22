@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The regular and trial execution details for a billing cycle.
@@ -72,10 +73,18 @@ class CycleExecution implements JsonSerializable
      */
     public $total_cycles;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->tenure_type) || strlen($this->tenure_type) >= 1);
-        assert(!isset($this->tenure_type) || strlen($this->tenure_type) <= 24);
-        assert(isset($this->amount_payable_per_cycle));
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->tenure_type) || Assert::minLength($this->tenure_type, 1, "tenure_type in CycleExecution must have minlength of 1 $within");
+        !isset($this->tenure_type) || Assert::maxLength($this->tenure_type, 24, "tenure_type in CycleExecution must have maxlength of 24 $within");
+        !isset($this->amount_payable_per_cycle) || Assert::notNull($this->amount_payable_per_cycle->currency_code, "currency_code in amount_payable_per_cycle must not be NULL within CycleExecution $within");
+        !isset($this->amount_payable_per_cycle) || Assert::notNull($this->amount_payable_per_cycle->value, "value in amount_payable_per_cycle must not be NULL within CycleExecution $within");
+        !isset($this->amount_payable_per_cycle) || Assert::isInstanceOf($this->amount_payable_per_cycle, Money::class, "amount_payable_per_cycle in CycleExecution must be instance of Money $within");
+        !isset($this->amount_payable_per_cycle) || $this->amount_payable_per_cycle->validate(CycleExecution::class);
+    }
+
+    public function __construct()
+    {
     }
 }

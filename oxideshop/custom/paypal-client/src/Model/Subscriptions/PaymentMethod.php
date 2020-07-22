@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The customer and merchant payment preferences.
@@ -86,11 +87,16 @@ class PaymentMethod implements JsonSerializable
      */
     public $category = 'CUSTOMER_PRESENT_SINGLE_PURCHASE';
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->payer_selected) || strlen($this->payer_selected) >= 1);
-        assert(!isset($this->payee_preferred) || strlen($this->payee_preferred) >= 1);
-        assert(!isset($this->category) || strlen($this->category) >= 3);
-        assert(!isset($this->category) || strlen($this->category) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->payer_selected) || Assert::minLength($this->payer_selected, 1, "payer_selected in PaymentMethod must have minlength of 1 $within");
+        !isset($this->payee_preferred) || Assert::minLength($this->payee_preferred, 1, "payee_preferred in PaymentMethod must have minlength of 1 $within");
+        !isset($this->category) || Assert::minLength($this->category, 3, "category in PaymentMethod must have minlength of 3 $within");
+        !isset($this->category) || Assert::maxLength($this->category, 255, "category in PaymentMethod must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

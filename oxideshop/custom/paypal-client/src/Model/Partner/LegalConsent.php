@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The customer-provided consent.
@@ -35,9 +36,14 @@ class LegalConsent implements JsonSerializable
      */
     public $granted;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->type) || strlen($this->type) >= 1);
-        assert(!isset($this->type) || strlen($this->type) <= 127);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->type) || Assert::minLength($this->type, 1, "type in LegalConsent must have minlength of 1 $within");
+        !isset($this->type) || Assert::maxLength($this->type, 127, "type in LegalConsent must have maxlength of 127 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

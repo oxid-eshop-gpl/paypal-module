@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The merchant who receives the funds and fulfills the order. The merchant is also known as the payee.
@@ -21,7 +22,14 @@ class Payee extends PayeeBase implements JsonSerializable
      */
     public $display_data;
 
-    public function validate()
+    public function validate($from = null)
+    {
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->display_data) || Assert::isInstanceOf($this->display_data, PayeeDisplayable::class, "display_data in Payee must be instance of PayeeDisplayable $within");
+        !isset($this->display_data) || $this->display_data->validate(Payee::class);
+    }
+
+    public function __construct()
     {
     }
 }

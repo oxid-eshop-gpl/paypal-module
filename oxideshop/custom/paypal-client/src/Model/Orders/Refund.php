@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The refund information.
@@ -74,12 +75,23 @@ class Refund extends RefundStatus implements JsonSerializable
      */
     public $update_time;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(isset($this->amount));
-        assert(!isset($this->create_time) || strlen($this->create_time) >= 20);
-        assert(!isset($this->create_time) || strlen($this->create_time) <= 64);
-        assert(!isset($this->update_time) || strlen($this->update_time) >= 20);
-        assert(!isset($this->update_time) || strlen($this->update_time) <= 64);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->amount) || Assert::notNull($this->amount->currency_code, "currency_code in amount must not be NULL within Refund $within");
+        !isset($this->amount) || Assert::notNull($this->amount->value, "value in amount must not be NULL within Refund $within");
+        !isset($this->amount) || Assert::isInstanceOf($this->amount, Money::class, "amount in Refund must be instance of Money $within");
+        !isset($this->amount) || $this->amount->validate(Refund::class);
+        !isset($this->seller_payable_breakdown) || Assert::isInstanceOf($this->seller_payable_breakdown, RefundSellerPayableBreakdown::class, "seller_payable_breakdown in Refund must be instance of RefundSellerPayableBreakdown $within");
+        !isset($this->seller_payable_breakdown) || $this->seller_payable_breakdown->validate(Refund::class);
+        !isset($this->links) || Assert::isArray($this->links, "links in Refund must be array $within");
+        !isset($this->create_time) || Assert::minLength($this->create_time, 20, "create_time in Refund must have minlength of 20 $within");
+        !isset($this->create_time) || Assert::maxLength($this->create_time, 64, "create_time in Refund must have maxlength of 64 $within");
+        !isset($this->update_time) || Assert::minLength($this->update_time, 20, "update_time in Refund must have minlength of 20 $within");
+        !isset($this->update_time) || Assert::maxLength($this->update_time, 64, "update_time in Refund must have maxlength of 64 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

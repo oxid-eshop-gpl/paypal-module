@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The portable international postal address. Maps to
@@ -113,17 +114,24 @@ class AddressPortable implements JsonSerializable
      */
     public $address_details;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->address_line_1) || strlen($this->address_line_1) <= 300);
-        assert(!isset($this->address_line_2) || strlen($this->address_line_2) <= 300);
-        assert(!isset($this->address_line_3) || strlen($this->address_line_3) <= 100);
-        assert(!isset($this->admin_area_4) || strlen($this->admin_area_4) <= 100);
-        assert(!isset($this->admin_area_3) || strlen($this->admin_area_3) <= 100);
-        assert(!isset($this->admin_area_2) || strlen($this->admin_area_2) <= 120);
-        assert(!isset($this->admin_area_1) || strlen($this->admin_area_1) <= 300);
-        assert(!isset($this->postal_code) || strlen($this->postal_code) <= 60);
-        assert(!isset($this->country_code) || strlen($this->country_code) >= 2);
-        assert(!isset($this->country_code) || strlen($this->country_code) <= 2);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->address_line_1) || Assert::maxLength($this->address_line_1, 300, "address_line_1 in AddressPortable must have maxlength of 300 $within");
+        !isset($this->address_line_2) || Assert::maxLength($this->address_line_2, 300, "address_line_2 in AddressPortable must have maxlength of 300 $within");
+        !isset($this->address_line_3) || Assert::maxLength($this->address_line_3, 100, "address_line_3 in AddressPortable must have maxlength of 100 $within");
+        !isset($this->admin_area_4) || Assert::maxLength($this->admin_area_4, 100, "admin_area_4 in AddressPortable must have maxlength of 100 $within");
+        !isset($this->admin_area_3) || Assert::maxLength($this->admin_area_3, 100, "admin_area_3 in AddressPortable must have maxlength of 100 $within");
+        !isset($this->admin_area_2) || Assert::maxLength($this->admin_area_2, 120, "admin_area_2 in AddressPortable must have maxlength of 120 $within");
+        !isset($this->admin_area_1) || Assert::maxLength($this->admin_area_1, 300, "admin_area_1 in AddressPortable must have maxlength of 300 $within");
+        !isset($this->postal_code) || Assert::maxLength($this->postal_code, 60, "postal_code in AddressPortable must have maxlength of 60 $within");
+        !isset($this->country_code) || Assert::minLength($this->country_code, 2, "country_code in AddressPortable must have minlength of 2 $within");
+        !isset($this->country_code) || Assert::maxLength($this->country_code, 2, "country_code in AddressPortable must have maxlength of 2 $within");
+        !isset($this->address_details) || Assert::isInstanceOf($this->address_details, AddressPortableAddressDetails::class, "address_details in AddressPortable must be instance of AddressPortableAddressDetails $within");
+        !isset($this->address_details) || $this->address_details->validate(AddressPortable::class);
+    }
+
+    public function __construct()
+    {
     }
 }

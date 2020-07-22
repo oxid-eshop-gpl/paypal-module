@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The collection of payments, or transactions, for a purchase unit in an order. For example, authorized
@@ -34,7 +35,35 @@ class PaymentCollection implements JsonSerializable
      */
     public $refunds;
 
-    public function validate()
+    public function validate($from = null)
+    {
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->authorizations) || Assert::isArray($this->authorizations, "authorizations in PaymentCollection must be array $within");
+
+                                if (isset($this->authorizations)){
+                                    foreach ($this->authorizations as $item) {
+                                        $item->validate(PaymentCollection::class);
+                                    }
+                                }
+
+        !isset($this->captures) || Assert::isArray($this->captures, "captures in PaymentCollection must be array $within");
+
+                                if (isset($this->captures)){
+                                    foreach ($this->captures as $item) {
+                                        $item->validate(PaymentCollection::class);
+                                    }
+                                }
+
+        !isset($this->refunds) || Assert::isArray($this->refunds, "refunds in PaymentCollection must be array $within");
+
+                                if (isset($this->refunds)){
+                                    foreach ($this->refunds as $item) {
+                                        $item->validate(PaymentCollection::class);
+                                    }
+                                }
+    }
+
+    public function __construct()
     {
     }
 }

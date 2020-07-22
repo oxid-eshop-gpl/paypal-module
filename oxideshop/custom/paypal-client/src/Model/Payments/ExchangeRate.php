@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The exchange rate that determines the amount to convert from one currency to another currency.
@@ -41,11 +42,16 @@ class ExchangeRate implements JsonSerializable
      */
     public $value;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->source_currency) || strlen($this->source_currency) >= 3);
-        assert(!isset($this->source_currency) || strlen($this->source_currency) <= 3);
-        assert(!isset($this->target_currency) || strlen($this->target_currency) >= 3);
-        assert(!isset($this->target_currency) || strlen($this->target_currency) <= 3);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->source_currency) || Assert::minLength($this->source_currency, 3, "source_currency in ExchangeRate must have minlength of 3 $within");
+        !isset($this->source_currency) || Assert::maxLength($this->source_currency, 3, "source_currency in ExchangeRate must have maxlength of 3 $within");
+        !isset($this->target_currency) || Assert::minLength($this->target_currency, 3, "target_currency in ExchangeRate must have minlength of 3 $within");
+        !isset($this->target_currency) || Assert::maxLength($this->target_currency, 3, "target_currency in ExchangeRate must have maxlength of 3 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

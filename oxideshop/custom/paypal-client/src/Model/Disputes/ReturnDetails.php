@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The return details for the product.
@@ -65,13 +66,18 @@ class ReturnDetails implements JsonSerializable
      */
     public $returned;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->return_time) || strlen($this->return_time) >= 20);
-        assert(!isset($this->return_time) || strlen($this->return_time) <= 64);
-        assert(!isset($this->mode) || strlen($this->mode) >= 1);
-        assert(!isset($this->mode) || strlen($this->mode) <= 255);
-        assert(!isset($this->return_confirmation_number) || strlen($this->return_confirmation_number) >= 1);
-        assert(!isset($this->return_confirmation_number) || strlen($this->return_confirmation_number) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->return_time) || Assert::minLength($this->return_time, 20, "return_time in ReturnDetails must have minlength of 20 $within");
+        !isset($this->return_time) || Assert::maxLength($this->return_time, 64, "return_time in ReturnDetails must have maxlength of 64 $within");
+        !isset($this->mode) || Assert::minLength($this->mode, 1, "mode in ReturnDetails must have minlength of 1 $within");
+        !isset($this->mode) || Assert::maxLength($this->mode, 255, "mode in ReturnDetails must have maxlength of 255 $within");
+        !isset($this->return_confirmation_number) || Assert::minLength($this->return_confirmation_number, 1, "return_confirmation_number in ReturnDetails must have minlength of 1 $within");
+        !isset($this->return_confirmation_number) || Assert::maxLength($this->return_confirmation_number, 255, "return_confirmation_number in ReturnDetails must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

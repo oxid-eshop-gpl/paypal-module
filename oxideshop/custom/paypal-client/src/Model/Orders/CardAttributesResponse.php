@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Additional attributes associated with the use of this card.
@@ -20,7 +21,14 @@ class CardAttributesResponse implements JsonSerializable
      */
     public $vault;
 
-    public function validate()
+    public function validate($from = null)
+    {
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->vault) || Assert::isInstanceOf($this->vault, VaultResponse::class, "vault in CardAttributesResponse must be instance of VaultResponse $within");
+        !isset($this->vault) || $this->vault->validate(CardAttributesResponse::class);
+    }
+
+    public function __construct()
     {
     }
 }

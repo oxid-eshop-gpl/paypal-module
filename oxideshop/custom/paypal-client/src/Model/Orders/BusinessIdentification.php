@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Business identification details.
@@ -49,14 +50,21 @@ class BusinessIdentification implements JsonSerializable
      */
     public $issued_time;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->type) || strlen($this->type) >= 1);
-        assert(!isset($this->type) || strlen($this->type) <= 127);
-        assert(!isset($this->identifier) || strlen($this->identifier) >= 1);
-        assert(!isset($this->identifier) || strlen($this->identifier) <= 127);
-        assert(isset($this->issuer));
-        assert(!isset($this->issued_time) || strlen($this->issued_time) >= 20);
-        assert(!isset($this->issued_time) || strlen($this->issued_time) <= 64);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->type) || Assert::minLength($this->type, 1, "type in BusinessIdentification must have minlength of 1 $within");
+        !isset($this->type) || Assert::maxLength($this->type, 127, "type in BusinessIdentification must have maxlength of 127 $within");
+        !isset($this->identifier) || Assert::minLength($this->identifier, 1, "identifier in BusinessIdentification must have minlength of 1 $within");
+        !isset($this->identifier) || Assert::maxLength($this->identifier, 127, "identifier in BusinessIdentification must have maxlength of 127 $within");
+        !isset($this->issuer) || Assert::notNull($this->issuer->country_code, "country_code in issuer must not be NULL within BusinessIdentification $within");
+        !isset($this->issuer) || Assert::isInstanceOf($this->issuer, DocumentIssuer::class, "issuer in BusinessIdentification must be instance of DocumentIssuer $within");
+        !isset($this->issuer) || $this->issuer->validate(BusinessIdentification::class);
+        !isset($this->issued_time) || Assert::minLength($this->issued_time, 20, "issued_time in BusinessIdentification must have minlength of 20 $within");
+        !isset($this->issued_time) || Assert::maxLength($this->issued_time, 64, "issued_time in BusinessIdentification must have maxlength of 64 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

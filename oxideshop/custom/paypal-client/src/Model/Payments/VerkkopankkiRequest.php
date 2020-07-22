@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Information needed to pay using Verkkopankki (Finnish Online Banking).
@@ -59,15 +60,20 @@ class VerkkopankkiRequest implements JsonSerializable
      */
     public $bank_id;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->name) || strlen($this->name) >= 3);
-        assert(!isset($this->name) || strlen($this->name) <= 300);
-        assert(!isset($this->email) || strlen($this->email) >= 3);
-        assert(!isset($this->email) || strlen($this->email) <= 254);
-        assert(!isset($this->country_code) || strlen($this->country_code) >= 2);
-        assert(!isset($this->country_code) || strlen($this->country_code) <= 2);
-        assert(!isset($this->bank_id) || strlen($this->bank_id) >= 1);
-        assert(!isset($this->bank_id) || strlen($this->bank_id) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->name) || Assert::minLength($this->name, 3, "name in VerkkopankkiRequest must have minlength of 3 $within");
+        !isset($this->name) || Assert::maxLength($this->name, 300, "name in VerkkopankkiRequest must have maxlength of 300 $within");
+        !isset($this->email) || Assert::minLength($this->email, 3, "email in VerkkopankkiRequest must have minlength of 3 $within");
+        !isset($this->email) || Assert::maxLength($this->email, 254, "email in VerkkopankkiRequest must have maxlength of 254 $within");
+        !isset($this->country_code) || Assert::minLength($this->country_code, 2, "country_code in VerkkopankkiRequest must have minlength of 2 $within");
+        !isset($this->country_code) || Assert::maxLength($this->country_code, 2, "country_code in VerkkopankkiRequest must have maxlength of 2 $within");
+        !isset($this->bank_id) || Assert::minLength($this->bank_id, 1, "bank_id in VerkkopankkiRequest must have minlength of 1 $within");
+        !isset($this->bank_id) || Assert::maxLength($this->bank_id, 255, "bank_id in VerkkopankkiRequest must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

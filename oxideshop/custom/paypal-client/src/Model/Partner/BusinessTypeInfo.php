@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The type and subtype of the business.
@@ -158,11 +159,16 @@ class BusinessTypeInfo implements JsonSerializable
      */
     public $subtype;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->type) || strlen($this->type) >= 1);
-        assert(!isset($this->type) || strlen($this->type) <= 255);
-        assert(!isset($this->subtype) || strlen($this->subtype) >= 1);
-        assert(!isset($this->subtype) || strlen($this->subtype) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->type) || Assert::minLength($this->type, 1, "type in BusinessTypeInfo must have minlength of 1 $within");
+        !isset($this->type) || Assert::maxLength($this->type, 255, "type in BusinessTypeInfo must have maxlength of 255 $within");
+        !isset($this->subtype) || Assert::minLength($this->subtype, 1, "subtype in BusinessTypeInfo must have minlength of 1 $within");
+        !isset($this->subtype) || Assert::maxLength($this->subtype, 255, "subtype in BusinessTypeInfo must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The bank account information.
@@ -65,6 +66,9 @@ class Bank implements JsonSerializable
      * An array of instrument institute attributes. Used with the account number to uniquely identify the instrument.
      * Value is:<ul><li>For banks with IBAN information, the IBAN number.</li><li>For banks with BBAN information,
      * the BBAN number.</li><li>For banks with both IBAN and BBAN information, the IBAN number.</li></ul>
+     *
+     * maxItems: 0
+     * maxItems: 20
      */
     public $identifiers;
 
@@ -83,17 +87,37 @@ class Bank implements JsonSerializable
      */
     public $mandate;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->nick_name) || strlen($this->nick_name) >= 1);
-        assert(!isset($this->nick_name) || strlen($this->nick_name) <= 50);
-        assert(!isset($this->account_number) || strlen($this->account_number) >= 1);
-        assert(!isset($this->account_number) || strlen($this->account_number) <= 50);
-        assert(!isset($this->account_type) || strlen($this->account_type) >= 1);
-        assert(!isset($this->account_type) || strlen($this->account_type) <= 50);
-        assert(!isset($this->currency_code) || strlen($this->currency_code) >= 3);
-        assert(!isset($this->currency_code) || strlen($this->currency_code) <= 3);
-        assert(isset($this->branch_location));
-        assert(isset($this->mandate));
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->nick_name) || Assert::minLength($this->nick_name, 1, "nick_name in Bank must have minlength of 1 $within");
+        !isset($this->nick_name) || Assert::maxLength($this->nick_name, 50, "nick_name in Bank must have maxlength of 50 $within");
+        !isset($this->account_number) || Assert::minLength($this->account_number, 1, "account_number in Bank must have minlength of 1 $within");
+        !isset($this->account_number) || Assert::maxLength($this->account_number, 50, "account_number in Bank must have maxlength of 50 $within");
+        !isset($this->account_type) || Assert::minLength($this->account_type, 1, "account_type in Bank must have minlength of 1 $within");
+        !isset($this->account_type) || Assert::maxLength($this->account_type, 50, "account_type in Bank must have maxlength of 50 $within");
+        !isset($this->currency_code) || Assert::minLength($this->currency_code, 3, "currency_code in Bank must have minlength of 3 $within");
+        !isset($this->currency_code) || Assert::maxLength($this->currency_code, 3, "currency_code in Bank must have maxlength of 3 $within");
+        Assert::notNull($this->identifiers, "identifiers in Bank must not be NULL $within");
+         Assert::minCount($this->identifiers, 0, "identifiers in Bank must have min. count of 0 $within");
+         Assert::maxCount($this->identifiers, 20, "identifiers in Bank must have max. count of 20 $within");
+         Assert::isArray($this->identifiers, "identifiers in Bank must be array $within");
+
+                                if (isset($this->identifiers)){
+                                    foreach ($this->identifiers as $item) {
+                                        $item->validate(Bank::class);
+                                    }
+                                }
+
+        !isset($this->branch_location) || Assert::notNull($this->branch_location->country_code, "country_code in branch_location must not be NULL within Bank $within");
+        !isset($this->branch_location) || Assert::isInstanceOf($this->branch_location, AddressPortable::class, "branch_location in Bank must be instance of AddressPortable $within");
+        !isset($this->branch_location) || $this->branch_location->validate(Bank::class);
+        !isset($this->mandate) || Assert::notNull($this->mandate->accepted, "accepted in mandate must not be NULL within Bank $within");
+        !isset($this->mandate) || Assert::isInstanceOf($this->mandate, Mandate::class, "mandate in Bank must be instance of Mandate $within");
+        !isset($this->mandate) || $this->mandate->validate(Bank::class);
+    }
+
+    public function __construct()
+    {
     }
 }

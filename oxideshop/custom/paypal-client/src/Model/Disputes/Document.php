@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * An uploaded document as a binary object that supports a dispute.
@@ -32,11 +33,16 @@ class Document implements JsonSerializable
      */
     public $url;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->name) || strlen($this->name) >= 1);
-        assert(!isset($this->name) || strlen($this->name) <= 2000);
-        assert(!isset($this->url) || strlen($this->url) >= 1);
-        assert(!isset($this->url) || strlen($this->url) <= 2000);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->name) || Assert::minLength($this->name, 1, "name in Document must have minlength of 1 $within");
+        !isset($this->name) || Assert::maxLength($this->name, 2000, "name in Document must have maxlength of 2000 $within");
+        !isset($this->url) || Assert::minLength($this->url, 1, "url in Document must have minlength of 1 $within");
+        !isset($this->url) || Assert::maxLength($this->url, 2000, "url in Document must have maxlength of 2000 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

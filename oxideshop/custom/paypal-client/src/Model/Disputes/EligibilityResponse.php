@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The eligible and ineligible disputes with reasons. Disputes and refund information are returned, if
@@ -81,11 +82,31 @@ class EligibilityResponse implements JsonSerializable
      */
     public $existing_refunds;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->allowable_life_cycle) || strlen($this->allowable_life_cycle) >= 1);
-        assert(!isset($this->allowable_life_cycle) || strlen($this->allowable_life_cycle) <= 255);
-        assert(!isset($this->ineligibility_reason) || strlen($this->ineligibility_reason) >= 1);
-        assert(!isset($this->ineligibility_reason) || strlen($this->ineligibility_reason) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->allowable_life_cycle) || Assert::minLength($this->allowable_life_cycle, 1, "allowable_life_cycle in EligibilityResponse must have minlength of 1 $within");
+        !isset($this->allowable_life_cycle) || Assert::maxLength($this->allowable_life_cycle, 255, "allowable_life_cycle in EligibilityResponse must have maxlength of 255 $within");
+        !isset($this->ineligibility_reason) || Assert::minLength($this->ineligibility_reason, 1, "ineligibility_reason in EligibilityResponse must have minlength of 1 $within");
+        !isset($this->ineligibility_reason) || Assert::maxLength($this->ineligibility_reason, 255, "ineligibility_reason in EligibilityResponse must have maxlength of 255 $within");
+        !isset($this->existing_disputes) || Assert::isArray($this->existing_disputes, "existing_disputes in EligibilityResponse must be array $within");
+
+                                if (isset($this->existing_disputes)){
+                                    foreach ($this->existing_disputes as $item) {
+                                        $item->validate(EligibilityResponse::class);
+                                    }
+                                }
+
+        !isset($this->existing_refunds) || Assert::isArray($this->existing_refunds, "existing_refunds in EligibilityResponse must be array $within");
+
+                                if (isset($this->existing_refunds)){
+                                    foreach ($this->existing_refunds as $item) {
+                                        $item->validate(EligibilityResponse::class);
+                                    }
+                                }
+    }
+
+    public function __construct()
+    {
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The response to a request to update the quantity of the product or service in a subscription. You can also use
@@ -22,7 +23,13 @@ class SubscriptionReviseResponse extends CustomizedXUnsupportedFiveEightSevenFiv
      */
     public $links;
 
-    public function validate()
+    public function validate($from = null)
+    {
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->links) || Assert::isArray($this->links, "links in SubscriptionReviseResponse must be array $within");
+    }
+
+    public function __construct()
     {
     }
 }

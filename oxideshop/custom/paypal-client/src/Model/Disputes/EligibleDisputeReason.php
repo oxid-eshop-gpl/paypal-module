@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The eligible dispute reason.
@@ -72,9 +73,16 @@ class EligibleDisputeReason implements JsonSerializable
      */
     public $allowable_life_cycle;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->dispute_reason) || strlen($this->dispute_reason) >= 1);
-        assert(!isset($this->dispute_reason) || strlen($this->dispute_reason) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->dispute_reason) || Assert::minLength($this->dispute_reason, 1, "dispute_reason in EligibleDisputeReason must have minlength of 1 $within");
+        !isset($this->dispute_reason) || Assert::maxLength($this->dispute_reason, 255, "dispute_reason in EligibleDisputeReason must have maxlength of 255 $within");
+        !isset($this->allowable_life_cycle) || Assert::isInstanceOf($this->allowable_life_cycle, EligibleDisputeReasonAllowableLifeCycle::class, "allowable_life_cycle in EligibleDisputeReason must be instance of EligibleDisputeReasonAllowableLifeCycle $within");
+        !isset($this->allowable_life_cycle) || $this->allowable_life_cycle->validate(EligibleDisputeReason::class);
+    }
+
+    public function __construct()
+    {
     }
 }

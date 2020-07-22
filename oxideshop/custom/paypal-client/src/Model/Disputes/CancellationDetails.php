@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The cancellation details.
@@ -71,11 +72,16 @@ class CancellationDetails implements JsonSerializable
      */
     public $cancellation_mode;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->cancellation_date) || strlen($this->cancellation_date) >= 20);
-        assert(!isset($this->cancellation_date) || strlen($this->cancellation_date) <= 64);
-        assert(!isset($this->cancellation_mode) || strlen($this->cancellation_mode) >= 1);
-        assert(!isset($this->cancellation_mode) || strlen($this->cancellation_mode) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->cancellation_date) || Assert::minLength($this->cancellation_date, 20, "cancellation_date in CancellationDetails must have minlength of 20 $within");
+        !isset($this->cancellation_date) || Assert::maxLength($this->cancellation_date, 64, "cancellation_date in CancellationDetails must have maxlength of 64 $within");
+        !isset($this->cancellation_mode) || Assert::minLength($this->cancellation_mode, 1, "cancellation_mode in CancellationDetails must have minlength of 1 $within");
+        !isset($this->cancellation_mode) || Assert::maxLength($this->cancellation_mode, 255, "cancellation_mode in CancellationDetails must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

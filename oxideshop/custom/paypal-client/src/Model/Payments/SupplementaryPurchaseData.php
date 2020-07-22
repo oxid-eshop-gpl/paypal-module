@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The capture identification-related fields. Includes the invoice ID, custom ID, note to payer, and soft
@@ -52,11 +53,16 @@ class SupplementaryPurchaseData implements JsonSerializable
      */
     public $soft_descriptor;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->invoice_id) || strlen($this->invoice_id) <= 127);
-        assert(!isset($this->custom_id) || strlen($this->custom_id) <= 127);
-        assert(!isset($this->note_to_payer) || strlen($this->note_to_payer) <= 255);
-        assert(!isset($this->soft_descriptor) || strlen($this->soft_descriptor) <= 22);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->invoice_id) || Assert::maxLength($this->invoice_id, 127, "invoice_id in SupplementaryPurchaseData must have maxlength of 127 $within");
+        !isset($this->custom_id) || Assert::maxLength($this->custom_id, 127, "custom_id in SupplementaryPurchaseData must have maxlength of 127 $within");
+        !isset($this->note_to_payer) || Assert::maxLength($this->note_to_payer, 255, "note_to_payer in SupplementaryPurchaseData must have maxlength of 255 $within");
+        !isset($this->soft_descriptor) || Assert::maxLength($this->soft_descriptor, 22, "soft_descriptor in SupplementaryPurchaseData must have maxlength of 22 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

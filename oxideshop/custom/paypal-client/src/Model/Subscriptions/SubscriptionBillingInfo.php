@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The billing details for the subscription. If the subscription was or is active, these fields are populated.
@@ -23,6 +24,9 @@ class SubscriptionBillingInfo implements JsonSerializable
     /**
      * @var array<CycleExecution>
      * The trial and regular billing executions.
+     *
+     * maxItems: 0
+     * maxItems: 2
      */
     public $cycle_executions;
 
@@ -79,16 +83,47 @@ class SubscriptionBillingInfo implements JsonSerializable
      */
     public $total_paid_amount;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(isset($this->outstanding_balance));
-        assert(isset($this->last_payment));
-        assert(!isset($this->next_billing_time) || strlen($this->next_billing_time) >= 20);
-        assert(!isset($this->next_billing_time) || strlen($this->next_billing_time) <= 64);
-        assert(isset($this->next_payment));
-        assert(!isset($this->final_payment_time) || strlen($this->final_payment_time) >= 20);
-        assert(!isset($this->final_payment_time) || strlen($this->final_payment_time) <= 64);
-        assert(isset($this->last_failed_payment));
-        assert(isset($this->total_paid_amount));
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->outstanding_balance) || Assert::notNull($this->outstanding_balance->currency_code, "currency_code in outstanding_balance must not be NULL within SubscriptionBillingInfo $within");
+        !isset($this->outstanding_balance) || Assert::notNull($this->outstanding_balance->value, "value in outstanding_balance must not be NULL within SubscriptionBillingInfo $within");
+        !isset($this->outstanding_balance) || Assert::isInstanceOf($this->outstanding_balance, Money::class, "outstanding_balance in SubscriptionBillingInfo must be instance of Money $within");
+        !isset($this->outstanding_balance) || $this->outstanding_balance->validate(SubscriptionBillingInfo::class);
+        Assert::notNull($this->cycle_executions, "cycle_executions in SubscriptionBillingInfo must not be NULL $within");
+         Assert::minCount($this->cycle_executions, 0, "cycle_executions in SubscriptionBillingInfo must have min. count of 0 $within");
+         Assert::maxCount($this->cycle_executions, 2, "cycle_executions in SubscriptionBillingInfo must have max. count of 2 $within");
+         Assert::isArray($this->cycle_executions, "cycle_executions in SubscriptionBillingInfo must be array $within");
+
+                                if (isset($this->cycle_executions)){
+                                    foreach ($this->cycle_executions as $item) {
+                                        $item->validate(SubscriptionBillingInfo::class);
+                                    }
+                                }
+
+        !isset($this->last_payment) || Assert::notNull($this->last_payment->amount, "amount in last_payment must not be NULL within SubscriptionBillingInfo $within");
+        !isset($this->last_payment) || Assert::notNull($this->last_payment->time, "time in last_payment must not be NULL within SubscriptionBillingInfo $within");
+        !isset($this->last_payment) || Assert::isInstanceOf($this->last_payment, LastPaymentDetails::class, "last_payment in SubscriptionBillingInfo must be instance of LastPaymentDetails $within");
+        !isset($this->last_payment) || $this->last_payment->validate(SubscriptionBillingInfo::class);
+        !isset($this->next_billing_time) || Assert::minLength($this->next_billing_time, 20, "next_billing_time in SubscriptionBillingInfo must have minlength of 20 $within");
+        !isset($this->next_billing_time) || Assert::maxLength($this->next_billing_time, 64, "next_billing_time in SubscriptionBillingInfo must have maxlength of 64 $within");
+        !isset($this->next_payment) || Assert::notNull($this->next_payment->currency_code, "currency_code in next_payment must not be NULL within SubscriptionBillingInfo $within");
+        !isset($this->next_payment) || Assert::notNull($this->next_payment->value, "value in next_payment must not be NULL within SubscriptionBillingInfo $within");
+        !isset($this->next_payment) || Assert::isInstanceOf($this->next_payment, Money::class, "next_payment in SubscriptionBillingInfo must be instance of Money $within");
+        !isset($this->next_payment) || $this->next_payment->validate(SubscriptionBillingInfo::class);
+        !isset($this->final_payment_time) || Assert::minLength($this->final_payment_time, 20, "final_payment_time in SubscriptionBillingInfo must have minlength of 20 $within");
+        !isset($this->final_payment_time) || Assert::maxLength($this->final_payment_time, 64, "final_payment_time in SubscriptionBillingInfo must have maxlength of 64 $within");
+        !isset($this->last_failed_payment) || Assert::notNull($this->last_failed_payment->amount, "amount in last_failed_payment must not be NULL within SubscriptionBillingInfo $within");
+        !isset($this->last_failed_payment) || Assert::notNull($this->last_failed_payment->time, "time in last_failed_payment must not be NULL within SubscriptionBillingInfo $within");
+        !isset($this->last_failed_payment) || Assert::isInstanceOf($this->last_failed_payment, FailedPaymentDetails::class, "last_failed_payment in SubscriptionBillingInfo must be instance of FailedPaymentDetails $within");
+        !isset($this->last_failed_payment) || $this->last_failed_payment->validate(SubscriptionBillingInfo::class);
+        !isset($this->total_paid_amount) || Assert::notNull($this->total_paid_amount->currency_code, "currency_code in total_paid_amount must not be NULL within SubscriptionBillingInfo $within");
+        !isset($this->total_paid_amount) || Assert::notNull($this->total_paid_amount->value, "value in total_paid_amount must not be NULL within SubscriptionBillingInfo $within");
+        !isset($this->total_paid_amount) || Assert::isInstanceOf($this->total_paid_amount, Money::class, "total_paid_amount in SubscriptionBillingInfo must be instance of Money $within");
+        !isset($this->total_paid_amount) || $this->total_paid_amount->validate(SubscriptionBillingInfo::class);
+    }
+
+    public function __construct()
+    {
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The bank source used to fund the payment
@@ -20,7 +21,14 @@ class BankResponse implements JsonSerializable
      */
     public $ach_debit;
 
-    public function validate()
+    public function validate($from = null)
+    {
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->ach_debit) || Assert::isInstanceOf($this->ach_debit, AchDebitResponse::class, "ach_debit in BankResponse must be instance of AchDebitResponse $within");
+        !isset($this->ach_debit) || $this->ach_debit->validate(BankResponse::class);
+    }
+
+    public function __construct()
     {
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Person information.
@@ -17,6 +18,9 @@ class Person extends Party implements JsonSerializable
     /**
      * @var array<Name>
      * Names of person.
+     *
+     * maxItems: 1
+     * maxItems: 10
      */
     public $names;
 
@@ -48,14 +52,43 @@ class Person extends Party implements JsonSerializable
     /**
      * @var array<IdentityDocument>
      * Identity documents for the entity like passport number.
+     *
+     * maxItems: 1
+     * maxItems: 10
      */
     public $identifications;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->citizenship) || strlen($this->citizenship) >= 2);
-        assert(!isset($this->citizenship) || strlen($this->citizenship) <= 2);
-        assert(!isset($this->birth_date) || strlen($this->birth_date) >= 10);
-        assert(!isset($this->birth_date) || strlen($this->birth_date) <= 10);
+        $within = isset($from) ? "within $from" : "";
+        Assert::notNull($this->names, "names in Person must not be NULL $within");
+         Assert::minCount($this->names, 1, "names in Person must have min. count of 1 $within");
+         Assert::maxCount($this->names, 10, "names in Person must have max. count of 10 $within");
+         Assert::isArray($this->names, "names in Person must be array $within");
+
+                                if (isset($this->names)){
+                                    foreach ($this->names as $item) {
+                                        $item->validate(Person::class);
+                                    }
+                                }
+
+        !isset($this->citizenship) || Assert::minLength($this->citizenship, 2, "citizenship in Person must have minlength of 2 $within");
+        !isset($this->citizenship) || Assert::maxLength($this->citizenship, 2, "citizenship in Person must have maxlength of 2 $within");
+        !isset($this->birth_date) || Assert::minLength($this->birth_date, 10, "birth_date in Person must have minlength of 10 $within");
+        !isset($this->birth_date) || Assert::maxLength($this->birth_date, 10, "birth_date in Person must have maxlength of 10 $within");
+        Assert::notNull($this->identifications, "identifications in Person must not be NULL $within");
+         Assert::minCount($this->identifications, 1, "identifications in Person must have min. count of 1 $within");
+         Assert::maxCount($this->identifications, 10, "identifications in Person must have max. count of 10 $within");
+         Assert::isArray($this->identifications, "identifications in Person must be array $within");
+
+                                if (isset($this->identifications)){
+                                    foreach ($this->identifications as $item) {
+                                        $item->validate(Person::class);
+                                    }
+                                }
+    }
+
+    public function __construct()
+    {
     }
 }

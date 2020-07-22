@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Information needed to pay using iDEAL.
@@ -46,13 +47,18 @@ class IdealRequest implements JsonSerializable
      */
     public $bic;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->name) || strlen($this->name) >= 3);
-        assert(!isset($this->name) || strlen($this->name) <= 300);
-        assert(!isset($this->country_code) || strlen($this->country_code) >= 2);
-        assert(!isset($this->country_code) || strlen($this->country_code) <= 2);
-        assert(!isset($this->bic) || strlen($this->bic) >= 8);
-        assert(!isset($this->bic) || strlen($this->bic) <= 11);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->name) || Assert::minLength($this->name, 3, "name in IdealRequest must have minlength of 3 $within");
+        !isset($this->name) || Assert::maxLength($this->name, 300, "name in IdealRequest must have maxlength of 300 $within");
+        !isset($this->country_code) || Assert::minLength($this->country_code, 2, "country_code in IdealRequest must have minlength of 2 $within");
+        !isset($this->country_code) || Assert::maxLength($this->country_code, 2, "country_code in IdealRequest must have maxlength of 2 $within");
+        !isset($this->bic) || Assert::minLength($this->bic, 8, "bic in IdealRequest must have minlength of 8 $within");
+        !isset($this->bic) || Assert::maxLength($this->bic, 11, "bic in IdealRequest must have maxlength of 11 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

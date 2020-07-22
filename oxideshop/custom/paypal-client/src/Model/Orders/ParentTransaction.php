@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Information about the parent transaction.
@@ -36,7 +37,12 @@ class ParentTransaction implements JsonSerializable
      */
     public $type;
 
-    public function validate()
+    public function validate($from = null)
+    {
+        $within = isset($from) ? "within $from" : "";
+    }
+
+    public function __construct()
     {
     }
 }

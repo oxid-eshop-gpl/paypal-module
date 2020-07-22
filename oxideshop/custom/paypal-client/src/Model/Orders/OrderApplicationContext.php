@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Customizes the payer experience during the approval process for the payment with
@@ -141,11 +142,22 @@ class OrderApplicationContext implements JsonSerializable
      */
     public $preferred_payment_source;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->brand_name) || strlen($this->brand_name) <= 127);
-        assert(!isset($this->locale) || strlen($this->locale) >= 2);
-        assert(!isset($this->locale) || strlen($this->locale) <= 10);
-        assert(!isset($this->payment_token) || strlen($this->payment_token) <= 19);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->brand_name) || Assert::maxLength($this->brand_name, 127, "brand_name in OrderApplicationContext must have maxlength of 127 $within");
+        !isset($this->locale) || Assert::minLength($this->locale, 2, "locale in OrderApplicationContext must have minlength of 2 $within");
+        !isset($this->locale) || Assert::maxLength($this->locale, 10, "locale in OrderApplicationContext must have maxlength of 10 $within");
+        !isset($this->payment_method) || Assert::isInstanceOf($this->payment_method, PaymentMethod::class, "payment_method in OrderApplicationContext must be instance of PaymentMethod $within");
+        !isset($this->payment_method) || $this->payment_method->validate(OrderApplicationContext::class);
+        !isset($this->payment_token) || Assert::maxLength($this->payment_token, 19, "payment_token in OrderApplicationContext must have maxlength of 19 $within");
+        !isset($this->client_configuration) || Assert::isInstanceOf($this->client_configuration, ClientConfiguration::class, "client_configuration in OrderApplicationContext must be instance of ClientConfiguration $within");
+        !isset($this->client_configuration) || $this->client_configuration->validate(OrderApplicationContext::class);
+        !isset($this->preferred_payment_source) || Assert::isInstanceOf($this->preferred_payment_source, PaymentSource::class, "preferred_payment_source in OrderApplicationContext must be instance of PaymentSource $within");
+        !isset($this->preferred_payment_source) || $this->preferred_payment_source->validate(OrderApplicationContext::class);
+    }
+
+    public function __construct()
+    {
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The document object.
@@ -27,6 +28,9 @@ class Document implements JsonSerializable
      * @var array<string>
      * The document labels. A document could be classfied to multiple categories. For example, a bill document can be
      * classfified as `BILL DOCUMENT` and `UTILITY DOCUMENT`.
+     *
+     * maxItems: 1
+     * maxItems: 50
      */
     public $labels;
 
@@ -90,28 +94,58 @@ class Document implements JsonSerializable
      * @var array<FileReference>
      * The files contained in the document. For example, a document could be represented by a front page file and a
      * back page file, etc.
+     *
+     * maxItems: 1
+     * maxItems: 50
      */
     public $files;
 
     /**
      * @var array<array>
      * The HATEOAS links.
+     *
+     * maxItems: 1
+     * maxItems: 10
      */
     public $links;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->id) || strlen($this->id) >= 1);
-        assert(!isset($this->id) || strlen($this->id) <= 20);
-        assert(!isset($this->name) || strlen($this->name) >= 1);
-        assert(!isset($this->name) || strlen($this->name) <= 100);
-        assert(!isset($this->identification_number) || strlen($this->identification_number) >= 1);
-        assert(!isset($this->identification_number) || strlen($this->identification_number) <= 100);
-        assert(!isset($this->issue_date) || strlen($this->issue_date) >= 10);
-        assert(!isset($this->issue_date) || strlen($this->issue_date) <= 10);
-        assert(!isset($this->expiry_date) || strlen($this->expiry_date) >= 10);
-        assert(!isset($this->expiry_date) || strlen($this->expiry_date) <= 10);
-        assert(!isset($this->issuing_country_code) || strlen($this->issuing_country_code) >= 2);
-        assert(!isset($this->issuing_country_code) || strlen($this->issuing_country_code) <= 2);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->id) || Assert::minLength($this->id, 1, "id in Document must have minlength of 1 $within");
+        !isset($this->id) || Assert::maxLength($this->id, 20, "id in Document must have maxlength of 20 $within");
+        Assert::notNull($this->labels, "labels in Document must not be NULL $within");
+         Assert::minCount($this->labels, 1, "labels in Document must have min. count of 1 $within");
+         Assert::maxCount($this->labels, 50, "labels in Document must have max. count of 50 $within");
+         Assert::isArray($this->labels, "labels in Document must be array $within");
+        !isset($this->name) || Assert::minLength($this->name, 1, "name in Document must have minlength of 1 $within");
+        !isset($this->name) || Assert::maxLength($this->name, 100, "name in Document must have maxlength of 100 $within");
+        !isset($this->identification_number) || Assert::minLength($this->identification_number, 1, "identification_number in Document must have minlength of 1 $within");
+        !isset($this->identification_number) || Assert::maxLength($this->identification_number, 100, "identification_number in Document must have maxlength of 100 $within");
+        !isset($this->issue_date) || Assert::minLength($this->issue_date, 10, "issue_date in Document must have minlength of 10 $within");
+        !isset($this->issue_date) || Assert::maxLength($this->issue_date, 10, "issue_date in Document must have maxlength of 10 $within");
+        !isset($this->expiry_date) || Assert::minLength($this->expiry_date, 10, "expiry_date in Document must have minlength of 10 $within");
+        !isset($this->expiry_date) || Assert::maxLength($this->expiry_date, 10, "expiry_date in Document must have maxlength of 10 $within");
+        !isset($this->issuing_country_code) || Assert::minLength($this->issuing_country_code, 2, "issuing_country_code in Document must have minlength of 2 $within");
+        !isset($this->issuing_country_code) || Assert::maxLength($this->issuing_country_code, 2, "issuing_country_code in Document must have maxlength of 2 $within");
+        Assert::notNull($this->files, "files in Document must not be NULL $within");
+         Assert::minCount($this->files, 1, "files in Document must have min. count of 1 $within");
+         Assert::maxCount($this->files, 50, "files in Document must have max. count of 50 $within");
+         Assert::isArray($this->files, "files in Document must be array $within");
+
+                                if (isset($this->files)){
+                                    foreach ($this->files as $item) {
+                                        $item->validate(Document::class);
+                                    }
+                                }
+
+        Assert::notNull($this->links, "links in Document must not be NULL $within");
+         Assert::minCount($this->links, 1, "links in Document must have min. count of 1 $within");
+         Assert::maxCount($this->links, 10, "links in Document must have max. count of 10 $within");
+         Assert::isArray($this->links, "links in Document must be array $within");
+    }
+
+    public function __construct()
+    {
     }
 }

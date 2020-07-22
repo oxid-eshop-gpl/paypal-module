@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * A PayPal-requested or partner action for the dispute.
@@ -106,20 +107,28 @@ class PartnerAction implements JsonSerializable
      */
     public $amount;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->id) || strlen($this->id) >= 1);
-        assert(!isset($this->id) || strlen($this->id) <= 255);
-        assert(!isset($this->name) || strlen($this->name) >= 1);
-        assert(!isset($this->name) || strlen($this->name) <= 255);
-        assert(!isset($this->create_time) || strlen($this->create_time) >= 20);
-        assert(!isset($this->create_time) || strlen($this->create_time) <= 64);
-        assert(!isset($this->update_time) || strlen($this->update_time) >= 20);
-        assert(!isset($this->update_time) || strlen($this->update_time) <= 64);
-        assert(!isset($this->due_time) || strlen($this->due_time) >= 20);
-        assert(!isset($this->due_time) || strlen($this->due_time) <= 64);
-        assert(!isset($this->status) || strlen($this->status) >= 1);
-        assert(!isset($this->status) || strlen($this->status) <= 255);
-        assert(isset($this->amount));
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->id) || Assert::minLength($this->id, 1, "id in PartnerAction must have minlength of 1 $within");
+        !isset($this->id) || Assert::maxLength($this->id, 255, "id in PartnerAction must have maxlength of 255 $within");
+        !isset($this->name) || Assert::minLength($this->name, 1, "name in PartnerAction must have minlength of 1 $within");
+        !isset($this->name) || Assert::maxLength($this->name, 255, "name in PartnerAction must have maxlength of 255 $within");
+        !isset($this->create_time) || Assert::minLength($this->create_time, 20, "create_time in PartnerAction must have minlength of 20 $within");
+        !isset($this->create_time) || Assert::maxLength($this->create_time, 64, "create_time in PartnerAction must have maxlength of 64 $within");
+        !isset($this->update_time) || Assert::minLength($this->update_time, 20, "update_time in PartnerAction must have minlength of 20 $within");
+        !isset($this->update_time) || Assert::maxLength($this->update_time, 64, "update_time in PartnerAction must have maxlength of 64 $within");
+        !isset($this->due_time) || Assert::minLength($this->due_time, 20, "due_time in PartnerAction must have minlength of 20 $within");
+        !isset($this->due_time) || Assert::maxLength($this->due_time, 64, "due_time in PartnerAction must have maxlength of 64 $within");
+        !isset($this->status) || Assert::minLength($this->status, 1, "status in PartnerAction must have minlength of 1 $within");
+        !isset($this->status) || Assert::maxLength($this->status, 255, "status in PartnerAction must have maxlength of 255 $within");
+        !isset($this->amount) || Assert::notNull($this->amount->currency_code, "currency_code in amount must not be NULL within PartnerAction $within");
+        !isset($this->amount) || Assert::notNull($this->amount->value, "value in amount must not be NULL within PartnerAction $within");
+        !isset($this->amount) || Assert::isInstanceOf($this->amount, Money::class, "amount in PartnerAction must be instance of Money $within");
+        !isset($this->amount) || $this->amount->validate(PartnerAction::class);
+    }
+
+    public function __construct()
+    {
     }
 }

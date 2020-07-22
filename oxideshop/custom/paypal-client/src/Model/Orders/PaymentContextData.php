@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Payment context data required for processing payments for an order.
@@ -42,16 +43,50 @@ class PaymentContextData implements JsonSerializable
     /**
      * @var array<Facilitator>
      * List of facilitators involved in the payment[s].
+     *
+     * maxItems: 1
+     * maxItems: 10
      */
     public $facilitators;
 
     /**
      * @var array<PaymentUnit>
      * List of payment contract data.
+     *
+     * maxItems: 1
+     * maxItems: 100
      */
     public $payment_units;
 
-    public function validate()
+    public function validate($from = null)
+    {
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->application_context) || Assert::isInstanceOf($this->application_context, OrderApplicationContext::class, "application_context in PaymentContextData must be instance of OrderApplicationContext $within");
+        !isset($this->application_context) || $this->application_context->validate(PaymentContextData::class);
+        Assert::notNull($this->facilitators, "facilitators in PaymentContextData must not be NULL $within");
+         Assert::minCount($this->facilitators, 1, "facilitators in PaymentContextData must have min. count of 1 $within");
+         Assert::maxCount($this->facilitators, 10, "facilitators in PaymentContextData must have max. count of 10 $within");
+         Assert::isArray($this->facilitators, "facilitators in PaymentContextData must be array $within");
+
+                                if (isset($this->facilitators)){
+                                    foreach ($this->facilitators as $item) {
+                                        $item->validate(PaymentContextData::class);
+                                    }
+                                }
+
+        Assert::notNull($this->payment_units, "payment_units in PaymentContextData must not be NULL $within");
+         Assert::minCount($this->payment_units, 1, "payment_units in PaymentContextData must have min. count of 1 $within");
+         Assert::maxCount($this->payment_units, 100, "payment_units in PaymentContextData must have max. count of 100 $within");
+         Assert::isArray($this->payment_units, "payment_units in PaymentContextData must be array $within");
+
+                                if (isset($this->payment_units)){
+                                    foreach ($this->payment_units as $item) {
+                                        $item->validate(PaymentContextData::class);
+                                    }
+                                }
+    }
+
+    public function __construct()
     {
     }
 }

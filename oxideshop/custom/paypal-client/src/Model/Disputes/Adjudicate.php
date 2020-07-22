@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * A request to settle a dispute in either the customer's or merchant's favor.
@@ -32,9 +33,14 @@ class Adjudicate implements JsonSerializable
      */
     public $adjudication_outcome;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->adjudication_outcome) || strlen($this->adjudication_outcome) >= 1);
-        assert(!isset($this->adjudication_outcome) || strlen($this->adjudication_outcome) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->adjudication_outcome) || Assert::minLength($this->adjudication_outcome, 1, "adjudication_outcome in Adjudicate must have minlength of 1 $within");
+        !isset($this->adjudication_outcome) || Assert::maxLength($this->adjudication_outcome, 255, "adjudication_outcome in Adjudicate must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

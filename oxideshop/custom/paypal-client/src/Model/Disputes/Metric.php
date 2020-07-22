@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * A metric.
@@ -35,9 +36,21 @@ class Metric implements JsonSerializable
      */
     public $amount;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->key) || strlen($this->key) >= 1);
-        assert(!isset($this->key) || strlen($this->key) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->key) || Assert::minLength($this->key, 1, "key in Metric must have minlength of 1 $within");
+        !isset($this->key) || Assert::maxLength($this->key, 255, "key in Metric must have maxlength of 255 $within");
+        !isset($this->amount) || Assert::isArray($this->amount, "amount in Metric must be array $within");
+
+                                if (isset($this->amount)){
+                                    foreach ($this->amount as $item) {
+                                        $item->validate(Metric::class);
+                                    }
+                                }
+    }
+
+    public function __construct()
+    {
     }
 }

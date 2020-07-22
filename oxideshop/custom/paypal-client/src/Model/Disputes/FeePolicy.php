@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Policy that determines whether the fee needs to be retained or returned while moving the money as part of
@@ -37,9 +38,14 @@ class FeePolicy implements JsonSerializable
      */
     public $transaction_fee;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->transaction_fee) || strlen($this->transaction_fee) >= 1);
-        assert(!isset($this->transaction_fee) || strlen($this->transaction_fee) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->transaction_fee) || Assert::minLength($this->transaction_fee, 1, "transaction_fee in FeePolicy must have minlength of 1 $within");
+        !isset($this->transaction_fee) || Assert::maxLength($this->transaction_fee, 255, "transaction_fee in FeePolicy must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Any additional payment instructions for PayPal Commerce Platform customers. Enables features for the PayPal
@@ -25,6 +26,9 @@ class PaymentInstruction implements JsonSerializable
     /**
      * @var array<PlatformFee>
      * An array of various fees, commissions, tips, or donations.
+     *
+     * maxItems: 0
+     * maxItems: 1
      */
     public $platform_fees;
 
@@ -38,7 +42,22 @@ class PaymentInstruction implements JsonSerializable
      */
     public $disbursement_mode = 'INSTANT';
 
-    public function validate()
+    public function validate($from = null)
+    {
+        $within = isset($from) ? "within $from" : "";
+        Assert::notNull($this->platform_fees, "platform_fees in PaymentInstruction must not be NULL $within");
+         Assert::minCount($this->platform_fees, 0, "platform_fees in PaymentInstruction must have min. count of 0 $within");
+         Assert::maxCount($this->platform_fees, 1, "platform_fees in PaymentInstruction must have max. count of 1 $within");
+         Assert::isArray($this->platform_fees, "platform_fees in PaymentInstruction must be array $within");
+
+                                if (isset($this->platform_fees)){
+                                    foreach ($this->platform_fees as $item) {
+                                        $item->validate(PaymentInstruction::class);
+                                    }
+                                }
+    }
+
+    public function __construct()
     {
     }
 }

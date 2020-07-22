@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The preference that customizes the billing experience of the customer.
@@ -29,9 +30,14 @@ class BillingExperiencePreference implements JsonSerializable
      */
     public $billing_context_set;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->experience_id) || strlen($this->experience_id) >= 1);
-        assert(!isset($this->experience_id) || strlen($this->experience_id) <= 20);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->experience_id) || Assert::minLength($this->experience_id, 1, "experience_id in BillingExperiencePreference must have minlength of 1 $within");
+        !isset($this->experience_id) || Assert::maxLength($this->experience_id, 20, "experience_id in BillingExperiencePreference must have maxlength of 20 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

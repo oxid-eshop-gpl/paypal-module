@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The bank account ID. An ID with `ROUTING_NUMBER_1` is required.
@@ -82,11 +83,16 @@ class Identifier implements JsonSerializable
      */
     public $value;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->type) || strlen($this->type) >= 1);
-        assert(!isset($this->type) || strlen($this->type) <= 125);
-        assert(!isset($this->value) || strlen($this->value) >= 1);
-        assert(!isset($this->value) || strlen($this->value) <= 125);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->type) || Assert::minLength($this->type, 1, "type in Identifier must have minlength of 1 $within");
+        !isset($this->type) || Assert::maxLength($this->type, 125, "type in Identifier must have maxlength of 125 $within");
+        !isset($this->value) || Assert::minLength($this->value, 1, "value in Identifier must have minlength of 1 $within");
+        !isset($this->value) || Assert::maxLength($this->value, 125, "value in Identifier must have maxlength of 125 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

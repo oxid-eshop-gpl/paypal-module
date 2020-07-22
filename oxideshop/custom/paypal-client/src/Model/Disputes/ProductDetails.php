@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The product information.
@@ -77,15 +78,23 @@ class ProductDetails implements JsonSerializable
      */
     public $return_details;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->description) || strlen($this->description) >= 1);
-        assert(!isset($this->description) || strlen($this->description) <= 2000);
-        assert(!isset($this->product_received) || strlen($this->product_received) >= 1);
-        assert(!isset($this->product_received) || strlen($this->product_received) <= 255);
-        assert(!isset($this->product_received_time) || strlen($this->product_received_time) >= 20);
-        assert(!isset($this->product_received_time) || strlen($this->product_received_time) <= 64);
-        assert(!isset($this->purchase_url) || strlen($this->purchase_url) >= 1);
-        assert(!isset($this->purchase_url) || strlen($this->purchase_url) <= 2000);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->description) || Assert::minLength($this->description, 1, "description in ProductDetails must have minlength of 1 $within");
+        !isset($this->description) || Assert::maxLength($this->description, 2000, "description in ProductDetails must have maxlength of 2000 $within");
+        !isset($this->product_received) || Assert::minLength($this->product_received, 1, "product_received in ProductDetails must have minlength of 1 $within");
+        !isset($this->product_received) || Assert::maxLength($this->product_received, 255, "product_received in ProductDetails must have maxlength of 255 $within");
+        !isset($this->product_received_time) || Assert::minLength($this->product_received_time, 20, "product_received_time in ProductDetails must have minlength of 20 $within");
+        !isset($this->product_received_time) || Assert::maxLength($this->product_received_time, 64, "product_received_time in ProductDetails must have maxlength of 64 $within");
+        !isset($this->sub_reasons) || Assert::isArray($this->sub_reasons, "sub_reasons in ProductDetails must be array $within");
+        !isset($this->purchase_url) || Assert::minLength($this->purchase_url, 1, "purchase_url in ProductDetails must have minlength of 1 $within");
+        !isset($this->purchase_url) || Assert::maxLength($this->purchase_url, 2000, "purchase_url in ProductDetails must have maxlength of 2000 $within");
+        !isset($this->return_details) || Assert::isInstanceOf($this->return_details, ReturnDetails::class, "return_details in ProductDetails must be instance of ReturnDetails $within");
+        !isset($this->return_details) || $this->return_details->validate(ProductDetails::class);
+    }
+
+    public function __construct()
+    {
     }
 }

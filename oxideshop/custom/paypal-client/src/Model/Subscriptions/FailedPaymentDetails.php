@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The details for the failed payment of the subscription.
@@ -84,14 +85,22 @@ class FailedPaymentDetails implements JsonSerializable
      */
     public $next_payment_retry_time;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(isset($this->amount));
-        assert(!isset($this->time) || strlen($this->time) >= 20);
-        assert(!isset($this->time) || strlen($this->time) <= 64);
-        assert(!isset($this->reason_code) || strlen($this->reason_code) >= 1);
-        assert(!isset($this->reason_code) || strlen($this->reason_code) <= 120);
-        assert(!isset($this->next_payment_retry_time) || strlen($this->next_payment_retry_time) >= 20);
-        assert(!isset($this->next_payment_retry_time) || strlen($this->next_payment_retry_time) <= 64);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->amount) || Assert::notNull($this->amount->currency_code, "currency_code in amount must not be NULL within FailedPaymentDetails $within");
+        !isset($this->amount) || Assert::notNull($this->amount->value, "value in amount must not be NULL within FailedPaymentDetails $within");
+        !isset($this->amount) || Assert::isInstanceOf($this->amount, Money::class, "amount in FailedPaymentDetails must be instance of Money $within");
+        !isset($this->amount) || $this->amount->validate(FailedPaymentDetails::class);
+        !isset($this->time) || Assert::minLength($this->time, 20, "time in FailedPaymentDetails must have minlength of 20 $within");
+        !isset($this->time) || Assert::maxLength($this->time, 64, "time in FailedPaymentDetails must have maxlength of 64 $within");
+        !isset($this->reason_code) || Assert::minLength($this->reason_code, 1, "reason_code in FailedPaymentDetails must have minlength of 1 $within");
+        !isset($this->reason_code) || Assert::maxLength($this->reason_code, 120, "reason_code in FailedPaymentDetails must have maxlength of 120 $within");
+        !isset($this->next_payment_retry_time) || Assert::minLength($this->next_payment_retry_time, 20, "next_payment_retry_time in FailedPaymentDetails must have minlength of 20 $within");
+        !isset($this->next_payment_retry_time) || Assert::maxLength($this->next_payment_retry_time, 64, "next_payment_retry_time in FailedPaymentDetails must have maxlength of 64 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

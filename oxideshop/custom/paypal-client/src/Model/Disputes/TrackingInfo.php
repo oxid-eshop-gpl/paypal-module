@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The tracking information.
@@ -532,15 +533,20 @@ class TrackingInfo implements JsonSerializable
      */
     public $tracking_number;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->carrier_name) || strlen($this->carrier_name) >= 1);
-        assert(!isset($this->carrier_name) || strlen($this->carrier_name) <= 255);
-        assert(!isset($this->carrier_name_other) || strlen($this->carrier_name_other) >= 1);
-        assert(!isset($this->carrier_name_other) || strlen($this->carrier_name_other) <= 2000);
-        assert(!isset($this->tracking_url) || strlen($this->tracking_url) >= 1);
-        assert(!isset($this->tracking_url) || strlen($this->tracking_url) <= 2000);
-        assert(!isset($this->tracking_number) || strlen($this->tracking_number) >= 1);
-        assert(!isset($this->tracking_number) || strlen($this->tracking_number) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->carrier_name) || Assert::minLength($this->carrier_name, 1, "carrier_name in TrackingInfo must have minlength of 1 $within");
+        !isset($this->carrier_name) || Assert::maxLength($this->carrier_name, 255, "carrier_name in TrackingInfo must have maxlength of 255 $within");
+        !isset($this->carrier_name_other) || Assert::minLength($this->carrier_name_other, 1, "carrier_name_other in TrackingInfo must have minlength of 1 $within");
+        !isset($this->carrier_name_other) || Assert::maxLength($this->carrier_name_other, 2000, "carrier_name_other in TrackingInfo must have maxlength of 2000 $within");
+        !isset($this->tracking_url) || Assert::minLength($this->tracking_url, 1, "tracking_url in TrackingInfo must have minlength of 1 $within");
+        !isset($this->tracking_url) || Assert::maxLength($this->tracking_url, 2000, "tracking_url in TrackingInfo must have maxlength of 2000 $within");
+        !isset($this->tracking_number) || Assert::minLength($this->tracking_number, 1, "tracking_number in TrackingInfo must have minlength of 1 $within");
+        !isset($this->tracking_number) || Assert::maxLength($this->tracking_number, 255, "tracking_number in TrackingInfo must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

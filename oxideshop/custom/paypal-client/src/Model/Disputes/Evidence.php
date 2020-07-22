@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * A merchant- or customer-submitted evidence document.
@@ -339,16 +340,31 @@ class Evidence implements JsonSerializable
      */
     public $item_id;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->evidence_type) || strlen($this->evidence_type) >= 1);
-        assert(!isset($this->evidence_type) || strlen($this->evidence_type) <= 255);
-        assert(!isset($this->notes) || strlen($this->notes) <= 2000);
-        assert(!isset($this->source) || strlen($this->source) >= 1);
-        assert(!isset($this->source) || strlen($this->source) <= 255);
-        assert(!isset($this->date) || strlen($this->date) >= 20);
-        assert(!isset($this->date) || strlen($this->date) <= 64);
-        assert(!isset($this->item_id) || strlen($this->item_id) >= 1);
-        assert(!isset($this->item_id) || strlen($this->item_id) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->evidence_type) || Assert::minLength($this->evidence_type, 1, "evidence_type in Evidence must have minlength of 1 $within");
+        !isset($this->evidence_type) || Assert::maxLength($this->evidence_type, 255, "evidence_type in Evidence must have maxlength of 255 $within");
+        !isset($this->evidence_info) || Assert::isInstanceOf($this->evidence_info, EvidenceInfo::class, "evidence_info in Evidence must be instance of EvidenceInfo $within");
+        !isset($this->evidence_info) || $this->evidence_info->validate(Evidence::class);
+        !isset($this->documents) || Assert::isArray($this->documents, "documents in Evidence must be array $within");
+
+                                if (isset($this->documents)){
+                                    foreach ($this->documents as $item) {
+                                        $item->validate(Evidence::class);
+                                    }
+                                }
+
+        !isset($this->notes) || Assert::maxLength($this->notes, 2000, "notes in Evidence must have maxlength of 2000 $within");
+        !isset($this->source) || Assert::minLength($this->source, 1, "source in Evidence must have minlength of 1 $within");
+        !isset($this->source) || Assert::maxLength($this->source, 255, "source in Evidence must have maxlength of 255 $within");
+        !isset($this->date) || Assert::minLength($this->date, 20, "date in Evidence must have minlength of 20 $within");
+        !isset($this->date) || Assert::maxLength($this->date, 64, "date in Evidence must have maxlength of 64 $within");
+        !isset($this->item_id) || Assert::minLength($this->item_id, 1, "item_id in Evidence must have minlength of 1 $within");
+        !isset($this->item_id) || Assert::maxLength($this->item_id, 255, "item_id in Evidence must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

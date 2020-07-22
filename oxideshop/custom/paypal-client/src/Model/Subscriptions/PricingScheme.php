@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The pricing scheme details.
@@ -70,6 +71,9 @@ class PricingScheme implements JsonSerializable
      * @var array<PricingTier>
      * An array of pricing tiers which are used for billing volume/graduated plans. tier_mode field has to be
      * specified.
+     *
+     * maxItems: 1
+     * maxItems: 32
      */
     public $tiers;
 
@@ -102,16 +106,37 @@ class PricingScheme implements JsonSerializable
      */
     public $update_time;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->status) || strlen($this->status) >= 1);
-        assert(!isset($this->status) || strlen($this->status) <= 24);
-        assert(isset($this->fixed_price));
-        assert(!isset($this->tier_mode) || strlen($this->tier_mode) >= 1);
-        assert(!isset($this->tier_mode) || strlen($this->tier_mode) <= 24);
-        assert(!isset($this->create_time) || strlen($this->create_time) >= 20);
-        assert(!isset($this->create_time) || strlen($this->create_time) <= 64);
-        assert(!isset($this->update_time) || strlen($this->update_time) >= 20);
-        assert(!isset($this->update_time) || strlen($this->update_time) <= 64);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->status) || Assert::minLength($this->status, 1, "status in PricingScheme must have minlength of 1 $within");
+        !isset($this->status) || Assert::maxLength($this->status, 24, "status in PricingScheme must have maxlength of 24 $within");
+        !isset($this->fixed_price) || Assert::notNull($this->fixed_price->currency_code, "currency_code in fixed_price must not be NULL within PricingScheme $within");
+        !isset($this->fixed_price) || Assert::notNull($this->fixed_price->value, "value in fixed_price must not be NULL within PricingScheme $within");
+        !isset($this->fixed_price) || Assert::isInstanceOf($this->fixed_price, Money::class, "fixed_price in PricingScheme must be instance of Money $within");
+        !isset($this->fixed_price) || $this->fixed_price->validate(PricingScheme::class);
+        !isset($this->tier_mode) || Assert::minLength($this->tier_mode, 1, "tier_mode in PricingScheme must have minlength of 1 $within");
+        !isset($this->tier_mode) || Assert::maxLength($this->tier_mode, 24, "tier_mode in PricingScheme must have maxlength of 24 $within");
+        Assert::notNull($this->tiers, "tiers in PricingScheme must not be NULL $within");
+         Assert::minCount($this->tiers, 1, "tiers in PricingScheme must have min. count of 1 $within");
+         Assert::maxCount($this->tiers, 32, "tiers in PricingScheme must have max. count of 32 $within");
+         Assert::isArray($this->tiers, "tiers in PricingScheme must be array $within");
+
+                                if (isset($this->tiers)){
+                                    foreach ($this->tiers as $item) {
+                                        $item->validate(PricingScheme::class);
+                                    }
+                                }
+
+        !isset($this->roll_out_strategy) || Assert::isInstanceOf($this->roll_out_strategy, RollOutStrategy::class, "roll_out_strategy in PricingScheme must be instance of RollOutStrategy $within");
+        !isset($this->roll_out_strategy) || $this->roll_out_strategy->validate(PricingScheme::class);
+        !isset($this->create_time) || Assert::minLength($this->create_time, 20, "create_time in PricingScheme must have minlength of 20 $within");
+        !isset($this->create_time) || Assert::maxLength($this->create_time, 64, "create_time in PricingScheme must have maxlength of 64 $within");
+        !isset($this->update_time) || Assert::minLength($this->update_time, 20, "update_time in PricingScheme must have minlength of 20 $within");
+        !isset($this->update_time) || Assert::maxLength($this->update_time, 64, "update_time in PricingScheme must have maxlength of 64 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

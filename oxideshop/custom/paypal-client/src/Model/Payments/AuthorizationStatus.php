@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The status fields for an authorized payment.
@@ -60,7 +61,14 @@ class AuthorizationStatus implements JsonSerializable
      */
     public $status_details;
 
-    public function validate()
+    public function validate($from = null)
+    {
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->status_details) || Assert::isInstanceOf($this->status_details, AuthorizationStatusDetails::class, "status_details in AuthorizationStatus must be instance of AuthorizationStatusDetails $within");
+        !isset($this->status_details) || $this->status_details->validate(AuthorizationStatus::class);
+    }
+
+    public function __construct()
     {
     }
 }

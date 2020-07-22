@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The third-party claims properties.
@@ -73,14 +74,22 @@ class ExternalCaseProperties implements JsonSerializable
      */
     public $reversal_fee;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->reference_id) || strlen($this->reference_id) >= 1);
-        assert(!isset($this->reference_id) || strlen($this->reference_id) <= 255);
-        assert(!isset($this->external_type) || strlen($this->external_type) >= 1);
-        assert(!isset($this->external_type) || strlen($this->external_type) <= 255);
-        assert(!isset($this->recovery_type) || strlen($this->recovery_type) >= 1);
-        assert(!isset($this->recovery_type) || strlen($this->recovery_type) <= 255);
-        assert(isset($this->reversal_fee));
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->reference_id) || Assert::minLength($this->reference_id, 1, "reference_id in ExternalCaseProperties must have minlength of 1 $within");
+        !isset($this->reference_id) || Assert::maxLength($this->reference_id, 255, "reference_id in ExternalCaseProperties must have maxlength of 255 $within");
+        !isset($this->external_type) || Assert::minLength($this->external_type, 1, "external_type in ExternalCaseProperties must have minlength of 1 $within");
+        !isset($this->external_type) || Assert::maxLength($this->external_type, 255, "external_type in ExternalCaseProperties must have maxlength of 255 $within");
+        !isset($this->recovery_type) || Assert::minLength($this->recovery_type, 1, "recovery_type in ExternalCaseProperties must have minlength of 1 $within");
+        !isset($this->recovery_type) || Assert::maxLength($this->recovery_type, 255, "recovery_type in ExternalCaseProperties must have maxlength of 255 $within");
+        !isset($this->reversal_fee) || Assert::notNull($this->reversal_fee->currency_code, "currency_code in reversal_fee must not be NULL within ExternalCaseProperties $within");
+        !isset($this->reversal_fee) || Assert::notNull($this->reversal_fee->value, "value in reversal_fee must not be NULL within ExternalCaseProperties $within");
+        !isset($this->reversal_fee) || Assert::isInstanceOf($this->reversal_fee, Money::class, "reversal_fee in ExternalCaseProperties must be instance of Money $within");
+        !isset($this->reversal_fee) || $this->reversal_fee->validate(ExternalCaseProperties::class);
+    }
+
+    public function __construct()
+    {
     }
 }

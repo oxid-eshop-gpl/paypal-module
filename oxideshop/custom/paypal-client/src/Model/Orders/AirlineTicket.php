@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The details for the airline ticket.
@@ -87,20 +88,34 @@ class AirlineTicket implements JsonSerializable
      */
     public $fee;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->number) || strlen($this->number) >= 1);
-        assert(!isset($this->number) || strlen($this->number) <= 16);
-        assert(!isset($this->issue_date) || strlen($this->issue_date) >= 10);
-        assert(!isset($this->issue_date) || strlen($this->issue_date) <= 10);
-        assert(!isset($this->issuing_carrier_code) || strlen($this->issuing_carrier_code) >= 2);
-        assert(!isset($this->issuing_carrier_code) || strlen($this->issuing_carrier_code) <= 2);
-        assert(!isset($this->travel_agency_name) || strlen($this->travel_agency_name) >= 1);
-        assert(!isset($this->travel_agency_name) || strlen($this->travel_agency_name) <= 25);
-        assert(!isset($this->travel_agency_code) || strlen($this->travel_agency_code) >= 1);
-        assert(!isset($this->travel_agency_code) || strlen($this->travel_agency_code) <= 8);
-        assert(isset($this->fare));
-        assert(isset($this->tax));
-        assert(isset($this->fee));
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->number) || Assert::minLength($this->number, 1, "number in AirlineTicket must have minlength of 1 $within");
+        !isset($this->number) || Assert::maxLength($this->number, 16, "number in AirlineTicket must have maxlength of 16 $within");
+        !isset($this->issue_date) || Assert::minLength($this->issue_date, 10, "issue_date in AirlineTicket must have minlength of 10 $within");
+        !isset($this->issue_date) || Assert::maxLength($this->issue_date, 10, "issue_date in AirlineTicket must have maxlength of 10 $within");
+        !isset($this->issuing_carrier_code) || Assert::minLength($this->issuing_carrier_code, 2, "issuing_carrier_code in AirlineTicket must have minlength of 2 $within");
+        !isset($this->issuing_carrier_code) || Assert::maxLength($this->issuing_carrier_code, 2, "issuing_carrier_code in AirlineTicket must have maxlength of 2 $within");
+        !isset($this->travel_agency_name) || Assert::minLength($this->travel_agency_name, 1, "travel_agency_name in AirlineTicket must have minlength of 1 $within");
+        !isset($this->travel_agency_name) || Assert::maxLength($this->travel_agency_name, 25, "travel_agency_name in AirlineTicket must have maxlength of 25 $within");
+        !isset($this->travel_agency_code) || Assert::minLength($this->travel_agency_code, 1, "travel_agency_code in AirlineTicket must have minlength of 1 $within");
+        !isset($this->travel_agency_code) || Assert::maxLength($this->travel_agency_code, 8, "travel_agency_code in AirlineTicket must have maxlength of 8 $within");
+        !isset($this->fare) || Assert::notNull($this->fare->currency_code, "currency_code in fare must not be NULL within AirlineTicket $within");
+        !isset($this->fare) || Assert::notNull($this->fare->value, "value in fare must not be NULL within AirlineTicket $within");
+        !isset($this->fare) || Assert::isInstanceOf($this->fare, Money::class, "fare in AirlineTicket must be instance of Money $within");
+        !isset($this->fare) || $this->fare->validate(AirlineTicket::class);
+        !isset($this->tax) || Assert::notNull($this->tax->currency_code, "currency_code in tax must not be NULL within AirlineTicket $within");
+        !isset($this->tax) || Assert::notNull($this->tax->value, "value in tax must not be NULL within AirlineTicket $within");
+        !isset($this->tax) || Assert::isInstanceOf($this->tax, Money::class, "tax in AirlineTicket must be instance of Money $within");
+        !isset($this->tax) || $this->tax->validate(AirlineTicket::class);
+        !isset($this->fee) || Assert::notNull($this->fee->currency_code, "currency_code in fee must not be NULL within AirlineTicket $within");
+        !isset($this->fee) || Assert::notNull($this->fee->value, "value in fee must not be NULL within AirlineTicket $within");
+        !isset($this->fee) || Assert::isInstanceOf($this->fee, Money::class, "fee in AirlineTicket must be instance of Money $within");
+        !isset($this->fee) || $this->fee->validate(AirlineTicket::class);
+    }
+
+    public function __construct()
+    {
     }
 }

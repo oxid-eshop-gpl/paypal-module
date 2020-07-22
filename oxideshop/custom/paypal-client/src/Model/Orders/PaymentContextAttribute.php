@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Payment Context Attribute. Typically used as a reference for a payment. Eg: CART_ID, PAY_ID.
@@ -32,11 +33,16 @@ class PaymentContextAttribute implements JsonSerializable
      */
     public $value;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->name) || strlen($this->name) >= 1);
-        assert(!isset($this->name) || strlen($this->name) <= 127);
-        assert(!isset($this->value) || strlen($this->value) >= 1);
-        assert(!isset($this->value) || strlen($this->value) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->name) || Assert::minLength($this->name, 1, "name in PaymentContextAttribute must have minlength of 1 $within");
+        !isset($this->name) || Assert::maxLength($this->name, 127, "name in PaymentContextAttribute must have maxlength of 127 $within");
+        !isset($this->value) || Assert::minLength($this->value, 1, "value in PaymentContextAttribute must have minlength of 1 $within");
+        !isset($this->value) || Assert::maxLength($this->value, 255, "value in PaymentContextAttribute must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

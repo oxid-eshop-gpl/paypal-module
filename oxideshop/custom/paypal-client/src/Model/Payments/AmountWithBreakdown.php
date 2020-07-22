@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The total order amount with an optional breakdown that provides details, such as the total item amount, total
@@ -26,7 +27,14 @@ class AmountWithBreakdown extends Money implements JsonSerializable
      */
     public $breakdown;
 
-    public function validate()
+    public function validate($from = null)
+    {
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->breakdown) || Assert::isInstanceOf($this->breakdown, AmountBreakdown::class, "breakdown in AmountWithBreakdown must be instance of AmountBreakdown $within");
+        !isset($this->breakdown) || $this->breakdown->validate(AmountWithBreakdown::class);
+    }
+
+    public function __construct()
     {
     }
 }

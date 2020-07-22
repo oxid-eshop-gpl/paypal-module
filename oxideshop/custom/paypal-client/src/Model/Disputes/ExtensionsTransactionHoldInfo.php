@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The transaction hold information.
@@ -38,11 +39,16 @@ class ExtensionsTransactionHoldInfo implements JsonSerializable
      */
     public $reason;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->id) || strlen($this->id) >= 1);
-        assert(!isset($this->id) || strlen($this->id) <= 255);
-        assert(!isset($this->reason) || strlen($this->reason) >= 1);
-        assert(!isset($this->reason) || strlen($this->reason) <= 2000);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->id) || Assert::minLength($this->id, 1, "id in ExtensionsTransactionHoldInfo must have minlength of 1 $within");
+        !isset($this->id) || Assert::maxLength($this->id, 255, "id in ExtensionsTransactionHoldInfo must have maxlength of 255 $within");
+        !isset($this->reason) || Assert::minLength($this->reason, 1, "reason in ExtensionsTransactionHoldInfo must have minlength of 1 $within");
+        !isset($this->reason) || Assert::maxLength($this->reason, 2000, "reason in ExtensionsTransactionHoldInfo must have maxlength of 2000 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

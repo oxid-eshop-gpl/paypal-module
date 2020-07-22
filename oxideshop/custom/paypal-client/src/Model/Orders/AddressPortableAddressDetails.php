@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The non-portable additional address details that are sometimes needed for compliance, risk, or other scenarios
@@ -67,13 +68,18 @@ class AddressPortableAddressDetails implements JsonSerializable
      */
     public $sub_building;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->street_number) || strlen($this->street_number) <= 100);
-        assert(!isset($this->street_name) || strlen($this->street_name) <= 100);
-        assert(!isset($this->street_type) || strlen($this->street_type) <= 100);
-        assert(!isset($this->delivery_service) || strlen($this->delivery_service) <= 100);
-        assert(!isset($this->building_name) || strlen($this->building_name) <= 100);
-        assert(!isset($this->sub_building) || strlen($this->sub_building) <= 100);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->street_number) || Assert::maxLength($this->street_number, 100, "street_number in AddressPortableAddressDetails must have maxlength of 100 $within");
+        !isset($this->street_name) || Assert::maxLength($this->street_name, 100, "street_name in AddressPortableAddressDetails must have maxlength of 100 $within");
+        !isset($this->street_type) || Assert::maxLength($this->street_type, 100, "street_type in AddressPortableAddressDetails must have maxlength of 100 $within");
+        !isset($this->delivery_service) || Assert::maxLength($this->delivery_service, 100, "delivery_service in AddressPortableAddressDetails must have maxlength of 100 $within");
+        !isset($this->building_name) || Assert::maxLength($this->building_name, 100, "building_name in AddressPortableAddressDetails must have maxlength of 100 $within");
+        !isset($this->sub_building) || Assert::maxLength($this->sub_building, 100, "sub_building in AddressPortableAddressDetails must have maxlength of 100 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

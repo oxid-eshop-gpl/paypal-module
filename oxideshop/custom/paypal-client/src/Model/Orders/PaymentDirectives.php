@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Payment Directives for transaction.
@@ -105,18 +106,27 @@ class PaymentDirectives implements JsonSerializable
     /**
      * @var array<PolicyDirective>
      * Policy directives indicating how to process the payment.
+     *
+     * maxItems: 1
+     * maxItems: 30
      */
     public $policy_directives;
 
     /**
      * @var array<PaymentMethodDirective>
      * Directives for certain payment methods based on eligibility.
+     *
+     * maxItems: 1
+     * maxItems: 30
      */
     public $payment_method_directives;
 
     /**
      * @var array<PricingDirective>
      * Pricing directives for the transaction.
+     *
+     * maxItems: 1
+     * maxItems: 25
      */
     public $pricing_directives;
 
@@ -147,19 +157,59 @@ class PaymentDirectives implements JsonSerializable
      */
     public $immediate_payment_required;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->disbursement_type) || strlen($this->disbursement_type) >= 1);
-        assert(!isset($this->disbursement_type) || strlen($this->disbursement_type) <= 255);
-        assert(!isset($this->linked_group_id) || strlen($this->linked_group_id) >= 1);
-        assert(!isset($this->linked_group_id) || strlen($this->linked_group_id) <= 10);
-        assert(!isset($this->settlement_account_number) || strlen($this->settlement_account_number) >= 1);
-        assert(!isset($this->settlement_account_number) || strlen($this->settlement_account_number) <= 30);
-        assert(!isset($this->loss_account_number) || strlen($this->loss_account_number) >= 1);
-        assert(!isset($this->loss_account_number) || strlen($this->loss_account_number) <= 30);
-        assert(!isset($this->liability_type) || strlen($this->liability_type) >= 1);
-        assert(!isset($this->liability_type) || strlen($this->liability_type) <= 255);
-        assert(!isset($this->currency_receiving_directive) || strlen($this->currency_receiving_directive) >= 1);
-        assert(!isset($this->currency_receiving_directive) || strlen($this->currency_receiving_directive) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->disbursement_type) || Assert::minLength($this->disbursement_type, 1, "disbursement_type in PaymentDirectives must have minlength of 1 $within");
+        !isset($this->disbursement_type) || Assert::maxLength($this->disbursement_type, 255, "disbursement_type in PaymentDirectives must have maxlength of 255 $within");
+        !isset($this->linked_group_id) || Assert::minLength($this->linked_group_id, 1, "linked_group_id in PaymentDirectives must have minlength of 1 $within");
+        !isset($this->linked_group_id) || Assert::maxLength($this->linked_group_id, 10, "linked_group_id in PaymentDirectives must have maxlength of 10 $within");
+        !isset($this->settlement_account_number) || Assert::minLength($this->settlement_account_number, 1, "settlement_account_number in PaymentDirectives must have minlength of 1 $within");
+        !isset($this->settlement_account_number) || Assert::maxLength($this->settlement_account_number, 30, "settlement_account_number in PaymentDirectives must have maxlength of 30 $within");
+        !isset($this->loss_account_number) || Assert::minLength($this->loss_account_number, 1, "loss_account_number in PaymentDirectives must have minlength of 1 $within");
+        !isset($this->loss_account_number) || Assert::maxLength($this->loss_account_number, 30, "loss_account_number in PaymentDirectives must have maxlength of 30 $within");
+        !isset($this->liability_type) || Assert::minLength($this->liability_type, 1, "liability_type in PaymentDirectives must have minlength of 1 $within");
+        !isset($this->liability_type) || Assert::maxLength($this->liability_type, 255, "liability_type in PaymentDirectives must have maxlength of 255 $within");
+        Assert::notNull($this->policy_directives, "policy_directives in PaymentDirectives must not be NULL $within");
+         Assert::minCount($this->policy_directives, 1, "policy_directives in PaymentDirectives must have min. count of 1 $within");
+         Assert::maxCount($this->policy_directives, 30, "policy_directives in PaymentDirectives must have max. count of 30 $within");
+         Assert::isArray($this->policy_directives, "policy_directives in PaymentDirectives must be array $within");
+
+                                if (isset($this->policy_directives)){
+                                    foreach ($this->policy_directives as $item) {
+                                        $item->validate(PaymentDirectives::class);
+                                    }
+                                }
+
+        Assert::notNull($this->payment_method_directives, "payment_method_directives in PaymentDirectives must not be NULL $within");
+         Assert::minCount($this->payment_method_directives, 1, "payment_method_directives in PaymentDirectives must have min. count of 1 $within");
+         Assert::maxCount($this->payment_method_directives, 30, "payment_method_directives in PaymentDirectives must have max. count of 30 $within");
+         Assert::isArray($this->payment_method_directives, "payment_method_directives in PaymentDirectives must be array $within");
+
+                                if (isset($this->payment_method_directives)){
+                                    foreach ($this->payment_method_directives as $item) {
+                                        $item->validate(PaymentDirectives::class);
+                                    }
+                                }
+
+        Assert::notNull($this->pricing_directives, "pricing_directives in PaymentDirectives must not be NULL $within");
+         Assert::minCount($this->pricing_directives, 1, "pricing_directives in PaymentDirectives must have min. count of 1 $within");
+         Assert::maxCount($this->pricing_directives, 25, "pricing_directives in PaymentDirectives must have max. count of 25 $within");
+         Assert::isArray($this->pricing_directives, "pricing_directives in PaymentDirectives must be array $within");
+
+                                if (isset($this->pricing_directives)){
+                                    foreach ($this->pricing_directives as $item) {
+                                        $item->validate(PaymentDirectives::class);
+                                    }
+                                }
+
+        !isset($this->authorization_directives) || Assert::isInstanceOf($this->authorization_directives, AuthorizationDirectives::class, "authorization_directives in PaymentDirectives must be instance of AuthorizationDirectives $within");
+        !isset($this->authorization_directives) || $this->authorization_directives->validate(PaymentDirectives::class);
+        !isset($this->currency_receiving_directive) || Assert::minLength($this->currency_receiving_directive, 1, "currency_receiving_directive in PaymentDirectives must have minlength of 1 $within");
+        !isset($this->currency_receiving_directive) || Assert::maxLength($this->currency_receiving_directive, 255, "currency_receiving_directive in PaymentDirectives must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

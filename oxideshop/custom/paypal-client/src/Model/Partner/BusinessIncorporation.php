@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Business incorporation information.
@@ -48,13 +49,18 @@ class BusinessIncorporation implements JsonSerializable
      */
     public $incorporation_province_code;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->incorporation_country_code) || strlen($this->incorporation_country_code) >= 2);
-        assert(!isset($this->incorporation_country_code) || strlen($this->incorporation_country_code) <= 2);
-        assert(!isset($this->incorporation_date) || strlen($this->incorporation_date) >= 10);
-        assert(!isset($this->incorporation_date) || strlen($this->incorporation_date) <= 10);
-        assert(!isset($this->incorporation_province_code) || strlen($this->incorporation_province_code) >= 1);
-        assert(!isset($this->incorporation_province_code) || strlen($this->incorporation_province_code) <= 50);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->incorporation_country_code) || Assert::minLength($this->incorporation_country_code, 2, "incorporation_country_code in BusinessIncorporation must have minlength of 2 $within");
+        !isset($this->incorporation_country_code) || Assert::maxLength($this->incorporation_country_code, 2, "incorporation_country_code in BusinessIncorporation must have maxlength of 2 $within");
+        !isset($this->incorporation_date) || Assert::minLength($this->incorporation_date, 10, "incorporation_date in BusinessIncorporation must have minlength of 10 $within");
+        !isset($this->incorporation_date) || Assert::maxLength($this->incorporation_date, 10, "incorporation_date in BusinessIncorporation must have maxlength of 10 $within");
+        !isset($this->incorporation_province_code) || Assert::minLength($this->incorporation_province_code, 1, "incorporation_province_code in BusinessIncorporation must have minlength of 1 $within");
+        !isset($this->incorporation_province_code) || Assert::maxLength($this->incorporation_province_code, 50, "incorporation_province_code in BusinessIncorporation must have maxlength of 50 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

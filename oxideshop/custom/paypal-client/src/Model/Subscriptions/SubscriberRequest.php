@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The subscriber request information .
@@ -28,7 +29,16 @@ class SubscriberRequest extends Payer implements JsonSerializable
      */
     public $payment_source;
 
-    public function validate()
+    public function validate($from = null)
+    {
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->shipping_address) || Assert::isInstanceOf($this->shipping_address, ShippingDetail::class, "shipping_address in SubscriberRequest must be instance of ShippingDetail $within");
+        !isset($this->shipping_address) || $this->shipping_address->validate(SubscriberRequest::class);
+        !isset($this->payment_source) || Assert::isInstanceOf($this->payment_source, PaymentSource::class, "payment_source in SubscriberRequest must be instance of PaymentSource $within");
+        !isset($this->payment_source) || $this->payment_source->validate(SubscriberRequest::class);
+    }
+
+    public function __construct()
     {
     }
 }

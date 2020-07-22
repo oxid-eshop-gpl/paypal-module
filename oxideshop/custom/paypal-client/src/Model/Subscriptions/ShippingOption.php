@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The options that the payee or merchant offers to the payer to ship or pick up their items.
@@ -64,10 +65,18 @@ class ShippingOption implements JsonSerializable
      */
     public $selected;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->id) || strlen($this->id) <= 127);
-        assert(!isset($this->label) || strlen($this->label) <= 127);
-        assert(isset($this->amount));
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->id) || Assert::maxLength($this->id, 127, "id in ShippingOption must have maxlength of 127 $within");
+        !isset($this->label) || Assert::maxLength($this->label, 127, "label in ShippingOption must have maxlength of 127 $within");
+        !isset($this->amount) || Assert::notNull($this->amount->currency_code, "currency_code in amount must not be NULL within ShippingOption $within");
+        !isset($this->amount) || Assert::notNull($this->amount->value, "value in amount must not be NULL within ShippingOption $within");
+        !isset($this->amount) || Assert::isInstanceOf($this->amount, Money::class, "amount in ShippingOption must be instance of Money $within");
+        !isset($this->amount) || $this->amount->validate(ShippingOption::class);
+    }
+
+    public function __construct()
+    {
     }
 }

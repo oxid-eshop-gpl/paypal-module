@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The extended properties for the dispute. Includes additional information for a dispute category, such as
@@ -119,15 +120,28 @@ class Extensions implements JsonSerializable
      */
     public $external_case_properties;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->merchant_contacted_outcome) || strlen($this->merchant_contacted_outcome) >= 1);
-        assert(!isset($this->merchant_contacted_outcome) || strlen($this->merchant_contacted_outcome) <= 255);
-        assert(!isset($this->merchant_contacted_time) || strlen($this->merchant_contacted_time) >= 20);
-        assert(!isset($this->merchant_contacted_time) || strlen($this->merchant_contacted_time) <= 64);
-        assert(!isset($this->merchant_contacted_mode) || strlen($this->merchant_contacted_mode) >= 1);
-        assert(!isset($this->merchant_contacted_mode) || strlen($this->merchant_contacted_mode) <= 255);
-        assert(!isset($this->buyer_contacted_time) || strlen($this->buyer_contacted_time) >= 20);
-        assert(!isset($this->buyer_contacted_time) || strlen($this->buyer_contacted_time) <= 64);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->merchant_contacted_outcome) || Assert::minLength($this->merchant_contacted_outcome, 1, "merchant_contacted_outcome in Extensions must have minlength of 1 $within");
+        !isset($this->merchant_contacted_outcome) || Assert::maxLength($this->merchant_contacted_outcome, 255, "merchant_contacted_outcome in Extensions must have maxlength of 255 $within");
+        !isset($this->merchant_contacted_time) || Assert::minLength($this->merchant_contacted_time, 20, "merchant_contacted_time in Extensions must have minlength of 20 $within");
+        !isset($this->merchant_contacted_time) || Assert::maxLength($this->merchant_contacted_time, 64, "merchant_contacted_time in Extensions must have maxlength of 64 $within");
+        !isset($this->merchant_contacted_mode) || Assert::minLength($this->merchant_contacted_mode, 1, "merchant_contacted_mode in Extensions must have minlength of 1 $within");
+        !isset($this->merchant_contacted_mode) || Assert::maxLength($this->merchant_contacted_mode, 255, "merchant_contacted_mode in Extensions must have maxlength of 255 $within");
+        !isset($this->buyer_contacted_time) || Assert::minLength($this->buyer_contacted_time, 20, "buyer_contacted_time in Extensions must have minlength of 20 $within");
+        !isset($this->buyer_contacted_time) || Assert::maxLength($this->buyer_contacted_time, 64, "buyer_contacted_time in Extensions must have maxlength of 64 $within");
+        !isset($this->billing_dispute_properties) || Assert::isInstanceOf($this->billing_dispute_properties, BillingDisputesProperties::class, "billing_dispute_properties in Extensions must be instance of BillingDisputesProperties $within");
+        !isset($this->billing_dispute_properties) || $this->billing_dispute_properties->validate(Extensions::class);
+        !isset($this->unauthorized_dispute_properties) || Assert::isInstanceOf($this->unauthorized_dispute_properties, UnauthorizedDisputeProperties::class, "unauthorized_dispute_properties in Extensions must be instance of UnauthorizedDisputeProperties $within");
+        !isset($this->unauthorized_dispute_properties) || $this->unauthorized_dispute_properties->validate(Extensions::class);
+        !isset($this->merchandize_dispute_properties) || Assert::isInstanceOf($this->merchandize_dispute_properties, MerchandizeDisputeProperties::class, "merchandize_dispute_properties in Extensions must be instance of MerchandizeDisputeProperties $within");
+        !isset($this->merchandize_dispute_properties) || $this->merchandize_dispute_properties->validate(Extensions::class);
+        !isset($this->external_case_properties) || Assert::isInstanceOf($this->external_case_properties, ExternalCaseProperties::class, "external_case_properties in Extensions must be instance of ExternalCaseProperties $within");
+        !isset($this->external_case_properties) || $this->external_case_properties->validate(Extensions::class);
+    }
+
+    public function __construct()
+    {
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The customer's referral data that partners share with PayPal.
@@ -64,12 +65,18 @@ class ReferralData extends Account implements JsonSerializable
     /**
      * @var array<Operation>
      * An array of operations to perform for the customer while they share their data.
+     *
+     * maxItems: 1
+     * maxItems: 5
      */
     public $operations;
 
     /**
      * @var array<string>
      * An array of PayPal products to which the partner wants to onboard the customer.
+     *
+     * maxItems: 1
+     * maxItems: 1
      */
     public $products;
 
@@ -77,16 +84,53 @@ class ReferralData extends Account implements JsonSerializable
      * @var array<LegalConsent>
      * An array of all consents that the partner has received from this seller. If `SHARE_DATA_CONSENT` is not
      * granted, PayPal does not store customer data.
+     *
+     * maxItems: 1
+     * maxItems: 5
      */
     public $legal_consents;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->email) || strlen($this->email) >= 3);
-        assert(!isset($this->email) || strlen($this->email) <= 254);
-        assert(!isset($this->preferred_language_code) || strlen($this->preferred_language_code) >= 2);
-        assert(!isset($this->preferred_language_code) || strlen($this->preferred_language_code) <= 10);
-        assert(!isset($this->tracking_id) || strlen($this->tracking_id) >= 1);
-        assert(!isset($this->tracking_id) || strlen($this->tracking_id) <= 127);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->email) || Assert::minLength($this->email, 3, "email in ReferralData must have minlength of 3 $within");
+        !isset($this->email) || Assert::maxLength($this->email, 254, "email in ReferralData must have maxlength of 254 $within");
+        !isset($this->preferred_language_code) || Assert::minLength($this->preferred_language_code, 2, "preferred_language_code in ReferralData must have minlength of 2 $within");
+        !isset($this->preferred_language_code) || Assert::maxLength($this->preferred_language_code, 10, "preferred_language_code in ReferralData must have maxlength of 10 $within");
+        !isset($this->tracking_id) || Assert::minLength($this->tracking_id, 1, "tracking_id in ReferralData must have minlength of 1 $within");
+        !isset($this->tracking_id) || Assert::maxLength($this->tracking_id, 127, "tracking_id in ReferralData must have maxlength of 127 $within");
+        !isset($this->partner_config_override) || Assert::isInstanceOf($this->partner_config_override, PartnerConfigOverride::class, "partner_config_override in ReferralData must be instance of PartnerConfigOverride $within");
+        !isset($this->partner_config_override) || $this->partner_config_override->validate(ReferralData::class);
+        !isset($this->financial_instruments) || Assert::isInstanceOf($this->financial_instruments, FinancialInstruments::class, "financial_instruments in ReferralData must be instance of FinancialInstruments $within");
+        !isset($this->financial_instruments) || $this->financial_instruments->validate(ReferralData::class);
+        Assert::notNull($this->operations, "operations in ReferralData must not be NULL $within");
+         Assert::minCount($this->operations, 1, "operations in ReferralData must have min. count of 1 $within");
+         Assert::maxCount($this->operations, 5, "operations in ReferralData must have max. count of 5 $within");
+         Assert::isArray($this->operations, "operations in ReferralData must be array $within");
+
+                                if (isset($this->operations)){
+                                    foreach ($this->operations as $item) {
+                                        $item->validate(ReferralData::class);
+                                    }
+                                }
+
+        Assert::notNull($this->products, "products in ReferralData must not be NULL $within");
+         Assert::minCount($this->products, 1, "products in ReferralData must have min. count of 1 $within");
+         Assert::maxCount($this->products, 1, "products in ReferralData must have max. count of 1 $within");
+         Assert::isArray($this->products, "products in ReferralData must be array $within");
+        Assert::notNull($this->legal_consents, "legal_consents in ReferralData must not be NULL $within");
+         Assert::minCount($this->legal_consents, 1, "legal_consents in ReferralData must have min. count of 1 $within");
+         Assert::maxCount($this->legal_consents, 5, "legal_consents in ReferralData must have max. count of 5 $within");
+         Assert::isArray($this->legal_consents, "legal_consents in ReferralData must be array $within");
+
+                                if (isset($this->legal_consents)){
+                                    foreach ($this->legal_consents as $item) {
+                                        $item->validate(ReferralData::class);
+                                    }
+                                }
+    }
+
+    public function __construct()
+    {
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The payment card to use to fund a payment. Card can be a credit or debit card.
@@ -167,12 +168,21 @@ class CardResponse implements JsonSerializable
      */
     public $attributes;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->last_n_chars) || strlen($this->last_n_chars) >= 2);
-        assert(!isset($this->brand) || strlen($this->brand) >= 1);
-        assert(!isset($this->brand) || strlen($this->brand) <= 255);
-        assert(!isset($this->bin) || strlen($this->bin) >= 6);
-        assert(!isset($this->bin) || strlen($this->bin) <= 8);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->last_n_chars) || Assert::minLength($this->last_n_chars, 2, "last_n_chars in CardResponse must have minlength of 2 $within");
+        !isset($this->brand) || Assert::minLength($this->brand, 1, "brand in CardResponse must have minlength of 1 $within");
+        !isset($this->brand) || Assert::maxLength($this->brand, 255, "brand in CardResponse must have maxlength of 255 $within");
+        !isset($this->bin) || Assert::minLength($this->bin, 6, "bin in CardResponse must have minlength of 6 $within");
+        !isset($this->bin) || Assert::maxLength($this->bin, 8, "bin in CardResponse must have maxlength of 8 $within");
+        !isset($this->authentication_result) || Assert::isInstanceOf($this->authentication_result, AuthenticationResponse::class, "authentication_result in CardResponse must be instance of AuthenticationResponse $within");
+        !isset($this->authentication_result) || $this->authentication_result->validate(CardResponse::class);
+        !isset($this->attributes) || Assert::isInstanceOf($this->attributes, CardAttributesResponse::class, "attributes in CardResponse must be instance of CardAttributesResponse $within");
+        !isset($this->attributes) || $this->attributes->validate(CardResponse::class);
+    }
+
+    public function __construct()
+    {
     }
 }

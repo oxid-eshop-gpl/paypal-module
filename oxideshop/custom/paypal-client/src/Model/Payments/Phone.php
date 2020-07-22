@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The phone number, in its canonical international [E.164 numbering plan
@@ -48,13 +49,18 @@ class Phone implements JsonSerializable
      */
     public $extension_number;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->country_code) || strlen($this->country_code) >= 1);
-        assert(!isset($this->country_code) || strlen($this->country_code) <= 3);
-        assert(!isset($this->national_number) || strlen($this->national_number) >= 1);
-        assert(!isset($this->national_number) || strlen($this->national_number) <= 14);
-        assert(!isset($this->extension_number) || strlen($this->extension_number) >= 1);
-        assert(!isset($this->extension_number) || strlen($this->extension_number) <= 15);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->country_code) || Assert::minLength($this->country_code, 1, "country_code in Phone must have minlength of 1 $within");
+        !isset($this->country_code) || Assert::maxLength($this->country_code, 3, "country_code in Phone must have maxlength of 3 $within");
+        !isset($this->national_number) || Assert::minLength($this->national_number, 1, "national_number in Phone must have minlength of 1 $within");
+        !isset($this->national_number) || Assert::maxLength($this->national_number, 14, "national_number in Phone must have maxlength of 14 $within");
+        !isset($this->extension_number) || Assert::minLength($this->extension_number, 1, "extension_number in Phone must have minlength of 1 $within");
+        !isset($this->extension_number) || Assert::maxLength($this->extension_number, 15, "extension_number in Phone must have maxlength of 15 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

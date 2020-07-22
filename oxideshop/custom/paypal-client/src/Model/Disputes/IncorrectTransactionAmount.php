@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The incorrect transaction amount details.
@@ -31,10 +32,18 @@ class IncorrectTransactionAmount implements JsonSerializable
      */
     public $correct_transaction_time;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(isset($this->correct_transaction_amount));
-        assert(!isset($this->correct_transaction_time) || strlen($this->correct_transaction_time) >= 20);
-        assert(!isset($this->correct_transaction_time) || strlen($this->correct_transaction_time) <= 64);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->correct_transaction_amount) || Assert::notNull($this->correct_transaction_amount->currency_code, "currency_code in correct_transaction_amount must not be NULL within IncorrectTransactionAmount $within");
+        !isset($this->correct_transaction_amount) || Assert::notNull($this->correct_transaction_amount->value, "value in correct_transaction_amount must not be NULL within IncorrectTransactionAmount $within");
+        !isset($this->correct_transaction_amount) || Assert::isInstanceOf($this->correct_transaction_amount, Money::class, "correct_transaction_amount in IncorrectTransactionAmount must be instance of Money $within");
+        !isset($this->correct_transaction_amount) || $this->correct_transaction_amount->validate(IncorrectTransactionAmount::class);
+        !isset($this->correct_transaction_time) || Assert::minLength($this->correct_transaction_time, 20, "correct_transaction_time in IncorrectTransactionAmount must have minlength of 20 $within");
+        !isset($this->correct_transaction_time) || Assert::maxLength($this->correct_transaction_time, 64, "correct_transaction_time in IncorrectTransactionAmount must have maxlength of 64 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

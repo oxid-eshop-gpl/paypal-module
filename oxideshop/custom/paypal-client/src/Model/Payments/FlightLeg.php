@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The details of the flight leg.
@@ -159,32 +160,46 @@ class FlightLeg implements JsonSerializable
      */
     public $additional_notations;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->flight_code) || strlen($this->flight_code) >= 1);
-        assert(!isset($this->flight_code) || strlen($this->flight_code) <= 5);
-        assert(!isset($this->carrier_code) || strlen($this->carrier_code) >= 2);
-        assert(!isset($this->carrier_code) || strlen($this->carrier_code) <= 2);
-        assert(!isset($this->service_class) || strlen($this->service_class) >= 1);
-        assert(!isset($this->service_class) || strlen($this->service_class) <= 1);
-        assert(!isset($this->departure_date) || strlen($this->departure_date) >= 10);
-        assert(!isset($this->departure_date) || strlen($this->departure_date) <= 10);
-        assert(!isset($this->departure_time) || strlen($this->departure_time) >= 5);
-        assert(!isset($this->departure_time) || strlen($this->departure_time) <= 5);
-        assert(!isset($this->departure_airport) || strlen($this->departure_airport) >= 3);
-        assert(!isset($this->departure_airport) || strlen($this->departure_airport) <= 4);
-        assert(!isset($this->arrival_airport) || strlen($this->arrival_airport) >= 3);
-        assert(!isset($this->arrival_airport) || strlen($this->arrival_airport) <= 4);
-        assert(!isset($this->fare_basis_code) || strlen($this->fare_basis_code) >= 1);
-        assert(!isset($this->fare_basis_code) || strlen($this->fare_basis_code) <= 15);
-        assert(!isset($this->arrival_time) || strlen($this->arrival_time) >= 5);
-        assert(!isset($this->arrival_time) || strlen($this->arrival_time) <= 5);
-        assert(!isset($this->conjunction_ticket_number) || strlen($this->conjunction_ticket_number) >= 1);
-        assert(!isset($this->conjunction_ticket_number) || strlen($this->conjunction_ticket_number) <= 16);
-        assert(isset($this->fare));
-        assert(isset($this->tax));
-        assert(isset($this->fee));
-        assert(!isset($this->additional_notations) || strlen($this->additional_notations) >= 1);
-        assert(!isset($this->additional_notations) || strlen($this->additional_notations) <= 20);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->flight_code) || Assert::minLength($this->flight_code, 1, "flight_code in FlightLeg must have minlength of 1 $within");
+        !isset($this->flight_code) || Assert::maxLength($this->flight_code, 5, "flight_code in FlightLeg must have maxlength of 5 $within");
+        !isset($this->carrier_code) || Assert::minLength($this->carrier_code, 2, "carrier_code in FlightLeg must have minlength of 2 $within");
+        !isset($this->carrier_code) || Assert::maxLength($this->carrier_code, 2, "carrier_code in FlightLeg must have maxlength of 2 $within");
+        !isset($this->service_class) || Assert::minLength($this->service_class, 1, "service_class in FlightLeg must have minlength of 1 $within");
+        !isset($this->service_class) || Assert::maxLength($this->service_class, 1, "service_class in FlightLeg must have maxlength of 1 $within");
+        !isset($this->departure_date) || Assert::minLength($this->departure_date, 10, "departure_date in FlightLeg must have minlength of 10 $within");
+        !isset($this->departure_date) || Assert::maxLength($this->departure_date, 10, "departure_date in FlightLeg must have maxlength of 10 $within");
+        !isset($this->departure_time) || Assert::minLength($this->departure_time, 5, "departure_time in FlightLeg must have minlength of 5 $within");
+        !isset($this->departure_time) || Assert::maxLength($this->departure_time, 5, "departure_time in FlightLeg must have maxlength of 5 $within");
+        !isset($this->departure_airport) || Assert::minLength($this->departure_airport, 3, "departure_airport in FlightLeg must have minlength of 3 $within");
+        !isset($this->departure_airport) || Assert::maxLength($this->departure_airport, 4, "departure_airport in FlightLeg must have maxlength of 4 $within");
+        !isset($this->arrival_airport) || Assert::minLength($this->arrival_airport, 3, "arrival_airport in FlightLeg must have minlength of 3 $within");
+        !isset($this->arrival_airport) || Assert::maxLength($this->arrival_airport, 4, "arrival_airport in FlightLeg must have maxlength of 4 $within");
+        !isset($this->fare_basis_code) || Assert::minLength($this->fare_basis_code, 1, "fare_basis_code in FlightLeg must have minlength of 1 $within");
+        !isset($this->fare_basis_code) || Assert::maxLength($this->fare_basis_code, 15, "fare_basis_code in FlightLeg must have maxlength of 15 $within");
+        !isset($this->arrival_time) || Assert::minLength($this->arrival_time, 5, "arrival_time in FlightLeg must have minlength of 5 $within");
+        !isset($this->arrival_time) || Assert::maxLength($this->arrival_time, 5, "arrival_time in FlightLeg must have maxlength of 5 $within");
+        !isset($this->conjunction_ticket_number) || Assert::minLength($this->conjunction_ticket_number, 1, "conjunction_ticket_number in FlightLeg must have minlength of 1 $within");
+        !isset($this->conjunction_ticket_number) || Assert::maxLength($this->conjunction_ticket_number, 16, "conjunction_ticket_number in FlightLeg must have maxlength of 16 $within");
+        !isset($this->fare) || Assert::notNull($this->fare->currency_code, "currency_code in fare must not be NULL within FlightLeg $within");
+        !isset($this->fare) || Assert::notNull($this->fare->value, "value in fare must not be NULL within FlightLeg $within");
+        !isset($this->fare) || Assert::isInstanceOf($this->fare, Money::class, "fare in FlightLeg must be instance of Money $within");
+        !isset($this->fare) || $this->fare->validate(FlightLeg::class);
+        !isset($this->tax) || Assert::notNull($this->tax->currency_code, "currency_code in tax must not be NULL within FlightLeg $within");
+        !isset($this->tax) || Assert::notNull($this->tax->value, "value in tax must not be NULL within FlightLeg $within");
+        !isset($this->tax) || Assert::isInstanceOf($this->tax, Money::class, "tax in FlightLeg must be instance of Money $within");
+        !isset($this->tax) || $this->tax->validate(FlightLeg::class);
+        !isset($this->fee) || Assert::notNull($this->fee->currency_code, "currency_code in fee must not be NULL within FlightLeg $within");
+        !isset($this->fee) || Assert::notNull($this->fee->value, "value in fee must not be NULL within FlightLeg $within");
+        !isset($this->fee) || Assert::isInstanceOf($this->fee, Money::class, "fee in FlightLeg must be instance of Money $within");
+        !isset($this->fee) || $this->fee->validate(FlightLeg::class);
+        !isset($this->additional_notations) || Assert::minLength($this->additional_notations, 1, "additional_notations in FlightLeg must have minlength of 1 $within");
+        !isset($this->additional_notations) || Assert::maxLength($this->additional_notations, 20, "additional_notations in FlightLeg must have maxlength of 20 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

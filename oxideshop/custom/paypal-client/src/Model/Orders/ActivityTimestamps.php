@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The date and time stamps that are common to authorized payment, captured payment, and refund transactions.
@@ -36,11 +37,16 @@ class ActivityTimestamps implements JsonSerializable
      */
     public $update_time;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->create_time) || strlen($this->create_time) >= 20);
-        assert(!isset($this->create_time) || strlen($this->create_time) <= 64);
-        assert(!isset($this->update_time) || strlen($this->update_time) >= 20);
-        assert(!isset($this->update_time) || strlen($this->update_time) <= 64);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->create_time) || Assert::minLength($this->create_time, 20, "create_time in ActivityTimestamps must have minlength of 20 $within");
+        !isset($this->create_time) || Assert::maxLength($this->create_time, 64, "create_time in ActivityTimestamps must have maxlength of 64 $within");
+        !isset($this->update_time) || Assert::minLength($this->update_time, 20, "update_time in ActivityTimestamps must have minlength of 20 $within");
+        !isset($this->update_time) || Assert::maxLength($this->update_time, 64, "update_time in ActivityTimestamps must have maxlength of 64 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

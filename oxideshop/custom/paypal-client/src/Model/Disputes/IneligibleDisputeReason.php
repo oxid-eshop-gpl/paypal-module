@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The ineligible dispute with the reason for ineligibility.
@@ -75,11 +76,16 @@ class IneligibleDisputeReason implements JsonSerializable
      */
     public $ineligibility_reason;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->dispute_reason) || strlen($this->dispute_reason) >= 1);
-        assert(!isset($this->dispute_reason) || strlen($this->dispute_reason) <= 255);
-        assert(!isset($this->ineligibility_reason) || strlen($this->ineligibility_reason) >= 1);
-        assert(!isset($this->ineligibility_reason) || strlen($this->ineligibility_reason) <= 2000);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->dispute_reason) || Assert::minLength($this->dispute_reason, 1, "dispute_reason in IneligibleDisputeReason must have minlength of 1 $within");
+        !isset($this->dispute_reason) || Assert::maxLength($this->dispute_reason, 255, "dispute_reason in IneligibleDisputeReason must have maxlength of 255 $within");
+        !isset($this->ineligibility_reason) || Assert::minLength($this->ineligibility_reason, 1, "ineligibility_reason in IneligibleDisputeReason must have minlength of 1 $within");
+        !isset($this->ineligibility_reason) || Assert::maxLength($this->ineligibility_reason, 2000, "ineligibility_reason in IneligibleDisputeReason must have maxlength of 2000 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

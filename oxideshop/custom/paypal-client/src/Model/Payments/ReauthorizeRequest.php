@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Reauthorizes an authorized PayPal account payment, by ID. To ensure that funds are still available,
@@ -27,8 +28,16 @@ class ReauthorizeRequest implements JsonSerializable
      */
     public $amount;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(isset($this->amount));
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->amount) || Assert::notNull($this->amount->currency_code, "currency_code in amount must not be NULL within ReauthorizeRequest $within");
+        !isset($this->amount) || Assert::notNull($this->amount->value, "value in amount must not be NULL within ReauthorizeRequest $within");
+        !isset($this->amount) || Assert::isInstanceOf($this->amount, Money::class, "amount in ReauthorizeRequest must be instance of Money $within");
+        !isset($this->amount) || $this->amount->validate(ReauthorizeRequest::class);
+    }
+
+    public function __construct()
+    {
     }
 }

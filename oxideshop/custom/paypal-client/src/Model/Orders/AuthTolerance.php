@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Auth-Capture Tolerance details.
@@ -27,8 +28,16 @@ class AuthTolerance implements JsonSerializable
      */
     public $absolute;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(isset($this->absolute));
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->absolute) || Assert::notNull($this->absolute->currency_code, "currency_code in absolute must not be NULL within AuthTolerance $within");
+        !isset($this->absolute) || Assert::notNull($this->absolute->value, "value in absolute must not be NULL within AuthTolerance $within");
+        !isset($this->absolute) || Assert::isInstanceOf($this->absolute, Money::class, "absolute in AuthTolerance must be instance of Money $within");
+        !isset($this->absolute) || $this->absolute->validate(AuthTolerance::class);
+    }
+
+    public function __construct()
+    {
     }
 }

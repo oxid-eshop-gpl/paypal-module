@@ -9,7 +9,8 @@
         "psr/log": "^1.1",
         "league/oauth2-client": "^2.4",
         "ext-json": "*",
-        "netresearch/jsonmapper": "^3.0"
+        "netresearch/jsonmapper": "^3.0",
+        "webmozart/assert": "^1.9"
     },
     "require-dev": {
         "php" : "^7.1",

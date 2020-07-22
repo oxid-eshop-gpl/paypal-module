@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The outcome of the dispute case.
@@ -60,13 +61,18 @@ class Outcome implements JsonSerializable
      */
     public $resolution_date;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->faulty_party) || strlen($this->faulty_party) >= 1);
-        assert(!isset($this->faulty_party) || strlen($this->faulty_party) <= 255);
-        assert(!isset($this->adjudication_reason) || strlen($this->adjudication_reason) >= 1);
-        assert(!isset($this->adjudication_reason) || strlen($this->adjudication_reason) <= 2000);
-        assert(!isset($this->resolution_date) || strlen($this->resolution_date) >= 20);
-        assert(!isset($this->resolution_date) || strlen($this->resolution_date) <= 64);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->faulty_party) || Assert::minLength($this->faulty_party, 1, "faulty_party in Outcome must have minlength of 1 $within");
+        !isset($this->faulty_party) || Assert::maxLength($this->faulty_party, 255, "faulty_party in Outcome must have maxlength of 255 $within");
+        !isset($this->adjudication_reason) || Assert::minLength($this->adjudication_reason, 1, "adjudication_reason in Outcome must have minlength of 1 $within");
+        !isset($this->adjudication_reason) || Assert::maxLength($this->adjudication_reason, 2000, "adjudication_reason in Outcome must have maxlength of 2000 $within");
+        !isset($this->resolution_date) || Assert::minLength($this->resolution_date, 20, "resolution_date in Outcome must have minlength of 20 $within");
+        !isset($this->resolution_date) || Assert::maxLength($this->resolution_date, 64, "resolution_date in Outcome must have maxlength of 64 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

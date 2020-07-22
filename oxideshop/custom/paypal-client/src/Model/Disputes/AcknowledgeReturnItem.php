@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * A merchant request to acknowledge receipt of the disputed item that the customer returned.
@@ -23,9 +24,14 @@ class AcknowledgeReturnItem implements JsonSerializable
      */
     public $note;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->note) || strlen($this->note) >= 1);
-        assert(!isset($this->note) || strlen($this->note) <= 2000);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->note) || Assert::minLength($this->note, 1, "note in AcknowledgeReturnItem must have minlength of 1 $within");
+        !isset($this->note) || Assert::maxLength($this->note, 2000, "note in AcknowledgeReturnItem must have maxlength of 2000 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The order details.
@@ -85,6 +86,9 @@ class Order extends ActivityTimestamps implements JsonSerializable
      * An array of purchase units. Each purchase unit establishes a contract between a customer and merchant. Each
      * purchase unit represents either a full or partial order that the customer intends to purchase from the
      * merchant.
+     *
+     * maxItems: 1
+     * maxItems: 10
      */
     public $purchase_units;
 
@@ -122,9 +126,32 @@ class Order extends ActivityTimestamps implements JsonSerializable
      */
     public $credit_financing_offer;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->expiration_time) || strlen($this->expiration_time) >= 20);
-        assert(!isset($this->expiration_time) || strlen($this->expiration_time) <= 64);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->payment_source) || Assert::isInstanceOf($this->payment_source, PaymentSourceResponse::class, "payment_source in Order must be instance of PaymentSourceResponse $within");
+        !isset($this->payment_source) || $this->payment_source->validate(Order::class);
+        !isset($this->payer) || Assert::isInstanceOf($this->payer, Payer::class, "payer in Order must be instance of Payer $within");
+        !isset($this->payer) || $this->payer->validate(Order::class);
+        !isset($this->expiration_time) || Assert::minLength($this->expiration_time, 20, "expiration_time in Order must have minlength of 20 $within");
+        !isset($this->expiration_time) || Assert::maxLength($this->expiration_time, 64, "expiration_time in Order must have maxlength of 64 $within");
+        Assert::notNull($this->purchase_units, "purchase_units in Order must not be NULL $within");
+         Assert::minCount($this->purchase_units, 1, "purchase_units in Order must have min. count of 1 $within");
+         Assert::maxCount($this->purchase_units, 10, "purchase_units in Order must have max. count of 10 $within");
+         Assert::isArray($this->purchase_units, "purchase_units in Order must be array $within");
+
+                                if (isset($this->purchase_units)){
+                                    foreach ($this->purchase_units as $item) {
+                                        $item->validate(Order::class);
+                                    }
+                                }
+
+        !isset($this->links) || Assert::isArray($this->links, "links in Order must be array $within");
+        !isset($this->credit_financing_offer) || Assert::isInstanceOf($this->credit_financing_offer, CreditFinancingOffer::class, "credit_financing_offer in Order must be instance of CreditFinancingOffer $within");
+        !isset($this->credit_financing_offer) || $this->credit_financing_offer->validate(Order::class);
+    }
+
+    public function __construct()
+    {
     }
 }

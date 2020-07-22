@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The dispute summary information.
@@ -439,33 +440,111 @@ class DisputeInfo implements JsonSerializable
      */
     public $links;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->dispute_id) || strlen($this->dispute_id) >= 1);
-        assert(!isset($this->dispute_id) || strlen($this->dispute_id) <= 255);
-        assert(!isset($this->create_time) || strlen($this->create_time) >= 20);
-        assert(!isset($this->create_time) || strlen($this->create_time) <= 64);
-        assert(!isset($this->update_time) || strlen($this->update_time) >= 20);
-        assert(!isset($this->update_time) || strlen($this->update_time) <= 64);
-        assert(!isset($this->reason) || strlen($this->reason) >= 1);
-        assert(!isset($this->reason) || strlen($this->reason) <= 255);
-        assert(!isset($this->status) || strlen($this->status) >= 1);
-        assert(!isset($this->status) || strlen($this->status) <= 255);
-        assert(!isset($this->dispute_state) || strlen($this->dispute_state) >= 1);
-        assert(!isset($this->dispute_state) || strlen($this->dispute_state) <= 255);
-        assert(isset($this->dispute_amount));
-        assert(isset($this->dispute_fee));
-        assert(!isset($this->external_reason_code) || strlen($this->external_reason_code) >= 1);
-        assert(!isset($this->external_reason_code) || strlen($this->external_reason_code) <= 2000);
-        assert(!isset($this->dispute_life_cycle_stage) || strlen($this->dispute_life_cycle_stage) >= 1);
-        assert(!isset($this->dispute_life_cycle_stage) || strlen($this->dispute_life_cycle_stage) <= 255);
-        assert(!isset($this->dispute_channel) || strlen($this->dispute_channel) >= 1);
-        assert(!isset($this->dispute_channel) || strlen($this->dispute_channel) <= 255);
-        assert(!isset($this->buyer_response_due_date) || strlen($this->buyer_response_due_date) >= 20);
-        assert(!isset($this->buyer_response_due_date) || strlen($this->buyer_response_due_date) <= 64);
-        assert(!isset($this->seller_response_due_date) || strlen($this->seller_response_due_date) >= 20);
-        assert(!isset($this->seller_response_due_date) || strlen($this->seller_response_due_date) <= 64);
-        assert(!isset($this->dispute_flow) || strlen($this->dispute_flow) >= 1);
-        assert(!isset($this->dispute_flow) || strlen($this->dispute_flow) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->dispute_id) || Assert::minLength($this->dispute_id, 1, "dispute_id in DisputeInfo must have minlength of 1 $within");
+        !isset($this->dispute_id) || Assert::maxLength($this->dispute_id, 255, "dispute_id in DisputeInfo must have maxlength of 255 $within");
+        !isset($this->create_time) || Assert::minLength($this->create_time, 20, "create_time in DisputeInfo must have minlength of 20 $within");
+        !isset($this->create_time) || Assert::maxLength($this->create_time, 64, "create_time in DisputeInfo must have maxlength of 64 $within");
+        !isset($this->update_time) || Assert::minLength($this->update_time, 20, "update_time in DisputeInfo must have minlength of 20 $within");
+        !isset($this->update_time) || Assert::maxLength($this->update_time, 64, "update_time in DisputeInfo must have maxlength of 64 $within");
+        !isset($this->disputed_transactions) || Assert::isArray($this->disputed_transactions, "disputed_transactions in DisputeInfo must be array $within");
+
+                                if (isset($this->disputed_transactions)){
+                                    foreach ($this->disputed_transactions as $item) {
+                                        $item->validate(DisputeInfo::class);
+                                    }
+                                }
+
+        !isset($this->disputed_account_activities) || Assert::isArray($this->disputed_account_activities, "disputed_account_activities in DisputeInfo must be array $within");
+
+                                if (isset($this->disputed_account_activities)){
+                                    foreach ($this->disputed_account_activities as $item) {
+                                        $item->validate(DisputeInfo::class);
+                                    }
+                                }
+
+        !isset($this->reason) || Assert::minLength($this->reason, 1, "reason in DisputeInfo must have minlength of 1 $within");
+        !isset($this->reason) || Assert::maxLength($this->reason, 255, "reason in DisputeInfo must have maxlength of 255 $within");
+        !isset($this->status) || Assert::minLength($this->status, 1, "status in DisputeInfo must have minlength of 1 $within");
+        !isset($this->status) || Assert::maxLength($this->status, 255, "status in DisputeInfo must have maxlength of 255 $within");
+        !isset($this->dispute_state) || Assert::minLength($this->dispute_state, 1, "dispute_state in DisputeInfo must have minlength of 1 $within");
+        !isset($this->dispute_state) || Assert::maxLength($this->dispute_state, 255, "dispute_state in DisputeInfo must have maxlength of 255 $within");
+        !isset($this->dispute_amount) || Assert::notNull($this->dispute_amount->currency_code, "currency_code in dispute_amount must not be NULL within DisputeInfo $within");
+        !isset($this->dispute_amount) || Assert::notNull($this->dispute_amount->value, "value in dispute_amount must not be NULL within DisputeInfo $within");
+        !isset($this->dispute_amount) || Assert::isInstanceOf($this->dispute_amount, Money::class, "dispute_amount in DisputeInfo must be instance of Money $within");
+        !isset($this->dispute_amount) || $this->dispute_amount->validate(DisputeInfo::class);
+        !isset($this->dispute_fee) || Assert::notNull($this->dispute_fee->currency_code, "currency_code in dispute_fee must not be NULL within DisputeInfo $within");
+        !isset($this->dispute_fee) || Assert::notNull($this->dispute_fee->value, "value in dispute_fee must not be NULL within DisputeInfo $within");
+        !isset($this->dispute_fee) || Assert::isInstanceOf($this->dispute_fee, Money::class, "dispute_fee in DisputeInfo must be instance of Money $within");
+        !isset($this->dispute_fee) || $this->dispute_fee->validate(DisputeInfo::class);
+        !isset($this->external_reason_code) || Assert::minLength($this->external_reason_code, 1, "external_reason_code in DisputeInfo must have minlength of 1 $within");
+        !isset($this->external_reason_code) || Assert::maxLength($this->external_reason_code, 2000, "external_reason_code in DisputeInfo must have maxlength of 2000 $within");
+        !isset($this->dispute_outcome) || Assert::isInstanceOf($this->dispute_outcome, DisputeOutcome::class, "dispute_outcome in DisputeInfo must be instance of DisputeOutcome $within");
+        !isset($this->dispute_outcome) || $this->dispute_outcome->validate(DisputeInfo::class);
+        !isset($this->dispute_life_cycle_stage) || Assert::minLength($this->dispute_life_cycle_stage, 1, "dispute_life_cycle_stage in DisputeInfo must have minlength of 1 $within");
+        !isset($this->dispute_life_cycle_stage) || Assert::maxLength($this->dispute_life_cycle_stage, 255, "dispute_life_cycle_stage in DisputeInfo must have maxlength of 255 $within");
+        !isset($this->dispute_channel) || Assert::minLength($this->dispute_channel, 1, "dispute_channel in DisputeInfo must have minlength of 1 $within");
+        !isset($this->dispute_channel) || Assert::maxLength($this->dispute_channel, 255, "dispute_channel in DisputeInfo must have maxlength of 255 $within");
+        !isset($this->messages) || Assert::isArray($this->messages, "messages in DisputeInfo must be array $within");
+
+                                if (isset($this->messages)){
+                                    foreach ($this->messages as $item) {
+                                        $item->validate(DisputeInfo::class);
+                                    }
+                                }
+
+        !isset($this->extensions) || Assert::isInstanceOf($this->extensions, Extensions::class, "extensions in DisputeInfo must be instance of Extensions $within");
+        !isset($this->extensions) || $this->extensions->validate(DisputeInfo::class);
+        !isset($this->evidences) || Assert::isArray($this->evidences, "evidences in DisputeInfo must be array $within");
+
+                                if (isset($this->evidences)){
+                                    foreach ($this->evidences as $item) {
+                                        $item->validate(DisputeInfo::class);
+                                    }
+                                }
+
+        !isset($this->buyer_response_due_date) || Assert::minLength($this->buyer_response_due_date, 20, "buyer_response_due_date in DisputeInfo must have minlength of 20 $within");
+        !isset($this->buyer_response_due_date) || Assert::maxLength($this->buyer_response_due_date, 64, "buyer_response_due_date in DisputeInfo must have maxlength of 64 $within");
+        !isset($this->seller_response_due_date) || Assert::minLength($this->seller_response_due_date, 20, "seller_response_due_date in DisputeInfo must have minlength of 20 $within");
+        !isset($this->seller_response_due_date) || Assert::maxLength($this->seller_response_due_date, 64, "seller_response_due_date in DisputeInfo must have maxlength of 64 $within");
+        !isset($this->history) || Assert::isArray($this->history, "history in DisputeInfo must be array $within");
+
+                                if (isset($this->history)){
+                                    foreach ($this->history as $item) {
+                                        $item->validate(DisputeInfo::class);
+                                    }
+                                }
+
+        !isset($this->dispute_flow) || Assert::minLength($this->dispute_flow, 1, "dispute_flow in DisputeInfo must have minlength of 1 $within");
+        !isset($this->dispute_flow) || Assert::maxLength($this->dispute_flow, 255, "dispute_flow in DisputeInfo must have maxlength of 255 $within");
+        !isset($this->offer) || Assert::isInstanceOf($this->offer, Offer::class, "offer in DisputeInfo must be instance of Offer $within");
+        !isset($this->offer) || $this->offer->validate(DisputeInfo::class);
+        !isset($this->refund_details) || Assert::isInstanceOf($this->refund_details, RefundDetails::class, "refund_details in DisputeInfo must be instance of RefundDetails $within");
+        !isset($this->refund_details) || $this->refund_details->validate(DisputeInfo::class);
+        !isset($this->communication_details) || Assert::isInstanceOf($this->communication_details, CommunicationDetails::class, "communication_details in DisputeInfo must be instance of CommunicationDetails $within");
+        !isset($this->communication_details) || $this->communication_details->validate(DisputeInfo::class);
+        !isset($this->partner_actions) || Assert::isArray($this->partner_actions, "partner_actions in DisputeInfo must be array $within");
+
+                                if (isset($this->partner_actions)){
+                                    foreach ($this->partner_actions as $item) {
+                                        $item->validate(DisputeInfo::class);
+                                    }
+                                }
+
+        !isset($this->supporting_info) || Assert::isArray($this->supporting_info, "supporting_info in DisputeInfo must be array $within");
+
+                                if (isset($this->supporting_info)){
+                                    foreach ($this->supporting_info as $item) {
+                                        $item->validate(DisputeInfo::class);
+                                    }
+                                }
+
+        !isset($this->links) || Assert::isArray($this->links, "links in DisputeInfo must be array $within");
+    }
+
+    public function __construct()
+    {
     }
 }

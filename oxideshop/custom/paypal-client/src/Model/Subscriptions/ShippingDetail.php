@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The shipping details.
@@ -23,6 +24,8 @@ class ShippingDetail implements JsonSerializable
     /**
      * @var array<ShippingOption>
      * An array of shipping options that the payee or merchant offers to the payer to ship or pick up their items.
+     *
+     * maxItems: 10
      */
     public $options;
 
@@ -35,8 +38,26 @@ class ShippingDetail implements JsonSerializable
      */
     public $address;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(isset($this->address));
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->name) || Assert::isInstanceOf($this->name, Name::class, "name in ShippingDetail must be instance of Name $within");
+        !isset($this->name) || $this->name->validate(ShippingDetail::class);
+        !isset($this->options) || Assert::maxCount($this->options, 10, "options in ShippingDetail must have max. count of 10 $within");
+        !isset($this->options) || Assert::isArray($this->options, "options in ShippingDetail must be array $within");
+
+                                if (isset($this->options)){
+                                    foreach ($this->options as $item) {
+                                        $item->validate(ShippingDetail::class);
+                                    }
+                                }
+
+        !isset($this->address) || Assert::notNull($this->address->country_code, "country_code in address must not be NULL within ShippingDetail $within");
+        !isset($this->address) || Assert::isInstanceOf($this->address, AddressPortable::class, "address in ShippingDetail must be instance of AddressPortable $within");
+        !isset($this->address) || $this->address->validate(ShippingDetail::class);
+    }
+
+    public function __construct()
+    {
     }
 }

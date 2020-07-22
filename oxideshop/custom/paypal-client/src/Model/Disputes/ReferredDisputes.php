@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * An array of disputes. Includes links that enable you to navigate through the response.
@@ -38,7 +39,21 @@ class ReferredDisputes implements JsonSerializable
      */
     public $links;
 
-    public function validate()
+    public function validate($from = null)
+    {
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->items) || Assert::isArray($this->items, "items in ReferredDisputes must be array $within");
+
+                                if (isset($this->items)){
+                                    foreach ($this->items as $item) {
+                                        $item->validate(ReferredDisputes::class);
+                                    }
+                                }
+
+        !isset($this->links) || Assert::isArray($this->links, "links in ReferredDisputes must be array $within");
+    }
+
+    public function __construct()
     {
     }
 }

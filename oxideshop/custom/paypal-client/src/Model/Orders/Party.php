@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The properties of a party.
@@ -53,18 +54,27 @@ class Party implements JsonSerializable
     /**
      * @var array<string>
      * Email addresses.
+     *
+     * maxItems: 1
+     * maxItems: 100
      */
     public $emails;
 
     /**
      * @var array<PhoneInfo>
      * Details of party's phone numbers.
+     *
+     * maxItems: 1
+     * maxItems: 100
      */
     public $phones;
 
     /**
      * @var array<AddressWithConfirmation>
      * Details of party's addresses.
+     *
+     * maxItems: 1
+     * maxItems: 100
      */
     public $addresses;
 
@@ -90,17 +100,48 @@ class Party implements JsonSerializable
      */
     public $update_time;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->id) || strlen($this->id) >= 1);
-        assert(!isset($this->id) || strlen($this->id) <= 30);
-        assert(!isset($this->external_id) || strlen($this->external_id) >= 1);
-        assert(!isset($this->external_id) || strlen($this->external_id) <= 30);
-        assert(!isset($this->primary_email) || strlen($this->primary_email) >= 3);
-        assert(!isset($this->primary_email) || strlen($this->primary_email) <= 254);
-        assert(!isset($this->create_time) || strlen($this->create_time) >= 20);
-        assert(!isset($this->create_time) || strlen($this->create_time) <= 64);
-        assert(!isset($this->update_time) || strlen($this->update_time) >= 20);
-        assert(!isset($this->update_time) || strlen($this->update_time) <= 64);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->id) || Assert::minLength($this->id, 1, "id in Party must have minlength of 1 $within");
+        !isset($this->id) || Assert::maxLength($this->id, 30, "id in Party must have maxlength of 30 $within");
+        !isset($this->external_id) || Assert::minLength($this->external_id, 1, "external_id in Party must have minlength of 1 $within");
+        !isset($this->external_id) || Assert::maxLength($this->external_id, 30, "external_id in Party must have maxlength of 30 $within");
+        !isset($this->primary_email) || Assert::minLength($this->primary_email, 3, "primary_email in Party must have minlength of 3 $within");
+        !isset($this->primary_email) || Assert::maxLength($this->primary_email, 254, "primary_email in Party must have maxlength of 254 $within");
+        Assert::notNull($this->emails, "emails in Party must not be NULL $within");
+         Assert::minCount($this->emails, 1, "emails in Party must have min. count of 1 $within");
+         Assert::maxCount($this->emails, 100, "emails in Party must have max. count of 100 $within");
+         Assert::isArray($this->emails, "emails in Party must be array $within");
+        Assert::notNull($this->phones, "phones in Party must not be NULL $within");
+         Assert::minCount($this->phones, 1, "phones in Party must have min. count of 1 $within");
+         Assert::maxCount($this->phones, 100, "phones in Party must have max. count of 100 $within");
+         Assert::isArray($this->phones, "phones in Party must be array $within");
+
+                                if (isset($this->phones)){
+                                    foreach ($this->phones as $item) {
+                                        $item->validate(Party::class);
+                                    }
+                                }
+
+        Assert::notNull($this->addresses, "addresses in Party must not be NULL $within");
+         Assert::minCount($this->addresses, 1, "addresses in Party must have min. count of 1 $within");
+         Assert::maxCount($this->addresses, 100, "addresses in Party must have max. count of 100 $within");
+         Assert::isArray($this->addresses, "addresses in Party must be array $within");
+
+                                if (isset($this->addresses)){
+                                    foreach ($this->addresses as $item) {
+                                        $item->validate(Party::class);
+                                    }
+                                }
+
+        !isset($this->create_time) || Assert::minLength($this->create_time, 20, "create_time in Party must have minlength of 20 $within");
+        !isset($this->create_time) || Assert::maxLength($this->create_time, 64, "create_time in Party must have maxlength of 64 $within");
+        !isset($this->update_time) || Assert::minLength($this->update_time, 20, "update_time in Party must have minlength of 20 $within");
+        !isset($this->update_time) || Assert::maxLength($this->update_time, 64, "update_time in Party must have maxlength of 64 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

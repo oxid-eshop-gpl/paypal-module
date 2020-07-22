@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The tax ID of the customer. The customer is also known as the payer. Both `tax_id` and `tax_id_type` are
@@ -40,8 +41,13 @@ class TaxInfo implements JsonSerializable
      */
     public $tax_id_type;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->tax_id) || strlen($this->tax_id) <= 14);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->tax_id) || Assert::maxLength($this->tax_id, 14, "tax_id in TaxInfo must have maxlength of 14 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

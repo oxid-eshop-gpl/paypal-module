@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The information about the account-related activities.
@@ -200,19 +201,33 @@ class AccountActivity implements JsonSerializable
      */
     public $reversal_actions;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->id) || strlen($this->id) >= 1);
-        assert(!isset($this->id) || strlen($this->id) <= 255);
-        assert(!isset($this->create_time) || strlen($this->create_time) >= 20);
-        assert(!isset($this->create_time) || strlen($this->create_time) <= 64);
-        assert(!isset($this->entity_type) || strlen($this->entity_type) >= 1);
-        assert(!isset($this->entity_type) || strlen($this->entity_type) <= 255);
-        assert(!isset($this->entity_subtype) || strlen($this->entity_subtype) >= 1);
-        assert(!isset($this->entity_subtype) || strlen($this->entity_subtype) <= 255);
-        assert(!isset($this->action_performed) || strlen($this->action_performed) >= 1);
-        assert(!isset($this->action_performed) || strlen($this->action_performed) <= 255);
-        assert(!isset($this->entity_id) || strlen($this->entity_id) >= 1);
-        assert(!isset($this->entity_id) || strlen($this->entity_id) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->id) || Assert::minLength($this->id, 1, "id in AccountActivity must have minlength of 1 $within");
+        !isset($this->id) || Assert::maxLength($this->id, 255, "id in AccountActivity must have maxlength of 255 $within");
+        !isset($this->create_time) || Assert::minLength($this->create_time, 20, "create_time in AccountActivity must have minlength of 20 $within");
+        !isset($this->create_time) || Assert::maxLength($this->create_time, 64, "create_time in AccountActivity must have maxlength of 64 $within");
+        !isset($this->entity_type) || Assert::minLength($this->entity_type, 1, "entity_type in AccountActivity must have minlength of 1 $within");
+        !isset($this->entity_type) || Assert::maxLength($this->entity_type, 255, "entity_type in AccountActivity must have maxlength of 255 $within");
+        !isset($this->entity_subtype) || Assert::minLength($this->entity_subtype, 1, "entity_subtype in AccountActivity must have minlength of 1 $within");
+        !isset($this->entity_subtype) || Assert::maxLength($this->entity_subtype, 255, "entity_subtype in AccountActivity must have maxlength of 255 $within");
+        !isset($this->action_performed) || Assert::minLength($this->action_performed, 1, "action_performed in AccountActivity must have minlength of 1 $within");
+        !isset($this->action_performed) || Assert::maxLength($this->action_performed, 255, "action_performed in AccountActivity must have maxlength of 255 $within");
+        !isset($this->entity_id) || Assert::minLength($this->entity_id, 1, "entity_id in AccountActivity must have minlength of 1 $within");
+        !isset($this->entity_id) || Assert::maxLength($this->entity_id, 255, "entity_id in AccountActivity must have maxlength of 255 $within");
+        !isset($this->activity_entity_info) || Assert::isInstanceOf($this->activity_entity_info, ActivityEntityInfo::class, "activity_entity_info in AccountActivity must be instance of ActivityEntityInfo $within");
+        !isset($this->activity_entity_info) || $this->activity_entity_info->validate(AccountActivity::class);
+        !isset($this->reversal_actions) || Assert::isArray($this->reversal_actions, "reversal_actions in AccountActivity must be array $within");
+
+                                if (isset($this->reversal_actions)){
+                                    foreach ($this->reversal_actions as $item) {
+                                        $item->validate(AccountActivity::class);
+                                    }
+                                }
+    }
+
+    public function __construct()
+    {
     }
 }

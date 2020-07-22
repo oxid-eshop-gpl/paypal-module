@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The details for the merchant who receives the funds and fulfills the order. The merchant is also known as the
@@ -44,11 +45,16 @@ class PayeeBase implements JsonSerializable
      */
     public $client_id;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->email_address) || strlen($this->email_address) <= 254);
-        assert(!isset($this->merchant_id) || strlen($this->merchant_id) >= 13);
-        assert(!isset($this->merchant_id) || strlen($this->merchant_id) <= 13);
-        assert(!isset($this->client_id) || strlen($this->client_id) <= 80);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->email_address) || Assert::maxLength($this->email_address, 254, "email_address in PayeeBase must have maxlength of 254 $within");
+        !isset($this->merchant_id) || Assert::minLength($this->merchant_id, 13, "merchant_id in PayeeBase must have minlength of 13 $within");
+        !isset($this->merchant_id) || Assert::maxLength($this->merchant_id, 13, "merchant_id in PayeeBase must have maxlength of 13 $within");
+        !isset($this->client_id) || Assert::maxLength($this->client_id, 80, "client_id in PayeeBase must have maxlength of 80 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

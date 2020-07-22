@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The currency and amount for a financial transaction, such as a balance or payment due.
@@ -35,10 +36,15 @@ class Money implements JsonSerializable
      */
     public $value;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->currency_code) || strlen($this->currency_code) >= 3);
-        assert(!isset($this->currency_code) || strlen($this->currency_code) <= 3);
-        assert(!isset($this->value) || strlen($this->value) <= 32);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->currency_code) || Assert::minLength($this->currency_code, 3, "currency_code in Money must have minlength of 3 $within");
+        !isset($this->currency_code) || Assert::maxLength($this->currency_code, 3, "currency_code in Money must have maxlength of 3 $within");
+        !isset($this->value) || Assert::maxLength($this->value, 32, "value in Money must have maxlength of 32 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

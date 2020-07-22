@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The share referral data response.
@@ -35,11 +36,27 @@ class ReferralDataResponse implements JsonSerializable
     /**
      * @var array<array>
      * An array of request-related [HATEOAS links](/docs/api/overview/#hateoas-links).
+     *
+     * maxItems: 0
+     * maxItems: 2
      */
     public $links;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(isset($this->referral_data));
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->referral_data) || Assert::notNull($this->referral_data->email, "email in referral_data must not be NULL within ReferralDataResponse $within");
+        !isset($this->referral_data) || Assert::notNull($this->referral_data->operations, "operations in referral_data must not be NULL within ReferralDataResponse $within");
+        !isset($this->referral_data) || Assert::notNull($this->referral_data->legal_consents, "legal_consents in referral_data must not be NULL within ReferralDataResponse $within");
+        !isset($this->referral_data) || Assert::isInstanceOf($this->referral_data, ReferralData::class, "referral_data in ReferralDataResponse must be instance of ReferralData $within");
+        !isset($this->referral_data) || $this->referral_data->validate(ReferralDataResponse::class);
+        Assert::notNull($this->links, "links in ReferralDataResponse must not be NULL $within");
+         Assert::minCount($this->links, 0, "links in ReferralDataResponse must have min. count of 0 $within");
+         Assert::maxCount($this->links, 2, "links in ReferralDataResponse must have max. count of 2 $within");
+         Assert::isArray($this->links, "links in ReferralDataResponse must be array $within");
+    }
+
+    public function __construct()
+    {
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The payout details for the referred dispute.
@@ -104,18 +105,26 @@ class RefundInfo implements JsonSerializable
      */
     public $transaction_source;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->recipient) || strlen($this->recipient) >= 1);
-        assert(!isset($this->recipient) || strlen($this->recipient) <= 255);
-        assert(isset($this->amount));
-        assert(!isset($this->create_time) || strlen($this->create_time) >= 20);
-        assert(!isset($this->create_time) || strlen($this->create_time) <= 64);
-        assert(!isset($this->transaction_id) || strlen($this->transaction_id) >= 1);
-        assert(!isset($this->transaction_id) || strlen($this->transaction_id) <= 255);
-        assert(!isset($this->payout_type) || strlen($this->payout_type) >= 1);
-        assert(!isset($this->payout_type) || strlen($this->payout_type) <= 255);
-        assert(!isset($this->transaction_source) || strlen($this->transaction_source) >= 1);
-        assert(!isset($this->transaction_source) || strlen($this->transaction_source) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->recipient) || Assert::minLength($this->recipient, 1, "recipient in RefundInfo must have minlength of 1 $within");
+        !isset($this->recipient) || Assert::maxLength($this->recipient, 255, "recipient in RefundInfo must have maxlength of 255 $within");
+        !isset($this->amount) || Assert::notNull($this->amount->currency_code, "currency_code in amount must not be NULL within RefundInfo $within");
+        !isset($this->amount) || Assert::notNull($this->amount->value, "value in amount must not be NULL within RefundInfo $within");
+        !isset($this->amount) || Assert::isInstanceOf($this->amount, Money::class, "amount in RefundInfo must be instance of Money $within");
+        !isset($this->amount) || $this->amount->validate(RefundInfo::class);
+        !isset($this->create_time) || Assert::minLength($this->create_time, 20, "create_time in RefundInfo must have minlength of 20 $within");
+        !isset($this->create_time) || Assert::maxLength($this->create_time, 64, "create_time in RefundInfo must have maxlength of 64 $within");
+        !isset($this->transaction_id) || Assert::minLength($this->transaction_id, 1, "transaction_id in RefundInfo must have minlength of 1 $within");
+        !isset($this->transaction_id) || Assert::maxLength($this->transaction_id, 255, "transaction_id in RefundInfo must have maxlength of 255 $within");
+        !isset($this->payout_type) || Assert::minLength($this->payout_type, 1, "payout_type in RefundInfo must have minlength of 1 $within");
+        !isset($this->payout_type) || Assert::maxLength($this->payout_type, 255, "payout_type in RefundInfo must have maxlength of 255 $within");
+        !isset($this->transaction_source) || Assert::minLength($this->transaction_source, 1, "transaction_source in RefundInfo must have minlength of 1 $within");
+        !isset($this->transaction_source) || Assert::maxLength($this->transaction_source, 255, "transaction_source in RefundInfo must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

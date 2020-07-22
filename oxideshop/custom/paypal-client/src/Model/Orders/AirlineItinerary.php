@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The airline itinerary details.
@@ -29,6 +30,9 @@ class AirlineItinerary implements JsonSerializable
     /**
      * @var array<FlightLeg>
      * An array of the airline itinerary legs.
+     *
+     * maxItems: 1
+     * maxItems: 12
      */
     public $flight_leg_details;
 
@@ -49,7 +53,26 @@ class AirlineItinerary implements JsonSerializable
      */
     public $clearing_count;
 
-    public function validate()
+    public function validate($from = null)
+    {
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->ticket) || Assert::isInstanceOf($this->ticket, AirlineTicket::class, "ticket in AirlineItinerary must be instance of AirlineTicket $within");
+        !isset($this->ticket) || $this->ticket->validate(AirlineItinerary::class);
+        !isset($this->passenger) || Assert::isInstanceOf($this->passenger, AirlinePassenger::class, "passenger in AirlineItinerary must be instance of AirlinePassenger $within");
+        !isset($this->passenger) || $this->passenger->validate(AirlineItinerary::class);
+        Assert::notNull($this->flight_leg_details, "flight_leg_details in AirlineItinerary must not be NULL $within");
+         Assert::minCount($this->flight_leg_details, 1, "flight_leg_details in AirlineItinerary must have min. count of 1 $within");
+         Assert::maxCount($this->flight_leg_details, 12, "flight_leg_details in AirlineItinerary must have max. count of 12 $within");
+         Assert::isArray($this->flight_leg_details, "flight_leg_details in AirlineItinerary must be array $within");
+
+                                if (isset($this->flight_leg_details)){
+                                    foreach ($this->flight_leg_details as $item) {
+                                        $item->validate(AirlineItinerary::class);
+                                    }
+                                }
+    }
+
+    public function __construct()
     {
     }
 }

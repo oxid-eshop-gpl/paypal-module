@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The merchant information. The merchant is also known as the payee. Appears to the customer in checkout,
@@ -42,10 +43,18 @@ class PayeeDisplayable implements JsonSerializable
      */
     public $brand_name;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->business_email) || strlen($this->business_email) <= 254);
-        assert(isset($this->business_phone));
-        assert(!isset($this->brand_name) || strlen($this->brand_name) <= 127);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->business_email) || Assert::maxLength($this->business_email, 254, "business_email in PayeeDisplayable must have maxlength of 254 $within");
+        !isset($this->business_phone) || Assert::notNull($this->business_phone->country_code, "country_code in business_phone must not be NULL within PayeeDisplayable $within");
+        !isset($this->business_phone) || Assert::notNull($this->business_phone->national_number, "national_number in business_phone must not be NULL within PayeeDisplayable $within");
+        !isset($this->business_phone) || Assert::isInstanceOf($this->business_phone, Phone::class, "business_phone in PayeeDisplayable must be instance of Phone $within");
+        !isset($this->business_phone) || $this->business_phone->validate(PayeeDisplayable::class);
+        !isset($this->brand_name) || Assert::maxLength($this->brand_name, 127, "brand_name in PayeeDisplayable must have maxlength of 127 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

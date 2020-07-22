@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The risk assessment for a customer account, merchant account, or transaction.
@@ -26,7 +27,16 @@ class RiskAssessments implements JsonSerializable
      */
     public $payee;
 
-    public function validate()
+    public function validate($from = null)
+    {
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->payer) || Assert::isInstanceOf($this->payer, RiskAssessment::class, "payer in RiskAssessments must be instance of RiskAssessment $within");
+        !isset($this->payer) || $this->payer->validate(RiskAssessments::class);
+        !isset($this->payee) || Assert::isInstanceOf($this->payee, RiskAssessment::class, "payee in RiskAssessments must be instance of RiskAssessment $within");
+        !isset($this->payee) || $this->payee->validate(RiskAssessments::class);
+    }
+
+    public function __construct()
     {
     }
 }

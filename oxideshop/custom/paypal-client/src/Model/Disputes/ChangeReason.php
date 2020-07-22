@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * A request to change the reason for a dispute.
@@ -107,11 +108,37 @@ class ChangeReason implements JsonSerializable
      */
     public $item_info;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->reason) || strlen($this->reason) >= 1);
-        assert(!isset($this->reason) || strlen($this->reason) <= 255);
-        assert(!isset($this->note) || strlen($this->note) <= 1048576);
-        assert(isset($this->buyer_requested_amount));
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->reason) || Assert::minLength($this->reason, 1, "reason in ChangeReason must have minlength of 1 $within");
+        !isset($this->reason) || Assert::maxLength($this->reason, 255, "reason in ChangeReason must have maxlength of 255 $within");
+        !isset($this->note) || Assert::maxLength($this->note, 1048576, "note in ChangeReason must have maxlength of 1048576 $within");
+        !isset($this->extensions) || Assert::isInstanceOf($this->extensions, Extensions::class, "extensions in ChangeReason must be instance of Extensions $within");
+        !isset($this->extensions) || $this->extensions->validate(ChangeReason::class);
+        !isset($this->disputed_account_activities) || Assert::isArray($this->disputed_account_activities, "disputed_account_activities in ChangeReason must be array $within");
+
+                                if (isset($this->disputed_account_activities)){
+                                    foreach ($this->disputed_account_activities as $item) {
+                                        $item->validate(ChangeReason::class);
+                                    }
+                                }
+
+        !isset($this->transaction_ids) || Assert::isArray($this->transaction_ids, "transaction_ids in ChangeReason must be array $within");
+        !isset($this->buyer_requested_amount) || Assert::notNull($this->buyer_requested_amount->currency_code, "currency_code in buyer_requested_amount must not be NULL within ChangeReason $within");
+        !isset($this->buyer_requested_amount) || Assert::notNull($this->buyer_requested_amount->value, "value in buyer_requested_amount must not be NULL within ChangeReason $within");
+        !isset($this->buyer_requested_amount) || Assert::isInstanceOf($this->buyer_requested_amount, Money::class, "buyer_requested_amount in ChangeReason must be instance of Money $within");
+        !isset($this->buyer_requested_amount) || $this->buyer_requested_amount->validate(ChangeReason::class);
+        !isset($this->item_info) || Assert::isArray($this->item_info, "item_info in ChangeReason must be array $within");
+
+                                if (isset($this->item_info)){
+                                    foreach ($this->item_info as $item) {
+                                        $item->validate(ChangeReason::class);
+                                    }
+                                }
+    }
+
+    public function __construct()
+    {
     }
 }

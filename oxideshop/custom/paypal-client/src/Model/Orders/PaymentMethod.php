@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The customer and merchant payment preferences.
@@ -80,12 +81,17 @@ class PaymentMethod implements JsonSerializable
      */
     public $standard_entry_class_code = 'WEB';
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->payer_selected) || strlen($this->payer_selected) >= 1);
-        assert(!isset($this->payee_preferred) || strlen($this->payee_preferred) >= 1);
-        assert(!isset($this->payee_preferred) || strlen($this->payee_preferred) <= 255);
-        assert(!isset($this->standard_entry_class_code) || strlen($this->standard_entry_class_code) >= 3);
-        assert(!isset($this->standard_entry_class_code) || strlen($this->standard_entry_class_code) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->payer_selected) || Assert::minLength($this->payer_selected, 1, "payer_selected in PaymentMethod must have minlength of 1 $within");
+        !isset($this->payee_preferred) || Assert::minLength($this->payee_preferred, 1, "payee_preferred in PaymentMethod must have minlength of 1 $within");
+        !isset($this->payee_preferred) || Assert::maxLength($this->payee_preferred, 255, "payee_preferred in PaymentMethod must have maxlength of 255 $within");
+        !isset($this->standard_entry_class_code) || Assert::minLength($this->standard_entry_class_code, 3, "standard_entry_class_code in PaymentMethod must have minlength of 3 $within");
+        !isset($this->standard_entry_class_code) || Assert::maxLength($this->standard_entry_class_code, 255, "standard_entry_class_code in PaymentMethod must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

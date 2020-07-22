@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The information about the disputed transaction.
@@ -207,24 +208,48 @@ class TransactionInfo implements JsonSerializable
      */
     public $provisional_credit_status;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->buyer_transaction_id) || strlen($this->buyer_transaction_id) >= 1);
-        assert(!isset($this->buyer_transaction_id) || strlen($this->buyer_transaction_id) <= 255);
-        assert(!isset($this->seller_transaction_id) || strlen($this->seller_transaction_id) >= 1);
-        assert(!isset($this->seller_transaction_id) || strlen($this->seller_transaction_id) <= 255);
-        assert(!isset($this->create_time) || strlen($this->create_time) >= 20);
-        assert(!isset($this->create_time) || strlen($this->create_time) <= 64);
-        assert(!isset($this->transaction_status) || strlen($this->transaction_status) >= 1);
-        assert(!isset($this->transaction_status) || strlen($this->transaction_status) <= 255);
-        assert(isset($this->gross_amount));
-        assert(!isset($this->invoice_number) || strlen($this->invoice_number) >= 1);
-        assert(!isset($this->invoice_number) || strlen($this->invoice_number) <= 127);
-        assert(!isset($this->custom) || strlen($this->custom) >= 1);
-        assert(!isset($this->custom) || strlen($this->custom) <= 2000);
-        assert(!isset($this->seller_protection_type) || strlen($this->seller_protection_type) >= 1);
-        assert(!isset($this->seller_protection_type) || strlen($this->seller_protection_type) <= 255);
-        assert(!isset($this->provisional_credit_status) || strlen($this->provisional_credit_status) >= 1);
-        assert(!isset($this->provisional_credit_status) || strlen($this->provisional_credit_status) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->buyer_transaction_id) || Assert::minLength($this->buyer_transaction_id, 1, "buyer_transaction_id in TransactionInfo must have minlength of 1 $within");
+        !isset($this->buyer_transaction_id) || Assert::maxLength($this->buyer_transaction_id, 255, "buyer_transaction_id in TransactionInfo must have maxlength of 255 $within");
+        !isset($this->seller_transaction_id) || Assert::minLength($this->seller_transaction_id, 1, "seller_transaction_id in TransactionInfo must have minlength of 1 $within");
+        !isset($this->seller_transaction_id) || Assert::maxLength($this->seller_transaction_id, 255, "seller_transaction_id in TransactionInfo must have maxlength of 255 $within");
+        !isset($this->create_time) || Assert::minLength($this->create_time, 20, "create_time in TransactionInfo must have minlength of 20 $within");
+        !isset($this->create_time) || Assert::maxLength($this->create_time, 64, "create_time in TransactionInfo must have maxlength of 64 $within");
+        !isset($this->transaction_status) || Assert::minLength($this->transaction_status, 1, "transaction_status in TransactionInfo must have minlength of 1 $within");
+        !isset($this->transaction_status) || Assert::maxLength($this->transaction_status, 255, "transaction_status in TransactionInfo must have maxlength of 255 $within");
+        !isset($this->gross_amount) || Assert::notNull($this->gross_amount->currency_code, "currency_code in gross_amount must not be NULL within TransactionInfo $within");
+        !isset($this->gross_amount) || Assert::notNull($this->gross_amount->value, "value in gross_amount must not be NULL within TransactionInfo $within");
+        !isset($this->gross_amount) || Assert::isInstanceOf($this->gross_amount, Money::class, "gross_amount in TransactionInfo must be instance of Money $within");
+        !isset($this->gross_amount) || $this->gross_amount->validate(TransactionInfo::class);
+        !isset($this->invoice_number) || Assert::minLength($this->invoice_number, 1, "invoice_number in TransactionInfo must have minlength of 1 $within");
+        !isset($this->invoice_number) || Assert::maxLength($this->invoice_number, 127, "invoice_number in TransactionInfo must have maxlength of 127 $within");
+        !isset($this->custom) || Assert::minLength($this->custom, 1, "custom in TransactionInfo must have minlength of 1 $within");
+        !isset($this->custom) || Assert::maxLength($this->custom, 2000, "custom in TransactionInfo must have maxlength of 2000 $within");
+        !isset($this->buyer) || Assert::isInstanceOf($this->buyer, Buyer::class, "buyer in TransactionInfo must be instance of Buyer $within");
+        !isset($this->buyer) || $this->buyer->validate(TransactionInfo::class);
+        !isset($this->seller) || Assert::isInstanceOf($this->seller, Seller::class, "seller in TransactionInfo must be instance of Seller $within");
+        !isset($this->seller) || $this->seller->validate(TransactionInfo::class);
+        !isset($this->facilitator) || Assert::isInstanceOf($this->facilitator, Facilitator::class, "facilitator in TransactionInfo must be instance of Facilitator $within");
+        !isset($this->facilitator) || $this->facilitator->validate(TransactionInfo::class);
+        !isset($this->items) || Assert::isArray($this->items, "items in TransactionInfo must be array $within");
+
+                                if (isset($this->items)){
+                                    foreach ($this->items as $item) {
+                                        $item->validate(TransactionInfo::class);
+                                    }
+                                }
+
+        !isset($this->seller_protection_type) || Assert::minLength($this->seller_protection_type, 1, "seller_protection_type in TransactionInfo must have minlength of 1 $within");
+        !isset($this->seller_protection_type) || Assert::maxLength($this->seller_protection_type, 255, "seller_protection_type in TransactionInfo must have maxlength of 255 $within");
+        !isset($this->regulation_info) || Assert::isInstanceOf($this->regulation_info, RegulationInfo::class, "regulation_info in TransactionInfo must be instance of RegulationInfo $within");
+        !isset($this->regulation_info) || $this->regulation_info->validate(TransactionInfo::class);
+        !isset($this->provisional_credit_status) || Assert::minLength($this->provisional_credit_status, 1, "provisional_credit_status in TransactionInfo must have minlength of 1 $within");
+        !isset($this->provisional_credit_status) || Assert::maxLength($this->provisional_credit_status, 255, "provisional_credit_status in TransactionInfo must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Date of birth data provided by the user
@@ -26,9 +27,14 @@ class BirthDetails implements JsonSerializable
      */
     public $date_of_birth;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->date_of_birth) || strlen($this->date_of_birth) >= 10);
-        assert(!isset($this->date_of_birth) || strlen($this->date_of_birth) <= 10);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->date_of_birth) || Assert::minLength($this->date_of_birth, 10, "date_of_birth in BirthDetails must have minlength of 10 $within");
+        !isset($this->date_of_birth) || Assert::maxLength($this->date_of_birth, 10, "date_of_birth in BirthDetails must have maxlength of 10 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

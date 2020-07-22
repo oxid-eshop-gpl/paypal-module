@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The save subscription request details.
@@ -23,9 +24,14 @@ class SubscriptionSaveRequest implements JsonSerializable
      */
     public $token_id;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->token_id) || strlen($this->token_id) >= 3);
-        assert(!isset($this->token_id) || strlen($this->token_id) <= 50);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->token_id) || Assert::minLength($this->token_id, 3, "token_id in SubscriptionSaveRequest must have minlength of 3 $within");
+        !isset($this->token_id) || Assert::maxLength($this->token_id, 50, "token_id in SubscriptionSaveRequest must have maxlength of 50 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

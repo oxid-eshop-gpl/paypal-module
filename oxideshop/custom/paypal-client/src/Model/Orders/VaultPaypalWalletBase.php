@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Resource consolidating common request and response attirbutes for vaulting PayPal Wallet.
@@ -94,15 +95,22 @@ class VaultPaypalWalletBase implements JsonSerializable
      */
     public $permit_multiple_payment_tokens = false;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->description) || strlen($this->description) >= 1);
-        assert(!isset($this->description) || strlen($this->description) <= 128);
-        assert(!isset($this->product_label) || strlen($this->product_label) >= 1);
-        assert(!isset($this->product_label) || strlen($this->product_label) <= 25);
-        assert(!isset($this->usage_type) || strlen($this->usage_type) >= 1);
-        assert(!isset($this->usage_type) || strlen($this->usage_type) <= 255);
-        assert(!isset($this->customer_type) || strlen($this->customer_type) >= 1);
-        assert(!isset($this->customer_type) || strlen($this->customer_type) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->description) || Assert::minLength($this->description, 1, "description in VaultPaypalWalletBase must have minlength of 1 $within");
+        !isset($this->description) || Assert::maxLength($this->description, 128, "description in VaultPaypalWalletBase must have maxlength of 128 $within");
+        !isset($this->product_label) || Assert::minLength($this->product_label, 1, "product_label in VaultPaypalWalletBase must have minlength of 1 $within");
+        !isset($this->product_label) || Assert::maxLength($this->product_label, 25, "product_label in VaultPaypalWalletBase must have maxlength of 25 $within");
+        !isset($this->shipping) || Assert::isInstanceOf($this->shipping, ShippingDetail::class, "shipping in VaultPaypalWalletBase must be instance of ShippingDetail $within");
+        !isset($this->shipping) || $this->shipping->validate(VaultPaypalWalletBase::class);
+        !isset($this->usage_type) || Assert::minLength($this->usage_type, 1, "usage_type in VaultPaypalWalletBase must have minlength of 1 $within");
+        !isset($this->usage_type) || Assert::maxLength($this->usage_type, 255, "usage_type in VaultPaypalWalletBase must have maxlength of 255 $within");
+        !isset($this->customer_type) || Assert::minLength($this->customer_type, 1, "customer_type in VaultPaypalWalletBase must have minlength of 1 $within");
+        !isset($this->customer_type) || Assert::maxLength($this->customer_type, 255, "customer_type in VaultPaypalWalletBase must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

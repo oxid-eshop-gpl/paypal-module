@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The Buyer credit option used to fund the payment.
@@ -49,11 +50,16 @@ class PaypalCredit implements JsonSerializable
      */
     public $type;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->id) || strlen($this->id) >= 4);
-        assert(!isset($this->id) || strlen($this->id) <= 25);
-        assert(!isset($this->type) || strlen($this->type) >= 1);
-        assert(!isset($this->type) || strlen($this->type) <= 50);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->id) || Assert::minLength($this->id, 4, "id in PaypalCredit must have minlength of 4 $within");
+        !isset($this->id) || Assert::maxLength($this->id, 25, "id in PaypalCredit must have maxlength of 25 $within");
+        !isset($this->type) || Assert::minLength($this->type, 1, "type in PaypalCredit must have minlength of 1 $within");
+        !isset($this->type) || Assert::maxLength($this->type, 50, "type in PaypalCredit must have maxlength of 50 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

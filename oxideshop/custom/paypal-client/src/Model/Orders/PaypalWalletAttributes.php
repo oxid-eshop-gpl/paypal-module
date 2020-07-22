@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Additional attributes associated with the use of this paypal wallet
@@ -20,7 +21,14 @@ class PaypalWalletAttributes implements JsonSerializable
      */
     public $customer;
 
-    public function validate()
+    public function validate($from = null)
+    {
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->customer) || Assert::isInstanceOf($this->customer, Customer::class, "customer in PaypalWalletAttributes must be instance of Customer $within");
+        !isset($this->customer) || $this->customer->validate(PaypalWalletAttributes::class);
+    }
+
+    public function __construct()
     {
     }
 }

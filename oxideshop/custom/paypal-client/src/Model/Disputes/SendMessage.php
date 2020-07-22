@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The merchant request to send a message to the other party.
@@ -23,9 +24,14 @@ class SendMessage implements JsonSerializable
      */
     public $message;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->message) || strlen($this->message) >= 1);
-        assert(!isset($this->message) || strlen($this->message) <= 2000);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->message) || Assert::minLength($this->message, 1, "message in SendMessage must have minlength of 1 $within");
+        !isset($this->message) || Assert::maxLength($this->message, 2000, "message in SendMessage must have maxlength of 2000 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

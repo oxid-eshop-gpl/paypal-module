@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The service details.
@@ -69,15 +70,21 @@ class ServiceDetails implements JsonSerializable
      */
     public $purchase_url;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->description) || strlen($this->description) >= 1);
-        assert(!isset($this->description) || strlen($this->description) <= 2000);
-        assert(!isset($this->service_started) || strlen($this->service_started) >= 1);
-        assert(!isset($this->service_started) || strlen($this->service_started) <= 255);
-        assert(!isset($this->note) || strlen($this->note) >= 1);
-        assert(!isset($this->note) || strlen($this->note) <= 2000);
-        assert(!isset($this->purchase_url) || strlen($this->purchase_url) >= 1);
-        assert(!isset($this->purchase_url) || strlen($this->purchase_url) <= 2000);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->description) || Assert::minLength($this->description, 1, "description in ServiceDetails must have minlength of 1 $within");
+        !isset($this->description) || Assert::maxLength($this->description, 2000, "description in ServiceDetails must have maxlength of 2000 $within");
+        !isset($this->service_started) || Assert::minLength($this->service_started, 1, "service_started in ServiceDetails must have minlength of 1 $within");
+        !isset($this->service_started) || Assert::maxLength($this->service_started, 255, "service_started in ServiceDetails must have maxlength of 255 $within");
+        !isset($this->note) || Assert::minLength($this->note, 1, "note in ServiceDetails must have minlength of 1 $within");
+        !isset($this->note) || Assert::maxLength($this->note, 2000, "note in ServiceDetails must have maxlength of 2000 $within");
+        !isset($this->sub_reasons) || Assert::isArray($this->sub_reasons, "sub_reasons in ServiceDetails must be array $within");
+        !isset($this->purchase_url) || Assert::minLength($this->purchase_url, 1, "purchase_url in ServiceDetails must have minlength of 1 $within");
+        !isset($this->purchase_url) || Assert::maxLength($this->purchase_url, 2000, "purchase_url in ServiceDetails must have maxlength of 2000 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

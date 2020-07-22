@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The purchase unit request. Includes required information for the payment contract.
@@ -111,12 +112,35 @@ class PurchaseUnitRequest implements JsonSerializable
      */
     public $supplementary_data;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->reference_id) || strlen($this->reference_id) <= 256);
-        assert(!isset($this->description) || strlen($this->description) <= 127);
-        assert(!isset($this->custom_id) || strlen($this->custom_id) <= 127);
-        assert(!isset($this->invoice_id) || strlen($this->invoice_id) <= 127);
-        assert(!isset($this->soft_descriptor) || strlen($this->soft_descriptor) <= 22);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->reference_id) || Assert::maxLength($this->reference_id, 256, "reference_id in PurchaseUnitRequest must have maxlength of 256 $within");
+        !isset($this->amount) || Assert::isInstanceOf($this->amount, AmountWithBreakdown::class, "amount in PurchaseUnitRequest must be instance of AmountWithBreakdown $within");
+        !isset($this->amount) || $this->amount->validate(PurchaseUnitRequest::class);
+        !isset($this->payee) || Assert::isInstanceOf($this->payee, Payee::class, "payee in PurchaseUnitRequest must be instance of Payee $within");
+        !isset($this->payee) || $this->payee->validate(PurchaseUnitRequest::class);
+        !isset($this->payment_instruction) || Assert::isInstanceOf($this->payment_instruction, PaymentInstruction::class, "payment_instruction in PurchaseUnitRequest must be instance of PaymentInstruction $within");
+        !isset($this->payment_instruction) || $this->payment_instruction->validate(PurchaseUnitRequest::class);
+        !isset($this->description) || Assert::maxLength($this->description, 127, "description in PurchaseUnitRequest must have maxlength of 127 $within");
+        !isset($this->custom_id) || Assert::maxLength($this->custom_id, 127, "custom_id in PurchaseUnitRequest must have maxlength of 127 $within");
+        !isset($this->invoice_id) || Assert::maxLength($this->invoice_id, 127, "invoice_id in PurchaseUnitRequest must have maxlength of 127 $within");
+        !isset($this->soft_descriptor) || Assert::maxLength($this->soft_descriptor, 22, "soft_descriptor in PurchaseUnitRequest must have maxlength of 22 $within");
+        !isset($this->items) || Assert::isArray($this->items, "items in PurchaseUnitRequest must be array $within");
+
+                                if (isset($this->items)){
+                                    foreach ($this->items as $item) {
+                                        $item->validate(PurchaseUnitRequest::class);
+                                    }
+                                }
+
+        !isset($this->shipping) || Assert::isInstanceOf($this->shipping, ShippingDetail::class, "shipping in PurchaseUnitRequest must be instance of ShippingDetail $within");
+        !isset($this->shipping) || $this->shipping->validate(PurchaseUnitRequest::class);
+        !isset($this->supplementary_data) || Assert::isInstanceOf($this->supplementary_data, SupplementaryData::class, "supplementary_data in PurchaseUnitRequest must be instance of SupplementaryData $within");
+        !isset($this->supplementary_data) || $this->supplementary_data->validate(PurchaseUnitRequest::class);
+    }
+
+    public function __construct()
+    {
     }
 }

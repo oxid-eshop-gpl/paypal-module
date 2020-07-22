@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The document-issuing authority information.
@@ -46,13 +47,18 @@ class DocumentIssuer implements JsonSerializable
      */
     public $authority;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->country_code) || strlen($this->country_code) >= 2);
-        assert(!isset($this->country_code) || strlen($this->country_code) <= 2);
-        assert(!isset($this->province_code) || strlen($this->province_code) >= 5);
-        assert(!isset($this->province_code) || strlen($this->province_code) <= 6);
-        assert(!isset($this->authority) || strlen($this->authority) >= 1);
-        assert(!isset($this->authority) || strlen($this->authority) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->country_code) || Assert::minLength($this->country_code, 2, "country_code in DocumentIssuer must have minlength of 2 $within");
+        !isset($this->country_code) || Assert::maxLength($this->country_code, 2, "country_code in DocumentIssuer must have maxlength of 2 $within");
+        !isset($this->province_code) || Assert::minLength($this->province_code, 5, "province_code in DocumentIssuer must have minlength of 5 $within");
+        !isset($this->province_code) || Assert::maxLength($this->province_code, 6, "province_code in DocumentIssuer must have maxlength of 6 $within");
+        !isset($this->authority) || Assert::minLength($this->authority, 1, "authority in DocumentIssuer must have minlength of 1 $within");
+        !isset($this->authority) || Assert::maxLength($this->authority, 255, "authority in DocumentIssuer must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

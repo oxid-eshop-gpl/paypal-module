@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The eligible and ineligible disputes with reasons.
@@ -66,12 +67,16 @@ class DisputeEligibility implements JsonSerializable
     /**
      * @var array<EligibleDisputeReason>
      * An array of the eligible disputes with reasons.
+     *
+     * maxItems: 0
      */
     public $eligible_dispute_reasons;
 
     /**
      * @var array<IneligibleDisputeReason>
      * An array of the ineligible disputes with ineligibility reasons.
+     *
+     * maxItems: 0
      */
     public $ineligible_dispute_reasons;
 
@@ -97,13 +102,38 @@ class DisputeEligibility implements JsonSerializable
      */
     public $recommended_dispute_reason;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->seller_transaction_id) || strlen($this->seller_transaction_id) >= 1);
-        assert(!isset($this->seller_transaction_id) || strlen($this->seller_transaction_id) <= 255);
-        assert(!isset($this->buyer_transaction_id) || strlen($this->buyer_transaction_id) >= 1);
-        assert(!isset($this->buyer_transaction_id) || strlen($this->buyer_transaction_id) <= 255);
-        assert(!isset($this->recommended_dispute_reason) || strlen($this->recommended_dispute_reason) >= 1);
-        assert(!isset($this->recommended_dispute_reason) || strlen($this->recommended_dispute_reason) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->seller_transaction_id) || Assert::minLength($this->seller_transaction_id, 1, "seller_transaction_id in DisputeEligibility must have minlength of 1 $within");
+        !isset($this->seller_transaction_id) || Assert::maxLength($this->seller_transaction_id, 255, "seller_transaction_id in DisputeEligibility must have maxlength of 255 $within");
+        !isset($this->buyer_transaction_id) || Assert::minLength($this->buyer_transaction_id, 1, "buyer_transaction_id in DisputeEligibility must have minlength of 1 $within");
+        !isset($this->buyer_transaction_id) || Assert::maxLength($this->buyer_transaction_id, 255, "buyer_transaction_id in DisputeEligibility must have maxlength of 255 $within");
+        Assert::notNull($this->eligible_dispute_reasons, "eligible_dispute_reasons in DisputeEligibility must not be NULL $within");
+         Assert::minCount($this->eligible_dispute_reasons, 0, "eligible_dispute_reasons in DisputeEligibility must have min. count of 0 $within");
+         Assert::isArray($this->eligible_dispute_reasons, "eligible_dispute_reasons in DisputeEligibility must be array $within");
+
+                                if (isset($this->eligible_dispute_reasons)){
+                                    foreach ($this->eligible_dispute_reasons as $item) {
+                                        $item->validate(DisputeEligibility::class);
+                                    }
+                                }
+
+        Assert::notNull($this->ineligible_dispute_reasons, "ineligible_dispute_reasons in DisputeEligibility must not be NULL $within");
+         Assert::minCount($this->ineligible_dispute_reasons, 0, "ineligible_dispute_reasons in DisputeEligibility must have min. count of 0 $within");
+         Assert::isArray($this->ineligible_dispute_reasons, "ineligible_dispute_reasons in DisputeEligibility must be array $within");
+
+                                if (isset($this->ineligible_dispute_reasons)){
+                                    foreach ($this->ineligible_dispute_reasons as $item) {
+                                        $item->validate(DisputeEligibility::class);
+                                    }
+                                }
+
+        !isset($this->recommended_dispute_reason) || Assert::minLength($this->recommended_dispute_reason, 1, "recommended_dispute_reason in DisputeEligibility must have minlength of 1 $within");
+        !isset($this->recommended_dispute_reason) || Assert::maxLength($this->recommended_dispute_reason, 255, "recommended_dispute_reason in DisputeEligibility must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

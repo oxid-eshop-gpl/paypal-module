@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * A request by a merchant to accept a customer's merchandise claim.
@@ -82,15 +83,25 @@ class AcceptClaim implements JsonSerializable
      */
     public $refund_amount;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->note) || strlen($this->note) >= 1);
-        assert(!isset($this->note) || strlen($this->note) <= 2000);
-        assert(!isset($this->accept_claim_reason) || strlen($this->accept_claim_reason) >= 1);
-        assert(!isset($this->accept_claim_reason) || strlen($this->accept_claim_reason) <= 255);
-        assert(!isset($this->invoice_id) || strlen($this->invoice_id) >= 1);
-        assert(!isset($this->invoice_id) || strlen($this->invoice_id) <= 127);
-        assert(isset($this->return_shipping_address));
-        assert(isset($this->refund_amount));
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->note) || Assert::minLength($this->note, 1, "note in AcceptClaim must have minlength of 1 $within");
+        !isset($this->note) || Assert::maxLength($this->note, 2000, "note in AcceptClaim must have maxlength of 2000 $within");
+        !isset($this->accept_claim_reason) || Assert::minLength($this->accept_claim_reason, 1, "accept_claim_reason in AcceptClaim must have minlength of 1 $within");
+        !isset($this->accept_claim_reason) || Assert::maxLength($this->accept_claim_reason, 255, "accept_claim_reason in AcceptClaim must have maxlength of 255 $within");
+        !isset($this->invoice_id) || Assert::minLength($this->invoice_id, 1, "invoice_id in AcceptClaim must have minlength of 1 $within");
+        !isset($this->invoice_id) || Assert::maxLength($this->invoice_id, 127, "invoice_id in AcceptClaim must have maxlength of 127 $within");
+        !isset($this->return_shipping_address) || Assert::notNull($this->return_shipping_address->country_code, "country_code in return_shipping_address must not be NULL within AcceptClaim $within");
+        !isset($this->return_shipping_address) || Assert::isInstanceOf($this->return_shipping_address, AddressPortable::class, "return_shipping_address in AcceptClaim must be instance of AddressPortable $within");
+        !isset($this->return_shipping_address) || $this->return_shipping_address->validate(AcceptClaim::class);
+        !isset($this->refund_amount) || Assert::notNull($this->refund_amount->currency_code, "currency_code in refund_amount must not be NULL within AcceptClaim $within");
+        !isset($this->refund_amount) || Assert::notNull($this->refund_amount->value, "value in refund_amount must not be NULL within AcceptClaim $within");
+        !isset($this->refund_amount) || Assert::isInstanceOf($this->refund_amount, Money::class, "refund_amount in AcceptClaim must be instance of Money $within");
+        !isset($this->refund_amount) || $this->refund_amount->validate(AcceptClaim::class);
+    }
+
+    public function __construct()
+    {
     }
 }

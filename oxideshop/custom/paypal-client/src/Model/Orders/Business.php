@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Business information.
@@ -89,6 +90,9 @@ class Business extends Party implements JsonSerializable
     /**
      * @var array<BusinessName>
      * Names of business.
+     *
+     * maxItems: 1
+     * maxItems: 10
      */
     public $names;
 
@@ -136,6 +140,9 @@ class Business extends Party implements JsonSerializable
     /**
      * @var array<BusinessIdentification>
      * Identification details for the business.
+     *
+     * maxItems: 1
+     * maxItems: 30
      */
     public $identifications;
 
@@ -151,6 +158,9 @@ class Business extends Party implements JsonSerializable
     /**
      * @var array<Person>
      * Beneficial owners of the business.
+     *
+     * maxItems: 1
+     * maxItems: 100
      */
     public $owners;
 
@@ -169,13 +179,55 @@ class Business extends Party implements JsonSerializable
      */
     public $customer_service_contacts;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->type) || strlen($this->type) >= 1);
-        assert(!isset($this->type) || strlen($this->type) <= 255);
-        assert(!isset($this->description) || strlen($this->description) >= 1);
-        assert(!isset($this->description) || strlen($this->description) <= 255);
-        assert(!isset($this->url) || strlen($this->url) >= 1);
-        assert(!isset($this->url) || strlen($this->url) <= 100);
+        $within = isset($from) ? "within $from" : "";
+        Assert::notNull($this->names, "names in Business must not be NULL $within");
+         Assert::minCount($this->names, 1, "names in Business must have min. count of 1 $within");
+         Assert::maxCount($this->names, 10, "names in Business must have max. count of 10 $within");
+         Assert::isArray($this->names, "names in Business must be array $within");
+
+                                if (isset($this->names)){
+                                    foreach ($this->names as $item) {
+                                        $item->validate(Business::class);
+                                    }
+                                }
+
+        !isset($this->type) || Assert::minLength($this->type, 1, "type in Business must have minlength of 1 $within");
+        !isset($this->type) || Assert::maxLength($this->type, 255, "type in Business must have maxlength of 255 $within");
+        !isset($this->category) || Assert::isInstanceOf($this->category, BusinessCategory::class, "category in Business must be instance of BusinessCategory $within");
+        !isset($this->category) || $this->category->validate(Business::class);
+        Assert::notNull($this->identifications, "identifications in Business must not be NULL $within");
+         Assert::minCount($this->identifications, 1, "identifications in Business must have min. count of 1 $within");
+         Assert::maxCount($this->identifications, 30, "identifications in Business must have max. count of 30 $within");
+         Assert::isArray($this->identifications, "identifications in Business must be array $within");
+
+                                if (isset($this->identifications)){
+                                    foreach ($this->identifications as $item) {
+                                        $item->validate(Business::class);
+                                    }
+                                }
+
+        !isset($this->description) || Assert::minLength($this->description, 1, "description in Business must have minlength of 1 $within");
+        !isset($this->description) || Assert::maxLength($this->description, 255, "description in Business must have maxlength of 255 $within");
+        Assert::notNull($this->owners, "owners in Business must not be NULL $within");
+         Assert::minCount($this->owners, 1, "owners in Business must have min. count of 1 $within");
+         Assert::maxCount($this->owners, 100, "owners in Business must have max. count of 100 $within");
+         Assert::isArray($this->owners, "owners in Business must be array $within");
+
+                                if (isset($this->owners)){
+                                    foreach ($this->owners as $item) {
+                                        $item->validate(Business::class);
+                                    }
+                                }
+
+        !isset($this->url) || Assert::minLength($this->url, 1, "url in Business must have minlength of 1 $within");
+        !isset($this->url) || Assert::maxLength($this->url, 100, "url in Business must have maxlength of 100 $within");
+        !isset($this->customer_service_contacts) || Assert::isInstanceOf($this->customer_service_contacts, CustomerServiceContact::class, "customer_service_contacts in Business must be instance of CustomerServiceContact $within");
+        !isset($this->customer_service_contacts) || $this->customer_service_contacts->validate(Business::class);
+    }
+
+    public function __construct()
+    {
     }
 }

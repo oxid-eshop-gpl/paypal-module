@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The payment preferences for a subscription.
@@ -70,12 +71,20 @@ class PaymentPreferences implements JsonSerializable
      */
     public $payment_failure_threshold = 0;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->service_type) || strlen($this->service_type) >= 1);
-        assert(!isset($this->service_type) || strlen($this->service_type) <= 24);
-        assert(isset($this->setup_fee));
-        assert(!isset($this->setup_fee_failure_action) || strlen($this->setup_fee_failure_action) >= 1);
-        assert(!isset($this->setup_fee_failure_action) || strlen($this->setup_fee_failure_action) <= 24);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->service_type) || Assert::minLength($this->service_type, 1, "service_type in PaymentPreferences must have minlength of 1 $within");
+        !isset($this->service_type) || Assert::maxLength($this->service_type, 24, "service_type in PaymentPreferences must have maxlength of 24 $within");
+        !isset($this->setup_fee) || Assert::notNull($this->setup_fee->currency_code, "currency_code in setup_fee must not be NULL within PaymentPreferences $within");
+        !isset($this->setup_fee) || Assert::notNull($this->setup_fee->value, "value in setup_fee must not be NULL within PaymentPreferences $within");
+        !isset($this->setup_fee) || Assert::isInstanceOf($this->setup_fee, Money::class, "setup_fee in PaymentPreferences must be instance of Money $within");
+        !isset($this->setup_fee) || $this->setup_fee->validate(PaymentPreferences::class);
+        !isset($this->setup_fee_failure_action) || Assert::minLength($this->setup_fee_failure_action, 1, "setup_fee_failure_action in PaymentPreferences must have minlength of 1 $within");
+        !isset($this->setup_fee_failure_action) || Assert::maxLength($this->setup_fee_failure_action, 24, "setup_fee_failure_action in PaymentPreferences must have maxlength of 24 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

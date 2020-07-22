@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The office bearer associated to the account.
@@ -48,9 +49,14 @@ class OfficeBearer extends Person implements JsonSerializable
      */
     public $role;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->role) || strlen($this->role) >= 1);
-        assert(!isset($this->role) || strlen($this->role) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->role) || Assert::minLength($this->role, 1, "role in OfficeBearer must have minlength of 1 $within");
+        !isset($this->role) || Assert::maxLength($this->role, 255, "role in OfficeBearer must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

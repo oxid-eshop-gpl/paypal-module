@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The payment source used to fund the payment.
@@ -20,7 +21,14 @@ class PaymentSourceResponse implements JsonSerializable
      */
     public $card;
 
-    public function validate()
+    public function validate($from = null)
+    {
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->card) || Assert::isInstanceOf($this->card, CardResponseWithBillingAddress::class, "card in PaymentSourceResponse must be instance of CardResponseWithBillingAddress $within");
+        !isset($this->card) || $this->card->validate(PaymentSourceResponse::class);
+    }
+
+    public function __construct()
     {
     }
 }

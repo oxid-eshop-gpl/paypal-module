@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The subscription status details.
@@ -94,15 +95,20 @@ class SubscriptionStatus implements JsonSerializable
      */
     public $status_changed_by;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->status) || strlen($this->status) >= 1);
-        assert(!isset($this->status) || strlen($this->status) <= 24);
-        assert(!isset($this->status_change_note) || strlen($this->status_change_note) >= 1);
-        assert(!isset($this->status_change_note) || strlen($this->status_change_note) <= 128);
-        assert(!isset($this->status_update_time) || strlen($this->status_update_time) >= 20);
-        assert(!isset($this->status_update_time) || strlen($this->status_update_time) <= 64);
-        assert(!isset($this->status_changed_by) || strlen($this->status_changed_by) >= 1);
-        assert(!isset($this->status_changed_by) || strlen($this->status_changed_by) <= 24);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->status) || Assert::minLength($this->status, 1, "status in SubscriptionStatus must have minlength of 1 $within");
+        !isset($this->status) || Assert::maxLength($this->status, 24, "status in SubscriptionStatus must have maxlength of 24 $within");
+        !isset($this->status_change_note) || Assert::minLength($this->status_change_note, 1, "status_change_note in SubscriptionStatus must have minlength of 1 $within");
+        !isset($this->status_change_note) || Assert::maxLength($this->status_change_note, 128, "status_change_note in SubscriptionStatus must have maxlength of 128 $within");
+        !isset($this->status_update_time) || Assert::minLength($this->status_update_time, 20, "status_update_time in SubscriptionStatus must have minlength of 20 $within");
+        !isset($this->status_update_time) || Assert::maxLength($this->status_update_time, 64, "status_update_time in SubscriptionStatus must have maxlength of 64 $within");
+        !isset($this->status_changed_by) || Assert::minLength($this->status_changed_by, 1, "status_changed_by in SubscriptionStatus must have minlength of 1 $within");
+        !isset($this->status_changed_by) || Assert::maxLength($this->status_changed_by, 24, "status_changed_by in SubscriptionStatus must have maxlength of 24 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The offer history.
@@ -97,16 +98,24 @@ class OfferHistory implements JsonSerializable
      */
     public $offer_amount;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->offer_time) || strlen($this->offer_time) >= 20);
-        assert(!isset($this->offer_time) || strlen($this->offer_time) <= 64);
-        assert(!isset($this->actor) || strlen($this->actor) >= 1);
-        assert(!isset($this->actor) || strlen($this->actor) <= 255);
-        assert(!isset($this->event_type) || strlen($this->event_type) >= 1);
-        assert(!isset($this->event_type) || strlen($this->event_type) <= 255);
-        assert(!isset($this->offer_type) || strlen($this->offer_type) >= 1);
-        assert(!isset($this->offer_type) || strlen($this->offer_type) <= 255);
-        assert(isset($this->offer_amount));
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->offer_time) || Assert::minLength($this->offer_time, 20, "offer_time in OfferHistory must have minlength of 20 $within");
+        !isset($this->offer_time) || Assert::maxLength($this->offer_time, 64, "offer_time in OfferHistory must have maxlength of 64 $within");
+        !isset($this->actor) || Assert::minLength($this->actor, 1, "actor in OfferHistory must have minlength of 1 $within");
+        !isset($this->actor) || Assert::maxLength($this->actor, 255, "actor in OfferHistory must have maxlength of 255 $within");
+        !isset($this->event_type) || Assert::minLength($this->event_type, 1, "event_type in OfferHistory must have minlength of 1 $within");
+        !isset($this->event_type) || Assert::maxLength($this->event_type, 255, "event_type in OfferHistory must have maxlength of 255 $within");
+        !isset($this->offer_type) || Assert::minLength($this->offer_type, 1, "offer_type in OfferHistory must have minlength of 1 $within");
+        !isset($this->offer_type) || Assert::maxLength($this->offer_type, 255, "offer_type in OfferHistory must have maxlength of 255 $within");
+        !isset($this->offer_amount) || Assert::notNull($this->offer_amount->currency_code, "currency_code in offer_amount must not be NULL within OfferHistory $within");
+        !isset($this->offer_amount) || Assert::notNull($this->offer_amount->value, "value in offer_amount must not be NULL within OfferHistory $within");
+        !isset($this->offer_amount) || Assert::isInstanceOf($this->offer_amount, Money::class, "offer_amount in OfferHistory must be instance of Money $within");
+        !isset($this->offer_amount) || $this->offer_amount->validate(OfferHistory::class);
+    }
+
+    public function __construct()
+    {
     }
 }

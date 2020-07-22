@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The details for the items to be purchased.
@@ -81,16 +82,27 @@ class Item implements JsonSerializable
      */
     public $category;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->name) || strlen($this->name) >= 1);
-        assert(!isset($this->name) || strlen($this->name) <= 127);
-        assert(isset($this->unit_amount));
-        assert(isset($this->tax));
-        assert(!isset($this->quantity) || strlen($this->quantity) <= 10);
-        assert(!isset($this->description) || strlen($this->description) <= 127);
-        assert(!isset($this->sku) || strlen($this->sku) <= 127);
-        assert(!isset($this->category) || strlen($this->category) >= 1);
-        assert(!isset($this->category) || strlen($this->category) <= 20);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->name) || Assert::minLength($this->name, 1, "name in Item must have minlength of 1 $within");
+        !isset($this->name) || Assert::maxLength($this->name, 127, "name in Item must have maxlength of 127 $within");
+        !isset($this->unit_amount) || Assert::notNull($this->unit_amount->currency_code, "currency_code in unit_amount must not be NULL within Item $within");
+        !isset($this->unit_amount) || Assert::notNull($this->unit_amount->value, "value in unit_amount must not be NULL within Item $within");
+        !isset($this->unit_amount) || Assert::isInstanceOf($this->unit_amount, Money::class, "unit_amount in Item must be instance of Money $within");
+        !isset($this->unit_amount) || $this->unit_amount->validate(Item::class);
+        !isset($this->tax) || Assert::notNull($this->tax->currency_code, "currency_code in tax must not be NULL within Item $within");
+        !isset($this->tax) || Assert::notNull($this->tax->value, "value in tax must not be NULL within Item $within");
+        !isset($this->tax) || Assert::isInstanceOf($this->tax, Money::class, "tax in Item must be instance of Money $within");
+        !isset($this->tax) || $this->tax->validate(Item::class);
+        !isset($this->quantity) || Assert::maxLength($this->quantity, 10, "quantity in Item must have maxlength of 10 $within");
+        !isset($this->description) || Assert::maxLength($this->description, 127, "description in Item must have maxlength of 127 $within");
+        !isset($this->sku) || Assert::maxLength($this->sku, 127, "sku in Item must have maxlength of 127 $within");
+        !isset($this->category) || Assert::minLength($this->category, 1, "category in Item must have minlength of 1 $within");
+        !isset($this->category) || Assert::maxLength($this->category, 20, "category in Item must have maxlength of 20 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

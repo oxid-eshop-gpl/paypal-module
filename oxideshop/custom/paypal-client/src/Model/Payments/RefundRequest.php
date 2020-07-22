@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Refunds a captured payment, by ID. For a full refund, include an empty request body. For a partial refund,
@@ -48,11 +49,19 @@ class RefundRequest implements JsonSerializable
      */
     public $note_to_payer;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(isset($this->amount));
-        assert(!isset($this->invoice_id) || strlen($this->invoice_id) <= 127);
-        assert(!isset($this->custom_id) || strlen($this->custom_id) <= 127);
-        assert(!isset($this->note_to_payer) || strlen($this->note_to_payer) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->amount) || Assert::notNull($this->amount->currency_code, "currency_code in amount must not be NULL within RefundRequest $within");
+        !isset($this->amount) || Assert::notNull($this->amount->value, "value in amount must not be NULL within RefundRequest $within");
+        !isset($this->amount) || Assert::isInstanceOf($this->amount, Money::class, "amount in RefundRequest must be instance of Money $within");
+        !isset($this->amount) || $this->amount->validate(RefundRequest::class);
+        !isset($this->invoice_id) || Assert::maxLength($this->invoice_id, 127, "invoice_id in RefundRequest must have maxlength of 127 $within");
+        !isset($this->custom_id) || Assert::maxLength($this->custom_id, 127, "custom_id in RefundRequest must have maxlength of 127 $within");
+        !isset($this->note_to_payer) || Assert::maxLength($this->note_to_payer, 255, "note_to_payer in RefundRequest must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

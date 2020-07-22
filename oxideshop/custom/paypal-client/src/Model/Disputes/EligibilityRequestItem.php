@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Information about the items in the transaction.
@@ -77,11 +78,16 @@ class EligibilityRequestItem implements JsonSerializable
      */
     public $category;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->id) || strlen($this->id) >= 1);
-        assert(!isset($this->id) || strlen($this->id) <= 255);
-        assert(!isset($this->category) || strlen($this->category) >= 1);
-        assert(!isset($this->category) || strlen($this->category) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->id) || Assert::minLength($this->id, 1, "id in EligibilityRequestItem must have minlength of 1 $within");
+        !isset($this->id) || Assert::maxLength($this->id, 255, "id in EligibilityRequestItem must have maxlength of 255 $within");
+        !isset($this->category) || Assert::minLength($this->category, 1, "category in EligibilityRequestItem must have minlength of 1 $within");
+        !isset($this->category) || Assert::maxLength($this->category, 255, "category in EligibilityRequestItem must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

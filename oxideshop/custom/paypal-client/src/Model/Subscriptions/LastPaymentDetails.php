@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The details for the last payment of the subscription.
@@ -31,10 +32,18 @@ class LastPaymentDetails implements JsonSerializable
      */
     public $time;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(isset($this->amount));
-        assert(!isset($this->time) || strlen($this->time) >= 20);
-        assert(!isset($this->time) || strlen($this->time) <= 64);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->amount) || Assert::notNull($this->amount->currency_code, "currency_code in amount must not be NULL within LastPaymentDetails $within");
+        !isset($this->amount) || Assert::notNull($this->amount->value, "value in amount must not be NULL within LastPaymentDetails $within");
+        !isset($this->amount) || Assert::isInstanceOf($this->amount, Money::class, "amount in LastPaymentDetails must be instance of Money $within");
+        !isset($this->amount) || $this->amount->validate(LastPaymentDetails::class);
+        !isset($this->time) || Assert::minLength($this->time, 20, "time in LastPaymentDetails must have minlength of 20 $within");
+        !isset($this->time) || Assert::maxLength($this->time, 64, "time in LastPaymentDetails must have maxlength of 64 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

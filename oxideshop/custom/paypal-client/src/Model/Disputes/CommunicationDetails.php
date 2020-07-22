@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The contact details that a merchant provides to the customer to use to share their evidence documents.
@@ -46,13 +47,18 @@ class CommunicationDetails implements JsonSerializable
      */
     public $time_posted;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->email) || strlen($this->email) >= 3);
-        assert(!isset($this->email) || strlen($this->email) <= 254);
-        assert(!isset($this->note) || strlen($this->note) >= 1);
-        assert(!isset($this->note) || strlen($this->note) <= 2000);
-        assert(!isset($this->time_posted) || strlen($this->time_posted) >= 20);
-        assert(!isset($this->time_posted) || strlen($this->time_posted) <= 64);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->email) || Assert::minLength($this->email, 3, "email in CommunicationDetails must have minlength of 3 $within");
+        !isset($this->email) || Assert::maxLength($this->email, 254, "email in CommunicationDetails must have maxlength of 254 $within");
+        !isset($this->note) || Assert::minLength($this->note, 1, "note in CommunicationDetails must have minlength of 1 $within");
+        !isset($this->note) || Assert::maxLength($this->note, 2000, "note in CommunicationDetails must have maxlength of 2000 $within");
+        !isset($this->time_posted) || Assert::minLength($this->time_posted, 20, "time_posted in CommunicationDetails must have minlength of 20 $within");
+        !isset($this->time_posted) || Assert::maxLength($this->time_posted, 64, "time_posted in CommunicationDetails must have maxlength of 64 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

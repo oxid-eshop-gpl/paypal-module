@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The details for a bank account that can be used to fund a payment.
@@ -69,11 +70,18 @@ class BankAccountResponse implements JsonSerializable
      */
     public $backup_funding_instrument;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->bank_name) || strlen($this->bank_name) <= 64);
-        assert(!isset($this->country_code) || strlen($this->country_code) >= 2);
-        assert(!isset($this->country_code) || strlen($this->country_code) <= 2);
-        assert(isset($this->backup_funding_instrument));
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->bank_name) || Assert::maxLength($this->bank_name, 64, "bank_name in BankAccountResponse must have maxlength of 64 $within");
+        !isset($this->country_code) || Assert::minLength($this->country_code, 2, "country_code in BankAccountResponse must have minlength of 2 $within");
+        !isset($this->country_code) || Assert::maxLength($this->country_code, 2, "country_code in BankAccountResponse must have maxlength of 2 $within");
+        !isset($this->backup_funding_instrument) || Assert::notNull($this->backup_funding_instrument->card, "card in backup_funding_instrument must not be NULL within BankAccountResponse $within");
+        !isset($this->backup_funding_instrument) || Assert::isInstanceOf($this->backup_funding_instrument, BackupFundingInstrument::class, "backup_funding_instrument in BankAccountResponse must be instance of BackupFundingInstrument $within");
+        !isset($this->backup_funding_instrument) || $this->backup_funding_instrument->validate(BankAccountResponse::class);
+    }
+
+    public function __construct()
+    {
     }
 }

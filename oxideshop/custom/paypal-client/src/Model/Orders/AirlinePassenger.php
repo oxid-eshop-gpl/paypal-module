@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The airline passenger details.
@@ -55,13 +56,20 @@ class AirlinePassenger implements JsonSerializable
      */
     public $customer_code;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->date_of_birth) || strlen($this->date_of_birth) >= 10);
-        assert(!isset($this->date_of_birth) || strlen($this->date_of_birth) <= 10);
-        assert(!isset($this->country_code) || strlen($this->country_code) >= 2);
-        assert(!isset($this->country_code) || strlen($this->country_code) <= 2);
-        assert(!isset($this->customer_code) || strlen($this->customer_code) >= 1);
-        assert(!isset($this->customer_code) || strlen($this->customer_code) <= 17);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->name) || Assert::isInstanceOf($this->name, Name::class, "name in AirlinePassenger must be instance of Name $within");
+        !isset($this->name) || $this->name->validate(AirlinePassenger::class);
+        !isset($this->date_of_birth) || Assert::minLength($this->date_of_birth, 10, "date_of_birth in AirlinePassenger must have minlength of 10 $within");
+        !isset($this->date_of_birth) || Assert::maxLength($this->date_of_birth, 10, "date_of_birth in AirlinePassenger must have maxlength of 10 $within");
+        !isset($this->country_code) || Assert::minLength($this->country_code, 2, "country_code in AirlinePassenger must have minlength of 2 $within");
+        !isset($this->country_code) || Assert::maxLength($this->country_code, 2, "country_code in AirlinePassenger must have maxlength of 2 $within");
+        !isset($this->customer_code) || Assert::minLength($this->customer_code, 1, "customer_code in AirlinePassenger must have minlength of 1 $within");
+        !isset($this->customer_code) || Assert::maxLength($this->customer_code, 17, "customer_code in AirlinePassenger must have maxlength of 17 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

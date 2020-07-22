@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The transaction details.
@@ -58,14 +59,24 @@ class Transaction extends CaptureStatus implements JsonSerializable
      */
     public $time;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->id) || strlen($this->id) >= 3);
-        assert(!isset($this->id) || strlen($this->id) <= 50);
-        assert(isset($this->amount_with_breakdown));
-        assert(!isset($this->payer_email) || strlen($this->payer_email) >= 3);
-        assert(!isset($this->payer_email) || strlen($this->payer_email) <= 254);
-        assert(!isset($this->time) || strlen($this->time) >= 20);
-        assert(!isset($this->time) || strlen($this->time) <= 64);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->id) || Assert::minLength($this->id, 3, "id in Transaction must have minlength of 3 $within");
+        !isset($this->id) || Assert::maxLength($this->id, 50, "id in Transaction must have maxlength of 50 $within");
+        !isset($this->amount_with_breakdown) || Assert::notNull($this->amount_with_breakdown->gross_amount, "gross_amount in amount_with_breakdown must not be NULL within Transaction $within");
+        !isset($this->amount_with_breakdown) || Assert::notNull($this->amount_with_breakdown->net_amount, "net_amount in amount_with_breakdown must not be NULL within Transaction $within");
+        !isset($this->amount_with_breakdown) || Assert::isInstanceOf($this->amount_with_breakdown, AmountWithBreakdown::class, "amount_with_breakdown in Transaction must be instance of AmountWithBreakdown $within");
+        !isset($this->amount_with_breakdown) || $this->amount_with_breakdown->validate(Transaction::class);
+        !isset($this->payer_name) || Assert::isInstanceOf($this->payer_name, Name::class, "payer_name in Transaction must be instance of Name $within");
+        !isset($this->payer_name) || $this->payer_name->validate(Transaction::class);
+        !isset($this->payer_email) || Assert::minLength($this->payer_email, 3, "payer_email in Transaction must have minlength of 3 $within");
+        !isset($this->payer_email) || Assert::maxLength($this->payer_email, 254, "payer_email in Transaction must have maxlength of 254 $within");
+        !isset($this->time) || Assert::minLength($this->time, 20, "time in Transaction must have minlength of 20 $within");
+        !isset($this->time) || Assert::maxLength($this->time, 64, "time in Transaction must have maxlength of 64 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The cancel dispute request details.
@@ -59,10 +60,16 @@ class Cancel implements JsonSerializable
      */
     public $cancellation_reason;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->note) || strlen($this->note) <= 1048576);
-        assert(!isset($this->cancellation_reason) || strlen($this->cancellation_reason) >= 1);
-        assert(!isset($this->cancellation_reason) || strlen($this->cancellation_reason) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->note) || Assert::maxLength($this->note, 1048576, "note in Cancel must have maxlength of 1048576 $within");
+        !isset($this->transaction_ids) || Assert::isArray($this->transaction_ids, "transaction_ids in Cancel must be array $within");
+        !isset($this->cancellation_reason) || Assert::minLength($this->cancellation_reason, 1, "cancellation_reason in Cancel must have minlength of 1 $within");
+        !isset($this->cancellation_reason) || Assert::maxLength($this->cancellation_reason, 255, "cancellation_reason in Cancel must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

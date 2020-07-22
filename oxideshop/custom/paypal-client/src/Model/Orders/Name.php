@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The name of the party.
@@ -73,14 +74,19 @@ class Name implements JsonSerializable
      */
     public $full_name;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->prefix) || strlen($this->prefix) <= 140);
-        assert(!isset($this->given_name) || strlen($this->given_name) <= 140);
-        assert(!isset($this->surname) || strlen($this->surname) <= 140);
-        assert(!isset($this->middle_name) || strlen($this->middle_name) <= 140);
-        assert(!isset($this->suffix) || strlen($this->suffix) <= 140);
-        assert(!isset($this->alternate_full_name) || strlen($this->alternate_full_name) <= 300);
-        assert(!isset($this->full_name) || strlen($this->full_name) <= 300);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->prefix) || Assert::maxLength($this->prefix, 140, "prefix in Name must have maxlength of 140 $within");
+        !isset($this->given_name) || Assert::maxLength($this->given_name, 140, "given_name in Name must have maxlength of 140 $within");
+        !isset($this->surname) || Assert::maxLength($this->surname, 140, "surname in Name must have maxlength of 140 $within");
+        !isset($this->middle_name) || Assert::maxLength($this->middle_name, 140, "middle_name in Name must have maxlength of 140 $within");
+        !isset($this->suffix) || Assert::maxLength($this->suffix, 140, "suffix in Name must have maxlength of 140 $within");
+        !isset($this->alternate_full_name) || Assert::maxLength($this->alternate_full_name, 300, "alternate_full_name in Name must have maxlength of 300 $within");
+        !isset($this->full_name) || Assert::maxLength($this->full_name, 300, "full_name in Name must have maxlength of 300 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The payment by other means details.
@@ -75,11 +76,16 @@ class PaymentByOtherMeans implements JsonSerializable
      */
     public $payment_instrument_suffix;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->payment_method) || strlen($this->payment_method) >= 1);
-        assert(!isset($this->payment_method) || strlen($this->payment_method) <= 255);
-        assert(!isset($this->payment_instrument_suffix) || strlen($this->payment_instrument_suffix) >= 2);
-        assert(!isset($this->payment_instrument_suffix) || strlen($this->payment_instrument_suffix) <= 4);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->payment_method) || Assert::minLength($this->payment_method, 1, "payment_method in PaymentByOtherMeans must have minlength of 1 $within");
+        !isset($this->payment_method) || Assert::maxLength($this->payment_method, 255, "payment_method in PaymentByOtherMeans must have maxlength of 255 $within");
+        !isset($this->payment_instrument_suffix) || Assert::minLength($this->payment_instrument_suffix, 2, "payment_instrument_suffix in PaymentByOtherMeans must have minlength of 2 $within");
+        !isset($this->payment_instrument_suffix) || Assert::maxLength($this->payment_instrument_suffix, 4, "payment_instrument_suffix in PaymentByOtherMeans must have maxlength of 4 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The refund status.
@@ -40,7 +41,14 @@ class RefundStatus implements JsonSerializable
      */
     public $status_details;
 
-    public function validate()
+    public function validate($from = null)
+    {
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->status_details) || Assert::isInstanceOf($this->status_details, RefundStatusDetails::class, "status_details in RefundStatus must be instance of RefundStatusDetails $within");
+        !isset($this->status_details) || $this->status_details->validate(RefundStatus::class);
+    }
+
+    public function __construct()
     {
     }
 }

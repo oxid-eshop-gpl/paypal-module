@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Information used to pay using P24(Przelewy24)
@@ -75,19 +76,24 @@ class PTwoFour implements JsonSerializable
      */
     public $method_description;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->name) || strlen($this->name) >= 3);
-        assert(!isset($this->name) || strlen($this->name) <= 300);
-        assert(!isset($this->email) || strlen($this->email) >= 3);
-        assert(!isset($this->email) || strlen($this->email) <= 254);
-        assert(!isset($this->country_code) || strlen($this->country_code) >= 2);
-        assert(!isset($this->country_code) || strlen($this->country_code) <= 2);
-        assert(!isset($this->payment_descriptor) || strlen($this->payment_descriptor) >= 1);
-        assert(!isset($this->payment_descriptor) || strlen($this->payment_descriptor) <= 2000);
-        assert(!isset($this->method_id) || strlen($this->method_id) >= 1);
-        assert(!isset($this->method_id) || strlen($this->method_id) <= 300);
-        assert(!isset($this->method_description) || strlen($this->method_description) >= 1);
-        assert(!isset($this->method_description) || strlen($this->method_description) <= 2000);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->name) || Assert::minLength($this->name, 3, "name in PTwoFour must have minlength of 3 $within");
+        !isset($this->name) || Assert::maxLength($this->name, 300, "name in PTwoFour must have maxlength of 300 $within");
+        !isset($this->email) || Assert::minLength($this->email, 3, "email in PTwoFour must have minlength of 3 $within");
+        !isset($this->email) || Assert::maxLength($this->email, 254, "email in PTwoFour must have maxlength of 254 $within");
+        !isset($this->country_code) || Assert::minLength($this->country_code, 2, "country_code in PTwoFour must have minlength of 2 $within");
+        !isset($this->country_code) || Assert::maxLength($this->country_code, 2, "country_code in PTwoFour must have maxlength of 2 $within");
+        !isset($this->payment_descriptor) || Assert::minLength($this->payment_descriptor, 1, "payment_descriptor in PTwoFour must have minlength of 1 $within");
+        !isset($this->payment_descriptor) || Assert::maxLength($this->payment_descriptor, 2000, "payment_descriptor in PTwoFour must have maxlength of 2000 $within");
+        !isset($this->method_id) || Assert::minLength($this->method_id, 1, "method_id in PTwoFour must have minlength of 1 $within");
+        !isset($this->method_id) || Assert::maxLength($this->method_id, 300, "method_id in PTwoFour must have maxlength of 300 $within");
+        !isset($this->method_description) || Assert::minLength($this->method_description, 1, "method_description in PTwoFour must have minlength of 1 $within");
+        !isset($this->method_description) || Assert::maxLength($this->method_description, 2000, "method_description in PTwoFour must have maxlength of 2000 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

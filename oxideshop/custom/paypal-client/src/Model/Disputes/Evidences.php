@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * A merchant or customer request to provide evidence for a dispute.
@@ -17,6 +18,8 @@ class Evidences implements JsonSerializable
     /**
      * @var array<Evidence>
      * An array of evidences for the dispute.
+     *
+     * maxItems: 0
      */
     public $evidences;
 
@@ -29,8 +32,25 @@ class Evidences implements JsonSerializable
      */
     public $return_shipping_address;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(isset($this->return_shipping_address));
+        $within = isset($from) ? "within $from" : "";
+        Assert::notNull($this->evidences, "evidences in Evidences must not be NULL $within");
+         Assert::minCount($this->evidences, 0, "evidences in Evidences must have min. count of 0 $within");
+         Assert::isArray($this->evidences, "evidences in Evidences must be array $within");
+
+                                if (isset($this->evidences)){
+                                    foreach ($this->evidences as $item) {
+                                        $item->validate(Evidences::class);
+                                    }
+                                }
+
+        !isset($this->return_shipping_address) || Assert::notNull($this->return_shipping_address->country_code, "country_code in return_shipping_address must not be NULL within Evidences $within");
+        !isset($this->return_shipping_address) || Assert::isInstanceOf($this->return_shipping_address, AddressPortable::class, "return_shipping_address in Evidences must be instance of AddressPortable $within");
+        !isset($this->return_shipping_address) || $this->return_shipping_address->validate(Evidences::class);
+    }
+
+    public function __construct()
+    {
     }
 }

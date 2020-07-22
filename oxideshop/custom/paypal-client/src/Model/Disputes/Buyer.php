@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The details for the customer who funds the payment. For example, the customer's first name, last name, and
@@ -47,13 +48,18 @@ class Buyer implements JsonSerializable
      */
     public $name;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->email) || strlen($this->email) >= 3);
-        assert(!isset($this->email) || strlen($this->email) <= 254);
-        assert(!isset($this->payer_id) || strlen($this->payer_id) >= 13);
-        assert(!isset($this->payer_id) || strlen($this->payer_id) <= 13);
-        assert(!isset($this->name) || strlen($this->name) >= 1);
-        assert(!isset($this->name) || strlen($this->name) <= 2000);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->email) || Assert::minLength($this->email, 3, "email in Buyer must have minlength of 3 $within");
+        !isset($this->email) || Assert::maxLength($this->email, 254, "email in Buyer must have maxlength of 254 $within");
+        !isset($this->payer_id) || Assert::minLength($this->payer_id, 13, "payer_id in Buyer must have minlength of 13 $within");
+        !isset($this->payer_id) || Assert::maxLength($this->payer_id, 13, "payer_id in Buyer must have maxlength of 13 $within");
+        !isset($this->name) || Assert::minLength($this->name, 1, "name in Buyer must have minlength of 1 $within");
+        !isset($this->name) || Assert::maxLength($this->name, 2000, "name in Buyer must have maxlength of 2000 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

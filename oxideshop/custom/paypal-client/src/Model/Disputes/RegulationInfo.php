@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The details for the regulation under which the transaction is covered.
@@ -63,11 +64,16 @@ class RegulationInfo implements JsonSerializable
      */
     public $resolution_sla;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->regulation_covered) || strlen($this->regulation_covered) >= 1);
-        assert(!isset($this->regulation_covered) || strlen($this->regulation_covered) <= 255);
-        assert(!isset($this->resolution_sla) || strlen($this->resolution_sla) >= 20);
-        assert(!isset($this->resolution_sla) || strlen($this->resolution_sla) <= 64);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->regulation_covered) || Assert::minLength($this->regulation_covered, 1, "regulation_covered in RegulationInfo must have minlength of 1 $within");
+        !isset($this->regulation_covered) || Assert::maxLength($this->regulation_covered, 255, "regulation_covered in RegulationInfo must have maxlength of 255 $within");
+        !isset($this->resolution_sla) || Assert::minLength($this->resolution_sla, 20, "resolution_sla in RegulationInfo must have minlength of 20 $within");
+        !isset($this->resolution_sla) || Assert::maxLength($this->resolution_sla, 64, "resolution_sla in RegulationInfo must have maxlength of 64 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

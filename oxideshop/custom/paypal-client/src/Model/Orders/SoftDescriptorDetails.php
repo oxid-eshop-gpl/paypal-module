@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Soft Descriptor Details.
@@ -43,13 +44,18 @@ class SoftDescriptorDetails implements JsonSerializable
      */
     public $contact_value;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->soft_descriptor) || strlen($this->soft_descriptor) >= 1);
-        assert(!isset($this->soft_descriptor) || strlen($this->soft_descriptor) <= 30);
-        assert(!isset($this->contact_type) || strlen($this->contact_type) >= 1);
-        assert(!isset($this->contact_type) || strlen($this->contact_type) <= 127);
-        assert(!isset($this->contact_value) || strlen($this->contact_value) >= 1);
-        assert(!isset($this->contact_value) || strlen($this->contact_value) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->soft_descriptor) || Assert::minLength($this->soft_descriptor, 1, "soft_descriptor in SoftDescriptorDetails must have minlength of 1 $within");
+        !isset($this->soft_descriptor) || Assert::maxLength($this->soft_descriptor, 30, "soft_descriptor in SoftDescriptorDetails must have maxlength of 30 $within");
+        !isset($this->contact_type) || Assert::minLength($this->contact_type, 1, "contact_type in SoftDescriptorDetails must have minlength of 1 $within");
+        !isset($this->contact_type) || Assert::maxLength($this->contact_type, 127, "contact_type in SoftDescriptorDetails must have maxlength of 127 $within");
+        !isset($this->contact_value) || Assert::minLength($this->contact_value, 1, "contact_value in SoftDescriptorDetails must have minlength of 1 $within");
+        !isset($this->contact_value) || Assert::maxLength($this->contact_value, 255, "contact_value in SoftDescriptorDetails must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

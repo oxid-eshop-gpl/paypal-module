@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The backup funding instrument to use for payment when the primary instrument fails.
@@ -20,7 +21,14 @@ class BackupFundingInstrument implements JsonSerializable
      */
     public $card;
 
-    public function validate()
+    public function validate($from = null)
+    {
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->card) || Assert::isInstanceOf($this->card, CardResponse::class, "card in BackupFundingInstrument must be instance of CardResponse $within");
+        !isset($this->card) || $this->card->validate(BackupFundingInstrument::class);
+    }
+
+    public function __construct()
     {
     }
 }

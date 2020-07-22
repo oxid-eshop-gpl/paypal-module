@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The authorized payment transaction.
@@ -67,11 +68,18 @@ class UpdateAuthorizationRequest implements JsonSerializable
      */
     public $status_details;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->id) || strlen($this->id) >= 1);
-        assert(!isset($this->id) || strlen($this->id) <= 20);
-        assert(!isset($this->status) || strlen($this->status) >= 1);
-        assert(!isset($this->status) || strlen($this->status) <= 127);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->id) || Assert::minLength($this->id, 1, "id in UpdateAuthorizationRequest must have minlength of 1 $within");
+        !isset($this->id) || Assert::maxLength($this->id, 20, "id in UpdateAuthorizationRequest must have maxlength of 20 $within");
+        !isset($this->status) || Assert::minLength($this->status, 1, "status in UpdateAuthorizationRequest must have minlength of 1 $within");
+        !isset($this->status) || Assert::maxLength($this->status, 127, "status in UpdateAuthorizationRequest must have maxlength of 127 $within");
+        !isset($this->status_details) || Assert::isInstanceOf($this->status_details, AuthorizationStatusDetails::class, "status_details in UpdateAuthorizationRequest must be instance of AuthorizationStatusDetails $within");
+        !isset($this->status_details) || $this->status_details->validate(UpdateAuthorizationRequest::class);
+    }
+
+    public function __construct()
+    {
     }
 }

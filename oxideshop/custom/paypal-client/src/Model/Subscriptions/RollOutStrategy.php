@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The roll-out strategy for a pricing scheme update. After the pricing update, all new subscriptions are based
@@ -42,11 +43,16 @@ class RollOutStrategy implements JsonSerializable
      */
     public $process_change_from = 'NEXT_PAYMENT';
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->effective_time) || strlen($this->effective_time) >= 20);
-        assert(!isset($this->effective_time) || strlen($this->effective_time) <= 64);
-        assert(!isset($this->process_change_from) || strlen($this->process_change_from) >= 1);
-        assert(!isset($this->process_change_from) || strlen($this->process_change_from) <= 30);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->effective_time) || Assert::minLength($this->effective_time, 20, "effective_time in RollOutStrategy must have minlength of 20 $within");
+        !isset($this->effective_time) || Assert::maxLength($this->effective_time, 64, "effective_time in RollOutStrategy must have maxlength of 64 $within");
+        !isset($this->process_change_from) || Assert::minLength($this->process_change_from, 1, "process_change_from in RollOutStrategy must have minlength of 1 $within");
+        !isset($this->process_change_from) || Assert::maxLength($this->process_change_from, 30, "process_change_from in RollOutStrategy must have maxlength of 30 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The refund transaction.
@@ -94,14 +95,22 @@ class RefundTransaction implements JsonSerializable
      */
     public $create_time;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->id) || strlen($this->id) >= 1);
-        assert(!isset($this->id) || strlen($this->id) <= 255);
-        assert(!isset($this->status) || strlen($this->status) >= 1);
-        assert(!isset($this->status) || strlen($this->status) <= 255);
-        assert(isset($this->gross_amount));
-        assert(!isset($this->create_time) || strlen($this->create_time) >= 20);
-        assert(!isset($this->create_time) || strlen($this->create_time) <= 64);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->id) || Assert::minLength($this->id, 1, "id in RefundTransaction must have minlength of 1 $within");
+        !isset($this->id) || Assert::maxLength($this->id, 255, "id in RefundTransaction must have maxlength of 255 $within");
+        !isset($this->status) || Assert::minLength($this->status, 1, "status in RefundTransaction must have minlength of 1 $within");
+        !isset($this->status) || Assert::maxLength($this->status, 255, "status in RefundTransaction must have maxlength of 255 $within");
+        !isset($this->gross_amount) || Assert::notNull($this->gross_amount->currency_code, "currency_code in gross_amount must not be NULL within RefundTransaction $within");
+        !isset($this->gross_amount) || Assert::notNull($this->gross_amount->value, "value in gross_amount must not be NULL within RefundTransaction $within");
+        !isset($this->gross_amount) || Assert::isInstanceOf($this->gross_amount, Money::class, "gross_amount in RefundTransaction must be instance of Money $within");
+        !isset($this->gross_amount) || $this->gross_amount->validate(RefundTransaction::class);
+        !isset($this->create_time) || Assert::minLength($this->create_time, 20, "create_time in RefundTransaction must have minlength of 20 $within");
+        !isset($this->create_time) || Assert::maxLength($this->create_time, 64, "create_time in RefundTransaction must have maxlength of 64 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

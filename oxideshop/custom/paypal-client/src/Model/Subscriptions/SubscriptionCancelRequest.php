@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The cancel subscription request details.
@@ -23,9 +24,14 @@ class SubscriptionCancelRequest implements JsonSerializable
      */
     public $reason;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->reason) || strlen($this->reason) >= 1);
-        assert(!isset($this->reason) || strlen($this->reason) <= 128);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->reason) || Assert::minLength($this->reason, 1, "reason in SubscriptionCancelRequest must have minlength of 1 $within");
+        !isset($this->reason) || Assert::maxLength($this->reason, 128, "reason in SubscriptionCancelRequest must have maxlength of 128 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

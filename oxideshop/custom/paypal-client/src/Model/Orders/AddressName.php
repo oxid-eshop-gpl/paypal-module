@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The name and address, typically used for billing and shipping purposes.
@@ -23,9 +24,14 @@ class AddressName extends AddressPortable implements JsonSerializable
      */
     public $addressee;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->addressee) || strlen($this->addressee) >= 1);
-        assert(!isset($this->addressee) || strlen($this->addressee) <= 200);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->addressee) || Assert::minLength($this->addressee, 1, "addressee in AddressName must have minlength of 1 $within");
+        !isset($this->addressee) || Assert::maxLength($this->addressee, 200, "addressee in AddressName must have maxlength of 200 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

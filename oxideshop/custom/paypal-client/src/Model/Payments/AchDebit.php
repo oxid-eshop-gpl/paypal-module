@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * ACH bank details required to fund the payment.
@@ -59,15 +60,20 @@ class AchDebit implements JsonSerializable
      */
     public $account_holder_name;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->account_number) || strlen($this->account_number) >= 3);
-        assert(!isset($this->account_number) || strlen($this->account_number) <= 17);
-        assert(!isset($this->routing_number) || strlen($this->routing_number) >= 9);
-        assert(!isset($this->routing_number) || strlen($this->routing_number) <= 9);
-        assert(!isset($this->account_type) || strlen($this->account_type) >= 1);
-        assert(!isset($this->account_type) || strlen($this->account_type) <= 255);
-        assert(!isset($this->account_holder_name) || strlen($this->account_holder_name) >= 1);
-        assert(!isset($this->account_holder_name) || strlen($this->account_holder_name) <= 300);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->account_number) || Assert::minLength($this->account_number, 3, "account_number in AchDebit must have minlength of 3 $within");
+        !isset($this->account_number) || Assert::maxLength($this->account_number, 17, "account_number in AchDebit must have maxlength of 17 $within");
+        !isset($this->routing_number) || Assert::minLength($this->routing_number, 9, "routing_number in AchDebit must have minlength of 9 $within");
+        !isset($this->routing_number) || Assert::maxLength($this->routing_number, 9, "routing_number in AchDebit must have maxlength of 9 $within");
+        !isset($this->account_type) || Assert::minLength($this->account_type, 1, "account_type in AchDebit must have minlength of 1 $within");
+        !isset($this->account_type) || Assert::maxLength($this->account_type, 255, "account_type in AchDebit must have maxlength of 255 $within");
+        !isset($this->account_holder_name) || Assert::minLength($this->account_holder_name, 1, "account_holder_name in AchDebit must have minlength of 1 $within");
+        !isset($this->account_holder_name) || Assert::maxLength($this->account_holder_name, 300, "account_holder_name in AchDebit must have maxlength of 300 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The list of subscriptions.
@@ -17,6 +18,9 @@ class SubscriptionCollection implements JsonSerializable
     /**
      * @var array<Subscription>
      * An array of subscriptions.
+     *
+     * maxItems: 0
+     * maxItems: 32767
      */
     public $subscriptions;
 
@@ -38,7 +42,24 @@ class SubscriptionCollection implements JsonSerializable
      */
     public $links;
 
-    public function validate()
+    public function validate($from = null)
+    {
+        $within = isset($from) ? "within $from" : "";
+        Assert::notNull($this->subscriptions, "subscriptions in SubscriptionCollection must not be NULL $within");
+         Assert::minCount($this->subscriptions, 0, "subscriptions in SubscriptionCollection must have min. count of 0 $within");
+         Assert::maxCount($this->subscriptions, 32767, "subscriptions in SubscriptionCollection must have max. count of 32767 $within");
+         Assert::isArray($this->subscriptions, "subscriptions in SubscriptionCollection must be array $within");
+
+                                if (isset($this->subscriptions)){
+                                    foreach ($this->subscriptions as $item) {
+                                        $item->validate(SubscriptionCollection::class);
+                                    }
+                                }
+
+        !isset($this->links) || Assert::isArray($this->links, "links in SubscriptionCollection must be array $within");
+    }
+
+    public function __construct()
     {
     }
 }

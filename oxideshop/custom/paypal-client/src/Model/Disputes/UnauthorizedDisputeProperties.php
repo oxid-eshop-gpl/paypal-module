@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The customer-entered issue details for an unauthorized dispute.
@@ -49,9 +50,15 @@ class UnauthorizedDisputeProperties implements JsonSerializable
      */
     public $rejected_dispute_transactions;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->review_sla) || strlen($this->review_sla) >= 20);
-        assert(!isset($this->review_sla) || strlen($this->review_sla) <= 64);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->review_sla) || Assert::minLength($this->review_sla, 20, "review_sla in UnauthorizedDisputeProperties must have minlength of 20 $within");
+        !isset($this->review_sla) || Assert::maxLength($this->review_sla, 64, "review_sla in UnauthorizedDisputeProperties must have maxlength of 64 $within");
+        !isset($this->rejected_dispute_transactions) || Assert::isArray($this->rejected_dispute_transactions, "rejected_dispute_transactions in UnauthorizedDisputeProperties must be array $within");
+    }
+
+    public function __construct()
+    {
     }
 }

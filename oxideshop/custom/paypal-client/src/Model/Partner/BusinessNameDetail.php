@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * Name of the business provided.
@@ -41,11 +42,16 @@ class BusinessNameDetail extends BusinessName implements JsonSerializable
      */
     public $type;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->id) || strlen($this->id) >= 1);
-        assert(!isset($this->id) || strlen($this->id) <= 20);
-        assert(!isset($this->type) || strlen($this->type) >= 1);
-        assert(!isset($this->type) || strlen($this->type) <= 255);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->id) || Assert::minLength($this->id, 1, "id in BusinessNameDetail must have minlength of 1 $within");
+        !isset($this->id) || Assert::maxLength($this->id, 20, "id in BusinessNameDetail must have maxlength of 20 $within");
+        !isset($this->type) || Assert::minLength($this->type, 1, "type in BusinessNameDetail must have minlength of 1 $within");
+        !isset($this->type) || Assert::maxLength($this->type, 255, "type in BusinessNameDetail must have maxlength of 255 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

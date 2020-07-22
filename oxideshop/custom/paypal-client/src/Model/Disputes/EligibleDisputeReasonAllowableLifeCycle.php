@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The details about the allowable lifecycle stage and the reason why it is allowed.
@@ -42,11 +43,16 @@ class EligibleDisputeReasonAllowableLifeCycle implements JsonSerializable
      */
     public $reason;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->stage) || strlen($this->stage) >= 1);
-        assert(!isset($this->stage) || strlen($this->stage) <= 255);
-        assert(!isset($this->reason) || strlen($this->reason) >= 1);
-        assert(!isset($this->reason) || strlen($this->reason) <= 2000);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->stage) || Assert::minLength($this->stage, 1, "stage in EligibleDisputeReasonAllowableLifeCycle must have minlength of 1 $within");
+        !isset($this->stage) || Assert::maxLength($this->stage, 255, "stage in EligibleDisputeReasonAllowableLifeCycle must have maxlength of 255 $within");
+        !isset($this->reason) || Assert::minLength($this->reason, 1, "reason in EligibleDisputeReasonAllowableLifeCycle must have minlength of 1 $within");
+        !isset($this->reason) || Assert::maxLength($this->reason, 2000, "reason in EligibleDisputeReasonAllowableLifeCycle must have maxlength of 2000 $within");
+    }
+
+    public function __construct()
+    {
     }
 }

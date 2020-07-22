@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The phone number, in its canonical international [E.164 numbering plan
@@ -73,12 +74,24 @@ class PersonPhoneDetail extends Phone implements JsonSerializable
     /**
      * @var array<string>
      * Array of tags for this phone number.
+     *
+     * maxItems: 0
+     * maxItems: 20
      */
     public $tags;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(!isset($this->contact_name) || strlen($this->contact_name) >= 1);
-        assert(!isset($this->contact_name) || strlen($this->contact_name) <= 900);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->contact_name) || Assert::minLength($this->contact_name, 1, "contact_name in PersonPhoneDetail must have minlength of 1 $within");
+        !isset($this->contact_name) || Assert::maxLength($this->contact_name, 900, "contact_name in PersonPhoneDetail must have maxlength of 900 $within");
+        Assert::notNull($this->tags, "tags in PersonPhoneDetail must not be NULL $within");
+         Assert::minCount($this->tags, 0, "tags in PersonPhoneDetail must have min. count of 0 $within");
+         Assert::maxCount($this->tags, 20, "tags in PersonPhoneDetail must have max. count of 20 $within");
+         Assert::isArray($this->tags, "tags in PersonPhoneDetail must be array $within");
+    }
+
+    public function __construct()
+    {
     }
 }

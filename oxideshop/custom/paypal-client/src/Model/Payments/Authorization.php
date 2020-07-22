@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use Webmozart\Assert\Assert;
 
 /**
  * The authorized payment transaction.
@@ -97,17 +98,28 @@ class Authorization extends AuthorizationStatus implements JsonSerializable
      */
     public $update_time;
 
-    public function validate()
+    public function validate($from = null)
     {
-        assert(isset($this->amount));
-        assert(!isset($this->custom_id) || strlen($this->custom_id) <= 127);
-        assert(!isset($this->alternate_id) || strlen($this->alternate_id) >= 1);
-        assert(!isset($this->alternate_id) || strlen($this->alternate_id) <= 22);
-        assert(!isset($this->expiration_time) || strlen($this->expiration_time) >= 20);
-        assert(!isset($this->expiration_time) || strlen($this->expiration_time) <= 64);
-        assert(!isset($this->create_time) || strlen($this->create_time) >= 20);
-        assert(!isset($this->create_time) || strlen($this->create_time) <= 64);
-        assert(!isset($this->update_time) || strlen($this->update_time) >= 20);
-        assert(!isset($this->update_time) || strlen($this->update_time) <= 64);
+        $within = isset($from) ? "within $from" : "";
+        !isset($this->amount) || Assert::notNull($this->amount->currency_code, "currency_code in amount must not be NULL within Authorization $within");
+        !isset($this->amount) || Assert::notNull($this->amount->value, "value in amount must not be NULL within Authorization $within");
+        !isset($this->amount) || Assert::isInstanceOf($this->amount, Money::class, "amount in Authorization must be instance of Money $within");
+        !isset($this->amount) || $this->amount->validate(Authorization::class);
+        !isset($this->custom_id) || Assert::maxLength($this->custom_id, 127, "custom_id in Authorization must have maxlength of 127 $within");
+        !isset($this->alternate_id) || Assert::minLength($this->alternate_id, 1, "alternate_id in Authorization must have minlength of 1 $within");
+        !isset($this->alternate_id) || Assert::maxLength($this->alternate_id, 22, "alternate_id in Authorization must have maxlength of 22 $within");
+        !isset($this->seller_protection) || Assert::isInstanceOf($this->seller_protection, SellerProtection::class, "seller_protection in Authorization must be instance of SellerProtection $within");
+        !isset($this->seller_protection) || $this->seller_protection->validate(Authorization::class);
+        !isset($this->expiration_time) || Assert::minLength($this->expiration_time, 20, "expiration_time in Authorization must have minlength of 20 $within");
+        !isset($this->expiration_time) || Assert::maxLength($this->expiration_time, 64, "expiration_time in Authorization must have maxlength of 64 $within");
+        !isset($this->links) || Assert::isArray($this->links, "links in Authorization must be array $within");
+        !isset($this->create_time) || Assert::minLength($this->create_time, 20, "create_time in Authorization must have minlength of 20 $within");
+        !isset($this->create_time) || Assert::maxLength($this->create_time, 64, "create_time in Authorization must have maxlength of 64 $within");
+        !isset($this->update_time) || Assert::minLength($this->update_time, 20, "update_time in Authorization must have minlength of 20 $within");
+        !isset($this->update_time) || Assert::maxLength($this->update_time, 64, "update_time in Authorization must have maxlength of 64 $within");
+    }
+
+    public function __construct()
+    {
     }
 }
