@@ -58,7 +58,7 @@
     "psr/log": "^1.1",
     "squizlabs/php_codesniffer": "3.*",
     "vlucas/phpdotenv": "^3.0",
-    "phpstan/phpstan": "0.12"
+    "phpstan/phpstan": "^0.12.33"
   },
   "autoload-dev": {
     "files": [
