@@ -56,7 +56,7 @@ class ServiceDetails implements JsonSerializable
     public $note;
 
     /**
-     * @var array<string>
+     * @var string[]
      * An array of sub-reasons for the service issue.
      */
     public $sub_reasons;

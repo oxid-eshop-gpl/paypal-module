@@ -18,7 +18,7 @@ class SubscriptionReviseResponse extends CustomizedXUnsupportedFiveEightSevenFiv
     use BaseModel;
 
     /**
-     * @var array<array>
+     * @var LinkDescription[]
      * An array of request-related [HATEOAS links](/docs/api/reference/api-responses/#hateoas-links).
      */
     public $links;
@@ -27,6 +27,12 @@ class SubscriptionReviseResponse extends CustomizedXUnsupportedFiveEightSevenFiv
     {
         $within = isset($from) ? "within $from" : "";
         !isset($this->links) || Assert::isArray($this->links, "links in SubscriptionReviseResponse must be array $within");
+
+                                if (isset($this->links)){
+                                    foreach ($this->links as $item) {
+                                        $item->validate(SubscriptionReviseResponse::class);
+                                    }
+                                }
     }
 
     public function __construct()

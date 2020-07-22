@@ -46,13 +46,13 @@ class Error implements JsonSerializable
     public $information_link;
 
     /**
-     * @var array<ErrorDetails>
+     * @var ErrorDetails[]
      * An array of additional details about the error.
      */
     public $details;
 
     /**
-     * @var array<array>
+     * @var LinkDescription[]
      * An array of request-related [HATEOAS links](/docs/api/reference/api-responses/#hateoas-links).
      */
     public $links;
@@ -72,6 +72,12 @@ class Error implements JsonSerializable
                                 }
 
         !isset($this->links) || Assert::isArray($this->links, "links in Error must be array $within");
+
+                                if (isset($this->links)){
+                                    foreach ($this->links as $item) {
+                                        $item->validate(Error::class);
+                                    }
+                                }
     }
 
     public function __construct()

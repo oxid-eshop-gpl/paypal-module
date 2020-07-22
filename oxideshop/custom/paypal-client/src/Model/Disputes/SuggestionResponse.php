@@ -17,7 +17,7 @@ class SuggestionResponse implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var array<string>
+     * @var string[]
      * An array of auto complete values for the given search_text if present.
      *
      * this is mandatory to be set
@@ -36,7 +36,7 @@ class SuggestionResponse implements JsonSerializable
     public $corrected_search_text;
 
     /**
-     * @var array<array>
+     * @var LinkDescription[]
      * An array of request-related [HATEOAS links](/docs/api/hateoas-links/).
      *
      * this is mandatory to be set
@@ -58,6 +58,12 @@ class SuggestionResponse implements JsonSerializable
          Assert::minCount($this->links, 1, "links in SuggestionResponse must have min. count of 1 $within");
          Assert::maxCount($this->links, 10, "links in SuggestionResponse must have max. count of 10 $within");
          Assert::isArray($this->links, "links in SuggestionResponse must be array $within");
+
+                                if (isset($this->links)){
+                                    foreach ($this->links as $item) {
+                                        $item->validate(SuggestionResponse::class);
+                                    }
+                                }
     }
 
     public function __construct()

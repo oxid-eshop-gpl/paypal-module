@@ -16,7 +16,7 @@ class Person extends Party implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var array<Name>
+     * @var Name[]
      * Names of person.
      *
      * this is mandatory to be set
@@ -51,7 +51,7 @@ class Person extends Party implements JsonSerializable
     public $birth_date;
 
     /**
-     * @var array<IdentityDocument>
+     * @var IdentityDocument[]
      * Identity documents for the entity like passport number.
      *
      * this is mandatory to be set

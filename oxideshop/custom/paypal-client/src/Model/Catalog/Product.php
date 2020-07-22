@@ -1899,7 +1899,7 @@ class Product implements JsonSerializable
     public $update_time;
 
     /**
-     * @var array<array>
+     * @var LinkDescription[]
      * An array of request-related [HATEOAS links](/docs/api/overview/#hateoas-links).
      */
     public $links;
@@ -1926,6 +1926,12 @@ class Product implements JsonSerializable
         !isset($this->update_time) || Assert::minLength($this->update_time, 20, "update_time in Product must have minlength of 20 $within");
         !isset($this->update_time) || Assert::maxLength($this->update_time, 64, "update_time in Product must have maxlength of 64 $within");
         !isset($this->links) || Assert::isArray($this->links, "links in Product must be array $within");
+
+                                if (isset($this->links)){
+                                    foreach ($this->links as $item) {
+                                        $item->validate(Product::class);
+                                    }
+                                }
     }
 
     public function __construct()

@@ -85,7 +85,7 @@ class PlanRequestPOST implements JsonSerializable
     public $usage_type = 'LICENSED';
 
     /**
-     * @var array<BillingCycle>
+     * @var BillingCycle[]
      * An array of billing cycles for trial billing and regular billing. A plan can have at most two trial cycles and
      * only one regular cycle.
      *

@@ -65,7 +65,7 @@ class ReferredDisputeSummary implements JsonSerializable
     public $update_time;
 
     /**
-     * @var array<ReferenceDispute>
+     * @var ReferenceDispute[]
      * The details about the partner disputes.
      */
     public $reference_disputes;
@@ -115,7 +115,7 @@ class ReferredDisputeSummary implements JsonSerializable
     public $dispute_flow;
 
     /**
-     * @var array<array>
+     * @var LinkDescription[]
      * An array of request-related [HATEOAS links](/docs/api/hateoas-links/).
      */
     public $links;
@@ -146,6 +146,12 @@ class ReferredDisputeSummary implements JsonSerializable
         !isset($this->dispute_flow) || Assert::minLength($this->dispute_flow, 1, "dispute_flow in ReferredDisputeSummary must have minlength of 1 $within");
         !isset($this->dispute_flow) || Assert::maxLength($this->dispute_flow, 255, "dispute_flow in ReferredDisputeSummary must have maxlength of 255 $within");
         !isset($this->links) || Assert::isArray($this->links, "links in ReferredDisputeSummary must be array $within");
+
+                                if (isset($this->links)){
+                                    foreach ($this->links as $item) {
+                                        $item->validate(ReferredDisputeSummary::class);
+                                    }
+                                }
     }
 
     public function __construct()

@@ -203,13 +203,13 @@ class DisputeInfo implements JsonSerializable
     public $update_time;
 
     /**
-     * @var array<TransactionInfo>
+     * @var TransactionInfo[]
      * An array of transactions for which disputes were created.
      */
     public $disputed_transactions;
 
     /**
-     * @var array<AccountActivity>
+     * @var AccountActivity[]
      * An array of merchant account activities.
      */
     public $disputed_account_activities;
@@ -324,7 +324,7 @@ class DisputeInfo implements JsonSerializable
     public $dispute_channel;
 
     /**
-     * @var array<Message>
+     * @var Message[]
      * An array of customer- or merchant-posted messages for the dispute.
      */
     public $messages;
@@ -337,7 +337,7 @@ class DisputeInfo implements JsonSerializable
     public $extensions;
 
     /**
-     * @var array<Evidence>
+     * @var Evidence[]
      * An array of evidence documents.
      */
     public $evidences;
@@ -365,7 +365,7 @@ class DisputeInfo implements JsonSerializable
     public $seller_response_due_date;
 
     /**
-     * @var array<History>
+     * @var History[]
      * An array of history objects.
      */
     public $history;
@@ -423,19 +423,19 @@ class DisputeInfo implements JsonSerializable
     public $communication_details;
 
     /**
-     * @var array<PartnerAction>
+     * @var PartnerAction[]
      * An array of all the actions that are associated to this dispute.
      */
     public $partner_actions;
 
     /**
-     * @var array<SupportingInfo>
+     * @var SupportingInfo[]
      * An array of all the supporting information that are associated to this dispute.
      */
     public $supporting_info;
 
     /**
-     * @var array<array>
+     * @var LinkDescription[]
      * An array of request-related [HATEOAS links](/docs/api/hateoas-links/).
      */
     public $links;
@@ -538,6 +538,12 @@ class DisputeInfo implements JsonSerializable
                                 }
 
         !isset($this->links) || Assert::isArray($this->links, "links in DisputeInfo must be array $within");
+
+                                if (isset($this->links)){
+                                    foreach ($this->links as $item) {
+                                        $item->validate(DisputeInfo::class);
+                                    }
+                                }
     }
 
     public function __construct()

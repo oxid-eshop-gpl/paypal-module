@@ -17,7 +17,7 @@ class UpdatePaymentCollectionRequest implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var array<UpdateAuthorizationRequest>
+     * @var UpdateAuthorizationRequest[]
      * An array of authorized payments for a purchase unit. A purchase unit can have zero or more authorized
      * payments.
      *
@@ -28,7 +28,7 @@ class UpdatePaymentCollectionRequest implements JsonSerializable
     public $authorizations;
 
     /**
-     * @var array<UpdateCaptureRequest>
+     * @var UpdateCaptureRequest[]
      * An array of captured payments for a purchase unit. A purchase unit can have zero or more captured payments.
      *
      * this is mandatory to be set

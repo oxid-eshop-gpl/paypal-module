@@ -104,7 +104,7 @@ class PaymentDirectives implements JsonSerializable
     public $allow_duplicate_invoice_id;
 
     /**
-     * @var array<PolicyDirective>
+     * @var PolicyDirective[]
      * Policy directives indicating how to process the payment.
      *
      * this is mandatory to be set
@@ -114,7 +114,7 @@ class PaymentDirectives implements JsonSerializable
     public $policy_directives;
 
     /**
-     * @var array<PaymentMethodDirective>
+     * @var PaymentMethodDirective[]
      * Directives for certain payment methods based on eligibility.
      *
      * this is mandatory to be set
@@ -124,7 +124,7 @@ class PaymentDirectives implements JsonSerializable
     public $payment_method_directives;
 
     /**
-     * @var array<PricingDirective>
+     * @var PricingDirective[]
      * Pricing directives for the transaction.
      *
      * this is mandatory to be set

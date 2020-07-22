@@ -22,7 +22,7 @@ class RiskAssessment implements JsonSerializable
     public $score;
 
     /**
-     * @var array<string>
+     * @var string[]
      * An array of risk assessment reasons.
      *
      * this is mandatory to be set

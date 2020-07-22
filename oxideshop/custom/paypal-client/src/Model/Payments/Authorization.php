@@ -71,7 +71,7 @@ class Authorization extends AuthorizationStatus implements JsonSerializable
     public $expiration_time;
 
     /**
-     * @var array<array>
+     * @var LinkDescription[]
      * An array of related [HATEOAS links](/docs/api/reference/api-responses/#hateoas-links).
      */
     public $links;
@@ -111,6 +111,13 @@ class Authorization extends AuthorizationStatus implements JsonSerializable
         !isset($this->expiration_time) || Assert::minLength($this->expiration_time, 20, "expiration_time in Authorization must have minlength of 20 $within");
         !isset($this->expiration_time) || Assert::maxLength($this->expiration_time, 64, "expiration_time in Authorization must have maxlength of 64 $within");
         !isset($this->links) || Assert::isArray($this->links, "links in Authorization must be array $within");
+
+                                if (isset($this->links)){
+                                    foreach ($this->links as $item) {
+                                        $item->validate(Authorization::class);
+                                    }
+                                }
+
         !isset($this->create_time) || Assert::minLength($this->create_time, 20, "create_time in Authorization must have minlength of 20 $within");
         !isset($this->create_time) || Assert::maxLength($this->create_time, 64, "create_time in Authorization must have maxlength of 64 $within");
         !isset($this->update_time) || Assert::minLength($this->update_time, 20, "update_time in Authorization must have minlength of 20 $within");

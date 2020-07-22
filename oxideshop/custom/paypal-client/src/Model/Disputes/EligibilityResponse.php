@@ -71,13 +71,13 @@ class EligibilityResponse implements JsonSerializable
     public $ineligibility_reason;
 
     /**
-     * @var array<ExistingDispute>
+     * @var ExistingDispute[]
      * An array of details about the disputes on the transaction.
      */
     public $existing_disputes;
 
     /**
-     * @var array<RefundTransaction>
+     * @var RefundTransaction[]
      * An array of details about the refunds on the disputed transaction, if applicable.
      */
     public $existing_refunds;

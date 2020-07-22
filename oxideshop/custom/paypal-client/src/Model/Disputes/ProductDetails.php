@@ -58,7 +58,7 @@ class ProductDetails implements JsonSerializable
     public $product_received_time;
 
     /**
-     * @var array<string>
+     * @var string[]
      * An array of sub-reasons for the product issue.
      */
     public $sub_reasons;

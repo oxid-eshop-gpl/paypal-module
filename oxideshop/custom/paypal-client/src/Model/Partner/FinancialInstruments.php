@@ -16,7 +16,7 @@ class FinancialInstruments implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var array<Bank>
+     * @var Bank[]
      * An array of banks attached to this managed account.
      *
      * this is mandatory to be set

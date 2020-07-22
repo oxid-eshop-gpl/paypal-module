@@ -163,7 +163,7 @@ class TransactionInfo implements JsonSerializable
     public $facilitator;
 
     /**
-     * @var array<ItemInfo>
+     * @var ItemInfo[]
      * An array of items that were purchased as part of the transaction.
      */
     public $items;

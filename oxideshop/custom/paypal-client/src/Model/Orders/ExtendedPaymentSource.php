@@ -16,7 +16,7 @@ class ExtendedPaymentSource extends PaymentSource implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var array<string>
+     * @var string[]
      * An array of contingencies.
      */
     public $contingencies;

@@ -28,7 +28,7 @@ class EligibilityRequest implements JsonSerializable
     public $transaction_id;
 
     /**
-     * @var array<EligibilityRequestItem>
+     * @var EligibilityRequestItem[]
      * An array of the items in the disputed transaction.
      */
     public $disputed_items;

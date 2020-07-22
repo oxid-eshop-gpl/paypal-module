@@ -31,7 +31,7 @@ class Metric implements JsonSerializable
     public $count;
 
     /**
-     * @var array<Money>
+     * @var Money[]
      * An array of the sums of amounts for each currency.
      */
     public $amount;

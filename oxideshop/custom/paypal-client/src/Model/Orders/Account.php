@@ -81,7 +81,7 @@ class Account implements JsonSerializable
     public $legal_country_code;
 
     /**
-     * @var array<string>
+     * @var string[]
      * Array of tags stored for the account in User domain by other clients Eg: YOUTH_ACCOUNT, RESTRICTED, WAX_USER,
      * MASSPAY_ENABLED etc.
      *

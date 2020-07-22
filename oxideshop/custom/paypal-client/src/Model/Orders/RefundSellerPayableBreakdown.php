@@ -34,7 +34,7 @@ class RefundSellerPayableBreakdown implements JsonSerializable
     public $net_amount;
 
     /**
-     * @var array<PlatformFee>
+     * @var PlatformFee[]
      * An array of platform or partner fees, commissions, or brokerage fees for the refund.
      *
      * this is mandatory to be set
@@ -44,7 +44,7 @@ class RefundSellerPayableBreakdown implements JsonSerializable
     public $platform_fees;
 
     /**
-     * @var array<NetAmountBreakdownItem>
+     * @var NetAmountBreakdownItem[]
      * An array of breakdown values for the net amount. Returned when the currency of the refund is different from
      * the currency of the PayPal account where the payee holds their funds.
      */

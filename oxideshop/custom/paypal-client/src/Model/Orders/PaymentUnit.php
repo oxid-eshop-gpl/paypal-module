@@ -72,7 +72,7 @@ class PaymentUnit implements JsonSerializable
     public $amount;
 
     /**
-     * @var array<Item>
+     * @var Item[]
      * List of purchase items.
      *
      * this is mandatory to be set
@@ -157,7 +157,7 @@ class PaymentUnit implements JsonSerializable
     public $odfi_details;
 
     /**
-     * @var array<PaymentContextAttribute>
+     * @var PaymentContextAttribute[]
      * List of context attributes usually used to lookup as an alternative id or provides a relative context for a
      * payment.
      *

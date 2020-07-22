@@ -56,7 +56,7 @@ class Facilitator extends Participant implements JsonSerializable
     public $integration_identifier;
 
     /**
-     * @var array<string>
+     * @var string[]
      * List of (business)segments the actor operates in.
      *
      * this is mandatory to be set

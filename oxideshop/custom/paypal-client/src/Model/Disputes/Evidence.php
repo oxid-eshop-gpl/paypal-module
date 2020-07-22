@@ -291,7 +291,7 @@ class Evidence implements JsonSerializable
     public $evidence_info;
 
     /**
-     * @var array<Document>
+     * @var Document[]
      * An array of evidence documents.
      */
     public $documents;

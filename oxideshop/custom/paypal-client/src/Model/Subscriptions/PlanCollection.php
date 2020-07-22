@@ -16,7 +16,7 @@ class PlanCollection implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var array<Plan>
+     * @var Plan[]
      * An array of plans.
      *
      * this is mandatory to be set
@@ -38,7 +38,7 @@ class PlanCollection implements JsonSerializable
     public $total_pages;
 
     /**
-     * @var array<array>
+     * @var LinkDescription[]
      * An array of request-related [HATEOAS links](/docs/api/reference/api-responses/#hateoas-links).
      */
     public $links;
@@ -58,6 +58,12 @@ class PlanCollection implements JsonSerializable
                                 }
 
         !isset($this->links) || Assert::isArray($this->links, "links in PlanCollection must be array $within");
+
+                                if (isset($this->links)){
+                                    foreach ($this->links as $item) {
+                                        $item->validate(PlanCollection::class);
+                                    }
+                                }
     }
 
     public function __construct()

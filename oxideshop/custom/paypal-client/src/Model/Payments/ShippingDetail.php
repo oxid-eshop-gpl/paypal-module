@@ -22,7 +22,7 @@ class ShippingDetail implements JsonSerializable
     public $name;
 
     /**
-     * @var array<ShippingOption>
+     * @var ShippingOption[]
      * An array of shipping options that the payee or merchant offers to the payer to ship or pick up their items.
      *
      * maxItems: 10

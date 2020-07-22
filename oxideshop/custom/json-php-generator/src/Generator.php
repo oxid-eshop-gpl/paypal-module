@@ -132,11 +132,11 @@ class Generator
     {
         $refName = $this->getRefNameFromRefString($defName);
         $className = $this->replaceNumbers($this->getClassNameFromRefName($refName));
-        if ($className == "LinkDescription" || $className == "LinkSchema") {
-            $this->definitions[$defName]['type'] = 'array';
-            return "array";
+        if ($className == "LinkSchema") {
+            $x = 1;
+            $this->definitions[$defName]['type'] = 'mixed';
+                 return "mixed";
         }
-
 
         /*
         if (strpos($defName, 'MerchantsCommonComponentsSpecification') === false) {
@@ -220,10 +220,7 @@ class Generator
             return;
         }
         if (isset($defs['type'])) {
-            if ($defs['type'] == "string") {
-                return;
-            }
-            if ($defs['type'] == "array") {
+            if (!$this->isObjectType($defs['type'])) {
                 return;
             }
         }
@@ -275,10 +272,11 @@ class Generator
                         $parameter['type'] = $nestedClassName;
                         if (isset($this->definitions[$nestedClassId])) {
                             if ($parameter != $this->definitions[$nestedClassId]) {
-                                throw new Exception("Not yet implemented:
-                                The schema defines a nested class with same name but different properties,
+                                //fixme
+                                /* print "Not yet implemented:
+                                The schema defines a nested class $nestedClassName again but different properties,
                                 in this case the classname must be generated in unique way.                               
-                                ");
+                                "; */
                             }
                         } else {
 
@@ -299,7 +297,7 @@ class Generator
                             if (isset($arrayItemsDef['type'])) {
                                 $itemType = $arrayItemsDef['type'];
                             }
-                            $parameter['type'] = "array<$itemType>";
+                            $parameter['type'] = "${itemType}[]";
 
                         }
                     }
@@ -462,10 +460,13 @@ class Generator
             $validateMethod->addBody("$emptyOr Assert::isInstanceOf(\$this->$name, $propType::class, \"$name in $className must be instance of $propType \$within\");");
             $validateMethod->addBody("$emptyOr \$this->${name}->validate($className::class);");
         }
-        if (strpos($propType, 'array') === 0) {
+        if (strpos($propType, '[') !== false || strpos($propType, 'array') === 0) {
             $validateMethod->addBody("$emptyOr Assert::isArray(\$this->$name, \"$name in $className must be array \$within\");");
-            if (preg_match("/array<(.*)>/", $propType, $matches)) {
+            $itemType = false;
+            if (preg_match("/(.*)\[\]/", $propType, $matches)) {
                 $itemType = $matches[1];
+            }
+            if ($itemType) {
                 if ($this->isObjectType($itemType)) {
                     $validateMethod->addBody("
                         if (isset(\$this->$name)){
@@ -488,7 +489,10 @@ class Generator
         if (strpos($propType, 'array') === 0) {
             return false;
         }
-        return $propType != "string" && $propType != "integer" && $propType != "mixed" && $propType != "boolean";
+        if (strpos($propType, '[') !== false) {
+            return false;
+        }
+        return $propType != "string" && $propType != "integer" && $propType != "mixed" && $propType != "boolean" && $propType != "mixed";
     }
 }
 

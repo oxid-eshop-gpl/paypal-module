@@ -105,7 +105,7 @@ class PurchaseUnit implements JsonSerializable
     public $soft_descriptor;
 
     /**
-     * @var array<Item>
+     * @var Item[]
      * An array of items that the customer purchases from the merchant.
      */
     public $items;

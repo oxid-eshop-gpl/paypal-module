@@ -54,7 +54,7 @@ class Offer implements JsonSerializable
     public $offer_type;
 
     /**
-     * @var array<OfferHistory>
+     * @var OfferHistory[]
      * An array of history information for an offer.
      */
     public $history;

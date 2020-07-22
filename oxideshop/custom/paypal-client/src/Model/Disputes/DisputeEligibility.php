@@ -65,7 +65,7 @@ class DisputeEligibility implements JsonSerializable
     public $buyer_transaction_id;
 
     /**
-     * @var array<EligibleDisputeReason>
+     * @var EligibleDisputeReason[]
      * An array of the eligible disputes with reasons.
      *
      * this is mandatory to be set
@@ -74,7 +74,7 @@ class DisputeEligibility implements JsonSerializable
     public $eligible_dispute_reasons;
 
     /**
-     * @var array<IneligibleDisputeReason>
+     * @var IneligibleDisputeReason[]
      * An array of the ineligible disputes with ineligibility reasons.
      *
      * this is mandatory to be set

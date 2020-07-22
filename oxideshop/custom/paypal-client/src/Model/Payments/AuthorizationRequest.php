@@ -74,7 +74,7 @@ class AuthorizationRequest implements JsonSerializable
     public $invoice_id;
 
     /**
-     * @var array<Item>
+     * @var Item[]
      * An array of items that the customer purchases from the merchant.
      */
     public $items;

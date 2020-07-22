@@ -16,7 +16,7 @@ class DisputeSearch implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var array<DisputeInfo>
+     * @var DisputeInfo[]
      * An array of disputes that match the filter criteria. Sorted in latest to earliest creation time order.
      */
     public $items;
@@ -34,7 +34,7 @@ class DisputeSearch implements JsonSerializable
     public $total_pages;
 
     /**
-     * @var array<array>
+     * @var LinkDescription[]
      * An array of request-related [HATEOAS links](/docs/api/hateoas-links/).
      */
     public $links;
@@ -51,6 +51,12 @@ class DisputeSearch implements JsonSerializable
                                 }
 
         !isset($this->links) || Assert::isArray($this->links, "links in DisputeSearch must be array $within");
+
+                                if (isset($this->links)){
+                                    foreach ($this->links as $item) {
+                                        $item->validate(DisputeSearch::class);
+                                    }
+                                }
     }
 
     public function __construct()

@@ -64,7 +64,7 @@ class ReferralData extends Account implements JsonSerializable
     public $financial_instruments;
 
     /**
-     * @var array<Operation>
+     * @var Operation[]
      * An array of operations to perform for the customer while they share their data.
      *
      * this is mandatory to be set
@@ -74,7 +74,7 @@ class ReferralData extends Account implements JsonSerializable
     public $operations;
 
     /**
-     * @var array<string>
+     * @var string[]
      * An array of PayPal products to which the partner wants to onboard the customer.
      *
      * this is mandatory to be set
@@ -84,7 +84,7 @@ class ReferralData extends Account implements JsonSerializable
     public $products;
 
     /**
-     * @var array<LegalConsent>
+     * @var LegalConsent[]
      * An array of all consents that the partner has received from this seller. If `SHARE_DATA_CONSENT` is not
      * granted, PayPal does not store customer data.
      *

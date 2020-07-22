@@ -41,7 +41,7 @@ class PaymentContextData implements JsonSerializable
     public $application_context;
 
     /**
-     * @var array<Facilitator>
+     * @var Facilitator[]
      * List of facilitators involved in the payment[s].
      *
      * this is mandatory to be set
@@ -51,7 +51,7 @@ class PaymentContextData implements JsonSerializable
     public $facilitators;
 
     /**
-     * @var array<PaymentUnit>
+     * @var PaymentUnit[]
      * List of payment contract data.
      *
      * this is mandatory to be set

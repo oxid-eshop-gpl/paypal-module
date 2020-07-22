@@ -48,7 +48,7 @@ class Refund extends RefundStatus implements JsonSerializable
     public $seller_payable_breakdown;
 
     /**
-     * @var array<array>
+     * @var LinkDescription[]
      * An array of related [HATEOAS links](/docs/api/reference/api-responses/#hateoas-links).
      */
     public $links;
@@ -83,6 +83,13 @@ class Refund extends RefundStatus implements JsonSerializable
         !isset($this->seller_payable_breakdown) || Assert::isInstanceOf($this->seller_payable_breakdown, RefundSellerPayableBreakdown::class, "seller_payable_breakdown in Refund must be instance of RefundSellerPayableBreakdown $within");
         !isset($this->seller_payable_breakdown) || $this->seller_payable_breakdown->validate(Refund::class);
         !isset($this->links) || Assert::isArray($this->links, "links in Refund must be array $within");
+
+                                if (isset($this->links)){
+                                    foreach ($this->links as $item) {
+                                        $item->validate(Refund::class);
+                                    }
+                                }
+
         !isset($this->create_time) || Assert::minLength($this->create_time, 20, "create_time in Refund must have minlength of 20 $within");
         !isset($this->create_time) || Assert::maxLength($this->create_time, 64, "create_time in Refund must have maxlength of 64 $within");
         !isset($this->update_time) || Assert::minLength($this->update_time, 20, "update_time in Refund must have minlength of 20 $within");

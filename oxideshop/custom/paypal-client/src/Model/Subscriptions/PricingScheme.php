@@ -68,7 +68,7 @@ class PricingScheme implements JsonSerializable
     public $tier_mode;
 
     /**
-     * @var array<PricingTier>
+     * @var PricingTier[]
      * An array of pricing tiers which are used for billing volume/graduated plans. tier_mode field has to be
      * specified.
      *

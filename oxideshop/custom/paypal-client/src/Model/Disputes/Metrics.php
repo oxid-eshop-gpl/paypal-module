@@ -16,7 +16,7 @@ class Metrics implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var array<Metric>
+     * @var Metric[]
      * An array of dimension and measurement metrics for disputes.
      *
      * this is mandatory to be set

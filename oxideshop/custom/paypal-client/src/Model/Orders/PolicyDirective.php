@@ -25,7 +25,7 @@ class PolicyDirective implements JsonSerializable
     public $payment_decision;
 
     /**
-     * @var array<string>
+     * @var string[]
      * List of reasons for the payment decision.
      *
      * this is mandatory to be set

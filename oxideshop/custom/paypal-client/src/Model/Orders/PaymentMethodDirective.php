@@ -34,7 +34,7 @@ class PaymentMethodDirective implements JsonSerializable
     public $processing_decision;
 
     /**
-     * @var array<string>
+     * @var string[]
      * Reasons for the decision. Usually set for a DENY decision.
      *
      * this is mandatory to be set

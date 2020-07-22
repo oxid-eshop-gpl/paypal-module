@@ -22,7 +22,7 @@ class RefundDetails implements JsonSerializable
     public $allowed_refund_amount;
 
     /**
-     * @var array<Refund>
+     * @var Refund[]
      * An array of refund objects.
      */
     public $refunds;

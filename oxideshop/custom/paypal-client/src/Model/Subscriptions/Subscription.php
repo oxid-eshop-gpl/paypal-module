@@ -128,7 +128,7 @@ class Subscription extends SubscriptionStatus implements JsonSerializable
     public $preferred_funding_source;
 
     /**
-     * @var array<array>
+     * @var LinkDescription[]
      * An array of request-related [HATEOAS links](/docs/api/reference/api-responses/#hateoas-links).
      */
     public $links;
@@ -159,6 +159,12 @@ class Subscription extends SubscriptionStatus implements JsonSerializable
         !isset($this->preferred_funding_source) || Assert::isInstanceOf($this->preferred_funding_source, FundingInstrumentResponse::class, "preferred_funding_source in Subscription must be instance of FundingInstrumentResponse $within");
         !isset($this->preferred_funding_source) || $this->preferred_funding_source->validate(Subscription::class);
         !isset($this->links) || Assert::isArray($this->links, "links in Subscription must be array $within");
+
+                                if (isset($this->links)){
+                                    foreach ($this->links as $item) {
+                                        $item->validate(Subscription::class);
+                                    }
+                                }
     }
 
     public function __construct()

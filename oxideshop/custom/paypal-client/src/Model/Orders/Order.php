@@ -82,7 +82,7 @@ class Order extends ActivityTimestamps implements JsonSerializable
     public $expiration_time;
 
     /**
-     * @var array<PurchaseUnit>
+     * @var PurchaseUnit[]
      * An array of purchase units. Each purchase unit establishes a contract between a customer and merchant. Each
      * purchase unit represents either a full or partial order that the customer intends to purchase from the
      * merchant.
@@ -109,7 +109,7 @@ class Order extends ActivityTimestamps implements JsonSerializable
     public $status;
 
     /**
-     * @var array<array>
+     * @var LinkDescription[]
      * An array of request-related HATEOAS links. To complete payer approval, use the `approve` link to redirect the
      * payer. The API caller has 3 hours (default setting, this which can be changed by your account manager to
      * 24/48/72 hours to accommodate your use case) from the time the order is created, to redirect your payer. Once
@@ -148,6 +148,13 @@ class Order extends ActivityTimestamps implements JsonSerializable
                                 }
 
         !isset($this->links) || Assert::isArray($this->links, "links in Order must be array $within");
+
+                                if (isset($this->links)){
+                                    foreach ($this->links as $item) {
+                                        $item->validate(Order::class);
+                                    }
+                                }
+
         !isset($this->credit_financing_offer) || Assert::isInstanceOf($this->credit_financing_offer, CreditFinancingOffer::class, "credit_financing_offer in Order must be instance of CreditFinancingOffer $within");
         !isset($this->credit_financing_offer) || $this->credit_financing_offer->validate(Order::class);
     }

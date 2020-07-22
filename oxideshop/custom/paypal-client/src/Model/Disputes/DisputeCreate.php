@@ -16,7 +16,7 @@ class DisputeCreate implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var array<array>
+     * @var LinkDescription[]
      * An array of request-related [HATEOAS links](/docs/api/hateoas-links/).
      */
     public $links;
@@ -25,6 +25,12 @@ class DisputeCreate implements JsonSerializable
     {
         $within = isset($from) ? "within $from" : "";
         !isset($this->links) || Assert::isArray($this->links, "links in DisputeCreate must be array $within");
+
+                                if (isset($this->links)){
+                                    foreach ($this->links as $item) {
+                                        $item->validate(DisputeCreate::class);
+                                    }
+                                }
     }
 
     public function __construct()

@@ -25,7 +25,7 @@ class Document implements JsonSerializable
     public $id;
 
     /**
-     * @var array<string>
+     * @var string[]
      * The document labels. A document could be classfied to multiple categories. For example, a bill document can be
      * classfified as `BILL DOCUMENT` and `UTILITY DOCUMENT`.
      *
@@ -92,7 +92,7 @@ class Document implements JsonSerializable
     public $issuing_country_code;
 
     /**
-     * @var array<FileReference>
+     * @var FileReference[]
      * The files contained in the document. For example, a document could be represented by a front page file and a
      * back page file, etc.
      *
@@ -103,7 +103,7 @@ class Document implements JsonSerializable
     public $files;
 
     /**
-     * @var array<array>
+     * @var LinkDescription[]
      * The HATEOAS links.
      *
      * this is mandatory to be set
@@ -146,6 +146,12 @@ class Document implements JsonSerializable
          Assert::minCount($this->links, 1, "links in Document must have min. count of 1 $within");
          Assert::maxCount($this->links, 10, "links in Document must have max. count of 10 $within");
          Assert::isArray($this->links, "links in Document must be array $within");
+
+                                if (isset($this->links)){
+                                    foreach ($this->links as $item) {
+                                        $item->validate(Document::class);
+                                    }
+                                }
     }
 
     public function __construct()

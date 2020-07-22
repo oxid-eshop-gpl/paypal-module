@@ -34,7 +34,7 @@ class ReferralDataResponse implements JsonSerializable
     public $referral_data;
 
     /**
-     * @var array<array>
+     * @var LinkDescription[]
      * An array of request-related [HATEOAS links](/docs/api/overview/#hateoas-links).
      *
      * this is mandatory to be set
@@ -52,6 +52,12 @@ class ReferralDataResponse implements JsonSerializable
          Assert::minCount($this->links, 0, "links in ReferralDataResponse must have min. count of 0 $within");
          Assert::maxCount($this->links, 2, "links in ReferralDataResponse must have max. count of 2 $within");
          Assert::isArray($this->links, "links in ReferralDataResponse must be array $within");
+
+                                if (isset($this->links)){
+                                    foreach ($this->links as $item) {
+                                        $item->validate(ReferralDataResponse::class);
+                                    }
+                                }
     }
 
     public function __construct()

@@ -33,24 +33,35 @@ class OrderTest extends TestCase
         $this->client = $client;
     }
 
+    public function testDecode()
+    {
+       $json = <<<'JSON'
+{"id":"9R353891UB6120313","links":[{"href":"https:\/\/api.sandbox.paypal.com\/v2\/checkout\/orders\/9R353891UB6120313","rel":"self","method":"GET"},{"href":"https:\/\/www.sandbox.paypal.com\/checkoutnow?token=9R353891UB6120313","rel":"approve","method":"GET"},{"href":"https:\/\/api.sandbox.paypal.com\/v2\/checkout\/orders\/9R353891UB6120313","rel":"update","method":"PATCH"},{"href":"https:\/\/api.sandbox.paypal.com\/v2\/checkout\/orders\/9R353891UB6120313\/capture","rel":"capture","method":"POST"}],"status":"CREATED"}
+JSON;
+       $json = \GuzzleHttp\json_decode($json);
+        $mapper = new \JsonMapper();
+        $order = $mapper->map($json, new Order());
+        //fixme: add more asserts
+    }
+
     public function testCreateOrder()
     {
         $orderService = new Orders($this->client);
         $orderRequest = new OrderRequest();
-/*
+
         $orderRequest->payer = new Payer();
         $orderRequest->payer->name = new Name();
         $orderRequest->payer->name->given_name = "Johannes";
         $orderRequest->payer->phone = new PhoneWithType();
         $orderRequest->payer->phone->phone_number = new Phone();
         $orderRequest->payer->phone->phone_number->national_number = "09812943";
-        $orderRequest->payer->phone->phone_number->country_code = "DE";
+        //$orderRequest->payer->phone->phone_number->country_code = "DE";
 
         //$orderRequest->payer->tax_info = new TaxInfo();
         //$orderRequest->payer->tax_info->tax_id= "";
         $orderRequest->payer->address = new AddressPortable();
         $orderRequest->payer->address->country_code = "DE";
-*/
+
         $purchaseUnitRequest = new PurchaseUnitRequest();
         $purchaseUnitRequest->amount = new AmountWithBreakdown();
         $purchaseUnitRequest->amount->value = "1";

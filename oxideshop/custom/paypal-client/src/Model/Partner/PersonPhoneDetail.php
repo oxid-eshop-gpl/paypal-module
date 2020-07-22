@@ -73,7 +73,7 @@ class PersonPhoneDetail extends Phone implements JsonSerializable
     public $type;
 
     /**
-     * @var array<string>
+     * @var string[]
      * Array of tags for this phone number.
      *
      * this is mandatory to be set

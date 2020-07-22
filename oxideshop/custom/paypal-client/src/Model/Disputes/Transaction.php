@@ -55,7 +55,7 @@ class Transaction implements JsonSerializable
     public $id;
 
     /**
-     * @var array<ItemInfo>
+     * @var ItemInfo[]
      * An array of items in the transaction in the dispute.
      */
     public $items;

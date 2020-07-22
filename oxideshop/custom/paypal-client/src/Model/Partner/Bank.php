@@ -64,7 +64,7 @@ class Bank implements JsonSerializable
     public $currency_code;
 
     /**
-     * @var array<Identifier>
+     * @var Identifier[]
      * An array of instrument institute attributes. Used with the account number to uniquely identify the instrument.
      * Value is:<ul><li>For banks with IBAN information, the IBAN number.</li><li>For banks with BBAN information,
      * the BBAN number.</li><li>For banks with both IBAN and BBAN information, the IBAN number.</li></ul>

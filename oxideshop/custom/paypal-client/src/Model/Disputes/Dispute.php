@@ -185,13 +185,13 @@ class Dispute implements JsonSerializable
     public $update_time;
 
     /**
-     * @var array<TransactionInfo>
+     * @var TransactionInfo[]
      * An array of transactions for which disputes were created.
      */
     public $disputed_transactions;
 
     /**
-     * @var array<AccountActivity>
+     * @var AccountActivity[]
      * An array of merchant account activities.
      */
     public $disputed_account_activities;
@@ -297,7 +297,7 @@ class Dispute implements JsonSerializable
     public $dispute_channel;
 
     /**
-     * @var array<Message>
+     * @var Message[]
      * An array of customer- or merchant-posted messages for the dispute.
      */
     public $messages;
@@ -310,7 +310,7 @@ class Dispute implements JsonSerializable
     public $extensions;
 
     /**
-     * @var array<Evidence>
+     * @var Evidence[]
      * An array of evidence documents.
      */
     public $evidences;
@@ -338,7 +338,7 @@ class Dispute implements JsonSerializable
     public $seller_response_due_date;
 
     /**
-     * @var array<History>
+     * @var History[]
      * An array of history objects.
      */
     public $history;
@@ -396,13 +396,13 @@ class Dispute implements JsonSerializable
     public $communication_details;
 
     /**
-     * @var array<SupportingInfo>
+     * @var SupportingInfo[]
      * An array of all the supporting information that are associated to this dispute.
      */
     public $supporting_info;
 
     /**
-     * @var array<array>
+     * @var LinkDescription[]
      * An array of request-related [HATEOAS links](/docs/api/hateoas-links/).
      */
     public $links;
@@ -497,6 +497,12 @@ class Dispute implements JsonSerializable
                                 }
 
         !isset($this->links) || Assert::isArray($this->links, "links in Dispute must be array $within");
+
+                                if (isset($this->links)){
+                                    foreach ($this->links as $item) {
+                                        $item->validate(Dispute::class);
+                                    }
+                                }
     }
 
     public function __construct()

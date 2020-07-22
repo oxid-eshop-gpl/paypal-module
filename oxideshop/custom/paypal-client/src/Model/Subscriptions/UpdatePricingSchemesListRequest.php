@@ -16,7 +16,7 @@ class UpdatePricingSchemesListRequest implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var array<UpdatePricingSchemeRequest>
+     * @var UpdatePricingSchemeRequest[]
      * An array of pricing schemes.
      *
      * this is mandatory to be set

@@ -22,7 +22,7 @@ class BusinessEntity extends Business implements JsonSerializable
     public $beneficial_owners;
 
     /**
-     * @var array<OfficeBearer>
+     * @var OfficeBearer[]
      * List of Directors present as part of the business entity.
      *
      * this is mandatory to be set

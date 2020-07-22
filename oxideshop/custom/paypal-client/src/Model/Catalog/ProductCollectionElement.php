@@ -54,7 +54,7 @@ class ProductCollectionElement implements JsonSerializable
     public $create_time;
 
     /**
-     * @var array<array>
+     * @var LinkDescription[]
      * An array of request-related [HATEOAS links](/docs/api/overview/#hateoas-links).
      */
     public $links;
@@ -71,6 +71,12 @@ class ProductCollectionElement implements JsonSerializable
         !isset($this->create_time) || Assert::minLength($this->create_time, 20, "create_time in ProductCollectionElement must have minlength of 20 $within");
         !isset($this->create_time) || Assert::maxLength($this->create_time, 64, "create_time in ProductCollectionElement must have maxlength of 64 $within");
         !isset($this->links) || Assert::isArray($this->links, "links in ProductCollectionElement must be array $within");
+
+                                if (isset($this->links)){
+                                    foreach ($this->links as $item) {
+                                        $item->validate(ProductCollectionElement::class);
+                                    }
+                                }
     }
 
     public function __construct()

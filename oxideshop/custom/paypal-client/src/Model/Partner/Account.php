@@ -16,7 +16,7 @@ class Account implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var array<IndividualOwner>
+     * @var IndividualOwner[]
      * List of owners in the account. There should be only one primary account owner which is mentioned in their
      * role_type.
      *

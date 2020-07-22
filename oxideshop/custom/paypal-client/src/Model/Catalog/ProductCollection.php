@@ -16,7 +16,7 @@ class ProductCollection implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var array<ProductCollectionElement>
+     * @var ProductCollectionElement[]
      * An array of products.
      *
      * this is mandatory to be set
@@ -38,7 +38,7 @@ class ProductCollection implements JsonSerializable
     public $total_pages;
 
     /**
-     * @var array<array>
+     * @var LinkDescription[]
      * An array of request-related [HATEOAS links](/docs/api/overview/#hateoas-links).
      */
     public $links;
@@ -58,6 +58,12 @@ class ProductCollection implements JsonSerializable
                                 }
 
         !isset($this->links) || Assert::isArray($this->links, "links in ProductCollection must be array $within");
+
+                                if (isset($this->links)){
+                                    foreach ($this->links as $item) {
+                                        $item->validate(ProductCollection::class);
+                                    }
+                                }
     }
 
     public function __construct()

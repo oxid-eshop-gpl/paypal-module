@@ -54,7 +54,7 @@ class SellerReceivableBreakdown implements JsonSerializable
     public $exchange_rate;
 
     /**
-     * @var array<PlatformFee>
+     * @var PlatformFee[]
      * An array of platform or partner fees, commissions, or brokerage fees that associated with the captured
      * payment.
      *

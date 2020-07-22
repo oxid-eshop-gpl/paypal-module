@@ -16,7 +16,7 @@ class SubscriptionCollection implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var array<Subscription>
+     * @var Subscription[]
      * An array of subscriptions.
      *
      * this is mandatory to be set
@@ -38,7 +38,7 @@ class SubscriptionCollection implements JsonSerializable
     public $total_pages;
 
     /**
-     * @var array<array>
+     * @var LinkDescription[]
      * An array of request-related [HATEOAS links](/docs/api/reference/api-responses/#hateoas-links).
      */
     public $links;
@@ -58,6 +58,12 @@ class SubscriptionCollection implements JsonSerializable
                                 }
 
         !isset($this->links) || Assert::isArray($this->links, "links in SubscriptionCollection must be array $within");
+
+                                if (isset($this->links)){
+                                    foreach ($this->links as $item) {
+                                        $item->validate(SubscriptionCollection::class);
+                                    }
+                                }
     }
 
     public function __construct()

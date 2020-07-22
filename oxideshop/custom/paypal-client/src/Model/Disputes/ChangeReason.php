@@ -83,13 +83,13 @@ class ChangeReason implements JsonSerializable
     public $extensions;
 
     /**
-     * @var array<AccountActivity>
+     * @var AccountActivity[]
      * An array of customer-reported unauthorized account activities.
      */
     public $disputed_account_activities;
 
     /**
-     * @var array<string>
+     * @var string[]
      * An array of transaction IDs to add to the unauthorized issue.
      */
     public $transaction_ids;
@@ -101,7 +101,7 @@ class ChangeReason implements JsonSerializable
     public $buyer_requested_amount;
 
     /**
-     * @var array<ItemInfo>
+     * @var ItemInfo[]
      * The customer purchased items in a disputed transaction.Applicable when the customer changes the dispute reason
      * to <a
      * href="/docs/integration/direct/customer-disputes/integration-guide/#merchandise_or_service_not_as_described"><code>MERCHANDISE_OR_SERVICE_NOT_AS_DESCRIBED</code></a>.

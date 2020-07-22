@@ -38,7 +38,7 @@ class SellerProtection implements JsonSerializable
     public $status;
 
     /**
-     * @var array<string>
+     * @var string[]
      * An array of conditions that are covered for the transaction.
      */
     public $dispute_categories;

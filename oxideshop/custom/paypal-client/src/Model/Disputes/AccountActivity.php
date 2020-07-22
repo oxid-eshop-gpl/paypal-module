@@ -195,7 +195,7 @@ class AccountActivity implements JsonSerializable
     public $activity_entity_info;
 
     /**
-     * @var array<ReversalAction>
+     * @var ReversalAction[]
      * An array of system actions that reversed the impact of the unauthorized event. Includes the system-defined
      * details of the reversal action.
      */

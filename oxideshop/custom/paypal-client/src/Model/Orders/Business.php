@@ -88,7 +88,7 @@ class Business extends Party implements JsonSerializable
     const TYPE_REGISTERED_COOPERATIVE = 'REGISTERED_COOPERATIVE';
 
     /**
-     * @var array<BusinessName>
+     * @var BusinessName[]
      * Names of business.
      *
      * this is mandatory to be set
@@ -139,7 +139,7 @@ class Business extends Party implements JsonSerializable
     public $category;
 
     /**
-     * @var array<BusinessIdentification>
+     * @var BusinessIdentification[]
      * Identification details for the business.
      *
      * this is mandatory to be set
@@ -158,7 +158,7 @@ class Business extends Party implements JsonSerializable
     public $description;
 
     /**
-     * @var array<Person>
+     * @var Person[]
      * Beneficial owners of the business.
      *
      * this is mandatory to be set

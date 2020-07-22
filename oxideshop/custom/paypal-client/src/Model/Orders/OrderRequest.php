@@ -59,7 +59,7 @@ class OrderRequest implements JsonSerializable
     public $payer;
 
     /**
-     * @var array<PurchaseUnitRequest>
+     * @var PurchaseUnitRequest[]
      * An array of purchase units. Each purchase unit establishes a contract between a payer and the payee. Each
      * purchase unit represents either a full or partial order that the payer intends to purchase from the payee.
      *

@@ -16,13 +16,13 @@ class EvidenceInfo implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var array<TrackingInfo>
+     * @var TrackingInfo[]
      * An array of relevant tracking information for the transaction involved in this dispute.
      */
     public $tracking_info;
 
     /**
-     * @var array<string>
+     * @var string[]
      * An array of refund IDs for the transaction involved in this dispute.
      */
     public $refund_ids;

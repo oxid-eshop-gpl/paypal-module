@@ -34,7 +34,7 @@ class SupportingInfo implements JsonSerializable
     public $notes;
 
     /**
-     * @var array<Document>
+     * @var Document[]
      * An array of metadata for the documents which were uploaded as supporting information for the dispute.
      */
     public $documents;

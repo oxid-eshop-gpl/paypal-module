@@ -52,7 +52,7 @@ class Party implements JsonSerializable
     public $primary_email;
 
     /**
-     * @var array<string>
+     * @var string[]
      * Email addresses.
      *
      * this is mandatory to be set
@@ -62,7 +62,7 @@ class Party implements JsonSerializable
     public $emails;
 
     /**
-     * @var array<PhoneInfo>
+     * @var PhoneInfo[]
      * Details of party's phone numbers.
      *
      * this is mandatory to be set
@@ -72,7 +72,7 @@ class Party implements JsonSerializable
     public $phones;
 
     /**
-     * @var array<AddressWithConfirmation>
+     * @var AddressWithConfirmation[]
      * Details of party's addresses.
      *
      * this is mandatory to be set

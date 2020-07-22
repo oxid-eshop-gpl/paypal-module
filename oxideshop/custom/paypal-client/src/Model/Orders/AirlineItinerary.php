@@ -28,7 +28,7 @@ class AirlineItinerary implements JsonSerializable
     public $passenger;
 
     /**
-     * @var array<FlightLeg>
+     * @var FlightLeg[]
      * An array of the airline itinerary legs.
      *
      * this is mandatory to be set

@@ -34,7 +34,7 @@ class Person implements JsonSerializable
     public $party_id;
 
     /**
-     * @var array<PersonName>
+     * @var PersonName[]
      * The name of the person.
      *
      * this is mandatory to be set
@@ -57,7 +57,7 @@ class Person implements JsonSerializable
     public $citizenship;
 
     /**
-     * @var array<PersonAddressDetail>
+     * @var PersonAddressDetail[]
      * The list of addresses associated with the person.
      *
      * this is mandatory to be set
@@ -67,7 +67,7 @@ class Person implements JsonSerializable
     public $addresses;
 
     /**
-     * @var array<PersonPhoneDetail>
+     * @var PersonPhoneDetail[]
      * The list of phone numbers associated with the person.
      *
      * this is mandatory to be set
@@ -83,7 +83,7 @@ class Person implements JsonSerializable
     public $birth_details;
 
     /**
-     * @var array<PersonDocument>
+     * @var PersonDocument[]
      * A person's or party's related document data collected from the customer. For example SSN, ITIN, or business
      * registration number collected from the user.
      *

@@ -39,7 +39,7 @@ class Cancel implements JsonSerializable
     public $note;
 
     /**
-     * @var array<string>
+     * @var string[]
      * An array of encrypted transaction IDs for a canceled unauthorized dispute. If you omit this ID for
      * unauthorized disputes, the issue is automatically canceled. Optional for other dispute types.
      */

@@ -24,7 +24,7 @@ class SubscriptionBillingInfo implements JsonSerializable
     public $outstanding_balance;
 
     /**
-     * @var array<CycleExecution>
+     * @var CycleExecution[]
      * The trial and regular billing executions.
      *
      * this is mandatory to be set

@@ -98,7 +98,7 @@ class Plan implements JsonSerializable
     public $usage_type = 'LICENSED';
 
     /**
-     * @var array<BillingCycle>
+     * @var BillingCycle[]
      * An array of billing cycles for trial billing and regular billing. A plan can have at most two trial cycles and
      * only one regular cycle.
      *
@@ -155,7 +155,7 @@ class Plan implements JsonSerializable
     public $update_time;
 
     /**
-     * @var array<array>
+     * @var LinkDescription[]
      * An array of request-related [HATEOAS links](/docs/api/reference/api-responses/#hateoas-links).
      */
     public $links;
@@ -197,6 +197,12 @@ class Plan implements JsonSerializable
         !isset($this->update_time) || Assert::minLength($this->update_time, 20, "update_time in Plan must have minlength of 20 $within");
         !isset($this->update_time) || Assert::maxLength($this->update_time, 64, "update_time in Plan must have maxlength of 64 $within");
         !isset($this->links) || Assert::isArray($this->links, "links in Plan must be array $within");
+
+                                if (isset($this->links)){
+                                    foreach ($this->links as $item) {
+                                        $item->validate(Plan::class);
+                                    }
+                                }
     }
 
     public function __construct()

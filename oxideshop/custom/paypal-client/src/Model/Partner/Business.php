@@ -32,7 +32,7 @@ class Business implements JsonSerializable
     public $business_incorporation;
 
     /**
-     * @var array<BusinessNameDetail>
+     * @var BusinessNameDetail[]
      * Name of the business.
      *
      * this is mandatory to be set
@@ -42,7 +42,7 @@ class Business implements JsonSerializable
     public $names;
 
     /**
-     * @var array<Email>
+     * @var Email[]
      * Email addresses of the business.
      *
      * this is mandatory to be set
@@ -61,7 +61,7 @@ class Business implements JsonSerializable
     public $website;
 
     /**
-     * @var array<BusinessAddressDetail>
+     * @var BusinessAddressDetail[]
      * List of addresses associated with the business entity.
      *
      * this is mandatory to be set
@@ -71,7 +71,7 @@ class Business implements JsonSerializable
     public $addresses;
 
     /**
-     * @var array<BusinessPhoneDetail>
+     * @var BusinessPhoneDetail[]
      * List of phone number associated with the business.
      *
      * this is mandatory to be set
@@ -81,7 +81,7 @@ class Business implements JsonSerializable
     public $phones;
 
     /**
-     * @var array<BusinessDocument>
+     * @var BusinessDocument[]
      * Business Party related Document data collected from the customer.. For example SSN, ITIN, Business
      * registration number that were collected from the user.
      *

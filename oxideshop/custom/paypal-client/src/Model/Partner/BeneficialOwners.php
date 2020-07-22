@@ -16,7 +16,7 @@ class BeneficialOwners implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var array<IndividualBeneficialOwner>
+     * @var IndividualBeneficialOwner[]
      * Individual beneficial owners.
      *
      * this is mandatory to be set
@@ -26,7 +26,7 @@ class BeneficialOwners implements JsonSerializable
     public $individual_beneficial_owners;
 
     /**
-     * @var array<BusinessBeneficialOwner>
+     * @var BusinessBeneficialOwner[]
      * Business beneficial owners.
      *
      * this is mandatory to be set

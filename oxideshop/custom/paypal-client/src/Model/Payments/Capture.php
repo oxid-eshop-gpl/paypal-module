@@ -93,7 +93,7 @@ class Capture extends CaptureStatus implements JsonSerializable
     public $error;
 
     /**
-     * @var array<array>
+     * @var LinkDescription[]
      * An array of related [HATEOAS links](/docs/api/reference/api-responses/#hateoas-links).
      */
     public $links;
@@ -147,6 +147,13 @@ class Capture extends CaptureStatus implements JsonSerializable
         !isset($this->error) || Assert::isInstanceOf($this->error, Error::class, "error in Capture must be instance of Error $within");
         !isset($this->error) || $this->error->validate(Capture::class);
         !isset($this->links) || Assert::isArray($this->links, "links in Capture must be array $within");
+
+                                if (isset($this->links)){
+                                    foreach ($this->links as $item) {
+                                        $item->validate(Capture::class);
+                                    }
+                                }
+
         !isset($this->processor_response) || Assert::isInstanceOf($this->processor_response, ProcessorResponse::class, "processor_response in Capture must be instance of ProcessorResponse $within");
         !isset($this->processor_response) || $this->processor_response->validate(Capture::class);
         !isset($this->supplementary_data) || Assert::isInstanceOf($this->supplementary_data, SupplementaryData::class, "supplementary_data in Capture must be instance of SupplementaryData $within");

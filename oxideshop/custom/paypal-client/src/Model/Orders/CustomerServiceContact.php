@@ -16,7 +16,7 @@ class CustomerServiceContact implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var array<string>
+     * @var string[]
      * Customer service email addresses.
      *
      * this is mandatory to be set
@@ -26,7 +26,7 @@ class CustomerServiceContact implements JsonSerializable
     public $emails;
 
     /**
-     * @var array<PhoneInfo>
+     * @var PhoneInfo[]
      * Details of customer service phone numbers.
      *
      * this is mandatory to be set

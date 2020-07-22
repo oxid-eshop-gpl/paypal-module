@@ -18,7 +18,7 @@ class ClassicApiIntegrationThirdPartyDetails implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var array<string>
+     * @var string[]
      * An array of permissions that the partner requests from the customer.
      *
      * this is mandatory to be set

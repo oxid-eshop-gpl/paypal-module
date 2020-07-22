@@ -16,7 +16,7 @@ class TransactionsList implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var array<Transaction>
+     * @var Transaction[]
      * An array of transactions.
      *
      * this is mandatory to be set
@@ -38,7 +38,7 @@ class TransactionsList implements JsonSerializable
     public $total_pages;
 
     /**
-     * @var array<array>
+     * @var LinkDescription[]
      * An array of request-related [HATEOAS links](/docs/api/reference/api-responses/#hateoas-links).
      */
     public $links;
@@ -58,6 +58,12 @@ class TransactionsList implements JsonSerializable
                                 }
 
         !isset($this->links) || Assert::isArray($this->links, "links in TransactionsList must be array $within");
+
+                                if (isset($this->links)){
+                                    foreach ($this->links as $item) {
+                                        $item->validate(TransactionsList::class);
+                                    }
+                                }
     }
 
     public function __construct()

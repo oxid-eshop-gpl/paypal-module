@@ -24,7 +24,7 @@ class PaymentInstruction implements JsonSerializable
     const DISBURSEMENT_MODE_DELAYED = 'DELAYED';
 
     /**
-     * @var array<PlatformFee>
+     * @var PlatformFee[]
      * An array of various fees, commissions, tips, or donations.
      *
      * this is mandatory to be set

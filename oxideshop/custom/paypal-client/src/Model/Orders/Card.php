@@ -146,7 +146,7 @@ class Card implements JsonSerializable
     public $billing_address;
 
     /**
-     * @var array<ThreedsResult>
+     * @var ThreedsResult[]
      * A list of authentication results.
      *
      * maxItems: 1
