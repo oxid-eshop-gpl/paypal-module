@@ -26,6 +26,7 @@ use OxidEsales\Eshop\Application\Controller\FrontendController;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderRequest;
 use OxidProfessionalServices\PayPal\Core\OrderRequestFactory;
+use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 
 class ProxyController extends FrontendController
 {
@@ -33,14 +34,22 @@ class ProxyController extends FrontendController
     {
         $basket = Registry::getSession()->getBasket();
 
+        /** @var ServiceFactory $serviceFactory */
+        $serviceFactory = Registry::get(ServiceFactory::class);
+        $service = $serviceFactory->getOrderService();
+
+        /** @var OrderRequestFactory $requestFactory */
+        $requestFactory = Registry::get(OrderRequestFactory::class);
+        $request = $requestFactory->getRequest($basket, OrderRequest::INTENT_CAPTURE);
+
+        try {
+            $response = $service->createOrder($request, '', '');
+        } catch (\Exception $exception) {
+            Registry::getLogger()->error("Something went wrong with order create call.", [$exception]);
+        }
     }
 
     public function captureOrder()
-    {
-
-    }
-
-    public function refundOrder()
     {
 
     }

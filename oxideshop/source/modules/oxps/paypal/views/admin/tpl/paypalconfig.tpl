@@ -50,7 +50,7 @@
         <div class="form-group live">
             <label for="client-id">[{oxmultilang ident="OXPS_PAYPAL_CLIENT_ID"}]</label>
             <div class="controls">
-                <input type="text" class="form-control" id="client-id" name="conf[sPayPalClientId]" value="[{$config->getClientId()}]" />
+                <input type="text" class="form-control" id="client-id" name="conf[sPayPalClientId]" value="[{$config->getLiveClientId()}]" />
                 <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_CLIENT_ID"}]</span>
             </div>
         </div>
@@ -58,7 +58,7 @@
         <div class="form-group live">
             <label for="client-secret">[{oxmultilang ident="OXPS_PAYPAL_CLIENT_SECRET"}]</label>
             <div class="controls">
-                <input type="text" class="form-control" id="client-secret" name="conf[sPayPalClientSecret]" value="[{$config->getClientSecret()}]" />
+                <input type="text" class="form-control" id="client-secret" name="conf[sPayPalClientSecret]" value="[{$config->getLiveClientSecret()}]" />
                 <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_CLIENT_SECRET"}]</span>
             </div>
         </div>

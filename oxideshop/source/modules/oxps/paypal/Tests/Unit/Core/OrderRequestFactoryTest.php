@@ -20,6 +20,8 @@
  * @copyright (C) OXID eSales AG 2003-2020
  */
 
+namespace Paypal\Tests\Unit\Core;
+
 use OxidEsales\TestingLibrary\UnitTestCase;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderRequest;
 use OxidProfessionalServices\PayPal\Core\OrderRequestFactory;

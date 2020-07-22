@@ -40,8 +40,8 @@ class Config
         if (
             (
                 !$this->isSandbox() &&
-                !$this->getClientId() &&
-                !$this->getClientSecret()
+                !$this->getLiveClientId() &&
+                !$this->getLiveClientSecret()
             ) ||
             (
                 $this->isSandbox() &&
@@ -78,9 +78,29 @@ class Config
     }
 
     /**
+     * Get client id based on set active mode
+     *
      * @return string
      */
     public function getClientId(): string
+    {
+        return $this->isSandbox() ? $this->getSandboxClientId() : $this->getLiveClientId();
+    }
+
+    /**
+     * Get client secret based on active mode
+     *
+     * @return string
+     */
+    public function getClientSecret(): string
+    {
+        return $this->isSandbox() ? $this->getSandboxClientSecret() : $this->getLiveClientSecret();
+    }
+
+    /**
+     * @return string
+     */
+    public function getLiveClientId(): string
     {
         return Registry::getConfig()->getConfigParam('sPayPalClientId');
     }
@@ -88,7 +108,7 @@ class Config
     /**
      * @return string
      */
-    public function getClientSecret(): string
+    public function getLiveClientSecret(): string
     {
         return Registry::getConfig()->getConfigParam('sPayPalClientSecret');
     }
