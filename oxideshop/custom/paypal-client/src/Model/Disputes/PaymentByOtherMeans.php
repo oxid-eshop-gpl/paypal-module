@@ -74,4 +74,12 @@ class PaymentByOtherMeans implements JsonSerializable
      * maxLength: 4
      */
     public $payment_instrument_suffix;
+
+    public function validate()
+    {
+        assert(!isset($this->payment_method) || strlen($this->payment_method) >= 1);
+        assert(!isset($this->payment_method) || strlen($this->payment_method) <= 255);
+        assert(!isset($this->payment_instrument_suffix) || strlen($this->payment_instrument_suffix) >= 2);
+        assert(!isset($this->payment_instrument_suffix) || strlen($this->payment_instrument_suffix) <= 4);
+    }
 }

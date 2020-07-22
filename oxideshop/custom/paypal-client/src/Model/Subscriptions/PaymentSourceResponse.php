@@ -19,4 +19,8 @@ class PaymentSourceResponse implements JsonSerializable
      * The payment card used to fund the payment. Card can be a credit or debit card.
      */
     public $card;
+
+    public function validate()
+    {
+    }
 }

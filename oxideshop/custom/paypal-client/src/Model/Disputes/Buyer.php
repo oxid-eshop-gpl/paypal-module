@@ -46,4 +46,14 @@ class Buyer implements JsonSerializable
      * maxLength: 2000
      */
     public $name;
+
+    public function validate()
+    {
+        assert(!isset($this->email) || strlen($this->email) >= 3);
+        assert(!isset($this->email) || strlen($this->email) <= 254);
+        assert(!isset($this->payer_id) || strlen($this->payer_id) >= 13);
+        assert(!isset($this->payer_id) || strlen($this->payer_id) <= 13);
+        assert(!isset($this->name) || strlen($this->name) >= 1);
+        assert(!isset($this->name) || strlen($this->name) <= 2000);
+    }
 }

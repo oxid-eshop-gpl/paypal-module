@@ -124,4 +124,20 @@ class ReversalAction implements JsonSerializable
      * maxLength: 2000
      */
     public $status;
+
+    public function validate()
+    {
+        assert(!isset($this->id) || strlen($this->id) >= 1);
+        assert(!isset($this->id) || strlen($this->id) <= 255);
+        assert(!isset($this->original_activity_id) || strlen($this->original_activity_id) >= 1);
+        assert(!isset($this->original_activity_id) || strlen($this->original_activity_id) <= 255);
+        assert(!isset($this->entity_type) || strlen($this->entity_type) >= 1);
+        assert(!isset($this->entity_type) || strlen($this->entity_type) <= 255);
+        assert(!isset($this->entity_subtype) || strlen($this->entity_subtype) >= 1);
+        assert(!isset($this->entity_subtype) || strlen($this->entity_subtype) <= 255);
+        assert(!isset($this->action_performed) || strlen($this->action_performed) >= 1);
+        assert(!isset($this->action_performed) || strlen($this->action_performed) <= 255);
+        assert(!isset($this->status) || strlen($this->status) >= 1);
+        assert(!isset($this->status) || strlen($this->status) <= 2000);
+    }
 }

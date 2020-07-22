@@ -158,4 +158,33 @@ class FlightLeg implements JsonSerializable
      * maxLength: 20
      */
     public $additional_notations;
+
+    public function validate()
+    {
+        assert(!isset($this->flight_code) || strlen($this->flight_code) >= 1);
+        assert(!isset($this->flight_code) || strlen($this->flight_code) <= 5);
+        assert(!isset($this->carrier_code) || strlen($this->carrier_code) >= 2);
+        assert(!isset($this->carrier_code) || strlen($this->carrier_code) <= 2);
+        assert(!isset($this->service_class) || strlen($this->service_class) >= 1);
+        assert(!isset($this->service_class) || strlen($this->service_class) <= 1);
+        assert(!isset($this->departure_date) || strlen($this->departure_date) >= 10);
+        assert(!isset($this->departure_date) || strlen($this->departure_date) <= 10);
+        assert(!isset($this->departure_time) || strlen($this->departure_time) >= 5);
+        assert(!isset($this->departure_time) || strlen($this->departure_time) <= 5);
+        assert(!isset($this->departure_airport) || strlen($this->departure_airport) >= 3);
+        assert(!isset($this->departure_airport) || strlen($this->departure_airport) <= 4);
+        assert(!isset($this->arrival_airport) || strlen($this->arrival_airport) >= 3);
+        assert(!isset($this->arrival_airport) || strlen($this->arrival_airport) <= 4);
+        assert(!isset($this->fare_basis_code) || strlen($this->fare_basis_code) >= 1);
+        assert(!isset($this->fare_basis_code) || strlen($this->fare_basis_code) <= 15);
+        assert(!isset($this->arrival_time) || strlen($this->arrival_time) >= 5);
+        assert(!isset($this->arrival_time) || strlen($this->arrival_time) <= 5);
+        assert(!isset($this->conjunction_ticket_number) || strlen($this->conjunction_ticket_number) >= 1);
+        assert(!isset($this->conjunction_ticket_number) || strlen($this->conjunction_ticket_number) <= 16);
+        assert(isset($this->fare));
+        assert(isset($this->tax));
+        assert(isset($this->fee));
+        assert(!isset($this->additional_notations) || strlen($this->additional_notations) >= 1);
+        assert(!isset($this->additional_notations) || strlen($this->additional_notations) <= 20);
+    }
 }

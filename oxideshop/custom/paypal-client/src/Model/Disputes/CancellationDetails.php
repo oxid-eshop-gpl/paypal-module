@@ -70,4 +70,12 @@ class CancellationDetails implements JsonSerializable
      * maxLength: 255
      */
     public $cancellation_mode;
+
+    public function validate()
+    {
+        assert(!isset($this->cancellation_date) || strlen($this->cancellation_date) >= 20);
+        assert(!isset($this->cancellation_date) || strlen($this->cancellation_date) <= 64);
+        assert(!isset($this->cancellation_mode) || strlen($this->cancellation_mode) >= 1);
+        assert(!isset($this->cancellation_mode) || strlen($this->cancellation_mode) <= 255);
+    }
 }

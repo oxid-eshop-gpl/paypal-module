@@ -19,4 +19,8 @@ class CardAttributesResponse implements JsonSerializable
      * The details about a saved payment source.
      */
     public $vault;
+
+    public function validate()
+    {
+    }
 }

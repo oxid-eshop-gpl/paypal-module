@@ -25,4 +25,8 @@ class BeneficialOwners implements JsonSerializable
      * Business beneficial owners.
      */
     public $business_beneficial_owners;
+
+    public function validate()
+    {
+    }
 }

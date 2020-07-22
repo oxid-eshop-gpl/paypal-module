@@ -61,4 +61,11 @@ class BillingCycle implements JsonSerializable
      * finite number of times (value between <code>1</code> and <code>999</code> for <code>total_cycles</code>).
      */
     public $total_cycles;
+
+    public function validate()
+    {
+        assert(isset($this->frequency));
+        assert(!isset($this->tenure_type) || strlen($this->tenure_type) >= 1);
+        assert(!isset($this->tenure_type) || strlen($this->tenure_type) <= 24);
+    }
 }

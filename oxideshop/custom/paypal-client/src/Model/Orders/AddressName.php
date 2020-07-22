@@ -22,4 +22,10 @@ class AddressName extends AddressPortable implements JsonSerializable
      * maxLength: 200
      */
     public $addressee;
+
+    public function validate()
+    {
+        assert(!isset($this->addressee) || strlen($this->addressee) >= 1);
+        assert(!isset($this->addressee) || strlen($this->addressee) <= 200);
+    }
 }

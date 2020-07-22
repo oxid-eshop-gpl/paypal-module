@@ -37,4 +37,10 @@ class PaypalWallet implements JsonSerializable
      * Additional attributes associated with the use of this paypal wallet
      */
     public $attributes;
+
+    public function validate()
+    {
+        assert(!isset($this->payment_method_preference) || strlen($this->payment_method_preference) >= 1);
+        assert(!isset($this->payment_method_preference) || strlen($this->payment_method_preference) <= 255);
+    }
 }

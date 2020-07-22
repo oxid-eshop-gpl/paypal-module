@@ -26,4 +26,8 @@ class AuthorizationWithAdditionalData extends Authorization implements JsonSeria
      * The processor information. Might be required for payment requests, such as direct credit card transactions.
      */
     public $processor_response;
+
+    public function validate()
+    {
+    }
 }

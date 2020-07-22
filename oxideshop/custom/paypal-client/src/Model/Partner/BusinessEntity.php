@@ -46,4 +46,10 @@ class BusinessEntity extends Business implements JsonSerializable
      * maxLength: 256
      */
     public $business_description;
+
+    public function validate()
+    {
+        assert(!isset($this->business_description) || strlen($this->business_description) >= 1);
+        assert(!isset($this->business_description) || strlen($this->business_description) <= 256);
+    }
 }

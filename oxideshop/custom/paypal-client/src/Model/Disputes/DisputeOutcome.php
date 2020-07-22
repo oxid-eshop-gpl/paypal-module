@@ -66,4 +66,13 @@ class DisputeOutcome implements JsonSerializable
      * The currency and amount for a financial transaction, such as a balance or payment due.
      */
     public $amount_refunded;
+
+    public function validate()
+    {
+        assert(!isset($this->outcome_code) || strlen($this->outcome_code) >= 1);
+        assert(!isset($this->outcome_code) || strlen($this->outcome_code) <= 255);
+        assert(!isset($this->outcome_reason) || strlen($this->outcome_reason) >= 1);
+        assert(!isset($this->outcome_reason) || strlen($this->outcome_reason) <= 2000);
+        assert(isset($this->amount_refunded));
+    }
 }

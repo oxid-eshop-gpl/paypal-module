@@ -63,4 +63,16 @@ class SubscriptionReviseRequest implements JsonSerializable
      * PayPal.
      */
     public $application_context;
+
+    public function validate()
+    {
+        assert(!isset($this->plan_id) || strlen($this->plan_id) >= 3);
+        assert(!isset($this->plan_id) || strlen($this->plan_id) <= 50);
+        assert(!isset($this->quantity) || strlen($this->quantity) >= 1);
+        assert(!isset($this->quantity) || strlen($this->quantity) <= 32);
+        assert(!isset($this->effective_time) || strlen($this->effective_time) >= 20);
+        assert(!isset($this->effective_time) || strlen($this->effective_time) <= 64);
+        assert(isset($this->shipping_amount));
+        assert(isset($this->application_context));
+    }
 }

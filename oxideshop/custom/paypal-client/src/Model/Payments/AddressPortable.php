@@ -112,4 +112,18 @@ class AddressPortable implements JsonSerializable
      * `address_details.street_number`, `street_name`, and `street_type`.
      */
     public $address_details;
+
+    public function validate()
+    {
+        assert(!isset($this->address_line_1) || strlen($this->address_line_1) <= 300);
+        assert(!isset($this->address_line_2) || strlen($this->address_line_2) <= 300);
+        assert(!isset($this->address_line_3) || strlen($this->address_line_3) <= 100);
+        assert(!isset($this->admin_area_4) || strlen($this->admin_area_4) <= 100);
+        assert(!isset($this->admin_area_3) || strlen($this->admin_area_3) <= 100);
+        assert(!isset($this->admin_area_2) || strlen($this->admin_area_2) <= 120);
+        assert(!isset($this->admin_area_1) || strlen($this->admin_area_1) <= 300);
+        assert(!isset($this->postal_code) || strlen($this->postal_code) <= 60);
+        assert(!isset($this->country_code) || strlen($this->country_code) >= 2);
+        assert(!isset($this->country_code) || strlen($this->country_code) <= 2);
+    }
 }

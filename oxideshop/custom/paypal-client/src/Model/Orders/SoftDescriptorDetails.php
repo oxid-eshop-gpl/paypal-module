@@ -42,4 +42,14 @@ class SoftDescriptorDetails implements JsonSerializable
      * maxLength: 255
      */
     public $contact_value;
+
+    public function validate()
+    {
+        assert(!isset($this->soft_descriptor) || strlen($this->soft_descriptor) >= 1);
+        assert(!isset($this->soft_descriptor) || strlen($this->soft_descriptor) <= 30);
+        assert(!isset($this->contact_type) || strlen($this->contact_type) >= 1);
+        assert(!isset($this->contact_type) || strlen($this->contact_type) <= 127);
+        assert(!isset($this->contact_value) || strlen($this->contact_value) >= 1);
+        assert(!isset($this->contact_value) || strlen($this->contact_value) <= 255);
+    }
 }

@@ -147,4 +147,16 @@ class Card implements JsonSerializable
      * A list of authentication results.
      */
     public $authentication_results;
+
+    public function validate()
+    {
+        assert(!isset($this->name) || strlen($this->name) <= 300);
+        assert(!isset($this->number) || strlen($this->number) >= 13);
+        assert(!isset($this->number) || strlen($this->number) <= 19);
+        assert(!isset($this->expiry) || strlen($this->expiry) >= 7);
+        assert(!isset($this->expiry) || strlen($this->expiry) <= 7);
+        assert(!isset($this->card_type) || strlen($this->card_type) >= 1);
+        assert(!isset($this->card_type) || strlen($this->card_type) <= 255);
+        assert(isset($this->billing_address));
+    }
 }

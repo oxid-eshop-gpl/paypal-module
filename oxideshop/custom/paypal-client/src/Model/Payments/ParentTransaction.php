@@ -35,4 +35,8 @@ class ParentTransaction implements JsonSerializable
      * @see TYPE_ORDER
      */
     public $type;
+
+    public function validate()
+    {
+    }
 }

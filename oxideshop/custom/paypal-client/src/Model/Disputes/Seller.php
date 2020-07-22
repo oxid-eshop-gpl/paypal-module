@@ -44,4 +44,14 @@ class Seller implements JsonSerializable
      * maxLength: 2000
      */
     public $name;
+
+    public function validate()
+    {
+        assert(!isset($this->email) || strlen($this->email) >= 3);
+        assert(!isset($this->email) || strlen($this->email) <= 254);
+        assert(!isset($this->merchant_id) || strlen($this->merchant_id) >= 1);
+        assert(!isset($this->merchant_id) || strlen($this->merchant_id) <= 255);
+        assert(!isset($this->name) || strlen($this->name) >= 1);
+        assert(!isset($this->name) || strlen($this->name) <= 2000);
+    }
 }

@@ -58,4 +58,12 @@ class UpdateCaptureRequest implements JsonSerializable
      * The details of the captured payment status.
      */
     public $status_details;
+
+    public function validate()
+    {
+        assert(!isset($this->id) || strlen($this->id) >= 1);
+        assert(!isset($this->id) || strlen($this->id) <= 20);
+        assert(!isset($this->status) || strlen($this->status) >= 1);
+        assert(!isset($this->status) || strlen($this->status) <= 127);
+    }
 }

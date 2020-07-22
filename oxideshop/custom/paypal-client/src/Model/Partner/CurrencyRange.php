@@ -25,4 +25,10 @@ class CurrencyRange implements JsonSerializable
      * The currency and amount for a financial transaction, such as a balance or payment due.
      */
     public $maximum_amount;
+
+    public function validate()
+    {
+        assert(isset($this->minimum_amount));
+        assert(isset($this->maximum_amount));
+    }
 }

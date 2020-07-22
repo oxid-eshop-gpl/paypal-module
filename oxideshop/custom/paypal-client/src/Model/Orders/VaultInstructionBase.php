@@ -27,4 +27,10 @@ class VaultInstructionBase implements JsonSerializable
      * maxLength: 255
      */
     public $confirm_payment_token;
+
+    public function validate()
+    {
+        assert(!isset($this->confirm_payment_token) || strlen($this->confirm_payment_token) >= 1);
+        assert(!isset($this->confirm_payment_token) || strlen($this->confirm_payment_token) <= 255);
+    }
 }

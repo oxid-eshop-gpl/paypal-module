@@ -25,4 +25,10 @@ class BirthDetails implements JsonSerializable
      * maxLength: 10
      */
     public $date_of_birth;
+
+    public function validate()
+    {
+        assert(!isset($this->date_of_birth) || strlen($this->date_of_birth) >= 10);
+        assert(!isset($this->date_of_birth) || strlen($this->date_of_birth) <= 10);
+    }
 }

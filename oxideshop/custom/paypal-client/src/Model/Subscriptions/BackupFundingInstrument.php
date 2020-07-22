@@ -19,4 +19,8 @@ class BackupFundingInstrument implements JsonSerializable
      * The payment card to use to fund a payment. Card can be a credit or debit card.
      */
     public $card;
+
+    public function validate()
+    {
+    }
 }

@@ -68,4 +68,12 @@ class BankAccountResponse implements JsonSerializable
      * The backup funding instrument to use for payment when the primary instrument fails.
      */
     public $backup_funding_instrument;
+
+    public function validate()
+    {
+        assert(!isset($this->bank_name) || strlen($this->bank_name) <= 64);
+        assert(!isset($this->country_code) || strlen($this->country_code) >= 2);
+        assert(!isset($this->country_code) || strlen($this->country_code) <= 2);
+        assert(isset($this->backup_funding_instrument));
+    }
 }

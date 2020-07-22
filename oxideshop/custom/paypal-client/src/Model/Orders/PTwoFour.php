@@ -74,4 +74,20 @@ class PTwoFour implements JsonSerializable
      * maxLength: 2000
      */
     public $method_description;
+
+    public function validate()
+    {
+        assert(!isset($this->name) || strlen($this->name) >= 3);
+        assert(!isset($this->name) || strlen($this->name) <= 300);
+        assert(!isset($this->email) || strlen($this->email) >= 3);
+        assert(!isset($this->email) || strlen($this->email) <= 254);
+        assert(!isset($this->country_code) || strlen($this->country_code) >= 2);
+        assert(!isset($this->country_code) || strlen($this->country_code) <= 2);
+        assert(!isset($this->payment_descriptor) || strlen($this->payment_descriptor) >= 1);
+        assert(!isset($this->payment_descriptor) || strlen($this->payment_descriptor) <= 2000);
+        assert(!isset($this->method_id) || strlen($this->method_id) >= 1);
+        assert(!isset($this->method_id) || strlen($this->method_id) <= 300);
+        assert(!isset($this->method_description) || strlen($this->method_description) >= 1);
+        assert(!isset($this->method_description) || strlen($this->method_description) <= 2000);
+    }
 }

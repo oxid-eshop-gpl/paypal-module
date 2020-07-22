@@ -63,4 +63,11 @@ class ShippingOption implements JsonSerializable
      * can be set to `selected=true`.
      */
     public $selected;
+
+    public function validate()
+    {
+        assert(!isset($this->id) || strlen($this->id) <= 127);
+        assert(!isset($this->label) || strlen($this->label) <= 127);
+        assert(isset($this->amount));
+    }
 }

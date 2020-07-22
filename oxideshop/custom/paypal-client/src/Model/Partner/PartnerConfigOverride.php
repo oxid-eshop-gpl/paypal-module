@@ -56,4 +56,16 @@ class PartnerConfigOverride implements JsonSerializable
      * Indicates whether to show an add credit card page.
      */
     public $show_add_credit_card;
+
+    public function validate()
+    {
+        assert(!isset($this->partner_logo_url) || strlen($this->partner_logo_url) >= 1);
+        assert(!isset($this->partner_logo_url) || strlen($this->partner_logo_url) <= 127);
+        assert(!isset($this->return_url) || strlen($this->return_url) >= 1);
+        assert(!isset($this->return_url) || strlen($this->return_url) <= 127);
+        assert(!isset($this->return_url_description) || strlen($this->return_url_description) >= 1);
+        assert(!isset($this->return_url_description) || strlen($this->return_url_description) <= 127);
+        assert(!isset($this->action_renewal_url) || strlen($this->action_renewal_url) >= 1);
+        assert(!isset($this->action_renewal_url) || strlen($this->action_renewal_url) <= 127);
+    }
 }

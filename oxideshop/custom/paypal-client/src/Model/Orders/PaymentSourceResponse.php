@@ -133,4 +133,8 @@ class PaymentSourceResponse implements JsonSerializable
      * Information needed to pay using WeChat Pay.
      */
     public $wechatpay;
+
+    public function validate()
+    {
+    }
 }

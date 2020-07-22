@@ -98,4 +98,20 @@ class Document implements JsonSerializable
      * The HATEOAS links.
      */
     public $links;
+
+    public function validate()
+    {
+        assert(!isset($this->id) || strlen($this->id) >= 1);
+        assert(!isset($this->id) || strlen($this->id) <= 20);
+        assert(!isset($this->name) || strlen($this->name) >= 1);
+        assert(!isset($this->name) || strlen($this->name) <= 100);
+        assert(!isset($this->identification_number) || strlen($this->identification_number) >= 1);
+        assert(!isset($this->identification_number) || strlen($this->identification_number) <= 100);
+        assert(!isset($this->issue_date) || strlen($this->issue_date) >= 10);
+        assert(!isset($this->issue_date) || strlen($this->issue_date) <= 10);
+        assert(!isset($this->expiry_date) || strlen($this->expiry_date) >= 10);
+        assert(!isset($this->expiry_date) || strlen($this->expiry_date) <= 10);
+        assert(!isset($this->issuing_country_code) || strlen($this->issuing_country_code) >= 2);
+        assert(!isset($this->issuing_country_code) || strlen($this->issuing_country_code) <= 2);
+    }
 }

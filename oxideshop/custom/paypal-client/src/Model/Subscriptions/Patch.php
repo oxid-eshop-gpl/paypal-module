@@ -65,4 +65,8 @@ class Patch implements JsonSerializable
      * to move the value. Required for the <code>move</code> operation.
      */
     public $from;
+
+    public function validate()
+    {
+    }
 }

@@ -55,4 +55,11 @@ class CreditNotProcessed implements JsonSerializable
      * The service details.
      */
     public $service_details;
+
+    public function validate()
+    {
+        assert(!isset($this->issue_type) || strlen($this->issue_type) >= 1);
+        assert(!isset($this->issue_type) || strlen($this->issue_type) <= 255);
+        assert(isset($this->expected_refund));
+    }
 }

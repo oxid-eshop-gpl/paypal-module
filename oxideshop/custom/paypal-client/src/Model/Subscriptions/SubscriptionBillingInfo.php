@@ -78,4 +78,17 @@ class SubscriptionBillingInfo implements JsonSerializable
      * The currency and amount for a financial transaction, such as a balance or payment due.
      */
     public $total_paid_amount;
+
+    public function validate()
+    {
+        assert(isset($this->outstanding_balance));
+        assert(isset($this->last_payment));
+        assert(!isset($this->next_billing_time) || strlen($this->next_billing_time) >= 20);
+        assert(!isset($this->next_billing_time) || strlen($this->next_billing_time) <= 64);
+        assert(isset($this->next_payment));
+        assert(!isset($this->final_payment_time) || strlen($this->final_payment_time) >= 20);
+        assert(!isset($this->final_payment_time) || strlen($this->final_payment_time) <= 64);
+        assert(isset($this->last_failed_payment));
+        assert(isset($this->total_paid_amount));
+    }
 }

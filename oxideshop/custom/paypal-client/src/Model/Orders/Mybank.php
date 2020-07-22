@@ -54,4 +54,16 @@ class Mybank implements JsonSerializable
      * maxLength: 34
      */
     public $iban_last_chars;
+
+    public function validate()
+    {
+        assert(!isset($this->name) || strlen($this->name) >= 3);
+        assert(!isset($this->name) || strlen($this->name) <= 300);
+        assert(!isset($this->country_code) || strlen($this->country_code) >= 2);
+        assert(!isset($this->country_code) || strlen($this->country_code) <= 2);
+        assert(!isset($this->bic) || strlen($this->bic) >= 8);
+        assert(!isset($this->bic) || strlen($this->bic) <= 11);
+        assert(!isset($this->iban_last_chars) || strlen($this->iban_last_chars) >= 4);
+        assert(!isset($this->iban_last_chars) || strlen($this->iban_last_chars) <= 34);
+    }
 }

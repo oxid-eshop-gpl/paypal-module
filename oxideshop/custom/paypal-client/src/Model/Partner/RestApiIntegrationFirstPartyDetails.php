@@ -29,4 +29,10 @@ class RestApiIntegrationFirstPartyDetails implements JsonSerializable
      * maxLength: 128
      */
     public $seller_nonce;
+
+    public function validate()
+    {
+        assert(!isset($this->seller_nonce) || strlen($this->seller_nonce) >= 44);
+        assert(!isset($this->seller_nonce) || strlen($this->seller_nonce) <= 128);
+    }
 }

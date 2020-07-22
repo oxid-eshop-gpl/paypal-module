@@ -36,4 +36,10 @@ class FeePolicy implements JsonSerializable
      * maxLength: 255
      */
     public $transaction_fee;
+
+    public function validate()
+    {
+        assert(!isset($this->transaction_fee) || strlen($this->transaction_fee) >= 1);
+        assert(!isset($this->transaction_fee) || strlen($this->transaction_fee) <= 255);
+    }
 }

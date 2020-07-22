@@ -30,4 +30,10 @@ class EligibilityRequest implements JsonSerializable
      * An array of the items in the disputed transaction.
      */
     public $disputed_items;
+
+    public function validate()
+    {
+        assert(!isset($this->transaction_id) || strlen($this->transaction_id) >= 1);
+        assert(!isset($this->transaction_id) || strlen($this->transaction_id) <= 255);
+    }
 }

@@ -34,4 +34,11 @@ class Money implements JsonSerializable
      * maxLength: 32
      */
     public $value;
+
+    public function validate()
+    {
+        assert(!isset($this->currency_code) || strlen($this->currency_code) >= 3);
+        assert(!isset($this->currency_code) || strlen($this->currency_code) <= 3);
+        assert(!isset($this->value) || strlen($this->value) <= 32);
+    }
 }

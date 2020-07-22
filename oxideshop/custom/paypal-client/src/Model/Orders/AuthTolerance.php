@@ -26,4 +26,9 @@ class AuthTolerance implements JsonSerializable
      * The currency and amount for a financial transaction, such as a balance or payment due.
      */
     public $absolute;
+
+    public function validate()
+    {
+        assert(isset($this->absolute));
+    }
 }

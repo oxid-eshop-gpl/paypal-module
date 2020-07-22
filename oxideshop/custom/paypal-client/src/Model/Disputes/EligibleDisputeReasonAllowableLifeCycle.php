@@ -41,4 +41,12 @@ class EligibleDisputeReasonAllowableLifeCycle implements JsonSerializable
      * maxLength: 2000
      */
     public $reason;
+
+    public function validate()
+    {
+        assert(!isset($this->stage) || strlen($this->stage) >= 1);
+        assert(!isset($this->stage) || strlen($this->stage) <= 255);
+        assert(!isset($this->reason) || strlen($this->reason) >= 1);
+        assert(!isset($this->reason) || strlen($this->reason) <= 2000);
+    }
 }

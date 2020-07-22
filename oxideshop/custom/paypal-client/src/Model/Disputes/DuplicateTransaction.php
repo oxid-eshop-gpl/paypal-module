@@ -25,4 +25,8 @@ class DuplicateTransaction implements JsonSerializable
      * The information about the disputed transaction.
      */
     public $original_transaction;
+
+    public function validate()
+    {
+    }
 }

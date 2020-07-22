@@ -25,4 +25,8 @@ class UpdatePricingSchemeRequest implements JsonSerializable
      * The pricing scheme details.
      */
     public $pricing_scheme;
+
+    public function validate()
+    {
+    }
 }

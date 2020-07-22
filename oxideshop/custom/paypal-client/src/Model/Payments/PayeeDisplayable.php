@@ -41,4 +41,11 @@ class PayeeDisplayable implements JsonSerializable
      * maxLength: 127
      */
     public $brand_name;
+
+    public function validate()
+    {
+        assert(!isset($this->business_email) || strlen($this->business_email) <= 254);
+        assert(isset($this->business_phone));
+        assert(!isset($this->brand_name) || strlen($this->brand_name) <= 127);
+    }
 }

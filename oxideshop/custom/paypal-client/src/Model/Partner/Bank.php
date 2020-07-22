@@ -82,4 +82,18 @@ class Bank implements JsonSerializable
      * Seller’s consent to operate on this financial instrument.
      */
     public $mandate;
+
+    public function validate()
+    {
+        assert(!isset($this->nick_name) || strlen($this->nick_name) >= 1);
+        assert(!isset($this->nick_name) || strlen($this->nick_name) <= 50);
+        assert(!isset($this->account_number) || strlen($this->account_number) >= 1);
+        assert(!isset($this->account_number) || strlen($this->account_number) <= 50);
+        assert(!isset($this->account_type) || strlen($this->account_type) >= 1);
+        assert(!isset($this->account_type) || strlen($this->account_type) <= 50);
+        assert(!isset($this->currency_code) || strlen($this->currency_code) >= 3);
+        assert(!isset($this->currency_code) || strlen($this->currency_code) <= 3);
+        assert(isset($this->branch_location));
+        assert(isset($this->mandate));
+    }
 }

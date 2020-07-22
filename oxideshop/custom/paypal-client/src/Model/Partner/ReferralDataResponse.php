@@ -37,4 +37,9 @@ class ReferralDataResponse implements JsonSerializable
      * An array of request-related [HATEOAS links](/docs/api/overview/#hateoas-links).
      */
     public $links;
+
+    public function validate()
+    {
+        assert(isset($this->referral_data));
+    }
 }

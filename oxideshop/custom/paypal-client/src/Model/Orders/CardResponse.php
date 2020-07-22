@@ -166,4 +166,13 @@ class CardResponse implements JsonSerializable
      * Additional attributes associated with the use of this card.
      */
     public $attributes;
+
+    public function validate()
+    {
+        assert(!isset($this->last_n_chars) || strlen($this->last_n_chars) >= 2);
+        assert(!isset($this->brand) || strlen($this->brand) >= 1);
+        assert(!isset($this->brand) || strlen($this->brand) <= 255);
+        assert(!isset($this->bin) || strlen($this->bin) >= 6);
+        assert(!isset($this->bin) || strlen($this->bin) <= 8);
+    }
 }

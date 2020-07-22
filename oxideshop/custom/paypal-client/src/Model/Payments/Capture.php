@@ -130,4 +130,16 @@ class Capture extends CaptureStatus implements JsonSerializable
      * maxLength: 64
      */
     public $update_time;
+
+    public function validate()
+    {
+        assert(isset($this->amount));
+        assert(!isset($this->custom_id) || strlen($this->custom_id) <= 127);
+        assert(isset($this->seller_receivable_breakdown));
+        assert(isset($this->error));
+        assert(!isset($this->create_time) || strlen($this->create_time) >= 20);
+        assert(!isset($this->create_time) || strlen($this->create_time) <= 64);
+        assert(!isset($this->update_time) || strlen($this->update_time) >= 20);
+        assert(!isset($this->update_time) || strlen($this->update_time) <= 64);
+    }
 }

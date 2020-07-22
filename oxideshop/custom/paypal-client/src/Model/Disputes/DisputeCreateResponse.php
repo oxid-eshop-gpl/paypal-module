@@ -19,4 +19,8 @@ class DisputeCreateResponse implements JsonSerializable
      * An array of request-related [HATEOAS links](/docs/api/hateoas-links/).
      */
     public $links;
+
+    public function validate()
+    {
+    }
 }

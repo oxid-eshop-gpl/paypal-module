@@ -28,4 +28,10 @@ class PolicyDirective implements JsonSerializable
      * List of reasons for the payment decision.
      */
     public $reason;
+
+    public function validate()
+    {
+        assert(!isset($this->payment_decision) || strlen($this->payment_decision) >= 1);
+        assert(!isset($this->payment_decision) || strlen($this->payment_decision) <= 30);
+    }
 }

@@ -73,4 +73,16 @@ class MakeOffer implements JsonSerializable
      * maxLength: 255
      */
     public $offer_type;
+
+    public function validate()
+    {
+        assert(!isset($this->note) || strlen($this->note) >= 1);
+        assert(!isset($this->note) || strlen($this->note) <= 2000);
+        assert(isset($this->offer_amount));
+        assert(isset($this->return_shipping_address));
+        assert(!isset($this->invoice_id) || strlen($this->invoice_id) >= 1);
+        assert(!isset($this->invoice_id) || strlen($this->invoice_id) <= 127);
+        assert(!isset($this->offer_type) || strlen($this->offer_type) >= 1);
+        assert(!isset($this->offer_type) || strlen($this->offer_type) <= 255);
+    }
 }

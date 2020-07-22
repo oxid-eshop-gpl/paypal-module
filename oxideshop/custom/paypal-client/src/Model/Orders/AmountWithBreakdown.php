@@ -25,4 +25,8 @@ class AmountWithBreakdown extends Money implements JsonSerializable
      * handling, insurance, and discounts, if any.
      */
     public $breakdown;
+
+    public function validate()
+    {
+    }
 }

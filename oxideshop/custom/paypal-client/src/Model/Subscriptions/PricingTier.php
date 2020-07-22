@@ -37,4 +37,13 @@ class PricingTier implements JsonSerializable
      * The currency and amount for a financial transaction, such as a balance or payment due.
      */
     public $amount;
+
+    public function validate()
+    {
+        assert(!isset($this->starting_quantity) || strlen($this->starting_quantity) >= 1);
+        assert(!isset($this->starting_quantity) || strlen($this->starting_quantity) <= 32);
+        assert(!isset($this->ending_quantity) || strlen($this->ending_quantity) >= 1);
+        assert(!isset($this->ending_quantity) || strlen($this->ending_quantity) <= 32);
+        assert(isset($this->amount));
+    }
 }

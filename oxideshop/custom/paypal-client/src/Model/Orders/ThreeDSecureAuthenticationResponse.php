@@ -81,4 +81,12 @@ class ThreeDSecureAuthenticationResponse implements JsonSerializable
      * maxLength: 255
      */
     public $enrollment_status;
+
+    public function validate()
+    {
+        assert(!isset($this->authentication_status) || strlen($this->authentication_status) >= 1);
+        assert(!isset($this->authentication_status) || strlen($this->authentication_status) <= 255);
+        assert(!isset($this->enrollment_status) || strlen($this->enrollment_status) >= 1);
+        assert(!isset($this->enrollment_status) || strlen($this->enrollment_status) <= 255);
+    }
 }

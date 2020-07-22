@@ -21,4 +21,8 @@ class ClassicApiIntegrationThirdPartyDetails implements JsonSerializable
      * An array of permissions that the partner requests from the customer.
      */
     public $permissions;
+
+    public function validate()
+    {
+    }
 }

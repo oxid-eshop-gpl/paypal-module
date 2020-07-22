@@ -79,4 +79,13 @@ class PaymentMethod implements JsonSerializable
      * maxLength: 255
      */
     public $standard_entry_class_code;
+
+    public function validate()
+    {
+        assert(!isset($this->payer_selected) || strlen($this->payer_selected) >= 1);
+        assert(!isset($this->payee_preferred) || strlen($this->payee_preferred) >= 1);
+        assert(!isset($this->payee_preferred) || strlen($this->payee_preferred) <= 255);
+        assert(!isset($this->standard_entry_class_code) || strlen($this->standard_entry_class_code) >= 3);
+        assert(!isset($this->standard_entry_class_code) || strlen($this->standard_entry_class_code) <= 255);
+    }
 }

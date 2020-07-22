@@ -25,4 +25,8 @@ class RiskAssessments implements JsonSerializable
      * The risk assessment for a customer or merchant account or transaction.
      */
     public $payee;
+
+    public function validate()
+    {
+    }
 }

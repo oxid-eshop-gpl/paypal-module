@@ -56,4 +56,13 @@ class SellerReceivableBreakdown implements JsonSerializable
      * payment.
      */
     public $platform_fees;
+
+    public function validate()
+    {
+        assert(isset($this->gross_amount));
+        assert(isset($this->paypal_fee));
+        assert(isset($this->paypal_fee_in_receivable_currency));
+        assert(isset($this->net_amount));
+        assert(isset($this->receivable_amount));
+    }
 }

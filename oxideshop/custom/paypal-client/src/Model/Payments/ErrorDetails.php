@@ -45,4 +45,8 @@ class ErrorDetails implements JsonSerializable
      * clients must not depend on this value.
      */
     public $description;
+
+    public function validate()
+    {
+    }
 }

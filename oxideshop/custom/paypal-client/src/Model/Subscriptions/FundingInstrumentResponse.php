@@ -31,4 +31,10 @@ class FundingInstrumentResponse implements JsonSerializable
      * The Buyer credit option used to fund the payment.
      */
     public $credit;
+
+    public function validate()
+    {
+        assert(isset($this->bank_account));
+        assert(isset($this->credit));
+    }
 }

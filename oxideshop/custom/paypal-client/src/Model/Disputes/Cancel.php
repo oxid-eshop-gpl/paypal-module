@@ -58,4 +58,11 @@ class Cancel implements JsonSerializable
      * maxLength: 255
      */
     public $cancellation_reason;
+
+    public function validate()
+    {
+        assert(!isset($this->note) || strlen($this->note) <= 1048576);
+        assert(!isset($this->cancellation_reason) || strlen($this->cancellation_reason) >= 1);
+        assert(!isset($this->cancellation_reason) || strlen($this->cancellation_reason) <= 255);
+    }
 }

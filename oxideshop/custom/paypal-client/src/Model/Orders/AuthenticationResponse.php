@@ -45,4 +45,10 @@ class AuthenticationResponse implements JsonSerializable
      * Results of 3D Secure Authentication.
      */
     public $three_d_secure;
+
+    public function validate()
+    {
+        assert(!isset($this->liability_shift) || strlen($this->liability_shift) >= 1);
+        assert(!isset($this->liability_shift) || strlen($this->liability_shift) <= 255);
+    }
 }

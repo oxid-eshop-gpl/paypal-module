@@ -76,4 +76,12 @@ class EligibilityRequestItem implements JsonSerializable
      * maxLength: 255
      */
     public $category;
+
+    public function validate()
+    {
+        assert(!isset($this->id) || strlen($this->id) >= 1);
+        assert(!isset($this->id) || strlen($this->id) <= 255);
+        assert(!isset($this->category) || strlen($this->category) >= 1);
+        assert(!isset($this->category) || strlen($this->category) <= 255);
+    }
 }

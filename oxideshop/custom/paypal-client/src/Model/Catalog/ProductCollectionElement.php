@@ -57,4 +57,16 @@ class ProductCollectionElement implements JsonSerializable
      * An array of request-related [HATEOAS links](/docs/api/overview/#hateoas-links).
      */
     public $links;
+
+    public function validate()
+    {
+        assert(!isset($this->id) || strlen($this->id) >= 6);
+        assert(!isset($this->id) || strlen($this->id) <= 50);
+        assert(!isset($this->name) || strlen($this->name) >= 1);
+        assert(!isset($this->name) || strlen($this->name) <= 127);
+        assert(!isset($this->description) || strlen($this->description) >= 1);
+        assert(!isset($this->description) || strlen($this->description) <= 256);
+        assert(!isset($this->create_time) || strlen($this->create_time) >= 20);
+        assert(!isset($this->create_time) || strlen($this->create_time) <= 64);
+    }
 }

@@ -29,4 +29,10 @@ class UpdatePurchaseUnitRequest implements JsonSerializable
      * payments, captured payments.
      */
     public $payments;
+
+    public function validate()
+    {
+        assert(!isset($this->reference_id) || strlen($this->reference_id) >= 1);
+        assert(!isset($this->reference_id) || strlen($this->reference_id) <= 256);
+    }
 }

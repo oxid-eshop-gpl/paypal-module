@@ -260,6 +260,7 @@ class Generator
         }
 
         if (isset($defs['properties'])) {
+            $class->addMethod('validate');
             foreach ($defs['properties'] as $name => $parameter) {
                 if (isset($parameter['type'])) {
                     if ($parameter['type'] === 'object') {
@@ -317,6 +318,7 @@ class Generator
                 }
             }
         }
+
         $ns->addUse(JsonSerializable::class);
         $class->addImplement(JsonSerializable::class);
         $ns->addUse($namespace . '\\BaseModel');
@@ -363,6 +365,7 @@ class Generator
      */
     private function addProperty($propDef, $name, \Nette\PhpGenerator\ClassType $class, $propType): void
     {
+        $validateMethod = $class->getMethod('validate');
         $property = $class->addProperty($name)
             ->setVisibility('public')
             ->setComment('@var ' . $propType);
@@ -386,12 +389,24 @@ class Generator
                 }
             }
         }
+        if (isset($propDef['default'])) {
+          //  $property->setValue($propDef['default']);
+        }
+        if (isset($propDef['required'])) {
+            $validateMethod->addBody("assert(isset(\$this->$name));");
+        }
         if (isset($propDef['minLength']) && $propDef['minLength'] > 0) {
-            $property->addComment("minLength: " . $propDef['minLength']);
+            $minLength = $propDef['minLength'];
+            $property->addComment("minLength: " . $minLength);
+            $validateMethod->addBody("assert(!isset(\$this->$name) || strlen(\$this->$name) >= $minLength);");
         }
         if (isset($propDef['maxLength'])) {
-            $property->addComment("maxLength: " . $propDef['maxLength']);
+            assert(!isset($this->value) || $this->value < 0);
+            $maxLength = $propDef['maxLength'];
+            $validateMethod->addBody("assert(!isset(\$this->$name) || strlen(\$this->$name) <= $maxLength);");
+            $property->addComment("maxLength: " . $maxLength);
         }
+
     }
 }
 

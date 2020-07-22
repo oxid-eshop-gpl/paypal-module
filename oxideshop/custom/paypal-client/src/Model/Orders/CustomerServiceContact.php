@@ -25,4 +25,8 @@ class CustomerServiceContact implements JsonSerializable
      * Details of customer service phone numbers.
      */
     public $phones;
+
+    public function validate()
+    {
+    }
 }

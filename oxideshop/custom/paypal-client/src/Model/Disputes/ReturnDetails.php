@@ -64,4 +64,14 @@ class ReturnDetails implements JsonSerializable
      * indicates the item was not attempted to return.
      */
     public $returned;
+
+    public function validate()
+    {
+        assert(!isset($this->return_time) || strlen($this->return_time) >= 20);
+        assert(!isset($this->return_time) || strlen($this->return_time) <= 64);
+        assert(!isset($this->mode) || strlen($this->mode) >= 1);
+        assert(!isset($this->mode) || strlen($this->mode) <= 255);
+        assert(!isset($this->return_confirmation_number) || strlen($this->return_confirmation_number) >= 1);
+        assert(!isset($this->return_confirmation_number) || strlen($this->return_confirmation_number) <= 255);
+    }
 }

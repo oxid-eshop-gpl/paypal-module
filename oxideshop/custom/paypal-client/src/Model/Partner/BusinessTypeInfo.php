@@ -157,4 +157,12 @@ class BusinessTypeInfo implements JsonSerializable
      * maxLength: 255
      */
     public $subtype;
+
+    public function validate()
+    {
+        assert(!isset($this->type) || strlen($this->type) >= 1);
+        assert(!isset($this->type) || strlen($this->type) <= 255);
+        assert(!isset($this->subtype) || strlen($this->subtype) >= 1);
+        assert(!isset($this->subtype) || strlen($this->subtype) <= 255);
+    }
 }

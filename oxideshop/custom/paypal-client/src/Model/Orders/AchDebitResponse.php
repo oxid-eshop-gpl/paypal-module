@@ -40,4 +40,14 @@ class AchDebitResponse implements JsonSerializable
      * maxLength: 300
      */
     public $account_holder_name;
+
+    public function validate()
+    {
+        assert(!isset($this->last_digits) || strlen($this->last_digits) >= 4);
+        assert(!isset($this->last_digits) || strlen($this->last_digits) <= 4);
+        assert(!isset($this->routing_number) || strlen($this->routing_number) >= 9);
+        assert(!isset($this->routing_number) || strlen($this->routing_number) <= 9);
+        assert(!isset($this->account_holder_name) || strlen($this->account_holder_name) >= 1);
+        assert(!isset($this->account_holder_name) || strlen($this->account_holder_name) <= 300);
+    }
 }

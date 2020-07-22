@@ -40,4 +40,12 @@ class ExchangeRate implements JsonSerializable
      * value with one to 15 digits to the right of the decimal point.
      */
     public $value;
+
+    public function validate()
+    {
+        assert(!isset($this->source_currency) || strlen($this->source_currency) >= 3);
+        assert(!isset($this->source_currency) || strlen($this->source_currency) <= 3);
+        assert(!isset($this->target_currency) || strlen($this->target_currency) >= 3);
+        assert(!isset($this->target_currency) || strlen($this->target_currency) <= 3);
+    }
 }

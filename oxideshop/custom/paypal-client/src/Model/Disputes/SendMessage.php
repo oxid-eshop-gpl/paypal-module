@@ -22,4 +22,10 @@ class SendMessage implements JsonSerializable
      * maxLength: 2000
      */
     public $message;
+
+    public function validate()
+    {
+        assert(!isset($this->message) || strlen($this->message) >= 1);
+        assert(!isset($this->message) || strlen($this->message) <= 2000);
+    }
 }

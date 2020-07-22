@@ -25,4 +25,8 @@ class RiskAssessment implements JsonSerializable
      * An array of risk assessment reasons.
      */
     public $reasons;
+
+    public function validate()
+    {
+    }
 }

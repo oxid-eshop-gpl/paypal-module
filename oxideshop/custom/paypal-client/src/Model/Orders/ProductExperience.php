@@ -304,4 +304,18 @@ class ProductExperience implements JsonSerializable
      * maxLength: 255
      */
     public $product_flow;
+
+    public function validate()
+    {
+        assert(!isset($this->user_experience_flow) || strlen($this->user_experience_flow) >= 1);
+        assert(!isset($this->user_experience_flow) || strlen($this->user_experience_flow) <= 255);
+        assert(!isset($this->entry_point) || strlen($this->entry_point) >= 1);
+        assert(!isset($this->entry_point) || strlen($this->entry_point) <= 255);
+        assert(!isset($this->payment_method) || strlen($this->payment_method) >= 1);
+        assert(!isset($this->payment_method) || strlen($this->payment_method) <= 255);
+        assert(!isset($this->channel) || strlen($this->channel) >= 1);
+        assert(!isset($this->channel) || strlen($this->channel) <= 255);
+        assert(!isset($this->product_flow) || strlen($this->product_flow) >= 1);
+        assert(!isset($this->product_flow) || strlen($this->product_flow) <= 255);
+    }
 }

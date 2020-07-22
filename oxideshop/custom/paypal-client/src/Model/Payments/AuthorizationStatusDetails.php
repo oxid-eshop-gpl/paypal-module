@@ -25,4 +25,8 @@ class AuthorizationStatusDetails implements JsonSerializable
      * @see REASON_PENDING_REVIEW
      */
     public $reason;
+
+    public function validate()
+    {
+    }
 }

@@ -45,4 +45,14 @@ class CommunicationDetails implements JsonSerializable
      * maxLength: 64
      */
     public $time_posted;
+
+    public function validate()
+    {
+        assert(!isset($this->email) || strlen($this->email) >= 3);
+        assert(!isset($this->email) || strlen($this->email) <= 254);
+        assert(!isset($this->note) || strlen($this->note) >= 1);
+        assert(!isset($this->note) || strlen($this->note) <= 2000);
+        assert(!isset($this->time_posted) || strlen($this->time_posted) >= 20);
+        assert(!isset($this->time_posted) || strlen($this->time_posted) <= 64);
+    }
 }

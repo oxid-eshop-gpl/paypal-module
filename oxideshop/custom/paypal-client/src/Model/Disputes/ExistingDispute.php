@@ -112,4 +112,18 @@ class ExistingDispute implements JsonSerializable
      * maxLength: 255
      */
     public $status;
+
+    public function validate()
+    {
+        assert(!isset($this->id) || strlen($this->id) >= 1);
+        assert(!isset($this->id) || strlen($this->id) <= 255);
+        assert(!isset($this->create_time) || strlen($this->create_time) >= 20);
+        assert(!isset($this->create_time) || strlen($this->create_time) <= 64);
+        assert(!isset($this->update_time) || strlen($this->update_time) >= 20);
+        assert(!isset($this->update_time) || strlen($this->update_time) <= 64);
+        assert(!isset($this->reason) || strlen($this->reason) >= 1);
+        assert(!isset($this->reason) || strlen($this->reason) <= 255);
+        assert(!isset($this->status) || strlen($this->status) >= 1);
+        assert(!isset($this->status) || strlen($this->status) <= 255);
+    }
 }

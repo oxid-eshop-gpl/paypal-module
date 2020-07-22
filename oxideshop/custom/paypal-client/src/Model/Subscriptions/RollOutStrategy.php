@@ -41,4 +41,12 @@ class RollOutStrategy implements JsonSerializable
      * maxLength: 30
      */
     public $process_change_from;
+
+    public function validate()
+    {
+        assert(!isset($this->effective_time) || strlen($this->effective_time) >= 20);
+        assert(!isset($this->effective_time) || strlen($this->effective_time) <= 64);
+        assert(!isset($this->process_change_from) || strlen($this->process_change_from) >= 1);
+        assert(!isset($this->process_change_from) || strlen($this->process_change_from) <= 30);
+    }
 }

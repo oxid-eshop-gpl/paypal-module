@@ -19,4 +19,8 @@ class PaypalWalletAttributes implements JsonSerializable
      * The details about a customer in merchant's or partner's system of records.
      */
     public $customer;
+
+    public function validate()
+    {
+    }
 }

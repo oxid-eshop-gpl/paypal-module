@@ -329,4 +329,42 @@ class ThreedsResult extends AuthenticationResultType implements JsonSerializable
      * maxLength: 36
      */
     public $three_ds_server_transaction_id;
+
+    public function validate()
+    {
+        assert(!isset($this->eci_flag) || strlen($this->eci_flag) >= 1);
+        assert(!isset($this->eci_flag) || strlen($this->eci_flag) <= 255);
+        assert(!isset($this->ucaf_indicator) || strlen($this->ucaf_indicator) >= 1);
+        assert(!isset($this->ucaf_indicator) || strlen($this->ucaf_indicator) <= 255);
+        assert(!isset($this->card_brand) || strlen($this->card_brand) >= 1);
+        assert(!isset($this->card_brand) || strlen($this->card_brand) <= 255);
+        assert(!isset($this->cavv) || strlen($this->cavv) >= 1);
+        assert(!isset($this->cavv) || strlen($this->cavv) <= 40);
+        assert(!isset($this->xid) || strlen($this->xid) >= 1);
+        assert(!isset($this->xid) || strlen($this->xid) <= 40);
+        assert(!isset($this->enrolled) || strlen($this->enrolled) >= 1);
+        assert(!isset($this->enrolled) || strlen($this->enrolled) <= 255);
+        assert(!isset($this->pares_status) || strlen($this->pares_status) >= 1);
+        assert(!isset($this->pares_status) || strlen($this->pares_status) <= 255);
+        assert(!isset($this->merchant_name) || strlen($this->merchant_name) >= 1);
+        assert(!isset($this->merchant_name) || strlen($this->merchant_name) <= 25);
+        assert(!isset($this->three_ds_version) || strlen($this->three_ds_version) >= 1);
+        assert(!isset($this->three_ds_version) || strlen($this->three_ds_version) <= 10);
+        assert(!isset($this->directory_server_transaction_id) || strlen($this->directory_server_transaction_id) >= 1);
+        assert(!isset($this->directory_server_transaction_id) || strlen($this->directory_server_transaction_id) <= 36);
+        assert(!isset($this->authentication_type) || strlen($this->authentication_type) >= 1);
+        assert(!isset($this->authentication_type) || strlen($this->authentication_type) <= 255);
+        assert(!isset($this->access_control_server_transaction_id) || strlen($this->access_control_server_transaction_id) >= 1);
+        assert(!isset($this->access_control_server_transaction_id) || strlen($this->access_control_server_transaction_id) <= 36);
+        assert(!isset($this->signature_verification_status) || strlen($this->signature_verification_status) >= 1);
+        assert(!isset($this->signature_verification_status) || strlen($this->signature_verification_status) <= 50);
+        assert(!isset($this->paypal_acquiring_mid) || strlen($this->paypal_acquiring_mid) >= 1);
+        assert(!isset($this->paypal_acquiring_mid) || strlen($this->paypal_acquiring_mid) <= 25);
+        assert(!isset($this->paypal_acquiring_bin) || strlen($this->paypal_acquiring_bin) >= 1);
+        assert(!isset($this->paypal_acquiring_bin) || strlen($this->paypal_acquiring_bin) <= 6);
+        assert(!isset($this->cavv_algorithm) || strlen($this->cavv_algorithm) >= 1);
+        assert(!isset($this->cavv_algorithm) || strlen($this->cavv_algorithm) <= 255);
+        assert(!isset($this->three_ds_server_transaction_id) || strlen($this->three_ds_server_transaction_id) >= 1);
+        assert(!isset($this->three_ds_server_transaction_id) || strlen($this->three_ds_server_transaction_id) <= 36);
+    }
 }

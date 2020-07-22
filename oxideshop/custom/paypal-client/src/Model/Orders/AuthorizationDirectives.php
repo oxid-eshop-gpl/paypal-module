@@ -39,4 +39,8 @@ class AuthorizationDirectives implements JsonSerializable
      * Auth-Capture Tolerance details.
      */
     public $tolerance;
+
+    public function validate()
+    {
+    }
 }

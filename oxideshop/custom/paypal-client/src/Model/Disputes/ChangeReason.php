@@ -106,4 +106,12 @@ class ChangeReason implements JsonSerializable
      * href="/docs/integration/direct/customer-disputes/integration-guide/#merchandise_or_service_not_as_described"><code>MERCHANDISE_OR_SERVICE_NOT_AS_DESCRIBED</code></a>.
      */
     public $item_info;
+
+    public function validate()
+    {
+        assert(!isset($this->reason) || strlen($this->reason) >= 1);
+        assert(!isset($this->reason) || strlen($this->reason) <= 255);
+        assert(!isset($this->note) || strlen($this->note) <= 1048576);
+        assert(isset($this->buyer_requested_amount));
+    }
 }

@@ -22,4 +22,10 @@ class SubscriptionSaveRequest implements JsonSerializable
      * maxLength: 50
      */
     public $token_id;
+
+    public function validate()
+    {
+        assert(!isset($this->token_id) || strlen($this->token_id) >= 3);
+        assert(!isset($this->token_id) || strlen($this->token_id) <= 50);
+    }
 }

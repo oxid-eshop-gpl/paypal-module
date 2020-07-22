@@ -59,4 +59,14 @@ class Outcome implements JsonSerializable
      * maxLength: 64
      */
     public $resolution_date;
+
+    public function validate()
+    {
+        assert(!isset($this->faulty_party) || strlen($this->faulty_party) >= 1);
+        assert(!isset($this->faulty_party) || strlen($this->faulty_party) <= 255);
+        assert(!isset($this->adjudication_reason) || strlen($this->adjudication_reason) >= 1);
+        assert(!isset($this->adjudication_reason) || strlen($this->adjudication_reason) <= 2000);
+        assert(!isset($this->resolution_date) || strlen($this->resolution_date) >= 20);
+        assert(!isset($this->resolution_date) || strlen($this->resolution_date) <= 64);
+    }
 }

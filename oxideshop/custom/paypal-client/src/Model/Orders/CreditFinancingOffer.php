@@ -49,4 +49,10 @@ class CreditFinancingOffer implements JsonSerializable
      * The payer-selected financing term, in months.
      */
     public $term;
+
+    public function validate()
+    {
+        assert(isset($this->total_payment));
+        assert(isset($this->total_interest));
+    }
 }

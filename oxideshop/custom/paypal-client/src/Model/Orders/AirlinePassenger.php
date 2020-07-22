@@ -54,4 +54,14 @@ class AirlinePassenger implements JsonSerializable
      * maxLength: 17
      */
     public $customer_code;
+
+    public function validate()
+    {
+        assert(!isset($this->date_of_birth) || strlen($this->date_of_birth) >= 10);
+        assert(!isset($this->date_of_birth) || strlen($this->date_of_birth) <= 10);
+        assert(!isset($this->country_code) || strlen($this->country_code) >= 2);
+        assert(!isset($this->country_code) || strlen($this->country_code) <= 2);
+        assert(!isset($this->customer_code) || strlen($this->customer_code) >= 1);
+        assert(!isset($this->customer_code) || strlen($this->customer_code) <= 17);
+    }
 }

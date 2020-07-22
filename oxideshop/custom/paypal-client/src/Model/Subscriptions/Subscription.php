@@ -131,4 +131,22 @@ class Subscription extends SubscriptionStatus implements JsonSerializable
      * An array of request-related [HATEOAS links](/docs/api/reference/api-responses/#hateoas-links).
      */
     public $links;
+
+    public function validate()
+    {
+        assert(!isset($this->id) || strlen($this->id) >= 3);
+        assert(!isset($this->id) || strlen($this->id) <= 50);
+        assert(!isset($this->plan_id) || strlen($this->plan_id) >= 3);
+        assert(!isset($this->plan_id) || strlen($this->plan_id) <= 50);
+        assert(!isset($this->start_time) || strlen($this->start_time) >= 20);
+        assert(!isset($this->start_time) || strlen($this->start_time) <= 64);
+        assert(!isset($this->quantity) || strlen($this->quantity) >= 1);
+        assert(!isset($this->quantity) || strlen($this->quantity) <= 32);
+        assert(isset($this->shipping_amount));
+        assert(isset($this->billing_info));
+        assert(!isset($this->create_time) || strlen($this->create_time) >= 20);
+        assert(!isset($this->create_time) || strlen($this->create_time) <= 64);
+        assert(!isset($this->update_time) || strlen($this->update_time) >= 20);
+        assert(!isset($this->update_time) || strlen($this->update_time) <= 64);
+    }
 }

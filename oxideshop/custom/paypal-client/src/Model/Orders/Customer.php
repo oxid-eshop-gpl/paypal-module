@@ -22,4 +22,10 @@ class Customer implements JsonSerializable
      * maxLength: 22
      */
     public $id;
+
+    public function validate()
+    {
+        assert(!isset($this->id) || strlen($this->id) >= 1);
+        assert(!isset($this->id) || strlen($this->id) <= 22);
+    }
 }

@@ -28,4 +28,9 @@ class PlatformFee implements JsonSerializable
      * payee.
      */
     public $payee;
+
+    public function validate()
+    {
+        assert(isset($this->amount));
+    }
 }

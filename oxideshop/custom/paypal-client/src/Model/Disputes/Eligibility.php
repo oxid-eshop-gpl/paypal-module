@@ -44,4 +44,14 @@ class Eligibility implements JsonSerializable
      * maxLength: 2000
      */
     public $buyer_note;
+
+    public function validate()
+    {
+        assert(!isset($this->encrypted_transaction_id) || strlen($this->encrypted_transaction_id) >= 1);
+        assert(!isset($this->encrypted_transaction_id) || strlen($this->encrypted_transaction_id) <= 255);
+        assert(!isset($this->dispute_id) || strlen($this->dispute_id) >= 1);
+        assert(!isset($this->dispute_id) || strlen($this->dispute_id) <= 255);
+        assert(!isset($this->buyer_note) || strlen($this->buyer_note) >= 1);
+        assert(!isset($this->buyer_note) || strlen($this->buyer_note) <= 2000);
+    }
 }

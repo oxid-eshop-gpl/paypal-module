@@ -22,4 +22,10 @@ class Facilitator implements JsonSerializable
      * maxLength: 2000
      */
     public $name;
+
+    public function validate()
+    {
+        assert(!isset($this->name) || strlen($this->name) >= 1);
+        assert(!isset($this->name) || strlen($this->name) <= 2000);
+    }
 }

@@ -19,4 +19,8 @@ class Metrics implements JsonSerializable
      * An array of dimension and measurement metrics for disputes.
      */
     public $metrics;
+
+    public function validate()
+    {
+    }
 }

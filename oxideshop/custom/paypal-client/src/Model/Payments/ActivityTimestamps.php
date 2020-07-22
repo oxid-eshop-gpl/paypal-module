@@ -35,4 +35,12 @@ class ActivityTimestamps implements JsonSerializable
      * maxLength: 64
      */
     public $update_time;
+
+    public function validate()
+    {
+        assert(!isset($this->create_time) || strlen($this->create_time) >= 20);
+        assert(!isset($this->create_time) || strlen($this->create_time) <= 64);
+        assert(!isset($this->update_time) || strlen($this->update_time) >= 20);
+        assert(!isset($this->update_time) || strlen($this->update_time) <= 64);
+    }
 }

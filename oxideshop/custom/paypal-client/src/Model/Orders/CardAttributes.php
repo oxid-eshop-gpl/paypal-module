@@ -26,4 +26,8 @@ class CardAttributes implements JsonSerializable
      * Auth, 3DS).
      */
     public $verification;
+
+    public function validate()
+    {
+    }
 }

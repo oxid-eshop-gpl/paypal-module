@@ -103,4 +103,19 @@ class RefundInfo implements JsonSerializable
      * maxLength: 255
      */
     public $transaction_source;
+
+    public function validate()
+    {
+        assert(!isset($this->recipient) || strlen($this->recipient) >= 1);
+        assert(!isset($this->recipient) || strlen($this->recipient) <= 255);
+        assert(isset($this->amount));
+        assert(!isset($this->create_time) || strlen($this->create_time) >= 20);
+        assert(!isset($this->create_time) || strlen($this->create_time) <= 64);
+        assert(!isset($this->transaction_id) || strlen($this->transaction_id) >= 1);
+        assert(!isset($this->transaction_id) || strlen($this->transaction_id) <= 255);
+        assert(!isset($this->payout_type) || strlen($this->payout_type) >= 1);
+        assert(!isset($this->payout_type) || strlen($this->payout_type) <= 255);
+        assert(!isset($this->transaction_source) || strlen($this->transaction_source) >= 1);
+        assert(!isset($this->transaction_source) || strlen($this->transaction_source) <= 255);
+    }
 }

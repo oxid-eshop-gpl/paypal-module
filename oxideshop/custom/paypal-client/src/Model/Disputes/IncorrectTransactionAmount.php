@@ -30,4 +30,11 @@ class IncorrectTransactionAmount implements JsonSerializable
      * maxLength: 64
      */
     public $correct_transaction_time;
+
+    public function validate()
+    {
+        assert(isset($this->correct_transaction_amount));
+        assert(!isset($this->correct_transaction_time) || strlen($this->correct_transaction_time) >= 20);
+        assert(!isset($this->correct_transaction_time) || strlen($this->correct_transaction_time) <= 64);
+    }
 }

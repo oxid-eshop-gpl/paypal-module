@@ -19,4 +19,8 @@ class WalletsResponse implements JsonSerializable
      * The Apple Pay Wallet used to fund a payment.
      */
     public $apple_pay;
+
+    public function validate()
+    {
+    }
 }

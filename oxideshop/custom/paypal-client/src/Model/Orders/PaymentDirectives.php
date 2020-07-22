@@ -146,4 +146,20 @@ class PaymentDirectives implements JsonSerializable
      * a pending state.
      */
     public $immediate_payment_required;
+
+    public function validate()
+    {
+        assert(!isset($this->disbursement_type) || strlen($this->disbursement_type) >= 1);
+        assert(!isset($this->disbursement_type) || strlen($this->disbursement_type) <= 255);
+        assert(!isset($this->linked_group_id) || strlen($this->linked_group_id) >= 1);
+        assert(!isset($this->linked_group_id) || strlen($this->linked_group_id) <= 10);
+        assert(!isset($this->settlement_account_number) || strlen($this->settlement_account_number) >= 1);
+        assert(!isset($this->settlement_account_number) || strlen($this->settlement_account_number) <= 30);
+        assert(!isset($this->loss_account_number) || strlen($this->loss_account_number) >= 1);
+        assert(!isset($this->loss_account_number) || strlen($this->loss_account_number) <= 30);
+        assert(!isset($this->liability_type) || strlen($this->liability_type) >= 1);
+        assert(!isset($this->liability_type) || strlen($this->liability_type) <= 255);
+        assert(!isset($this->currency_receiving_directive) || strlen($this->currency_receiving_directive) >= 1);
+        assert(!isset($this->currency_receiving_directive) || strlen($this->currency_receiving_directive) <= 255);
+    }
 }

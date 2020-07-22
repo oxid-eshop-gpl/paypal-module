@@ -64,4 +64,10 @@ class OdfiDetails implements JsonSerializable
      * maxLength: 3
      */
     public $standard_entry_class_code;
+
+    public function validate()
+    {
+        assert(!isset($this->standard_entry_class_code) || strlen($this->standard_entry_class_code) >= 1);
+        assert(!isset($this->standard_entry_class_code) || strlen($this->standard_entry_class_code) <= 3);
+    }
 }

@@ -80,4 +80,12 @@ class EligibilityResponse implements JsonSerializable
      * An array of details about the refunds on the disputed transaction, if applicable.
      */
     public $existing_refunds;
+
+    public function validate()
+    {
+        assert(!isset($this->allowable_life_cycle) || strlen($this->allowable_life_cycle) >= 1);
+        assert(!isset($this->allowable_life_cycle) || strlen($this->allowable_life_cycle) <= 255);
+        assert(!isset($this->ineligibility_reason) || strlen($this->ineligibility_reason) >= 1);
+        assert(!isset($this->ineligibility_reason) || strlen($this->ineligibility_reason) <= 255);
+    }
 }

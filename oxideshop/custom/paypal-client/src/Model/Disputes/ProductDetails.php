@@ -76,4 +76,16 @@ class ProductDetails implements JsonSerializable
      * The return details for the product.
      */
     public $return_details;
+
+    public function validate()
+    {
+        assert(!isset($this->description) || strlen($this->description) >= 1);
+        assert(!isset($this->description) || strlen($this->description) <= 2000);
+        assert(!isset($this->product_received) || strlen($this->product_received) >= 1);
+        assert(!isset($this->product_received) || strlen($this->product_received) <= 255);
+        assert(!isset($this->product_received_time) || strlen($this->product_received_time) >= 20);
+        assert(!isset($this->product_received_time) || strlen($this->product_received_time) <= 64);
+        assert(!isset($this->purchase_url) || strlen($this->purchase_url) >= 1);
+        assert(!isset($this->purchase_url) || strlen($this->purchase_url) <= 2000);
+    }
 }

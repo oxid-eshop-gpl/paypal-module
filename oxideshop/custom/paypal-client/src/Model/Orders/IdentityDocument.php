@@ -86,4 +86,17 @@ class IdentityDocument implements JsonSerializable
      * maxLength: 10
      */
     public $expiration_date;
+
+    public function validate()
+    {
+        assert(!isset($this->type) || strlen($this->type) >= 1);
+        assert(!isset($this->type) || strlen($this->type) <= 255);
+        assert(isset($this->issuer));
+        assert(!isset($this->id_number) || strlen($this->id_number) >= 1);
+        assert(!isset($this->id_number) || strlen($this->id_number) <= 100);
+        assert(!isset($this->issued_date) || strlen($this->issued_date) >= 10);
+        assert(!isset($this->issued_date) || strlen($this->issued_date) <= 10);
+        assert(!isset($this->expiration_date) || strlen($this->expiration_date) >= 10);
+        assert(!isset($this->expiration_date) || strlen($this->expiration_date) <= 10);
+    }
 }

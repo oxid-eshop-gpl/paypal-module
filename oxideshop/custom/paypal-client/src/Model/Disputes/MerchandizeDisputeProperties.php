@@ -52,4 +52,11 @@ class MerchandizeDisputeProperties implements JsonSerializable
      * attribute](https://www.w3.org/TR/html51/sec-forms.html#autofilling-form-controls-the-autocomplete-attribute).
      */
     public $return_shipping_address;
+
+    public function validate()
+    {
+        assert(!isset($this->issue_type) || strlen($this->issue_type) >= 1);
+        assert(!isset($this->issue_type) || strlen($this->issue_type) <= 255);
+        assert(isset($this->return_shipping_address));
+    }
 }

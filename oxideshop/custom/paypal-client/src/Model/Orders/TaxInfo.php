@@ -39,4 +39,9 @@ class TaxInfo implements JsonSerializable
      * @see TAX_ID_TYPE_BR_CNPJ
      */
     public $tax_id_type;
+
+    public function validate()
+    {
+        assert(!isset($this->tax_id) || strlen($this->tax_id) <= 14);
+    }
 }

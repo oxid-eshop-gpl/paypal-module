@@ -35,4 +35,10 @@ class SuggestionResponse implements JsonSerializable
      * An array of request-related [HATEOAS links](/docs/api/hateoas-links/).
      */
     public $links;
+
+    public function validate()
+    {
+        assert(!isset($this->corrected_search_text) || strlen($this->corrected_search_text) >= 1);
+        assert(!isset($this->corrected_search_text) || strlen($this->corrected_search_text) <= 255);
+    }
 }

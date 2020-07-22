@@ -62,4 +62,12 @@ class RegulationInfo implements JsonSerializable
      * maxLength: 64
      */
     public $resolution_sla;
+
+    public function validate()
+    {
+        assert(!isset($this->regulation_covered) || strlen($this->regulation_covered) >= 1);
+        assert(!isset($this->regulation_covered) || strlen($this->regulation_covered) <= 255);
+        assert(!isset($this->resolution_sla) || strlen($this->resolution_sla) >= 20);
+        assert(!isset($this->resolution_sla) || strlen($this->resolution_sla) <= 64);
+    }
 }

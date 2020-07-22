@@ -25,4 +25,8 @@ class AuthenticationResultType implements JsonSerializable
      * @see TYPE_THREE_DS_AUTHENTICATION
      */
     public $type;
+
+    public function validate()
+    {
+    }
 }

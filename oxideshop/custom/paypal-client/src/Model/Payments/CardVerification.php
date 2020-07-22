@@ -30,4 +30,10 @@ class CardVerification implements JsonSerializable
      * maxLength: 255
      */
     public $method;
+
+    public function validate()
+    {
+        assert(!isset($this->method) || strlen($this->method) >= 1);
+        assert(!isset($this->method) || strlen($this->method) <= 255);
+    }
 }

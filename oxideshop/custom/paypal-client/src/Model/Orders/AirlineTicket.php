@@ -86,4 +86,21 @@ class AirlineTicket implements JsonSerializable
      * The currency and amount for a financial transaction, such as a balance or payment due.
      */
     public $fee;
+
+    public function validate()
+    {
+        assert(!isset($this->number) || strlen($this->number) >= 1);
+        assert(!isset($this->number) || strlen($this->number) <= 16);
+        assert(!isset($this->issue_date) || strlen($this->issue_date) >= 10);
+        assert(!isset($this->issue_date) || strlen($this->issue_date) <= 10);
+        assert(!isset($this->issuing_carrier_code) || strlen($this->issuing_carrier_code) >= 2);
+        assert(!isset($this->issuing_carrier_code) || strlen($this->issuing_carrier_code) <= 2);
+        assert(!isset($this->travel_agency_name) || strlen($this->travel_agency_name) >= 1);
+        assert(!isset($this->travel_agency_name) || strlen($this->travel_agency_name) <= 25);
+        assert(!isset($this->travel_agency_code) || strlen($this->travel_agency_code) >= 1);
+        assert(!isset($this->travel_agency_code) || strlen($this->travel_agency_code) <= 8);
+        assert(isset($this->fare));
+        assert(isset($this->tax));
+        assert(isset($this->fee));
+    }
 }

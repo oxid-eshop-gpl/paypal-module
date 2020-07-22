@@ -132,4 +132,30 @@ class Filter implements JsonSerializable
      * The currency and amount for a financial transaction, such as a balance or payment due.
      */
     public $dispute_amount_lte;
+
+    public function validate()
+    {
+        assert(!isset($this->email) || strlen($this->email) >= 3);
+        assert(!isset($this->email) || strlen($this->email) <= 254);
+        assert(!isset($this->name) || strlen($this->name) >= 1);
+        assert(!isset($this->name) || strlen($this->name) <= 2000);
+        assert(!isset($this->reasons) || strlen($this->reasons) >= 1);
+        assert(!isset($this->reasons) || strlen($this->reasons) <= 2000);
+        assert(!isset($this->statuses) || strlen($this->statuses) >= 1);
+        assert(!isset($this->statuses) || strlen($this->statuses) <= 2000);
+        assert(!isset($this->create_time_before) || strlen($this->create_time_before) >= 20);
+        assert(!isset($this->create_time_before) || strlen($this->create_time_before) <= 64);
+        assert(!isset($this->create_time_after) || strlen($this->create_time_after) >= 20);
+        assert(!isset($this->create_time_after) || strlen($this->create_time_after) <= 64);
+        assert(!isset($this->update_time_before) || strlen($this->update_time_before) >= 20);
+        assert(!isset($this->update_time_before) || strlen($this->update_time_before) <= 64);
+        assert(!isset($this->update_time_after) || strlen($this->update_time_after) >= 20);
+        assert(!isset($this->update_time_after) || strlen($this->update_time_after) <= 64);
+        assert(!isset($this->response_due_date_before) || strlen($this->response_due_date_before) >= 20);
+        assert(!isset($this->response_due_date_before) || strlen($this->response_due_date_before) <= 64);
+        assert(!isset($this->response_due_date_after) || strlen($this->response_due_date_after) >= 20);
+        assert(!isset($this->response_due_date_after) || strlen($this->response_due_date_after) <= 64);
+        assert(isset($this->dispute_amount_gte));
+        assert(isset($this->dispute_amount_lte));
+    }
 }

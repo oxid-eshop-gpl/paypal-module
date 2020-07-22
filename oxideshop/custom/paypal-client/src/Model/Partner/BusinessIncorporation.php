@@ -47,4 +47,14 @@ class BusinessIncorporation implements JsonSerializable
      * maxLength: 50
      */
     public $incorporation_province_code;
+
+    public function validate()
+    {
+        assert(!isset($this->incorporation_country_code) || strlen($this->incorporation_country_code) >= 2);
+        assert(!isset($this->incorporation_country_code) || strlen($this->incorporation_country_code) <= 2);
+        assert(!isset($this->incorporation_date) || strlen($this->incorporation_date) >= 10);
+        assert(!isset($this->incorporation_date) || strlen($this->incorporation_date) <= 10);
+        assert(!isset($this->incorporation_province_code) || strlen($this->incorporation_province_code) >= 1);
+        assert(!isset($this->incorporation_province_code) || strlen($this->incorporation_province_code) <= 50);
+    }
 }

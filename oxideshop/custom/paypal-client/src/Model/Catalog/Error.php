@@ -49,4 +49,8 @@ class Error implements JsonSerializable
      * An array of request-related [HATEOAS links](/docs/api/reference/api-responses/#hateoas-links).
      */
     public $links;
+
+    public function validate()
+    {
+    }
 }

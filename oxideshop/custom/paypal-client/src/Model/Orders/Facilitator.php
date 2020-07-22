@@ -59,4 +59,14 @@ class Facilitator extends Participant implements JsonSerializable
      * List of (business)segments the actor operates in.
      */
     public $segments;
+
+    public function validate()
+    {
+        assert(!isset($this->type) || strlen($this->type) >= 1);
+        assert(!isset($this->type) || strlen($this->type) <= 255);
+        assert(!isset($this->client_id) || strlen($this->client_id) >= 1);
+        assert(!isset($this->client_id) || strlen($this->client_id) <= 128);
+        assert(!isset($this->integration_identifier) || strlen($this->integration_identifier) >= 1);
+        assert(!isset($this->integration_identifier) || strlen($this->integration_identifier) <= 127);
+    }
 }

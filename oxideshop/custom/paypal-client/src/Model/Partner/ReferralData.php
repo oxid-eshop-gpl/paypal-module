@@ -79,4 +79,14 @@ class ReferralData extends Account implements JsonSerializable
      * granted, PayPal does not store customer data.
      */
     public $legal_consents;
+
+    public function validate()
+    {
+        assert(!isset($this->email) || strlen($this->email) >= 3);
+        assert(!isset($this->email) || strlen($this->email) <= 254);
+        assert(!isset($this->preferred_language_code) || strlen($this->preferred_language_code) >= 2);
+        assert(!isset($this->preferred_language_code) || strlen($this->preferred_language_code) <= 10);
+        assert(!isset($this->tracking_id) || strlen($this->tracking_id) >= 1);
+        assert(!isset($this->tracking_id) || strlen($this->tracking_id) <= 127);
+    }
 }

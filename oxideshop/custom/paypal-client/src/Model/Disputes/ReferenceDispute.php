@@ -33,4 +33,12 @@ class ReferenceDispute implements JsonSerializable
      * maxLength: 64
      */
     public $create_time;
+
+    public function validate()
+    {
+        assert(!isset($this->id) || strlen($this->id) >= 1);
+        assert(!isset($this->id) || strlen($this->id) <= 255);
+        assert(!isset($this->create_time) || strlen($this->create_time) >= 20);
+        assert(!isset($this->create_time) || strlen($this->create_time) <= 64);
+    }
 }

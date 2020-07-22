@@ -26,4 +26,8 @@ class IntegrationDetails implements JsonSerializable
      * The integration details for PayPal REST endpoints.
      */
     public $rest_api_integration;
+
+    public function validate()
+    {
+    }
 }

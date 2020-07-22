@@ -105,4 +105,19 @@ class PlanRequestPOST implements JsonSerializable
      * Indicates whether you can subscribe to this plan by providing a quantity for the goods or service.
      */
     public $quantity_supported;
+
+    public function validate()
+    {
+        assert(!isset($this->product_id) || strlen($this->product_id) >= 6);
+        assert(!isset($this->product_id) || strlen($this->product_id) <= 50);
+        assert(!isset($this->name) || strlen($this->name) >= 1);
+        assert(!isset($this->name) || strlen($this->name) <= 127);
+        assert(!isset($this->status) || strlen($this->status) >= 1);
+        assert(!isset($this->status) || strlen($this->status) <= 24);
+        assert(!isset($this->description) || strlen($this->description) >= 1);
+        assert(!isset($this->description) || strlen($this->description) <= 127);
+        assert(!isset($this->usage_type) || strlen($this->usage_type) >= 1);
+        assert(!isset($this->usage_type) || strlen($this->usage_type) <= 24);
+        assert(isset($this->taxes));
+    }
 }

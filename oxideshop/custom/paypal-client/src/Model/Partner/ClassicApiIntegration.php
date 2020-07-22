@@ -62,4 +62,12 @@ class ClassicApiIntegration implements JsonSerializable
      * maxLength: 128
      */
     public $first_party_details;
+
+    public function validate()
+    {
+        assert(!isset($this->integration_type) || strlen($this->integration_type) >= 1);
+        assert(!isset($this->integration_type) || strlen($this->integration_type) <= 128);
+        assert(!isset($this->first_party_details) || strlen($this->first_party_details) >= 1);
+        assert(!isset($this->first_party_details) || strlen($this->first_party_details) <= 128);
+    }
 }

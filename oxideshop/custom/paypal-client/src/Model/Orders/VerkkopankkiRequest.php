@@ -58,4 +58,16 @@ class VerkkopankkiRequest implements JsonSerializable
      * maxLength: 255
      */
     public $bank_id;
+
+    public function validate()
+    {
+        assert(!isset($this->name) || strlen($this->name) >= 3);
+        assert(!isset($this->name) || strlen($this->name) <= 300);
+        assert(!isset($this->email) || strlen($this->email) >= 3);
+        assert(!isset($this->email) || strlen($this->email) <= 254);
+        assert(!isset($this->country_code) || strlen($this->country_code) >= 2);
+        assert(!isset($this->country_code) || strlen($this->country_code) <= 2);
+        assert(!isset($this->bank_id) || strlen($this->bank_id) >= 1);
+        assert(!isset($this->bank_id) || strlen($this->bank_id) <= 255);
+    }
 }

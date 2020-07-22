@@ -55,4 +55,16 @@ class BillingAgreement implements JsonSerializable
      * maxLength: 50
      */
     public $ec_token;
+
+    public function validate()
+    {
+        assert(!isset($this->description) || strlen($this->description) >= 1);
+        assert(!isset($this->description) || strlen($this->description) <= 125);
+        assert(!isset($this->merchant_custom_data) || strlen($this->merchant_custom_data) >= 1);
+        assert(!isset($this->merchant_custom_data) || strlen($this->merchant_custom_data) <= 125);
+        assert(!isset($this->approval_url) || strlen($this->approval_url) >= 1);
+        assert(!isset($this->approval_url) || strlen($this->approval_url) <= 125);
+        assert(!isset($this->ec_token) || strlen($this->ec_token) >= 1);
+        assert(!isset($this->ec_token) || strlen($this->ec_token) <= 50);
+    }
 }

@@ -22,4 +22,10 @@ class SubscriptionSuspendRequest implements JsonSerializable
      * maxLength: 128
      */
     public $reason;
+
+    public function validate()
+    {
+        assert(!isset($this->reason) || strlen($this->reason) >= 1);
+        assert(!isset($this->reason) || strlen($this->reason) <= 128);
+    }
 }

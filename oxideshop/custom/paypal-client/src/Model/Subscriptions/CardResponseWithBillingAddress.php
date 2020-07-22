@@ -31,4 +31,11 @@ class CardResponseWithBillingAddress extends CardResponse implements JsonSeriali
      * attribute](https://www.w3.org/TR/html51/sec-forms.html#autofilling-form-controls-the-autocomplete-attribute).
      */
     public $billing_address;
+
+    public function validate()
+    {
+        assert(!isset($this->name) || strlen($this->name) >= 2);
+        assert(!isset($this->name) || strlen($this->name) <= 300);
+        assert(isset($this->billing_address));
+    }
 }

@@ -63,4 +63,14 @@ class Name implements JsonSerializable
      * maxLength: 300
      */
     public $full_name;
+
+    public function validate()
+    {
+        assert(!isset($this->prefix) || strlen($this->prefix) <= 140);
+        assert(!isset($this->given_name) || strlen($this->given_name) <= 140);
+        assert(!isset($this->surname) || strlen($this->surname) <= 140);
+        assert(!isset($this->middle_name) || strlen($this->middle_name) <= 140);
+        assert(!isset($this->suffix) || strlen($this->suffix) <= 140);
+        assert(!isset($this->full_name) || strlen($this->full_name) <= 300);
+    }
 }

@@ -42,4 +42,13 @@ class SubscriptionCaptureRequest implements JsonSerializable
      * The currency and amount for a financial transaction, such as a balance or payment due.
      */
     public $amount;
+
+    public function validate()
+    {
+        assert(!isset($this->note) || strlen($this->note) >= 1);
+        assert(!isset($this->note) || strlen($this->note) <= 128);
+        assert(!isset($this->capture_type) || strlen($this->capture_type) >= 1);
+        assert(!isset($this->capture_type) || strlen($this->capture_type) <= 24);
+        assert(isset($this->amount));
+    }
 }

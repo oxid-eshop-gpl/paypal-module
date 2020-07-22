@@ -90,4 +90,20 @@ class TrackingInfoItem implements JsonSerializable
      * maxLength: 64
      */
     public $posted_time;
+
+    public function validate()
+    {
+        assert(!isset($this->carrier_name) || strlen($this->carrier_name) >= 1);
+        assert(!isset($this->carrier_name) || strlen($this->carrier_name) <= 2000);
+        assert(!isset($this->tracking_url) || strlen($this->tracking_url) >= 1);
+        assert(!isset($this->tracking_url) || strlen($this->tracking_url) <= 2000);
+        assert(!isset($this->tracking_number) || strlen($this->tracking_number) >= 1);
+        assert(!isset($this->tracking_number) || strlen($this->tracking_number) <= 255);
+        assert(!isset($this->tracking_status) || strlen($this->tracking_status) >= 1);
+        assert(!isset($this->tracking_status) || strlen($this->tracking_status) <= 255);
+        assert(!isset($this->note) || strlen($this->note) >= 1);
+        assert(!isset($this->note) || strlen($this->note) <= 2000);
+        assert(!isset($this->posted_time) || strlen($this->posted_time) >= 20);
+        assert(!isset($this->posted_time) || strlen($this->posted_time) <= 64);
+    }
 }

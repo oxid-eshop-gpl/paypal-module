@@ -26,4 +26,8 @@ class Account implements JsonSerializable
      * The business entity of the account.
      */
     public $business_entity;
+
+    public function validate()
+    {
+    }
 }

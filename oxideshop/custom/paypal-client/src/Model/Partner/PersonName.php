@@ -27,4 +27,10 @@ class PersonName extends Name implements JsonSerializable
      * maxLength: 255
      */
     public $type;
+
+    public function validate()
+    {
+        assert(!isset($this->type) || strlen($this->type) >= 1);
+        assert(!isset($this->type) || strlen($this->type) <= 255);
+    }
 }

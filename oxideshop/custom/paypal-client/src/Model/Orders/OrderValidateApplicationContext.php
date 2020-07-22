@@ -23,4 +23,8 @@ class OrderValidateApplicationContext implements JsonSerializable
      * capture when INTENT=SALE and authorization when INTENT=AUTHORIZE.
      */
     public $vault;
+
+    public function validate()
+    {
+    }
 }

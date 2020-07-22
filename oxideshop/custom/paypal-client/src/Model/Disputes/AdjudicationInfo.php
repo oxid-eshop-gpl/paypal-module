@@ -79,4 +79,14 @@ class AdjudicationInfo implements JsonSerializable
      * An array of customer- or merchant-posted messages.
      */
     public $messages;
+
+    public function validate()
+    {
+        assert(isset($this->dispute_amount));
+        assert(isset($this->outcome));
+        assert(!isset($this->dispute_reason) || strlen($this->dispute_reason) >= 1);
+        assert(!isset($this->dispute_reason) || strlen($this->dispute_reason) <= 255);
+        assert(!isset($this->closure_reason) || strlen($this->closure_reason) >= 1);
+        assert(!isset($this->closure_reason) || strlen($this->closure_reason) <= 2000);
+    }
 }

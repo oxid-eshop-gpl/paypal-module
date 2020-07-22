@@ -20,4 +20,8 @@ class IndividualBeneficialOwner extends Person implements JsonSerializable
      * `19.99`.
      */
     public $percentage_of_ownership;
+
+    public function validate()
+    {
+    }
 }

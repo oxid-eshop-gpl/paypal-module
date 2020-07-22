@@ -50,4 +50,12 @@ class Person extends Party implements JsonSerializable
      * Identity documents for the entity like passport number.
      */
     public $identifications;
+
+    public function validate()
+    {
+        assert(!isset($this->citizenship) || strlen($this->citizenship) >= 2);
+        assert(!isset($this->citizenship) || strlen($this->citizenship) <= 2);
+        assert(!isset($this->birth_date) || strlen($this->birth_date) >= 10);
+        assert(!isset($this->birth_date) || strlen($this->birth_date) <= 10);
+    }
 }

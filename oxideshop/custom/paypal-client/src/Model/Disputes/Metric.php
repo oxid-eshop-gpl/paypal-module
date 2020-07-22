@@ -34,4 +34,10 @@ class Metric implements JsonSerializable
      * An array of the sums of amounts for each currency.
      */
     public $amount;
+
+    public function validate()
+    {
+        assert(!isset($this->key) || strlen($this->key) >= 1);
+        assert(!isset($this->key) || strlen($this->key) <= 255);
+    }
 }

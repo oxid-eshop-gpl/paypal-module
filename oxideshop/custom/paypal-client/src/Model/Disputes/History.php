@@ -124,4 +124,14 @@ class History implements JsonSerializable
      * maxLength: 255
      */
     public $event_type;
+
+    public function validate()
+    {
+        assert(!isset($this->date) || strlen($this->date) >= 20);
+        assert(!isset($this->date) || strlen($this->date) <= 64);
+        assert(!isset($this->actor) || strlen($this->actor) >= 1);
+        assert(!isset($this->actor) || strlen($this->actor) <= 255);
+        assert(!isset($this->event_type) || strlen($this->event_type) >= 1);
+        assert(!isset($this->event_type) || strlen($this->event_type) <= 255);
+    }
 }

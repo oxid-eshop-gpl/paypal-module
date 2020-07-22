@@ -40,4 +40,14 @@ class AddressWithConfirmation extends AddressName implements JsonSerializable
      * maxLength: 255
      */
     public $confirmation_authority;
+
+    public function validate()
+    {
+        assert(!isset($this->id) || strlen($this->id) >= 1);
+        assert(!isset($this->id) || strlen($this->id) <= 30);
+        assert(!isset($this->confirmation_status) || strlen($this->confirmation_status) >= 1);
+        assert(!isset($this->confirmation_status) || strlen($this->confirmation_status) <= 127);
+        assert(!isset($this->confirmation_authority) || strlen($this->confirmation_authority) >= 1);
+        assert(!isset($this->confirmation_authority) || strlen($this->confirmation_authority) <= 255);
+    }
 }

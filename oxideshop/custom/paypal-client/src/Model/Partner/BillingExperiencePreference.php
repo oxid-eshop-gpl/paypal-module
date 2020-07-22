@@ -28,4 +28,10 @@ class BillingExperiencePreference implements JsonSerializable
      * Indicates whether the partner has already displayed the billing context to the seller.
      */
     public $billing_context_set;
+
+    public function validate()
+    {
+        assert(!isset($this->experience_id) || strlen($this->experience_id) >= 1);
+        assert(!isset($this->experience_id) || strlen($this->experience_id) <= 20);
+    }
 }

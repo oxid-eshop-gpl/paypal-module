@@ -531,4 +531,16 @@ class TrackingInfo implements JsonSerializable
      * maxLength: 255
      */
     public $tracking_number;
+
+    public function validate()
+    {
+        assert(!isset($this->carrier_name) || strlen($this->carrier_name) >= 1);
+        assert(!isset($this->carrier_name) || strlen($this->carrier_name) <= 255);
+        assert(!isset($this->carrier_name_other) || strlen($this->carrier_name_other) >= 1);
+        assert(!isset($this->carrier_name_other) || strlen($this->carrier_name_other) <= 2000);
+        assert(!isset($this->tracking_url) || strlen($this->tracking_url) >= 1);
+        assert(!isset($this->tracking_url) || strlen($this->tracking_url) <= 2000);
+        assert(!isset($this->tracking_number) || strlen($this->tracking_number) >= 1);
+        assert(!isset($this->tracking_number) || strlen($this->tracking_number) <= 255);
+    }
 }

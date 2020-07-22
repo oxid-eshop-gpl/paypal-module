@@ -31,4 +31,12 @@ class Document implements JsonSerializable
      * maxLength: 2000
      */
     public $url;
+
+    public function validate()
+    {
+        assert(!isset($this->name) || strlen($this->name) >= 1);
+        assert(!isset($this->name) || strlen($this->name) <= 2000);
+        assert(!isset($this->url) || strlen($this->url) >= 1);
+        assert(!isset($this->url) || strlen($this->url) <= 2000);
+    }
 }

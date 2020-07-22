@@ -118,4 +118,16 @@ class Extensions implements JsonSerializable
      * The third-party claims properties.
      */
     public $external_case_properties;
+
+    public function validate()
+    {
+        assert(!isset($this->merchant_contacted_outcome) || strlen($this->merchant_contacted_outcome) >= 1);
+        assert(!isset($this->merchant_contacted_outcome) || strlen($this->merchant_contacted_outcome) <= 255);
+        assert(!isset($this->merchant_contacted_time) || strlen($this->merchant_contacted_time) >= 20);
+        assert(!isset($this->merchant_contacted_time) || strlen($this->merchant_contacted_time) <= 64);
+        assert(!isset($this->merchant_contacted_mode) || strlen($this->merchant_contacted_mode) >= 1);
+        assert(!isset($this->merchant_contacted_mode) || strlen($this->merchant_contacted_mode) <= 255);
+        assert(!isset($this->buyer_contacted_time) || strlen($this->buyer_contacted_time) >= 20);
+        assert(!isset($this->buyer_contacted_time) || strlen($this->buyer_contacted_time) <= 64);
+    }
 }

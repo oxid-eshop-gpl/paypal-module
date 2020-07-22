@@ -66,4 +66,14 @@ class AddressPortableAddressDetails implements JsonSerializable
      * maxLength: 100
      */
     public $sub_building;
+
+    public function validate()
+    {
+        assert(!isset($this->street_number) || strlen($this->street_number) <= 100);
+        assert(!isset($this->street_name) || strlen($this->street_name) <= 100);
+        assert(!isset($this->street_type) || strlen($this->street_type) <= 100);
+        assert(!isset($this->delivery_service) || strlen($this->delivery_service) <= 100);
+        assert(!isset($this->building_name) || strlen($this->building_name) <= 100);
+        assert(!isset($this->sub_building) || strlen($this->sub_building) <= 100);
+    }
 }

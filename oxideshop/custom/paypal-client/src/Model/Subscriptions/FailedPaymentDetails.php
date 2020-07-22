@@ -83,4 +83,15 @@ class FailedPaymentDetails implements JsonSerializable
      * maxLength: 64
      */
     public $next_payment_retry_time;
+
+    public function validate()
+    {
+        assert(isset($this->amount));
+        assert(!isset($this->time) || strlen($this->time) >= 20);
+        assert(!isset($this->time) || strlen($this->time) <= 64);
+        assert(!isset($this->reason_code) || strlen($this->reason_code) >= 1);
+        assert(!isset($this->reason_code) || strlen($this->reason_code) <= 120);
+        assert(!isset($this->next_payment_retry_time) || strlen($this->next_payment_retry_time) >= 20);
+        assert(!isset($this->next_payment_retry_time) || strlen($this->next_payment_retry_time) <= 64);
+    }
 }

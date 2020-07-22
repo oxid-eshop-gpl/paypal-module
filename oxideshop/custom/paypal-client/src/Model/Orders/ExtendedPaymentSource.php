@@ -19,4 +19,8 @@ class ExtendedPaymentSource extends PaymentSource implements JsonSerializable
      * An array of contingencies.
      */
     public $contingencies;
+
+    public function validate()
+    {
+    }
 }

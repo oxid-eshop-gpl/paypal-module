@@ -117,4 +117,20 @@ class ItemInfo implements JsonSerializable
      * maxLength: 2000
      */
     public $notes;
+
+    public function validate()
+    {
+        assert(!isset($this->item_id) || strlen($this->item_id) >= 1);
+        assert(!isset($this->item_id) || strlen($this->item_id) <= 255);
+        assert(!isset($this->item_description) || strlen($this->item_description) >= 1);
+        assert(!isset($this->item_description) || strlen($this->item_description) <= 2000);
+        assert(!isset($this->item_quantity) || strlen($this->item_quantity) <= 10);
+        assert(!isset($this->partner_transaction_id) || strlen($this->partner_transaction_id) >= 1);
+        assert(!isset($this->partner_transaction_id) || strlen($this->partner_transaction_id) <= 255);
+        assert(!isset($this->reason) || strlen($this->reason) >= 1);
+        assert(!isset($this->reason) || strlen($this->reason) <= 255);
+        assert(isset($this->dispute_amount));
+        assert(!isset($this->notes) || strlen($this->notes) >= 1);
+        assert(!isset($this->notes) || strlen($this->notes) <= 2000);
+    }
 }

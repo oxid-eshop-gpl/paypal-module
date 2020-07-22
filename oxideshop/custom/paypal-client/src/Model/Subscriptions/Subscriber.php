@@ -25,4 +25,8 @@ class Subscriber extends Payer implements JsonSerializable
      * The payment source used to fund the payment.
      */
     public $payment_source;
+
+    public function validate()
+    {
+    }
 }

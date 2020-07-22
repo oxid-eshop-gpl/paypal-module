@@ -338,4 +338,17 @@ class Evidence implements JsonSerializable
      * maxLength: 255
      */
     public $item_id;
+
+    public function validate()
+    {
+        assert(!isset($this->evidence_type) || strlen($this->evidence_type) >= 1);
+        assert(!isset($this->evidence_type) || strlen($this->evidence_type) <= 255);
+        assert(!isset($this->notes) || strlen($this->notes) <= 2000);
+        assert(!isset($this->source) || strlen($this->source) >= 1);
+        assert(!isset($this->source) || strlen($this->source) <= 255);
+        assert(!isset($this->date) || strlen($this->date) >= 20);
+        assert(!isset($this->date) || strlen($this->date) <= 64);
+        assert(!isset($this->item_id) || strlen($this->item_id) >= 1);
+        assert(!isset($this->item_id) || strlen($this->item_id) <= 255);
+    }
 }

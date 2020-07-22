@@ -22,4 +22,10 @@ class ProvideSupportingInfo implements JsonSerializable
      * maxLength: 2000
      */
     public $notes;
+
+    public function validate()
+    {
+        assert(!isset($this->notes) || strlen($this->notes) >= 1);
+        assert(!isset($this->notes) || strlen($this->notes) <= 2000);
+    }
 }

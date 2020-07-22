@@ -127,4 +127,14 @@ class PurchaseUnit implements JsonSerializable
      * payments, captured payments, and refunds.
      */
     public $payments;
+
+    public function validate()
+    {
+        assert(!isset($this->reference_id) || strlen($this->reference_id) <= 256);
+        assert(!isset($this->description) || strlen($this->description) <= 127);
+        assert(!isset($this->custom_id) || strlen($this->custom_id) <= 127);
+        assert(!isset($this->invoice_id) || strlen($this->invoice_id) <= 127);
+        assert(!isset($this->id) || strlen($this->id) <= 19);
+        assert(!isset($this->soft_descriptor) || strlen($this->soft_descriptor) <= 22);
+    }
 }

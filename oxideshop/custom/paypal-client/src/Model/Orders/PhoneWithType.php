@@ -26,4 +26,9 @@ class PhoneWithType implements JsonSerializable
      * format](https://www.itu.int/rec/T-REC-E.164/en).
      */
     public $phone_number;
+
+    public function validate()
+    {
+        assert(isset($this->phone_number));
+    }
 }

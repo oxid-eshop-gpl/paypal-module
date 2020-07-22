@@ -34,4 +34,10 @@ class LegalConsent implements JsonSerializable
      * consent, specify `false`.
      */
     public $granted;
+
+    public function validate()
+    {
+        assert(!isset($this->type) || strlen($this->type) >= 1);
+        assert(!isset($this->type) || strlen($this->type) <= 127);
+    }
 }

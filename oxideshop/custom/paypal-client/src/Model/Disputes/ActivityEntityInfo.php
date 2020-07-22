@@ -49,4 +49,10 @@ class ActivityEntityInfo implements JsonSerializable
      * Indicates whether the customer has changed their card settings.
      */
     public $card_settings_changed;
+
+    public function validate()
+    {
+        assert(!isset($this->last_known_valid_transaction_date) || strlen($this->last_known_valid_transaction_date) >= 20);
+        assert(!isset($this->last_known_valid_transaction_date) || strlen($this->last_known_valid_transaction_date) <= 64);
+    }
 }

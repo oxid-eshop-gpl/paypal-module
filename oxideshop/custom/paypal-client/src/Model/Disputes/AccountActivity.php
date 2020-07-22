@@ -199,4 +199,20 @@ class AccountActivity implements JsonSerializable
      * details of the reversal action.
      */
     public $reversal_actions;
+
+    public function validate()
+    {
+        assert(!isset($this->id) || strlen($this->id) >= 1);
+        assert(!isset($this->id) || strlen($this->id) <= 255);
+        assert(!isset($this->create_time) || strlen($this->create_time) >= 20);
+        assert(!isset($this->create_time) || strlen($this->create_time) <= 64);
+        assert(!isset($this->entity_type) || strlen($this->entity_type) >= 1);
+        assert(!isset($this->entity_type) || strlen($this->entity_type) <= 255);
+        assert(!isset($this->entity_subtype) || strlen($this->entity_subtype) >= 1);
+        assert(!isset($this->entity_subtype) || strlen($this->entity_subtype) <= 255);
+        assert(!isset($this->action_performed) || strlen($this->action_performed) >= 1);
+        assert(!isset($this->action_performed) || strlen($this->action_performed) <= 255);
+        assert(!isset($this->entity_id) || strlen($this->entity_id) >= 1);
+        assert(!isset($this->entity_id) || strlen($this->entity_id) <= 255);
+    }
 }

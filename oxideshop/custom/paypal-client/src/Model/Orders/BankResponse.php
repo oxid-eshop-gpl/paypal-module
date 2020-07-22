@@ -19,4 +19,8 @@ class BankResponse implements JsonSerializable
      * ACH bank details response object
      */
     public $ach_debit;
+
+    public function validate()
+    {
+    }
 }

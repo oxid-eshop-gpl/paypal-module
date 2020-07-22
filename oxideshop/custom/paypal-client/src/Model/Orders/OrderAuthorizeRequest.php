@@ -33,4 +33,10 @@ class OrderAuthorizeRequest implements JsonSerializable
      * The currency and amount for a financial transaction, such as a balance or payment due.
      */
     public $amount;
+
+    public function validate()
+    {
+        assert(!isset($this->reference_id) || strlen($this->reference_id) <= 256);
+        assert(isset($this->amount));
+    }
 }

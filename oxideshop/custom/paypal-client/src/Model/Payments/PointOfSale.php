@@ -31,4 +31,12 @@ class PointOfSale implements JsonSerializable
      * maxLength: 50
      */
     public $terminal_id;
+
+    public function validate()
+    {
+        assert(!isset($this->store_id) || strlen($this->store_id) >= 1);
+        assert(!isset($this->store_id) || strlen($this->store_id) <= 50);
+        assert(!isset($this->terminal_id) || strlen($this->terminal_id) >= 1);
+        assert(!isset($this->terminal_id) || strlen($this->terminal_id) <= 50);
+    }
 }

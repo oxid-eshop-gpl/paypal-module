@@ -74,4 +74,12 @@ class IneligibleDisputeReason implements JsonSerializable
      * maxLength: 2000
      */
     public $ineligibility_reason;
+
+    public function validate()
+    {
+        assert(!isset($this->dispute_reason) || strlen($this->dispute_reason) >= 1);
+        assert(!isset($this->dispute_reason) || strlen($this->dispute_reason) <= 255);
+        assert(!isset($this->ineligibility_reason) || strlen($this->ineligibility_reason) >= 1);
+        assert(!isset($this->ineligibility_reason) || strlen($this->ineligibility_reason) <= 2000);
+    }
 }

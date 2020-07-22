@@ -27,4 +27,8 @@ class SubscriberRequest extends Payer implements JsonSerializable
      * non-3DS cards and for merchants in US and AU regions.
      */
     public $payment_source;
+
+    public function validate()
+    {
+    }
 }

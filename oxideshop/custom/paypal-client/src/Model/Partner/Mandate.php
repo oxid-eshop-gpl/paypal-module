@@ -19,4 +19,8 @@ class Mandate implements JsonSerializable
      * Whether mandate was accepted or not.
      */
     public $accepted;
+
+    public function validate()
+    {
+    }
 }

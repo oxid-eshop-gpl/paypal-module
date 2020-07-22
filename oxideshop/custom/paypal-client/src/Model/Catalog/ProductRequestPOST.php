@@ -1875,4 +1875,22 @@ class ProductRequestPOST implements JsonSerializable
      * maxLength: 2000
      */
     public $home_url;
+
+    public function validate()
+    {
+        assert(!isset($this->id) || strlen($this->id) >= 6);
+        assert(!isset($this->id) || strlen($this->id) <= 50);
+        assert(!isset($this->name) || strlen($this->name) >= 1);
+        assert(!isset($this->name) || strlen($this->name) <= 127);
+        assert(!isset($this->description) || strlen($this->description) >= 1);
+        assert(!isset($this->description) || strlen($this->description) <= 256);
+        assert(!isset($this->type) || strlen($this->type) >= 1);
+        assert(!isset($this->type) || strlen($this->type) <= 24);
+        assert(!isset($this->category) || strlen($this->category) >= 4);
+        assert(!isset($this->category) || strlen($this->category) <= 256);
+        assert(!isset($this->image_url) || strlen($this->image_url) >= 1);
+        assert(!isset($this->image_url) || strlen($this->image_url) <= 2000);
+        assert(!isset($this->home_url) || strlen($this->home_url) >= 1);
+        assert(!isset($this->home_url) || strlen($this->home_url) <= 2000);
+    }
 }

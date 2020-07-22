@@ -20,4 +20,8 @@ class Payee extends PayeeBase implements JsonSerializable
      * transactions, email receipts, and transaction history.
      */
     public $display_data;
+
+    public function validate()
+    {
+    }
 }

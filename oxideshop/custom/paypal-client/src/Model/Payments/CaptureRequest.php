@@ -41,4 +41,9 @@ class CaptureRequest extends SupplementaryPurchaseData implements JsonSerializab
      * The supplementary data.
      */
     public $supplementary_data;
+
+    public function validate()
+    {
+        assert(isset($this->amount));
+    }
 }

@@ -73,4 +73,16 @@ class Payer implements JsonSerializable
      * attribute](https://www.w3.org/TR/html51/sec-forms.html#autofilling-form-controls-the-autocomplete-attribute).
      */
     public $address;
+
+    public function validate()
+    {
+        assert(!isset($this->email_address) || strlen($this->email_address) <= 254);
+        assert(!isset($this->payer_id) || strlen($this->payer_id) >= 13);
+        assert(!isset($this->payer_id) || strlen($this->payer_id) <= 13);
+        assert(isset($this->phone));
+        assert(!isset($this->birth_date) || strlen($this->birth_date) >= 10);
+        assert(!isset($this->birth_date) || strlen($this->birth_date) <= 10);
+        assert(isset($this->tax_info));
+        assert(isset($this->address));
+    }
 }

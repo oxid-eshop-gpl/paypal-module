@@ -47,4 +47,8 @@ class CaptureStatus implements JsonSerializable
      * The details of the captured payment status.
      */
     public $status_details;
+
+    public function validate()
+    {
+    }
 }

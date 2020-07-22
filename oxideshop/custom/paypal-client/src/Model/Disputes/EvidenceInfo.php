@@ -25,4 +25,8 @@ class EvidenceInfo implements JsonSerializable
      * An array of refund IDs for the transaction involved in this dispute.
      */
     public $refund_ids;
+
+    public function validate()
+    {
+    }
 }

@@ -37,4 +37,12 @@ class ExtensionsTransactionRiskInfo implements JsonSerializable
      * maxLength: 2000
      */
     public $reason;
+
+    public function validate()
+    {
+        assert(!isset($this->id) || strlen($this->id) >= 1);
+        assert(!isset($this->id) || strlen($this->id) <= 255);
+        assert(!isset($this->reason) || strlen($this->reason) >= 1);
+        assert(!isset($this->reason) || strlen($this->reason) <= 2000);
+    }
 }

@@ -133,4 +133,26 @@ class PaymentSource implements JsonSerializable
      * Information needed to pay using WeChat Pay.
      */
     public $wechatpay;
+
+    public function validate()
+    {
+        assert(isset($this->card));
+        assert(isset($this->token));
+        assert(isset($this->alipay));
+        assert(isset($this->bancontact));
+        assert(isset($this->blik));
+        assert(isset($this->eps));
+        assert(isset($this->giropay));
+        assert(isset($this->ideal));
+        assert(isset($this->multibanco));
+        assert(isset($this->mybank));
+        assert(isset($this->payu));
+        assert(isset($this->p24));
+        assert(isset($this->poli));
+        assert(isset($this->sofort));
+        assert(isset($this->trustly));
+        assert(isset($this->trustpay));
+        assert(isset($this->verkkopankki));
+        assert(isset($this->wechatpay));
+    }
 }

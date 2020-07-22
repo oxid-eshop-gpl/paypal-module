@@ -43,4 +43,12 @@ class PayeeBase implements JsonSerializable
      * maxLength: 80
      */
     public $client_id;
+
+    public function validate()
+    {
+        assert(!isset($this->email_address) || strlen($this->email_address) <= 254);
+        assert(!isset($this->merchant_id) || strlen($this->merchant_id) >= 13);
+        assert(!isset($this->merchant_id) || strlen($this->merchant_id) <= 13);
+        assert(!isset($this->client_id) || strlen($this->client_id) <= 80);
+    }
 }

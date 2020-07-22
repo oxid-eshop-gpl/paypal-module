@@ -38,4 +38,8 @@ class Patch implements JsonSerializable
      * operation.
      */
     public $from;
+
+    public function validate()
+    {
+    }
 }

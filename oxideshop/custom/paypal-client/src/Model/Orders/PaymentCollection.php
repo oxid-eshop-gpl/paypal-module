@@ -33,4 +33,8 @@ class PaymentCollection implements JsonSerializable
      * An array of refunds for a purchase unit. A purchase unit can have zero or more refunds.
      */
     public $refunds;
+
+    public function validate()
+    {
+    }
 }

@@ -25,4 +25,8 @@ class SupplementaryData implements JsonSerializable
      * The API caller-provided information about the store.
      */
     public $point_of_sale;
+
+    public function validate()
+    {
+    }
 }

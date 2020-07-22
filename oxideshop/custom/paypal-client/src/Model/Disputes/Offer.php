@@ -57,4 +57,12 @@ class Offer implements JsonSerializable
      * An array of history information for an offer.
      */
     public $history;
+
+    public function validate()
+    {
+        assert(isset($this->buyer_requested_amount));
+        assert(isset($this->seller_offered_amount));
+        assert(!isset($this->offer_type) || strlen($this->offer_type) >= 1);
+        assert(!isset($this->offer_type) || strlen($this->offer_type) <= 255);
+    }
 }

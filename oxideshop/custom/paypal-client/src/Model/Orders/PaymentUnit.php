@@ -169,4 +169,30 @@ class PaymentUnit implements JsonSerializable
      * Payment Directives for transaction.
      */
     public $payment_directives;
+
+    public function validate()
+    {
+        assert(!isset($this->reference_id) || strlen($this->reference_id) >= 1);
+        assert(!isset($this->reference_id) || strlen($this->reference_id) <= 255);
+        assert(!isset($this->parent_reference_id) || strlen($this->parent_reference_id) >= 1);
+        assert(!isset($this->parent_reference_id) || strlen($this->parent_reference_id) <= 255);
+        assert(!isset($this->idempotency_id) || strlen($this->idempotency_id) >= 1);
+        assert(!isset($this->idempotency_id) || strlen($this->idempotency_id) <= 255);
+        assert(!isset($this->partner_attribution_id) || strlen($this->partner_attribution_id) >= 1);
+        assert(!isset($this->partner_attribution_id) || strlen($this->partner_attribution_id) <= 255);
+        assert(!isset($this->payment_category) || strlen($this->payment_category) >= 1);
+        assert(!isset($this->payment_category) || strlen($this->payment_category) <= 127);
+        assert(!isset($this->custom_id) || strlen($this->custom_id) >= 1);
+        assert(!isset($this->custom_id) || strlen($this->custom_id) <= 127);
+        assert(!isset($this->description) || strlen($this->description) >= 1);
+        assert(!isset($this->description) || strlen($this->description) <= 127);
+        assert(!isset($this->invoice_id) || strlen($this->invoice_id) >= 1);
+        assert(!isset($this->invoice_id) || strlen($this->invoice_id) <= 256);
+        assert(!isset($this->payment_schedule_category) || strlen($this->payment_schedule_category) >= 1);
+        assert(!isset($this->payment_schedule_category) || strlen($this->payment_schedule_category) <= 127);
+        assert(!isset($this->biller_company_name) || strlen($this->biller_company_name) >= 1);
+        assert(!isset($this->biller_company_name) || strlen($this->biller_company_name) <= 16);
+        assert(!isset($this->biller_company_id) || strlen($this->biller_company_id) >= 1);
+        assert(!isset($this->biller_company_id) || strlen($this->biller_company_id) <= 10);
+    }
 }

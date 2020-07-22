@@ -70,4 +70,13 @@ class Escalate implements JsonSerializable
      * The currency and amount for a financial transaction, such as a balance or payment due.
      */
     public $buyer_requested_amount;
+
+    public function validate()
+    {
+        assert(!isset($this->note) || strlen($this->note) >= 1);
+        assert(!isset($this->note) || strlen($this->note) <= 2000);
+        assert(!isset($this->buyer_escalation_reason) || strlen($this->buyer_escalation_reason) >= 1);
+        assert(!isset($this->buyer_escalation_reason) || strlen($this->buyer_escalation_reason) <= 255);
+        assert(isset($this->buyer_requested_amount));
+    }
 }

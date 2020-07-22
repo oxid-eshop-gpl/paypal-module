@@ -48,4 +48,8 @@ class AirlineItinerary implements JsonSerializable
      * authorization. In the case of single capture against an authorization the value should be 1.
      */
     public $clearing_count;
+
+    public function validate()
+    {
+    }
 }

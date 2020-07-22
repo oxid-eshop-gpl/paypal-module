@@ -71,4 +71,10 @@ class EligibleDisputeReason implements JsonSerializable
      * The details about the allowable lifecycle stage and the reason why it is allowed.
      */
     public $allowable_life_cycle;
+
+    public function validate()
+    {
+        assert(!isset($this->dispute_reason) || strlen($this->dispute_reason) >= 1);
+        assert(!isset($this->dispute_reason) || strlen($this->dispute_reason) <= 255);
+    }
 }

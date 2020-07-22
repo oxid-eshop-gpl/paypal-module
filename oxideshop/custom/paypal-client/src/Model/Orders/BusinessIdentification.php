@@ -48,4 +48,15 @@ class BusinessIdentification implements JsonSerializable
      * maxLength: 64
      */
     public $issued_time;
+
+    public function validate()
+    {
+        assert(!isset($this->type) || strlen($this->type) >= 1);
+        assert(!isset($this->type) || strlen($this->type) <= 127);
+        assert(!isset($this->identifier) || strlen($this->identifier) >= 1);
+        assert(!isset($this->identifier) || strlen($this->identifier) <= 127);
+        assert(isset($this->issuer));
+        assert(!isset($this->issued_time) || strlen($this->issued_time) >= 20);
+        assert(!isset($this->issued_time) || strlen($this->issued_time) <= 64);
+    }
 }

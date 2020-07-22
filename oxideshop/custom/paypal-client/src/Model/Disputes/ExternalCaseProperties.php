@@ -72,4 +72,15 @@ class ExternalCaseProperties implements JsonSerializable
      * The currency and amount for a financial transaction, such as a balance or payment due.
      */
     public $reversal_fee;
+
+    public function validate()
+    {
+        assert(!isset($this->reference_id) || strlen($this->reference_id) >= 1);
+        assert(!isset($this->reference_id) || strlen($this->reference_id) <= 255);
+        assert(!isset($this->external_type) || strlen($this->external_type) >= 1);
+        assert(!isset($this->external_type) || strlen($this->external_type) <= 255);
+        assert(!isset($this->recovery_type) || strlen($this->recovery_type) >= 1);
+        assert(!isset($this->recovery_type) || strlen($this->recovery_type) <= 255);
+        assert(isset($this->reversal_fee));
+    }
 }

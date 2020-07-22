@@ -19,4 +19,8 @@ class OrderCaptureRequest extends CaptureRequest implements JsonSerializable
      * The identifier of the order for this capture.
      */
     public $order_id;
+
+    public function validate()
+    {
+    }
 }

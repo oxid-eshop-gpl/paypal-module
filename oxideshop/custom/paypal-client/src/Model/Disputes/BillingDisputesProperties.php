@@ -43,4 +43,8 @@ class BillingDisputesProperties implements JsonSerializable
      * The recurring billing canceled details.
      */
     public $canceled_recurring_billing;
+
+    public function validate()
+    {
+    }
 }

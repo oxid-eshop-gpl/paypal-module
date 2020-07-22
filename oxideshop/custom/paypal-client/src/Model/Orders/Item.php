@@ -80,4 +80,17 @@ class Item implements JsonSerializable
      * maxLength: 20
      */
     public $category;
+
+    public function validate()
+    {
+        assert(!isset($this->name) || strlen($this->name) >= 1);
+        assert(!isset($this->name) || strlen($this->name) <= 127);
+        assert(isset($this->unit_amount));
+        assert(isset($this->tax));
+        assert(!isset($this->quantity) || strlen($this->quantity) <= 10);
+        assert(!isset($this->description) || strlen($this->description) <= 127);
+        assert(!isset($this->sku) || strlen($this->sku) <= 127);
+        assert(!isset($this->category) || strlen($this->category) >= 1);
+        assert(!isset($this->category) || strlen($this->category) <= 20);
+    }
 }

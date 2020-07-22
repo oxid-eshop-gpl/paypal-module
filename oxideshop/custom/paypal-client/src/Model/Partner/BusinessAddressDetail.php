@@ -40,4 +40,10 @@ class BusinessAddressDetail extends AddressPortable implements JsonSerializable
      * Whether this address has been inactivated.
      */
     public $inactive;
+
+    public function validate()
+    {
+        assert(!isset($this->type) || strlen($this->type) >= 1);
+        assert(!isset($this->type) || strlen($this->type) <= 255);
+    }
 }

@@ -48,4 +48,15 @@ class Refund implements JsonSerializable
      * maxLength: 127
      */
     public $invoice_number;
+
+    public function validate()
+    {
+        assert(isset($this->gross_amount));
+        assert(!isset($this->transaction_time) || strlen($this->transaction_time) >= 20);
+        assert(!isset($this->transaction_time) || strlen($this->transaction_time) <= 64);
+        assert(!isset($this->transaction_id) || strlen($this->transaction_id) >= 1);
+        assert(!isset($this->transaction_id) || strlen($this->transaction_id) <= 255);
+        assert(!isset($this->invoice_number) || strlen($this->invoice_number) >= 1);
+        assert(!isset($this->invoice_number) || strlen($this->invoice_number) <= 127);
+    }
 }

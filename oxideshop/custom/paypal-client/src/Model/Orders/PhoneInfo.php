@@ -52,4 +52,9 @@ class PhoneInfo implements JsonSerializable
      * @see PHONE_TYPE_WORK
      */
     public $phone_type;
+
+    public function validate()
+    {
+        assert(isset($this->phone_number));
+    }
 }

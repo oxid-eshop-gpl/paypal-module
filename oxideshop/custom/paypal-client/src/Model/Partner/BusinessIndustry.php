@@ -40,4 +40,14 @@ class BusinessIndustry implements JsonSerializable
      * maxLength: 20
      */
     public $subcategory;
+
+    public function validate()
+    {
+        assert(!isset($this->category) || strlen($this->category) >= 1);
+        assert(!isset($this->category) || strlen($this->category) <= 20);
+        assert(!isset($this->mcc_code) || strlen($this->mcc_code) >= 1);
+        assert(!isset($this->mcc_code) || strlen($this->mcc_code) <= 20);
+        assert(!isset($this->subcategory) || strlen($this->subcategory) >= 1);
+        assert(!isset($this->subcategory) || strlen($this->subcategory) <= 20);
+    }
 }

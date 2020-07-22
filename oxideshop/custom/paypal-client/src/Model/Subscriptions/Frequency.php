@@ -55,4 +55,10 @@ class Frequency implements JsonSerializable
      * align="right">12</td></tr><tr><td><code>YEAR</code></td><td align="right">1</td></tr></tbody></table>
      */
     public $interval_count;
+
+    public function validate()
+    {
+        assert(!isset($this->interval_unit) || strlen($this->interval_unit) >= 1);
+        assert(!isset($this->interval_unit) || strlen($this->interval_unit) <= 24);
+    }
 }

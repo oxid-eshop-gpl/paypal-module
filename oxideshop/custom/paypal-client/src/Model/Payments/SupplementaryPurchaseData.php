@@ -51,4 +51,12 @@ class SupplementaryPurchaseData implements JsonSerializable
      * maxLength: 22
      */
     public $soft_descriptor;
+
+    public function validate()
+    {
+        assert(!isset($this->invoice_id) || strlen($this->invoice_id) <= 127);
+        assert(!isset($this->custom_id) || strlen($this->custom_id) <= 127);
+        assert(!isset($this->note_to_payer) || strlen($this->note_to_payer) <= 255);
+        assert(!isset($this->soft_descriptor) || strlen($this->soft_descriptor) <= 22);
+    }
 }

@@ -47,4 +47,14 @@ class BlikRequest implements JsonSerializable
      * maxLength: 254
      */
     public $email;
+
+    public function validate()
+    {
+        assert(!isset($this->name) || strlen($this->name) >= 3);
+        assert(!isset($this->name) || strlen($this->name) <= 300);
+        assert(!isset($this->country_code) || strlen($this->country_code) >= 2);
+        assert(!isset($this->country_code) || strlen($this->country_code) <= 2);
+        assert(!isset($this->email) || strlen($this->email) >= 3);
+        assert(!isset($this->email) || strlen($this->email) <= 254);
+    }
 }

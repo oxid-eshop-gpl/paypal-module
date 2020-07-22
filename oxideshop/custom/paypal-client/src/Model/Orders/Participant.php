@@ -25,4 +25,8 @@ class Participant extends Account implements JsonSerializable
      * Business information.
      */
     public $business;
+
+    public function validate()
+    {
+    }
 }

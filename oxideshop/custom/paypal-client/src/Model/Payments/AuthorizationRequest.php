@@ -79,4 +79,11 @@ class AuthorizationRequest implements JsonSerializable
      * The shipping details.
      */
     public $shipping;
+
+    public function validate()
+    {
+        assert(!isset($this->description) || strlen($this->description) <= 127);
+        assert(!isset($this->custom_id) || strlen($this->custom_id) <= 127);
+        assert(!isset($this->invoice_id) || strlen($this->invoice_id) <= 127);
+    }
 }

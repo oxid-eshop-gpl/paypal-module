@@ -101,4 +101,17 @@ class PricingScheme implements JsonSerializable
      * maxLength: 64
      */
     public $update_time;
+
+    public function validate()
+    {
+        assert(!isset($this->status) || strlen($this->status) >= 1);
+        assert(!isset($this->status) || strlen($this->status) <= 24);
+        assert(isset($this->fixed_price));
+        assert(!isset($this->tier_mode) || strlen($this->tier_mode) >= 1);
+        assert(!isset($this->tier_mode) || strlen($this->tier_mode) <= 24);
+        assert(!isset($this->create_time) || strlen($this->create_time) >= 20);
+        assert(!isset($this->create_time) || strlen($this->create_time) <= 64);
+        assert(!isset($this->update_time) || strlen($this->update_time) >= 20);
+        assert(!isset($this->update_time) || strlen($this->update_time) <= 64);
+    }
 }

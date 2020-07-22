@@ -100,4 +100,20 @@ class ApplicationContext implements JsonSerializable
      * maxLength: 4000
      */
     public $cancel_url;
+
+    public function validate()
+    {
+        assert(!isset($this->brand_name) || strlen($this->brand_name) >= 1);
+        assert(!isset($this->brand_name) || strlen($this->brand_name) <= 127);
+        assert(!isset($this->locale) || strlen($this->locale) >= 2);
+        assert(!isset($this->locale) || strlen($this->locale) <= 10);
+        assert(!isset($this->shipping_preference) || strlen($this->shipping_preference) >= 1);
+        assert(!isset($this->shipping_preference) || strlen($this->shipping_preference) <= 24);
+        assert(!isset($this->user_action) || strlen($this->user_action) >= 1);
+        assert(!isset($this->user_action) || strlen($this->user_action) <= 24);
+        assert(!isset($this->return_url) || strlen($this->return_url) >= 10);
+        assert(!isset($this->return_url) || strlen($this->return_url) <= 4000);
+        assert(!isset($this->cancel_url) || strlen($this->cancel_url) >= 10);
+        assert(!isset($this->cancel_url) || strlen($this->cancel_url) <= 4000);
+    }
 }

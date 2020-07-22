@@ -96,4 +96,14 @@ class DisputeEligibility implements JsonSerializable
      * maxLength: 255
      */
     public $recommended_dispute_reason;
+
+    public function validate()
+    {
+        assert(!isset($this->seller_transaction_id) || strlen($this->seller_transaction_id) >= 1);
+        assert(!isset($this->seller_transaction_id) || strlen($this->seller_transaction_id) <= 255);
+        assert(!isset($this->buyer_transaction_id) || strlen($this->buyer_transaction_id) >= 1);
+        assert(!isset($this->buyer_transaction_id) || strlen($this->buyer_transaction_id) <= 255);
+        assert(!isset($this->recommended_dispute_reason) || strlen($this->recommended_dispute_reason) >= 1);
+        assert(!isset($this->recommended_dispute_reason) || strlen($this->recommended_dispute_reason) <= 255);
+    }
 }

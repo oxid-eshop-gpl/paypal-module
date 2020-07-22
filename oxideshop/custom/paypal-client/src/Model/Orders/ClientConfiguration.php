@@ -192,4 +192,16 @@ class ClientConfiguration implements JsonSerializable
      * The product experiences that a user completes on a PayPal transaction.
      */
     public $experience;
+
+    public function validate()
+    {
+        assert(!isset($this->product_code) || strlen($this->product_code) >= 1);
+        assert(!isset($this->product_code) || strlen($this->product_code) <= 255);
+        assert(!isset($this->product_feature) || strlen($this->product_feature) >= 1);
+        assert(!isset($this->product_feature) || strlen($this->product_feature) <= 255);
+        assert(!isset($this->api) || strlen($this->api) >= 1);
+        assert(!isset($this->api) || strlen($this->api) <= 255);
+        assert(!isset($this->integration_artifact) || strlen($this->integration_artifact) >= 1);
+        assert(!isset($this->integration_artifact) || strlen($this->integration_artifact) <= 255);
+    }
 }

@@ -26,4 +26,8 @@ class Taxes implements JsonSerializable
      * Indicates whether the tax was already included in the billing amount.
      */
     public $inclusive;
+
+    public function validate()
+    {
+    }
 }

@@ -62,4 +62,14 @@ class RestApiIntegration implements JsonSerializable
      * The integration details for PayPal REST endpoints.
      */
     public $third_party_details;
+
+    public function validate()
+    {
+        assert(!isset($this->integration_method) || strlen($this->integration_method) >= 1);
+        assert(!isset($this->integration_method) || strlen($this->integration_method) <= 255);
+        assert(!isset($this->integration_type) || strlen($this->integration_type) >= 1);
+        assert(!isset($this->integration_type) || strlen($this->integration_type) <= 255);
+        assert(isset($this->first_party_details));
+        assert(isset($this->third_party_details));
+    }
 }

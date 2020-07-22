@@ -55,4 +55,12 @@ class BusinessPhoneDetail extends Phone implements JsonSerializable
      * Array of tags for this phone number.
      */
     public $tags;
+
+    public function validate()
+    {
+        assert(!isset($this->contact_name) || strlen($this->contact_name) >= 1);
+        assert(!isset($this->contact_name) || strlen($this->contact_name) <= 900);
+        assert(!isset($this->type) || strlen($this->type) >= 1);
+        assert(!isset($this->type) || strlen($this->type) <= 255);
+    }
 }

@@ -20,4 +20,8 @@ class RestApiIntegrationThirdPartyDetails implements JsonSerializable
      * permission for these features to the partner.
      */
     public $features;
+
+    public function validate()
+    {
+    }
 }

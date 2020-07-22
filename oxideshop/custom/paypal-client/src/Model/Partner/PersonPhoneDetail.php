@@ -75,4 +75,10 @@ class PersonPhoneDetail extends Phone implements JsonSerializable
      * Array of tags for this phone number.
      */
     public $tags;
+
+    public function validate()
+    {
+        assert(!isset($this->contact_name) || strlen($this->contact_name) >= 1);
+        assert(!isset($this->contact_name) || strlen($this->contact_name) <= 900);
+    }
 }

@@ -61,4 +61,14 @@ class SupportingInfo implements JsonSerializable
      * maxLength: 64
      */
     public $provided_time;
+
+    public function validate()
+    {
+        assert(!isset($this->notes) || strlen($this->notes) >= 1);
+        assert(!isset($this->notes) || strlen($this->notes) <= 2000);
+        assert(!isset($this->source) || strlen($this->source) >= 1);
+        assert(!isset($this->source) || strlen($this->source) <= 255);
+        assert(!isset($this->provided_time) || strlen($this->provided_time) >= 20);
+        assert(!isset($this->provided_time) || strlen($this->provided_time) <= 64);
+    }
 }

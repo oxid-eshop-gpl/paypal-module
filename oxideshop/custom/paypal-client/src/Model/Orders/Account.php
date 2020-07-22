@@ -124,4 +124,26 @@ class Account implements JsonSerializable
      * maxLength: 64
      */
     public $time_created;
+
+    public function validate()
+    {
+        assert(!isset($this->account_number) || strlen($this->account_number) >= 1);
+        assert(!isset($this->account_number) || strlen($this->account_number) <= 20);
+        assert(!isset($this->account_id) || strlen($this->account_id) >= 13);
+        assert(!isset($this->account_id) || strlen($this->account_id) <= 13);
+        assert(!isset($this->tier) || strlen($this->tier) >= 1);
+        assert(!isset($this->tier) || strlen($this->tier) <= 100);
+        assert(!isset($this->registration_type) || strlen($this->registration_type) >= 1);
+        assert(!isset($this->registration_type) || strlen($this->registration_type) <= 255);
+        assert(!isset($this->legal_country_code) || strlen($this->legal_country_code) >= 2);
+        assert(!isset($this->legal_country_code) || strlen($this->legal_country_code) <= 2);
+        assert(!isset($this->status) || strlen($this->status) >= 1);
+        assert(!isset($this->status) || strlen($this->status) <= 30);
+        assert(!isset($this->pricing_category) || strlen($this->pricing_category) >= 1);
+        assert(!isset($this->pricing_category) || strlen($this->pricing_category) <= 30);
+        assert(!isset($this->legal_entity) || strlen($this->legal_entity) >= 1);
+        assert(!isset($this->legal_entity) || strlen($this->legal_entity) <= 30);
+        assert(!isset($this->time_created) || strlen($this->time_created) >= 20);
+        assert(!isset($this->time_created) || strlen($this->time_created) <= 64);
+    }
 }

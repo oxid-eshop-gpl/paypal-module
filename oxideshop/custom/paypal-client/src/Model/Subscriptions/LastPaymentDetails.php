@@ -30,4 +30,11 @@ class LastPaymentDetails implements JsonSerializable
      * maxLength: 64
      */
     public $time;
+
+    public function validate()
+    {
+        assert(isset($this->amount));
+        assert(!isset($this->time) || strlen($this->time) >= 20);
+        assert(!isset($this->time) || strlen($this->time) <= 64);
+    }
 }

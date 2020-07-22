@@ -57,4 +57,15 @@ class Transaction extends CaptureStatus implements JsonSerializable
      * maxLength: 64
      */
     public $time;
+
+    public function validate()
+    {
+        assert(!isset($this->id) || strlen($this->id) >= 3);
+        assert(!isset($this->id) || strlen($this->id) <= 50);
+        assert(isset($this->amount_with_breakdown));
+        assert(!isset($this->payer_email) || strlen($this->payer_email) >= 3);
+        assert(!isset($this->payer_email) || strlen($this->payer_email) <= 254);
+        assert(!isset($this->time) || strlen($this->time) >= 20);
+        assert(!isset($this->time) || strlen($this->time) <= 64);
+    }
 }

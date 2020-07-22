@@ -168,4 +168,14 @@ class Business extends Party implements JsonSerializable
      * Customer care contact information.
      */
     public $customer_service_contacts;
+
+    public function validate()
+    {
+        assert(!isset($this->type) || strlen($this->type) >= 1);
+        assert(!isset($this->type) || strlen($this->type) <= 255);
+        assert(!isset($this->description) || strlen($this->description) >= 1);
+        assert(!isset($this->description) || strlen($this->description) <= 255);
+        assert(!isset($this->url) || strlen($this->url) >= 1);
+        assert(!isset($this->url) || strlen($this->url) <= 100);
+    }
 }

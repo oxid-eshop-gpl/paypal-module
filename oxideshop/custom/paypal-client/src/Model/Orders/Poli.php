@@ -35,4 +35,12 @@ class Poli implements JsonSerializable
      * maxLength: 2
      */
     public $country_code;
+
+    public function validate()
+    {
+        assert(!isset($this->name) || strlen($this->name) >= 3);
+        assert(!isset($this->name) || strlen($this->name) <= 300);
+        assert(!isset($this->country_code) || strlen($this->country_code) >= 2);
+        assert(!isset($this->country_code) || strlen($this->country_code) <= 2);
+    }
 }

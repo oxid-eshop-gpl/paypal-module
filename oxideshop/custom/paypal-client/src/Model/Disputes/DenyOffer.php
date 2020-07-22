@@ -22,4 +22,10 @@ class DenyOffer implements JsonSerializable
      * maxLength: 2000
      */
     public $note;
+
+    public function validate()
+    {
+        assert(!isset($this->note) || strlen($this->note) >= 1);
+        assert(!isset($this->note) || strlen($this->note) <= 2000);
+    }
 }

@@ -25,4 +25,8 @@ class RefundStatusDetails implements JsonSerializable
      * @see REASON_ECHECK
      */
     public $reason;
+
+    public function validate()
+    {
+    }
 }

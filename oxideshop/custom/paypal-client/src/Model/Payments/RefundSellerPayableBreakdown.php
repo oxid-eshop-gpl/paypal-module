@@ -50,4 +50,12 @@ class RefundSellerPayableBreakdown implements JsonSerializable
      * The currency and amount for a financial transaction, such as a balance or payment due.
      */
     public $total_refunded_amount;
+
+    public function validate()
+    {
+        assert(isset($this->gross_amount));
+        assert(isset($this->paypal_fee));
+        assert(isset($this->net_amount));
+        assert(isset($this->total_refunded_amount));
+    }
 }

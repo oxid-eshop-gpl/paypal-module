@@ -93,4 +93,16 @@ class VaultPaypalWalletBase implements JsonSerializable
      * may share the same PayPal account. This only applies to PayPal payment source.
      */
     public $permit_multiple_payment_tokens;
+
+    public function validate()
+    {
+        assert(!isset($this->description) || strlen($this->description) >= 1);
+        assert(!isset($this->description) || strlen($this->description) <= 128);
+        assert(!isset($this->product_label) || strlen($this->product_label) >= 1);
+        assert(!isset($this->product_label) || strlen($this->product_label) <= 25);
+        assert(!isset($this->usage_type) || strlen($this->usage_type) >= 1);
+        assert(!isset($this->usage_type) || strlen($this->usage_type) <= 255);
+        assert(!isset($this->customer_type) || strlen($this->customer_type) >= 1);
+        assert(!isset($this->customer_type) || strlen($this->customer_type) <= 255);
+    }
 }

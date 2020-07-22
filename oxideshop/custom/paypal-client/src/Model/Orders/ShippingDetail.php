@@ -34,4 +34,9 @@ class ShippingDetail implements JsonSerializable
      * attribute](https://www.w3.org/TR/html51/sec-forms.html#autofilling-form-controls-the-autocomplete-attribute).
      */
     public $address;
+
+    public function validate()
+    {
+        assert(isset($this->address));
+    }
 }

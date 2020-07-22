@@ -68,4 +68,16 @@ class ServiceDetails implements JsonSerializable
      * maxLength: 2000
      */
     public $purchase_url;
+
+    public function validate()
+    {
+        assert(!isset($this->description) || strlen($this->description) >= 1);
+        assert(!isset($this->description) || strlen($this->description) <= 2000);
+        assert(!isset($this->service_started) || strlen($this->service_started) >= 1);
+        assert(!isset($this->service_started) || strlen($this->service_started) <= 255);
+        assert(!isset($this->note) || strlen($this->note) >= 1);
+        assert(!isset($this->note) || strlen($this->note) <= 2000);
+        assert(!isset($this->purchase_url) || strlen($this->purchase_url) >= 1);
+        assert(!isset($this->purchase_url) || strlen($this->purchase_url) <= 2000);
+    }
 }

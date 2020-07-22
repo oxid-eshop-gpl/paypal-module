@@ -116,4 +116,14 @@ class DisputeCreateRequest implements JsonSerializable
      * An array of customer- or merchant-posted messages.
      */
     public $messages;
+
+    public function validate()
+    {
+        assert(!isset($this->dispute_flow) || strlen($this->dispute_flow) >= 1);
+        assert(!isset($this->dispute_flow) || strlen($this->dispute_flow) <= 255);
+        assert(!isset($this->reason) || strlen($this->reason) >= 1);
+        assert(!isset($this->reason) || strlen($this->reason) <= 255);
+        assert(!isset($this->sub_reason) || strlen($this->sub_reason) >= 1);
+        assert(!isset($this->sub_reason) || strlen($this->sub_reason) <= 255);
+    }
 }

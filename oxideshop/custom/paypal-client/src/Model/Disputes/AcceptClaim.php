@@ -81,4 +81,16 @@ class AcceptClaim implements JsonSerializable
      * The currency and amount for a financial transaction, such as a balance or payment due.
      */
     public $refund_amount;
+
+    public function validate()
+    {
+        assert(!isset($this->note) || strlen($this->note) >= 1);
+        assert(!isset($this->note) || strlen($this->note) <= 2000);
+        assert(!isset($this->accept_claim_reason) || strlen($this->accept_claim_reason) >= 1);
+        assert(!isset($this->accept_claim_reason) || strlen($this->accept_claim_reason) <= 255);
+        assert(!isset($this->invoice_id) || strlen($this->invoice_id) >= 1);
+        assert(!isset($this->invoice_id) || strlen($this->invoice_id) <= 127);
+        assert(isset($this->return_shipping_address));
+        assert(isset($this->refund_amount));
+    }
 }

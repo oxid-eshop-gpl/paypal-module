@@ -21,4 +21,9 @@ class BusinessName implements JsonSerializable
      * maxLength: 300
      */
     public $business_name;
+
+    public function validate()
+    {
+        assert(!isset($this->business_name) || strlen($this->business_name) <= 300);
+    }
 }

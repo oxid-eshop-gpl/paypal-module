@@ -742,4 +742,8 @@ class ProcessorResponse implements JsonSerializable
      * @see PAYMENT_ADVICE_CODE_21
      */
     public $payment_advice_code;
+
+    public function validate()
+    {
+    }
 }

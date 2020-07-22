@@ -65,4 +65,8 @@ class CaptureStatusDetails implements JsonSerializable
      * @see REASON_VERIFICATION_REQUIRED
      */
     public $reason;
+
+    public function validate()
+    {
+    }
 }

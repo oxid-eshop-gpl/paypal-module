@@ -47,4 +47,12 @@ class RefundRequest implements JsonSerializable
      * maxLength: 255
      */
     public $note_to_payer;
+
+    public function validate()
+    {
+        assert(isset($this->amount));
+        assert(!isset($this->invoice_id) || strlen($this->invoice_id) <= 127);
+        assert(!isset($this->custom_id) || strlen($this->custom_id) <= 127);
+        assert(!isset($this->note_to_payer) || strlen($this->note_to_payer) <= 255);
+    }
 }

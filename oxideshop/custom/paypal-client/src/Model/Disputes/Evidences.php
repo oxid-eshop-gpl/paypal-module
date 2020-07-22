@@ -28,4 +28,9 @@ class Evidences implements JsonSerializable
      * attribute](https://www.w3.org/TR/html51/sec-forms.html#autofilling-form-controls-the-autocomplete-attribute).
      */
     public $return_shipping_address;
+
+    public function validate()
+    {
+        assert(isset($this->return_shipping_address));
+    }
 }

@@ -47,4 +47,10 @@ class OfficeBearer extends Person implements JsonSerializable
      * maxLength: 255
      */
     public $role;
+
+    public function validate()
+    {
+        assert(!isset($this->role) || strlen($this->role) >= 1);
+        assert(!isset($this->role) || strlen($this->role) <= 255);
+    }
 }

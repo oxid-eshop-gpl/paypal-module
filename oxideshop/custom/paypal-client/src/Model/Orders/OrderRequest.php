@@ -77,4 +77,8 @@ class OrderRequest implements JsonSerializable
      * values.</blockquote>
      */
     public $application_context;
+
+    public function validate()
+    {
+    }
 }

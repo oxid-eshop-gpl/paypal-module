@@ -59,4 +59,8 @@ class AuthorizationStatus implements JsonSerializable
      * The details of the authorized payment status.
      */
     public $status_details;
+
+    public function validate()
+    {
+    }
 }

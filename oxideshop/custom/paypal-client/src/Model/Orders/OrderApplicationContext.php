@@ -140,4 +140,12 @@ class OrderApplicationContext implements JsonSerializable
      * The payment source definition.
      */
     public $preferred_payment_source;
+
+    public function validate()
+    {
+        assert(!isset($this->brand_name) || strlen($this->brand_name) <= 127);
+        assert(!isset($this->locale) || strlen($this->locale) >= 2);
+        assert(!isset($this->locale) || strlen($this->locale) <= 10);
+        assert(!isset($this->payment_token) || strlen($this->payment_token) <= 19);
+    }
 }

@@ -25,4 +25,9 @@ class RefundDetails implements JsonSerializable
      * An array of refund objects.
      */
     public $refunds;
+
+    public function validate()
+    {
+        assert(isset($this->allowed_refund_amount));
+    }
 }

@@ -96,4 +96,17 @@ class OfferHistory implements JsonSerializable
      * The currency and amount for a financial transaction, such as a balance or payment due.
      */
     public $offer_amount;
+
+    public function validate()
+    {
+        assert(!isset($this->offer_time) || strlen($this->offer_time) >= 20);
+        assert(!isset($this->offer_time) || strlen($this->offer_time) <= 64);
+        assert(!isset($this->actor) || strlen($this->actor) >= 1);
+        assert(!isset($this->actor) || strlen($this->actor) <= 255);
+        assert(!isset($this->event_type) || strlen($this->event_type) >= 1);
+        assert(!isset($this->event_type) || strlen($this->event_type) <= 255);
+        assert(!isset($this->offer_type) || strlen($this->offer_type) >= 1);
+        assert(!isset($this->offer_type) || strlen($this->offer_type) <= 255);
+        assert(isset($this->offer_amount));
+    }
 }

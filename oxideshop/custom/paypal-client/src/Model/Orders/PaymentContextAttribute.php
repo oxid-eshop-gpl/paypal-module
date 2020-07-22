@@ -31,4 +31,12 @@ class PaymentContextAttribute implements JsonSerializable
      * maxLength: 255
      */
     public $value;
+
+    public function validate()
+    {
+        assert(!isset($this->name) || strlen($this->name) >= 1);
+        assert(!isset($this->name) || strlen($this->name) <= 127);
+        assert(!isset($this->value) || strlen($this->value) >= 1);
+        assert(!isset($this->value) || strlen($this->value) <= 255);
+    }
 }

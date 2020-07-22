@@ -50,4 +50,8 @@ class PaymentContextData implements JsonSerializable
      * List of payment contract data.
      */
     public $payment_units;
+
+    public function validate()
+    {
+    }
 }

@@ -53,4 +53,10 @@ class Operation implements JsonSerializable
      * The details of the billing agreement between the partner and a seller.
      */
     public $billing_agreement;
+
+    public function validate()
+    {
+        assert(!isset($this->operation) || strlen($this->operation) >= 1);
+        assert(!isset($this->operation) || strlen($this->operation) <= 255);
+    }
 }

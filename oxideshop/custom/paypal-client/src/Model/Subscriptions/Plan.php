@@ -154,4 +154,25 @@ class Plan implements JsonSerializable
      * An array of request-related [HATEOAS links](/docs/api/reference/api-responses/#hateoas-links).
      */
     public $links;
+
+    public function validate()
+    {
+        assert(!isset($this->id) || strlen($this->id) >= 3);
+        assert(!isset($this->id) || strlen($this->id) <= 50);
+        assert(!isset($this->product_id) || strlen($this->product_id) >= 6);
+        assert(!isset($this->product_id) || strlen($this->product_id) <= 50);
+        assert(!isset($this->name) || strlen($this->name) >= 1);
+        assert(!isset($this->name) || strlen($this->name) <= 127);
+        assert(!isset($this->status) || strlen($this->status) >= 1);
+        assert(!isset($this->status) || strlen($this->status) <= 24);
+        assert(!isset($this->description) || strlen($this->description) >= 1);
+        assert(!isset($this->description) || strlen($this->description) <= 127);
+        assert(!isset($this->usage_type) || strlen($this->usage_type) >= 1);
+        assert(!isset($this->usage_type) || strlen($this->usage_type) <= 24);
+        assert(isset($this->taxes));
+        assert(!isset($this->create_time) || strlen($this->create_time) >= 20);
+        assert(!isset($this->create_time) || strlen($this->create_time) <= 64);
+        assert(!isset($this->update_time) || strlen($this->update_time) >= 20);
+        assert(!isset($this->update_time) || strlen($this->update_time) <= 64);
+    }
 }

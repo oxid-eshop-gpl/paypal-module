@@ -81,4 +81,12 @@ class Identifier implements JsonSerializable
      * maxLength: 125
      */
     public $value;
+
+    public function validate()
+    {
+        assert(!isset($this->type) || strlen($this->type) >= 1);
+        assert(!isset($this->type) || strlen($this->type) <= 125);
+        assert(!isset($this->value) || strlen($this->value) >= 1);
+        assert(!isset($this->value) || strlen($this->value) <= 125);
+    }
 }

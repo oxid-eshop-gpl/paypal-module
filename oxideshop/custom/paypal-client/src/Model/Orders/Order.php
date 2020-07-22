@@ -121,4 +121,10 @@ class Order extends ActivityTimestamps implements JsonSerializable
      * The details about the payer-selected credit financing offer.
      */
     public $credit_financing_offer;
+
+    public function validate()
+    {
+        assert(!isset($this->expiration_time) || strlen($this->expiration_time) >= 20);
+        assert(!isset($this->expiration_time) || strlen($this->expiration_time) <= 64);
+    }
 }

@@ -27,4 +27,8 @@ class UpdatePaymentCollectionRequest implements JsonSerializable
      * An array of captured payments for a purchase unit. A purchase unit can have zero or more captured payments.
      */
     public $captures;
+
+    public function validate()
+    {
+    }
 }

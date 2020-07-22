@@ -39,4 +39,12 @@ class Email implements JsonSerializable
      * maxLength: 254
      */
     public $email;
+
+    public function validate()
+    {
+        assert(!isset($this->type) || strlen($this->type) >= 1);
+        assert(!isset($this->type) || strlen($this->type) <= 50);
+        assert(!isset($this->email) || strlen($this->email) >= 3);
+        assert(!isset($this->email) || strlen($this->email) <= 254);
+    }
 }

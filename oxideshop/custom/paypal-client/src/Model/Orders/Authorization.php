@@ -96,4 +96,18 @@ class Authorization extends AuthorizationStatus implements JsonSerializable
      * maxLength: 64
      */
     public $update_time;
+
+    public function validate()
+    {
+        assert(isset($this->amount));
+        assert(!isset($this->custom_id) || strlen($this->custom_id) <= 127);
+        assert(!isset($this->alternate_id) || strlen($this->alternate_id) >= 1);
+        assert(!isset($this->alternate_id) || strlen($this->alternate_id) <= 22);
+        assert(!isset($this->expiration_time) || strlen($this->expiration_time) >= 20);
+        assert(!isset($this->expiration_time) || strlen($this->expiration_time) <= 64);
+        assert(!isset($this->create_time) || strlen($this->create_time) >= 20);
+        assert(!isset($this->create_time) || strlen($this->create_time) <= 64);
+        assert(!isset($this->update_time) || strlen($this->update_time) >= 20);
+        assert(!isset($this->update_time) || strlen($this->update_time) <= 64);
+    }
 }

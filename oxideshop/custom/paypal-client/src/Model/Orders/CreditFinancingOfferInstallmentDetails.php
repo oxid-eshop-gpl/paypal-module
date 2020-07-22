@@ -31,4 +31,9 @@ class CreditFinancingOfferInstallmentDetails implements JsonSerializable
      * The currency and amount for a financial transaction, such as a balance or payment due.
      */
     public $payment_due;
+
+    public function validate()
+    {
+        assert(isset($this->payment_due));
+    }
 }

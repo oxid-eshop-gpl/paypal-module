@@ -19,4 +19,8 @@ class FinancialInstruments implements JsonSerializable
      * An array of banks attached to this managed account.
      */
     public $banks;
+
+    public function validate()
+    {
+    }
 }

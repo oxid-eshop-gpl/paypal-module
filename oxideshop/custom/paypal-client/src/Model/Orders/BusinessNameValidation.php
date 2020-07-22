@@ -11,4 +11,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 class BusinessNameValidation implements JsonSerializable
 {
     use BaseModel;
+
+    public function validate()
+    {
+    }
 }

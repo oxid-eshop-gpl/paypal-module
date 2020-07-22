@@ -75,4 +75,15 @@ class Person implements JsonSerializable
      * registration number collected from the user.
      */
     public $documents;
+
+    public function validate()
+    {
+        assert(!isset($this->id) || strlen($this->id) >= 1);
+        assert(!isset($this->id) || strlen($this->id) <= 20);
+        assert(!isset($this->party_id) || strlen($this->party_id) >= 1);
+        assert(!isset($this->party_id) || strlen($this->party_id) <= 20);
+        assert(!isset($this->citizenship) || strlen($this->citizenship) >= 2);
+        assert(!isset($this->citizenship) || strlen($this->citizenship) <= 2);
+        assert(isset($this->birth_details));
+    }
 }

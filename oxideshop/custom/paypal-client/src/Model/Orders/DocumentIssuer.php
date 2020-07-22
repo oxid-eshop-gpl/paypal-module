@@ -45,4 +45,14 @@ class DocumentIssuer implements JsonSerializable
      * maxLength: 255
      */
     public $authority;
+
+    public function validate()
+    {
+        assert(!isset($this->country_code) || strlen($this->country_code) >= 2);
+        assert(!isset($this->country_code) || strlen($this->country_code) <= 2);
+        assert(!isset($this->province_code) || strlen($this->province_code) >= 5);
+        assert(!isset($this->province_code) || strlen($this->province_code) <= 6);
+        assert(!isset($this->authority) || strlen($this->authority) >= 1);
+        assert(!isset($this->authority) || strlen($this->authority) <= 255);
+    }
 }

@@ -45,4 +45,14 @@ class GiropayRequest implements JsonSerializable
      * maxLength: 11
      */
     public $bic;
+
+    public function validate()
+    {
+        assert(!isset($this->name) || strlen($this->name) >= 3);
+        assert(!isset($this->name) || strlen($this->name) <= 300);
+        assert(!isset($this->country_code) || strlen($this->country_code) >= 2);
+        assert(!isset($this->country_code) || strlen($this->country_code) <= 2);
+        assert(!isset($this->bic) || strlen($this->bic) >= 8);
+        assert(!isset($this->bic) || strlen($this->bic) <= 11);
+    }
 }

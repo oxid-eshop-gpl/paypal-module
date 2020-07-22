@@ -32,4 +32,10 @@ class NetAmountBreakdownItem implements JsonSerializable
      * The exchange rate that determines the amount to convert from one currency to another currency.
      */
     public $exchange_rate;
+
+    public function validate()
+    {
+        assert(isset($this->payable_amount));
+        assert(isset($this->converted_amount));
+    }
 }

@@ -19,4 +19,9 @@ class Bank implements JsonSerializable
      * ACH bank details required to fund the payment.
      */
     public $ach_debit;
+
+    public function validate()
+    {
+        assert(isset($this->ach_debit));
+    }
 }

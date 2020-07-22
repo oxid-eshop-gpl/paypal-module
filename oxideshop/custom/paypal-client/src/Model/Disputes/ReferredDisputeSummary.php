@@ -118,4 +118,21 @@ class ReferredDisputeSummary implements JsonSerializable
      * An array of request-related [HATEOAS links](/docs/api/hateoas-links/).
      */
     public $links;
+
+    public function validate()
+    {
+        assert(!isset($this->dispute_id) || strlen($this->dispute_id) >= 6);
+        assert(!isset($this->dispute_id) || strlen($this->dispute_id) <= 20);
+        assert(!isset($this->create_time) || strlen($this->create_time) >= 20);
+        assert(!isset($this->create_time) || strlen($this->create_time) <= 64);
+        assert(!isset($this->update_time) || strlen($this->update_time) >= 20);
+        assert(!isset($this->update_time) || strlen($this->update_time) <= 64);
+        assert(isset($this->dispute_amount));
+        assert(!isset($this->reason) || strlen($this->reason) >= 1);
+        assert(!isset($this->reason) || strlen($this->reason) <= 255);
+        assert(!isset($this->status) || strlen($this->status) >= 1);
+        assert(!isset($this->status) || strlen($this->status) <= 255);
+        assert(!isset($this->dispute_flow) || strlen($this->dispute_flow) >= 1);
+        assert(!isset($this->dispute_flow) || strlen($this->dispute_flow) <= 255);
+    }
 }

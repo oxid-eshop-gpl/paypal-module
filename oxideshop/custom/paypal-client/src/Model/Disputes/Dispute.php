@@ -405,4 +405,32 @@ class Dispute implements JsonSerializable
      * An array of request-related [HATEOAS links](/docs/api/hateoas-links/).
      */
     public $links;
+
+    public function validate()
+    {
+        assert(!isset($this->dispute_id) || strlen($this->dispute_id) >= 1);
+        assert(!isset($this->dispute_id) || strlen($this->dispute_id) <= 255);
+        assert(!isset($this->create_time) || strlen($this->create_time) >= 20);
+        assert(!isset($this->create_time) || strlen($this->create_time) <= 64);
+        assert(!isset($this->update_time) || strlen($this->update_time) >= 20);
+        assert(!isset($this->update_time) || strlen($this->update_time) <= 64);
+        assert(!isset($this->reason) || strlen($this->reason) >= 1);
+        assert(!isset($this->reason) || strlen($this->reason) <= 255);
+        assert(!isset($this->status) || strlen($this->status) >= 1);
+        assert(!isset($this->status) || strlen($this->status) <= 255);
+        assert(isset($this->dispute_amount));
+        assert(isset($this->dispute_fee));
+        assert(!isset($this->external_reason_code) || strlen($this->external_reason_code) >= 1);
+        assert(!isset($this->external_reason_code) || strlen($this->external_reason_code) <= 2000);
+        assert(!isset($this->dispute_life_cycle_stage) || strlen($this->dispute_life_cycle_stage) >= 1);
+        assert(!isset($this->dispute_life_cycle_stage) || strlen($this->dispute_life_cycle_stage) <= 255);
+        assert(!isset($this->dispute_channel) || strlen($this->dispute_channel) >= 1);
+        assert(!isset($this->dispute_channel) || strlen($this->dispute_channel) <= 255);
+        assert(!isset($this->buyer_response_due_date) || strlen($this->buyer_response_due_date) >= 20);
+        assert(!isset($this->buyer_response_due_date) || strlen($this->buyer_response_due_date) <= 64);
+        assert(!isset($this->seller_response_due_date) || strlen($this->seller_response_due_date) >= 20);
+        assert(!isset($this->seller_response_due_date) || strlen($this->seller_response_due_date) <= 64);
+        assert(!isset($this->dispute_flow) || strlen($this->dispute_flow) >= 1);
+        assert(!isset($this->dispute_flow) || strlen($this->dispute_flow) <= 255);
+    }
 }

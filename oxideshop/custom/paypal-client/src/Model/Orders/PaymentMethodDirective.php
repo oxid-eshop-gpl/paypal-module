@@ -37,4 +37,12 @@ class PaymentMethodDirective implements JsonSerializable
      * Reasons for the decision. Usually set for a DENY decision.
      */
     public $reason;
+
+    public function validate()
+    {
+        assert(!isset($this->payment_processing_type) || strlen($this->payment_processing_type) >= 1);
+        assert(!isset($this->payment_processing_type) || strlen($this->payment_processing_type) <= 127);
+        assert(!isset($this->processing_decision) || strlen($this->processing_decision) >= 1);
+        assert(!isset($this->processing_decision) || strlen($this->processing_decision) <= 30);
+    }
 }

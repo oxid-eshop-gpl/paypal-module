@@ -56,4 +56,15 @@ class AmountBreakdown implements JsonSerializable
      * The currency and amount for a financial transaction, such as a balance or payment due.
      */
     public $discount;
+
+    public function validate()
+    {
+        assert(isset($this->item_total));
+        assert(isset($this->shipping));
+        assert(isset($this->handling));
+        assert(isset($this->tax_total));
+        assert(isset($this->insurance));
+        assert(isset($this->shipping_discount));
+        assert(isset($this->discount));
+    }
 }

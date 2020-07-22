@@ -89,4 +89,18 @@ class Party implements JsonSerializable
      * maxLength: 64
      */
     public $update_time;
+
+    public function validate()
+    {
+        assert(!isset($this->id) || strlen($this->id) >= 1);
+        assert(!isset($this->id) || strlen($this->id) <= 30);
+        assert(!isset($this->external_id) || strlen($this->external_id) >= 1);
+        assert(!isset($this->external_id) || strlen($this->external_id) <= 30);
+        assert(!isset($this->primary_email) || strlen($this->primary_email) >= 3);
+        assert(!isset($this->primary_email) || strlen($this->primary_email) <= 254);
+        assert(!isset($this->create_time) || strlen($this->create_time) >= 20);
+        assert(!isset($this->create_time) || strlen($this->create_time) <= 64);
+        assert(!isset($this->update_time) || strlen($this->update_time) >= 20);
+        assert(!isset($this->update_time) || strlen($this->update_time) <= 64);
+    }
 }

@@ -93,4 +93,16 @@ class SubscriptionStatus implements JsonSerializable
      * maxLength: 24
      */
     public $status_changed_by;
+
+    public function validate()
+    {
+        assert(!isset($this->status) || strlen($this->status) >= 1);
+        assert(!isset($this->status) || strlen($this->status) <= 24);
+        assert(!isset($this->status_change_note) || strlen($this->status_change_note) >= 1);
+        assert(!isset($this->status_change_note) || strlen($this->status_change_note) <= 128);
+        assert(!isset($this->status_update_time) || strlen($this->status_update_time) >= 20);
+        assert(!isset($this->status_update_time) || strlen($this->status_update_time) <= 64);
+        assert(!isset($this->status_changed_by) || strlen($this->status_changed_by) >= 1);
+        assert(!isset($this->status_changed_by) || strlen($this->status_changed_by) <= 24);
+    }
 }

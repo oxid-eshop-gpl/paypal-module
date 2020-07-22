@@ -19,4 +19,8 @@ class PaypalWalletResponse implements JsonSerializable
      * Additional attributes associated with the use of a PayPal Wallet.
      */
     public $attributes;
+
+    public function validate()
+    {
+    }
 }

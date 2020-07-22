@@ -54,4 +54,13 @@ class Message implements JsonSerializable
      * maxLength: 2000
      */
     public $content;
+
+    public function validate()
+    {
+        assert(!isset($this->posted_by) || strlen($this->posted_by) >= 1);
+        assert(!isset($this->posted_by) || strlen($this->posted_by) <= 255);
+        assert(!isset($this->time_posted) || strlen($this->time_posted) >= 20);
+        assert(!isset($this->time_posted) || strlen($this->time_posted) <= 64);
+        assert(!isset($this->content) || strlen($this->content) <= 2000);
+    }
 }

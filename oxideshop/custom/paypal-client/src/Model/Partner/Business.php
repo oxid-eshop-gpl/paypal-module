@@ -69,4 +69,11 @@ class Business implements JsonSerializable
      * registration number that were collected from the user.
      */
     public $documents;
+
+    public function validate()
+    {
+        assert(isset($this->business_industry));
+        assert(!isset($this->website) || strlen($this->website) >= 1);
+        assert(!isset($this->website) || strlen($this->website) <= 50);
+    }
 }

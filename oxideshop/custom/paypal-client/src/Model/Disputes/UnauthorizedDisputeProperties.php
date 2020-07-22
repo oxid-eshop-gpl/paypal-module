@@ -48,4 +48,10 @@ class UnauthorizedDisputeProperties implements JsonSerializable
      * An array of transaction IDs that the user reported as unauthorized but that PayPal rejected.
      */
     public $rejected_dispute_transactions;
+
+    public function validate()
+    {
+        assert(!isset($this->review_sla) || strlen($this->review_sla) >= 20);
+        assert(!isset($this->review_sla) || strlen($this->review_sla) <= 64);
+    }
 }

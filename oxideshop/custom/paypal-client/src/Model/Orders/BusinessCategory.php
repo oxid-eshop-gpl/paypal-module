@@ -41,4 +41,14 @@ class BusinessCategory implements JsonSerializable
      * maxLength: 4
      */
     public $mcc_code;
+
+    public function validate()
+    {
+        assert(!isset($this->category) || strlen($this->category) >= 1);
+        assert(!isset($this->category) || strlen($this->category) <= 50);
+        assert(!isset($this->sub_category) || strlen($this->sub_category) >= 1);
+        assert(!isset($this->sub_category) || strlen($this->sub_category) <= 50);
+        assert(!isset($this->mcc_code) || strlen($this->mcc_code) >= 1);
+        assert(!isset($this->mcc_code) || strlen($this->mcc_code) <= 4);
+    }
 }

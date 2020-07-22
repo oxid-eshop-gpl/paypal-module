@@ -31,4 +31,10 @@ class Adjudicate implements JsonSerializable
      * maxLength: 255
      */
     public $adjudication_outcome;
+
+    public function validate()
+    {
+        assert(!isset($this->adjudication_outcome) || strlen($this->adjudication_outcome) >= 1);
+        assert(!isset($this->adjudication_outcome) || strlen($this->adjudication_outcome) <= 255);
+    }
 }

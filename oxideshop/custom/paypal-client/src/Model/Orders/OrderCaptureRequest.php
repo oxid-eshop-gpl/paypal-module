@@ -19,4 +19,8 @@ class OrderCaptureRequest implements JsonSerializable
      * The payment source definition.
      */
     public $payment_source;
+
+    public function validate()
+    {
+    }
 }

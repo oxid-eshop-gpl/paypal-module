@@ -34,4 +34,10 @@ class RequireEvidence implements JsonSerializable
      * maxLength: 255
      */
     public $action;
+
+    public function validate()
+    {
+        assert(!isset($this->action) || strlen($this->action) >= 1);
+        assert(!isset($this->action) || strlen($this->action) <= 255);
+    }
 }

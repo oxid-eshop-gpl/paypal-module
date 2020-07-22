@@ -176,4 +176,11 @@ class BusinessName implements JsonSerializable
      * maxLength: 4
      */
     public $orthography;
+
+    public function validate()
+    {
+        assert(!isset($this->business_name) || strlen($this->business_name) <= 300);
+        assert(!isset($this->orthography) || strlen($this->orthography) >= 4);
+        assert(!isset($this->orthography) || strlen($this->orthography) <= 4);
+    }
 }

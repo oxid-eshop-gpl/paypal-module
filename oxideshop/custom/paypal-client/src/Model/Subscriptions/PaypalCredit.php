@@ -48,4 +48,12 @@ class PaypalCredit implements JsonSerializable
      * maxLength: 50
      */
     public $type;
+
+    public function validate()
+    {
+        assert(!isset($this->id) || strlen($this->id) >= 4);
+        assert(!isset($this->id) || strlen($this->id) <= 25);
+        assert(!isset($this->type) || strlen($this->type) >= 1);
+        assert(!isset($this->type) || strlen($this->type) <= 50);
+    }
 }

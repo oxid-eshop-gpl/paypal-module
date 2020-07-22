@@ -27,4 +27,8 @@ class PaymentDetailsRequest implements JsonSerializable
      * merchant.
      */
     public $purchase_units;
+
+    public function validate()
+    {
+    }
 }

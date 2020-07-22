@@ -69,4 +69,13 @@ class PaymentPreferences implements JsonSerializable
      * consecutive payments fail.
      */
     public $payment_failure_threshold;
+
+    public function validate()
+    {
+        assert(!isset($this->service_type) || strlen($this->service_type) >= 1);
+        assert(!isset($this->service_type) || strlen($this->service_type) <= 24);
+        assert(isset($this->setup_fee));
+        assert(!isset($this->setup_fee_failure_action) || strlen($this->setup_fee_failure_action) >= 1);
+        assert(!isset($this->setup_fee_failure_action) || strlen($this->setup_fee_failure_action) <= 24);
+    }
 }

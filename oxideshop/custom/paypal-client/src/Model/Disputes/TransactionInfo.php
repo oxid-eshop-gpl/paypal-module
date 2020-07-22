@@ -206,4 +206,25 @@ class TransactionInfo implements JsonSerializable
      * maxLength: 255
      */
     public $provisional_credit_status;
+
+    public function validate()
+    {
+        assert(!isset($this->buyer_transaction_id) || strlen($this->buyer_transaction_id) >= 1);
+        assert(!isset($this->buyer_transaction_id) || strlen($this->buyer_transaction_id) <= 255);
+        assert(!isset($this->seller_transaction_id) || strlen($this->seller_transaction_id) >= 1);
+        assert(!isset($this->seller_transaction_id) || strlen($this->seller_transaction_id) <= 255);
+        assert(!isset($this->create_time) || strlen($this->create_time) >= 20);
+        assert(!isset($this->create_time) || strlen($this->create_time) <= 64);
+        assert(!isset($this->transaction_status) || strlen($this->transaction_status) >= 1);
+        assert(!isset($this->transaction_status) || strlen($this->transaction_status) <= 255);
+        assert(isset($this->gross_amount));
+        assert(!isset($this->invoice_number) || strlen($this->invoice_number) >= 1);
+        assert(!isset($this->invoice_number) || strlen($this->invoice_number) <= 127);
+        assert(!isset($this->custom) || strlen($this->custom) >= 1);
+        assert(!isset($this->custom) || strlen($this->custom) <= 2000);
+        assert(!isset($this->seller_protection_type) || strlen($this->seller_protection_type) >= 1);
+        assert(!isset($this->seller_protection_type) || strlen($this->seller_protection_type) <= 255);
+        assert(!isset($this->provisional_credit_status) || strlen($this->provisional_credit_status) >= 1);
+        assert(!isset($this->provisional_credit_status) || strlen($this->provisional_credit_status) <= 255);
+    }
 }

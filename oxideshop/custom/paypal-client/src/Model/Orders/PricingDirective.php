@@ -62,4 +62,14 @@ class PricingDirective implements JsonSerializable
      * maxLength: 255
      */
     public $type;
+
+    public function validate()
+    {
+        assert(!isset($this->participant_type) || strlen($this->participant_type) >= 1);
+        assert(!isset($this->participant_type) || strlen($this->participant_type) <= 255);
+        assert(!isset($this->account_number) || strlen($this->account_number) >= 1);
+        assert(!isset($this->account_number) || strlen($this->account_number) <= 30);
+        assert(!isset($this->type) || strlen($this->type) >= 1);
+        assert(!isset($this->type) || strlen($this->type) <= 255);
+    }
 }

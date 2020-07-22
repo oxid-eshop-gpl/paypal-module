@@ -41,4 +41,8 @@ class SellerProtection implements JsonSerializable
      * An array of conditions that are covered for the transaction.
      */
     public $dispute_categories;
+
+    public function validate()
+    {
+    }
 }

@@ -55,4 +55,14 @@ class FileReference implements JsonSerializable
      * The size of the file, in bytes.
      */
     public $size;
+
+    public function validate()
+    {
+        assert(!isset($this->id) || strlen($this->id) >= 1);
+        assert(!isset($this->id) || strlen($this->id) <= 255);
+        assert(!isset($this->reference_url) || strlen($this->reference_url) >= 1);
+        assert(!isset($this->reference_url) || strlen($this->reference_url) <= 2000);
+        assert(!isset($this->create_time) || strlen($this->create_time) >= 20);
+        assert(!isset($this->create_time) || strlen($this->create_time) <= 64);
+    }
 }

@@ -25,4 +25,9 @@ class CanceledRecurringBilling implements JsonSerializable
      * The cancellation details.
      */
     public $cancellation_details;
+
+    public function validate()
+    {
+        assert(isset($this->expected_refund));
+    }
 }

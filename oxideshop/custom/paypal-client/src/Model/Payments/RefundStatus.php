@@ -39,4 +39,8 @@ class RefundStatus implements JsonSerializable
      * The details of the refund status.
      */
     public $status_details;
+
+    public function validate()
+    {
+    }
 }
