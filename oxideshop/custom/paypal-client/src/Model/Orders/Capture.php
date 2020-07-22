@@ -67,7 +67,7 @@ class Capture extends CaptureStatus implements JsonSerializable
      * intend to capture additional payments against the authorization. Set to `false` if you intend to capture
      * additional payments against the authorization.
      */
-    public $final_capture;
+    public $final_capture = false;
 
     /**
      * @var SellerReceivableBreakdown
@@ -83,7 +83,7 @@ class Capture extends CaptureStatus implements JsonSerializable
      * @see DISBURSEMENT_MODE_INSTANT
      * @see DISBURSEMENT_MODE_DELAYED
      */
-    public $disbursement_mode;
+    public $disbursement_mode = 'INSTANT';
 
     /**
      * @var Error

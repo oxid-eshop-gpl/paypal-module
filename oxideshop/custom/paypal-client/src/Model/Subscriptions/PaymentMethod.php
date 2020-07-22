@@ -53,7 +53,7 @@ class PaymentMethod implements JsonSerializable
      * @see PAYER_SELECTED_PAYPAL
      * minLength: 1
      */
-    public $payer_selected;
+    public $payer_selected = 'PAYPAL';
 
     /**
      * @var string
@@ -64,7 +64,7 @@ class PaymentMethod implements JsonSerializable
      * @see PAYEE_PREFERRED_IMMEDIATE_PAYMENT_REQUIRED
      * minLength: 1
      */
-    public $payee_preferred;
+    public $payee_preferred = 'UNRESTRICTED';
 
     /**
      * @var string
@@ -84,7 +84,7 @@ class PaymentMethod implements JsonSerializable
      * minLength: 3
      * maxLength: 255
      */
-    public $category;
+    public $category = 'CUSTOMER_PRESENT_SINGLE_PURCHASE';
 
     public function validate()
     {

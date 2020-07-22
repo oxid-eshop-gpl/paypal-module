@@ -54,7 +54,7 @@ class Frequency implements JsonSerializable
      * align="right">52</td></tr><tr><td><code>MONTH</code></td><td
      * align="right">12</td></tr><tr><td><code>YEAR</code></td><td align="right">1</td></tr></tbody></table>
      */
-    public $interval_count;
+    public $interval_count = 1;
 
     public function validate()
     {

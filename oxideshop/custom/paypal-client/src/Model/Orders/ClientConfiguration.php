@@ -145,7 +145,7 @@ class ClientConfiguration implements JsonSerializable
      * minLength: 1
      * maxLength: 255
      */
-    public $product_feature;
+    public $product_feature = 'NONE';
 
     /**
      * @var string
@@ -185,7 +185,7 @@ class ClientConfiguration implements JsonSerializable
      * minLength: 1
      * maxLength: 255
      */
-    public $integration_artifact;
+    public $integration_artifact = 'NONE';
 
     /**
      * @var ProductExperience

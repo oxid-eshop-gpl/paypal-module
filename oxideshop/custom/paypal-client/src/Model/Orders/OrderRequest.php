@@ -48,7 +48,7 @@ class OrderRequest implements JsonSerializable
      * @see PROCESSING_INSTRUCTION_ORDER_SAVED_ON_BUYER_APPROVAL
      * @see PROCESSING_INSTRUCTION_NO_INSTRUCTION
      */
-    public $processing_instruction;
+    public $processing_instruction = 'NO_INSTRUCTION';
 
     /**
      * @var Payer

@@ -60,7 +60,7 @@ class BillingCycle implements JsonSerializable
      * billing cycles can be executed infinite times (value of <code>0</code> for <code>total_cycles</code>) or a
      * finite number of times (value between <code>1</code> and <code>999</code> for <code>total_cycles</code>).
      */
-    public $total_cycles;
+    public $total_cycles = 1;
 
     public function validate()
     {

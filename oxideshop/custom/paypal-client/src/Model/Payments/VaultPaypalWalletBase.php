@@ -82,7 +82,7 @@ class VaultPaypalWalletBase implements JsonSerializable
      * minLength: 1
      * maxLength: 255
      */
-    public $customer_type;
+    public $customer_type = 'CONSUMER';
 
     /**
      * @var boolean
@@ -92,7 +92,7 @@ class VaultPaypalWalletBase implements JsonSerializable
      * payer, different customer at merchant/platform. This helps to identify customers distinctly even though they
      * may share the same PayPal account. This only applies to PayPal payment source.
      */
-    public $permit_multiple_payment_tokens;
+    public $permit_multiple_payment_tokens = false;
 
     public function validate()
     {

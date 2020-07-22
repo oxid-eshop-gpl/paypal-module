@@ -25,7 +25,7 @@ class Taxes implements JsonSerializable
      * @var boolean
      * Indicates whether the tax was already included in the billing amount.
      */
-    public $inclusive;
+    public $inclusive = true;
 
     public function validate()
     {

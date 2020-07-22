@@ -48,7 +48,7 @@ class AchDebit implements JsonSerializable
      * minLength: 1
      * maxLength: 255
      */
-    public $account_type;
+    public $account_type = 'CHECKING';
 
     /**
      * @var string

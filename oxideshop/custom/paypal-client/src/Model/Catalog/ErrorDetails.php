@@ -31,7 +31,7 @@ class ErrorDetails implements JsonSerializable
      * @var string
      * The location of the field that caused the error. Value is `body`, `path`, or `query`.
      */
-    public $location;
+    public $location = 'body';
 
     /**
      * @var string

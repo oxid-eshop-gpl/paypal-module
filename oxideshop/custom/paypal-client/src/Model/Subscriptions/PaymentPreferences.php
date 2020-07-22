@@ -36,13 +36,13 @@ class PaymentPreferences implements JsonSerializable
      * minLength: 1
      * maxLength: 24
      */
-    public $service_type;
+    public $service_type = 'PREPAID';
 
     /**
      * @var boolean
      * Indicates whether to automatically bill the outstanding amount in the next billing cycle.
      */
-    public $auto_bill_outstanding;
+    public $auto_bill_outstanding = true;
 
     /**
      * @var Money
@@ -60,7 +60,7 @@ class PaymentPreferences implements JsonSerializable
      * minLength: 1
      * maxLength: 24
      */
-    public $setup_fee_failure_action;
+    public $setup_fee_failure_action = 'CANCEL';
 
     /**
      * @var integer
@@ -68,7 +68,7 @@ class PaymentPreferences implements JsonSerializable
      * `payment_failure_threshold` is `2`, the subscription automatically updates to the `SUSPEND` state if two
      * consecutive payments fail.
      */
-    public $payment_failure_threshold;
+    public $payment_failure_threshold = 0;
 
     public function validate()
     {

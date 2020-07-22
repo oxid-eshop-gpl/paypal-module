@@ -40,7 +40,7 @@ class RollOutStrategy implements JsonSerializable
      * minLength: 1
      * maxLength: 30
      */
-    public $process_change_from;
+    public $process_change_from = 'NEXT_PAYMENT';
 
     public function validate()
     {

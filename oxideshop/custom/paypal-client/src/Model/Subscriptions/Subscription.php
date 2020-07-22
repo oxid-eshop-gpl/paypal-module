@@ -86,7 +86,7 @@ class Subscription extends SubscriptionStatus implements JsonSerializable
      * @var boolean
      * DEPRECATED. Indicates whether the subscription auto-renews after the billing cycles complete.
      */
-    public $auto_renewal;
+    public $auto_renewal = false;
 
     /**
      * @var string

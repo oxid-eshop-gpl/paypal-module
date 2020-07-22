@@ -36,7 +36,7 @@ class RestApiIntegration implements JsonSerializable
      * minLength: 1
      * maxLength: 255
      */
-    public $integration_method;
+    public $integration_method = 'PAYPAL';
 
     /**
      * @var string

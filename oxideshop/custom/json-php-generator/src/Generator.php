@@ -390,7 +390,7 @@ class Generator
             }
         }
         if (isset($propDef['default'])) {
-          //  $property->setValue($propDef['default']);
+            $property->setValue($propDef['default']);
         }
         if (isset($propDef['required'])) {
             $validateMethod->addBody("assert(isset(\$this->$name));");

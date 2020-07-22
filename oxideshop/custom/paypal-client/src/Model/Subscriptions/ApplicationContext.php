@@ -63,7 +63,7 @@ class ApplicationContext implements JsonSerializable
      * minLength: 1
      * maxLength: 24
      */
-    public $shipping_preference;
+    public $shipping_preference = 'GET_FROM_FILE';
 
     /**
      * @var string
@@ -75,7 +75,7 @@ class ApplicationContext implements JsonSerializable
      * minLength: 1
      * maxLength: 24
      */
-    public $user_action;
+    public $user_action = 'SUBSCRIBE_NOW';
 
     /**
      * @var PaymentMethod

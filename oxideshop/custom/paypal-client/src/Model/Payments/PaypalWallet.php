@@ -30,7 +30,7 @@ class PaypalWallet implements JsonSerializable
      * minLength: 1
      * maxLength: 255
      */
-    public $payment_method_preference;
+    public $payment_method_preference = 'UNRESTRICTED';
 
     /**
      * @var PaypalWalletAttributes

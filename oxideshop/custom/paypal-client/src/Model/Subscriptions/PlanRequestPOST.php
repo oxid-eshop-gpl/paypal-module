@@ -58,7 +58,7 @@ class PlanRequestPOST implements JsonSerializable
      * minLength: 1
      * maxLength: 24
      */
-    public $status;
+    public $status = 'ACTIVE';
 
     /**
      * @var string
@@ -79,7 +79,7 @@ class PlanRequestPOST implements JsonSerializable
      * minLength: 1
      * maxLength: 24
      */
-    public $usage_type;
+    public $usage_type = 'LICENSED';
 
     /**
      * @var array<BillingCycle>
@@ -104,7 +104,7 @@ class PlanRequestPOST implements JsonSerializable
      * @var boolean
      * Indicates whether you can subscribe to this plan by providing a quantity for the goods or service.
      */
-    public $quantity_supported;
+    public $quantity_supported = false;
 
     public function validate()
     {

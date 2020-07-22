@@ -71,7 +71,7 @@ class OrderApplicationContext implements JsonSerializable
      * @see LANDING_PAGE_BILLING
      * @see LANDING_PAGE_NO_PREFERENCE
      */
-    public $landing_page;
+    public $landing_page = 'NO_PREFERENCE';
 
     /**
      * @var string
@@ -84,7 +84,7 @@ class OrderApplicationContext implements JsonSerializable
      * @see SHIPPING_PREFERENCE_NO_SHIPPING
      * @see SHIPPING_PREFERENCE_SET_PROVIDED_ADDRESS
      */
-    public $shipping_preference;
+    public $shipping_preference = 'GET_FROM_FILE';
 
     /**
      * @var string
@@ -94,7 +94,7 @@ class OrderApplicationContext implements JsonSerializable
      * @see USER_ACTION_CONTINUE
      * @see USER_ACTION_PAY_NOW
      */
-    public $user_action;
+    public $user_action = 'CONTINUE';
 
     /**
      * @var PaymentMethod
@@ -133,7 +133,7 @@ class OrderApplicationContext implements JsonSerializable
      * @var boolean
      * Signals to vault the payment source upon successful validation.
      */
-    public $vault;
+    public $vault = false;
 
     /**
      * @var PaymentSource

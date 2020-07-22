@@ -36,7 +36,7 @@ class PaymentInstruction implements JsonSerializable
      * @see DISBURSEMENT_MODE_INSTANT
      * @see DISBURSEMENT_MODE_DELAYED
      */
-    public $disbursement_mode;
+    public $disbursement_mode = 'INSTANT';
 
     public function validate()
     {

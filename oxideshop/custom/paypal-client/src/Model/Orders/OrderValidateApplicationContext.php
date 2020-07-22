@@ -22,7 +22,7 @@ class OrderValidateApplicationContext implements JsonSerializable
      * Signals to vault the payment source upon successful validation. The payment source is vaulted upon successful
      * capture when INTENT=SALE and authorization when INTENT=AUTHORIZE.
      */
-    public $vault;
+    public $vault = false;
 
     public function validate()
     {

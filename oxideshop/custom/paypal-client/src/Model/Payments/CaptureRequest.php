@@ -26,7 +26,7 @@ class CaptureRequest extends SupplementaryPurchaseData implements JsonSerializab
      * intend to capture additional payments against the authorization. Set to `false` if you intend to capture
      * additional payments against the authorization.
      */
-    public $final_capture;
+    public $final_capture = 'false';
 
     /**
      * @var PaymentInstruction

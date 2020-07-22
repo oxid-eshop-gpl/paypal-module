@@ -57,7 +57,7 @@ class CustomizedXUnsupportedNineEightNineFourApplicationContext implements JsonS
      * minLength: 1
      * maxLength: 24
      */
-    public $shipping_preference;
+    public $shipping_preference = 'GET_FROM_FILE';
 
     /**
      * @var PaymentMethod

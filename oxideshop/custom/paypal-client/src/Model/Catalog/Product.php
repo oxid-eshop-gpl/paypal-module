@@ -1399,7 +1399,7 @@ class Product implements JsonSerializable
      * minLength: 1
      * maxLength: 24
      */
-    public $type;
+    public $type = 'PHYSICAL';
 
     /**
      * @var string
