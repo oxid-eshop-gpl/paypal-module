@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The currency and amount for a financial transaction, such as a balance or payment due.
+ *
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-common_components-v3-schema-json-openapi-2.0-money.json
  */
 class Money implements JsonSerializable
 {

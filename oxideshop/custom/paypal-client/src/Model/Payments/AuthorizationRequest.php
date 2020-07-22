@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Authorizes either a portion or the full amount of a saved order.
+ *
+ * generated from: authorization_request.json
  */
 class AuthorizationRequest implements JsonSerializable
 {

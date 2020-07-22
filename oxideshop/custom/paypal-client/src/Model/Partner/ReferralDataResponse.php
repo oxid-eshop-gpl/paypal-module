@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The share referral data response.
+ *
+ * generated from: referral_data-referral_data_response.json
  */
 class ReferralDataResponse implements JsonSerializable
 {

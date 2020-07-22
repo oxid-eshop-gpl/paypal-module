@@ -8,6 +8,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 /**
  * The details for the customer who funds the payment. For example, the customer's first name, last name, and
  * email address.
+ *
+ * generated from: response-buyer.json
  */
 class Buyer implements JsonSerializable
 {

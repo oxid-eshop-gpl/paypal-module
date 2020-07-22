@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The details about the partner dispute.
+ *
+ * generated from: referred-reference_dispute.json
  */
 class ReferenceDispute implements JsonSerializable
 {

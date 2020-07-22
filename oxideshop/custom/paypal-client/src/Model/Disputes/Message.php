@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * A customer- or merchant-posted message for the dispute.
+ *
+ * generated from: response-message.json
  */
 class Message implements JsonSerializable
 {

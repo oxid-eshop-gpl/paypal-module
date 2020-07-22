@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The credit not processed details.
+ *
+ * generated from: response-credit_not_processed.json
  */
 class CreditNotProcessed implements JsonSerializable
 {

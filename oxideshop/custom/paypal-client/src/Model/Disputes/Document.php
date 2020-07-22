@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * An uploaded document as a binary object that supports a dispute.
+ *
+ * generated from: response-document.json
  */
 class Document implements JsonSerializable
 {

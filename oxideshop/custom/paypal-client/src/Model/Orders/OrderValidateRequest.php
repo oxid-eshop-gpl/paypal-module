@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Completes an action for an order.
+ *
+ * generated from: order_validate_request.json
  */
 class OrderValidateRequest implements JsonSerializable
 {

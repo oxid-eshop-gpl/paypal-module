@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The offer history.
+ *
+ * generated from: response-offer_history.json
  */
 class OfferHistory implements JsonSerializable
 {

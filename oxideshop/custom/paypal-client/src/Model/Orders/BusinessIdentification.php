@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Business identification details.
+ *
+ * generated from: model-business_identification.json
  */
 class BusinessIdentification implements JsonSerializable
 {

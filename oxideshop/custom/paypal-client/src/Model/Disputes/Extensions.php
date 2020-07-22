@@ -8,6 +8,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 /**
  * The extended properties for the dispute. Includes additional information for a dispute category, such as
  * billing disputes, the original transaction ID, and the correct amount.
+ *
+ * generated from: response-extensions.json
  */
 class Extensions implements JsonSerializable
 {

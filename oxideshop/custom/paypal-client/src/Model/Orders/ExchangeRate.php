@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The exchange rate that determines the amount to convert from one currency to another currency.
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-exchange_rate.json
  */
 class ExchangeRate implements JsonSerializable
 {

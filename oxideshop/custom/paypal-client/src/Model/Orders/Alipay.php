@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Information used to pay using Alipay.
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-alipay.json
  */
 class Alipay implements JsonSerializable
 {

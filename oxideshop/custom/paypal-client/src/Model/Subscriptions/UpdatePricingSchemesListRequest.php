@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The update pricing scheme request details.
+ *
+ * generated from: update_pricing_schemes_list_request.json
  */
 class UpdatePricingSchemesListRequest implements JsonSerializable
 {

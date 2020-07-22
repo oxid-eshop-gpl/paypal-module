@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The details for a product in the collection response.
+ *
+ * generated from: product_collection_element.json
  */
 class ProductCollectionElement implements JsonSerializable
 {

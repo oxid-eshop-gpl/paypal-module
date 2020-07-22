@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The details of the flight leg.
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-flight_leg.json
  */
 class FlightLeg implements JsonSerializable
 {

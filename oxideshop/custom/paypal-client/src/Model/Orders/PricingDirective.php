@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Pricing directive for transaction indication the source and type of pricing.
+ *
+ * generated from: model-pricing_directive.json
  */
 class PricingDirective implements JsonSerializable
 {

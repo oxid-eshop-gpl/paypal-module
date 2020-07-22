@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The payment preferences for a subscription.
+ *
+ * generated from: payment_preferences.json
  */
 class PaymentPreferences implements JsonSerializable
 {

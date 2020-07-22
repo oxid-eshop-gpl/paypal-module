@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Results of 3D Secure Authentication.
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-three_d_secure_authentication_response.json
  */
 class ThreeDSecureAuthenticationResponse implements JsonSerializable
 {

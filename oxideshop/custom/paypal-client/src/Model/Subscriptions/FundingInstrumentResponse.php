@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The customer's funding instrument. Returned as a funding option to external entities.
+ *
+ * generated from: merchant.CommonComponentsSpecification-v1-schema-funding_instrument_response.json
  */
 class FundingInstrumentResponse implements JsonSerializable
 {

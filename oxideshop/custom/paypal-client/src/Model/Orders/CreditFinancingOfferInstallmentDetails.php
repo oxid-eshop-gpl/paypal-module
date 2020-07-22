@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The payer-approved installment payment plan details.
+ *
+ * generated from: CreditFinancingOffer_installment_details
  */
 class CreditFinancingOfferInstallmentDetails implements JsonSerializable
 {

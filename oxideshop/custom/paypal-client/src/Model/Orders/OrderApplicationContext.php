@@ -10,6 +10,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
  * PayPal.<blockquote><strong>Note:</strong> Partners and Marketplaces might configure <code>brand_name</code>
  * and <code>shipping_preference</code> during partner account setup, which overrides the request
  * values.</blockquote>
+ *
+ * generated from: order_application_context.json
  */
 class OrderApplicationContext implements JsonSerializable
 {

@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The details for the airline ticket.
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-airline_ticket.json
  */
 class AirlineTicket implements JsonSerializable
 {

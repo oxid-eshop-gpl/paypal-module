@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The integration details for PayPal REST endpoints.
+ *
+ * generated from: RestApiIntegration_third_party_details
  */
 class RestApiIntegrationThirdPartyDetails implements JsonSerializable
 {

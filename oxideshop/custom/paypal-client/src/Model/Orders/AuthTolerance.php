@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Auth-Capture Tolerance details.
+ *
+ * generated from: model-auth_tolerance.json
  */
 class AuthTolerance implements JsonSerializable
 {

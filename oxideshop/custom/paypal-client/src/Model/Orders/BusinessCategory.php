@@ -8,6 +8,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 /**
  * Business category information. Refer:
  * https://developer.paypal.com/docs/commerce-platform/reference/categories-subcategories/.
+ *
+ * generated from: model-business_category.json
  */
 class BusinessCategory implements JsonSerializable
 {

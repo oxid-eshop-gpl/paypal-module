@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The documents associated with the business.
+ *
+ * generated from: customer_common_overrides-business_document.json
  */
 class BusinessDocument extends Document implements JsonSerializable
 {

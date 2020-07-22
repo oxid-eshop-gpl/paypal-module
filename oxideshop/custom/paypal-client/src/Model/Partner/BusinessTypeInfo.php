@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The type and subtype of the business.
+ *
+ * generated from: customer_common-v1-schema-account_model-business_type_info.json
  */
 class BusinessTypeInfo implements JsonSerializable
 {

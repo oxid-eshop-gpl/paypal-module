@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Address and confirmation details.
+ *
+ * generated from: model-address_with_confirmation.json
  */
 class AddressWithConfirmation extends AddressName implements JsonSerializable
 {

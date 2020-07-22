@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Payment Directives for transaction.
+ *
+ * generated from: model-payment_directives.json
  */
 class PaymentDirectives implements JsonSerializable
 {

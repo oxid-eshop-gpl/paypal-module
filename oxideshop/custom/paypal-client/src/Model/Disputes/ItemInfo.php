@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The information for a purchased item in a disputed transaction.
+ *
+ * generated from: response-item_info.json
  */
 class ItemInfo implements JsonSerializable
 {

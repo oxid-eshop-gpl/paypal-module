@@ -8,6 +8,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 /**
  * The authorization with additional payment details, such as risk assessment and processor response. These
  * details are populated only for certain payment methods.
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-authorization_with_additional_data.json
  */
 class AuthorizationWithAdditionalData extends Authorization implements JsonSerializable
 {

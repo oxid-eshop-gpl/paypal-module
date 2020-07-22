@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The pricing tier details.
+ *
+ * generated from: pricing_tier.json
  */
 class PricingTier implements JsonSerializable
 {

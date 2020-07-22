@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Facilitator involved in the Payment. Usually the API caller. Example: AliExpress, facebook, eBay.
+ *
+ * generated from: model-facilitator.json
  */
 class Facilitator extends Participant implements JsonSerializable
 {

@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Information needed to pay using Sofort.
+ *
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-sofort_request.json
  */
 class SofortRequest implements JsonSerializable
 {

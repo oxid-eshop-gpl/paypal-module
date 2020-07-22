@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * A resource representing a Facilitator/Partner who facilitates a transaction.
+ *
+ * generated from: response-facilitator.json
  */
 class Facilitator implements JsonSerializable
 {

@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * A merchant or customer request to provide evidence for a dispute.
+ *
+ * generated from: request-evidences.json
  */
 class Evidences implements JsonSerializable
 {

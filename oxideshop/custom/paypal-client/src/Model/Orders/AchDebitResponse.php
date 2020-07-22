@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * ACH bank details response object
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-ach_debit_response.json
  */
 class AchDebitResponse implements JsonSerializable
 {

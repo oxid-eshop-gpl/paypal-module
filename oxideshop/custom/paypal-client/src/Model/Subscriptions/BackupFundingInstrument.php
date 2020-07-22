@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The backup funding instrument to use for payment when the primary instrument fails.
+ *
+ * generated from: merchant.CommonComponentsSpecification-v1-schema-backup_funding_instrument.json
  */
 class BackupFundingInstrument implements JsonSerializable
 {

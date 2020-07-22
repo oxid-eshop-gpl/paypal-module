@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Information needed to pay using TrustPay.
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-trustpay_request.json
  */
 class TrustpayRequest implements JsonSerializable
 {

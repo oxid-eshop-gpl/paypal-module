@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The subsequent action.
+ *
+ * generated from: response-subsequent_action.json
  */
 class SubsequentAction implements JsonSerializable
 {

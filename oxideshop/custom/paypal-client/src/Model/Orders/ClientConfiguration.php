@@ -8,6 +8,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 /**
  * Client configuration that captures the product flows and specific experiences that a user completes a paypal
  * transaction.
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-common_components-v3-schema-json-openapi-2.0-client_configuration.json
  */
 class ClientConfiguration implements JsonSerializable
 {

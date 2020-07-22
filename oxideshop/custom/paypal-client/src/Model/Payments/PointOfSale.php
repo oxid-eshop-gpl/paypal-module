@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The API caller-provided information about the store.
+ *
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-point_of_sale.json
  */
 class PointOfSale implements JsonSerializable
 {

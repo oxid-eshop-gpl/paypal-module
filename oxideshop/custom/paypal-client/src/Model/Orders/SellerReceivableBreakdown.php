@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The detailed breakdown of the capture activity.
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-seller_receivable_breakdown.json
  */
 class SellerReceivableBreakdown implements JsonSerializable
 {

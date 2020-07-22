@@ -8,6 +8,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 /**
  * The phone number, in its canonical international [E.164 numbering plan
  * format](https://www.itu.int/rec/T-REC-E.164/en).
+ *
+ * generated from: customer_common_overrides-person_phone_detail.json
  */
 class PersonPhoneDetail extends Phone implements JsonSerializable
 {

@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The details about the allowable lifecycle stage and the reason why it is allowed.
+ *
+ * generated from: EligibleDisputeReason_allowable_life_cycle
  */
 class EligibleDisputeReasonAllowableLifeCycle implements JsonSerializable
 {

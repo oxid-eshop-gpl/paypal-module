@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The business entity of the account.
+ *
+ * generated from: customer_common_overrides-business_entity.json
  */
 class BusinessEntity extends Business implements JsonSerializable
 {

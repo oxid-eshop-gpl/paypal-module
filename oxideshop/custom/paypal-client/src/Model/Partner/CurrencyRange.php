@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The currency range, from the minimum inclusive amount to the maximum inclusive amount.
+ *
+ * generated from: onboarding_common-currency_range.json
  */
 class CurrencyRange implements JsonSerializable
 {

@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Financial instruments attached to this account.
+ *
+ * generated from: referral_data-financial_instruments.json
  */
 class FinancialInstruments implements JsonSerializable
 {

@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The create product request details.
+ *
+ * generated from: product_request_POST.json
  */
 class ProductRequestPOST implements JsonSerializable
 {

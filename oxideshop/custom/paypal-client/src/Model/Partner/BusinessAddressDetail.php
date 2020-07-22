@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * A simple postal address with coarse-grained fields.
+ *
+ * generated from: customer_common_overrides-business_address_detail.json
  */
 class BusinessAddressDetail extends AddressPortable implements JsonSerializable
 {

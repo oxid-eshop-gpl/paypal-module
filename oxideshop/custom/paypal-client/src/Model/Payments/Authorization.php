@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The authorized payment transaction.
+ *
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-authorization.json
  */
 class Authorization extends AuthorizationStatus implements JsonSerializable
 {

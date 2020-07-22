@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The airline itinerary details.
+ *
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-airline_itinerary.json
  */
 class AirlineItinerary implements JsonSerializable
 {

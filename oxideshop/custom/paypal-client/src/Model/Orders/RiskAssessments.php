@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The risk assessment for a customer account, merchant account, or transaction.
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-risk_assessments.json
  */
 class RiskAssessments implements JsonSerializable
 {

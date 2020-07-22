@@ -8,6 +8,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 /**
  * The breakdown of the amount. Breakdown provides details such as total item amount, total tax amount, shipping,
  * handling, insurance, and discounts, if any.
+ *
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-amount_breakdown.json
  */
 class AmountBreakdown implements JsonSerializable
 {

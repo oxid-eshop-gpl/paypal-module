@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The cancellation details.
+ *
+ * generated from: response-cancellation_details.json
  */
 class CancellationDetails implements JsonSerializable
 {

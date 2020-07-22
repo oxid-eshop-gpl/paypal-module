@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Seller’s consent to operate on this financial instrument.
+ *
+ * generated from: referral_data-mandate.json
  */
 class Mandate implements JsonSerializable
 {

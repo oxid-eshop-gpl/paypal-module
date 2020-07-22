@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The document object.
+ *
+ * generated from: customer_common-v1-schema-account_model-document.json
  */
 class Document implements JsonSerializable
 {

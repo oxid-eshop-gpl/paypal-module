@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * A metric.
+ *
+ * generated from: response-metric.json
  */
 class Metric implements JsonSerializable
 {

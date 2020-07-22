@@ -6,7 +6,6 @@ use Exception;
 use JsonSerializable;
 use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\PsrPrinter;
-use PHP_CodeSniffer\Exceptions\DeepExitException;
 
 class Generator
 {
@@ -82,27 +81,6 @@ class Generator
     }
 
     /**
-     * @param $namespace
-     * @param $classname
-     * @param $name
-     * @param $refName
-     * @param $class
-     * @return mixed
-     */
-    private function generateFromRef($namespace, $classname, $name, $refName, $class)
-    {
-        $fileName = $this->getFileNameFromRefName($refName);
-
-        $parameter['type'] = $namespace . '\\' . $classname . '\\' . $fileName;
-
-        $class->addProperty(lcfirst($name))
-            ->setVisibility('public')
-            ->setComment('@var ' . $parameter['type']);
-
-        return $class;
-    }
-
-    /**
      * @param $defName
      * @return string|string[]
      */
@@ -125,33 +103,6 @@ class Generator
         return $defClassName;
     }
 
-    /**
-     * @param $refName
-     * @return string
-     */
-    private function getFileNameFromRefName($refName)
-    {
-        $classNameExploded = explode('-', $refName);
-        return implode(
-            '',
-            array_map(
-                'ucwords',
-                explode(
-                    '_',
-                    ucfirst(
-                        str_replace(
-                            '.json',
-                            '',
-                            end(
-                                $classNameExploded
-                            )
-                        )
-                    )
-                )
-            )
-        );
-    }
-
     private function replaceNumbers($string)
     {
         $numbers = array(
@@ -169,20 +120,6 @@ class Generator
         return preg_replace_callback('/[0-9]/', function ($matches) use ($numbers) {
             return $numbers[ $matches[0] ];
         }, $string);
-    }
-
-    /**
-     * @param $parameter
-     * @return string
-     */
-    private function parseCommentString($parameter): string
-    {
-        if (is_string($parameter['type'])) {
-            $comment = $parameter['type'];
-        } else {
-            $comment = implode('|', $parameter['type']);
-        }
-        return $comment;
     }
 
     /**
@@ -331,7 +268,10 @@ class Generator
                         $parameter['type'] = $nestedClassName;
                         if (isset($this->definitions[$nestedClassId])) {
                             if ($parameter != $this->definitions[$nestedClassId]) {
-                                $doomed = 1;
+                                throw new Exception("Not yet implemented:
+                                The schema defines a nested class with same name but different properties,
+                                in this case the classname must be generated in unique way.                               
+                                ");
                             }
                         } else {
 

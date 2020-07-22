@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The integration details for PayPal CLASSIC endpoints.
+ *
+ * generated from: referral_data-classic_api_integration.json
  */
 class ClassicApiIntegration implements JsonSerializable
 {

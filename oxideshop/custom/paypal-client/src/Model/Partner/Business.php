@@ -5,6 +5,9 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
+/**
+ * generated from: customer_common_overrides-business.json
+ */
 class Business implements JsonSerializable
 {
     use BaseModel;

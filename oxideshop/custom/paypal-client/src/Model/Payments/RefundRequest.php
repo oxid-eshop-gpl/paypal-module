@@ -8,6 +8,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 /**
  * Refunds a captured payment, by ID. For a full refund, include an empty request body. For a partial refund,
  * include an <code>amount</code> object in the request body.
+ *
+ * generated from: refund_request.json
  */
 class RefundRequest implements JsonSerializable
 {

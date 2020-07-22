@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The customer and merchant payment preferences.
+ *
+ * generated from: merchant.CommonComponentsSpecification-v1-schema-payment_method.json
  */
 class PaymentMethod implements JsonSerializable
 {

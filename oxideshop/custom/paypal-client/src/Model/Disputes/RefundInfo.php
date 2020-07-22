@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The payout details for the referred dispute.
+ *
+ * generated from: referred-refund_info.json
  */
 class RefundInfo implements JsonSerializable
 {

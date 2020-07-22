@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The list transactions for a subscription request details.
+ *
+ * generated from: transactions_list.json
  */
 class TransactionsList implements JsonSerializable
 {

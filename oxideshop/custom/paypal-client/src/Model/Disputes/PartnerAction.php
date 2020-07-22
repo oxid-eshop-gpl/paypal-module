@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * A PayPal-requested or partner action for the dispute.
+ *
+ * generated from: response-partner_action.json
  */
 class PartnerAction implements JsonSerializable
 {

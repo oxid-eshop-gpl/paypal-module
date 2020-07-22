@@ -10,6 +10,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
  * <code>WAITING_FOR_SELLER_RESPONSE</code>. This state change enables either the customer or merchant to submit
  * evidence for the dispute. Specify an <code>action</code> value in the JSON request body to indicate whether
  * the state change enables the customer or merchant to submit evidence.
+ *
+ * generated from: request-require_evidence.json
  */
 class RequireEvidence implements JsonSerializable
 {

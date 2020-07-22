@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The customer who approves and pays for the order. The customer is also known as the payer.
+ *
+ * generated from: merchant.CommonComponentsSpecification-v1-schema-payer.json
  */
 class Payer implements JsonSerializable
 {

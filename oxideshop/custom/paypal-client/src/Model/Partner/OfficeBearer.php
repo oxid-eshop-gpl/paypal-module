@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The office bearer associated to the account.
+ *
+ * generated from: customer_common_overrides-office_bearer.json
  */
 class OfficeBearer extends Person implements JsonSerializable
 {

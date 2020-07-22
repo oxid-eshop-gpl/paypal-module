@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The details for the last payment of the subscription.
+ *
+ * generated from: last_payment_details.json
  */
 class LastPaymentDetails implements JsonSerializable
 {

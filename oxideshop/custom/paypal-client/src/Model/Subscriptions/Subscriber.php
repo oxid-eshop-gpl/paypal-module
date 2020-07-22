@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The subscriber response information.
+ *
+ * generated from: subscriber.json
  */
 class Subscriber extends Payer implements JsonSerializable
 {

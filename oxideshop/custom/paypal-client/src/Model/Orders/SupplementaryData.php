@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The supplementary data.
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-supplementary_data.json
  */
 class SupplementaryData implements JsonSerializable
 {

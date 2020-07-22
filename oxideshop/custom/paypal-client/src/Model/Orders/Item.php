@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The details for the items to be purchased.
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-item.json
  */
 class Item implements JsonSerializable
 {

@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Date of birth data provided by the user
+ *
+ * generated from: customer_common-v1-schema-account_model-birth_details.json
  */
 class BirthDetails implements JsonSerializable
 {

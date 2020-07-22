@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The cancel dispute request details.
+ *
+ * generated from: request-cancel.json
  */
 class Cancel implements JsonSerializable
 {

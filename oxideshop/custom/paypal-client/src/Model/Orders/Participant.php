@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Participant in a payment activity, one of person or business must be provided.
+ *
+ * generated from: model-participant.json
  */
 class Participant extends Account implements JsonSerializable
 {

@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The authorization of an order request.
+ *
+ * generated from: order_authorize_request.json
  */
 class OrderAuthorizeRequest implements JsonSerializable
 {

@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The order details.
+ *
+ * generated from: order.json
  */
 class Order extends ActivityTimestamps implements JsonSerializable
 {

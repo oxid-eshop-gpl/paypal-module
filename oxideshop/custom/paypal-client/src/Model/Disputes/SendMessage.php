@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The merchant request to send a message to the other party.
+ *
+ * generated from: request-send_message.json
  */
 class SendMessage implements JsonSerializable
 {

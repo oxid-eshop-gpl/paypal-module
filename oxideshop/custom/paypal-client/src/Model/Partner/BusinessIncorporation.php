@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Business incorporation information.
+ *
+ * generated from: customer_common-v1-schema-account_model-business_incorporation.json
  */
 class BusinessIncorporation implements JsonSerializable
 {

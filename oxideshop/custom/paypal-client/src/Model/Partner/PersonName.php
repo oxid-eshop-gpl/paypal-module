@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The name of the person.
+ *
+ * generated from: customer_common-v1-schema-account_model-person_name.json
  */
 class PersonName extends Name implements JsonSerializable
 {

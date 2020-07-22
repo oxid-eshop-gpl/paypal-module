@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The suspend subscription request details.
+ *
+ * generated from: subscription_suspend_request.json
  */
 class SubscriptionSuspendRequest implements JsonSerializable
 {

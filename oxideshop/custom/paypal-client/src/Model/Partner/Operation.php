@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The required operation to share data.
+ *
+ * generated from: referral_data-operation.json
  */
 class Operation implements JsonSerializable
 {

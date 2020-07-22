@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Information used to pay using MyBank.
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-mybank.json
  */
 class Mybank implements JsonSerializable
 {

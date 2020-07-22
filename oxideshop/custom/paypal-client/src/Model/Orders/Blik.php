@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Information used to pay using BLIK
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-blik.json
  */
 class Blik implements JsonSerializable
 {

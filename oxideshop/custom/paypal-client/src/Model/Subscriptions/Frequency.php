@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The frequency of the billing cycle.
+ *
+ * generated from: frequency.json
  */
 class Frequency implements JsonSerializable
 {

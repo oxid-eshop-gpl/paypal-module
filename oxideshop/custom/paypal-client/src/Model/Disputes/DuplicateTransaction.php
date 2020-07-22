@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The duplicate transaction details.
+ *
+ * generated from: response-duplicate_transaction.json
  */
 class DuplicateTransaction implements JsonSerializable
 {

@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The transaction details.
+ *
+ * generated from: transaction.json
  */
 class Transaction extends CaptureStatus implements JsonSerializable
 {

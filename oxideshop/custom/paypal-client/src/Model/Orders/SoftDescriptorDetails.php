@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Soft Descriptor Details.
+ *
+ * generated from: model-soft_descriptor_details.json
  */
 class SoftDescriptorDetails implements JsonSerializable
 {

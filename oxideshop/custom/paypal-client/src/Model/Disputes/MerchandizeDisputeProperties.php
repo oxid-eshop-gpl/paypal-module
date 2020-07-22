@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The customer-provided merchandise issue details for the dispute.
+ *
+ * generated from: response-merchandize_dispute_properties.json
  */
 class MerchandizeDisputeProperties implements JsonSerializable
 {

@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * A merchant request to escalate a dispute, by ID, to a PayPal claim.
+ *
+ * generated from: request-escalate.json
  */
 class Escalate implements JsonSerializable
 {

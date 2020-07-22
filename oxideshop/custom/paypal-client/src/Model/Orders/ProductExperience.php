@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The product experiences that a user completes on a PayPal transaction.
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-common_components-v3-schema-json-openapi-2.0-product_experience.json
  */
 class ProductExperience implements JsonSerializable
 {

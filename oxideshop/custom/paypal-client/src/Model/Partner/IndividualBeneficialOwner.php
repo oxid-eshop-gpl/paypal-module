@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The individual owner of the account.
+ *
+ * generated from: customer_common_overrides-individual_beneficial_owner.json
  */
 class IndividualBeneficialOwner extends Person implements JsonSerializable
 {

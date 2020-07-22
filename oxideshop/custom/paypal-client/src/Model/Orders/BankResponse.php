@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The bank source used to fund the payment
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-bank_response.json
  */
 class BankResponse implements JsonSerializable
 {

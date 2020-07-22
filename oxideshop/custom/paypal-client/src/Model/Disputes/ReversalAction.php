@@ -8,6 +8,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 /**
  * The system action that reverses the impact of the unauthorized event. Includes the system-defined details of
  * the reversal action.
+ *
+ * generated from: response-reversal_action.json
  */
 class ReversalAction implements JsonSerializable
 {

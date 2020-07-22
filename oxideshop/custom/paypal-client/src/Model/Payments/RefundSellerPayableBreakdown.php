@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The breakdown of the refund.
+ *
+ * generated from: Refund_seller_payable_breakdown
  */
 class RefundSellerPayableBreakdown implements JsonSerializable
 {

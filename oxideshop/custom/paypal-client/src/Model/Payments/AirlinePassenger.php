@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The airline passenger details.
+ *
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-airline_passenger.json
  */
 class AirlinePassenger implements JsonSerializable
 {

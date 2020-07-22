@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The information about the account-related activities.
+ *
+ * generated from: response-account_activity.json
  */
 class AccountActivity implements JsonSerializable
 {

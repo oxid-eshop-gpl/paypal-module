@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * A merchant request to make an offer to resolve a dispute.
+ *
+ * generated from: request-make_offer.json
  */
 class MakeOffer implements JsonSerializable
 {

@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * A merchant- or customer-submitted evidence document.
+ *
+ * generated from: response-evidence.json
  */
 class Evidence implements JsonSerializable
 {

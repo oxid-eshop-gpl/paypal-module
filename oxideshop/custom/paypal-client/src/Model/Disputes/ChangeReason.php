@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * A request to change the reason for a dispute.
+ *
+ * generated from: request-change_reason.json
  */
 class ChangeReason implements JsonSerializable
 {

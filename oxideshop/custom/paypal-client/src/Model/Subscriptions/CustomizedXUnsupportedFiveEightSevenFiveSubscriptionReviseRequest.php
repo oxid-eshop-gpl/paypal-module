@@ -9,6 +9,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
  * The request to update the quantity of the product or service in a subscription. You can also use this method
  * to switch the plan and update the `shipping_amount` and `shipping_address` values for the subscription. This
  * type of update requires the buyer's consent.
+ *
+ * generated from: customized_x_unsupported_5875_subscription_revise_request.json
  */
 class CustomizedXUnsupportedFiveEightSevenFiveSubscriptionReviseRequest implements JsonSerializable
 {

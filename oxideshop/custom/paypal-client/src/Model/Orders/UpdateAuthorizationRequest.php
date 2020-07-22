@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The authorized payment transaction.
+ *
+ * generated from: model-update_authorization_request.json
  */
 class UpdateAuthorizationRequest implements JsonSerializable
 {

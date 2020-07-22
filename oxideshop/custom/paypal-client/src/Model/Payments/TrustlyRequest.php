@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Information needed to pay using Trustly.
+ *
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-trustly_request.json
  */
 class TrustlyRequest implements JsonSerializable
 {

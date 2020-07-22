@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The error details.
+ *
+ * generated from: merchant_common_components-v1-schema-common_components-v3-schema-json-openapi-2.0-error.json
  */
 class Error implements JsonSerializable
 {

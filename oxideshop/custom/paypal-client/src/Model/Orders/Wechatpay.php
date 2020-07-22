@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Information needed to pay using WeChat Pay.
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-wechatpay.json
  */
 class Wechatpay implements JsonSerializable
 {

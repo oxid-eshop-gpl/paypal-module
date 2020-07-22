@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Shipping details for transaction.
+ *
+ * generated from: model-shipping_details.json
  */
 class ShippingDetails implements JsonSerializable
 {

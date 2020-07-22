@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The properties of a party.
+ *
+ * generated from: model-party.json
  */
 class Party implements JsonSerializable
 {

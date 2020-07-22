@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Phone information.
+ *
+ * generated from: model-phone_info.json
  */
 class PhoneInfo implements JsonSerializable
 {

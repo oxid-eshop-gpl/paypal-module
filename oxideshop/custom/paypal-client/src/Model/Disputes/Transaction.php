@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The transaction for which to create a case.
+ *
+ * generated from: referred-transaction.json
  */
 class Transaction implements JsonSerializable
 {

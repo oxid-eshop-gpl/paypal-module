@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The date and time stamps that are common to authorized payment, captured payment, and refund transactions.
+ *
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-activity_timestamps.json
  */
 class ActivityTimestamps implements JsonSerializable
 {

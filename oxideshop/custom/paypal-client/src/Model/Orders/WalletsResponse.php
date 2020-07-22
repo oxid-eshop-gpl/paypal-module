@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The customer's wallet used to fund the transaction.
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-wallets_response.json
  */
 class WalletsResponse implements JsonSerializable
 {

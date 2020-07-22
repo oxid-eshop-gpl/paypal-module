@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Common account object to hold the account related details of the customer.
+ *
+ * generated from: customer_common_overrides-account.json
  */
 class Account implements JsonSerializable
 {

@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The processor information. Might be required for payment requests, such as direct credit card transactions.
+ *
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-processor_response.json
  */
 class ProcessorResponse implements JsonSerializable
 {

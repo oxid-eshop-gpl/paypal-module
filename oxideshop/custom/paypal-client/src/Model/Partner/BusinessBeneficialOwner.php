@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The business beneficial owner of the account.
+ *
+ * generated from: customer_common_overrides-business_beneficial_owner.json
  */
 class BusinessBeneficialOwner extends Business implements JsonSerializable
 {

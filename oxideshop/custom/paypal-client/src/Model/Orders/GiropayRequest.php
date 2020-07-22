@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Information needed to pay using giropay.
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-giropay_request.json
  */
 class GiropayRequest implements JsonSerializable
 {

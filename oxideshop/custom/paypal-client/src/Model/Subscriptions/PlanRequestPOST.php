@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The create plan request details.
+ *
+ * generated from: plan_request_POST.json
  */
 class PlanRequestPOST implements JsonSerializable
 {

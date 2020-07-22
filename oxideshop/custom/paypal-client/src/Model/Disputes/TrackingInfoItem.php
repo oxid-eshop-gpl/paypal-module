@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The tracking information item.
+ *
+ * generated from: referred-tracking_info_item.json
  */
 class TrackingInfoItem implements JsonSerializable
 {

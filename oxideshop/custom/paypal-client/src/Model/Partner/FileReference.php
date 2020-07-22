@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The file reference. Can be a file in PayPal MediaServ, PayPal DMS, or another custom store.
+ *
+ * generated from: customer_common-v1-schema-common_components-v4-schema-json-openapi-2.0-file_reference.json
  */
 class FileReference implements JsonSerializable
 {

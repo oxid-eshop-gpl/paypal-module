@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The dispute summary information.
+ *
+ * generated from: response-dispute_info.json
  */
 class DisputeInfo implements JsonSerializable
 {

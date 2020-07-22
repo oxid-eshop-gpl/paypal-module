@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The details about the payer-selected credit financing offer.
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-credit_financing_offer.json
  */
 class CreditFinancingOffer implements JsonSerializable
 {

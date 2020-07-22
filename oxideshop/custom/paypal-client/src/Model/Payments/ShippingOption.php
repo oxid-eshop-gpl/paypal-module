@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The options that the payee or merchant offers to the payer to ship or pick up their items.
+ *
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-shipping_option.json
  */
 class ShippingOption implements JsonSerializable
 {

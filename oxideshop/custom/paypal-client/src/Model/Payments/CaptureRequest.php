@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Captures either a portion or the full authorized amount of an authorized payment.
+ *
+ * generated from: capture_request.json
  */
 class CaptureRequest extends SupplementaryPurchaseData implements JsonSerializable
 {

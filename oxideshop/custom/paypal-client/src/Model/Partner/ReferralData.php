@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The customer's referral data that partners share with PayPal.
+ *
+ * generated from: referral_data-referral_data.json
  */
 class ReferralData extends Account implements JsonSerializable
 {

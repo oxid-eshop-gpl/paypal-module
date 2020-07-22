@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The refund status.
+ *
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-refund_status.json
  */
 class RefundStatus implements JsonSerializable
 {

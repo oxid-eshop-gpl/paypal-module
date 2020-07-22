@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Payment data for a purchase unit.
+ *
+ * generated from: model-payment_unit.json
  */
 class PaymentUnit implements JsonSerializable
 {

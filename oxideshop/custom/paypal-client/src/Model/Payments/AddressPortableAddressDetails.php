@@ -10,6 +10,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
  * where fine-grain address information might be needed. Not portable with common third party and open source.
  * Redundant with core fields.<br/>For example, `address_portable.address_line_1` is usually a combination of
  * `address_details.street_number`, `street_name`, and `street_type`.
+ *
+ * generated from: AddressPortable_address_details
  */
 class AddressPortableAddressDetails implements JsonSerializable
 {

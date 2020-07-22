@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The pricing scheme details.
+ *
+ * generated from: pricing_scheme.json
  */
 class PricingScheme implements JsonSerializable
 {

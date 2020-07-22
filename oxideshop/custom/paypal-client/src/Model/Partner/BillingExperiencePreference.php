@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The preference that customizes the billing experience of the customer.
+ *
+ * generated from: referral_data-billing_experience_preference.json
  */
 class BillingExperiencePreference implements JsonSerializable
 {

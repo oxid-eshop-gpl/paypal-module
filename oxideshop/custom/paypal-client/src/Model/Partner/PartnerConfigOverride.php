@@ -8,6 +8,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 /**
  * The preference to customize the web experience of the customer by overriding that is set at the Partner's
  * Account.
+ *
+ * generated from: referral_data-partner_config_override.json
  */
 class PartnerConfigOverride implements JsonSerializable
 {

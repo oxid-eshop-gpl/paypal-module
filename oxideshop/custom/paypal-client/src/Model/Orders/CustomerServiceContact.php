@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Customer care contact information.
+ *
+ * generated from: model-customer_service_contact.json
  */
 class CustomerServiceContact implements JsonSerializable
 {

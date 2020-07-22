@@ -8,6 +8,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 /**
  * The merchant information. The merchant is also known as the payee. Appears to the customer in checkout,
  * transactions, email receipts, and transaction history.
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-payee_displayable.json
  */
 class PayeeDisplayable implements JsonSerializable
 {

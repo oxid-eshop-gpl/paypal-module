@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Resource consolidating common request and response attirbutes for vaulting PayPal Wallet.
+ *
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-vault_paypal_wallet_base.json
  */
 class VaultPaypalWalletBase implements JsonSerializable
 {

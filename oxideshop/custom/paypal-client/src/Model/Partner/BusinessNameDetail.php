@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Name of the business provided.
+ *
+ * generated from: customer_common-v1-schema-account_model-business_name_detail.json
  */
 class BusinessNameDetail extends BusinessName implements JsonSerializable
 {

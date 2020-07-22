@@ -8,6 +8,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 /**
  * Arrays of auto-complete and DidYouMean values. Includes links that enable you to navigate through the
  * response.
+ *
+ * generated from: response-suggestion_response.json
  */
 class SuggestionResponse implements JsonSerializable
 {

@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * A merchant- or customer-submitted supporting information.
+ *
+ * generated from: response-supporting_info.json
  */
 class SupportingInfo implements JsonSerializable
 {

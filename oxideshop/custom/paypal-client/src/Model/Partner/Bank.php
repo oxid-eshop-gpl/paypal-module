@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The bank account information.
+ *
+ * generated from: referral_data-bank.json
  */
 class Bank implements JsonSerializable
 {

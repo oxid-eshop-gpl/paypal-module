@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The billing cycle details.
+ *
+ * generated from: billing_cycle.json
  */
 class BillingCycle implements JsonSerializable
 {

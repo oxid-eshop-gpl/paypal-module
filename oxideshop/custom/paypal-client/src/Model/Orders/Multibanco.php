@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Information used to pay using Multibanco.
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-multibanco.json
  */
 class Multibanco implements JsonSerializable
 {

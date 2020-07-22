@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Information about the parent transaction.
+ *
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-parent_transaction.json
  */
 class ParentTransaction implements JsonSerializable
 {

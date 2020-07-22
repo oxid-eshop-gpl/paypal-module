@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The payment card to use to fund a payment. Card can be a credit or debit card.
+ *
+ * generated from: merchant.CommonComponentsSpecification-v1-schema-card_response.json
  */
 class CardResponse implements JsonSerializable
 {

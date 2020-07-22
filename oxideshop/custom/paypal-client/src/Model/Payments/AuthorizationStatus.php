@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The status fields for an authorized payment.
+ *
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-authorization_status.json
  */
 class AuthorizationStatus implements JsonSerializable
 {

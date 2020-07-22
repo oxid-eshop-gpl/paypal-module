@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Details of the person or party.
+ *
+ * generated from: customer_common_overrides-person.json
  */
 class Person implements JsonSerializable
 {

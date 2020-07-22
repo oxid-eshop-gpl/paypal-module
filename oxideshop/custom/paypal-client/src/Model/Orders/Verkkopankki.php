@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Information used to pay using Verkkopankki (Finnish Online Banking).
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-verkkopankki.json
  */
 class Verkkopankki implements JsonSerializable
 {

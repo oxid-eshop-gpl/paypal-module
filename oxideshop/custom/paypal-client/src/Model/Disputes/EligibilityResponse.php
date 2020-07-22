@@ -8,6 +8,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 /**
  * The eligible and ineligible disputes with reasons. Disputes and refund information are returned, if
  * applicable.
+ *
+ * generated from: referred-eligibility_response.json
  */
 class EligibilityResponse implements JsonSerializable
 {

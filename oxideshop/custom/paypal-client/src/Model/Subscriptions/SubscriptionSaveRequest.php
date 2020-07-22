@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The save subscription request details.
+ *
+ * generated from: subscription_save_request.json
  */
 class SubscriptionSaveRequest implements JsonSerializable
 {

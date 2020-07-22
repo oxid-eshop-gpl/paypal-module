@@ -10,6 +10,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
  * [AddressValidationMetadata](https://github.com/googlei18n/libaddressinput/wiki/AddressValidationMetadata) and
  * HTML 5.1 [Autofilling form controls: the autocomplete
  * attribute](https://www.w3.org/TR/html51/sec-forms.html#autofilling-form-controls-the-autocomplete-attribute).
+ *
+ * generated from: merchant.CommonComponentsSpecification-v1-schema-common_components-v3-schema-json-openapi-2.0-address_portable.json
  */
 class AddressPortable implements JsonSerializable
 {

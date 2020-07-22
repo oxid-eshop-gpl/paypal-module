@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Information used to pay using iDEAL.
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-ideal.json
  */
 class Ideal implements JsonSerializable
 {

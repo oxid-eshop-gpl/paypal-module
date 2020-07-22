@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The customer-provided consent.
+ *
+ * generated from: referral_data-legal_consent.json
  */
 class LegalConsent implements JsonSerializable
 {

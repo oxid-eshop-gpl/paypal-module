@@ -8,6 +8,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 /**
  * The collection of payments, or transactions, for a purchase unit in an order. For example, authorized
  * payments, captured payments.
+ *
+ * generated from: model-update_payment_collection_request.json
  */
 class UpdatePaymentCollectionRequest implements JsonSerializable
 {

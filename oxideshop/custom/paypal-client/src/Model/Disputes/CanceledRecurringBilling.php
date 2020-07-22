@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The recurring billing canceled details.
+ *
+ * generated from: response-canceled_recurring_billing.json
  */
 class CanceledRecurringBilling implements JsonSerializable
 {

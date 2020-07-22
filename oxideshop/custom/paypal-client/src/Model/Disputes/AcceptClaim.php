@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * A request by a merchant to accept a customer's merchandise claim.
+ *
+ * generated from: request-accept_claim.json
  */
 class AcceptClaim implements JsonSerializable
 {

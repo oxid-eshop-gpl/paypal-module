@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The history of the dispute.
+ *
+ * generated from: response-history.json
  */
 class History implements JsonSerializable
 {

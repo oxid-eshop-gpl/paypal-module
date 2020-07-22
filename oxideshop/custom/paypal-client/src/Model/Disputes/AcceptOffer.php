@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * A customer request to accept the offer made by the merchant.
+ *
+ * generated from: request-accept_offer.json
  */
 class AcceptOffer implements JsonSerializable
 {

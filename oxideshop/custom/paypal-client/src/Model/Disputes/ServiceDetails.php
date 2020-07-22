@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The service details.
+ *
+ * generated from: response-service_details.json
  */
 class ServiceDetails implements JsonSerializable
 {

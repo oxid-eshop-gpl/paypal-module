@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The billing issue details.
+ *
+ * generated from: response-billing_disputes_properties.json
  */
 class BillingDisputesProperties implements JsonSerializable
 {

@@ -8,6 +8,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 /**
  * The details for the merchant who receives the funds and fulfills the order. For example, merchant ID, and
  * contact email address.
+ *
+ * generated from: response-seller.json
  */
 class Seller implements JsonSerializable
 {

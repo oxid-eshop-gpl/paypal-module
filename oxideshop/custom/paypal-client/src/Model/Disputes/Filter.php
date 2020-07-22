@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * A set of filters that you can use to filter the disputes in the response.
+ *
+ * generated from: request-filter.json
  */
 class Filter implements JsonSerializable
 {

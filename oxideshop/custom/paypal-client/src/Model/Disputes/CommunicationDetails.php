@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The contact details that a merchant provides to the customer to use to share their evidence documents.
+ *
+ * generated from: response-communication_details.json
  */
 class CommunicationDetails implements JsonSerializable
 {

@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The regular and trial execution details for a billing cycle.
+ *
+ * generated from: cycle_execution.json
  */
 class CycleExecution implements JsonSerializable
 {

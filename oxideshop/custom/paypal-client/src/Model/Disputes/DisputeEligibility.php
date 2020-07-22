@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The eligible and ineligible disputes with reasons.
+ *
+ * generated from: response-dispute_eligibility.json
  */
 class DisputeEligibility implements JsonSerializable
 {

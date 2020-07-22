@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The payment source definition.
+ *
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-payment_source.json
  */
 class PaymentSource implements JsonSerializable
 {

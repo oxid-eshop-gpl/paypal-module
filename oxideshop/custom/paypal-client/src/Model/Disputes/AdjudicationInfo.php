@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The partner-provided details that were used for adjudication on the partner's side.
+ *
+ * generated from: referred-adjudication_info.json
  */
 class AdjudicationInfo implements JsonSerializable
 {

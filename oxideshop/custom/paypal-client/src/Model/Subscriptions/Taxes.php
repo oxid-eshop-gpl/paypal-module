@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The tax details.
+ *
+ * generated from: taxes.json
  */
 class Taxes implements JsonSerializable
 {

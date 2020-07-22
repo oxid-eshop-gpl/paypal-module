@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The billing details for the subscription. If the subscription was or is active, these fields are populated.
+ *
+ * generated from: subscription_billing_info.json
  */
 class SubscriptionBillingInfo implements JsonSerializable
 {

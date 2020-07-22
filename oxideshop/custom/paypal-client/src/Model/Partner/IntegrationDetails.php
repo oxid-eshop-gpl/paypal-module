@@ -8,6 +8,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 /**
  * The integration details for the partner and customer relationship. Required if `operation` is
  * `API_INTEGRATION`.
+ *
+ * generated from: referral_data-integration_details.json
  */
 class IntegrationDetails implements JsonSerializable
 {

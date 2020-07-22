@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The phone information.
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-phone_with_type.json
  */
 class PhoneWithType implements JsonSerializable
 {

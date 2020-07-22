@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Information about the items in the transaction.
+ *
+ * generated from: referred-eligibility_request_item.json
  */
 class EligibilityRequestItem implements JsonSerializable
 {

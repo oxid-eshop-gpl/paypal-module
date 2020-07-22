@@ -8,6 +8,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 /**
  * The application context, which customizes the payer experience during the subscription approval process with
  * PayPal.
+ *
+ * generated from: application_context.json
  */
 class ApplicationContext implements JsonSerializable
 {

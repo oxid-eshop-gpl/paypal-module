@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The charge amount from the subscriber.
+ *
+ * generated from: subscription_capture_request.json
  */
 class SubscriptionCaptureRequest implements JsonSerializable
 {

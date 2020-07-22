@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The details of the billing agreement between the partner and a seller.
+ *
+ * generated from: referral_data-billing_agreement.json
  */
 class BillingAgreement implements JsonSerializable
 {

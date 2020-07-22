@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The refund details.
+ *
+ * generated from: response-refund_details.json
  */
 class RefundDetails implements JsonSerializable
 {

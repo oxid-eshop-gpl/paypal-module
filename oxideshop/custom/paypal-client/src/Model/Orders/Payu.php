@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Information needed to pay using PayU.
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-payu.json
  */
 class Payu implements JsonSerializable
 {

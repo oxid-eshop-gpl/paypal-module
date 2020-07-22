@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * An email address at which the person or business can be contacted.
+ *
+ * generated from: customer_common_overrides-email.json
  */
 class Email implements JsonSerializable
 {

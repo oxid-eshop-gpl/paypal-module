@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The third-party claims properties.
+ *
+ * generated from: response-external_case_properties.json
  */
 class ExternalCaseProperties implements JsonSerializable
 {

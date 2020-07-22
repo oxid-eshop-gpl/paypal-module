@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The breakdown details for the amount. Includes the gross, tax, fee, and shipping amounts.
+ *
+ * generated from: amount_with_breakdown.json
  */
 class AmountWithBreakdown implements JsonSerializable
 {

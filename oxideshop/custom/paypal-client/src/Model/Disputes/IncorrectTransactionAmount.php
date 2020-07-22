@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The incorrect transaction amount details.
+ *
+ * generated from: response-incorrect_transaction_amount.json
  */
 class IncorrectTransactionAmount implements JsonSerializable
 {

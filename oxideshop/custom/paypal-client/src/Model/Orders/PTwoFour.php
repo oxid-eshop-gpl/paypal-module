@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Information used to pay using P24(Przelewy24)
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-p24.json
  */
 class PTwoFour implements JsonSerializable
 {

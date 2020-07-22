@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Encapsulates the properties of user account.
+ *
+ * generated from: model-account.json
  */
 class Account implements JsonSerializable
 {

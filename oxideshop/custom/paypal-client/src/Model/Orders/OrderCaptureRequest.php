@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Completes an capture payment for an order.
+ *
+ * generated from: order_capture_request.json
  */
 class OrderCaptureRequest implements JsonSerializable
 {

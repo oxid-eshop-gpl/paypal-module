@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The error details. Required for client-side `4XX` errors.
+ *
+ * generated from: common_components-v3-schema-json-openapi-2.0-error_details.json
  */
 class ErrorDetails implements JsonSerializable
 {

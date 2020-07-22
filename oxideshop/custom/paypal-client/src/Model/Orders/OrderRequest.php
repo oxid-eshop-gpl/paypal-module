@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The order request details.
+ *
+ * generated from: order_request.json
  */
 class OrderRequest implements JsonSerializable
 {

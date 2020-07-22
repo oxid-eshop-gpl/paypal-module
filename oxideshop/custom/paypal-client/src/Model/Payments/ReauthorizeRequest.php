@@ -14,6 +14,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
  * payment once for up to 115% of the original authorized amount, not to exceed an increase of $75
  * USD.<br/><br/>Supports only the `amount` request parameter.<blockquote><strong>Note:</strong> This request is
  * currently not supported for Partner use cases.</blockquote>
+ *
+ * generated from: reauthorize_request.json
  */
 class ReauthorizeRequest implements JsonSerializable
 {

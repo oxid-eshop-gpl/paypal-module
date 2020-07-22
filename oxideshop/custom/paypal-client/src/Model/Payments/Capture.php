@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * A captured payment.
+ *
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-capture.json
  */
 class Capture extends CaptureStatus implements JsonSerializable
 {

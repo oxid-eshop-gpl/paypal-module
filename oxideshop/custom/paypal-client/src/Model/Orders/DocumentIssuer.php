@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The document-issuing authority information.
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-common_components-v4-schema-json-openapi-2.0-document_issuer.json
  */
 class DocumentIssuer implements JsonSerializable
 {

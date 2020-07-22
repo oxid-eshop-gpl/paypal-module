@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Information needed to pay using Bancontact.
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-bancontact_request.json
  */
 class BancontactRequest implements JsonSerializable
 {

@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Information needed to pay using eps.
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-eps_request.json
  */
 class EpsRequest implements JsonSerializable
 {

@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The purchase unit request. Includes required information for the payment contract.
+ *
+ * generated from: purchase_unit_request.json
  */
 class PurchaseUnitRequest implements JsonSerializable
 {

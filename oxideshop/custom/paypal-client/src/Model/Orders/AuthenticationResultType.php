@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Indicates the form of authentication used on the financial instrument.
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-authentication_result_type.json
  */
 class AuthenticationResultType implements JsonSerializable
 {

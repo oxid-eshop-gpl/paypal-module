@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The transaction hold information.
+ *
+ * generated from: Extensions_transaction_hold_info
  */
 class ExtensionsTransactionHoldInfo implements JsonSerializable
 {

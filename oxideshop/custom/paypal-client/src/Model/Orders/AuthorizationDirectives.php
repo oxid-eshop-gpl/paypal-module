@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Auth directives for the transaction.
+ *
+ * generated from: model-authorization_directives.json
  */
 class AuthorizationDirectives implements JsonSerializable
 {

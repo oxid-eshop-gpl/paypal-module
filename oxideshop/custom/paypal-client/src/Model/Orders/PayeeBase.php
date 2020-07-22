@@ -8,6 +8,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 /**
  * The details for the merchant who receives the funds and fulfills the order. The merchant is also known as the
  * payee.
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-payee_base.json
  */
 class PayeeBase implements JsonSerializable
 {

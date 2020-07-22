@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * A payment source that has additional authentication challenges.
+ *
+ * generated from: extended_payment_source.json
  */
 class ExtendedPaymentSource extends PaymentSource implements JsonSerializable
 {

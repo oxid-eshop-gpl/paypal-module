@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The category, subcategory and MCC code of the business.
+ *
+ * generated from: customer_common_overrides-business_industry.json
  */
 class BusinessIndustry implements JsonSerializable
 {

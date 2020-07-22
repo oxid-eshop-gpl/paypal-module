@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * A captured payment.
+ *
+ * generated from: model-update_capture_request.json
  */
 class UpdateCaptureRequest implements JsonSerializable
 {

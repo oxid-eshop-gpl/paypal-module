@@ -10,6 +10,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
  * and ineligible dispute reasons; the eligible reasons are the ones that the customer can use to update the
  * dispute. To check the eligibility of case creation, specify the encrypted transaction ID. To check the
  * eligibility of dispute reason modification, specify the dispute ID.
+ *
+ * generated from: request-eligibility.json
  */
 class Eligibility implements JsonSerializable
 {

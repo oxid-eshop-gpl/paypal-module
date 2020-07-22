@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The Card from Apple Pay Wallet used to fund the payment
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-apple_pay_card_response.json
  */
 class ApplePayCardResponse extends CardResponse implements JsonSerializable
 {

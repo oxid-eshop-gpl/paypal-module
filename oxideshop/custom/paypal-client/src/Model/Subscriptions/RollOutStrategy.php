@@ -8,6 +8,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 /**
  * The roll-out strategy for a pricing scheme update. After the pricing update, all new subscriptions are based
  * on this pricing scheme and the values in this object determine the behavior for the existing subscriptions.
+ *
+ * generated from: roll_out_strategy.json
  */
 class RollOutStrategy implements JsonSerializable
 {

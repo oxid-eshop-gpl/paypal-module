@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The Paypal Wallet response.
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-paypal_wallet_response.json
  */
 class PaypalWalletResponse implements JsonSerializable
 {

@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The customer-entered issue details for an unauthorized dispute.
+ *
+ * generated from: response-unauthorized_dispute_properties.json
  */
 class UnauthorizedDisputeProperties implements JsonSerializable
 {

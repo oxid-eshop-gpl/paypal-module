@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Payment context data required for processing payments for an order.
+ *
+ * generated from: model-payment_context_data.json
  */
 class PaymentContextData implements JsonSerializable
 {

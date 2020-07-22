@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The cancel subscription request details.
+ *
+ * generated from: subscription_cancel_request.json
  */
 class SubscriptionCancelRequest implements JsonSerializable
 {

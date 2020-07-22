@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The create subscription request details.
+ *
+ * generated from: subscription_request_post.json
  */
 class SubscriptionRequestPost implements JsonSerializable
 {

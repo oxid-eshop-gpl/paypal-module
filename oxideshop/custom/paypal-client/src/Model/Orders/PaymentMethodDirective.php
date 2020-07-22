@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Directives for certain payment methods based on eligibility.
+ *
+ * generated from: model-payment_method_directive.json
  */
 class PaymentMethodDirective implements JsonSerializable
 {

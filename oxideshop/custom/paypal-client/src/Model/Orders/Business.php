@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Business information.
+ *
+ * generated from: model-business.json
  */
 class Business extends Party implements JsonSerializable
 {

@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * Information needed to pay using POLi.
+ *
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-poli_request.json
  */
 class PoliRequest implements JsonSerializable
 {

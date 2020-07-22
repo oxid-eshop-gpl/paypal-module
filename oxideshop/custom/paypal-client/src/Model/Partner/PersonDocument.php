@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The documents associated with the person.
+ *
+ * generated from: customer_common_overrides-person_document.json
  */
 class PersonDocument extends Document implements JsonSerializable
 {

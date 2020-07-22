@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The computed metrics for disputes.
+ *
+ * generated from: response-metrics.json
  */
 class Metrics implements JsonSerializable
 {

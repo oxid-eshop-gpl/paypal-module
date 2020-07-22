@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The details for the regulation under which the transaction is covered.
+ *
+ * generated from: response-regulation_info.json
  */
 class RegulationInfo implements JsonSerializable
 {

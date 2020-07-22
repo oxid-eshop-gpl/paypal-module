@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The details about a saved payment source.
+ *
+ * generated from: MerchantsCommonComponentsSpecification-v1-schema-vault_response.json
  */
 class VaultResponse implements JsonSerializable
 {

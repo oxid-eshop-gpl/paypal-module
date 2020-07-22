@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The payment by other means details.
+ *
+ * generated from: response-payment_by_other_means.json
  */
 class PaymentByOtherMeans implements JsonSerializable
 {

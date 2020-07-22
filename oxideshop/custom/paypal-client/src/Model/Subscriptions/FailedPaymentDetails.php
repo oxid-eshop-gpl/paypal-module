@@ -7,6 +7,8 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 
 /**
  * The details for the failed payment of the subscription.
+ *
+ * generated from: failed_payment_details.json
  */
 class FailedPaymentDetails implements JsonSerializable
 {
