@@ -19,18 +19,18 @@ class RequireEvidence implements JsonSerializable
     use BaseModel;
 
     /** Changes the status of the dispute to <code>WAITING_FOR_BUYER_RESPONSE</code>. */
-    const ACTION_BUYER_EVIDENCE = 'BUYER_EVIDENCE';
+    public const ACTION_BUYER_EVIDENCE = 'BUYER_EVIDENCE';
 
     /** Changes the status of the dispute to <code>WAITING_FOR_SELLER_RESPONSE</code>. */
-    const ACTION_SELLER_EVIDENCE = 'SELLER_EVIDENCE';
+    public const ACTION_SELLER_EVIDENCE = 'SELLER_EVIDENCE';
 
     /**
-     * @var string
      * The action. Indicates whether the state change enables the customer or merchant to submit evidence.
      *
      * use one of constants defined in this class to set the value:
      * @see ACTION_BUYER_EVIDENCE
      * @see ACTION_SELLER_EVIDENCE
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
@@ -39,8 +39,16 @@ class RequireEvidence implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->action) || Assert::minLength($this->action, 1, "action in RequireEvidence must have minlength of 1 $within");
-        !isset($this->action) || Assert::maxLength($this->action, 255, "action in RequireEvidence must have maxlength of 255 $within");
+        !isset($this->action) || Assert::minLength(
+            $this->action,
+            1,
+            "action in RequireEvidence must have minlength of 1 $within"
+        );
+        !isset($this->action) || Assert::maxLength(
+            $this->action,
+            255,
+            "action in RequireEvidence must have maxlength of 255 $within"
+        );
     }
 
     public function __construct()

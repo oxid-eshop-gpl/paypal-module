@@ -17,64 +17,63 @@ class ReversalAction implements JsonSerializable
     use BaseModel;
 
     /** An email address. */
-    const ENTITY_TYPE_EMAIL = 'EMAIL';
+    public const ENTITY_TYPE_EMAIL = 'EMAIL';
 
     /** A phone numbr. */
-    const ENTITY_TYPE_PHONE = 'PHONE';
+    public const ENTITY_TYPE_PHONE = 'PHONE';
 
     /** An address. */
-    const ENTITY_TYPE_ADDRESS = 'ADDRESS';
+    public const ENTITY_TYPE_ADDRESS = 'ADDRESS';
 
     /** An account. */
-    const ENTITY_TYPE_ACCOUNT = 'ACCOUNT';
+    public const ENTITY_TYPE_ACCOUNT = 'ACCOUNT';
 
     /** A funding instrument. */
-    const ENTITY_TYPE_FUNDING_INSTRUMENT = 'FUNDING_INSTRUMENT';
+    public const ENTITY_TYPE_FUNDING_INSTRUMENT = 'FUNDING_INSTRUMENT';
 
     /** A credit card. */
-    const ENTITY_SUBTYPE_CREDIT_CARD = 'CREDIT_CARD';
+    public const ENTITY_SUBTYPE_CREDIT_CARD = 'CREDIT_CARD';
 
     /** A bank account. */
-    const ENTITY_SUBTYPE_BANK_ACCOUNT = 'BANK_ACCOUNT';
+    public const ENTITY_SUBTYPE_BANK_ACCOUNT = 'BANK_ACCOUNT';
 
     /** The entity was added. */
-    const ACTION_PERFORMED_ADDED = 'ADDED';
+    public const ACTION_PERFORMED_ADDED = 'ADDED';
 
     /** The entity was removed. */
-    const ACTION_PERFORMED_REMOVED = 'REMOVED';
+    public const ACTION_PERFORMED_REMOVED = 'REMOVED';
 
     /** The entity was marked as primary. */
-    const ACTION_PERFORMED_MARKED_PRIMARY = 'MARKED_PRIMARY';
+    public const ACTION_PERFORMED_MARKED_PRIMARY = 'MARKED_PRIMARY';
 
     /** The entity was edited. */
-    const ACTION_PERFORMED_EDITED = 'EDITED';
+    public const ACTION_PERFORMED_EDITED = 'EDITED';
 
     /** The entity was upgraded. */
-    const ACTION_PERFORMED_UPGRADED = 'UPGRADED';
+    public const ACTION_PERFORMED_UPGRADED = 'UPGRADED';
 
     /** The entity was downgraded. */
-    const ACTION_PERFORMED_DOWNGRADED = 'DOWNGRADED';
+    public const ACTION_PERFORMED_DOWNGRADED = 'DOWNGRADED';
 
     /**
-     * @var string
      * The ID of the entity that was changed as part of the reversal action.
      *
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
     public $id;
 
     /**
-     * @var string
      * The ID of the activity log entry that was created for the reversal action that was carried out by the system.
      *
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
     public $original_activity_id;
 
     /**
-     * @var string
      * The entity type on which some activity is completed.
      *
      * use one of constants defined in this class to set the value:
@@ -83,26 +82,26 @@ class ReversalAction implements JsonSerializable
      * @see ENTITY_TYPE_ADDRESS
      * @see ENTITY_TYPE_ACCOUNT
      * @see ENTITY_TYPE_FUNDING_INSTRUMENT
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
     public $entity_type;
 
     /**
-     * @var string
      * The entity subtype on which the activity is completed. For example, `CREDIT_CARD` is a subtype of
      * `FUNDING_INSTRUMENT`, `PAYPAL_SMART_CONNECT` is a subtype of `CREDIT_LINE`, and so on.
      *
      * use one of constants defined in this class to set the value:
      * @see ENTITY_SUBTYPE_CREDIT_CARD
      * @see ENTITY_SUBTYPE_BANK_ACCOUNT
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
     public $entity_subtype;
 
     /**
-     * @var string
      * The action completed on the entity type.
      *
      * use one of constants defined in this class to set the value:
@@ -112,15 +111,16 @@ class ReversalAction implements JsonSerializable
      * @see ACTION_PERFORMED_EDITED
      * @see ACTION_PERFORMED_UPGRADED
      * @see ACTION_PERFORMED_DOWNGRADED
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
     public $action_performed;
 
     /**
-     * @var string
      * The status.
      *
+     * @var string | null
      * minLength: 1
      * maxLength: 2000
      */
@@ -129,18 +129,66 @@ class ReversalAction implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->id) || Assert::minLength($this->id, 1, "id in ReversalAction must have minlength of 1 $within");
-        !isset($this->id) || Assert::maxLength($this->id, 255, "id in ReversalAction must have maxlength of 255 $within");
-        !isset($this->original_activity_id) || Assert::minLength($this->original_activity_id, 1, "original_activity_id in ReversalAction must have minlength of 1 $within");
-        !isset($this->original_activity_id) || Assert::maxLength($this->original_activity_id, 255, "original_activity_id in ReversalAction must have maxlength of 255 $within");
-        !isset($this->entity_type) || Assert::minLength($this->entity_type, 1, "entity_type in ReversalAction must have minlength of 1 $within");
-        !isset($this->entity_type) || Assert::maxLength($this->entity_type, 255, "entity_type in ReversalAction must have maxlength of 255 $within");
-        !isset($this->entity_subtype) || Assert::minLength($this->entity_subtype, 1, "entity_subtype in ReversalAction must have minlength of 1 $within");
-        !isset($this->entity_subtype) || Assert::maxLength($this->entity_subtype, 255, "entity_subtype in ReversalAction must have maxlength of 255 $within");
-        !isset($this->action_performed) || Assert::minLength($this->action_performed, 1, "action_performed in ReversalAction must have minlength of 1 $within");
-        !isset($this->action_performed) || Assert::maxLength($this->action_performed, 255, "action_performed in ReversalAction must have maxlength of 255 $within");
-        !isset($this->status) || Assert::minLength($this->status, 1, "status in ReversalAction must have minlength of 1 $within");
-        !isset($this->status) || Assert::maxLength($this->status, 2000, "status in ReversalAction must have maxlength of 2000 $within");
+        !isset($this->id) || Assert::minLength(
+            $this->id,
+            1,
+            "id in ReversalAction must have minlength of 1 $within"
+        );
+        !isset($this->id) || Assert::maxLength(
+            $this->id,
+            255,
+            "id in ReversalAction must have maxlength of 255 $within"
+        );
+        !isset($this->original_activity_id) || Assert::minLength(
+            $this->original_activity_id,
+            1,
+            "original_activity_id in ReversalAction must have minlength of 1 $within"
+        );
+        !isset($this->original_activity_id) || Assert::maxLength(
+            $this->original_activity_id,
+            255,
+            "original_activity_id in ReversalAction must have maxlength of 255 $within"
+        );
+        !isset($this->entity_type) || Assert::minLength(
+            $this->entity_type,
+            1,
+            "entity_type in ReversalAction must have minlength of 1 $within"
+        );
+        !isset($this->entity_type) || Assert::maxLength(
+            $this->entity_type,
+            255,
+            "entity_type in ReversalAction must have maxlength of 255 $within"
+        );
+        !isset($this->entity_subtype) || Assert::minLength(
+            $this->entity_subtype,
+            1,
+            "entity_subtype in ReversalAction must have minlength of 1 $within"
+        );
+        !isset($this->entity_subtype) || Assert::maxLength(
+            $this->entity_subtype,
+            255,
+            "entity_subtype in ReversalAction must have maxlength of 255 $within"
+        );
+        !isset($this->action_performed) || Assert::minLength(
+            $this->action_performed,
+            1,
+            "action_performed in ReversalAction must have minlength of 1 $within"
+        );
+        !isset($this->action_performed) || Assert::maxLength(
+            $this->action_performed,
+            255,
+            "action_performed in ReversalAction must have maxlength of 255 $within"
+        );
+        !isset($this->status) || Assert::minLength(
+            $this->status,
+            1,
+            "status in ReversalAction must have minlength of 1 $within"
+        );
+        !isset($this->status) || Assert::maxLength(
+            $this->status,
+            2000,
+            "status in ReversalAction must have maxlength of 2000 $within"
+        );
     }
 
     public function __construct()

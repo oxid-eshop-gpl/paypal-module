@@ -16,21 +16,25 @@ class DisputesChangeReason implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var LinkDescription[]
      * An array of request-related [HATEOAS links](/docs/api/hateoas-links/).
+     *
+     * @var LinkDescription[] | null
      */
     public $links;
 
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->links) || Assert::isArray($this->links, "links in DisputesChangeReason must be array $within");
+        !isset($this->links) || Assert::isArray(
+            $this->links,
+            "links in DisputesChangeReason must be array $within"
+        );
 
-                                if (isset($this->links)){
-                                    foreach ($this->links as $item) {
-                                        $item->validate(DisputesChangeReason::class);
-                                    }
-                                }
+        if (isset($this->links)) {
+            foreach ($this->links as $item) {
+                $item->validate(DisputesChangeReason::class);
+            }
+        }
     }
 
     public function __construct()

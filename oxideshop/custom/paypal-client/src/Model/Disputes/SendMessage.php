@@ -16,10 +16,9 @@ class SendMessage implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var string
      * The message sent by the merchant to the other party.
      *
-     * this is mandatory to be set
+     * @var string
      * minLength: 1
      * maxLength: 2000
      */
@@ -29,8 +28,16 @@ class SendMessage implements JsonSerializable
     {
         $within = isset($from) ? "within $from" : "";
         Assert::notNull($this->message, "message in SendMessage must not be NULL $within");
-         Assert::minLength($this->message, 1, "message in SendMessage must have minlength of 1 $within");
-         Assert::maxLength($this->message, 2000, "message in SendMessage must have maxlength of 2000 $within");
+        Assert::minLength(
+            $this->message,
+            1,
+            "message in SendMessage must have minlength of 1 $within"
+        );
+        Assert::maxLength(
+            $this->message,
+            2000,
+            "message in SendMessage must have maxlength of 2000 $within"
+        );
     }
 
     public function __construct()

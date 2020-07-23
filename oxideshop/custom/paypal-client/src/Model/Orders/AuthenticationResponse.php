@@ -16,19 +16,18 @@ class AuthenticationResponse implements JsonSerializable
     use BaseModel;
 
     /** Liability has shifted to the card issuer. Available only after order is authorized or captured. */
-    const LIABILITY_SHIFT_YES = 'YES';
+    public const LIABILITY_SHIFT_YES = 'YES';
 
     /** Liability is with the merchant. */
-    const LIABILITY_SHIFT_NO = 'NO';
+    public const LIABILITY_SHIFT_NO = 'NO';
 
     /** Liability may shift to the card issuer. Available only before order is authorized or captured. */
-    const LIABILITY_SHIFT_POSSIBLE = 'POSSIBLE';
+    public const LIABILITY_SHIFT_POSSIBLE = 'POSSIBLE';
 
     /** The authentication system is not available. */
-    const LIABILITY_SHIFT_UNKNOWN = 'UNKNOWN';
+    public const LIABILITY_SHIFT_UNKNOWN = 'UNKNOWN';
 
     /**
-     * @var string
      * Liability shift indicator. The outcome of the issuer's authentication.
      *
      * use one of constants defined in this class to set the value:
@@ -36,24 +35,38 @@ class AuthenticationResponse implements JsonSerializable
      * @see LIABILITY_SHIFT_NO
      * @see LIABILITY_SHIFT_POSSIBLE
      * @see LIABILITY_SHIFT_UNKNOWN
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
     public $liability_shift;
 
     /**
-     * @var ThreeDSecureAuthenticationResponse
      * Results of 3D Secure Authentication.
+     *
+     * @var ThreeDSecureAuthenticationResponse | null
      */
     public $three_d_secure;
 
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->liability_shift) || Assert::minLength($this->liability_shift, 1, "liability_shift in AuthenticationResponse must have minlength of 1 $within");
-        !isset($this->liability_shift) || Assert::maxLength($this->liability_shift, 255, "liability_shift in AuthenticationResponse must have maxlength of 255 $within");
-        !isset($this->three_d_secure) || Assert::isInstanceOf($this->three_d_secure, ThreeDSecureAuthenticationResponse::class, "three_d_secure in AuthenticationResponse must be instance of ThreeDSecureAuthenticationResponse $within");
-        !isset($this->three_d_secure) || $this->three_d_secure->validate(AuthenticationResponse::class);
+        !isset($this->liability_shift) || Assert::minLength(
+            $this->liability_shift,
+            1,
+            "liability_shift in AuthenticationResponse must have minlength of 1 $within"
+        );
+        !isset($this->liability_shift) || Assert::maxLength(
+            $this->liability_shift,
+            255,
+            "liability_shift in AuthenticationResponse must have maxlength of 255 $within"
+        );
+        !isset($this->three_d_secure) || Assert::isInstanceOf(
+            $this->three_d_secure,
+            ThreeDSecureAuthenticationResponse::class,
+            "three_d_secure in AuthenticationResponse must be instance of ThreeDSecureAuthenticationResponse $within"
+        );
+        !isset($this->three_d_secure) ||  $this->three_d_secure->validate(AuthenticationResponse::class);
     }
 
     public function __construct()

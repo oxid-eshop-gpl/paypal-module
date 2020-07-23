@@ -16,28 +16,27 @@ class RegulationInfo implements JsonSerializable
     use BaseModel;
 
     /** No regulation. */
-    const REGULATION_COVERED_NONE = 'NONE';
+    public const REGULATION_COVERED_NONE = 'NONE';
 
     /** E regulation. */
-    const REGULATION_COVERED_REG_E = 'REG_E';
+    public const REGULATION_COVERED_REG_E = 'REG_E';
 
     /** Z regulation. */
-    const REGULATION_COVERED_REG_Z = 'REG_Z';
+    public const REGULATION_COVERED_REG_Z = 'REG_Z';
 
     /** ZCAD regulation. */
-    const REGULATION_COVERED_REG_ZCAD = 'REG_ZCAD';
+    public const REGULATION_COVERED_REG_ZCAD = 'REG_ZCAD';
 
     /** PPBP regulation. */
-    const REGULATION_COVERED_PPBP = 'PPBP';
+    public const REGULATION_COVERED_PPBP = 'PPBP';
 
     /** Deferred claim regulation. */
-    const REGULATION_COVERED_DEFERRED_CLAIM = 'DEFERRED_CLAIM';
+    public const REGULATION_COVERED_DEFERRED_CLAIM = 'DEFERRED_CLAIM';
 
     /** LUX AGGR regulation. */
-    const REGULATION_COVERED_LUX_AGGR = 'LUX_AGGR';
+    public const REGULATION_COVERED_LUX_AGGR = 'LUX_AGGR';
 
     /**
-     * @var string
      * The regulation under which the transaction is covered.
      *
      * use one of constants defined in this class to set the value:
@@ -48,17 +47,18 @@ class RegulationInfo implements JsonSerializable
      * @see REGULATION_COVERED_PPBP
      * @see REGULATION_COVERED_DEFERRED_CLAIM
      * @see REGULATION_COVERED_LUX_AGGR
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
     public $regulation_covered;
 
     /**
-     * @var string
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
      *
+     * @var string | null
      * minLength: 20
      * maxLength: 64
      */
@@ -67,10 +67,26 @@ class RegulationInfo implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->regulation_covered) || Assert::minLength($this->regulation_covered, 1, "regulation_covered in RegulationInfo must have minlength of 1 $within");
-        !isset($this->regulation_covered) || Assert::maxLength($this->regulation_covered, 255, "regulation_covered in RegulationInfo must have maxlength of 255 $within");
-        !isset($this->resolution_sla) || Assert::minLength($this->resolution_sla, 20, "resolution_sla in RegulationInfo must have minlength of 20 $within");
-        !isset($this->resolution_sla) || Assert::maxLength($this->resolution_sla, 64, "resolution_sla in RegulationInfo must have maxlength of 64 $within");
+        !isset($this->regulation_covered) || Assert::minLength(
+            $this->regulation_covered,
+            1,
+            "regulation_covered in RegulationInfo must have minlength of 1 $within"
+        );
+        !isset($this->regulation_covered) || Assert::maxLength(
+            $this->regulation_covered,
+            255,
+            "regulation_covered in RegulationInfo must have maxlength of 255 $within"
+        );
+        !isset($this->resolution_sla) || Assert::minLength(
+            $this->resolution_sla,
+            20,
+            "resolution_sla in RegulationInfo must have minlength of 20 $within"
+        );
+        !isset($this->resolution_sla) || Assert::maxLength(
+            $this->resolution_sla,
+            64,
+            "resolution_sla in RegulationInfo must have maxlength of 64 $within"
+        );
     }
 
     public function __construct()

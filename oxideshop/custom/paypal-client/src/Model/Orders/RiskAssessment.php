@@ -16,16 +16,16 @@ class RiskAssessment implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var integer
      * The fine-grained numeric evaluation. Value is from `0` to `999`.
+     *
+     * @var integer | null
      */
     public $score;
 
     /**
-     * @var string[]
      * An array of risk assessment reasons.
      *
-     * this is mandatory to be set
+     * @var string[]
      * maxItems: 0
      * maxItems: 9
      */
@@ -35,12 +35,24 @@ class RiskAssessment implements JsonSerializable
     {
         $within = isset($from) ? "within $from" : "";
         Assert::notNull($this->reasons, "reasons in RiskAssessment must not be NULL $within");
-         Assert::minCount($this->reasons, 0, "reasons in RiskAssessment must have min. count of 0 $within");
-         Assert::maxCount($this->reasons, 9, "reasons in RiskAssessment must have max. count of 9 $within");
-         Assert::isArray($this->reasons, "reasons in RiskAssessment must be array $within");
+        Assert::minCount(
+            $this->reasons,
+            0,
+            "reasons in RiskAssessment must have min. count of 0 $within"
+        );
+        Assert::maxCount(
+            $this->reasons,
+            9,
+            "reasons in RiskAssessment must have max. count of 9 $within"
+        );
+        Assert::isArray(
+            $this->reasons,
+            "reasons in RiskAssessment must be array $within"
+        );
     }
 
     public function __construct()
     {
+        $this->reasons = [];
     }
 }

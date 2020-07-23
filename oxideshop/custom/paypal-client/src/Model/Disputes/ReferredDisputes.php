@@ -16,47 +16,57 @@ class ReferredDisputes implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var ReferredDisputeSummary[]
      * An array of disputes that match the filter criteria. Sorted in latest to earliest creation time order.
+     *
+     * @var ReferredDisputeSummary[] | null
      */
     public $items;
 
     /**
-     * @var integer
      * The total number of items/Disputes available for the given search criteria.
+     *
+     * @var integer | null
      */
     public $total_items;
 
     /**
-     * @var integer
      * The total number of pages in the response.
+     *
+     * @var integer | null
      */
     public $total_pages;
 
     /**
-     * @var LinkDescription[]
      * An array of request-related [HATEOAS links](/docs/api/hateoas-links/).
+     *
+     * @var LinkDescription[] | null
      */
     public $links;
 
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->items) || Assert::isArray($this->items, "items in ReferredDisputes must be array $within");
+        !isset($this->items) || Assert::isArray(
+            $this->items,
+            "items in ReferredDisputes must be array $within"
+        );
 
-                                if (isset($this->items)){
-                                    foreach ($this->items as $item) {
-                                        $item->validate(ReferredDisputes::class);
-                                    }
-                                }
+        if (isset($this->items)) {
+            foreach ($this->items as $item) {
+                $item->validate(ReferredDisputes::class);
+            }
+        }
 
-        !isset($this->links) || Assert::isArray($this->links, "links in ReferredDisputes must be array $within");
+        !isset($this->links) || Assert::isArray(
+            $this->links,
+            "links in ReferredDisputes must be array $within"
+        );
 
-                                if (isset($this->links)){
-                                    foreach ($this->links as $item) {
-                                        $item->validate(ReferredDisputes::class);
-                                    }
-                                }
+        if (isset($this->links)) {
+            foreach ($this->links as $item) {
+                $item->validate(ReferredDisputes::class);
+            }
+        }
     }
 
     public function __construct()

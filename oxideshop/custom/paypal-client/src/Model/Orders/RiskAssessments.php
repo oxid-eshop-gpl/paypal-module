@@ -16,24 +16,34 @@ class RiskAssessments implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var RiskAssessment
      * The risk assessment for a customer or merchant account or transaction.
+     *
+     * @var RiskAssessment | null
      */
     public $payer;
 
     /**
-     * @var RiskAssessment
      * The risk assessment for a customer or merchant account or transaction.
+     *
+     * @var RiskAssessment | null
      */
     public $payee;
 
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->payer) || Assert::isInstanceOf($this->payer, RiskAssessment::class, "payer in RiskAssessments must be instance of RiskAssessment $within");
-        !isset($this->payer) || $this->payer->validate(RiskAssessments::class);
-        !isset($this->payee) || Assert::isInstanceOf($this->payee, RiskAssessment::class, "payee in RiskAssessments must be instance of RiskAssessment $within");
-        !isset($this->payee) || $this->payee->validate(RiskAssessments::class);
+        !isset($this->payer) || Assert::isInstanceOf(
+            $this->payer,
+            RiskAssessment::class,
+            "payer in RiskAssessments must be instance of RiskAssessment $within"
+        );
+        !isset($this->payer) ||  $this->payer->validate(RiskAssessments::class);
+        !isset($this->payee) || Assert::isInstanceOf(
+            $this->payee,
+            RiskAssessment::class,
+            "payee in RiskAssessments must be instance of RiskAssessment $within"
+        );
+        !isset($this->payee) ||  $this->payee->validate(RiskAssessments::class);
     }
 
     public function __construct()

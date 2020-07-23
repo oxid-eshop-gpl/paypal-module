@@ -16,17 +16,18 @@ class IncorrectTransactionAmount implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var Money
      * The currency and amount for a financial transaction, such as a balance or payment due.
+     *
+     * @var Money | null
      */
     public $correct_transaction_amount;
 
     /**
-     * @var string
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
      *
+     * @var string | null
      * minLength: 20
      * maxLength: 64
      */
@@ -35,10 +36,22 @@ class IncorrectTransactionAmount implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->correct_transaction_amount) || Assert::isInstanceOf($this->correct_transaction_amount, Money::class, "correct_transaction_amount in IncorrectTransactionAmount must be instance of Money $within");
-        !isset($this->correct_transaction_amount) || $this->correct_transaction_amount->validate(IncorrectTransactionAmount::class);
-        !isset($this->correct_transaction_time) || Assert::minLength($this->correct_transaction_time, 20, "correct_transaction_time in IncorrectTransactionAmount must have minlength of 20 $within");
-        !isset($this->correct_transaction_time) || Assert::maxLength($this->correct_transaction_time, 64, "correct_transaction_time in IncorrectTransactionAmount must have maxlength of 64 $within");
+        !isset($this->correct_transaction_amount) || Assert::isInstanceOf(
+            $this->correct_transaction_amount,
+            Money::class,
+            "correct_transaction_amount in IncorrectTransactionAmount must be instance of Money $within"
+        );
+        !isset($this->correct_transaction_amount) ||  $this->correct_transaction_amount->validate(IncorrectTransactionAmount::class);
+        !isset($this->correct_transaction_time) || Assert::minLength(
+            $this->correct_transaction_time,
+            20,
+            "correct_transaction_time in IncorrectTransactionAmount must have minlength of 20 $within"
+        );
+        !isset($this->correct_transaction_time) || Assert::maxLength(
+            $this->correct_transaction_time,
+            64,
+            "correct_transaction_time in IncorrectTransactionAmount must have maxlength of 64 $within"
+        );
     }
 
     public function __construct()

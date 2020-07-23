@@ -16,18 +16,18 @@ class SupplementaryData implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var AirlineItinerary[]
      * An array of airline itineraries' data, including ticket, passenger, and airline details.
      *
-     * this is mandatory to be set
+     * @var AirlineItinerary[]
      * maxItems: 1
      * maxItems: 1
      */
     public $airline;
 
     /**
-     * @var PointOfSale
      * The API caller-provided information about the store.
+     *
+     * @var PointOfSale | null
      */
     public $point_of_sale;
 
@@ -35,21 +35,37 @@ class SupplementaryData implements JsonSerializable
     {
         $within = isset($from) ? "within $from" : "";
         Assert::notNull($this->airline, "airline in SupplementaryData must not be NULL $within");
-         Assert::minCount($this->airline, 1, "airline in SupplementaryData must have min. count of 1 $within");
-         Assert::maxCount($this->airline, 1, "airline in SupplementaryData must have max. count of 1 $within");
-         Assert::isArray($this->airline, "airline in SupplementaryData must be array $within");
+        Assert::minCount(
+            $this->airline,
+            1,
+            "airline in SupplementaryData must have min. count of 1 $within"
+        );
+        Assert::maxCount(
+            $this->airline,
+            1,
+            "airline in SupplementaryData must have max. count of 1 $within"
+        );
+        Assert::isArray(
+            $this->airline,
+            "airline in SupplementaryData must be array $within"
+        );
 
-                                if (isset($this->airline)){
-                                    foreach ($this->airline as $item) {
-                                        $item->validate(SupplementaryData::class);
-                                    }
-                                }
+        if (isset($this->airline)) {
+            foreach ($this->airline as $item) {
+                $item->validate(SupplementaryData::class);
+            }
+        }
 
-        !isset($this->point_of_sale) || Assert::isInstanceOf($this->point_of_sale, PointOfSale::class, "point_of_sale in SupplementaryData must be instance of PointOfSale $within");
-        !isset($this->point_of_sale) || $this->point_of_sale->validate(SupplementaryData::class);
+        !isset($this->point_of_sale) || Assert::isInstanceOf(
+            $this->point_of_sale,
+            PointOfSale::class,
+            "point_of_sale in SupplementaryData must be instance of PointOfSale $within"
+        );
+        !isset($this->point_of_sale) ||  $this->point_of_sale->validate(SupplementaryData::class);
     }
 
     public function __construct()
     {
+        $this->airline = [];
     }
 }

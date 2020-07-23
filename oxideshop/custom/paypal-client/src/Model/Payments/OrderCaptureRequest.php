@@ -16,8 +16,9 @@ class OrderCaptureRequest extends CaptureRequest implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var string
      * The identifier of the order for this capture.
+     *
+     * @var string | null
      */
     public $order_id;
 

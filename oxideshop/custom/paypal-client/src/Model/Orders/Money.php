@@ -16,24 +16,22 @@ class Money implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var string
      * The [three-character ISO-4217 currency code](/docs/integration/direct/rest/currency-codes/) that identifies
      * the currency.
      *
-     * this is mandatory to be set
+     * @var string
      * minLength: 3
      * maxLength: 3
      */
     public $currency_code;
 
     /**
-     * @var string
      * The value, which might be:<ul><li>An integer for currencies like `JPY` that are not typically
      * fractional.</li><li>A decimal fraction for currencies like `TND` that are subdivided into
      * thousandths.</li></ul>For the required number of decimal places for a currency code, see [Currency
      * Codes](/docs/integration/direct/rest/currency-codes/).
      *
-     * this is mandatory to be set
+     * @var string
      * maxLength: 32
      */
     public $value;
@@ -42,10 +40,22 @@ class Money implements JsonSerializable
     {
         $within = isset($from) ? "within $from" : "";
         Assert::notNull($this->currency_code, "currency_code in Money must not be NULL $within");
-         Assert::minLength($this->currency_code, 3, "currency_code in Money must have minlength of 3 $within");
-         Assert::maxLength($this->currency_code, 3, "currency_code in Money must have maxlength of 3 $within");
+        Assert::minLength(
+            $this->currency_code,
+            3,
+            "currency_code in Money must have minlength of 3 $within"
+        );
+        Assert::maxLength(
+            $this->currency_code,
+            3,
+            "currency_code in Money must have maxlength of 3 $within"
+        );
         Assert::notNull($this->value, "value in Money must not be NULL $within");
-         Assert::maxLength($this->value, 32, "value in Money must have maxlength of 32 $within");
+        Assert::maxLength(
+            $this->value,
+            32,
+            "value in Money must have maxlength of 32 $within"
+        );
     }
 
     public function __construct()

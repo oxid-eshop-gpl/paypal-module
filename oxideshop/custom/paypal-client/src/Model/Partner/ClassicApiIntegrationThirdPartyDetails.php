@@ -18,10 +18,9 @@ class ClassicApiIntegrationThirdPartyDetails implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var string[]
      * An array of permissions that the partner requests from the customer.
      *
-     * this is mandatory to be set
+     * @var string[]
      * maxItems: 0
      * maxItems: 30
      */
@@ -31,12 +30,24 @@ class ClassicApiIntegrationThirdPartyDetails implements JsonSerializable
     {
         $within = isset($from) ? "within $from" : "";
         Assert::notNull($this->permissions, "permissions in ClassicApiIntegrationThirdPartyDetails must not be NULL $within");
-         Assert::minCount($this->permissions, 0, "permissions in ClassicApiIntegrationThirdPartyDetails must have min. count of 0 $within");
-         Assert::maxCount($this->permissions, 30, "permissions in ClassicApiIntegrationThirdPartyDetails must have max. count of 30 $within");
-         Assert::isArray($this->permissions, "permissions in ClassicApiIntegrationThirdPartyDetails must be array $within");
+        Assert::minCount(
+            $this->permissions,
+            0,
+            "permissions in ClassicApiIntegrationThirdPartyDetails must have min. count of 0 $within"
+        );
+        Assert::maxCount(
+            $this->permissions,
+            30,
+            "permissions in ClassicApiIntegrationThirdPartyDetails must have max. count of 30 $within"
+        );
+        Assert::isArray(
+            $this->permissions,
+            "permissions in ClassicApiIntegrationThirdPartyDetails must be array $within"
+        );
     }
 
     public function __construct()
     {
+        $this->permissions = [];
     }
 }

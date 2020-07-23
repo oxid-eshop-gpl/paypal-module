@@ -16,57 +16,60 @@ class SubscriptionRequestPost implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var string
      * The ID of the plan.
      *
-     * this is mandatory to be set
+     * @var string
      * minLength: 3
      * maxLength: 50
      */
     public $plan_id;
 
     /**
-     * @var string
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
      *
+     * @var string | null
      * minLength: 20
      * maxLength: 64
      */
     public $start_time;
 
     /**
-     * @var string
      * The quantity of the product in the subscription.
      *
+     * @var string | null
      * minLength: 1
      * maxLength: 32
      */
     public $quantity;
 
     /**
-     * @var Money
      * The currency and amount for a financial transaction, such as a balance or payment due.
+     *
+     * @var Money | null
      */
     public $shipping_amount;
 
     /**
-     * @var SubscriberRequest
      * The subscriber request information .
+     *
+     * @var SubscriberRequest | null
      */
     public $subscriber;
 
     /**
-     * @var boolean
      * DEPRECATED. Indicates whether the subscription auto-renews after the billing cycles complete.
+     *
+     * @var boolean | null
      */
     public $auto_renewal = false;
 
     /**
-     * @var ApplicationContext
      * The application context, which customizes the payer experience during the subscription approval process with
      * PayPal.
+     *
+     * @var ApplicationContext | null
      */
     public $application_context;
 
@@ -74,18 +77,54 @@ class SubscriptionRequestPost implements JsonSerializable
     {
         $within = isset($from) ? "within $from" : "";
         Assert::notNull($this->plan_id, "plan_id in SubscriptionRequestPost must not be NULL $within");
-         Assert::minLength($this->plan_id, 3, "plan_id in SubscriptionRequestPost must have minlength of 3 $within");
-         Assert::maxLength($this->plan_id, 50, "plan_id in SubscriptionRequestPost must have maxlength of 50 $within");
-        !isset($this->start_time) || Assert::minLength($this->start_time, 20, "start_time in SubscriptionRequestPost must have minlength of 20 $within");
-        !isset($this->start_time) || Assert::maxLength($this->start_time, 64, "start_time in SubscriptionRequestPost must have maxlength of 64 $within");
-        !isset($this->quantity) || Assert::minLength($this->quantity, 1, "quantity in SubscriptionRequestPost must have minlength of 1 $within");
-        !isset($this->quantity) || Assert::maxLength($this->quantity, 32, "quantity in SubscriptionRequestPost must have maxlength of 32 $within");
-        !isset($this->shipping_amount) || Assert::isInstanceOf($this->shipping_amount, Money::class, "shipping_amount in SubscriptionRequestPost must be instance of Money $within");
-        !isset($this->shipping_amount) || $this->shipping_amount->validate(SubscriptionRequestPost::class);
-        !isset($this->subscriber) || Assert::isInstanceOf($this->subscriber, SubscriberRequest::class, "subscriber in SubscriptionRequestPost must be instance of SubscriberRequest $within");
-        !isset($this->subscriber) || $this->subscriber->validate(SubscriptionRequestPost::class);
-        !isset($this->application_context) || Assert::isInstanceOf($this->application_context, ApplicationContext::class, "application_context in SubscriptionRequestPost must be instance of ApplicationContext $within");
-        !isset($this->application_context) || $this->application_context->validate(SubscriptionRequestPost::class);
+        Assert::minLength(
+            $this->plan_id,
+            3,
+            "plan_id in SubscriptionRequestPost must have minlength of 3 $within"
+        );
+        Assert::maxLength(
+            $this->plan_id,
+            50,
+            "plan_id in SubscriptionRequestPost must have maxlength of 50 $within"
+        );
+        !isset($this->start_time) || Assert::minLength(
+            $this->start_time,
+            20,
+            "start_time in SubscriptionRequestPost must have minlength of 20 $within"
+        );
+        !isset($this->start_time) || Assert::maxLength(
+            $this->start_time,
+            64,
+            "start_time in SubscriptionRequestPost must have maxlength of 64 $within"
+        );
+        !isset($this->quantity) || Assert::minLength(
+            $this->quantity,
+            1,
+            "quantity in SubscriptionRequestPost must have minlength of 1 $within"
+        );
+        !isset($this->quantity) || Assert::maxLength(
+            $this->quantity,
+            32,
+            "quantity in SubscriptionRequestPost must have maxlength of 32 $within"
+        );
+        !isset($this->shipping_amount) || Assert::isInstanceOf(
+            $this->shipping_amount,
+            Money::class,
+            "shipping_amount in SubscriptionRequestPost must be instance of Money $within"
+        );
+        !isset($this->shipping_amount) ||  $this->shipping_amount->validate(SubscriptionRequestPost::class);
+        !isset($this->subscriber) || Assert::isInstanceOf(
+            $this->subscriber,
+            SubscriberRequest::class,
+            "subscriber in SubscriptionRequestPost must be instance of SubscriberRequest $within"
+        );
+        !isset($this->subscriber) ||  $this->subscriber->validate(SubscriptionRequestPost::class);
+        !isset($this->application_context) || Assert::isInstanceOf(
+            $this->application_context,
+            ApplicationContext::class,
+            "application_context in SubscriptionRequestPost must be instance of ApplicationContext $within"
+        );
+        !isset($this->application_context) ||  $this->application_context->validate(SubscriptionRequestPost::class);
     }
 
     public function __construct()

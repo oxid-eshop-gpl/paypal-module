@@ -16,89 +16,87 @@ class Business extends Party implements JsonSerializable
     use BaseModel;
 
     /** The any other business entity. */
-    const TYPE_ANY_OTHER_BUSINESS_ENTITY = 'ANY_OTHER_BUSINESS_ENTITY';
+    public const TYPE_ANY_OTHER_BUSINESS_ENTITY = 'ANY_OTHER_BUSINESS_ENTITY';
 
     /** The association. */
-    const TYPE_ASSOCIATION = 'ASSOCIATION';
+    public const TYPE_ASSOCIATION = 'ASSOCIATION';
 
     /** The corporation. */
-    const TYPE_CORPORATION = 'CORPORATION';
+    public const TYPE_CORPORATION = 'CORPORATION';
 
     /** The general partnership. */
-    const TYPE_GENERAL_PARTNERSHIP = 'GENERAL_PARTNERSHIP';
+    public const TYPE_GENERAL_PARTNERSHIP = 'GENERAL_PARTNERSHIP';
 
     /** The government. */
-    const TYPE_GOVERNMENT = 'GOVERNMENT';
+    public const TYPE_GOVERNMENT = 'GOVERNMENT';
 
     /** The individual. */
-    const TYPE_INDIVIDUAL = 'INDIVIDUAL';
+    public const TYPE_INDIVIDUAL = 'INDIVIDUAL';
 
     /** The limited liability partnership. */
-    const TYPE_LIMITED_LIABILITY_PARTNERSHIP = 'LIMITED_LIABILITY_PARTNERSHIP';
+    public const TYPE_LIMITED_LIABILITY_PARTNERSHIP = 'LIMITED_LIABILITY_PARTNERSHIP';
 
     /** The limited liability proprietors. */
-    const TYPE_LIMITED_LIABILITY_PROPRIETORS = 'LIMITED_LIABILITY_PROPRIETORS';
+    public const TYPE_LIMITED_LIABILITY_PROPRIETORS = 'LIMITED_LIABILITY_PROPRIETORS';
 
     /** The limited liability private corporation. */
-    const TYPE_LIMITED_LIABILITY_PRIVATE_CORPORATION = 'LIMITED_LIABILITY_PRIVATE_CORPORATION';
+    public const TYPE_LIMITED_LIABILITY_PRIVATE_CORPORATION = 'LIMITED_LIABILITY_PRIVATE_CORPORATION';
 
     /** The limited partnership. */
-    const TYPE_LIMITED_PARTNERSHIP = 'LIMITED_PARTNERSHIP';
+    public const TYPE_LIMITED_PARTNERSHIP = 'LIMITED_PARTNERSHIP';
 
     /** The limited partnership private corporation. */
-    const TYPE_LIMITED_PARTNERSHIP_PRIVATE_CORPORATION = 'LIMITED_PARTNERSHIP_PRIVATE_CORPORATION';
+    public const TYPE_LIMITED_PARTNERSHIP_PRIVATE_CORPORATION = 'LIMITED_PARTNERSHIP_PRIVATE_CORPORATION';
 
     /** The nonprofit. */
-    const TYPE_NONPROFIT = 'NONPROFIT';
+    public const TYPE_NONPROFIT = 'NONPROFIT';
 
     /** The only buy and send money. */
-    const TYPE_ONLY_BUY_OR_SEND_MONEY = 'ONLY_BUY_OR_SEND_MONEY';
+    public const TYPE_ONLY_BUY_OR_SEND_MONEY = 'ONLY_BUY_OR_SEND_MONEY';
 
     /** The other corporate body. */
-    const TYPE_OTHER_CORPORATE_BODY = 'OTHER_CORPORATE_BODY';
+    public const TYPE_OTHER_CORPORATE_BODY = 'OTHER_CORPORATE_BODY';
 
     /** The partnership. */
-    const TYPE_PARTNERSHIP = 'PARTNERSHIP';
+    public const TYPE_PARTNERSHIP = 'PARTNERSHIP';
 
     /** The private partnership. */
-    const TYPE_PRIVATE_PARTNERSHIP = 'PRIVATE_PARTNERSHIP';
+    public const TYPE_PRIVATE_PARTNERSHIP = 'PRIVATE_PARTNERSHIP';
 
     /** The proprietorship. */
-    const TYPE_PROPRIETORSHIP = 'PROPRIETORSHIP';
+    public const TYPE_PROPRIETORSHIP = 'PROPRIETORSHIP';
 
     /** The proprietorship craftsman. */
-    const TYPE_PROPRIETORSHIP_CRAFTSMAN = 'PROPRIETORSHIP_CRAFTSMAN';
+    public const TYPE_PROPRIETORSHIP_CRAFTSMAN = 'PROPRIETORSHIP_CRAFTSMAN';
 
     /** The proprietory company. */
-    const TYPE_PROPRIETORY_COMPANY = 'PROPRIETORY_COMPANY';
+    public const TYPE_PROPRIETORY_COMPANY = 'PROPRIETORY_COMPANY';
 
     /** The private corporation. */
-    const TYPE_PRIVATE_CORPORATION = 'PRIVATE_CORPORATION';
+    public const TYPE_PRIVATE_CORPORATION = 'PRIVATE_CORPORATION';
 
     /** The public company. */
-    const TYPE_PUBLIC_COMPANY = 'PUBLIC_COMPANY';
+    public const TYPE_PUBLIC_COMPANY = 'PUBLIC_COMPANY';
 
     /** The public corporation. */
-    const TYPE_PUBLIC_CORPORATION = 'PUBLIC_CORPORATION';
+    public const TYPE_PUBLIC_CORPORATION = 'PUBLIC_CORPORATION';
 
     /** The public partnership. */
-    const TYPE_PUBLIC_PARTNERSHIP = 'PUBLIC_PARTNERSHIP';
+    public const TYPE_PUBLIC_PARTNERSHIP = 'PUBLIC_PARTNERSHIP';
 
     /** A group of private owners who have registered their bsuiness. */
-    const TYPE_REGISTERED_COOPERATIVE = 'REGISTERED_COOPERATIVE';
+    public const TYPE_REGISTERED_COOPERATIVE = 'REGISTERED_COOPERATIVE';
 
     /**
-     * @var BusinessName[]
      * Names of business.
      *
-     * this is mandatory to be set
+     * @var BusinessName[]
      * maxItems: 1
      * maxItems: 10
      */
     public $names;
 
     /**
-     * @var string
      * The business types classified.
      *
      * use one of constants defined in this class to set the value:
@@ -126,59 +124,60 @@ class Business extends Party implements JsonSerializable
      * @see TYPE_PUBLIC_CORPORATION
      * @see TYPE_PUBLIC_PARTNERSHIP
      * @see TYPE_REGISTERED_COOPERATIVE
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
     public $type;
 
     /**
-     * @var BusinessCategory
      * Business category information. Refer:
      * https://developer.paypal.com/docs/commerce-platform/reference/categories-subcategories/.
+     *
+     * @var BusinessCategory | null
      */
     public $category;
 
     /**
-     * @var BusinessIdentification[]
      * Identification details for the business.
      *
-     * this is mandatory to be set
+     * @var BusinessIdentification[]
      * maxItems: 1
      * maxItems: 30
      */
     public $identifications;
 
     /**
-     * @var string
      * Description of business.
      *
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
     public $description;
 
     /**
-     * @var Person[]
      * Beneficial owners of the business.
      *
-     * this is mandatory to be set
+     * @var Person[]
      * maxItems: 1
      * maxItems: 100
      */
     public $owners;
 
     /**
-     * @var string
      * Web site url (online presence) for the business.
      *
+     * @var string | null
      * minLength: 1
      * maxLength: 100
      */
     public $url;
 
     /**
-     * @var CustomerServiceContact
      * Customer care contact information.
+     *
+     * @var CustomerServiceContact | null
      */
     public $customer_service_contacts;
 
@@ -186,51 +185,119 @@ class Business extends Party implements JsonSerializable
     {
         $within = isset($from) ? "within $from" : "";
         Assert::notNull($this->names, "names in Business must not be NULL $within");
-         Assert::minCount($this->names, 1, "names in Business must have min. count of 1 $within");
-         Assert::maxCount($this->names, 10, "names in Business must have max. count of 10 $within");
-         Assert::isArray($this->names, "names in Business must be array $within");
+        Assert::minCount(
+            $this->names,
+            1,
+            "names in Business must have min. count of 1 $within"
+        );
+        Assert::maxCount(
+            $this->names,
+            10,
+            "names in Business must have max. count of 10 $within"
+        );
+        Assert::isArray(
+            $this->names,
+            "names in Business must be array $within"
+        );
 
-                                if (isset($this->names)){
-                                    foreach ($this->names as $item) {
-                                        $item->validate(Business::class);
-                                    }
-                                }
+        if (isset($this->names)) {
+            foreach ($this->names as $item) {
+                $item->validate(Business::class);
+            }
+        }
 
-        !isset($this->type) || Assert::minLength($this->type, 1, "type in Business must have minlength of 1 $within");
-        !isset($this->type) || Assert::maxLength($this->type, 255, "type in Business must have maxlength of 255 $within");
-        !isset($this->category) || Assert::isInstanceOf($this->category, BusinessCategory::class, "category in Business must be instance of BusinessCategory $within");
-        !isset($this->category) || $this->category->validate(Business::class);
+        !isset($this->type) || Assert::minLength(
+            $this->type,
+            1,
+            "type in Business must have minlength of 1 $within"
+        );
+        !isset($this->type) || Assert::maxLength(
+            $this->type,
+            255,
+            "type in Business must have maxlength of 255 $within"
+        );
+        !isset($this->category) || Assert::isInstanceOf(
+            $this->category,
+            BusinessCategory::class,
+            "category in Business must be instance of BusinessCategory $within"
+        );
+        !isset($this->category) ||  $this->category->validate(Business::class);
         Assert::notNull($this->identifications, "identifications in Business must not be NULL $within");
-         Assert::minCount($this->identifications, 1, "identifications in Business must have min. count of 1 $within");
-         Assert::maxCount($this->identifications, 30, "identifications in Business must have max. count of 30 $within");
-         Assert::isArray($this->identifications, "identifications in Business must be array $within");
+        Assert::minCount(
+            $this->identifications,
+            1,
+            "identifications in Business must have min. count of 1 $within"
+        );
+        Assert::maxCount(
+            $this->identifications,
+            30,
+            "identifications in Business must have max. count of 30 $within"
+        );
+        Assert::isArray(
+            $this->identifications,
+            "identifications in Business must be array $within"
+        );
 
-                                if (isset($this->identifications)){
-                                    foreach ($this->identifications as $item) {
-                                        $item->validate(Business::class);
-                                    }
-                                }
+        if (isset($this->identifications)) {
+            foreach ($this->identifications as $item) {
+                $item->validate(Business::class);
+            }
+        }
 
-        !isset($this->description) || Assert::minLength($this->description, 1, "description in Business must have minlength of 1 $within");
-        !isset($this->description) || Assert::maxLength($this->description, 255, "description in Business must have maxlength of 255 $within");
+        !isset($this->description) || Assert::minLength(
+            $this->description,
+            1,
+            "description in Business must have minlength of 1 $within"
+        );
+        !isset($this->description) || Assert::maxLength(
+            $this->description,
+            255,
+            "description in Business must have maxlength of 255 $within"
+        );
         Assert::notNull($this->owners, "owners in Business must not be NULL $within");
-         Assert::minCount($this->owners, 1, "owners in Business must have min. count of 1 $within");
-         Assert::maxCount($this->owners, 100, "owners in Business must have max. count of 100 $within");
-         Assert::isArray($this->owners, "owners in Business must be array $within");
+        Assert::minCount(
+            $this->owners,
+            1,
+            "owners in Business must have min. count of 1 $within"
+        );
+        Assert::maxCount(
+            $this->owners,
+            100,
+            "owners in Business must have max. count of 100 $within"
+        );
+        Assert::isArray(
+            $this->owners,
+            "owners in Business must be array $within"
+        );
 
-                                if (isset($this->owners)){
-                                    foreach ($this->owners as $item) {
-                                        $item->validate(Business::class);
-                                    }
-                                }
+        if (isset($this->owners)) {
+            foreach ($this->owners as $item) {
+                $item->validate(Business::class);
+            }
+        }
 
-        !isset($this->url) || Assert::minLength($this->url, 1, "url in Business must have minlength of 1 $within");
-        !isset($this->url) || Assert::maxLength($this->url, 100, "url in Business must have maxlength of 100 $within");
-        !isset($this->customer_service_contacts) || Assert::isInstanceOf($this->customer_service_contacts, CustomerServiceContact::class, "customer_service_contacts in Business must be instance of CustomerServiceContact $within");
-        !isset($this->customer_service_contacts) || $this->customer_service_contacts->validate(Business::class);
+        !isset($this->url) || Assert::minLength(
+            $this->url,
+            1,
+            "url in Business must have minlength of 1 $within"
+        );
+        !isset($this->url) || Assert::maxLength(
+            $this->url,
+            100,
+            "url in Business must have maxlength of 100 $within"
+        );
+        !isset($this->customer_service_contacts) || Assert::isInstanceOf(
+            $this->customer_service_contacts,
+            CustomerServiceContact::class,
+            "customer_service_contacts in Business must be instance of CustomerServiceContact $within"
+        );
+        !isset($this->customer_service_contacts) ||  $this->customer_service_contacts->validate(Business::class);
     }
 
     public function __construct()
     {
+        $this->names = [];
+        $this->identifications = [];
+        $this->owners = [];
     }
 }

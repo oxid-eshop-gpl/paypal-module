@@ -21,17 +21,22 @@ class AmountWithBreakdown extends Money implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var AmountBreakdown
      * The breakdown of the amount. Breakdown provides details such as total item amount, total tax amount, shipping,
      * handling, insurance, and discounts, if any.
+     *
+     * @var AmountBreakdown | null
      */
     public $breakdown;
 
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->breakdown) || Assert::isInstanceOf($this->breakdown, AmountBreakdown::class, "breakdown in AmountWithBreakdown must be instance of AmountBreakdown $within");
-        !isset($this->breakdown) || $this->breakdown->validate(AmountWithBreakdown::class);
+        !isset($this->breakdown) || Assert::isInstanceOf(
+            $this->breakdown,
+            AmountBreakdown::class,
+            "breakdown in AmountWithBreakdown must be instance of AmountBreakdown $within"
+        );
+        !isset($this->breakdown) ||  $this->breakdown->validate(AmountWithBreakdown::class);
     }
 
     public function __construct()

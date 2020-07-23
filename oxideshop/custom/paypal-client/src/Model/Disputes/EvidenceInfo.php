@@ -16,29 +16,37 @@ class EvidenceInfo implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var TrackingInfo[]
      * An array of relevant tracking information for the transaction involved in this dispute.
+     *
+     * @var TrackingInfo[] | null
      */
     public $tracking_info;
 
     /**
-     * @var string[]
      * An array of refund IDs for the transaction involved in this dispute.
+     *
+     * @var string[] | null
      */
     public $refund_ids;
 
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->tracking_info) || Assert::isArray($this->tracking_info, "tracking_info in EvidenceInfo must be array $within");
+        !isset($this->tracking_info) || Assert::isArray(
+            $this->tracking_info,
+            "tracking_info in EvidenceInfo must be array $within"
+        );
 
-                                if (isset($this->tracking_info)){
-                                    foreach ($this->tracking_info as $item) {
-                                        $item->validate(EvidenceInfo::class);
-                                    }
-                                }
+        if (isset($this->tracking_info)) {
+            foreach ($this->tracking_info as $item) {
+                $item->validate(EvidenceInfo::class);
+            }
+        }
 
-        !isset($this->refund_ids) || Assert::isArray($this->refund_ids, "refund_ids in EvidenceInfo must be array $within");
+        !isset($this->refund_ids) || Assert::isArray(
+            $this->refund_ids,
+            "refund_ids in EvidenceInfo must be array $within"
+        );
     }
 
     public function __construct()

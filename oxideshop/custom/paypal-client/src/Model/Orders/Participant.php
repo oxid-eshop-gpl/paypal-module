@@ -16,24 +16,34 @@ class Participant extends Account implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var Person
      * Person information.
+     *
+     * @var Person | null
      */
     public $person;
 
     /**
-     * @var Business
      * Business information.
+     *
+     * @var Business | null
      */
     public $business;
 
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->person) || Assert::isInstanceOf($this->person, Person::class, "person in Participant must be instance of Person $within");
-        !isset($this->person) || $this->person->validate(Participant::class);
-        !isset($this->business) || Assert::isInstanceOf($this->business, Business::class, "business in Participant must be instance of Business $within");
-        !isset($this->business) || $this->business->validate(Participant::class);
+        !isset($this->person) || Assert::isInstanceOf(
+            $this->person,
+            Person::class,
+            "person in Participant must be instance of Person $within"
+        );
+        !isset($this->person) ||  $this->person->validate(Participant::class);
+        !isset($this->business) || Assert::isInstanceOf(
+            $this->business,
+            Business::class,
+            "business in Participant must be instance of Business $within"
+        );
+        !isset($this->business) ||  $this->business->validate(Participant::class);
     }
 
     public function __construct()

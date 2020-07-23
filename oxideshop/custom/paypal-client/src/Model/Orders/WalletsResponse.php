@@ -16,16 +16,21 @@ class WalletsResponse implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var ApplePayWalletResponse
      * The Apple Pay Wallet used to fund a payment.
+     *
+     * @var ApplePayWalletResponse | null
      */
     public $apple_pay;
 
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->apple_pay) || Assert::isInstanceOf($this->apple_pay, ApplePayWalletResponse::class, "apple_pay in WalletsResponse must be instance of ApplePayWalletResponse $within");
-        !isset($this->apple_pay) || $this->apple_pay->validate(WalletsResponse::class);
+        !isset($this->apple_pay) || Assert::isInstanceOf(
+            $this->apple_pay,
+            ApplePayWalletResponse::class,
+            "apple_pay in WalletsResponse must be instance of ApplePayWalletResponse $within"
+        );
+        !isset($this->apple_pay) ||  $this->apple_pay->validate(WalletsResponse::class);
     }
 
     public function __construct()

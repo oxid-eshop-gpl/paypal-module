@@ -16,9 +16,9 @@ class BusinessName implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var string
      * Required. The business name of the party.
      *
+     * @var string | null
      * maxLength: 300
      */
     public $business_name;
@@ -26,7 +26,11 @@ class BusinessName implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->business_name) || Assert::maxLength($this->business_name, 300, "business_name in BusinessName must have maxlength of 300 $within");
+        !isset($this->business_name) || Assert::maxLength(
+            $this->business_name,
+            300,
+            "business_name in BusinessName must have maxlength of 300 $within"
+        );
     }
 
     public function __construct()

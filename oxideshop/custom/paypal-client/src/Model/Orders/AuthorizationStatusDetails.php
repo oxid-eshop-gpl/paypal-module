@@ -16,14 +16,14 @@ class AuthorizationStatusDetails implements JsonSerializable
     use BaseModel;
 
     /** Authorization is pending manual review. */
-    const REASON_PENDING_REVIEW = 'PENDING_REVIEW';
+    public const REASON_PENDING_REVIEW = 'PENDING_REVIEW';
 
     /**
-     * @var string
      * The reason why the authorized status is `PENDING`.
      *
      * use one of constants defined in this class to set the value:
      * @see REASON_PENDING_REVIEW
+     * @var string | null
      */
     public $reason;
 

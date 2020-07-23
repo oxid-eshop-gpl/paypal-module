@@ -16,187 +16,186 @@ class ProductExperience implements JsonSerializable
     use BaseModel;
 
     /** The consumer's browser does a 302 redirect to <a href="https://www.paypal.com/us/home">paypal.com</a> from the third-party site. */
-    const USER_EXPERIENCE_FLOW_FULL_PAGE_REDIRECT = 'FULL_PAGE_REDIRECT';
+    public const USER_EXPERIENCE_FLOW_FULL_PAGE_REDIRECT = 'FULL_PAGE_REDIRECT';
 
     /** The buyer interacts with <a href="https://www.paypal.com/us/home">paypal.com</a> in an iframe or pop up window, which is a modal that is outside or hovers over the existing merchant experience. */
-    const USER_EXPERIENCE_FLOW_INCONTEXT = 'INCONTEXT';
+    public const USER_EXPERIENCE_FLOW_INCONTEXT = 'INCONTEXT';
 
     /** The buyer interacts with <a href="https://www.paypal.com/us/home">paypal.com</a> through an iframe on the merchant site, and is in line with the existing merchant experience. */
-    const USER_EXPERIENCE_FLOW_INLINE = 'INLINE';
+    public const USER_EXPERIENCE_FLOW_INLINE = 'INLINE';
 
     /** The buyer interacts with PayPal through PayPal's native SDK. */
-    const USER_EXPERIENCE_FLOW_NATIVE = 'NATIVE';
+    public const USER_EXPERIENCE_FLOW_NATIVE = 'NATIVE';
 
     /** The buyer interacts with PayPal by opening PayPal.com directly on browser */
-    const USER_EXPERIENCE_FLOW_FULL_PAGE = 'FULL_PAGE';
+    public const USER_EXPERIENCE_FLOW_FULL_PAGE = 'FULL_PAGE';
 
     /** The transaction is initiated from Venmo. */
-    const ENTRY_POINT_PAY_WITH_VENMO = 'PAY_WITH_VENMO';
+    public const ENTRY_POINT_PAY_WITH_VENMO = 'PAY_WITH_VENMO';
 
     /** The transaction is initiated from a credit card. */
-    const ENTRY_POINT_PAY_WITH_CARD = 'PAY_WITH_CARD';
+    public const ENTRY_POINT_PAY_WITH_CARD = 'PAY_WITH_CARD';
 
     /** The transaction is initiated from PayPal. */
-    const ENTRY_POINT_PAY_WITH_PAYPAL = 'PAY_WITH_PAYPAL';
+    public const ENTRY_POINT_PAY_WITH_PAYPAL = 'PAY_WITH_PAYPAL';
 
     /** The transaction is initiated from PayPal credit. */
-    const ENTRY_POINT_PAY_WITH_PAYPAL_CREDIT = 'PAY_WITH_PAYPAL_CREDIT';
+    public const ENTRY_POINT_PAY_WITH_PAYPAL_CREDIT = 'PAY_WITH_PAYPAL_CREDIT';
 
     /** The transaction is initiated from Pay With SEPA. */
-    const ENTRY_POINT_PAY_WITH_SEPA = 'PAY_WITH_SEPA';
+    public const ENTRY_POINT_PAY_WITH_SEPA = 'PAY_WITH_SEPA';
 
     /** The transaction is initiated from Alternative Payment AliPay. */
-    const ENTRY_POINT_PAY_WITH_ALTPAY_ALIPAY = 'PAY_WITH_ALTPAY_ALIPAY';
+    public const ENTRY_POINT_PAY_WITH_ALTPAY_ALIPAY = 'PAY_WITH_ALTPAY_ALIPAY';
 
     /** The transaction is initiated from Alternative Payment Bancontact. */
-    const ENTRY_POINT_PAY_WITH_ALTPAY_BANCONTACT = 'PAY_WITH_ALTPAY_BANCONTACT';
+    public const ENTRY_POINT_PAY_WITH_ALTPAY_BANCONTACT = 'PAY_WITH_ALTPAY_BANCONTACT';
 
     /** The transaction is initiated from Alternative Payment Boleto. */
-    const ENTRY_POINT_PAY_WITH_ALTPAY_BOLETO = 'PAY_WITH_ALTPAY_BOLETO';
+    public const ENTRY_POINT_PAY_WITH_ALTPAY_BOLETO = 'PAY_WITH_ALTPAY_BOLETO';
 
     /** The transaction is initiated from Alternative Payment EPS. */
-    const ENTRY_POINT_PAY_WITH_ALTPAY_EPS = 'PAY_WITH_ALTPAY_EPS';
+    public const ENTRY_POINT_PAY_WITH_ALTPAY_EPS = 'PAY_WITH_ALTPAY_EPS';
 
     /** The transaction is initiated from Alternative Payment Giropay. */
-    const ENTRY_POINT_PAY_WITH_ALTPAY_GIROPAY = 'PAY_WITH_ALTPAY_GIROPAY';
+    public const ENTRY_POINT_PAY_WITH_ALTPAY_GIROPAY = 'PAY_WITH_ALTPAY_GIROPAY';
 
     /** The transaction is initiated from Alternative Payment iDeal. */
-    const ENTRY_POINT_PAY_WITH_ALTPAY_IDEAL = 'PAY_WITH_ALTPAY_IDEAL';
+    public const ENTRY_POINT_PAY_WITH_ALTPAY_IDEAL = 'PAY_WITH_ALTPAY_IDEAL';
 
     /** The transaction is initiated from Alternative Payment MyBank. */
-    const ENTRY_POINT_PAY_WITH_ALTPAY_MYBANK = 'PAY_WITH_ALTPAY_MYBANK';
+    public const ENTRY_POINT_PAY_WITH_ALTPAY_MYBANK = 'PAY_WITH_ALTPAY_MYBANK';
 
     /** The transaction is initiated from Alternative Payment OXXO. */
-    const ENTRY_POINT_PAY_WITH_ALTPAY_OXXO = 'PAY_WITH_ALTPAY_OXXO';
+    public const ENTRY_POINT_PAY_WITH_ALTPAY_OXXO = 'PAY_WITH_ALTPAY_OXXO';
 
     /** The transaction is initiated from Alternative Payment P24. */
-    const ENTRY_POINT_PAY_WITH_ALTPAY_P24 = 'PAY_WITH_ALTPAY_P24';
+    public const ENTRY_POINT_PAY_WITH_ALTPAY_P24 = 'PAY_WITH_ALTPAY_P24';
 
     /** The transaction is initiated from Alternative Payment Sofort. */
-    const ENTRY_POINT_PAY_WITH_ALTPAY_SOFORT = 'PAY_WITH_ALTPAY_SOFORT';
+    public const ENTRY_POINT_PAY_WITH_ALTPAY_SOFORT = 'PAY_WITH_ALTPAY_SOFORT';
 
     /** The transaction is initiated from Alternative Payment WeChatPay. */
-    const ENTRY_POINT_PAY_WITH_ALTPAY_WECHATPAY = 'PAY_WITH_ALTPAY_WECHATPAY';
+    public const ENTRY_POINT_PAY_WITH_ALTPAY_WECHATPAY = 'PAY_WITH_ALTPAY_WECHATPAY';
 
     /** The transaction is initiated from Alternative Payment Zimpler. */
-    const ENTRY_POINT_PAY_WITH_ALTPAY_ZIMPLER = 'PAY_WITH_ALTPAY_ZIMPLER';
+    public const ENTRY_POINT_PAY_WITH_ALTPAY_ZIMPLER = 'PAY_WITH_ALTPAY_ZIMPLER';
 
     /** The action is initiated on PayPal.com website */
-    const ENTRY_POINT_PAYPAL_SITE = 'PAYPAL_SITE';
+    public const ENTRY_POINT_PAYPAL_SITE = 'PAYPAL_SITE';
 
     /** The transaction source is unknown. */
-    const ENTRY_POINT_UNKNOWN = 'UNKNOWN';
+    public const ENTRY_POINT_UNKNOWN = 'UNKNOWN';
 
     /** The transaction is completed through Venmo. */
-    const PAYMENT_METHOD_PAY_WITH_VENMO = 'PAY_WITH_VENMO';
+    public const PAYMENT_METHOD_PAY_WITH_VENMO = 'PAY_WITH_VENMO';
 
     /** The transaction is completed through a credit card. */
-    const PAYMENT_METHOD_PAY_WITH_CARD = 'PAY_WITH_CARD';
+    public const PAYMENT_METHOD_PAY_WITH_CARD = 'PAY_WITH_CARD';
 
     /** The transaction is completed through PayPal. */
-    const PAYMENT_METHOD_PAY_WITH_PAYPAL = 'PAY_WITH_PAYPAL';
+    public const PAYMENT_METHOD_PAY_WITH_PAYPAL = 'PAY_WITH_PAYPAL';
 
     /** The transaction is completed through PayPal credit. */
-    const PAYMENT_METHOD_PAY_WITH_PAYPAL_CREDIT = 'PAY_WITH_PAYPAL_CREDIT';
+    public const PAYMENT_METHOD_PAY_WITH_PAYPAL_CREDIT = 'PAY_WITH_PAYPAL_CREDIT';
 
     /** The transaction is completed through Pay With SEPA. */
-    const PAYMENT_METHOD_PAY_WITH_SEPA = 'PAY_WITH_SEPA';
+    public const PAYMENT_METHOD_PAY_WITH_SEPA = 'PAY_WITH_SEPA';
 
     /** The transaction is completed through Alternative Payment AliPay. */
-    const PAYMENT_METHOD_PAY_WITH_ALTPAY_ALIPAY = 'PAY_WITH_ALTPAY_ALIPAY';
+    public const PAYMENT_METHOD_PAY_WITH_ALTPAY_ALIPAY = 'PAY_WITH_ALTPAY_ALIPAY';
 
     /** The transaction is completed through Alternative Payment Bancontact. */
-    const PAYMENT_METHOD_PAY_WITH_ALTPAY_BANCONTACT = 'PAY_WITH_ALTPAY_BANCONTACT';
+    public const PAYMENT_METHOD_PAY_WITH_ALTPAY_BANCONTACT = 'PAY_WITH_ALTPAY_BANCONTACT';
 
     /** The transaction is completed through Alternative Payment Boleto. */
-    const PAYMENT_METHOD_PAY_WITH_ALTPAY_BOLETO = 'PAY_WITH_ALTPAY_BOLETO';
+    public const PAYMENT_METHOD_PAY_WITH_ALTPAY_BOLETO = 'PAY_WITH_ALTPAY_BOLETO';
 
     /** The transaction is completed through Alternative Payment EPS. */
-    const PAYMENT_METHOD_PAY_WITH_ALTPAY_EPS = 'PAY_WITH_ALTPAY_EPS';
+    public const PAYMENT_METHOD_PAY_WITH_ALTPAY_EPS = 'PAY_WITH_ALTPAY_EPS';
 
     /** The transaction is completed through Alternative Payment Giropay. */
-    const PAYMENT_METHOD_PAY_WITH_ALTPAY_GIROPAY = 'PAY_WITH_ALTPAY_GIROPAY';
+    public const PAYMENT_METHOD_PAY_WITH_ALTPAY_GIROPAY = 'PAY_WITH_ALTPAY_GIROPAY';
 
     /** The transaction is completed through Alternative Payment iDeal. */
-    const PAYMENT_METHOD_PAY_WITH_ALTPAY_IDEAL = 'PAY_WITH_ALTPAY_IDEAL';
+    public const PAYMENT_METHOD_PAY_WITH_ALTPAY_IDEAL = 'PAY_WITH_ALTPAY_IDEAL';
 
     /** The transaction is completed through Alternative Payment MyBank. */
-    const PAYMENT_METHOD_PAY_WITH_ALTPAY_MYBANK = 'PAY_WITH_ALTPAY_MYBANK';
+    public const PAYMENT_METHOD_PAY_WITH_ALTPAY_MYBANK = 'PAY_WITH_ALTPAY_MYBANK';
 
     /** The transaction is completed through Alternative Payment OXXO. */
-    const PAYMENT_METHOD_PAY_WITH_ALTPAY_OXXO = 'PAY_WITH_ALTPAY_OXXO';
+    public const PAYMENT_METHOD_PAY_WITH_ALTPAY_OXXO = 'PAY_WITH_ALTPAY_OXXO';
 
     /** The transaction is completed through Alternative Payment P24. */
-    const PAYMENT_METHOD_PAY_WITH_ALTPAY_P24 = 'PAY_WITH_ALTPAY_P24';
+    public const PAYMENT_METHOD_PAY_WITH_ALTPAY_P24 = 'PAY_WITH_ALTPAY_P24';
 
     /** The transaction is completed through Alternative Payment Sofort. */
-    const PAYMENT_METHOD_PAY_WITH_ALTPAY_SOFORT = 'PAY_WITH_ALTPAY_SOFORT';
+    public const PAYMENT_METHOD_PAY_WITH_ALTPAY_SOFORT = 'PAY_WITH_ALTPAY_SOFORT';
 
     /** The transaction is completed through Alternative Payment WeChatPay. */
-    const PAYMENT_METHOD_PAY_WITH_ALTPAY_WECHATPAY = 'PAY_WITH_ALTPAY_WECHATPAY';
+    public const PAYMENT_METHOD_PAY_WITH_ALTPAY_WECHATPAY = 'PAY_WITH_ALTPAY_WECHATPAY';
 
     /** The transaction is completed through Alternative Payment Zimpler. */
-    const PAYMENT_METHOD_PAY_WITH_ALTPAY_ZIMPLER = 'PAY_WITH_ALTPAY_ZIMPLER';
+    public const PAYMENT_METHOD_PAY_WITH_ALTPAY_ZIMPLER = 'PAY_WITH_ALTPAY_ZIMPLER';
 
     /** The transaction payment method is unknown. */
-    const PAYMENT_METHOD_UNKNOWN = 'UNKNOWN';
+    public const PAYMENT_METHOD_UNKNOWN = 'UNKNOWN';
 
     /** A browser on a PC. */
-    const CHANNEL_WEB = 'WEB';
+    public const CHANNEL_WEB = 'WEB';
 
     /** A browser on a mobile device. */
-    const CHANNEL_MOBILE_WEB = 'MOBILE_WEB';
+    public const CHANNEL_MOBILE_WEB = 'MOBILE_WEB';
 
     /** A native app in a mobile device. */
-    const CHANNEL_MOBILE_APP = 'MOBILE_APP';
+    public const CHANNEL_MOBILE_APP = 'MOBILE_APP';
 
     /** A batch invocation */
-    const CHANNEL_BATCH = 'BATCH';
+    public const CHANNEL_BATCH = 'BATCH';
 
     /** A legacy checkout API flow. */
-    const PRODUCT_FLOW_CLASSIC = 'CLASSIC';
+    public const PRODUCT_FLOW_CLASSIC = 'CLASSIC';
 
     /** A web application handles the user's checkout interaction. */
-    const PRODUCT_FLOW_HERMES = 'HERMES';
+    public const PRODUCT_FLOW_HERMES = 'HERMES';
 
     /** An eBay application handles the user's PayPal checkout experience. */
-    const PRODUCT_FLOW_PROX = 'PROX';
+    public const PRODUCT_FLOW_PROX = 'PROX';
 
     /** A web application handles the user's checkout interaction. */
-    const PRODUCT_FLOW_SMART_PAYMENT_BUTTONS = 'SMART_PAYMENT_BUTTONS';
+    public const PRODUCT_FLOW_SMART_PAYMENT_BUTTONS = 'SMART_PAYMENT_BUTTONS';
 
     /** A buyer signing up for a billing agreement */
-    const PRODUCT_FLOW_BUYER_APPROVAL_BILLING_AGREEMENT_CREATE = 'BUYER_APPROVAL_BILLING_AGREEMENT_CREATE';
+    public const PRODUCT_FLOW_BUYER_APPROVAL_BILLING_AGREEMENT_CREATE = 'BUYER_APPROVAL_BILLING_AGREEMENT_CREATE';
 
     /** A billing agreement modification flow initiated by consumer on paypal.com */
-    const PRODUCT_FLOW_CONSUMER_EXP_BILLING_AGREEMENT_MODIFY = 'CONSUMER_EXP_BILLING_AGREEMENT_MODIFY';
+    public const PRODUCT_FLOW_CONSUMER_EXP_BILLING_AGREEMENT_MODIFY = 'CONSUMER_EXP_BILLING_AGREEMENT_MODIFY';
 
     /** A flow allowing consumer to change funding for a transaction, while buyer is present for the transaction */
-    const PRODUCT_FLOW_ONE_TIME_PAYMENT_USING_BILLING_AGREEMENT = 'ONE_TIME_PAYMENT_USING_BILLING_AGREEMENT';
+    public const PRODUCT_FLOW_ONE_TIME_PAYMENT_USING_BILLING_AGREEMENT = 'ONE_TIME_PAYMENT_USING_BILLING_AGREEMENT';
 
     /** A purchase flow which buyer also approves creation of a billing agreement */
-    const PRODUCT_FLOW_BUYER_APPROVAL_BILLING_AGREEMENT_WITH_PURCHASE = 'BUYER_APPROVAL_BILLING_AGREEMENT_WITH_PURCHASE';
+    public const PRODUCT_FLOW_BUYER_APPROVAL_BILLING_AGREEMENT_WITH_PURCHASE = 'BUYER_APPROVAL_BILLING_AGREEMENT_WITH_PURCHASE';
 
     /** A buyer signing up for a Subscription. */
-    const PRODUCT_FLOW_BUYER_APPROVAL_SUBSCRIPTIONS = 'BUYER_APPROVAL_SUBSCRIPTIONS';
+    public const PRODUCT_FLOW_BUYER_APPROVAL_SUBSCRIPTIONS = 'BUYER_APPROVAL_SUBSCRIPTIONS';
 
     /** A subscription modification flow intiated by consumer on paypal.com. */
-    const PRODUCT_FLOW_CONSUMER_EXP_SUBSCRIPTIONS_MODIFY = 'CONSUMER_EXP_SUBSCRIPTIONS_MODIFY';
+    public const PRODUCT_FLOW_CONSUMER_EXP_SUBSCRIPTIONS_MODIFY = 'CONSUMER_EXP_SUBSCRIPTIONS_MODIFY';
 
     /** A subscription modification flow intiated by consumer on merchant site. */
-    const PRODUCT_FLOW_BUYER_APPROVAL_SUBSCRIPTIONS_REVISE = 'BUYER_APPROVAL_SUBSCRIPTIONS_REVISE';
+    public const PRODUCT_FLOW_BUYER_APPROVAL_SUBSCRIPTIONS_REVISE = 'BUYER_APPROVAL_SUBSCRIPTIONS_REVISE';
 
     /** A buyer consenting changes made to a plan of the subscription */
-    const PRODUCT_FLOW_BUYER_APPROVAL_SUBSCRIPTIONS_PRICING_CHANGE = 'BUYER_APPROVAL_SUBSCRIPTIONS_PRICING_CHANGE';
+    public const PRODUCT_FLOW_BUYER_APPROVAL_SUBSCRIPTIONS_PRICING_CHANGE = 'BUYER_APPROVAL_SUBSCRIPTIONS_PRICING_CHANGE';
 
     /** Additional factor authentication flow for Billing Agreements. */
-    const PRODUCT_FLOW_BUYER_INSTRUMENT_AUTHENTICATION_BILLING_AGREEMENT = 'BUYER_INSTRUMENT_AUTHENTICATION_BILLING_AGREEMENT';
+    public const PRODUCT_FLOW_BUYER_INSTRUMENT_AUTHENTICATION_BILLING_AGREEMENT = 'BUYER_INSTRUMENT_AUTHENTICATION_BILLING_AGREEMENT';
 
     /** Collection flow with the system initiating payments to resolve negative balance on sink accounts. */
-    const PRODUCT_FLOW_NEGATIVE_BALANCE_COLLECTION = 'NEGATIVE_BALANCE_COLLECTION';
+    public const PRODUCT_FLOW_NEGATIVE_BALANCE_COLLECTION = 'NEGATIVE_BALANCE_COLLECTION';
 
     /**
-     * @var string
      * The user experience flow for the PayPal transaction.
      *
      * use one of constants defined in this class to set the value:
@@ -205,13 +204,13 @@ class ProductExperience implements JsonSerializable
      * @see USER_EXPERIENCE_FLOW_INLINE
      * @see USER_EXPERIENCE_FLOW_NATIVE
      * @see USER_EXPERIENCE_FLOW_FULL_PAGE
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
     public $user_experience_flow;
 
     /**
-     * @var string
      * The payment method user chose to start the payment process.
      *
      * use one of constants defined in this class to set the value:
@@ -234,13 +233,13 @@ class ProductExperience implements JsonSerializable
      * @see ENTRY_POINT_PAY_WITH_ALTPAY_ZIMPLER
      * @see ENTRY_POINT_PAYPAL_SITE
      * @see ENTRY_POINT_UNKNOWN
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
     public $entry_point;
 
     /**
-     * @var string
      * Payment method used to complete the transaction. This can sometimes be different than the entry point if user
      * changed their mind during the checkout flow.
      *
@@ -263,13 +262,13 @@ class ProductExperience implements JsonSerializable
      * @see PAYMENT_METHOD_PAY_WITH_ALTPAY_WECHATPAY
      * @see PAYMENT_METHOD_PAY_WITH_ALTPAY_ZIMPLER
      * @see PAYMENT_METHOD_UNKNOWN
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
     public $payment_method;
 
     /**
-     * @var string
      * The payment flow channel type.
      *
      * use one of constants defined in this class to set the value:
@@ -277,13 +276,13 @@ class ProductExperience implements JsonSerializable
      * @see CHANNEL_MOBILE_WEB
      * @see CHANNEL_MOBILE_APP
      * @see CHANNEL_BATCH
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
     public $channel;
 
     /**
-     * @var string
      * The product flow type.
      *
      * use one of constants defined in this class to set the value:
@@ -301,6 +300,7 @@ class ProductExperience implements JsonSerializable
      * @see PRODUCT_FLOW_BUYER_APPROVAL_SUBSCRIPTIONS_PRICING_CHANGE
      * @see PRODUCT_FLOW_BUYER_INSTRUMENT_AUTHENTICATION_BILLING_AGREEMENT
      * @see PRODUCT_FLOW_NEGATIVE_BALANCE_COLLECTION
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
@@ -309,16 +309,56 @@ class ProductExperience implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->user_experience_flow) || Assert::minLength($this->user_experience_flow, 1, "user_experience_flow in ProductExperience must have minlength of 1 $within");
-        !isset($this->user_experience_flow) || Assert::maxLength($this->user_experience_flow, 255, "user_experience_flow in ProductExperience must have maxlength of 255 $within");
-        !isset($this->entry_point) || Assert::minLength($this->entry_point, 1, "entry_point in ProductExperience must have minlength of 1 $within");
-        !isset($this->entry_point) || Assert::maxLength($this->entry_point, 255, "entry_point in ProductExperience must have maxlength of 255 $within");
-        !isset($this->payment_method) || Assert::minLength($this->payment_method, 1, "payment_method in ProductExperience must have minlength of 1 $within");
-        !isset($this->payment_method) || Assert::maxLength($this->payment_method, 255, "payment_method in ProductExperience must have maxlength of 255 $within");
-        !isset($this->channel) || Assert::minLength($this->channel, 1, "channel in ProductExperience must have minlength of 1 $within");
-        !isset($this->channel) || Assert::maxLength($this->channel, 255, "channel in ProductExperience must have maxlength of 255 $within");
-        !isset($this->product_flow) || Assert::minLength($this->product_flow, 1, "product_flow in ProductExperience must have minlength of 1 $within");
-        !isset($this->product_flow) || Assert::maxLength($this->product_flow, 255, "product_flow in ProductExperience must have maxlength of 255 $within");
+        !isset($this->user_experience_flow) || Assert::minLength(
+            $this->user_experience_flow,
+            1,
+            "user_experience_flow in ProductExperience must have minlength of 1 $within"
+        );
+        !isset($this->user_experience_flow) || Assert::maxLength(
+            $this->user_experience_flow,
+            255,
+            "user_experience_flow in ProductExperience must have maxlength of 255 $within"
+        );
+        !isset($this->entry_point) || Assert::minLength(
+            $this->entry_point,
+            1,
+            "entry_point in ProductExperience must have minlength of 1 $within"
+        );
+        !isset($this->entry_point) || Assert::maxLength(
+            $this->entry_point,
+            255,
+            "entry_point in ProductExperience must have maxlength of 255 $within"
+        );
+        !isset($this->payment_method) || Assert::minLength(
+            $this->payment_method,
+            1,
+            "payment_method in ProductExperience must have minlength of 1 $within"
+        );
+        !isset($this->payment_method) || Assert::maxLength(
+            $this->payment_method,
+            255,
+            "payment_method in ProductExperience must have maxlength of 255 $within"
+        );
+        !isset($this->channel) || Assert::minLength(
+            $this->channel,
+            1,
+            "channel in ProductExperience must have minlength of 1 $within"
+        );
+        !isset($this->channel) || Assert::maxLength(
+            $this->channel,
+            255,
+            "channel in ProductExperience must have maxlength of 255 $within"
+        );
+        !isset($this->product_flow) || Assert::minLength(
+            $this->product_flow,
+            1,
+            "product_flow in ProductExperience must have minlength of 1 $within"
+        );
+        !isset($this->product_flow) || Assert::maxLength(
+            $this->product_flow,
+            255,
+            "product_flow in ProductExperience must have maxlength of 255 $within"
+        );
     }
 
     public function __construct()

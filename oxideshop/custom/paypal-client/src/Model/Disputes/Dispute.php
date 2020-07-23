@@ -16,188 +16,189 @@ class Dispute implements JsonSerializable
     use BaseModel;
 
     /** The customer did not receive the merchandise or service. */
-    const REASON_MERCHANDISE_OR_SERVICE_NOT_RECEIVED = 'MERCHANDISE_OR_SERVICE_NOT_RECEIVED';
+    public const REASON_MERCHANDISE_OR_SERVICE_NOT_RECEIVED = 'MERCHANDISE_OR_SERVICE_NOT_RECEIVED';
 
     /** The customer reports that the merchandise or service is not as described. */
-    const REASON_MERCHANDISE_OR_SERVICE_NOT_AS_DESCRIBED = 'MERCHANDISE_OR_SERVICE_NOT_AS_DESCRIBED';
+    public const REASON_MERCHANDISE_OR_SERVICE_NOT_AS_DESCRIBED = 'MERCHANDISE_OR_SERVICE_NOT_AS_DESCRIBED';
 
     /** The customer did not authorize purchase of the merchandise or service. */
-    const REASON_UNAUTHORISED = 'UNAUTHORISED';
+    public const REASON_UNAUTHORISED = 'UNAUTHORISED';
 
     /** The refund or credit was not processed for the customer. */
-    const REASON_CREDIT_NOT_PROCESSED = 'CREDIT_NOT_PROCESSED';
+    public const REASON_CREDIT_NOT_PROCESSED = 'CREDIT_NOT_PROCESSED';
 
     /** The transaction was a duplicate. */
-    const REASON_DUPLICATE_TRANSACTION = 'DUPLICATE_TRANSACTION';
+    public const REASON_DUPLICATE_TRANSACTION = 'DUPLICATE_TRANSACTION';
 
     /** The customer was charged an incorrect amount. */
-    const REASON_INCORRECT_AMOUNT = 'INCORRECT_AMOUNT';
+    public const REASON_INCORRECT_AMOUNT = 'INCORRECT_AMOUNT';
 
     /** The customer paid for the transaction through other means. */
-    const REASON_PAYMENT_BY_OTHER_MEANS = 'PAYMENT_BY_OTHER_MEANS';
+    public const REASON_PAYMENT_BY_OTHER_MEANS = 'PAYMENT_BY_OTHER_MEANS';
 
     /** The customer was being charged for a subscription or a recurring transaction that was canceled. */
-    const REASON_CANCELED_RECURRING_BILLING = 'CANCELED_RECURRING_BILLING';
+    public const REASON_CANCELED_RECURRING_BILLING = 'CANCELED_RECURRING_BILLING';
 
     /** A problem occurred with the remittance. */
-    const REASON_PROBLEM_WITH_REMITTANCE = 'PROBLEM_WITH_REMITTANCE';
+    public const REASON_PROBLEM_WITH_REMITTANCE = 'PROBLEM_WITH_REMITTANCE';
 
     /** Other. */
-    const REASON_OTHER = 'OTHER';
+    public const REASON_OTHER = 'OTHER';
 
     /** The dispute is open. */
-    const STATUS_OPEN = 'OPEN';
+    public const STATUS_OPEN = 'OPEN';
 
     /** The dispute is waiting for a response from the customer. */
-    const STATUS_WAITING_FOR_BUYER_RESPONSE = 'WAITING_FOR_BUYER_RESPONSE';
+    public const STATUS_WAITING_FOR_BUYER_RESPONSE = 'WAITING_FOR_BUYER_RESPONSE';
 
     /** The dispute is waiting for a response from the merchant. */
-    const STATUS_WAITING_FOR_SELLER_RESPONSE = 'WAITING_FOR_SELLER_RESPONSE';
+    public const STATUS_WAITING_FOR_SELLER_RESPONSE = 'WAITING_FOR_SELLER_RESPONSE';
 
     /** The dispute is under review with PayPal. */
-    const STATUS_UNDER_REVIEW = 'UNDER_REVIEW';
+    public const STATUS_UNDER_REVIEW = 'UNDER_REVIEW';
 
     /** The dispute is resolved. */
-    const STATUS_RESOLVED = 'RESOLVED';
+    public const STATUS_RESOLVED = 'RESOLVED';
 
     /** The default status if the dispute does not have one of the other statuses. */
-    const STATUS_OTHER = 'OTHER';
+    public const STATUS_OTHER = 'OTHER';
 
     /** A customer and merchant interact in an attempt to resolve a dispute without escalation to PayPal. Occurs when the customer:<ul><li>Has not received goods or a service.</li><li>Reports that the received goods or service are not as described.</li><li>Needs more details, such as a copy of the transaction or a receipt.</li></ul> */
-    const DISPUTE_LIFE_CYCLE_STAGE_INQUIRY = 'INQUIRY';
+    public const DISPUTE_LIFE_CYCLE_STAGE_INQUIRY = 'INQUIRY';
 
     /** A customer or merchant escalates an inquiry to a claim, which authorizes PayPal to investigate the case and make a determination. Occurs only when the dispute channel is <code>INTERNAL</code>. This stage is a PayPal dispute lifecycle stage and not a credit card or debit card chargeback. All notes that the customer sends in this stage are visible to PayPal agents only. The customer must wait for PayPal’s response before the customer can take further action. In this stage, PayPal shares dispute details with the merchant, who can complete one of these actions:<ul><li>Accept the claim.</li><li>Submit evidence to challenge the claim.</li><li>Make an offer to the customer to resolve the claim.</li></ul> */
-    const DISPUTE_LIFE_CYCLE_STAGE_CHARGEBACK = 'CHARGEBACK';
+    public const DISPUTE_LIFE_CYCLE_STAGE_CHARGEBACK = 'CHARGEBACK';
 
     /** The first appeal stage for merchants. A merchant can appeal a chargeback if PayPal's decision is not in the merchant's favor. If the merchant does not appeal within the appeal period, PayPal considers the case resolved. */
-    const DISPUTE_LIFE_CYCLE_STAGE_PRE_ARBITRATION = 'PRE_ARBITRATION';
+    public const DISPUTE_LIFE_CYCLE_STAGE_PRE_ARBITRATION = 'PRE_ARBITRATION';
 
     /** The second appeal stage for merchants. A merchant can appeal a dispute for a second time if the first appeal was denied. If the merchant does not appeal within the appeal period, the case returns to a resolved status in pre-arbitration stage. */
-    const DISPUTE_LIFE_CYCLE_STAGE_ARBITRATION = 'ARBITRATION';
+    public const DISPUTE_LIFE_CYCLE_STAGE_ARBITRATION = 'ARBITRATION';
 
     /** The customer contacts PayPal to file a dispute with the merchant. */
-    const DISPUTE_CHANNEL_INTERNAL = 'INTERNAL';
+    public const DISPUTE_CHANNEL_INTERNAL = 'INTERNAL';
 
     /** The customer contacts their card issuer or bank to request a refund. */
-    const DISPUTE_CHANNEL_EXTERNAL = 'EXTERNAL';
+    public const DISPUTE_CHANNEL_EXTERNAL = 'EXTERNAL';
 
     /** ACH returns. */
-    const DISPUTE_FLOW_ACH_RETURNS = 'ACH_RETURNS';
+    public const DISPUTE_FLOW_ACH_RETURNS = 'ACH_RETURNS';
 
     /** Account issues. */
-    const DISPUTE_FLOW_ACCOUNT_ISSUES = 'ACCOUNT_ISSUES';
+    public const DISPUTE_FLOW_ACCOUNT_ISSUES = 'ACCOUNT_ISSUES';
 
     /** Admin fraud reversal. */
-    const DISPUTE_FLOW_ADMIN_FRAUD_REVERSAL = 'ADMIN_FRAUD_REVERSAL';
+    public const DISPUTE_FLOW_ADMIN_FRAUD_REVERSAL = 'ADMIN_FRAUD_REVERSAL';
 
     /** Billing. */
-    const DISPUTE_FLOW_BILLING = 'BILLING';
+    public const DISPUTE_FLOW_BILLING = 'BILLING';
 
     /** Charge back. */
-    const DISPUTE_FLOW_CHARGEBACKS = 'CHARGEBACKS';
+    public const DISPUTE_FLOW_CHARGEBACKS = 'CHARGEBACKS';
 
     /** Complaint resolution. */
-    const DISPUTE_FLOW_COMPLAINT_RESOLUTION = 'COMPLAINT_RESOLUTION';
+    public const DISPUTE_FLOW_COMPLAINT_RESOLUTION = 'COMPLAINT_RESOLUTION';
 
     /** Correction. */
-    const DISPUTE_FLOW_CORRECTION = 'CORRECTION';
+    public const DISPUTE_FLOW_CORRECTION = 'CORRECTION';
 
     /** Debit card charge back. */
-    const DISPUTE_FLOW_DEBIT_CARD_CHARGEBACK = 'DEBIT_CARD_CHARGEBACK';
+    public const DISPUTE_FLOW_DEBIT_CARD_CHARGEBACK = 'DEBIT_CARD_CHARGEBACK';
 
     /** FAX routing. */
-    const DISPUTE_FLOW_FAX_ROUTING = 'FAX_ROUTING';
+    public const DISPUTE_FLOW_FAX_ROUTING = 'FAX_ROUTING';
 
     /** MIPS complaint item. */
-    const DISPUTE_FLOW_MIPS_COMPLAINT_ITEM = 'MIPS_COMPLAINT_ITEM';
+    public const DISPUTE_FLOW_MIPS_COMPLAINT_ITEM = 'MIPS_COMPLAINT_ITEM';
 
     /** MIPS complaint. */
-    const DISPUTE_FLOW_MIPS_COMPLAINT = 'MIPS_COMPLAINT';
+    public const DISPUTE_FLOW_MIPS_COMPLAINT = 'MIPS_COMPLAINT';
 
     /** OPS verification flow. */
-    const DISPUTE_FLOW_OPS_VERIFICATION_FLOW = 'OPS_VERIFICATION_FLOW';
+    public const DISPUTE_FLOW_OPS_VERIFICATION_FLOW = 'OPS_VERIFICATION_FLOW';
 
     /** PayPal dispute resolution. */
-    const DISPUTE_FLOW_PAYPAL_DISPUTE_RESOLUTION = 'PAYPAL_DISPUTE_RESOLUTION';
+    public const DISPUTE_FLOW_PAYPAL_DISPUTE_RESOLUTION = 'PAYPAL_DISPUTE_RESOLUTION';
 
     /** Pin-less debit return. */
-    const DISPUTE_FLOW_PINLESS_DEBIT_RETURN = 'PINLESS_DEBIT_RETURN';
+    public const DISPUTE_FLOW_PINLESS_DEBIT_RETURN = 'PINLESS_DEBIT_RETURN';
 
     /** Pricing adjustment. */
-    const DISPUTE_FLOW_PRICING_ADJUSTMENT = 'PRICING_ADJUSTMENT';
+    public const DISPUTE_FLOW_PRICING_ADJUSTMENT = 'PRICING_ADJUSTMENT';
 
     /** Spoof unauthorized child. */
-    const DISPUTE_FLOW_SPOOF_UNAUTH_CHILD = 'SPOOF_UNAUTH_CHILD';
+    public const DISPUTE_FLOW_SPOOF_UNAUTH_CHILD = 'SPOOF_UNAUTH_CHILD';
 
     /** Spoof unauthorized parent. */
-    const DISPUTE_FLOW_SPOOF_UNAUTH_PARENT = 'SPOOF_UNAUTH_PARENT';
+    public const DISPUTE_FLOW_SPOOF_UNAUTH_PARENT = 'SPOOF_UNAUTH_PARENT';
 
     /** Third-party claim. */
-    const DISPUTE_FLOW_THIRD_PARTY_CLAIM = 'THIRD_PARTY_CLAIM';
+    public const DISPUTE_FLOW_THIRD_PARTY_CLAIM = 'THIRD_PARTY_CLAIM';
 
     /** Third-party dispute. */
-    const DISPUTE_FLOW_THIRD_PARTY_DISPUTE = 'THIRD_PARTY_DISPUTE';
+    public const DISPUTE_FLOW_THIRD_PARTY_DISPUTE = 'THIRD_PARTY_DISPUTE';
 
     /** Ticket retrieval. */
-    const DISPUTE_FLOW_TICKET_RETRIEVAL = 'TICKET_RETRIEVAL';
+    public const DISPUTE_FLOW_TICKET_RETRIEVAL = 'TICKET_RETRIEVAL';
 
     /** UK Express returns. */
-    const DISPUTE_FLOW_UK_EXPRESS_RETURNS = 'UK_EXPRESS_RETURNS';
+    public const DISPUTE_FLOW_UK_EXPRESS_RETURNS = 'UK_EXPRESS_RETURNS';
 
     /** Unknown faxes. */
-    const DISPUTE_FLOW_UNKNOWN_FAXES = 'UNKNOWN_FAXES';
+    public const DISPUTE_FLOW_UNKNOWN_FAXES = 'UNKNOWN_FAXES';
 
     /** Vetting. */
-    const DISPUTE_FLOW_VETTING = 'VETTING';
+    public const DISPUTE_FLOW_VETTING = 'VETTING';
 
     /** Other. */
-    const DISPUTE_FLOW_OTHER = 'OTHER';
+    public const DISPUTE_FLOW_OTHER = 'OTHER';
 
     /**
-     * @var string
      * The ID of the dispute.
      *
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
     public $dispute_id;
 
     /**
-     * @var string
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
      *
+     * @var string | null
      * minLength: 20
      * maxLength: 64
      */
     public $create_time;
 
     /**
-     * @var string
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
      *
+     * @var string | null
      * minLength: 20
      * maxLength: 64
      */
     public $update_time;
 
     /**
-     * @var TransactionInfo[]
      * An array of transactions for which disputes were created.
+     *
+     * @var TransactionInfo[] | null
      */
     public $disputed_transactions;
 
     /**
-     * @var AccountActivity[]
      * An array of merchant account activities.
+     *
+     * @var AccountActivity[] | null
      */
     public $disputed_account_activities;
 
     /**
-     * @var string
      * The reason for the item-level dispute. For information about the required information for each dispute reason
      * and associated evidence type, see <a
      * href="/docs/integration/direct/customer-disputes/integration-guide/#dispute-reasons">dispute reasons</a>.
@@ -213,13 +214,13 @@ class Dispute implements JsonSerializable
      * @see REASON_CANCELED_RECURRING_BILLING
      * @see REASON_PROBLEM_WITH_REMITTANCE
      * @see REASON_OTHER
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
     public $reason;
 
     /**
-     * @var string
      * The status of the dispute.
      *
      * use one of constants defined in this class to set the value:
@@ -229,49 +230,53 @@ class Dispute implements JsonSerializable
      * @see STATUS_UNDER_REVIEW
      * @see STATUS_RESOLVED
      * @see STATUS_OTHER
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
     public $status;
 
     /**
-     * @var Money
      * The currency and amount for a financial transaction, such as a balance or payment due.
+     *
+     * @var Money | null
      */
     public $dispute_amount;
 
     /**
-     * @var Money
      * The currency and amount for a financial transaction, such as a balance or payment due.
+     *
+     * @var Money | null
      */
     public $dispute_fee;
 
     /**
-     * @var FeePolicy
      * Policy that determines whether the fee needs to be retained or returned while moving the money as part of
      * dispute process.
+     *
+     * @var FeePolicy | null
      */
     public $fee_policy;
 
     /**
-     * @var string
      * The code that identifies the reason for the credit card chargeback. Each card issuer follows their own
      * standards for defining reason type, code, and its format. For more details about the external reason code, see
      * the card issue site. Available for only unbranded transactions.
      *
+     * @var string | null
      * minLength: 1
      * maxLength: 2000
      */
     public $external_reason_code;
 
     /**
-     * @var DisputeOutcome
      * The outcome of a dispute.
+     *
+     * @var DisputeOutcome | null
      */
     public $dispute_outcome;
 
     /**
-     * @var string
      * The stage in the dispute lifecycle.
      *
      * use one of constants defined in this class to set the value:
@@ -279,72 +284,76 @@ class Dispute implements JsonSerializable
      * @see DISPUTE_LIFE_CYCLE_STAGE_CHARGEBACK
      * @see DISPUTE_LIFE_CYCLE_STAGE_PRE_ARBITRATION
      * @see DISPUTE_LIFE_CYCLE_STAGE_ARBITRATION
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
     public $dispute_life_cycle_stage;
 
     /**
-     * @var string
      * The channel where the customer created the dispute.
      *
      * use one of constants defined in this class to set the value:
      * @see DISPUTE_CHANNEL_INTERNAL
      * @see DISPUTE_CHANNEL_EXTERNAL
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
     public $dispute_channel;
 
     /**
-     * @var Message[]
      * An array of customer- or merchant-posted messages for the dispute.
+     *
+     * @var Message[] | null
      */
     public $messages;
 
     /**
-     * @var Extensions
      * The extended properties for the dispute. Includes additional information for a dispute category, such as
      * billing disputes, the original transaction ID, and the correct amount.
+     *
+     * @var Extensions | null
      */
     public $extensions;
 
     /**
-     * @var Evidence[]
      * An array of evidence documents.
+     *
+     * @var Evidence[] | null
      */
     public $evidences;
 
     /**
-     * @var string
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
      *
+     * @var string | null
      * minLength: 20
      * maxLength: 64
      */
     public $buyer_response_due_date;
 
     /**
-     * @var string
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
      *
+     * @var string | null
      * minLength: 20
      * maxLength: 64
      */
     public $seller_response_due_date;
 
     /**
-     * @var History[]
      * An array of history objects.
+     *
+     * @var History[] | null
      */
     public $history;
 
     /**
-     * @var string
      * The flow ID for the dispute ID.
      *
      * use one of constants defined in this class to set the value:
@@ -372,137 +381,284 @@ class Dispute implements JsonSerializable
      * @see DISPUTE_FLOW_UNKNOWN_FAXES
      * @see DISPUTE_FLOW_VETTING
      * @see DISPUTE_FLOW_OTHER
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
     public $dispute_flow;
 
     /**
-     * @var Offer
      * The merchant-proposed offer for a dispute.
+     *
+     * @var Offer | null
      */
     public $offer;
 
     /**
-     * @var RefundDetails
      * The refund details.
+     *
+     * @var RefundDetails | null
      */
     public $refund_details;
 
     /**
-     * @var CommunicationDetails
      * The contact details that a merchant provides to the customer to use to share their evidence documents.
+     *
+     * @var CommunicationDetails | null
      */
     public $communication_details;
 
     /**
-     * @var SupportingInfo[]
      * An array of all the supporting information that are associated to this dispute.
+     *
+     * @var SupportingInfo[] | null
      */
     public $supporting_info;
 
     /**
-     * @var LinkDescription[]
      * An array of request-related [HATEOAS links](/docs/api/hateoas-links/).
+     *
+     * @var LinkDescription[] | null
      */
     public $links;
 
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->dispute_id) || Assert::minLength($this->dispute_id, 1, "dispute_id in Dispute must have minlength of 1 $within");
-        !isset($this->dispute_id) || Assert::maxLength($this->dispute_id, 255, "dispute_id in Dispute must have maxlength of 255 $within");
-        !isset($this->create_time) || Assert::minLength($this->create_time, 20, "create_time in Dispute must have minlength of 20 $within");
-        !isset($this->create_time) || Assert::maxLength($this->create_time, 64, "create_time in Dispute must have maxlength of 64 $within");
-        !isset($this->update_time) || Assert::minLength($this->update_time, 20, "update_time in Dispute must have minlength of 20 $within");
-        !isset($this->update_time) || Assert::maxLength($this->update_time, 64, "update_time in Dispute must have maxlength of 64 $within");
-        !isset($this->disputed_transactions) || Assert::isArray($this->disputed_transactions, "disputed_transactions in Dispute must be array $within");
+        !isset($this->dispute_id) || Assert::minLength(
+            $this->dispute_id,
+            1,
+            "dispute_id in Dispute must have minlength of 1 $within"
+        );
+        !isset($this->dispute_id) || Assert::maxLength(
+            $this->dispute_id,
+            255,
+            "dispute_id in Dispute must have maxlength of 255 $within"
+        );
+        !isset($this->create_time) || Assert::minLength(
+            $this->create_time,
+            20,
+            "create_time in Dispute must have minlength of 20 $within"
+        );
+        !isset($this->create_time) || Assert::maxLength(
+            $this->create_time,
+            64,
+            "create_time in Dispute must have maxlength of 64 $within"
+        );
+        !isset($this->update_time) || Assert::minLength(
+            $this->update_time,
+            20,
+            "update_time in Dispute must have minlength of 20 $within"
+        );
+        !isset($this->update_time) || Assert::maxLength(
+            $this->update_time,
+            64,
+            "update_time in Dispute must have maxlength of 64 $within"
+        );
+        !isset($this->disputed_transactions) || Assert::isArray(
+            $this->disputed_transactions,
+            "disputed_transactions in Dispute must be array $within"
+        );
 
-                                if (isset($this->disputed_transactions)){
-                                    foreach ($this->disputed_transactions as $item) {
-                                        $item->validate(Dispute::class);
-                                    }
-                                }
+        if (isset($this->disputed_transactions)) {
+            foreach ($this->disputed_transactions as $item) {
+                $item->validate(Dispute::class);
+            }
+        }
 
-        !isset($this->disputed_account_activities) || Assert::isArray($this->disputed_account_activities, "disputed_account_activities in Dispute must be array $within");
+        !isset($this->disputed_account_activities) || Assert::isArray(
+            $this->disputed_account_activities,
+            "disputed_account_activities in Dispute must be array $within"
+        );
 
-                                if (isset($this->disputed_account_activities)){
-                                    foreach ($this->disputed_account_activities as $item) {
-                                        $item->validate(Dispute::class);
-                                    }
-                                }
+        if (isset($this->disputed_account_activities)) {
+            foreach ($this->disputed_account_activities as $item) {
+                $item->validate(Dispute::class);
+            }
+        }
 
-        !isset($this->reason) || Assert::minLength($this->reason, 1, "reason in Dispute must have minlength of 1 $within");
-        !isset($this->reason) || Assert::maxLength($this->reason, 255, "reason in Dispute must have maxlength of 255 $within");
-        !isset($this->status) || Assert::minLength($this->status, 1, "status in Dispute must have minlength of 1 $within");
-        !isset($this->status) || Assert::maxLength($this->status, 255, "status in Dispute must have maxlength of 255 $within");
-        !isset($this->dispute_amount) || Assert::isInstanceOf($this->dispute_amount, Money::class, "dispute_amount in Dispute must be instance of Money $within");
-        !isset($this->dispute_amount) || $this->dispute_amount->validate(Dispute::class);
-        !isset($this->dispute_fee) || Assert::isInstanceOf($this->dispute_fee, Money::class, "dispute_fee in Dispute must be instance of Money $within");
-        !isset($this->dispute_fee) || $this->dispute_fee->validate(Dispute::class);
-        !isset($this->fee_policy) || Assert::isInstanceOf($this->fee_policy, FeePolicy::class, "fee_policy in Dispute must be instance of FeePolicy $within");
-        !isset($this->fee_policy) || $this->fee_policy->validate(Dispute::class);
-        !isset($this->external_reason_code) || Assert::minLength($this->external_reason_code, 1, "external_reason_code in Dispute must have minlength of 1 $within");
-        !isset($this->external_reason_code) || Assert::maxLength($this->external_reason_code, 2000, "external_reason_code in Dispute must have maxlength of 2000 $within");
-        !isset($this->dispute_outcome) || Assert::isInstanceOf($this->dispute_outcome, DisputeOutcome::class, "dispute_outcome in Dispute must be instance of DisputeOutcome $within");
-        !isset($this->dispute_outcome) || $this->dispute_outcome->validate(Dispute::class);
-        !isset($this->dispute_life_cycle_stage) || Assert::minLength($this->dispute_life_cycle_stage, 1, "dispute_life_cycle_stage in Dispute must have minlength of 1 $within");
-        !isset($this->dispute_life_cycle_stage) || Assert::maxLength($this->dispute_life_cycle_stage, 255, "dispute_life_cycle_stage in Dispute must have maxlength of 255 $within");
-        !isset($this->dispute_channel) || Assert::minLength($this->dispute_channel, 1, "dispute_channel in Dispute must have minlength of 1 $within");
-        !isset($this->dispute_channel) || Assert::maxLength($this->dispute_channel, 255, "dispute_channel in Dispute must have maxlength of 255 $within");
-        !isset($this->messages) || Assert::isArray($this->messages, "messages in Dispute must be array $within");
+        !isset($this->reason) || Assert::minLength(
+            $this->reason,
+            1,
+            "reason in Dispute must have minlength of 1 $within"
+        );
+        !isset($this->reason) || Assert::maxLength(
+            $this->reason,
+            255,
+            "reason in Dispute must have maxlength of 255 $within"
+        );
+        !isset($this->status) || Assert::minLength(
+            $this->status,
+            1,
+            "status in Dispute must have minlength of 1 $within"
+        );
+        !isset($this->status) || Assert::maxLength(
+            $this->status,
+            255,
+            "status in Dispute must have maxlength of 255 $within"
+        );
+        !isset($this->dispute_amount) || Assert::isInstanceOf(
+            $this->dispute_amount,
+            Money::class,
+            "dispute_amount in Dispute must be instance of Money $within"
+        );
+        !isset($this->dispute_amount) ||  $this->dispute_amount->validate(Dispute::class);
+        !isset($this->dispute_fee) || Assert::isInstanceOf(
+            $this->dispute_fee,
+            Money::class,
+            "dispute_fee in Dispute must be instance of Money $within"
+        );
+        !isset($this->dispute_fee) ||  $this->dispute_fee->validate(Dispute::class);
+        !isset($this->fee_policy) || Assert::isInstanceOf(
+            $this->fee_policy,
+            FeePolicy::class,
+            "fee_policy in Dispute must be instance of FeePolicy $within"
+        );
+        !isset($this->fee_policy) ||  $this->fee_policy->validate(Dispute::class);
+        !isset($this->external_reason_code) || Assert::minLength(
+            $this->external_reason_code,
+            1,
+            "external_reason_code in Dispute must have minlength of 1 $within"
+        );
+        !isset($this->external_reason_code) || Assert::maxLength(
+            $this->external_reason_code,
+            2000,
+            "external_reason_code in Dispute must have maxlength of 2000 $within"
+        );
+        !isset($this->dispute_outcome) || Assert::isInstanceOf(
+            $this->dispute_outcome,
+            DisputeOutcome::class,
+            "dispute_outcome in Dispute must be instance of DisputeOutcome $within"
+        );
+        !isset($this->dispute_outcome) ||  $this->dispute_outcome->validate(Dispute::class);
+        !isset($this->dispute_life_cycle_stage) || Assert::minLength(
+            $this->dispute_life_cycle_stage,
+            1,
+            "dispute_life_cycle_stage in Dispute must have minlength of 1 $within"
+        );
+        !isset($this->dispute_life_cycle_stage) || Assert::maxLength(
+            $this->dispute_life_cycle_stage,
+            255,
+            "dispute_life_cycle_stage in Dispute must have maxlength of 255 $within"
+        );
+        !isset($this->dispute_channel) || Assert::minLength(
+            $this->dispute_channel,
+            1,
+            "dispute_channel in Dispute must have minlength of 1 $within"
+        );
+        !isset($this->dispute_channel) || Assert::maxLength(
+            $this->dispute_channel,
+            255,
+            "dispute_channel in Dispute must have maxlength of 255 $within"
+        );
+        !isset($this->messages) || Assert::isArray(
+            $this->messages,
+            "messages in Dispute must be array $within"
+        );
 
-                                if (isset($this->messages)){
-                                    foreach ($this->messages as $item) {
-                                        $item->validate(Dispute::class);
-                                    }
-                                }
+        if (isset($this->messages)) {
+            foreach ($this->messages as $item) {
+                $item->validate(Dispute::class);
+            }
+        }
 
-        !isset($this->extensions) || Assert::isInstanceOf($this->extensions, Extensions::class, "extensions in Dispute must be instance of Extensions $within");
-        !isset($this->extensions) || $this->extensions->validate(Dispute::class);
-        !isset($this->evidences) || Assert::isArray($this->evidences, "evidences in Dispute must be array $within");
+        !isset($this->extensions) || Assert::isInstanceOf(
+            $this->extensions,
+            Extensions::class,
+            "extensions in Dispute must be instance of Extensions $within"
+        );
+        !isset($this->extensions) ||  $this->extensions->validate(Dispute::class);
+        !isset($this->evidences) || Assert::isArray(
+            $this->evidences,
+            "evidences in Dispute must be array $within"
+        );
 
-                                if (isset($this->evidences)){
-                                    foreach ($this->evidences as $item) {
-                                        $item->validate(Dispute::class);
-                                    }
-                                }
+        if (isset($this->evidences)) {
+            foreach ($this->evidences as $item) {
+                $item->validate(Dispute::class);
+            }
+        }
 
-        !isset($this->buyer_response_due_date) || Assert::minLength($this->buyer_response_due_date, 20, "buyer_response_due_date in Dispute must have minlength of 20 $within");
-        !isset($this->buyer_response_due_date) || Assert::maxLength($this->buyer_response_due_date, 64, "buyer_response_due_date in Dispute must have maxlength of 64 $within");
-        !isset($this->seller_response_due_date) || Assert::minLength($this->seller_response_due_date, 20, "seller_response_due_date in Dispute must have minlength of 20 $within");
-        !isset($this->seller_response_due_date) || Assert::maxLength($this->seller_response_due_date, 64, "seller_response_due_date in Dispute must have maxlength of 64 $within");
-        !isset($this->history) || Assert::isArray($this->history, "history in Dispute must be array $within");
+        !isset($this->buyer_response_due_date) || Assert::minLength(
+            $this->buyer_response_due_date,
+            20,
+            "buyer_response_due_date in Dispute must have minlength of 20 $within"
+        );
+        !isset($this->buyer_response_due_date) || Assert::maxLength(
+            $this->buyer_response_due_date,
+            64,
+            "buyer_response_due_date in Dispute must have maxlength of 64 $within"
+        );
+        !isset($this->seller_response_due_date) || Assert::minLength(
+            $this->seller_response_due_date,
+            20,
+            "seller_response_due_date in Dispute must have minlength of 20 $within"
+        );
+        !isset($this->seller_response_due_date) || Assert::maxLength(
+            $this->seller_response_due_date,
+            64,
+            "seller_response_due_date in Dispute must have maxlength of 64 $within"
+        );
+        !isset($this->history) || Assert::isArray(
+            $this->history,
+            "history in Dispute must be array $within"
+        );
 
-                                if (isset($this->history)){
-                                    foreach ($this->history as $item) {
-                                        $item->validate(Dispute::class);
-                                    }
-                                }
+        if (isset($this->history)) {
+            foreach ($this->history as $item) {
+                $item->validate(Dispute::class);
+            }
+        }
 
-        !isset($this->dispute_flow) || Assert::minLength($this->dispute_flow, 1, "dispute_flow in Dispute must have minlength of 1 $within");
-        !isset($this->dispute_flow) || Assert::maxLength($this->dispute_flow, 255, "dispute_flow in Dispute must have maxlength of 255 $within");
-        !isset($this->offer) || Assert::isInstanceOf($this->offer, Offer::class, "offer in Dispute must be instance of Offer $within");
-        !isset($this->offer) || $this->offer->validate(Dispute::class);
-        !isset($this->refund_details) || Assert::isInstanceOf($this->refund_details, RefundDetails::class, "refund_details in Dispute must be instance of RefundDetails $within");
-        !isset($this->refund_details) || $this->refund_details->validate(Dispute::class);
-        !isset($this->communication_details) || Assert::isInstanceOf($this->communication_details, CommunicationDetails::class, "communication_details in Dispute must be instance of CommunicationDetails $within");
-        !isset($this->communication_details) || $this->communication_details->validate(Dispute::class);
-        !isset($this->supporting_info) || Assert::isArray($this->supporting_info, "supporting_info in Dispute must be array $within");
+        !isset($this->dispute_flow) || Assert::minLength(
+            $this->dispute_flow,
+            1,
+            "dispute_flow in Dispute must have minlength of 1 $within"
+        );
+        !isset($this->dispute_flow) || Assert::maxLength(
+            $this->dispute_flow,
+            255,
+            "dispute_flow in Dispute must have maxlength of 255 $within"
+        );
+        !isset($this->offer) || Assert::isInstanceOf(
+            $this->offer,
+            Offer::class,
+            "offer in Dispute must be instance of Offer $within"
+        );
+        !isset($this->offer) ||  $this->offer->validate(Dispute::class);
+        !isset($this->refund_details) || Assert::isInstanceOf(
+            $this->refund_details,
+            RefundDetails::class,
+            "refund_details in Dispute must be instance of RefundDetails $within"
+        );
+        !isset($this->refund_details) ||  $this->refund_details->validate(Dispute::class);
+        !isset($this->communication_details) || Assert::isInstanceOf(
+            $this->communication_details,
+            CommunicationDetails::class,
+            "communication_details in Dispute must be instance of CommunicationDetails $within"
+        );
+        !isset($this->communication_details) ||  $this->communication_details->validate(Dispute::class);
+        !isset($this->supporting_info) || Assert::isArray(
+            $this->supporting_info,
+            "supporting_info in Dispute must be array $within"
+        );
 
-                                if (isset($this->supporting_info)){
-                                    foreach ($this->supporting_info as $item) {
-                                        $item->validate(Dispute::class);
-                                    }
-                                }
+        if (isset($this->supporting_info)) {
+            foreach ($this->supporting_info as $item) {
+                $item->validate(Dispute::class);
+            }
+        }
 
-        !isset($this->links) || Assert::isArray($this->links, "links in Dispute must be array $within");
+        !isset($this->links) || Assert::isArray(
+            $this->links,
+            "links in Dispute must be array $within"
+        );
 
-                                if (isset($this->links)){
-                                    foreach ($this->links as $item) {
-                                        $item->validate(Dispute::class);
-                                    }
-                                }
+        if (isset($this->links)) {
+            foreach ($this->links as $item) {
+                $item->validate(Dispute::class);
+            }
+        }
     }
 
     public function __construct()

@@ -16,49 +16,48 @@ class EligibilityRequestItem implements JsonSerializable
     use BaseModel;
 
     /** Computer or related accessories. */
-    const CATEGORY_COMPUTERS = 'COMPUTERS';
+    public const CATEGORY_COMPUTERS = 'COMPUTERS';
 
     /** Home appliances. */
-    const CATEGORY_HOME = 'HOME';
+    public const CATEGORY_HOME = 'HOME';
 
     /** Decorative items, ornaments, and so on. */
-    const CATEGORY_JEWELRY = 'JEWELRY';
+    public const CATEGORY_JEWELRY = 'JEWELRY';
 
     /** Antiques and collectible items. */
-    const CATEGORY_ANTIQUES = 'ANTIQUES';
+    public const CATEGORY_ANTIQUES = 'ANTIQUES';
 
     /** Entertainment goods, such as video games, DVDs, and so on. */
-    const CATEGORY_ENTERTAINMENT = 'ENTERTAINMENT';
+    public const CATEGORY_ENTERTAINMENT = 'ENTERTAINMENT';
 
     /** Other material goods. */
-    const CATEGORY_OTHER_TANGIBLES = 'OTHER_TANGIBLES';
+    public const CATEGORY_OTHER_TANGIBLES = 'OTHER_TANGIBLES';
 
     /** Travel items and travel needs. */
-    const CATEGORY_TRAVEL = 'TRAVEL';
+    public const CATEGORY_TRAVEL = 'TRAVEL';
 
     /** Services, such as installation, repair, and so on. */
-    const CATEGORY_SERVICE = 'SERVICE';
+    public const CATEGORY_SERVICE = 'SERVICE';
 
     /** Non-physical objects, such as online games. */
-    const CATEGORY_VIRTUAL_GOODS = 'VIRTUAL_GOODS';
+    public const CATEGORY_VIRTUAL_GOODS = 'VIRTUAL_GOODS';
 
     /** Other intangible goods. */
-    const CATEGORY_OTHER_INTANGIBLES = 'OTHER_INTANGIBLES';
+    public const CATEGORY_OTHER_INTANGIBLES = 'OTHER_INTANGIBLES';
 
     /** Tickets for events, such as sports, concerts, and so on. */
-    const CATEGORY_TICKETS = 'TICKETS';
+    public const CATEGORY_TICKETS = 'TICKETS';
 
     /**
-     * @var string
      * The ID of the item.
      *
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
     public $id;
 
     /**
-     * @var string
      * The category of the item in dispute.
      *
      * use one of constants defined in this class to set the value:
@@ -73,6 +72,7 @@ class EligibilityRequestItem implements JsonSerializable
      * @see CATEGORY_VIRTUAL_GOODS
      * @see CATEGORY_OTHER_INTANGIBLES
      * @see CATEGORY_TICKETS
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
@@ -81,10 +81,26 @@ class EligibilityRequestItem implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->id) || Assert::minLength($this->id, 1, "id in EligibilityRequestItem must have minlength of 1 $within");
-        !isset($this->id) || Assert::maxLength($this->id, 255, "id in EligibilityRequestItem must have maxlength of 255 $within");
-        !isset($this->category) || Assert::minLength($this->category, 1, "category in EligibilityRequestItem must have minlength of 1 $within");
-        !isset($this->category) || Assert::maxLength($this->category, 255, "category in EligibilityRequestItem must have maxlength of 255 $within");
+        !isset($this->id) || Assert::minLength(
+            $this->id,
+            1,
+            "id in EligibilityRequestItem must have minlength of 1 $within"
+        );
+        !isset($this->id) || Assert::maxLength(
+            $this->id,
+            255,
+            "id in EligibilityRequestItem must have maxlength of 255 $within"
+        );
+        !isset($this->category) || Assert::minLength(
+            $this->category,
+            1,
+            "category in EligibilityRequestItem must have minlength of 1 $within"
+        );
+        !isset($this->category) || Assert::maxLength(
+            $this->category,
+            255,
+            "category in EligibilityRequestItem must have maxlength of 255 $within"
+        );
     }
 
     public function __construct()

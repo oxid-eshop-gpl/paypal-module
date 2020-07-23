@@ -16,43 +16,42 @@ class Identifier implements JsonSerializable
     use BaseModel;
 
     /** The bank code. */
-    const TYPE_BANK_CODE = 'BANK_CODE';
+    public const TYPE_BANK_CODE = 'BANK_CODE';
 
     /** The BI code. */
-    const TYPE_BI_CODE = 'BI_CODE';
+    public const TYPE_BI_CODE = 'BI_CODE';
 
     /** Branch code. */
-    const TYPE_BRANCH_CODE = 'BRANCH_CODE';
+    public const TYPE_BRANCH_CODE = 'BRANCH_CODE';
 
     /** The bank routing number. */
-    const TYPE_ROUTING_NUMBER_1 = 'ROUTING_NUMBER_1';
+    public const TYPE_ROUTING_NUMBER_1 = 'ROUTING_NUMBER_1';
 
     /** The bank routing number. */
-    const TYPE_ROUTING_NUMBER_2 = 'ROUTING_NUMBER_2';
+    public const TYPE_ROUTING_NUMBER_2 = 'ROUTING_NUMBER_2';
 
     /** The bank routing number. */
-    const TYPE_ROUTING_NUMBER_3 = 'ROUTING_NUMBER_3';
+    public const TYPE_ROUTING_NUMBER_3 = 'ROUTING_NUMBER_3';
 
     /** The bank swift code. */
-    const TYPE_SWIFT_CODE = 'SWIFT_CODE';
+    public const TYPE_SWIFT_CODE = 'SWIFT_CODE';
 
     /** Swift code. */
-    const TYPE_INTERMEDIARY_SWIFT_CODE = 'INTERMEDIARY_SWIFT_CODE';
+    public const TYPE_INTERMEDIARY_SWIFT_CODE = 'INTERMEDIARY_SWIFT_CODE';
 
     /** BBAN. */
-    const TYPE_BBAN = 'BBAN';
+    public const TYPE_BBAN = 'BBAN';
 
     /** BBAN enrypted. */
-    const TYPE_BBAN_ENCRYPTED = 'BBAN_ENCRYPTED';
+    public const TYPE_BBAN_ENCRYPTED = 'BBAN_ENCRYPTED';
 
     /** BBAN HMAC. */
-    const TYPE_BBAN_HMAC = 'BBAN_HMAC';
+    public const TYPE_BBAN_HMAC = 'BBAN_HMAC';
 
     /** Aggregator Yodlee. */
-    const TYPE_AGGREGATOR_YODLEE = 'AGGREGATOR_YODLEE';
+    public const TYPE_AGGREGATOR_YODLEE = 'AGGREGATOR_YODLEE';
 
     /**
-     * @var string
      * The bank account ID type.
      *
      * use one of constants defined in this class to set the value:
@@ -69,15 +68,16 @@ class Identifier implements JsonSerializable
      * @see TYPE_BBAN_ENCRYPTED
      * @see TYPE_BBAN_HMAC
      * @see TYPE_AGGREGATOR_YODLEE
+     * @var string | null
      * minLength: 1
      * maxLength: 125
      */
     public $type;
 
     /**
-     * @var string
      * The value of account identifier.
      *
+     * @var string | null
      * minLength: 1
      * maxLength: 125
      */
@@ -86,10 +86,26 @@ class Identifier implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->type) || Assert::minLength($this->type, 1, "type in Identifier must have minlength of 1 $within");
-        !isset($this->type) || Assert::maxLength($this->type, 125, "type in Identifier must have maxlength of 125 $within");
-        !isset($this->value) || Assert::minLength($this->value, 1, "value in Identifier must have minlength of 1 $within");
-        !isset($this->value) || Assert::maxLength($this->value, 125, "value in Identifier must have maxlength of 125 $within");
+        !isset($this->type) || Assert::minLength(
+            $this->type,
+            1,
+            "type in Identifier must have minlength of 1 $within"
+        );
+        !isset($this->type) || Assert::maxLength(
+            $this->type,
+            125,
+            "type in Identifier must have maxlength of 125 $within"
+        );
+        !isset($this->value) || Assert::minLength(
+            $this->value,
+            1,
+            "value in Identifier must have minlength of 1 $within"
+        );
+        !isset($this->value) || Assert::maxLength(
+            $this->value,
+            125,
+            "value in Identifier must have maxlength of 125 $within"
+        );
     }
 
     public function __construct()

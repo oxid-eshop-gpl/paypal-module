@@ -16,20 +16,18 @@ class CustomerServiceContact implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var string[]
      * Customer service email addresses.
      *
-     * this is mandatory to be set
+     * @var string[]
      * maxItems: 1
      * maxItems: 100
      */
     public $emails;
 
     /**
-     * @var PhoneInfo[]
      * Details of customer service phone numbers.
      *
-     * this is mandatory to be set
+     * @var PhoneInfo[]
      * maxItems: 1
      * maxItems: 100
      */
@@ -39,22 +37,46 @@ class CustomerServiceContact implements JsonSerializable
     {
         $within = isset($from) ? "within $from" : "";
         Assert::notNull($this->emails, "emails in CustomerServiceContact must not be NULL $within");
-         Assert::minCount($this->emails, 1, "emails in CustomerServiceContact must have min. count of 1 $within");
-         Assert::maxCount($this->emails, 100, "emails in CustomerServiceContact must have max. count of 100 $within");
-         Assert::isArray($this->emails, "emails in CustomerServiceContact must be array $within");
+        Assert::minCount(
+            $this->emails,
+            1,
+            "emails in CustomerServiceContact must have min. count of 1 $within"
+        );
+        Assert::maxCount(
+            $this->emails,
+            100,
+            "emails in CustomerServiceContact must have max. count of 100 $within"
+        );
+        Assert::isArray(
+            $this->emails,
+            "emails in CustomerServiceContact must be array $within"
+        );
         Assert::notNull($this->phones, "phones in CustomerServiceContact must not be NULL $within");
-         Assert::minCount($this->phones, 1, "phones in CustomerServiceContact must have min. count of 1 $within");
-         Assert::maxCount($this->phones, 100, "phones in CustomerServiceContact must have max. count of 100 $within");
-         Assert::isArray($this->phones, "phones in CustomerServiceContact must be array $within");
+        Assert::minCount(
+            $this->phones,
+            1,
+            "phones in CustomerServiceContact must have min. count of 1 $within"
+        );
+        Assert::maxCount(
+            $this->phones,
+            100,
+            "phones in CustomerServiceContact must have max. count of 100 $within"
+        );
+        Assert::isArray(
+            $this->phones,
+            "phones in CustomerServiceContact must be array $within"
+        );
 
-                                if (isset($this->phones)){
-                                    foreach ($this->phones as $item) {
-                                        $item->validate(CustomerServiceContact::class);
-                                    }
-                                }
+        if (isset($this->phones)) {
+            foreach ($this->phones as $item) {
+                $item->validate(CustomerServiceContact::class);
+            }
+        }
     }
 
     public function __construct()
     {
+        $this->emails = [];
+        $this->phones = [];
     }
 }

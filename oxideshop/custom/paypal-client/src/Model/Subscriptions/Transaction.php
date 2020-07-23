@@ -16,48 +16,46 @@ class Transaction extends CaptureStatus implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var string
      * The PayPal-generated transaction ID.
      *
-     * this is mandatory to be set
+     * @var string
      * minLength: 3
      * maxLength: 50
      */
     public $id;
 
     /**
-     * @var AmountWithBreakdown
      * The breakdown details for the amount. Includes the gross, tax, fee, and shipping amounts.
      *
-     * this is mandatory to be set
+     * @var AmountWithBreakdown
      */
     public $amount_with_breakdown;
 
     /**
-     * @var Name
      * The name of the party.
+     *
+     * @var Name | null
      */
     public $payer_name;
 
     /**
-     * @var string
      * The internationalized email address.<blockquote><strong>Note:</strong> Up to 64 characters are allowed before
      * and 255 characters are allowed after the <code>@</code> sign. However, the generally accepted maximum length
      * for an email address is 254 characters. The pattern verifies that an unquoted <code>@</code> sign
      * exists.</blockquote>
      *
+     * @var string | null
      * minLength: 3
      * maxLength: 254
      */
     public $payer_email;
 
     /**
-     * @var string
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
      *
-     * this is mandatory to be set
+     * @var string
      * minLength: 20
      * maxLength: 64
      */
@@ -67,21 +65,54 @@ class Transaction extends CaptureStatus implements JsonSerializable
     {
         $within = isset($from) ? "within $from" : "";
         Assert::notNull($this->id, "id in Transaction must not be NULL $within");
-         Assert::minLength($this->id, 3, "id in Transaction must have minlength of 3 $within");
-         Assert::maxLength($this->id, 50, "id in Transaction must have maxlength of 50 $within");
+        Assert::minLength(
+            $this->id,
+            3,
+            "id in Transaction must have minlength of 3 $within"
+        );
+        Assert::maxLength(
+            $this->id,
+            50,
+            "id in Transaction must have maxlength of 50 $within"
+        );
         Assert::notNull($this->amount_with_breakdown, "amount_with_breakdown in Transaction must not be NULL $within");
-         Assert::isInstanceOf($this->amount_with_breakdown, AmountWithBreakdown::class, "amount_with_breakdown in Transaction must be instance of AmountWithBreakdown $within");
+        Assert::isInstanceOf(
+            $this->amount_with_breakdown,
+            AmountWithBreakdown::class,
+            "amount_with_breakdown in Transaction must be instance of AmountWithBreakdown $within"
+        );
          $this->amount_with_breakdown->validate(Transaction::class);
-        !isset($this->payer_name) || Assert::isInstanceOf($this->payer_name, Name::class, "payer_name in Transaction must be instance of Name $within");
-        !isset($this->payer_name) || $this->payer_name->validate(Transaction::class);
-        !isset($this->payer_email) || Assert::minLength($this->payer_email, 3, "payer_email in Transaction must have minlength of 3 $within");
-        !isset($this->payer_email) || Assert::maxLength($this->payer_email, 254, "payer_email in Transaction must have maxlength of 254 $within");
+        !isset($this->payer_name) || Assert::isInstanceOf(
+            $this->payer_name,
+            Name::class,
+            "payer_name in Transaction must be instance of Name $within"
+        );
+        !isset($this->payer_name) ||  $this->payer_name->validate(Transaction::class);
+        !isset($this->payer_email) || Assert::minLength(
+            $this->payer_email,
+            3,
+            "payer_email in Transaction must have minlength of 3 $within"
+        );
+        !isset($this->payer_email) || Assert::maxLength(
+            $this->payer_email,
+            254,
+            "payer_email in Transaction must have maxlength of 254 $within"
+        );
         Assert::notNull($this->time, "time in Transaction must not be NULL $within");
-         Assert::minLength($this->time, 20, "time in Transaction must have minlength of 20 $within");
-         Assert::maxLength($this->time, 64, "time in Transaction must have maxlength of 64 $within");
+        Assert::minLength(
+            $this->time,
+            20,
+            "time in Transaction must have minlength of 20 $within"
+        );
+        Assert::maxLength(
+            $this->time,
+            64,
+            "time in Transaction must have maxlength of 64 $within"
+        );
     }
 
     public function __construct()
     {
+        $this->amount_with_breakdown = new AmountWithBreakdown();
     }
 }

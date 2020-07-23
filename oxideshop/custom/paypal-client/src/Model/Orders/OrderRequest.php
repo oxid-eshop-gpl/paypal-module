@@ -16,71 +16,72 @@ class OrderRequest implements JsonSerializable
     use BaseModel;
 
     /** The merchant intends to capture payment immediately after the customer makes a payment. */
-    const INTENT_CAPTURE = 'CAPTURE';
+    public const INTENT_CAPTURE = 'CAPTURE';
 
     /** The merchant intends to authorize a payment and place funds on hold after the customer makes a payment. Authorized payments are guaranteed for up to three days but are available to capture for up to 29 days. After the three-day honor period, the original authorized payment expires and you must re-authorize the payment. You must make a separate request to capture payments on demand. This intent is not supported when you have more than one `purchase_unit` within your order. */
-    const INTENT_AUTHORIZE = 'AUTHORIZE';
+    public const INTENT_AUTHORIZE = 'AUTHORIZE';
 
     /** The API caller saves the order for future payment processing by making an explicit <code>v2/checkout/orders/id/save</code> call after the payer approves the order. */
-    const PROCESSING_INSTRUCTION_ORDER_SAVED_EXPLICITLY = 'ORDER_SAVED_EXPLICITLY';
+    public const PROCESSING_INSTRUCTION_ORDER_SAVED_EXPLICITLY = 'ORDER_SAVED_EXPLICITLY';
 
     /** PayPal implicitly saves the order on behalf of the API caller after the payer approves the order. Note that this option is not currently supported. */
-    const PROCESSING_INSTRUCTION_ORDER_SAVED_ON_BUYER_APPROVAL = 'ORDER_SAVED_ON_BUYER_APPROVAL';
+    public const PROCESSING_INSTRUCTION_ORDER_SAVED_ON_BUYER_APPROVAL = 'ORDER_SAVED_ON_BUYER_APPROVAL';
 
     /** The API caller intends to authorize <code>v2/checkout/orders/id/authorize</code> or capture <code>v2/checkout/orders/id/capture</code> after the payer approves the order. */
-    const PROCESSING_INSTRUCTION_NO_INSTRUCTION = 'NO_INSTRUCTION';
+    public const PROCESSING_INSTRUCTION_NO_INSTRUCTION = 'NO_INSTRUCTION';
 
     /**
-     * @var string
      * The intent to either capture payment immediately or authorize a payment for an order after order creation.
      *
      * use one of constants defined in this class to set the value:
      * @see INTENT_CAPTURE
      * @see INTENT_AUTHORIZE
-     * this is mandatory to be set
+     * @var string
      */
     public $intent;
 
     /**
-     * @var string
      * The instruction to process an order.
      *
      * use one of constants defined in this class to set the value:
      * @see PROCESSING_INSTRUCTION_ORDER_SAVED_EXPLICITLY
      * @see PROCESSING_INSTRUCTION_ORDER_SAVED_ON_BUYER_APPROVAL
      * @see PROCESSING_INSTRUCTION_NO_INSTRUCTION
+     * @var string | null
      */
     public $processing_instruction = 'NO_INSTRUCTION';
 
     /**
-     * @var Payer
      * The customer who approves and pays for the order. The customer is also known as the payer.
+     *
+     * @var Payer | null
      */
     public $payer;
 
     /**
-     * @var PurchaseUnitRequest[]
      * An array of purchase units. Each purchase unit establishes a contract between a payer and the payee. Each
      * purchase unit represents either a full or partial order that the payer intends to purchase from the payee.
      *
-     * this is mandatory to be set
+     * @var PurchaseUnitRequest[]
      * maxItems: 1
      * maxItems: 10
      */
     public $purchase_units;
 
     /**
-     * @var PaymentSource
      * The payment source definition.
+     *
+     * @var PaymentSource | null
      */
     public $payment_source;
 
     /**
-     * @var OrderApplicationContext
      * Customizes the payer experience during the approval process for the payment with
      * PayPal.<blockquote><strong>Note:</strong> Partners and Marketplaces might configure <code>brand_name</code>
      * and <code>shipping_preference</code> during partner account setup, which overrides the request
      * values.</blockquote>
+     *
+     * @var OrderApplicationContext | null
      */
     public $application_context;
 
@@ -88,26 +89,50 @@ class OrderRequest implements JsonSerializable
     {
         $within = isset($from) ? "within $from" : "";
         Assert::notNull($this->intent, "intent in OrderRequest must not be NULL $within");
-        !isset($this->payer) || Assert::isInstanceOf($this->payer, Payer::class, "payer in OrderRequest must be instance of Payer $within");
-        !isset($this->payer) || $this->payer->validate(OrderRequest::class);
+        !isset($this->payer) || Assert::isInstanceOf(
+            $this->payer,
+            Payer::class,
+            "payer in OrderRequest must be instance of Payer $within"
+        );
+        !isset($this->payer) ||  $this->payer->validate(OrderRequest::class);
         Assert::notNull($this->purchase_units, "purchase_units in OrderRequest must not be NULL $within");
-         Assert::minCount($this->purchase_units, 1, "purchase_units in OrderRequest must have min. count of 1 $within");
-         Assert::maxCount($this->purchase_units, 10, "purchase_units in OrderRequest must have max. count of 10 $within");
-         Assert::isArray($this->purchase_units, "purchase_units in OrderRequest must be array $within");
+        Assert::minCount(
+            $this->purchase_units,
+            1,
+            "purchase_units in OrderRequest must have min. count of 1 $within"
+        );
+        Assert::maxCount(
+            $this->purchase_units,
+            10,
+            "purchase_units in OrderRequest must have max. count of 10 $within"
+        );
+        Assert::isArray(
+            $this->purchase_units,
+            "purchase_units in OrderRequest must be array $within"
+        );
 
-                                if (isset($this->purchase_units)){
-                                    foreach ($this->purchase_units as $item) {
-                                        $item->validate(OrderRequest::class);
-                                    }
-                                }
+        if (isset($this->purchase_units)) {
+            foreach ($this->purchase_units as $item) {
+                $item->validate(OrderRequest::class);
+            }
+        }
 
-        !isset($this->payment_source) || Assert::isInstanceOf($this->payment_source, PaymentSource::class, "payment_source in OrderRequest must be instance of PaymentSource $within");
-        !isset($this->payment_source) || $this->payment_source->validate(OrderRequest::class);
-        !isset($this->application_context) || Assert::isInstanceOf($this->application_context, OrderApplicationContext::class, "application_context in OrderRequest must be instance of OrderApplicationContext $within");
-        !isset($this->application_context) || $this->application_context->validate(OrderRequest::class);
+        !isset($this->payment_source) || Assert::isInstanceOf(
+            $this->payment_source,
+            PaymentSource::class,
+            "payment_source in OrderRequest must be instance of PaymentSource $within"
+        );
+        !isset($this->payment_source) ||  $this->payment_source->validate(OrderRequest::class);
+        !isset($this->application_context) || Assert::isInstanceOf(
+            $this->application_context,
+            OrderApplicationContext::class,
+            "application_context in OrderRequest must be instance of OrderApplicationContext $within"
+        );
+        !isset($this->application_context) ||  $this->application_context->validate(OrderRequest::class);
     }
 
     public function __construct()
     {
+        $this->purchase_units = [];
     }
 }

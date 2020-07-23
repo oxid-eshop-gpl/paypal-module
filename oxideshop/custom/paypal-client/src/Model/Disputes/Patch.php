@@ -16,29 +16,31 @@ class Patch implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var string
      * The operation to complete.
      *
-     * this is mandatory to be set
+     * @var string
      */
     public $op;
 
     /**
-     * @var string
      * The JSON pointer to the target document location at which to complete the operation.
+     *
+     * @var string | null
      */
     public $path;
 
     /**
-     * @var number|integer|string|boolean|null|array|object
      * The value to apply. The `remove` operation does not require a value.
+     *
+     * @var number|integer|string|boolean|null|array|object | null
      */
     public $value;
 
     /**
-     * @var string
      * The JSON pointer to the target document location from which to move the value. Required for the `move`
      * operation.
+     *
+     * @var string | null
      */
     public $from;
 

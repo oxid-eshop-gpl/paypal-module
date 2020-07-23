@@ -18,18 +18,18 @@ class EligibilityRequest implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var string
      * The encrypted transaction ID.
      *
-     * this is mandatory to be set
+     * @var string
      * minLength: 1
      * maxLength: 255
      */
     public $transaction_id;
 
     /**
-     * @var EligibilityRequestItem[]
      * An array of the items in the disputed transaction.
+     *
+     * @var EligibilityRequestItem[] | null
      */
     public $disputed_items;
 
@@ -37,15 +37,26 @@ class EligibilityRequest implements JsonSerializable
     {
         $within = isset($from) ? "within $from" : "";
         Assert::notNull($this->transaction_id, "transaction_id in EligibilityRequest must not be NULL $within");
-         Assert::minLength($this->transaction_id, 1, "transaction_id in EligibilityRequest must have minlength of 1 $within");
-         Assert::maxLength($this->transaction_id, 255, "transaction_id in EligibilityRequest must have maxlength of 255 $within");
-        !isset($this->disputed_items) || Assert::isArray($this->disputed_items, "disputed_items in EligibilityRequest must be array $within");
+        Assert::minLength(
+            $this->transaction_id,
+            1,
+            "transaction_id in EligibilityRequest must have minlength of 1 $within"
+        );
+        Assert::maxLength(
+            $this->transaction_id,
+            255,
+            "transaction_id in EligibilityRequest must have maxlength of 255 $within"
+        );
+        !isset($this->disputed_items) || Assert::isArray(
+            $this->disputed_items,
+            "disputed_items in EligibilityRequest must be array $within"
+        );
 
-                                if (isset($this->disputed_items)){
-                                    foreach ($this->disputed_items as $item) {
-                                        $item->validate(EligibilityRequest::class);
-                                    }
-                                }
+        if (isset($this->disputed_items)) {
+            foreach ($this->disputed_items as $item) {
+                $item->validate(EligibilityRequest::class);
+            }
+        }
     }
 
     public function __construct()

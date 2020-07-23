@@ -16,24 +16,34 @@ class CurrencyRange implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var Money
      * The currency and amount for a financial transaction, such as a balance or payment due.
+     *
+     * @var Money | null
      */
     public $minimum_amount;
 
     /**
-     * @var Money
      * The currency and amount for a financial transaction, such as a balance or payment due.
+     *
+     * @var Money | null
      */
     public $maximum_amount;
 
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->minimum_amount) || Assert::isInstanceOf($this->minimum_amount, Money::class, "minimum_amount in CurrencyRange must be instance of Money $within");
-        !isset($this->minimum_amount) || $this->minimum_amount->validate(CurrencyRange::class);
-        !isset($this->maximum_amount) || Assert::isInstanceOf($this->maximum_amount, Money::class, "maximum_amount in CurrencyRange must be instance of Money $within");
-        !isset($this->maximum_amount) || $this->maximum_amount->validate(CurrencyRange::class);
+        !isset($this->minimum_amount) || Assert::isInstanceOf(
+            $this->minimum_amount,
+            Money::class,
+            "minimum_amount in CurrencyRange must be instance of Money $within"
+        );
+        !isset($this->minimum_amount) ||  $this->minimum_amount->validate(CurrencyRange::class);
+        !isset($this->maximum_amount) || Assert::isInstanceOf(
+            $this->maximum_amount,
+            Money::class,
+            "maximum_amount in CurrencyRange must be instance of Money $within"
+        );
+        !isset($this->maximum_amount) ||  $this->maximum_amount->validate(CurrencyRange::class);
     }
 
     public function __construct()

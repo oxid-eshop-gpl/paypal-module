@@ -16,29 +16,27 @@ class PricingTier implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var string
      * The starting quantity for the tier.
      *
-     * this is mandatory to be set
+     * @var string
      * minLength: 1
      * maxLength: 32
      */
     public $starting_quantity;
 
     /**
-     * @var string
      * The ending quantity for the tier. Optional for the last tier.
      *
+     * @var string | null
      * minLength: 1
      * maxLength: 32
      */
     public $ending_quantity;
 
     /**
-     * @var Money
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * this is mandatory to be set
+     * @var Money
      */
     public $amount;
 
@@ -46,16 +44,37 @@ class PricingTier implements JsonSerializable
     {
         $within = isset($from) ? "within $from" : "";
         Assert::notNull($this->starting_quantity, "starting_quantity in PricingTier must not be NULL $within");
-         Assert::minLength($this->starting_quantity, 1, "starting_quantity in PricingTier must have minlength of 1 $within");
-         Assert::maxLength($this->starting_quantity, 32, "starting_quantity in PricingTier must have maxlength of 32 $within");
-        !isset($this->ending_quantity) || Assert::minLength($this->ending_quantity, 1, "ending_quantity in PricingTier must have minlength of 1 $within");
-        !isset($this->ending_quantity) || Assert::maxLength($this->ending_quantity, 32, "ending_quantity in PricingTier must have maxlength of 32 $within");
+        Assert::minLength(
+            $this->starting_quantity,
+            1,
+            "starting_quantity in PricingTier must have minlength of 1 $within"
+        );
+        Assert::maxLength(
+            $this->starting_quantity,
+            32,
+            "starting_quantity in PricingTier must have maxlength of 32 $within"
+        );
+        !isset($this->ending_quantity) || Assert::minLength(
+            $this->ending_quantity,
+            1,
+            "ending_quantity in PricingTier must have minlength of 1 $within"
+        );
+        !isset($this->ending_quantity) || Assert::maxLength(
+            $this->ending_quantity,
+            32,
+            "ending_quantity in PricingTier must have maxlength of 32 $within"
+        );
         Assert::notNull($this->amount, "amount in PricingTier must not be NULL $within");
-         Assert::isInstanceOf($this->amount, Money::class, "amount in PricingTier must be instance of Money $within");
+        Assert::isInstanceOf(
+            $this->amount,
+            Money::class,
+            "amount in PricingTier must be instance of Money $within"
+        );
          $this->amount->validate(PricingTier::class);
     }
 
     public function __construct()
     {
+        $this->amount = new Money();
     }
 }

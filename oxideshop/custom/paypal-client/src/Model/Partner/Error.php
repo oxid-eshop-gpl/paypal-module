@@ -16,44 +16,44 @@ class Error implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var string
      * The human-readable, unique name of the error.
      *
-     * this is mandatory to be set
+     * @var string
      */
     public $name;
 
     /**
-     * @var string
      * The message that describes the error.
      *
-     * this is mandatory to be set
+     * @var string
      */
     public $message;
 
     /**
-     * @var string
      * The PayPal internal ID. Used for correlation purposes.
      *
-     * this is mandatory to be set
+     * @var string
      */
     public $debug_id;
 
     /**
-     * @var string
      * The information link, or URI, that shows detailed information about this error for the developer.
+     *
+     * @var string | null
      */
     public $information_link;
 
     /**
-     * @var ErrorDetails[]
      * An array of additional details about the error.
+     *
+     * @var ErrorDetails[] | null
      */
     public $details;
 
     /**
-     * @var LinkDescription[]
      * An array of request-related [HATEOAS links](/docs/api/reference/api-responses/#hateoas-links).
+     *
+     * @var LinkDescription[] | null
      */
     public $links;
 
@@ -63,21 +63,27 @@ class Error implements JsonSerializable
         Assert::notNull($this->name, "name in Error must not be NULL $within");
         Assert::notNull($this->message, "message in Error must not be NULL $within");
         Assert::notNull($this->debug_id, "debug_id in Error must not be NULL $within");
-        !isset($this->details) || Assert::isArray($this->details, "details in Error must be array $within");
+        !isset($this->details) || Assert::isArray(
+            $this->details,
+            "details in Error must be array $within"
+        );
 
-                                if (isset($this->details)){
-                                    foreach ($this->details as $item) {
-                                        $item->validate(Error::class);
-                                    }
-                                }
+        if (isset($this->details)) {
+            foreach ($this->details as $item) {
+                $item->validate(Error::class);
+            }
+        }
 
-        !isset($this->links) || Assert::isArray($this->links, "links in Error must be array $within");
+        !isset($this->links) || Assert::isArray(
+            $this->links,
+            "links in Error must be array $within"
+        );
 
-                                if (isset($this->links)){
-                                    foreach ($this->links as $item) {
-                                        $item->validate(Error::class);
-                                    }
-                                }
+        if (isset($this->links)) {
+            foreach ($this->links as $item) {
+                $item->validate(Error::class);
+            }
+        }
     }
 
     public function __construct()

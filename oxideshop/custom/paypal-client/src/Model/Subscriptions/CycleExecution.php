@@ -16,65 +16,66 @@ class CycleExecution implements JsonSerializable
     use BaseModel;
 
     /** A regular billing cycle. */
-    const TENURE_TYPE_REGULAR = 'REGULAR';
+    public const TENURE_TYPE_REGULAR = 'REGULAR';
 
     /** A trial billing cycle. */
-    const TENURE_TYPE_TRIAL = 'TRIAL';
+    public const TENURE_TYPE_TRIAL = 'TRIAL';
 
     /**
-     * @var string
      * The type of the billing cycle.
      *
      * use one of constants defined in this class to set the value:
      * @see TENURE_TYPE_REGULAR
      * @see TENURE_TYPE_TRIAL
-     * this is mandatory to be set
+     * @var string
      * minLength: 1
      * maxLength: 24
      */
     public $tenure_type;
 
     /**
-     * @var integer
      * The order in which to run this cycle among other billing cycles.
      *
-     * this is mandatory to be set
+     * @var integer
      */
     public $sequence;
 
     /**
-     * @var integer
      * The number of billing cycles that have completed.
      *
-     * this is mandatory to be set
+     * @var integer
      */
     public $cycles_completed;
 
     /**
-     * @var integer
      * For a finite billing cycle, cycles_remaining is the number of remaining cycles. For an infinite billing cycle,
      * cycles_remaining is set as 0.
+     *
+     * @var integer | null
      */
     public $cycles_remaining;
 
     /**
-     * @var integer
      * The active pricing scheme version for the billing cycle.
+     *
+     * @var integer | null
      */
     public $current_pricing_scheme_version;
 
     /**
-     * @var Money
      * The currency and amount for a financial transaction, such as a balance or payment due.
+     *
+     * @var Money | null
      */
     public $amount_payable_per_cycle;
 
     /**
-     * @var integer
      * The number of times this billing cycle gets executed. Trial billing cycles can only be executed a finite
      * number of times (value between <code>1</code> and <code>999</code> for <code>total_cycles</code>). Regular
      * billing cycles can be executed infinite times (value of <code>0</code> for <code>total_cycles</code>) or a
      * finite number of times (value between <code>1</code> and <code>999</code> for <code>total_cycles</code>).
+     *
+     * @var integer | null
      */
     public $total_cycles;
 
@@ -82,12 +83,24 @@ class CycleExecution implements JsonSerializable
     {
         $within = isset($from) ? "within $from" : "";
         Assert::notNull($this->tenure_type, "tenure_type in CycleExecution must not be NULL $within");
-         Assert::minLength($this->tenure_type, 1, "tenure_type in CycleExecution must have minlength of 1 $within");
-         Assert::maxLength($this->tenure_type, 24, "tenure_type in CycleExecution must have maxlength of 24 $within");
+        Assert::minLength(
+            $this->tenure_type,
+            1,
+            "tenure_type in CycleExecution must have minlength of 1 $within"
+        );
+        Assert::maxLength(
+            $this->tenure_type,
+            24,
+            "tenure_type in CycleExecution must have maxlength of 24 $within"
+        );
         Assert::notNull($this->sequence, "sequence in CycleExecution must not be NULL $within");
         Assert::notNull($this->cycles_completed, "cycles_completed in CycleExecution must not be NULL $within");
-        !isset($this->amount_payable_per_cycle) || Assert::isInstanceOf($this->amount_payable_per_cycle, Money::class, "amount_payable_per_cycle in CycleExecution must be instance of Money $within");
-        !isset($this->amount_payable_per_cycle) || $this->amount_payable_per_cycle->validate(CycleExecution::class);
+        !isset($this->amount_payable_per_cycle) || Assert::isInstanceOf(
+            $this->amount_payable_per_cycle,
+            Money::class,
+            "amount_payable_per_cycle in CycleExecution must be instance of Money $within"
+        );
+        !isset($this->amount_payable_per_cycle) ||  $this->amount_payable_per_cycle->validate(CycleExecution::class);
     }
 
     public function __construct()

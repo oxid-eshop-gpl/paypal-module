@@ -16,10 +16,9 @@ class Mandate implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var boolean
      * Whether mandate was accepted or not.
      *
-     * this is mandatory to be set
+     * @var boolean
      */
     public $accepted;
 

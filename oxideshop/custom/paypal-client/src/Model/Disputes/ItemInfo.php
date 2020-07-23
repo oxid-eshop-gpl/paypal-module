@@ -16,74 +16,73 @@ class ItemInfo implements JsonSerializable
     use BaseModel;
 
     /** The customer did not receive the merchandise or service. */
-    const REASON_MERCHANDISE_OR_SERVICE_NOT_RECEIVED = 'MERCHANDISE_OR_SERVICE_NOT_RECEIVED';
+    public const REASON_MERCHANDISE_OR_SERVICE_NOT_RECEIVED = 'MERCHANDISE_OR_SERVICE_NOT_RECEIVED';
 
     /** The customer reports that the merchandise or service is not as described. */
-    const REASON_MERCHANDISE_OR_SERVICE_NOT_AS_DESCRIBED = 'MERCHANDISE_OR_SERVICE_NOT_AS_DESCRIBED';
+    public const REASON_MERCHANDISE_OR_SERVICE_NOT_AS_DESCRIBED = 'MERCHANDISE_OR_SERVICE_NOT_AS_DESCRIBED';
 
     /** The customer did not authorize purchase of the merchandise or service. */
-    const REASON_UNAUTHORISED = 'UNAUTHORISED';
+    public const REASON_UNAUTHORISED = 'UNAUTHORISED';
 
     /** The refund or credit was not processed for the customer. */
-    const REASON_CREDIT_NOT_PROCESSED = 'CREDIT_NOT_PROCESSED';
+    public const REASON_CREDIT_NOT_PROCESSED = 'CREDIT_NOT_PROCESSED';
 
     /** The transaction was a duplicate. */
-    const REASON_DUPLICATE_TRANSACTION = 'DUPLICATE_TRANSACTION';
+    public const REASON_DUPLICATE_TRANSACTION = 'DUPLICATE_TRANSACTION';
 
     /** The customer was charged an incorrect amount. */
-    const REASON_INCORRECT_AMOUNT = 'INCORRECT_AMOUNT';
+    public const REASON_INCORRECT_AMOUNT = 'INCORRECT_AMOUNT';
 
     /** The customer paid for the transaction through other means. */
-    const REASON_PAYMENT_BY_OTHER_MEANS = 'PAYMENT_BY_OTHER_MEANS';
+    public const REASON_PAYMENT_BY_OTHER_MEANS = 'PAYMENT_BY_OTHER_MEANS';
 
     /** The customer was being charged for a subscription or a recurring transaction that was canceled. */
-    const REASON_CANCELED_RECURRING_BILLING = 'CANCELED_RECURRING_BILLING';
+    public const REASON_CANCELED_RECURRING_BILLING = 'CANCELED_RECURRING_BILLING';
 
     /** A problem occurred with the remittance. */
-    const REASON_PROBLEM_WITH_REMITTANCE = 'PROBLEM_WITH_REMITTANCE';
+    public const REASON_PROBLEM_WITH_REMITTANCE = 'PROBLEM_WITH_REMITTANCE';
 
     /** Other. */
-    const REASON_OTHER = 'OTHER';
+    public const REASON_OTHER = 'OTHER';
 
     /**
-     * @var string
      * The item ID. If the merchant provides multiple pieces of evidence and the transaction has multiple item IDs,
      * the merchant can use this value to associate a piece of evidence with an item ID.
      *
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
     public $item_id;
 
     /**
-     * @var string
      * The item description.
      *
+     * @var string | null
      * minLength: 1
      * maxLength: 2000
      */
     public $item_description;
 
     /**
-     * @var string
      * The count of the item in the dispute. Must be a whole number.
      *
+     * @var string | null
      * maxLength: 10
      */
     public $item_quantity;
 
     /**
-     * @var string
      * The ID of the transaction in the partner system. The partner transaction ID is returned at an item level
      * because the partner might show different transactions for different items in the cart.
      *
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
     public $partner_transaction_id;
 
     /**
-     * @var string
      * The reason for the item-level dispute. For information about the required information for each dispute reason
      * and associated evidence type, see <a
      * href="/docs/integration/direct/customer-disputes/integration-guide/#dispute-reasons">dispute reasons</a>.
@@ -99,21 +98,23 @@ class ItemInfo implements JsonSerializable
      * @see REASON_CANCELED_RECURRING_BILLING
      * @see REASON_PROBLEM_WITH_REMITTANCE
      * @see REASON_OTHER
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
     public $reason;
 
     /**
-     * @var Money
      * The currency and amount for a financial transaction, such as a balance or payment due.
+     *
+     * @var Money | null
      */
     public $dispute_amount;
 
     /**
-     * @var string
      * Any notes provided with the item.
      *
+     * @var string | null
      * minLength: 1
      * maxLength: 2000
      */
@@ -122,19 +123,67 @@ class ItemInfo implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->item_id) || Assert::minLength($this->item_id, 1, "item_id in ItemInfo must have minlength of 1 $within");
-        !isset($this->item_id) || Assert::maxLength($this->item_id, 255, "item_id in ItemInfo must have maxlength of 255 $within");
-        !isset($this->item_description) || Assert::minLength($this->item_description, 1, "item_description in ItemInfo must have minlength of 1 $within");
-        !isset($this->item_description) || Assert::maxLength($this->item_description, 2000, "item_description in ItemInfo must have maxlength of 2000 $within");
-        !isset($this->item_quantity) || Assert::maxLength($this->item_quantity, 10, "item_quantity in ItemInfo must have maxlength of 10 $within");
-        !isset($this->partner_transaction_id) || Assert::minLength($this->partner_transaction_id, 1, "partner_transaction_id in ItemInfo must have minlength of 1 $within");
-        !isset($this->partner_transaction_id) || Assert::maxLength($this->partner_transaction_id, 255, "partner_transaction_id in ItemInfo must have maxlength of 255 $within");
-        !isset($this->reason) || Assert::minLength($this->reason, 1, "reason in ItemInfo must have minlength of 1 $within");
-        !isset($this->reason) || Assert::maxLength($this->reason, 255, "reason in ItemInfo must have maxlength of 255 $within");
-        !isset($this->dispute_amount) || Assert::isInstanceOf($this->dispute_amount, Money::class, "dispute_amount in ItemInfo must be instance of Money $within");
-        !isset($this->dispute_amount) || $this->dispute_amount->validate(ItemInfo::class);
-        !isset($this->notes) || Assert::minLength($this->notes, 1, "notes in ItemInfo must have minlength of 1 $within");
-        !isset($this->notes) || Assert::maxLength($this->notes, 2000, "notes in ItemInfo must have maxlength of 2000 $within");
+        !isset($this->item_id) || Assert::minLength(
+            $this->item_id,
+            1,
+            "item_id in ItemInfo must have minlength of 1 $within"
+        );
+        !isset($this->item_id) || Assert::maxLength(
+            $this->item_id,
+            255,
+            "item_id in ItemInfo must have maxlength of 255 $within"
+        );
+        !isset($this->item_description) || Assert::minLength(
+            $this->item_description,
+            1,
+            "item_description in ItemInfo must have minlength of 1 $within"
+        );
+        !isset($this->item_description) || Assert::maxLength(
+            $this->item_description,
+            2000,
+            "item_description in ItemInfo must have maxlength of 2000 $within"
+        );
+        !isset($this->item_quantity) || Assert::maxLength(
+            $this->item_quantity,
+            10,
+            "item_quantity in ItemInfo must have maxlength of 10 $within"
+        );
+        !isset($this->partner_transaction_id) || Assert::minLength(
+            $this->partner_transaction_id,
+            1,
+            "partner_transaction_id in ItemInfo must have minlength of 1 $within"
+        );
+        !isset($this->partner_transaction_id) || Assert::maxLength(
+            $this->partner_transaction_id,
+            255,
+            "partner_transaction_id in ItemInfo must have maxlength of 255 $within"
+        );
+        !isset($this->reason) || Assert::minLength(
+            $this->reason,
+            1,
+            "reason in ItemInfo must have minlength of 1 $within"
+        );
+        !isset($this->reason) || Assert::maxLength(
+            $this->reason,
+            255,
+            "reason in ItemInfo must have maxlength of 255 $within"
+        );
+        !isset($this->dispute_amount) || Assert::isInstanceOf(
+            $this->dispute_amount,
+            Money::class,
+            "dispute_amount in ItemInfo must be instance of Money $within"
+        );
+        !isset($this->dispute_amount) ||  $this->dispute_amount->validate(ItemInfo::class);
+        !isset($this->notes) || Assert::minLength(
+            $this->notes,
+            1,
+            "notes in ItemInfo must have minlength of 1 $within"
+        );
+        !isset($this->notes) || Assert::maxLength(
+            $this->notes,
+            2000,
+            "notes in ItemInfo must have maxlength of 2000 $within"
+        );
     }
 
     public function __construct()

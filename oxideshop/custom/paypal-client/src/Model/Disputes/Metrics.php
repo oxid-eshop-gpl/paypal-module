@@ -16,10 +16,9 @@ class Metrics implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var Metric[]
      * An array of dimension and measurement metrics for disputes.
      *
-     * this is mandatory to be set
+     * @var Metric[]
      * maxItems: 0
      */
     public $metrics;
@@ -28,17 +27,25 @@ class Metrics implements JsonSerializable
     {
         $within = isset($from) ? "within $from" : "";
         Assert::notNull($this->metrics, "metrics in Metrics must not be NULL $within");
-         Assert::minCount($this->metrics, 0, "metrics in Metrics must have min. count of 0 $within");
-         Assert::isArray($this->metrics, "metrics in Metrics must be array $within");
+        Assert::minCount(
+            $this->metrics,
+            0,
+            "metrics in Metrics must have min. count of 0 $within"
+        );
+        Assert::isArray(
+            $this->metrics,
+            "metrics in Metrics must be array $within"
+        );
 
-                                if (isset($this->metrics)){
-                                    foreach ($this->metrics as $item) {
-                                        $item->validate(Metrics::class);
-                                    }
-                                }
+        if (isset($this->metrics)) {
+            foreach ($this->metrics as $item) {
+                $item->validate(Metrics::class);
+            }
+        }
     }
 
     public function __construct()
     {
+        $this->metrics = [];
     }
 }

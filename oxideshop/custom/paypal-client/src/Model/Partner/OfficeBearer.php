@@ -16,25 +16,24 @@ class OfficeBearer extends Person implements JsonSerializable
     use BaseModel;
 
     /** The ceo. */
-    const ROLE_CEO = 'CEO';
+    public const ROLE_CEO = 'CEO';
 
     /** The chairman. */
-    const ROLE_CHAIRMAN = 'CHAIRMAN';
+    public const ROLE_CHAIRMAN = 'CHAIRMAN';
 
     /** Director of the business */
-    const ROLE_DIRECTOR = 'DIRECTOR';
+    public const ROLE_DIRECTOR = 'DIRECTOR';
 
     /** The secretary. */
-    const ROLE_SECRETARY = 'SECRETARY';
+    public const ROLE_SECRETARY = 'SECRETARY';
 
     /** The treasurer. */
-    const ROLE_TREASURER = 'TREASURER';
+    public const ROLE_TREASURER = 'TREASURER';
 
     /** The trustee. */
-    const ROLE_TRUSTEE = 'TRUSTEE';
+    public const ROLE_TRUSTEE = 'TRUSTEE';
 
     /**
-     * @var string
      * Role of the person party played in the business.
      *
      * use one of constants defined in this class to set the value:
@@ -44,6 +43,7 @@ class OfficeBearer extends Person implements JsonSerializable
      * @see ROLE_SECRETARY
      * @see ROLE_TREASURER
      * @see ROLE_TRUSTEE
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
@@ -52,8 +52,16 @@ class OfficeBearer extends Person implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->role) || Assert::minLength($this->role, 1, "role in OfficeBearer must have minlength of 1 $within");
-        !isset($this->role) || Assert::maxLength($this->role, 255, "role in OfficeBearer must have maxlength of 255 $within");
+        !isset($this->role) || Assert::minLength(
+            $this->role,
+            1,
+            "role in OfficeBearer must have minlength of 1 $within"
+        );
+        !isset($this->role) || Assert::maxLength(
+            $this->role,
+            255,
+            "role in OfficeBearer must have maxlength of 255 $within"
+        );
     }
 
     public function __construct()

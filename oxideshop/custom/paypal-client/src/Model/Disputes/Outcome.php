@@ -16,19 +16,18 @@ class Outcome implements JsonSerializable
     use BaseModel;
 
     /** The customer is at fault. */
-    const FAULTY_PARTY_BUYER = 'BUYER';
+    public const FAULTY_PARTY_BUYER = 'BUYER';
 
     /** The merchant is at fault. */
-    const FAULTY_PARTY_SELLER = 'SELLER';
+    public const FAULTY_PARTY_SELLER = 'SELLER';
 
     /** The partner is at fault. */
-    const FAULTY_PARTY_PARTNER = 'PARTNER';
+    public const FAULTY_PARTY_PARTNER = 'PARTNER';
 
     /** No specific party is at fault. */
-    const FAULTY_PARTY_NONE = 'NONE';
+    public const FAULTY_PARTY_NONE = 'NONE';
 
     /**
-     * @var string
      * The party that was at fault.
      *
      * use one of constants defined in this class to set the value:
@@ -36,28 +35,27 @@ class Outcome implements JsonSerializable
      * @see FAULTY_PARTY_SELLER
      * @see FAULTY_PARTY_PARTNER
      * @see FAULTY_PARTY_NONE
-     * this is mandatory to be set
+     * @var string
      * minLength: 1
      * maxLength: 255
      */
     public $faulty_party;
 
     /**
-     * @var string
      * The reason for the decision.
      *
-     * this is mandatory to be set
+     * @var string
      * minLength: 1
      * maxLength: 2000
      */
     public $adjudication_reason;
 
     /**
-     * @var string
      * The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).
      * Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular
      * expression provides guidance but does not reject all invalid dates.</blockquote>
      *
+     * @var string | null
      * minLength: 20
      * maxLength: 64
      */
@@ -67,13 +65,37 @@ class Outcome implements JsonSerializable
     {
         $within = isset($from) ? "within $from" : "";
         Assert::notNull($this->faulty_party, "faulty_party in Outcome must not be NULL $within");
-         Assert::minLength($this->faulty_party, 1, "faulty_party in Outcome must have minlength of 1 $within");
-         Assert::maxLength($this->faulty_party, 255, "faulty_party in Outcome must have maxlength of 255 $within");
+        Assert::minLength(
+            $this->faulty_party,
+            1,
+            "faulty_party in Outcome must have minlength of 1 $within"
+        );
+        Assert::maxLength(
+            $this->faulty_party,
+            255,
+            "faulty_party in Outcome must have maxlength of 255 $within"
+        );
         Assert::notNull($this->adjudication_reason, "adjudication_reason in Outcome must not be NULL $within");
-         Assert::minLength($this->adjudication_reason, 1, "adjudication_reason in Outcome must have minlength of 1 $within");
-         Assert::maxLength($this->adjudication_reason, 2000, "adjudication_reason in Outcome must have maxlength of 2000 $within");
-        !isset($this->resolution_date) || Assert::minLength($this->resolution_date, 20, "resolution_date in Outcome must have minlength of 20 $within");
-        !isset($this->resolution_date) || Assert::maxLength($this->resolution_date, 64, "resolution_date in Outcome must have maxlength of 64 $within");
+        Assert::minLength(
+            $this->adjudication_reason,
+            1,
+            "adjudication_reason in Outcome must have minlength of 1 $within"
+        );
+        Assert::maxLength(
+            $this->adjudication_reason,
+            2000,
+            "adjudication_reason in Outcome must have maxlength of 2000 $within"
+        );
+        !isset($this->resolution_date) || Assert::minLength(
+            $this->resolution_date,
+            20,
+            "resolution_date in Outcome must have minlength of 20 $within"
+        );
+        !isset($this->resolution_date) || Assert::maxLength(
+            $this->resolution_date,
+            64,
+            "resolution_date in Outcome must have maxlength of 64 $within"
+        );
     }
 
     public function __construct()

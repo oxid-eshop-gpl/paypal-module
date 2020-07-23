@@ -16,36 +16,39 @@ class ErrorDetails implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var string
      * The field that caused the error. If this field is in the body, set this value to the field's JSON pointer
      * value. Required for client-side errors.
+     *
+     * @var string | null
      */
     public $field;
 
     /**
-     * @var string
      * The value of the field that caused the error.
+     *
+     * @var string | null
      */
     public $value;
 
     /**
-     * @var string
      * The location of the field that caused the error. Value is `body`, `path`, or `query`.
+     *
+     * @var string | null
      */
     public $location = 'body';
 
     /**
-     * @var string
      * The unique, fine-grained application-level error code.
      *
-     * this is mandatory to be set
+     * @var string
      */
     public $issue;
 
     /**
-     * @var string
      * The human-readable description for an issue. The description can change over the lifetime of an API, so
      * clients must not depend on this value.
+     *
+     * @var string | null
      */
     public $description;
 

@@ -16,18 +16,18 @@ class PointOfSale implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var string
      * The API caller-provided external store identification number.
      *
+     * @var string | null
      * minLength: 1
      * maxLength: 50
      */
     public $store_id;
 
     /**
-     * @var string
      * The API caller-provided external terminal identification number.
      *
+     * @var string | null
      * minLength: 1
      * maxLength: 50
      */
@@ -36,10 +36,26 @@ class PointOfSale implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->store_id) || Assert::minLength($this->store_id, 1, "store_id in PointOfSale must have minlength of 1 $within");
-        !isset($this->store_id) || Assert::maxLength($this->store_id, 50, "store_id in PointOfSale must have maxlength of 50 $within");
-        !isset($this->terminal_id) || Assert::minLength($this->terminal_id, 1, "terminal_id in PointOfSale must have minlength of 1 $within");
-        !isset($this->terminal_id) || Assert::maxLength($this->terminal_id, 50, "terminal_id in PointOfSale must have maxlength of 50 $within");
+        !isset($this->store_id) || Assert::minLength(
+            $this->store_id,
+            1,
+            "store_id in PointOfSale must have minlength of 1 $within"
+        );
+        !isset($this->store_id) || Assert::maxLength(
+            $this->store_id,
+            50,
+            "store_id in PointOfSale must have maxlength of 50 $within"
+        );
+        !isset($this->terminal_id) || Assert::minLength(
+            $this->terminal_id,
+            1,
+            "terminal_id in PointOfSale must have minlength of 1 $within"
+        );
+        !isset($this->terminal_id) || Assert::maxLength(
+            $this->terminal_id,
+            50,
+            "terminal_id in PointOfSale must have maxlength of 50 $within"
+        );
     }
 
     public function __construct()

@@ -16,18 +16,16 @@ class UpdatePricingSchemeRequest implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var integer
      * The billing cycle sequence.
      *
-     * this is mandatory to be set
+     * @var integer
      */
     public $billing_cycle_sequence;
 
     /**
-     * @var PricingScheme
      * The pricing scheme details.
      *
-     * this is mandatory to be set
+     * @var PricingScheme
      */
     public $pricing_scheme;
 
@@ -36,11 +34,16 @@ class UpdatePricingSchemeRequest implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
         Assert::notNull($this->billing_cycle_sequence, "billing_cycle_sequence in UpdatePricingSchemeRequest must not be NULL $within");
         Assert::notNull($this->pricing_scheme, "pricing_scheme in UpdatePricingSchemeRequest must not be NULL $within");
-         Assert::isInstanceOf($this->pricing_scheme, PricingScheme::class, "pricing_scheme in UpdatePricingSchemeRequest must be instance of PricingScheme $within");
+        Assert::isInstanceOf(
+            $this->pricing_scheme,
+            PricingScheme::class,
+            "pricing_scheme in UpdatePricingSchemeRequest must be instance of PricingScheme $within"
+        );
          $this->pricing_scheme->validate(UpdatePricingSchemeRequest::class);
     }
 
     public function __construct()
     {
+        $this->pricing_scheme = new PricingScheme();
     }
 }

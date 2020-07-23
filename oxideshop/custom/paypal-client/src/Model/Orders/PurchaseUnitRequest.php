@@ -16,17 +16,16 @@ class PurchaseUnitRequest implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var string
      * The API caller-provided external ID for the purchase unit. Required for multiple purchase units when you must
      * update the order through `PATCH`. If you omit this value and the order contains only one purchase unit, PayPal
      * sets this value to `default`.
      *
+     * @var string | null
      * maxLength: 256
      */
     public $reference_id;
 
     /**
-     * @var AmountWithBreakdown
      * The total order amount with an optional breakdown that provides details, such as the total item amount, total
      * tax amount, shipping, handling, insurance, and discounts, if any.<br/>If you specify `amount.breakdown`, the
      * amount equals `item_total` plus `tax_total` plus `shipping` plus `handling` plus `insurance` minus
@@ -34,52 +33,53 @@ class PurchaseUnitRequest implements JsonSerializable
      * currencies and decimal precision, see the PayPal REST APIs <a
      * href="/docs/integration/direct/rest/currency-codes/">Currency Codes</a>.
      *
-     * this is mandatory to be set
+     * @var AmountWithBreakdown
      */
     public $amount;
 
     /**
-     * @var Payee
      * The merchant who receives the funds and fulfills the order. The merchant is also known as the payee.
+     *
+     * @var Payee | null
      */
     public $payee;
 
     /**
-     * @var PaymentInstruction
      * Any additional payment instructions for PayPal Commerce Platform customers. Enables features for the PayPal
      * Commerce Platform, such as delayed disbursement and collection of a platform fee. Applies during order
      * creation for captured payments or during capture of authorized payments.
+     *
+     * @var PaymentInstruction | null
      */
     public $payment_instruction;
 
     /**
-     * @var string
      * The purchase description.
      *
+     * @var string | null
      * maxLength: 127
      */
     public $description;
 
     /**
-     * @var string
      * The API caller-provided external ID. Used to reconcile client transactions with PayPal transactions. Appears
      * in transaction and settlement reports but is not visible to the payer.
      *
+     * @var string | null
      * maxLength: 127
      */
     public $custom_id;
 
     /**
-     * @var string
      * The API caller-provided external invoice number for this order. Appears in both the payer's transaction
      * history and the emails that the payer receives.
      *
+     * @var string | null
      * maxLength: 127
      */
     public $invoice_id;
 
     /**
-     * @var string
      * The soft descriptor is the dynamic text used to construct the statement descriptor that appears on a payer's
      * card statement.<br><br>If an Order is paid using the "PayPal Wallet", the statement descriptor will appear in
      * following format on the payer's card statement:
@@ -92,58 +92,106 @@ class PurchaseUnitRequest implements JsonSerializable
      * is <code>Janes Gift</code>.</li><li>The soft descriptor is <code>800-123-1234</code>.</li></ul>Then, the
      * statement descriptor on the card is <code>PAYPAL * Janes Gift 80</code>.
      *
+     * @var string | null
      * maxLength: 22
      */
     public $soft_descriptor;
 
     /**
-     * @var Item[]
      * An array of items that the customer purchases from the merchant.
+     *
+     * @var Item[] | null
      */
     public $items;
 
     /**
-     * @var ShippingDetail
      * The shipping details.
+     *
+     * @var ShippingDetail | null
      */
     public $shipping;
 
     /**
-     * @var SupplementaryData
      * The supplementary data.
+     *
+     * @var SupplementaryData | null
      */
     public $supplementary_data;
 
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->reference_id) || Assert::maxLength($this->reference_id, 256, "reference_id in PurchaseUnitRequest must have maxlength of 256 $within");
+        !isset($this->reference_id) || Assert::maxLength(
+            $this->reference_id,
+            256,
+            "reference_id in PurchaseUnitRequest must have maxlength of 256 $within"
+        );
         Assert::notNull($this->amount, "amount in PurchaseUnitRequest must not be NULL $within");
-         Assert::isInstanceOf($this->amount, AmountWithBreakdown::class, "amount in PurchaseUnitRequest must be instance of AmountWithBreakdown $within");
+        Assert::isInstanceOf(
+            $this->amount,
+            AmountWithBreakdown::class,
+            "amount in PurchaseUnitRequest must be instance of AmountWithBreakdown $within"
+        );
          $this->amount->validate(PurchaseUnitRequest::class);
-        !isset($this->payee) || Assert::isInstanceOf($this->payee, Payee::class, "payee in PurchaseUnitRequest must be instance of Payee $within");
-        !isset($this->payee) || $this->payee->validate(PurchaseUnitRequest::class);
-        !isset($this->payment_instruction) || Assert::isInstanceOf($this->payment_instruction, PaymentInstruction::class, "payment_instruction in PurchaseUnitRequest must be instance of PaymentInstruction $within");
-        !isset($this->payment_instruction) || $this->payment_instruction->validate(PurchaseUnitRequest::class);
-        !isset($this->description) || Assert::maxLength($this->description, 127, "description in PurchaseUnitRequest must have maxlength of 127 $within");
-        !isset($this->custom_id) || Assert::maxLength($this->custom_id, 127, "custom_id in PurchaseUnitRequest must have maxlength of 127 $within");
-        !isset($this->invoice_id) || Assert::maxLength($this->invoice_id, 127, "invoice_id in PurchaseUnitRequest must have maxlength of 127 $within");
-        !isset($this->soft_descriptor) || Assert::maxLength($this->soft_descriptor, 22, "soft_descriptor in PurchaseUnitRequest must have maxlength of 22 $within");
-        !isset($this->items) || Assert::isArray($this->items, "items in PurchaseUnitRequest must be array $within");
+        !isset($this->payee) || Assert::isInstanceOf(
+            $this->payee,
+            Payee::class,
+            "payee in PurchaseUnitRequest must be instance of Payee $within"
+        );
+        !isset($this->payee) ||  $this->payee->validate(PurchaseUnitRequest::class);
+        !isset($this->payment_instruction) || Assert::isInstanceOf(
+            $this->payment_instruction,
+            PaymentInstruction::class,
+            "payment_instruction in PurchaseUnitRequest must be instance of PaymentInstruction $within"
+        );
+        !isset($this->payment_instruction) ||  $this->payment_instruction->validate(PurchaseUnitRequest::class);
+        !isset($this->description) || Assert::maxLength(
+            $this->description,
+            127,
+            "description in PurchaseUnitRequest must have maxlength of 127 $within"
+        );
+        !isset($this->custom_id) || Assert::maxLength(
+            $this->custom_id,
+            127,
+            "custom_id in PurchaseUnitRequest must have maxlength of 127 $within"
+        );
+        !isset($this->invoice_id) || Assert::maxLength(
+            $this->invoice_id,
+            127,
+            "invoice_id in PurchaseUnitRequest must have maxlength of 127 $within"
+        );
+        !isset($this->soft_descriptor) || Assert::maxLength(
+            $this->soft_descriptor,
+            22,
+            "soft_descriptor in PurchaseUnitRequest must have maxlength of 22 $within"
+        );
+        !isset($this->items) || Assert::isArray(
+            $this->items,
+            "items in PurchaseUnitRequest must be array $within"
+        );
 
-                                if (isset($this->items)){
-                                    foreach ($this->items as $item) {
-                                        $item->validate(PurchaseUnitRequest::class);
-                                    }
-                                }
+        if (isset($this->items)) {
+            foreach ($this->items as $item) {
+                $item->validate(PurchaseUnitRequest::class);
+            }
+        }
 
-        !isset($this->shipping) || Assert::isInstanceOf($this->shipping, ShippingDetail::class, "shipping in PurchaseUnitRequest must be instance of ShippingDetail $within");
-        !isset($this->shipping) || $this->shipping->validate(PurchaseUnitRequest::class);
-        !isset($this->supplementary_data) || Assert::isInstanceOf($this->supplementary_data, SupplementaryData::class, "supplementary_data in PurchaseUnitRequest must be instance of SupplementaryData $within");
-        !isset($this->supplementary_data) || $this->supplementary_data->validate(PurchaseUnitRequest::class);
+        !isset($this->shipping) || Assert::isInstanceOf(
+            $this->shipping,
+            ShippingDetail::class,
+            "shipping in PurchaseUnitRequest must be instance of ShippingDetail $within"
+        );
+        !isset($this->shipping) ||  $this->shipping->validate(PurchaseUnitRequest::class);
+        !isset($this->supplementary_data) || Assert::isInstanceOf(
+            $this->supplementary_data,
+            SupplementaryData::class,
+            "supplementary_data in PurchaseUnitRequest must be instance of SupplementaryData $within"
+        );
+        !isset($this->supplementary_data) ||  $this->supplementary_data->validate(PurchaseUnitRequest::class);
     }
 
     public function __construct()
     {
+        $this->amount = new AmountWithBreakdown();
     }
 }

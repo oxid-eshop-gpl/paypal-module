@@ -16,30 +16,32 @@ class ProductCollection implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var ProductCollectionElement[]
      * An array of products.
      *
-     * this is mandatory to be set
+     * @var ProductCollectionElement[]
      * maxItems: 1
      * maxItems: 32767
      */
     public $products;
 
     /**
-     * @var integer
      * The total number of items.
+     *
+     * @var integer | null
      */
     public $total_items;
 
     /**
-     * @var integer
      * The total number of pages.
+     *
+     * @var integer | null
      */
     public $total_pages;
 
     /**
-     * @var LinkDescription[]
      * An array of request-related [HATEOAS links](/docs/api/overview/#hateoas-links).
+     *
+     * @var LinkDescription[] | null
      */
     public $links;
 
@@ -47,26 +49,41 @@ class ProductCollection implements JsonSerializable
     {
         $within = isset($from) ? "within $from" : "";
         Assert::notNull($this->products, "products in ProductCollection must not be NULL $within");
-         Assert::minCount($this->products, 1, "products in ProductCollection must have min. count of 1 $within");
-         Assert::maxCount($this->products, 32767, "products in ProductCollection must have max. count of 32767 $within");
-         Assert::isArray($this->products, "products in ProductCollection must be array $within");
+        Assert::minCount(
+            $this->products,
+            1,
+            "products in ProductCollection must have min. count of 1 $within"
+        );
+        Assert::maxCount(
+            $this->products,
+            32767,
+            "products in ProductCollection must have max. count of 32767 $within"
+        );
+        Assert::isArray(
+            $this->products,
+            "products in ProductCollection must be array $within"
+        );
 
-                                if (isset($this->products)){
-                                    foreach ($this->products as $item) {
-                                        $item->validate(ProductCollection::class);
-                                    }
-                                }
+        if (isset($this->products)) {
+            foreach ($this->products as $item) {
+                $item->validate(ProductCollection::class);
+            }
+        }
 
-        !isset($this->links) || Assert::isArray($this->links, "links in ProductCollection must be array $within");
+        !isset($this->links) || Assert::isArray(
+            $this->links,
+            "links in ProductCollection must be array $within"
+        );
 
-                                if (isset($this->links)){
-                                    foreach ($this->links as $item) {
-                                        $item->validate(ProductCollection::class);
-                                    }
-                                }
+        if (isset($this->links)) {
+            foreach ($this->links as $item) {
+                $item->validate(ProductCollection::class);
+            }
+        }
     }
 
     public function __construct()
     {
+        $this->products = [];
     }
 }

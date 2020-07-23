@@ -19,9 +19,10 @@ class OrderValidateApplicationContext implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var boolean
      * Signals to vault the payment source upon successful validation. The payment source is vaulted upon successful
      * capture when INTENT=SALE and authorization when INTENT=AUTHORIZE.
+     *
+     * @var boolean | null
      */
     public $vault = false;
 

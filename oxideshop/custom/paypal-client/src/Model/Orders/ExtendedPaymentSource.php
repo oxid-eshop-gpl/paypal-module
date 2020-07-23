@@ -16,15 +16,19 @@ class ExtendedPaymentSource extends PaymentSource implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var string[]
      * An array of contingencies.
+     *
+     * @var string[] | null
      */
     public $contingencies;
 
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->contingencies) || Assert::isArray($this->contingencies, "contingencies in ExtendedPaymentSource must be array $within");
+        !isset($this->contingencies) || Assert::isArray(
+            $this->contingencies,
+            "contingencies in ExtendedPaymentSource must be array $within"
+        );
     }
 
     public function __construct()

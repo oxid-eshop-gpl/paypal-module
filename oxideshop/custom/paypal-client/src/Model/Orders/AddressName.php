@@ -16,9 +16,9 @@ class AddressName extends AddressPortable implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var string
      * The name on the address, for example,  Mr J. Smith.
      *
+     * @var string | null
      * minLength: 1
      * maxLength: 200
      */
@@ -27,8 +27,16 @@ class AddressName extends AddressPortable implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->addressee) || Assert::minLength($this->addressee, 1, "addressee in AddressName must have minlength of 1 $within");
-        !isset($this->addressee) || Assert::maxLength($this->addressee, 200, "addressee in AddressName must have maxlength of 200 $within");
+        !isset($this->addressee) || Assert::minLength(
+            $this->addressee,
+            1,
+            "addressee in AddressName must have minlength of 1 $within"
+        );
+        !isset($this->addressee) || Assert::maxLength(
+            $this->addressee,
+            200,
+            "addressee in AddressName must have maxlength of 200 $within"
+        );
     }
 
     public function __construct()

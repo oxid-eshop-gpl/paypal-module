@@ -23,16 +23,21 @@ class ReauthorizeRequest implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var Money
      * The currency and amount for a financial transaction, such as a balance or payment due.
+     *
+     * @var Money | null
      */
     public $amount;
 
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->amount) || Assert::isInstanceOf($this->amount, Money::class, "amount in ReauthorizeRequest must be instance of Money $within");
-        !isset($this->amount) || $this->amount->validate(ReauthorizeRequest::class);
+        !isset($this->amount) || Assert::isInstanceOf(
+            $this->amount,
+            Money::class,
+            "amount in ReauthorizeRequest must be instance of Money $within"
+        );
+        !isset($this->amount) ||  $this->amount->validate(ReauthorizeRequest::class);
     }
 
     public function __construct()

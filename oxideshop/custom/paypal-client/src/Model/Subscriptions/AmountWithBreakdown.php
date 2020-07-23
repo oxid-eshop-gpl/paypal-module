@@ -16,36 +16,37 @@ class AmountWithBreakdown implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var Money
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * this is mandatory to be set
+     * @var Money
      */
     public $gross_amount;
 
     /**
-     * @var Money
      * The currency and amount for a financial transaction, such as a balance or payment due.
+     *
+     * @var Money | null
      */
     public $fee_amount;
 
     /**
-     * @var Money
      * The currency and amount for a financial transaction, such as a balance or payment due.
+     *
+     * @var Money | null
      */
     public $shipping_amount;
 
     /**
-     * @var Money
      * The currency and amount for a financial transaction, such as a balance or payment due.
+     *
+     * @var Money | null
      */
     public $tax_amount;
 
     /**
-     * @var Money
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * this is mandatory to be set
+     * @var Money
      */
     public $net_amount;
 
@@ -53,20 +54,42 @@ class AmountWithBreakdown implements JsonSerializable
     {
         $within = isset($from) ? "within $from" : "";
         Assert::notNull($this->gross_amount, "gross_amount in AmountWithBreakdown must not be NULL $within");
-         Assert::isInstanceOf($this->gross_amount, Money::class, "gross_amount in AmountWithBreakdown must be instance of Money $within");
+        Assert::isInstanceOf(
+            $this->gross_amount,
+            Money::class,
+            "gross_amount in AmountWithBreakdown must be instance of Money $within"
+        );
          $this->gross_amount->validate(AmountWithBreakdown::class);
-        !isset($this->fee_amount) || Assert::isInstanceOf($this->fee_amount, Money::class, "fee_amount in AmountWithBreakdown must be instance of Money $within");
-        !isset($this->fee_amount) || $this->fee_amount->validate(AmountWithBreakdown::class);
-        !isset($this->shipping_amount) || Assert::isInstanceOf($this->shipping_amount, Money::class, "shipping_amount in AmountWithBreakdown must be instance of Money $within");
-        !isset($this->shipping_amount) || $this->shipping_amount->validate(AmountWithBreakdown::class);
-        !isset($this->tax_amount) || Assert::isInstanceOf($this->tax_amount, Money::class, "tax_amount in AmountWithBreakdown must be instance of Money $within");
-        !isset($this->tax_amount) || $this->tax_amount->validate(AmountWithBreakdown::class);
+        !isset($this->fee_amount) || Assert::isInstanceOf(
+            $this->fee_amount,
+            Money::class,
+            "fee_amount in AmountWithBreakdown must be instance of Money $within"
+        );
+        !isset($this->fee_amount) ||  $this->fee_amount->validate(AmountWithBreakdown::class);
+        !isset($this->shipping_amount) || Assert::isInstanceOf(
+            $this->shipping_amount,
+            Money::class,
+            "shipping_amount in AmountWithBreakdown must be instance of Money $within"
+        );
+        !isset($this->shipping_amount) ||  $this->shipping_amount->validate(AmountWithBreakdown::class);
+        !isset($this->tax_amount) || Assert::isInstanceOf(
+            $this->tax_amount,
+            Money::class,
+            "tax_amount in AmountWithBreakdown must be instance of Money $within"
+        );
+        !isset($this->tax_amount) ||  $this->tax_amount->validate(AmountWithBreakdown::class);
         Assert::notNull($this->net_amount, "net_amount in AmountWithBreakdown must not be NULL $within");
-         Assert::isInstanceOf($this->net_amount, Money::class, "net_amount in AmountWithBreakdown must be instance of Money $within");
+        Assert::isInstanceOf(
+            $this->net_amount,
+            Money::class,
+            "net_amount in AmountWithBreakdown must be instance of Money $within"
+        );
          $this->net_amount->validate(AmountWithBreakdown::class);
     }
 
     public function __construct()
     {
+        $this->gross_amount = new Money();
+        $this->net_amount = new Money();
     }
 }

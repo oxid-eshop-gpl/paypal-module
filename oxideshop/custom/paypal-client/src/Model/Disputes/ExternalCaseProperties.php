@@ -16,75 +16,104 @@ class ExternalCaseProperties implements JsonSerializable
     use BaseModel;
 
     /** The customer disputed the transaction at the issuing bank. */
-    const EXTERNAL_TYPE_BANK_RETURN = 'BANK_RETURN';
+    public const EXTERNAL_TYPE_BANK_RETURN = 'BANK_RETURN';
 
     /** The customer requested to reverse the ELV transaction at the issuing bank. */
-    const EXTERNAL_TYPE_DIRECT_DEBIT_REVERSAL = 'DIRECT_DEBIT_REVERSAL';
+    public const EXTERNAL_TYPE_DIRECT_DEBIT_REVERSAL = 'DIRECT_DEBIT_REVERSAL';
 
     /** The customer disputed the transaction with the credit card processor. */
-    const EXTERNAL_TYPE_CREDIT_CARD_DISPUTE = 'CREDIT_CARD_DISPUTE';
+    public const EXTERNAL_TYPE_CREDIT_CARD_DISPUTE = 'CREDIT_CARD_DISPUTE';
 
     /** The dispute amount is debited from the merchant. */
-    const RECOVERY_TYPE_RECOVERED_FROM_SELLER = 'RECOVERED_FROM_SELLER';
+    public const RECOVERY_TYPE_RECOVERED_FROM_SELLER = 'RECOVERED_FROM_SELLER';
 
     /** The dispute amount is debited from the customer. */
-    const RECOVERY_TYPE_RECOVERED_FROM_BUYER = 'RECOVERED_FROM_BUYER';
+    public const RECOVERY_TYPE_RECOVERED_FROM_BUYER = 'RECOVERED_FROM_BUYER';
 
     /** The merchant or customer is not liable for the dispute. */
-    const RECOVERY_TYPE_NO_RECOVERY = 'NO_RECOVERY';
+    public const RECOVERY_TYPE_NO_RECOVERY = 'NO_RECOVERY';
 
     /**
-     * @var string
      * The external claim ID.
      *
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
     public $reference_id;
 
     /**
-     * @var string
      * The partner-supported external type.
      *
      * use one of constants defined in this class to set the value:
      * @see EXTERNAL_TYPE_BANK_RETURN
      * @see EXTERNAL_TYPE_DIRECT_DEBIT_REVERSAL
      * @see EXTERNAL_TYPE_CREDIT_CARD_DISPUTE
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
     public $external_type;
 
     /**
-     * @var string
      * The type of recovery on the external dispute.
      *
      * use one of constants defined in this class to set the value:
      * @see RECOVERY_TYPE_RECOVERED_FROM_SELLER
      * @see RECOVERY_TYPE_RECOVERED_FROM_BUYER
      * @see RECOVERY_TYPE_NO_RECOVERY
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
     public $recovery_type;
 
     /**
-     * @var Money
      * The currency and amount for a financial transaction, such as a balance or payment due.
+     *
+     * @var Money | null
      */
     public $reversal_fee;
 
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->reference_id) || Assert::minLength($this->reference_id, 1, "reference_id in ExternalCaseProperties must have minlength of 1 $within");
-        !isset($this->reference_id) || Assert::maxLength($this->reference_id, 255, "reference_id in ExternalCaseProperties must have maxlength of 255 $within");
-        !isset($this->external_type) || Assert::minLength($this->external_type, 1, "external_type in ExternalCaseProperties must have minlength of 1 $within");
-        !isset($this->external_type) || Assert::maxLength($this->external_type, 255, "external_type in ExternalCaseProperties must have maxlength of 255 $within");
-        !isset($this->recovery_type) || Assert::minLength($this->recovery_type, 1, "recovery_type in ExternalCaseProperties must have minlength of 1 $within");
-        !isset($this->recovery_type) || Assert::maxLength($this->recovery_type, 255, "recovery_type in ExternalCaseProperties must have maxlength of 255 $within");
-        !isset($this->reversal_fee) || Assert::isInstanceOf($this->reversal_fee, Money::class, "reversal_fee in ExternalCaseProperties must be instance of Money $within");
-        !isset($this->reversal_fee) || $this->reversal_fee->validate(ExternalCaseProperties::class);
+        !isset($this->reference_id) || Assert::minLength(
+            $this->reference_id,
+            1,
+            "reference_id in ExternalCaseProperties must have minlength of 1 $within"
+        );
+        !isset($this->reference_id) || Assert::maxLength(
+            $this->reference_id,
+            255,
+            "reference_id in ExternalCaseProperties must have maxlength of 255 $within"
+        );
+        !isset($this->external_type) || Assert::minLength(
+            $this->external_type,
+            1,
+            "external_type in ExternalCaseProperties must have minlength of 1 $within"
+        );
+        !isset($this->external_type) || Assert::maxLength(
+            $this->external_type,
+            255,
+            "external_type in ExternalCaseProperties must have maxlength of 255 $within"
+        );
+        !isset($this->recovery_type) || Assert::minLength(
+            $this->recovery_type,
+            1,
+            "recovery_type in ExternalCaseProperties must have minlength of 1 $within"
+        );
+        !isset($this->recovery_type) || Assert::maxLength(
+            $this->recovery_type,
+            255,
+            "recovery_type in ExternalCaseProperties must have maxlength of 255 $within"
+        );
+        !isset($this->reversal_fee) || Assert::isInstanceOf(
+            $this->reversal_fee,
+            Money::class,
+            "reversal_fee in ExternalCaseProperties must be instance of Money $within"
+        );
+        !isset($this->reversal_fee) ||  $this->reversal_fee->validate(ExternalCaseProperties::class);
     }
 
     public function __construct()

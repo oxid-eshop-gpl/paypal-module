@@ -36,14 +36,14 @@ class OrderTest extends TestCase
     //fixme: move this test to the unittest folder
     public function testPaypalOrderResponseCanBeMapped()
     {
-       $json = <<<'JSON'
+        $json = <<<'JSON'
 {"id":"9R353891UB6120313","links":[{"href":"https:\/\/api.sandbox.paypal.com\/v2\/checkout\/orders\/9R353891UB6120313","rel":"self","method":"GET"},{"href":"https:\/\/www.sandbox.paypal.com\/checkoutnow?token=9R353891UB6120313","rel":"approve","method":"GET"},{"href":"https:\/\/api.sandbox.paypal.com\/v2\/checkout\/orders\/9R353891UB6120313","rel":"update","method":"PATCH"},{"href":"https:\/\/api.sandbox.paypal.com\/v2\/checkout\/orders\/9R353891UB6120313\/capture","rel":"capture","method":"POST"}],"status":"CREATED"}
 JSON;
-       $json = \GuzzleHttp\json_decode($json);
+        $json = \GuzzleHttp\json_decode($json);
         $mapper = new \JsonMapper();
         $order = $mapper->map($json, new Order());
-        $this->assertEquals($order->id,"9R353891UB6120313");
-        $this->assertEquals($order->status,"CREATED");
+        $this->assertEquals($order->id, "9R353891UB6120313");
+        $this->assertEquals($order->status, "CREATED");
     }
 
     public function testCreateOrder()
@@ -72,7 +72,10 @@ JSON;
         $orderRequest->purchase_units = [$purchaseUnitRequest];
         $orderRequest->intent = Order::INTENT_CAPTURE;
         $orderRequest->validate();
-        $order = $orderService->createOrder($orderRequest,"","");
+        $order = $orderService->createOrder($orderRequest, "", "");
         $this->assertEquals($order->status, "CREATED");
+        $id = $order->id;
+        $order = $orderService->showOrderDetails($id);
+        $this->assertEquals($id, $order->id);
     }
 }

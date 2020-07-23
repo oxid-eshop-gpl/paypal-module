@@ -18,17 +18,17 @@ class PlatformFee implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var Money
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * this is mandatory to be set
+     * @var Money
      */
     public $amount;
 
     /**
-     * @var PayeeBase
      * The details for the merchant who receives the funds and fulfills the order. The merchant is also known as the
      * payee.
+     *
+     * @var PayeeBase | null
      */
     public $payee;
 
@@ -36,13 +36,22 @@ class PlatformFee implements JsonSerializable
     {
         $within = isset($from) ? "within $from" : "";
         Assert::notNull($this->amount, "amount in PlatformFee must not be NULL $within");
-         Assert::isInstanceOf($this->amount, Money::class, "amount in PlatformFee must be instance of Money $within");
+        Assert::isInstanceOf(
+            $this->amount,
+            Money::class,
+            "amount in PlatformFee must be instance of Money $within"
+        );
          $this->amount->validate(PlatformFee::class);
-        !isset($this->payee) || Assert::isInstanceOf($this->payee, PayeeBase::class, "payee in PlatformFee must be instance of PayeeBase $within");
-        !isset($this->payee) || $this->payee->validate(PlatformFee::class);
+        !isset($this->payee) || Assert::isInstanceOf(
+            $this->payee,
+            PayeeBase::class,
+            "payee in PlatformFee must be instance of PayeeBase $within"
+        );
+        !isset($this->payee) ||  $this->payee->validate(PlatformFee::class);
     }
 
     public function __construct()
     {
+        $this->amount = new Money();
     }
 }

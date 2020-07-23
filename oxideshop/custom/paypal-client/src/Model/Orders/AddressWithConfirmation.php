@@ -16,27 +16,27 @@ class AddressWithConfirmation extends AddressName implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var string
      * Unique address identifier.
      *
+     * @var string | null
      * minLength: 1
      * maxLength: 30
      */
     public $id;
 
     /**
-     * @var string
      * Address confirmation status like NONE, PENDING, CONFIRMED, FAILED.
      *
+     * @var string | null
      * minLength: 1
      * maxLength: 127
      */
     public $confirmation_status;
 
     /**
-     * @var string
      * What 3rd party or process has determined the current confirmation_status.
      *
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
@@ -45,12 +45,36 @@ class AddressWithConfirmation extends AddressName implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->id) || Assert::minLength($this->id, 1, "id in AddressWithConfirmation must have minlength of 1 $within");
-        !isset($this->id) || Assert::maxLength($this->id, 30, "id in AddressWithConfirmation must have maxlength of 30 $within");
-        !isset($this->confirmation_status) || Assert::minLength($this->confirmation_status, 1, "confirmation_status in AddressWithConfirmation must have minlength of 1 $within");
-        !isset($this->confirmation_status) || Assert::maxLength($this->confirmation_status, 127, "confirmation_status in AddressWithConfirmation must have maxlength of 127 $within");
-        !isset($this->confirmation_authority) || Assert::minLength($this->confirmation_authority, 1, "confirmation_authority in AddressWithConfirmation must have minlength of 1 $within");
-        !isset($this->confirmation_authority) || Assert::maxLength($this->confirmation_authority, 255, "confirmation_authority in AddressWithConfirmation must have maxlength of 255 $within");
+        !isset($this->id) || Assert::minLength(
+            $this->id,
+            1,
+            "id in AddressWithConfirmation must have minlength of 1 $within"
+        );
+        !isset($this->id) || Assert::maxLength(
+            $this->id,
+            30,
+            "id in AddressWithConfirmation must have maxlength of 30 $within"
+        );
+        !isset($this->confirmation_status) || Assert::minLength(
+            $this->confirmation_status,
+            1,
+            "confirmation_status in AddressWithConfirmation must have minlength of 1 $within"
+        );
+        !isset($this->confirmation_status) || Assert::maxLength(
+            $this->confirmation_status,
+            127,
+            "confirmation_status in AddressWithConfirmation must have maxlength of 127 $within"
+        );
+        !isset($this->confirmation_authority) || Assert::minLength(
+            $this->confirmation_authority,
+            1,
+            "confirmation_authority in AddressWithConfirmation must have minlength of 1 $within"
+        );
+        !isset($this->confirmation_authority) || Assert::maxLength(
+            $this->confirmation_authority,
+            255,
+            "confirmation_authority in AddressWithConfirmation must have maxlength of 255 $within"
+        );
     }
 
     public function __construct()

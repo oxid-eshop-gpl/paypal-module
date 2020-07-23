@@ -16,11 +16,10 @@ class RestApiIntegrationThirdPartyDetails implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var string[]
      * An array of features that partner can access, or use, in PayPal on behalf of the seller. The seller grants
      * permission for these features to the partner.
      *
-     * this is mandatory to be set
+     * @var string[]
      * maxItems: 0
      * maxItems: 20
      */
@@ -30,12 +29,24 @@ class RestApiIntegrationThirdPartyDetails implements JsonSerializable
     {
         $within = isset($from) ? "within $from" : "";
         Assert::notNull($this->features, "features in RestApiIntegrationThirdPartyDetails must not be NULL $within");
-         Assert::minCount($this->features, 0, "features in RestApiIntegrationThirdPartyDetails must have min. count of 0 $within");
-         Assert::maxCount($this->features, 20, "features in RestApiIntegrationThirdPartyDetails must have max. count of 20 $within");
-         Assert::isArray($this->features, "features in RestApiIntegrationThirdPartyDetails must be array $within");
+        Assert::minCount(
+            $this->features,
+            0,
+            "features in RestApiIntegrationThirdPartyDetails must have min. count of 0 $within"
+        );
+        Assert::maxCount(
+            $this->features,
+            20,
+            "features in RestApiIntegrationThirdPartyDetails must have max. count of 20 $within"
+        );
+        Assert::isArray(
+            $this->features,
+            "features in RestApiIntegrationThirdPartyDetails must be array $within"
+        );
     }
 
     public function __construct()
     {
+        $this->features = [];
     }
 }

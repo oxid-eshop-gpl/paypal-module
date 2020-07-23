@@ -275,11 +275,10 @@ class Generator
                                 //fixme
                                 /* print "Not yet implemented:
                                 The schema defines a nested class $nestedClassName again but different properties,
-                                in this case the classname must be generated in unique way.                               
+                                in this case the classname must be generated in unique way.
                                 "; */
                             }
                         } else {
-
                             $this->definitions[$nestedClassId] = $parameter;
                             $this->generateModelClass($namespace, $subNameSpace, $nestedClassId, $parameter);
                         }
@@ -298,7 +297,6 @@ class Generator
                                 $itemType = $arrayItemsDef['type'];
                             }
                             $parameter['type'] = "${itemType}[]";
-
                         }
                     }
                     if (is_array($parameter['type'])) {
@@ -308,7 +306,6 @@ class Generator
                     $propType = $parameter['type'];
                     $propDef = $parameter;
                     $this->addProperty($propDef, $name, $class, $propType, $defs);
-
                 } else {
                     // use the $this->references[] map here when you come across a reference
                     if (!empty($parameter['$ref'])) {
@@ -372,8 +369,7 @@ class Generator
         $validateMethod = $class->getMethod('validate');
         $constructor = $class->getMethod('__construct');
         $property = $class->addProperty($name)
-            ->setVisibility('public')
-            ->setComment('@var ' . $propType);
+            ->setVisibility('public');
 
         if (isset($propDef['description'])) {
             $propDesc = $propDef['description'];
@@ -383,11 +379,11 @@ class Generator
             $enums = $propDef['x-enum'];
             $property->addComment("use one of constants defined in this class to set the value:");
             foreach ($enums as $constantDef) {
-                if (isset($constantDef['value']) ) {
+                if (isset($constantDef['value'])) {
                     $value = $constantDef['value'];
                     $constantName = $this->cleanConstantName($name . '_' . $value);
                     $property->addComment("@see $constantName");
-                    $classConstant = $class->addConstant($constantName, $value);
+                    $classConstant = $class->addConstant($constantName, $value)->setVisibility('public');
                     if (isset($constantDef['description'])) {
                         $classConstant->addComment($constantDef['description']);
                     }
@@ -397,7 +393,7 @@ class Generator
         if (isset($propDef['default'])) {
             $property->setValue($propDef['default']);
         }
-        $emptyOr = "!isset(\$this->$name) ||";
+        $emptyOr = "!isset(\$this->$name) || ";
         $className = $class->getName();
 
         $required = false;
@@ -408,60 +404,92 @@ class Generator
         }
 
         if (isset($classDef['required'])) {
-            if(array_search($name, $classDef['required']) !== false) {
+            if (array_search($name, $classDef['required']) !== false) {
                 $required = true;
             }
         }
 
         if ($required) {
-            $property->addComment("this is mandatory to be set");
-            $validateMethod->addBody("Assert::notNull(\$this->$name, \"$name in $className must not be NULL \$within\");");
+            $validateMethod->addBody(
+                "Assert::notNull(\$this->$name, \"$name in $className must not be NULL \$within\");"
+            );
             $emptyOr = "";
-
             if ($this->isObjectType($propType)) {
-                //$constructor->addBody("\$this->$name = new ${propType}();");
+                $constructor->addBody("\$this->$name = new ${propType}();");
+            }
+            if ($this->isArrayType($propType)) {
+                $constructor->addBody("\$this->$name = [];");
             }
         }
-
-
-        /* if (isset($propDef['required']) && is_array($propDef['required'])) {
-             foreach ($propDef['required'] as $subProp) {
-                 $validateMethod->addBody("$emptyOr Assert::notNull(\$this->$name->$subProp, \"$subProp in $name must not be NULL within $className \$within\");");
-             }
-             //validate sub properties
-         }*/
+        $typehint =  $required ? $propType : "$propType | null";
+        $property->addComment('@var ' . $typehint);
 
 
         if (isset($propDef['minItems'])) {
             $minItems = $propDef['minItems'];
             $property->addComment("maxItems: " . $minItems);
-            $validateMethod->addBody("$emptyOr Assert::minCount(\$this->$name, $minItems, \"$name in $className must have min. count of $minItems \$within\");");
+            $validateMethod->addBody(
+                "${emptyOr}Assert::minCount(
+    \$this->$name,
+    $minItems,
+    \"$name in $className must have min. count of $minItems \$within\"
+);"
+            );
         }
 
         if (isset($propDef['maxItems'])) {
             $maxItems = $propDef['maxItems'];
             $property->addComment("maxItems: " . $maxItems);
-            $validateMethod->addBody("$emptyOr Assert::maxCount(\$this->$name, $maxItems, \"$name in $className must have max. count of $maxItems \$within\");");
+            $validateMethod->addBody(
+                "${emptyOr}Assert::maxCount(
+    \$this->$name,
+    $maxItems,
+    \"$name in $className must have max. count of $maxItems \$within\"
+);"
+            );
         }
 
         if (isset($propDef['minLength']) && $propDef['minLength'] > 0) {
             $minLength = $propDef['minLength'];
             $property->addComment("minLength: " . $minLength);
-            $validateMethod->addBody("$emptyOr Assert::minLength(\$this->$name, $minLength, \"$name in $className must have minlength of $minLength \$within\");");
+            $validateMethod->addBody(
+                "${emptyOr}Assert::minLength(
+    \$this->$name,
+    $minLength,
+    \"$name in $className must have minlength of $minLength \$within\"
+);"
+            );
         }
         if (isset($propDef['maxLength'])) {
             assert(!isset($this->value) || $this->value < 0);
             $maxLength = $propDef['maxLength'];
-            $validateMethod->addBody("$emptyOr Assert::maxLength(\$this->$name, $maxLength, \"$name in $className must have maxlength of $maxLength \$within\");");
+            $validateMethod->addBody(
+                "${emptyOr}Assert::maxLength(
+    \$this->$name,
+    $maxLength,
+    \"$name in $className must have maxlength of $maxLength \$within\"
+);"
+            );
             $property->addComment("maxLength: " . $maxLength);
         }
 
-        if ($this->isObjectType($propType)){
-            $validateMethod->addBody("$emptyOr Assert::isInstanceOf(\$this->$name, $propType::class, \"$name in $className must be instance of $propType \$within\");");
+        if ($this->isObjectType($propType)) {
+            $validateMethod->addBody(
+                "${emptyOr}Assert::isInstanceOf(
+    \$this->$name,
+    $propType::class,
+    \"$name in $className must be instance of $propType \$within\"
+);"
+            );
             $validateMethod->addBody("$emptyOr \$this->${name}->validate($className::class);");
         }
         if (strpos($propType, '[') !== false || strpos($propType, 'array') === 0) {
-            $validateMethod->addBody("$emptyOr Assert::isArray(\$this->$name, \"$name in $className must be array \$within\");");
+            $validateMethod->addBody(
+                "${emptyOr}Assert::isArray(
+    \$this->$name,
+    \"$name in $className must be array \$within\"
+);"
+            );
             $itemType = false;
             if (preg_match("/(.*)\[\]/", $propType, $matches)) {
                 $itemType = $matches[1];
@@ -469,16 +497,15 @@ class Generator
             if ($itemType) {
                 if ($this->isObjectType($itemType)) {
                     $validateMethod->addBody("
-                        if (isset(\$this->$name)){
-                            foreach (\$this->$name as \$item) {
-                                \$item->validate($className::class);
-                            }
-                        }
+if (isset(\$this->$name)) {
+    foreach (\$this->$name as \$item) {
+        \$item->validate($className::class);
+    }
+}
                         ");
                 }
             }
         }
-
     }
 
     private function isObjectType($propType)
@@ -486,14 +513,27 @@ class Generator
         if (strpos($propType, '|') !== false) {
             return false;
         }
-        if (strpos($propType, 'array') === 0) {
+        if ($this->isArrayType($propType)) {
             return false;
+        }
+        return $propType != "string"
+            && $propType != "integer"
+            && $propType != "mixed"
+            && $propType != "boolean"
+            && $propType != "mixed";
+    }
+
+    private function isArrayType($propType)
+    {
+        if (strpos($propType, '|') !== false) {
+            return false;
+        }
+        if (strpos($propType, 'array') === 0) {
+            return true;
         }
         if (strpos($propType, '[') !== false) {
-            return false;
+            return true;
         }
-        return $propType != "string" && $propType != "integer" && $propType != "mixed" && $propType != "boolean" && $propType != "mixed";
+        return false;
     }
 }
-
-

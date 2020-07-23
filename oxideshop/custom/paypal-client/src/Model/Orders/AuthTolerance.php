@@ -16,23 +16,29 @@ class AuthTolerance implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var string
      * The percentage, as a fixed-point, signed decimal number. For example, define a 19.99% interest rate as
      * `19.99`.
+     *
+     * @var string | null
      */
     public $percent;
 
     /**
-     * @var Money
      * The currency and amount for a financial transaction, such as a balance or payment due.
+     *
+     * @var Money | null
      */
     public $absolute;
 
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->absolute) || Assert::isInstanceOf($this->absolute, Money::class, "absolute in AuthTolerance must be instance of Money $within");
-        !isset($this->absolute) || $this->absolute->validate(AuthTolerance::class);
+        !isset($this->absolute) || Assert::isInstanceOf(
+            $this->absolute,
+            Money::class,
+            "absolute in AuthTolerance must be instance of Money $within"
+        );
+        !isset($this->absolute) ||  $this->absolute->validate(AuthTolerance::class);
     }
 
     public function __construct()

@@ -16,22 +16,21 @@ class Frequency implements JsonSerializable
     use BaseModel;
 
     /** A daily billing cycle. */
-    const INTERVAL_UNIT_DAY = 'DAY';
+    public const INTERVAL_UNIT_DAY = 'DAY';
 
     /** A weekly billing cycle. */
-    const INTERVAL_UNIT_WEEK = 'WEEK';
+    public const INTERVAL_UNIT_WEEK = 'WEEK';
 
     /** A monthly billing cycle. */
-    const INTERVAL_UNIT_SEMI_MONTH = 'SEMI_MONTH';
+    public const INTERVAL_UNIT_SEMI_MONTH = 'SEMI_MONTH';
 
     /** A monthly billing cycle. */
-    const INTERVAL_UNIT_MONTH = 'MONTH';
+    public const INTERVAL_UNIT_MONTH = 'MONTH';
 
     /** A yearly billing cycle. */
-    const INTERVAL_UNIT_YEAR = 'YEAR';
+    public const INTERVAL_UNIT_YEAR = 'YEAR';
 
     /**
-     * @var string
      * The interval at which the subscription is charged or billed.
      *
      * use one of constants defined in this class to set the value:
@@ -40,14 +39,13 @@ class Frequency implements JsonSerializable
      * @see INTERVAL_UNIT_SEMI_MONTH
      * @see INTERVAL_UNIT_MONTH
      * @see INTERVAL_UNIT_YEAR
-     * this is mandatory to be set
+     * @var string
      * minLength: 1
      * maxLength: 24
      */
     public $interval_unit;
 
     /**
-     * @var integer
      * The number of intervals after which a subscriber is billed. For example, if the `interval_unit` is `DAY` with
      * an `interval_count` of  `2`, the subscription is billed once every two days. The following table lists the
      * maximum allowed values for the `interval_count` for each `interval_unit`:<table><thead><tr><th><code>Interval
@@ -55,6 +53,8 @@ class Frequency implements JsonSerializable
      * align="right">365</td></tr><tr><td><code>WEEK</code></td><td
      * align="right">52</td></tr><tr><td><code>MONTH</code></td><td
      * align="right">12</td></tr><tr><td><code>YEAR</code></td><td align="right">1</td></tr></tbody></table>
+     *
+     * @var integer | null
      */
     public $interval_count = 1;
 
@@ -62,8 +62,16 @@ class Frequency implements JsonSerializable
     {
         $within = isset($from) ? "within $from" : "";
         Assert::notNull($this->interval_unit, "interval_unit in Frequency must not be NULL $within");
-         Assert::minLength($this->interval_unit, 1, "interval_unit in Frequency must have minlength of 1 $within");
-         Assert::maxLength($this->interval_unit, 24, "interval_unit in Frequency must have maxlength of 24 $within");
+        Assert::minLength(
+            $this->interval_unit,
+            1,
+            "interval_unit in Frequency must have minlength of 1 $within"
+        );
+        Assert::maxLength(
+            $this->interval_unit,
+            24,
+            "interval_unit in Frequency must have maxlength of 24 $within"
+        );
     }
 
     public function __construct()

@@ -16,30 +16,31 @@ class PersonAddressDetail extends AddressPortable implements JsonSerializable
     use BaseModel;
 
     /** The home address of the customer. */
-    const TYPE_HOME = 'HOME';
+    public const TYPE_HOME = 'HOME';
 
     /**
-     * @var string
      * The address type under which the provided address is tagged.
      *
      * use one of constants defined in this class to set the value:
      * @see TYPE_HOME
-     * this is mandatory to be set
+     * @var string
      * minLength: 1
      * maxLength: 255
      */
     public $type;
 
     /**
-     * @var boolean
      * Whether this is the primary address of the user. This cannot be directly set to `false`, but rather it is
      * toggled `false` in the datastore when another address is set to primary.
+     *
+     * @var boolean | null
      */
     public $primary;
 
     /**
-     * @var boolean
      * Whether this address has been inactivated.
+     *
+     * @var boolean | null
      */
     public $inactive;
 
@@ -47,8 +48,16 @@ class PersonAddressDetail extends AddressPortable implements JsonSerializable
     {
         $within = isset($from) ? "within $from" : "";
         Assert::notNull($this->type, "type in PersonAddressDetail must not be NULL $within");
-         Assert::minLength($this->type, 1, "type in PersonAddressDetail must have minlength of 1 $within");
-         Assert::maxLength($this->type, 255, "type in PersonAddressDetail must have maxlength of 255 $within");
+        Assert::minLength(
+            $this->type,
+            1,
+            "type in PersonAddressDetail must have minlength of 1 $within"
+        );
+        Assert::maxLength(
+            $this->type,
+            255,
+            "type in PersonAddressDetail must have maxlength of 255 $within"
+        );
     }
 
     public function __construct()

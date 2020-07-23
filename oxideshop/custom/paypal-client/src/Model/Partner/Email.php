@@ -16,28 +16,26 @@ class Email implements JsonSerializable
     use BaseModel;
 
     /** The email ID to be used to contact the customer service of the business. */
-    const TYPE_CUSTOMER_SERVICE = 'CUSTOMER_SERVICE';
+    public const TYPE_CUSTOMER_SERVICE = 'CUSTOMER_SERVICE';
 
     /**
-     * @var string
      * The role of the email address.
      *
      * use one of constants defined in this class to set the value:
      * @see TYPE_CUSTOMER_SERVICE
-     * this is mandatory to be set
+     * @var string
      * minLength: 1
      * maxLength: 50
      */
     public $type;
 
     /**
-     * @var string
      * The internationalized email address.<blockquote><strong>Note:</strong> Up to 64 characters are allowed before
      * and 255 characters are allowed after the <code>@</code> sign. However, the generally accepted maximum length
      * for an email address is 254 characters. The pattern verifies that an unquoted <code>@</code> sign
      * exists.</blockquote>
      *
-     * this is mandatory to be set
+     * @var string
      * minLength: 3
      * maxLength: 254
      */
@@ -47,11 +45,27 @@ class Email implements JsonSerializable
     {
         $within = isset($from) ? "within $from" : "";
         Assert::notNull($this->type, "type in Email must not be NULL $within");
-         Assert::minLength($this->type, 1, "type in Email must have minlength of 1 $within");
-         Assert::maxLength($this->type, 50, "type in Email must have maxlength of 50 $within");
+        Assert::minLength(
+            $this->type,
+            1,
+            "type in Email must have minlength of 1 $within"
+        );
+        Assert::maxLength(
+            $this->type,
+            50,
+            "type in Email must have maxlength of 50 $within"
+        );
         Assert::notNull($this->email, "email in Email must not be NULL $within");
-         Assert::minLength($this->email, 3, "email in Email must have minlength of 3 $within");
-         Assert::maxLength($this->email, 254, "email in Email must have maxlength of 254 $within");
+        Assert::minLength(
+            $this->email,
+            3,
+            "email in Email must have minlength of 3 $within"
+        );
+        Assert::maxLength(
+            $this->email,
+            254,
+            "email in Email must have maxlength of 254 $within"
+        );
     }
 
     public function __construct()

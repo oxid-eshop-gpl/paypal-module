@@ -16,16 +16,21 @@ class CardAttributesResponse implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var VaultResponse
      * The details about a saved payment source.
+     *
+     * @var VaultResponse | null
      */
     public $vault;
 
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->vault) || Assert::isInstanceOf($this->vault, VaultResponse::class, "vault in CardAttributesResponse must be instance of VaultResponse $within");
-        !isset($this->vault) || $this->vault->validate(CardAttributesResponse::class);
+        !isset($this->vault) || Assert::isInstanceOf(
+            $this->vault,
+            VaultResponse::class,
+            "vault in CardAttributesResponse must be instance of VaultResponse $within"
+        );
+        !isset($this->vault) ||  $this->vault->validate(CardAttributesResponse::class);
     }
 
     public function __construct()

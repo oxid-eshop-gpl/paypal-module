@@ -16,24 +16,25 @@ class ParentTransaction implements JsonSerializable
     use BaseModel;
 
     /** The parent transaction is an authorization. */
-    const TYPE_AUTHORIZATION = 'AUTHORIZATION';
+    public const TYPE_AUTHORIZATION = 'AUTHORIZATION';
 
     /** The parent transaction is an order. */
-    const TYPE_ORDER = 'ORDER';
+    public const TYPE_ORDER = 'ORDER';
 
     /**
-     * @var string
      * The PayPal-generated ID for Authorization or Order this transaction is capturing.
+     *
+     * @var string | null
      */
     public $id;
 
     /**
-     * @var string
      * The payment type the parent transaction.
      *
      * use one of constants defined in this class to set the value:
      * @see TYPE_AUTHORIZATION
      * @see TYPE_ORDER
+     * @var string | null
      */
     public $type;
 

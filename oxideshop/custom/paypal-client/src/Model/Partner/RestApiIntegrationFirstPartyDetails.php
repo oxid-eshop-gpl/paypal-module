@@ -16,19 +16,17 @@ class RestApiIntegrationFirstPartyDetails implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var string[]
      * An array of features that partner can access, or use, in PayPal on behalf of the seller. The seller grants
      * permission for these features to the partner.
      *
-     * this is mandatory to be set
+     * @var string[]
      */
     public $features;
 
     /**
-     * @var string
      * S256 - The code verifier must be high-entropy cryptographic random string with a byte length of 43-128 range.
      *
-     * this is mandatory to be set
+     * @var string
      * minLength: 44
      * maxLength: 128
      */
@@ -38,13 +36,25 @@ class RestApiIntegrationFirstPartyDetails implements JsonSerializable
     {
         $within = isset($from) ? "within $from" : "";
         Assert::notNull($this->features, "features in RestApiIntegrationFirstPartyDetails must not be NULL $within");
-         Assert::isArray($this->features, "features in RestApiIntegrationFirstPartyDetails must be array $within");
+        Assert::isArray(
+            $this->features,
+            "features in RestApiIntegrationFirstPartyDetails must be array $within"
+        );
         Assert::notNull($this->seller_nonce, "seller_nonce in RestApiIntegrationFirstPartyDetails must not be NULL $within");
-         Assert::minLength($this->seller_nonce, 44, "seller_nonce in RestApiIntegrationFirstPartyDetails must have minlength of 44 $within");
-         Assert::maxLength($this->seller_nonce, 128, "seller_nonce in RestApiIntegrationFirstPartyDetails must have maxlength of 128 $within");
+        Assert::minLength(
+            $this->seller_nonce,
+            44,
+            "seller_nonce in RestApiIntegrationFirstPartyDetails must have minlength of 44 $within"
+        );
+        Assert::maxLength(
+            $this->seller_nonce,
+            128,
+            "seller_nonce in RestApiIntegrationFirstPartyDetails must have maxlength of 128 $within"
+        );
     }
 
     public function __construct()
     {
+        $this->features = [];
     }
 }

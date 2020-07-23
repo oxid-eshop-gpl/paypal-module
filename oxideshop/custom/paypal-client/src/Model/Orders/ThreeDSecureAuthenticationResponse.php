@@ -16,43 +16,42 @@ class ThreeDSecureAuthenticationResponse implements JsonSerializable
     use BaseModel;
 
     /** Successful authentication. */
-    const AUTHENTICATION_STATUS_Y = 'Y';
+    public const AUTHENTICATION_STATUS_Y = 'Y';
 
     /** Failed authentication / account not verified / transaction denied. */
-    const AUTHENTICATION_STATUS_N = 'N';
+    public const AUTHENTICATION_STATUS_N = 'N';
 
     /** Unable to complete authentication. */
-    const AUTHENTICATION_STATUS_U = 'U';
+    public const AUTHENTICATION_STATUS_U = 'U';
 
     /** Successful attempts transaction. */
-    const AUTHENTICATION_STATUS_A = 'A';
+    public const AUTHENTICATION_STATUS_A = 'A';
 
     /** Challenge required for authentication. */
-    const AUTHENTICATION_STATUS_C = 'C';
+    public const AUTHENTICATION_STATUS_C = 'C';
 
     /** Authentication rejected (merchant must not submit for authorization). */
-    const AUTHENTICATION_STATUS_R = 'R';
+    public const AUTHENTICATION_STATUS_R = 'R';
 
     /** Challenge required; decoupled authentication confirmed. */
-    const AUTHENTICATION_STATUS_D = 'D';
+    public const AUTHENTICATION_STATUS_D = 'D';
 
     /** Informational only; 3DS requestor challenge preference acknowledged. */
-    const AUTHENTICATION_STATUS_I = 'I';
+    public const AUTHENTICATION_STATUS_I = 'I';
 
     /** Yes. The bank is participating in 3-D Secure protocol and will return the ACSUrl. */
-    const ENROLLMENT_STATUS_Y = 'Y';
+    public const ENROLLMENT_STATUS_Y = 'Y';
 
     /** No. The bank is not participating in 3-D Secure protocol. */
-    const ENROLLMENT_STATUS_N = 'N';
+    public const ENROLLMENT_STATUS_N = 'N';
 
     /** Unavailable. The DS or ACS is not available for authentication at the time of the request. */
-    const ENROLLMENT_STATUS_U = 'U';
+    public const ENROLLMENT_STATUS_U = 'U';
 
     /** Bypass. The merchant authentication rule is triggered to bypass authentication. */
-    const ENROLLMENT_STATUS_B = 'B';
+    public const ENROLLMENT_STATUS_B = 'B';
 
     /**
-     * @var string
      * Transactions status result identifier. The outcome of the issuer's authentication.
      *
      * use one of constants defined in this class to set the value:
@@ -64,13 +63,13 @@ class ThreeDSecureAuthenticationResponse implements JsonSerializable
      * @see AUTHENTICATION_STATUS_R
      * @see AUTHENTICATION_STATUS_D
      * @see AUTHENTICATION_STATUS_I
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
     public $authentication_status;
 
     /**
-     * @var string
      * Status of Authentication eligibility.
      *
      * use one of constants defined in this class to set the value:
@@ -78,6 +77,7 @@ class ThreeDSecureAuthenticationResponse implements JsonSerializable
      * @see ENROLLMENT_STATUS_N
      * @see ENROLLMENT_STATUS_U
      * @see ENROLLMENT_STATUS_B
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
@@ -86,10 +86,26 @@ class ThreeDSecureAuthenticationResponse implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->authentication_status) || Assert::minLength($this->authentication_status, 1, "authentication_status in ThreeDSecureAuthenticationResponse must have minlength of 1 $within");
-        !isset($this->authentication_status) || Assert::maxLength($this->authentication_status, 255, "authentication_status in ThreeDSecureAuthenticationResponse must have maxlength of 255 $within");
-        !isset($this->enrollment_status) || Assert::minLength($this->enrollment_status, 1, "enrollment_status in ThreeDSecureAuthenticationResponse must have minlength of 1 $within");
-        !isset($this->enrollment_status) || Assert::maxLength($this->enrollment_status, 255, "enrollment_status in ThreeDSecureAuthenticationResponse must have maxlength of 255 $within");
+        !isset($this->authentication_status) || Assert::minLength(
+            $this->authentication_status,
+            1,
+            "authentication_status in ThreeDSecureAuthenticationResponse must have minlength of 1 $within"
+        );
+        !isset($this->authentication_status) || Assert::maxLength(
+            $this->authentication_status,
+            255,
+            "authentication_status in ThreeDSecureAuthenticationResponse must have maxlength of 255 $within"
+        );
+        !isset($this->enrollment_status) || Assert::minLength(
+            $this->enrollment_status,
+            1,
+            "enrollment_status in ThreeDSecureAuthenticationResponse must have minlength of 1 $within"
+        );
+        !isset($this->enrollment_status) || Assert::maxLength(
+            $this->enrollment_status,
+            255,
+            "enrollment_status in ThreeDSecureAuthenticationResponse must have maxlength of 255 $within"
+        );
     }
 
     public function __construct()

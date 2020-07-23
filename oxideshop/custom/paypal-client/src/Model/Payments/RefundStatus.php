@@ -16,36 +16,41 @@ class RefundStatus implements JsonSerializable
     use BaseModel;
 
     /** The refund was cancelled. */
-    const STATUS_CANCELLED = 'CANCELLED';
+    public const STATUS_CANCELLED = 'CANCELLED';
 
     /** The refund is pending. For more information, see <code>status_details.reason</code>. */
-    const STATUS_PENDING = 'PENDING';
+    public const STATUS_PENDING = 'PENDING';
 
     /** The funds for this transaction were debited to the customer's account. */
-    const STATUS_COMPLETED = 'COMPLETED';
+    public const STATUS_COMPLETED = 'COMPLETED';
 
     /**
-     * @var string
      * The status of the refund.
      *
      * use one of constants defined in this class to set the value:
      * @see STATUS_CANCELLED
      * @see STATUS_PENDING
      * @see STATUS_COMPLETED
+     * @var string | null
      */
     public $status;
 
     /**
-     * @var RefundStatusDetails
      * The details of the refund status.
+     *
+     * @var RefundStatusDetails | null
      */
     public $status_details;
 
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->status_details) || Assert::isInstanceOf($this->status_details, RefundStatusDetails::class, "status_details in RefundStatus must be instance of RefundStatusDetails $within");
-        !isset($this->status_details) || $this->status_details->validate(RefundStatus::class);
+        !isset($this->status_details) || Assert::isInstanceOf(
+            $this->status_details,
+            RefundStatusDetails::class,
+            "status_details in RefundStatus must be instance of RefundStatusDetails $within"
+        );
+        !isset($this->status_details) ||  $this->status_details->validate(RefundStatus::class);
     }
 
     public function __construct()

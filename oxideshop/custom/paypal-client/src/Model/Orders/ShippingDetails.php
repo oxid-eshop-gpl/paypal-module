@@ -16,16 +16,16 @@ class ShippingDetails implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var AddressWithConfirmation
      * Address and confirmation details.
+     *
+     * @var AddressWithConfirmation | null
      */
     public $shipping_address;
 
     /**
-     * @var ShippingOption[]
      * An array of shipping options that the payee or merchant offers to the payer to ship or pick up their items.
      *
-     * this is mandatory to be set
+     * @var ShippingOption[]
      * maxItems: 1
      * maxItems: 10
      */
@@ -34,21 +34,37 @@ class ShippingDetails implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->shipping_address) || Assert::isInstanceOf($this->shipping_address, AddressWithConfirmation::class, "shipping_address in ShippingDetails must be instance of AddressWithConfirmation $within");
-        !isset($this->shipping_address) || $this->shipping_address->validate(ShippingDetails::class);
+        !isset($this->shipping_address) || Assert::isInstanceOf(
+            $this->shipping_address,
+            AddressWithConfirmation::class,
+            "shipping_address in ShippingDetails must be instance of AddressWithConfirmation $within"
+        );
+        !isset($this->shipping_address) ||  $this->shipping_address->validate(ShippingDetails::class);
         Assert::notNull($this->options, "options in ShippingDetails must not be NULL $within");
-         Assert::minCount($this->options, 1, "options in ShippingDetails must have min. count of 1 $within");
-         Assert::maxCount($this->options, 10, "options in ShippingDetails must have max. count of 10 $within");
-         Assert::isArray($this->options, "options in ShippingDetails must be array $within");
+        Assert::minCount(
+            $this->options,
+            1,
+            "options in ShippingDetails must have min. count of 1 $within"
+        );
+        Assert::maxCount(
+            $this->options,
+            10,
+            "options in ShippingDetails must have max. count of 10 $within"
+        );
+        Assert::isArray(
+            $this->options,
+            "options in ShippingDetails must be array $within"
+        );
 
-                                if (isset($this->options)){
-                                    foreach ($this->options as $item) {
-                                        $item->validate(ShippingDetails::class);
-                                    }
-                                }
+        if (isset($this->options)) {
+            foreach ($this->options as $item) {
+                $item->validate(ShippingDetails::class);
+            }
+        }
     }
 
     public function __construct()
     {
+        $this->options = [];
     }
 }

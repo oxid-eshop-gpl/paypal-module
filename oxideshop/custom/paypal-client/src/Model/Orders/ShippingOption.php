@@ -16,56 +16,54 @@ class ShippingOption implements JsonSerializable
     use BaseModel;
 
     /** The payer intends to receive the items at a specified address. */
-    const TYPE_SHIPPING = 'SHIPPING';
+    public const TYPE_SHIPPING = 'SHIPPING';
 
     /** The payer intends to pick up the items at a specified address. For example, a store address. */
-    const TYPE_PICKUP = 'PICKUP';
+    public const TYPE_PICKUP = 'PICKUP';
 
     /**
-     * @var string
      * A unique ID that identifies a payer-selected shipping option.
      *
-     * this is mandatory to be set
+     * @var string
      * maxLength: 127
      */
     public $id;
 
     /**
-     * @var string
      * A description that the payer sees, which helps them choose an appropriate shipping option. For example, `Free
      * Shipping`, `USPS Priority Shipping`, `Expédition prioritaire USPS`, or `USPS yōuxiān fā huò`. Localize
      * this description to the payer's locale.
      *
-     * this is mandatory to be set
+     * @var string
      * maxLength: 127
      */
     public $label;
 
     /**
-     * @var string
      * The method by which the payer wants to get their items.
      *
      * use one of constants defined in this class to set the value:
      * @see TYPE_SHIPPING
      * @see TYPE_PICKUP
+     * @var string | null
      */
     public $type;
 
     /**
-     * @var Money
      * The currency and amount for a financial transaction, such as a balance or payment due.
+     *
+     * @var Money | null
      */
     public $amount;
 
     /**
-     * @var boolean
      * If the API request sets `selected = true`, it represents the shipping option that the payee or merchant
      * expects to be pre-selected for the payer when they first view the `shipping.options` in the PayPal Checkout
      * experience. As part of the response if a `shipping.option` contains `selected=true`, it represents the
      * shipping option that the payer selected during the course of checkout with PayPal. Only one `shipping.option`
      * can be set to `selected=true`.
      *
-     * this is mandatory to be set
+     * @var boolean
      */
     public $selected;
 
@@ -73,11 +71,23 @@ class ShippingOption implements JsonSerializable
     {
         $within = isset($from) ? "within $from" : "";
         Assert::notNull($this->id, "id in ShippingOption must not be NULL $within");
-         Assert::maxLength($this->id, 127, "id in ShippingOption must have maxlength of 127 $within");
+        Assert::maxLength(
+            $this->id,
+            127,
+            "id in ShippingOption must have maxlength of 127 $within"
+        );
         Assert::notNull($this->label, "label in ShippingOption must not be NULL $within");
-         Assert::maxLength($this->label, 127, "label in ShippingOption must have maxlength of 127 $within");
-        !isset($this->amount) || Assert::isInstanceOf($this->amount, Money::class, "amount in ShippingOption must be instance of Money $within");
-        !isset($this->amount) || $this->amount->validate(ShippingOption::class);
+        Assert::maxLength(
+            $this->label,
+            127,
+            "label in ShippingOption must have maxlength of 127 $within"
+        );
+        !isset($this->amount) || Assert::isInstanceOf(
+            $this->amount,
+            Money::class,
+            "amount in ShippingOption must be instance of Money $within"
+        );
+        !isset($this->amount) ||  $this->amount->validate(ShippingOption::class);
         Assert::notNull($this->selected, "selected in ShippingOption must not be NULL $within");
     }
 

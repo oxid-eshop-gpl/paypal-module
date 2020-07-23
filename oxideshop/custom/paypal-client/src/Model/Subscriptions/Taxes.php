@@ -16,17 +16,17 @@ class Taxes implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var string
      * The percentage, as a fixed-point, signed decimal number. For example, define a 19.99% interest rate as
      * `19.99`.
      *
-     * this is mandatory to be set
+     * @var string
      */
     public $percentage;
 
     /**
-     * @var boolean
      * Indicates whether the tax was already included in the billing amount.
+     *
+     * @var boolean | null
      */
     public $inclusive = true;
 

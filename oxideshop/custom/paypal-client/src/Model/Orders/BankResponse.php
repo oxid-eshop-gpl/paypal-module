@@ -16,16 +16,21 @@ class BankResponse implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var AchDebitResponse
      * ACH bank details response object
+     *
+     * @var AchDebitResponse | null
      */
     public $ach_debit;
 
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->ach_debit) || Assert::isInstanceOf($this->ach_debit, AchDebitResponse::class, "ach_debit in BankResponse must be instance of AchDebitResponse $within");
-        !isset($this->ach_debit) || $this->ach_debit->validate(BankResponse::class);
+        !isset($this->ach_debit) || Assert::isInstanceOf(
+            $this->ach_debit,
+            AchDebitResponse::class,
+            "ach_debit in BankResponse must be instance of AchDebitResponse $within"
+        );
+        !isset($this->ach_debit) ||  $this->ach_debit->validate(BankResponse::class);
     }
 
     public function __construct()

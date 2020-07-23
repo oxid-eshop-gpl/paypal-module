@@ -16,20 +16,18 @@ class BeneficialOwners implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var IndividualBeneficialOwner[]
      * Individual beneficial owners.
      *
-     * this is mandatory to be set
+     * @var IndividualBeneficialOwner[]
      * maxItems: 0
      * maxItems: 5
      */
     public $individual_beneficial_owners;
 
     /**
-     * @var BusinessBeneficialOwner[]
      * Business beneficial owners.
      *
-     * this is mandatory to be set
+     * @var BusinessBeneficialOwner[]
      * maxItems: 0
      * maxItems: 5
      */
@@ -39,29 +37,53 @@ class BeneficialOwners implements JsonSerializable
     {
         $within = isset($from) ? "within $from" : "";
         Assert::notNull($this->individual_beneficial_owners, "individual_beneficial_owners in BeneficialOwners must not be NULL $within");
-         Assert::minCount($this->individual_beneficial_owners, 0, "individual_beneficial_owners in BeneficialOwners must have min. count of 0 $within");
-         Assert::maxCount($this->individual_beneficial_owners, 5, "individual_beneficial_owners in BeneficialOwners must have max. count of 5 $within");
-         Assert::isArray($this->individual_beneficial_owners, "individual_beneficial_owners in BeneficialOwners must be array $within");
+        Assert::minCount(
+            $this->individual_beneficial_owners,
+            0,
+            "individual_beneficial_owners in BeneficialOwners must have min. count of 0 $within"
+        );
+        Assert::maxCount(
+            $this->individual_beneficial_owners,
+            5,
+            "individual_beneficial_owners in BeneficialOwners must have max. count of 5 $within"
+        );
+        Assert::isArray(
+            $this->individual_beneficial_owners,
+            "individual_beneficial_owners in BeneficialOwners must be array $within"
+        );
 
-                                if (isset($this->individual_beneficial_owners)){
-                                    foreach ($this->individual_beneficial_owners as $item) {
-                                        $item->validate(BeneficialOwners::class);
-                                    }
-                                }
+        if (isset($this->individual_beneficial_owners)) {
+            foreach ($this->individual_beneficial_owners as $item) {
+                $item->validate(BeneficialOwners::class);
+            }
+        }
 
         Assert::notNull($this->business_beneficial_owners, "business_beneficial_owners in BeneficialOwners must not be NULL $within");
-         Assert::minCount($this->business_beneficial_owners, 0, "business_beneficial_owners in BeneficialOwners must have min. count of 0 $within");
-         Assert::maxCount($this->business_beneficial_owners, 5, "business_beneficial_owners in BeneficialOwners must have max. count of 5 $within");
-         Assert::isArray($this->business_beneficial_owners, "business_beneficial_owners in BeneficialOwners must be array $within");
+        Assert::minCount(
+            $this->business_beneficial_owners,
+            0,
+            "business_beneficial_owners in BeneficialOwners must have min. count of 0 $within"
+        );
+        Assert::maxCount(
+            $this->business_beneficial_owners,
+            5,
+            "business_beneficial_owners in BeneficialOwners must have max. count of 5 $within"
+        );
+        Assert::isArray(
+            $this->business_beneficial_owners,
+            "business_beneficial_owners in BeneficialOwners must be array $within"
+        );
 
-                                if (isset($this->business_beneficial_owners)){
-                                    foreach ($this->business_beneficial_owners as $item) {
-                                        $item->validate(BeneficialOwners::class);
-                                    }
-                                }
+        if (isset($this->business_beneficial_owners)) {
+            foreach ($this->business_beneficial_owners as $item) {
+                $item->validate(BeneficialOwners::class);
+            }
+        }
     }
 
     public function __construct()
     {
+        $this->individual_beneficial_owners = [];
+        $this->business_beneficial_owners = [];
     }
 }

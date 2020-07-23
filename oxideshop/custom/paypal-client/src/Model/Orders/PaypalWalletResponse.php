@@ -16,16 +16,21 @@ class PaypalWalletResponse implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var PaypalWalletAttributesResponse
      * Additional attributes associated with the use of a PayPal Wallet.
+     *
+     * @var PaypalWalletAttributesResponse | null
      */
     public $attributes;
 
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->attributes) || Assert::isInstanceOf($this->attributes, PaypalWalletAttributesResponse::class, "attributes in PaypalWalletResponse must be instance of PaypalWalletAttributesResponse $within");
-        !isset($this->attributes) || $this->attributes->validate(PaypalWalletResponse::class);
+        !isset($this->attributes) || Assert::isInstanceOf(
+            $this->attributes,
+            PaypalWalletAttributesResponse::class,
+            "attributes in PaypalWalletResponse must be instance of PaypalWalletAttributesResponse $within"
+        );
+        !isset($this->attributes) ||  $this->attributes->validate(PaypalWalletResponse::class);
     }
 
     public function __construct()

@@ -16,90 +16,91 @@ class CardResponse implements JsonSerializable
     use BaseModel;
 
     /** Visa card. */
-    const BRAND_VISA = 'VISA';
+    public const BRAND_VISA = 'VISA';
 
     /** Mastecard card. */
-    const BRAND_MASTERCARD = 'MASTERCARD';
+    public const BRAND_MASTERCARD = 'MASTERCARD';
 
     /** Discover card. */
-    const BRAND_DISCOVER = 'DISCOVER';
+    public const BRAND_DISCOVER = 'DISCOVER';
 
     /** American Express card. */
-    const BRAND_AMEX = 'AMEX';
+    public const BRAND_AMEX = 'AMEX';
 
     /** Solo debit card. */
-    const BRAND_SOLO = 'SOLO';
+    public const BRAND_SOLO = 'SOLO';
 
     /** Japan Credit Bureau card. */
-    const BRAND_JCB = 'JCB';
+    public const BRAND_JCB = 'JCB';
 
     /** Military Star card. */
-    const BRAND_STAR = 'STAR';
+    public const BRAND_STAR = 'STAR';
 
     /** Delta Airlines card. */
-    const BRAND_DELTA = 'DELTA';
+    public const BRAND_DELTA = 'DELTA';
 
     /** Switch credit card. */
-    const BRAND_SWITCH = 'SWITCH';
+    public const BRAND_SWITCH = 'SWITCH';
 
     /** Maestro credit card. */
-    const BRAND_MAESTRO = 'MAESTRO';
+    public const BRAND_MAESTRO = 'MAESTRO';
 
     /** Carte Bancaire (CB) credit card. */
-    const BRAND_CB_NATIONALE = 'CB_NATIONALE';
+    public const BRAND_CB_NATIONALE = 'CB_NATIONALE';
 
     /** Configoga credit card. */
-    const BRAND_CONFIGOGA = 'CONFIGOGA';
+    public const BRAND_CONFIGOGA = 'CONFIGOGA';
 
     /** Confidis credit card. */
-    const BRAND_CONFIDIS = 'CONFIDIS';
+    public const BRAND_CONFIDIS = 'CONFIDIS';
 
     /** Visa Electron credit card. */
-    const BRAND_ELECTRON = 'ELECTRON';
+    public const BRAND_ELECTRON = 'ELECTRON';
 
     /** Cetelem credit card. */
-    const BRAND_CETELEM = 'CETELEM';
+    public const BRAND_CETELEM = 'CETELEM';
 
     /** China union pay credit card. */
-    const BRAND_CHINA_UNION_PAY = 'CHINA_UNION_PAY';
+    public const BRAND_CHINA_UNION_PAY = 'CHINA_UNION_PAY';
 
     /** A credit card. */
-    const TYPE_CREDIT = 'CREDIT';
+    public const TYPE_CREDIT = 'CREDIT';
 
     /** A debit card. */
-    const TYPE_DEBIT = 'DEBIT';
+    public const TYPE_DEBIT = 'DEBIT';
 
     /** A Prepaid card. */
-    const TYPE_PREPAID = 'PREPAID';
+    public const TYPE_PREPAID = 'PREPAID';
 
     /** Card type cannot be determined. */
-    const TYPE_UNKNOWN = 'UNKNOWN';
+    public const TYPE_UNKNOWN = 'UNKNOWN';
 
     /** A PayPal credit card. */
-    const ISSUER_PAYPAL = 'PAYPAL';
+    public const ISSUER_PAYPAL = 'PAYPAL';
 
     /**
-     * @var string
      * The PayPal-generated ID for the card.
+     *
+     * @var string | null
      */
     public $id;
 
     /**
-     * @var string
      * The last digits of the payment card.
      *
+     * @var string | null
      * minLength: 2
      */
     public $last_n_chars;
 
     /**
-     * @var string
      * The last digits of the payment card.
+     *
+     * @var string | null
      */
     public $last_digits;
 
     /**
-     * @var string
      * The card network or brand. Applies to credit, debit, gift, and payment cards.
      *
      * use one of constants defined in this class to set the value:
@@ -119,13 +120,13 @@ class CardResponse implements JsonSerializable
      * @see BRAND_ELECTRON
      * @see BRAND_CETELEM
      * @see BRAND_CHINA_UNION_PAY
+     * @var string | null
      * minLength: 1
      * maxLength: 255
      */
     public $brand;
 
     /**
-     * @var string
      * The payment card type.
      *
      * use one of constants defined in this class to set the value:
@@ -133,53 +134,84 @@ class CardResponse implements JsonSerializable
      * @see TYPE_DEBIT
      * @see TYPE_PREPAID
      * @see TYPE_UNKNOWN
+     * @var string | null
      */
     public $type;
 
     /**
-     * @var string
      * The issuer of the card instrument.
      *
      * use one of constants defined in this class to set the value:
      * @see ISSUER_PAYPAL
+     * @var string | null
      */
     public $issuer;
 
     /**
-     * @var string
      * An acronym for Bank Identification Number (BIN), also known as IIN (Issuer Identification Number). It Is a
      * standardized global numbering scheme (6 to 8 digits) used to identify a bank / institution that issued the
      * card.
      *
+     * @var string | null
      * minLength: 6
      * maxLength: 8
      */
     public $bin;
 
     /**
-     * @var AuthenticationResponse
      * Results of Authentication such as 3D Secure.
+     *
+     * @var AuthenticationResponse | null
      */
     public $authentication_result;
 
     /**
-     * @var CardAttributesResponse
      * Additional attributes associated with the use of this card.
+     *
+     * @var CardAttributesResponse | null
      */
     public $attributes;
 
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->last_n_chars) || Assert::minLength($this->last_n_chars, 2, "last_n_chars in CardResponse must have minlength of 2 $within");
-        !isset($this->brand) || Assert::minLength($this->brand, 1, "brand in CardResponse must have minlength of 1 $within");
-        !isset($this->brand) || Assert::maxLength($this->brand, 255, "brand in CardResponse must have maxlength of 255 $within");
-        !isset($this->bin) || Assert::minLength($this->bin, 6, "bin in CardResponse must have minlength of 6 $within");
-        !isset($this->bin) || Assert::maxLength($this->bin, 8, "bin in CardResponse must have maxlength of 8 $within");
-        !isset($this->authentication_result) || Assert::isInstanceOf($this->authentication_result, AuthenticationResponse::class, "authentication_result in CardResponse must be instance of AuthenticationResponse $within");
-        !isset($this->authentication_result) || $this->authentication_result->validate(CardResponse::class);
-        !isset($this->attributes) || Assert::isInstanceOf($this->attributes, CardAttributesResponse::class, "attributes in CardResponse must be instance of CardAttributesResponse $within");
-        !isset($this->attributes) || $this->attributes->validate(CardResponse::class);
+        !isset($this->last_n_chars) || Assert::minLength(
+            $this->last_n_chars,
+            2,
+            "last_n_chars in CardResponse must have minlength of 2 $within"
+        );
+        !isset($this->brand) || Assert::minLength(
+            $this->brand,
+            1,
+            "brand in CardResponse must have minlength of 1 $within"
+        );
+        !isset($this->brand) || Assert::maxLength(
+            $this->brand,
+            255,
+            "brand in CardResponse must have maxlength of 255 $within"
+        );
+        !isset($this->bin) || Assert::minLength(
+            $this->bin,
+            6,
+            "bin in CardResponse must have minlength of 6 $within"
+        );
+        !isset($this->bin) || Assert::maxLength(
+            $this->bin,
+            8,
+            "bin in CardResponse must have maxlength of 8 $within"
+        );
+        !isset($this->authentication_result) || Assert::isInstanceOf(
+            $this->authentication_result,
+            AuthenticationResponse::class,
+            "authentication_result in CardResponse must be instance of AuthenticationResponse $within"
+        );
+        !isset($this->authentication_result) ||  $this->authentication_result->validate(CardResponse::class);
+        !isset($this->attributes) || Assert::isInstanceOf(
+            $this->attributes,
+            CardAttributesResponse::class,
+            "attributes in CardResponse must be instance of CardAttributesResponse $within"
+        );
+        !isset($this->attributes) ||  $this->attributes->validate(CardResponse::class);
     }
 
     public function __construct()

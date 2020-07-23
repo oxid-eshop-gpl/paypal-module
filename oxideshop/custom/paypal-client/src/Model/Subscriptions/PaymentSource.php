@@ -18,16 +18,21 @@ class PaymentSource implements JsonSerializable
     use BaseModel;
 
     /**
-     * @var Card
      * The payment card to use to fund a payment. Can be a credit or debit card.
+     *
+     * @var Card | null
      */
     public $card;
 
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->card) || Assert::isInstanceOf($this->card, Card::class, "card in PaymentSource must be instance of Card $within");
-        !isset($this->card) || $this->card->validate(PaymentSource::class);
+        !isset($this->card) || Assert::isInstanceOf(
+            $this->card,
+            Card::class,
+            "card in PaymentSource must be instance of Card $within"
+        );
+        !isset($this->card) ||  $this->card->validate(PaymentSource::class);
     }
 
     public function __construct()
