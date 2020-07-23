@@ -227,7 +227,7 @@ class Client
         $payerId = $this->merchantPayerId;
 
 
-        $partnerClientId = $this->technicalClientId;
+        $partnerClientId = $this->merchantClientId;
         $payload = base64_encode("{\"iss\": \"$partnerClientId\", \"payer_id\":\"$payerId\"}");
 
         $headers['PayPal-Auth-Assertion'] = "{$joseHeader}.{$payload}.";

@@ -65,7 +65,6 @@ JSON;
         $orderRequest->payer->address->country_code = "DE";
 
         $purchaseUnitRequest = new PurchaseUnitRequest();
-        $purchaseUnitRequest->amount = new AmountWithBreakdown();
         $purchaseUnitRequest->amount->value = "1";
         $purchaseUnitRequest->amount->currency_code = "EUR";
 
@@ -73,7 +72,7 @@ JSON;
         $orderRequest->intent = Order::INTENT_CAPTURE;
         $orderRequest->validate();
         $order = $orderService->createOrder($orderRequest, "", "");
-        $this->assertEquals($order->status, "CREATED");
+        $this->assertEquals("CREATED", $order->status);
         $id = $order->id;
         $order = $orderService->showOrderDetails($id);
         $this->assertEquals($id, $order->id);

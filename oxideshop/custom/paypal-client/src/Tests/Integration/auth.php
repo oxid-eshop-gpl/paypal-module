@@ -1,8 +1,9 @@
 <?php
+
 return [
-    "clientId" => "AS-lHBWs8cudxxonSeQ1eRbdn1Nr-7baqAURRNJnIuP-PPQFzFF1XkjDYV3NG3M6O75st2D98DOil4Vd",
-    "clientSecret" => "EANkP__pSQ25b1cXuO4CrC_KeDc78rKtgUpeEDthejOVjkJV9sv0mfjxM_A4qXyMqbdCIeib0tDfQY_6",
+    "clientId" => "Afu4cJEUEDWXWGvjgAEZb44pEXYJ9ALGwKHBFSXe6nxa9za0TZJ_SbkGwW4rWzUZlm5FcJ8s8y9QLd6f",
+    "clientSecret" => "ECZwVDCAIyX8yp22Mh7RRwanJxl57ZK77GJbvelGG3gdniQAx0PEg0iHy6VP5bJbZxEhiZ1EkaKIQAy-",
     //oxid partnerId used in request auth headers
-    "payerId" => 'LRCHTG6NYPSXN',
+    "payerId" => 'W56FXEVJQ3SWW',
     "debug" => true,
 ];
