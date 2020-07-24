@@ -23,8 +23,10 @@
 namespace OxidProfessionalServices\PayPal\Core;
 
 use DateTime;
+use libphonenumber\NumberParseException;
 use OxidEsales\Eshop\Application\Model\Basket;
 use OxidEsales\Eshop\Application\Model\BasketItem;
+use OxidEsales\Eshop\Application\Model\Country;
 use OxidEsales\Eshop\Application\Model\State;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\AddressPortable;
@@ -35,6 +37,7 @@ use OxidProfessionalServices\PayPal\Api\Model\Orders\Name;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderApplicationContext;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderRequest;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\Payer;
+use OxidProfessionalServices\PayPal\Api\Model\Orders\PhoneWithType;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\PurchaseUnit;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\PurchaseUnitRequest;
 use OxidProfessionalServices\PayPal\Core\Utils\PriceToMoney;
@@ -90,6 +93,7 @@ class OrderRequestFactory
             $request->payer = $this->getPayer();
         }
         $request->purchase_units = $this->getPurchaseUnits();
+        $request->payer = $this->getPayer();
         $request->application_context = $this->getApplicationContext($userAction);
 
         return $request;
@@ -119,9 +123,14 @@ class OrderRequestFactory
     protected function getPurchaseUnits(): array
     {
         $purchaseUnit = new PurchaseUnitRequest();
+
+        $purchaseUnit->custom_id = '123'; //TODO
+        $purchaseUnit->invoice_id = '132'; //TODO
+        $purchaseUnit->description = '123'; //TODO
+        $purchaseUnit->soft_descriptor = '123'; //TODO
+
         $purchaseUnit->amount = $this->getAmount();
         $purchaseUnit->items = $this->getItems();
-        $purchaseUnit->payee = $this->getPayer();
 
         return [$purchaseUnit];
     }
@@ -187,8 +196,7 @@ class OrderRequestFactory
         $name->surname = $user->getFieldData('oxlname');
 
         $payer->email_address = $user->getFieldData('oxusername');
-
-        //TODO add phone number, need special format for that
+        $payer->phone = $this->getPayerPhone();
 
         $birthDate = $user->getFieldData('oxbirthdate');
         if ($birthDate && $birthDate !== '0000-00-00') {
@@ -209,5 +217,51 @@ class OrderRequestFactory
         $address->postal_code = $user->getFieldData('oxzip');
 
         return $payer;
+    }
+
+    /**
+     * @return PhoneWithType|null
+     */
+    protected function getPayerPhone(): ?PhoneWithType
+    {
+        $user = $this->basket->getBasketUser();
+        $phoneUtils = \libphonenumber\PhoneNumberUtil::getInstance();
+
+        //Array of phone numbers to use in the request, using the first from the sequence that is available and valid.
+        $userPhoneFields = [
+            'oxmobfon' => 'MOBILE',
+            'oxprivfon' => 'MOBILE',
+            'oxfon' => 'HOME',
+            'oxfax' => 'FAX'
+        ];
+
+        $userCountry = oxNew(Country::class);
+        $userCountry->load($user->getFieldData('oxcountryid'));
+        $countryCode = $userCountry->oxcountry__oxisoalpha2->value;
+
+        $number = null;
+
+        foreach ($userPhoneFields as $numberField => $numberType) {
+            $number = $user->getFieldData($numberField);
+            if (!$number) continue;
+            try {
+                $phoneNumber = $phoneUtils->parse($number, $countryCode);
+                if ($phoneUtils->isValidNumber($phoneNumber)) {
+                    $number = $phoneUtils->format($phoneNumber, \libphonenumber\PhoneNumberFormat::E164);
+                    $type = $numberType;
+                    break;
+                }
+            } catch (NumberParseException $exception) {}
+        }
+
+        if (!$number) {
+            return null;
+        }
+
+        $phone = new PhoneWithType();
+        $phone->phone_type = $type;
+        $phone->phone_number = $number;
+
+        return $phone;
     }
 }
