@@ -24,6 +24,8 @@ namespace OxidProfessionalServices\PayPal\Core;
 
 use DateTime;
 use libphonenumber\NumberParseException;
+use libphonenumber\PhoneNumberFormat;
+use libphonenumber\PhoneNumberUtil;
 use OxidEsales\Eshop\Application\Model\Basket;
 use OxidEsales\Eshop\Application\Model\BasketItem;
 use OxidEsales\Eshop\Application\Model\Country;
@@ -131,6 +133,7 @@ class OrderRequestFactory
 
         $purchaseUnit->amount = $this->getAmount();
         $purchaseUnit->items = $this->getItems();
+        $purchaseUnit->shipping->address = $this->getAddress();
 
         return [$purchaseUnit];
     }
@@ -144,8 +147,9 @@ class OrderRequestFactory
         $basket = $this->basket;
         $currency = $this->basket->getBasketCurrency();
 
-        //Total amount
-        $amount->value = PriceToMoney::convert($this->basket->getPrice()->getBruttoPrice(), $currency);
+        //Total amount with taxes
+        $amount->value = $this->basket->getPrice()->getBruttoPrice();
+        $amount->currency_code = $this->basket->getBasketCurrency()->name;
 
         //Cost breakdown
         $breakdown = $amount->breakdown = new AmountBreakdown();
@@ -154,9 +158,21 @@ class OrderRequestFactory
         $itemTotal = $basket->getProductsPrice()->getNettoSum();
         $breakdown->item_total = PriceToMoney::convert($itemTotal, $currency);
 
+        //Item tax sum
+        $tax = $basket->getPayPalProductVat();
+        $breakdown->tax_total = PriceToMoney::convert($tax, $currency);
+
+//        //Other costs
+//        $handling = '';
+//        $breakdown->handling = '';
+
         //Shipping cost
-        $shippingCost = $basket->getDeliveryCost()->getNettoPrice();
+        $shippingCost = $basket->getDeliveryCost()->getBruttoPrice();
         $breakdown->shipping = PriceToMoney::convert($shippingCost, $currency);
+
+        //Discount
+        $discount = $basket->getDiscountSumPayPalBasket();
+        $breakdown->discount = PriceToMoney::convert($discount, $currency);
 
         return $amount;
     }
@@ -176,6 +192,7 @@ class OrderRequestFactory
             $item->name = $basketItem->getTitle();
             $itemUnitPrice = $basketItem->getUnitPrice();
             $item->unit_amount = PriceToMoney::convert($itemUnitPrice->getNettoPrice(), $currency);
+            $item->tax = PriceToMoney::convert($itemUnitPrice->getVatValue(), $currency);
             $item->quantity = $basketItem->getAmount();
             $items[] = $item;
         }
@@ -205,18 +222,34 @@ class OrderRequestFactory
             $payer->birth_date = $birthDate->format('Y-m-d');
         }
 
+        $payer->address = $this->getAddress();
+
+        return $payer;
+    }
+
+    /**
+     * @return AddressPortable
+     */
+    protected function getAddress(): AddressPortable
+    {
+        $user = $this->basket->getBasketUser();
+
         $state = oxNew(State::class);
         $state->load($user->getFieldData('oxstateid'));
 
-        $address = $payer->address = new AddressPortable();
+        //TODO move it to a method
+        $userCountry = oxNew(Country::class);
+        $userCountry->load($user->getFieldData('oxcountryid'));
+
+        $address = new AddressPortable();
         $addressLine = $user->getFieldData('oxstreet') . " " . $user->getFieldData('oxstreetnr');
         $address->address_line_1 = $addressLine;
         $address->admin_area_1 = $state->getFieldData('oxtitle'); //TODO state codes
         $address->admin_area_2 = $user->getFieldData('oxcity');
-        $address->country_code = $user->getFieldData('oxisoalpha2');
+        $address->country_code = $userCountry->oxcountry__oxisoalpha2->value;
         $address->postal_code = $user->getFieldData('oxzip');
 
-        return $payer;
+        return $address;
     }
 
     /**
@@ -225,7 +258,7 @@ class OrderRequestFactory
     protected function getPayerPhone(): ?PhoneWithType
     {
         $user = $this->basket->getBasketUser();
-        $phoneUtils = \libphonenumber\PhoneNumberUtil::getInstance();
+        $phoneUtils = PhoneNumberUtil::getInstance();
 
         //Array of phone numbers to use in the request, using the first from the sequence that is available and valid.
         $userPhoneFields = [
@@ -235,6 +268,7 @@ class OrderRequestFactory
             'oxfax' => 'FAX'
         ];
 
+        //TODO Move to user object
         $userCountry = oxNew(Country::class);
         $userCountry->load($user->getFieldData('oxcountryid'));
         $countryCode = $userCountry->oxcountry__oxisoalpha2->value;
@@ -247,7 +281,7 @@ class OrderRequestFactory
             try {
                 $phoneNumber = $phoneUtils->parse($number, $countryCode);
                 if ($phoneUtils->isValidNumber($phoneNumber)) {
-                    $number = $phoneUtils->format($phoneNumber, \libphonenumber\PhoneNumberFormat::E164);
+                    $number = ltrim($phoneUtils->format($phoneNumber, PhoneNumberFormat::E164), '+');
                     $type = $numberType;
                     break;
                 }
@@ -260,7 +294,7 @@ class OrderRequestFactory
 
         $phone = new PhoneWithType();
         $phone->phone_type = $type;
-        $phone->phone_number = $number;
+        $phone->phone_number->national_number = $number;
 
         return $phone;
     }

@@ -34,6 +34,7 @@
     "php": ">=7.1",
     "ext-json": "*",
     "ddoe/visualcms-module": "3.3.2",
+    "giggsey/libphonenumber-for-php": "^8.12",
     "oxid-community/moduleinternals": "^3.0@alpha",
     "oxid-esales/b2b-module": "^3.2",
     "oxid-esales/oxideshop-ce": "6.3.6",

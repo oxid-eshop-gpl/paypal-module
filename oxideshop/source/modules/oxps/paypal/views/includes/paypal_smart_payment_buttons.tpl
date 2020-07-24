@@ -11,8 +11,11 @@ paypal.Buttons({
                 'content-type': 'application/json'
             }
         }).then(function(res) {
-
-        });
+            return res.json();
+        }).then(function(data) {
+            console.log(data);
+            return data.id;
+        })
     },
     onApprove: function(data, actions) {
         return fetch('/index.php?cl=PayPalProxyController&fnc=captureOrder', {
@@ -30,5 +33,5 @@ paypal.Buttons({
 
 <div id="paypal-button-container"></div>
 
-[{oxscript include="https://www.paypal.com/sdk/js?client-id="|cat:$clientId}]
+[{oxscript include="https://www.paypal.com/sdk/js?client-id="|cat:$clientId|cat:"&currency=EUR"}]
 [{oxscript add=$smarty.capture.paypal_init}]

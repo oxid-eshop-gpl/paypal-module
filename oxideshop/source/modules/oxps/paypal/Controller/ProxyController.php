@@ -22,14 +22,19 @@
 
 namespace OxidProfessionalServices\PayPal\Controller;
 
+use Exception;
 use OxidEsales\Eshop\Application\Controller\FrontendController;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderRequest;
 use OxidProfessionalServices\PayPal\Core\OrderRequestFactory;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 
+/**
+ * Server side interface for PayPal smart buttons.
+ */
 class ProxyController extends FrontendController
 {
+
     public function createOrder()
     {
         $basket = Registry::getSession()->getBasket();
@@ -44,13 +49,27 @@ class ProxyController extends FrontendController
 
         try {
             $response = $service->createOrder($request, '', '');
-        } catch (\Exception $exception) {
-            Registry::getLogger()->error("Something went wrong with order create call.", [$exception]);
+        } catch (Exception $exception) {
+            Registry::getLogger()->error("Error on order create call.", [$exception]);
         }
+
+        $this->outputJson($response);
     }
 
     public function captureOrder()
     {
 
+    }
+
+    /**
+     * Encodes and sends response as json
+     *
+     * @param $response
+     */
+    protected function outputJson($response)
+    {
+        $utils = Registry::getUtils();
+        $utils->setHeader('Content-Type: application/json');
+        $utils->showMessageAndExit(json_encode($response));
     }
 }
