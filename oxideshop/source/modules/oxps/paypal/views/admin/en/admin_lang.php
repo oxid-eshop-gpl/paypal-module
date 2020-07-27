@@ -43,7 +43,6 @@ $aLang = [
         'One or more configuration values are either not set or incorrect. Please double check them.<br>
         <b>Module inactive.</b>',
     'OXPS_PAYPAL_CONF_VALID'         => 'Configuration values OK.<br><b>Module is active</b>',
-    'OXPS_PAYPAL_DESCRIPTION'        => 'Payment at %s',
     'OXPS_PAYPAL_BUTTON_PLACEMEMT_TITLE' => 'Button placement settings',
     'OXPS_PAYPAL_PRODUCT_DETAILS_BUTTON_PLACEMENT' => 'Product details page',
     'OXPS_PAYPAL_ADD_TO_BASKET_MODAL_PLACEMENT' => 'Add to basket modal',

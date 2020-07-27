@@ -218,6 +218,7 @@ class OrderRequestFactory
             if ($nettoPrices)
                 $item->tax = PriceToMoney::convert($basket->getPayPalWrappingVat(), $currency);
             $item->quantity = 1;
+            $items[] = $item;
         }
 
         if ($giftCard = $basket->getPayPalGiftCardCosts()) {
@@ -227,6 +228,7 @@ class OrderRequestFactory
             if ($nettoPrices)
                 $item->tax = PriceToMoney::convert($basket->getPayPalGiftCardVat(), $currency);
             $item->quantity = 1;
+            $items[] = $item;
         }
 
         if (($payment = $basket->getPayPalPaymentCosts()) > 0) {
@@ -236,6 +238,7 @@ class OrderRequestFactory
             if ($nettoPrices)
                 $item->tax = PriceToMoney::convert($basket->getPayPalPayCostVat(), $currency);
             $item->quantity = 1;
+            $items[] = $item;
         }
 
         return $items;
