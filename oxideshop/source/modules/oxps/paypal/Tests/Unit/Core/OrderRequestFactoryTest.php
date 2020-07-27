@@ -32,6 +32,7 @@ class OrderRequestFactoryTest extends UnitTestCase
 {
     public function testGetRequest()
     {
+        $this->markTestSkipped();
         $sut = new OrderRequestFactory();
         /** @var MockBuilder $orderMockBuilder */
         $orderMockBuilder = $this->getMockBuilder(Order::class);
