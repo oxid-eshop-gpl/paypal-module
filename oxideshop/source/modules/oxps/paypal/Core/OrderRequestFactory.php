@@ -163,7 +163,7 @@ class OrderRequestFactory
         $breakdown = $amount->breakdown = new AmountBreakdown();
 
         //Item total cost
-        $itemTotal = $basket->getProductsPrice()->getSum($basket->isCalculationModeNetto());
+        $itemTotal = $basket->getSumOfCostOfAllItemsPayPalBasket();
         $breakdown->item_total = PriceToMoney::convert($itemTotal, $currency);
 
         if ($basket->isCalculationModeNetto()) {
