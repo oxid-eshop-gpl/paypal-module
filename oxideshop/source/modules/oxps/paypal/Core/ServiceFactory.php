@@ -56,7 +56,9 @@ class ServiceFactory
                 $config->isSandbox() ? Client::SANDBOX_URL : Client::PRODUCTION_URL,
                 $config->getClientId(),
                 $config->getClientSecret(),
-                'W56FXEVJQ3SWW', // TODO change this to the value from config when available
+                '', // must be empty. We do not have the merchant's payerid
+                //and confirmed by paypal we should not use it for auth and 
+                //so not ask for it on the configuration page
                 false
             );
             $this->client = $client;
