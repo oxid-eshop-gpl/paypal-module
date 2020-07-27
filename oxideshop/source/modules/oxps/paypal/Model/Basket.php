@@ -100,7 +100,8 @@ class Basket extends Basket_parent
 
         $giftCardCost = $this->getCosts('oxgiftcard');
         if ($giftCardCost) {
-            $amount = $this->isCalculationModeNetto() ? $giftCardCost->getNettoPrice() : $giftCardCost->getBruttoPrice();
+            $amount = $this->isCalculationModeNetto() ?
+                $giftCardCost->getNettoPrice() : $giftCardCost->getBruttoPrice();
         }
 
         return $amount;
@@ -117,7 +118,8 @@ class Basket extends Basket_parent
 
         $paymentCost = $this->getCosts('oxpayment');
         if ($paymentCost) {
-            $amount = $this->isCalculationModeNetto() ? $paymentCost->getNettoPrice() : $paymentCost->getBruttoPrice();
+            $amount = $this->isCalculationModeNetto() ?
+                $paymentCost->getNettoPrice() : $paymentCost->getBruttoPrice();
         }
 
         return $amount;

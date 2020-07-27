@@ -56,8 +56,8 @@ class ServiceFactory
                 $config->isSandbox() ? Client::SANDBOX_URL : Client::PRODUCTION_URL,
                 $config->getClientId(),
                 $config->getClientSecret(),
-                'W56FXEVJQ3SWW',
-                true
+                'W56FXEVJQ3SWW', // TODO change this to the value from config when available
+                false
             );
             $this->client = $client;
         }
