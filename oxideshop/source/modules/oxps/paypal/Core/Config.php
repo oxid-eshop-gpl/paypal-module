@@ -40,8 +40,8 @@ class Config
         if (
             (
                 !$this->isSandbox() &&
-                !$this->getClientId() &&
-                !$this->getClientSecret()
+                !$this->getLiveClientId() &&
+                !$this->getLiveClientSecret()
             ) ||
             (
                 $this->isSandbox() &&
@@ -58,25 +58,59 @@ class Config
     /**
      * @return bool
      */
-    public function isSandbox(): bool
+    public function isActive()
     {
-        return (bool) Registry::getConfig()->getConfigParam('blPaypalSandboxMode');
+        try {
+            $this->checkHealth();
+        } catch (StandardException $exception) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
+     * @return bool
+     */
+    public function isSandbox(): bool
+    {
+        return (bool) Registry::getConfig()->getConfigParam('blPayPalSandboxMode');
+    }
+
+    /**
+     * Get client id based on set active mode
+     *
      * @return string
      */
     public function getClientId(): string
     {
-        return Registry::getConfig()->getConfigParam('sPaypalClientId');
+        return $this->isSandbox() ? $this->getSandboxClientId() : $this->getLiveClientId();
+    }
+
+    /**
+     * Get client secret based on active mode
+     *
+     * @return string
+     */
+    public function getClientSecret(): string
+    {
+        return $this->isSandbox() ? $this->getSandboxClientSecret() : $this->getLiveClientSecret();
     }
 
     /**
      * @return string
      */
-    public function getClientSecret(): string
+    public function getLiveClientId(): string
     {
-        return Registry::getConfig()->getConfigParam('sPaypalClientSecret');
+        return Registry::getConfig()->getConfigParam('sPayPalClientId');
+    }
+
+    /**
+     * @return string
+     */
+    public function getLiveClientSecret(): string
+    {
+        return Registry::getConfig()->getConfigParam('sPayPalClientSecret');
     }
 
     /**
@@ -84,7 +118,7 @@ class Config
      */
     public function getSandboxClientId(): string
     {
-        return Registry::getConfig()->getConfigParam('sPaypalSandboxClientId');
+        return Registry::getConfig()->getConfigParam('sPayPalSandboxClientId');
     }
 
     /**
@@ -92,7 +126,31 @@ class Config
      */
     public function getSandboxClientSecret(): string
     {
-        return Registry::getConfig()->getConfigParam('sPaypalSandboxClientSecret');
+        return Registry::getConfig()->getConfigParam('sPayPalSandboxClientSecret');
+    }
+
+    /**
+     * @return bool
+     */
+    public function showPayPalMiniBasketButton(): bool
+    {
+        return (bool) Registry::getConfig()->getConfigParam('blPayPalShowMiniBasketButton');
+    }
+
+    /**
+     * @return bool
+     */
+    public function showPayPalProductDetailsButton(): bool
+    {
+        return (bool) Registry::getConfig()->getConfigParam('blPayPalShowProductDetailsButton');
+    }
+
+    /**
+     * @return bool
+     */
+    public function showPayPalAddToBasketModalButton(): bool
+    {
+        return (bool) Registry::getConfig()->getConfigParam('blPayPalShowAddToBasketModalButton');
     }
 
     /**

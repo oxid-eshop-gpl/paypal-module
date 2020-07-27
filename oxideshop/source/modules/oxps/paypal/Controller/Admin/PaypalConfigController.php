@@ -49,7 +49,7 @@ class PaypalConfigController extends AdminController
      */
     public function getWebhookControllerUrl(): string
     {
-        return Registry::getUtilsUrl()->getActiveShopHost() . '/index.php?cl=PaypalWebhookController';
+        return Registry::getUtilsUrl()->getActiveShopHost() . '/index.php?cl=PayPalWebhookController';
     }
 
     /**
@@ -194,10 +194,22 @@ class PaypalConfigController extends AdminController
      */
     protected function handleSpecialFields(array $conf): array
     {
-        if ($conf['blPaypalSandboxMode'] === 'sandbox') {
-            $conf['blPaypalSandboxMode'] = 1;
+        if ($conf['blPayPalSandboxMode'] === 'sandbox') {
+            $conf['blPayPalSandboxMode'] = 1;
         } else {
-            $conf['blPaypalSandboxMode'] = 0;
+            $conf['blPayPalSandboxMode'] = 0;
+        }
+
+        if (!isset($conf['blPayPalShowProductDetailsButton'])) {
+            $conf['blPayPalShowProductDetailsButton'] = 0;
+        }
+
+        if (!isset($conf['blPayPalShowMiniBasketButton'])) {
+            $conf['blPayPalShowMiniBasketButton'] = 0;
+        }
+
+        if (!isset($conf['blPayPalShowAddToBasketModalButton'])) {
+            $conf['blPayPalShowAddToBasketModalButton'] = 0;
         }
 
         return $conf;

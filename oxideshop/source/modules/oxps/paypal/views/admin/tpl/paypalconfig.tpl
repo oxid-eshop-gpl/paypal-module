@@ -22,7 +22,7 @@
 
         <label for="opmode">[{oxmultilang ident="OXPS_PAYPAL_OPMODE"}]</label>
         <div class="controls">
-            <select name="conf[blPaypalSandboxMode]" id="opmode" class="form-control">
+            <select name="conf[blPayPalSandboxMode]" id="opmode" class="form-control">
                 <option value="sandbox" [{if $config->isSandbox()}]selected[{/if}]>
                     [{oxmultilang ident="OXPS_PAYPAL_OPMODE_SANDBOX"}]
                 </option>
@@ -50,7 +50,7 @@
         <div class="form-group live">
             <label for="client-id">[{oxmultilang ident="OXPS_PAYPAL_CLIENT_ID"}]</label>
             <div class="controls">
-                <input type="text" class="form-control" id="client-id" name="conf[sPaypalClientId]" value="[{$config->getClientId()}]" />
+                <input type="text" class="form-control" id="client-id" name="conf[sPayPalClientId]" value="[{$config->getLiveClientId()}]" />
                 <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_CLIENT_ID"}]</span>
             </div>
         </div>
@@ -58,7 +58,7 @@
         <div class="form-group live">
             <label for="client-secret">[{oxmultilang ident="OXPS_PAYPAL_CLIENT_SECRET"}]</label>
             <div class="controls">
-                <input type="text" class="form-control" id="client-secret" name="conf[sPaypalClientSecret]" value="[{$config->getClientSecret()}]" />
+                <input type="text" class="form-control" id="client-secret" name="conf[sPayPalClientSecret]" value="[{$config->getLiveClientSecret()}]" />
                 <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_CLIENT_SECRET"}]</span>
             </div>
         </div>
@@ -78,7 +78,7 @@
         <div class="form-group sandbox">
             <label for="client-sandbox-id">[{oxmultilang ident="OXPS_PAYPAL_CLIENT_ID"}]</label>
             <div class="controls">
-                <input type="text" class="form-control" id="client-sandbox-id" name="conf[sPaypalSandboxClientId]" value="[{$config->getSandboxClientId()}]" />
+                <input type="text" class="form-control" id="client-sandbox-id" name="conf[sPayPalSandboxClientId]" value="[{$config->getSandboxClientId()}]" />
                 <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_SANDBOX_CLIENT_ID"}]</span>
             </div>
         </div>
@@ -86,8 +86,12 @@
         <div class="form-group sandbox">
             <label for="client-sandbox-secret">[{oxmultilang ident="OXPS_PAYPAL_CLIENT_SECRET"}]</label>
             <div class="controls">
-                <input type="text" class="form-control" id="client-sandbox-secret" name="conf[sPaypalSandboxClientSecret]" value="[{$config->getSandboxClientSecret()}]" />
-                <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_SANDBOX_CLIENT_SECRET"}]</span>
+                <div>
+                    <div class="checkbox"><label><input type="checkbox" name="conf[blPayPalShowProductDetailsButton]" [{if $config->showPayPalProductDetailsButton()}]checked[{/if}] value="1">[{oxmultilang ident="OXPS_PAYPAL_PRODUCT_DETAILS_BUTTON_PLACEMENT"}]</label></div>
+                    <div class="checkbox"><label><input type="checkbox" name="conf[blPayPalShowMiniBasketButton]" [{if $config->showPayPalMiniBasketButton()}]checked[{/if}] value="1">[{oxmultilang ident="OXPS_PAYPAL_MINI_BASKET_BUTTON_PLACEMENT"}]</label></div>
+                    <div class="checkbox"><label><input type="checkbox" name="conf[blPayPalShowAddToBasketModalButton]" [{if $config->showPayPalAddToBasketModalButton()}]checked[{/if}] value="1">[{oxmultilang ident="OXPS_PAYPAL_ADD_TO_BASKET_MODAL_PLACEMENT"}]</label></div>
+                </div>
+                <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_BUTTON_PLACEMEMT"}]</span>
             </div>
         </div>
 
