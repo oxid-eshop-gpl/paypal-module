@@ -141,7 +141,7 @@ class OrderRequestFactory
 
         $purchaseUnit->amount = $this->getAmount();
         $purchaseUnit->items = $this->getItems();
-        $purchaseUnit->shipping->address = $this->getShippingAddress();
+        $purchaseUnit->shipping = $this->getShippingAddress();
 
         return [$purchaseUnit];
     }
@@ -172,13 +172,15 @@ class OrderRequestFactory
             $breakdown->tax_total = PriceToMoney::convert($tax, $currency);
         }
 
-        //Shipping cost
-        $shippingCost = $basket->getDeliveryCost()->getPrice();
-        $breakdown->shipping = PriceToMoney::convert($shippingCost, $currency);
+        if ($shippingCost = $basket->getDeliveryCost()->getPrice()) {
+            //Shipping cost
+            $breakdown->shipping = PriceToMoney::convert($shippingCost, $currency);
+        }
 
-        //Discount
-        $discount = $basket->getDiscountSumPayPalBasket();
-        $breakdown->discount = PriceToMoney::convert($discount, $currency);
+        if ($discount = $basket->getDiscountSumPayPalBasket()) {
+            //Discount
+            $breakdown->discount = PriceToMoney::convert($discount, $currency);
+        }
 
         return $amount;
     }
@@ -227,7 +229,7 @@ class OrderRequestFactory
             $item->quantity = 1;
         }
 
-        if (($payment = $this->getPayPalPaymentCosts()) > 0) {
+        if (($payment = $basket->getPayPalPaymentCosts()) > 0) {
             $item = new Item();
             $item->name = $language->translateString('PAYMENT_METHOD');
             $item->unit_amount = PriceToMoney::convert($payment, $currency);

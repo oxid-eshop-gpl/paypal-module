@@ -45,7 +45,9 @@ class ProxyController extends FrontendController
 
         /** @var OrderRequestFactory $requestFactory */
         $requestFactory = Registry::get(OrderRequestFactory::class);
-        $request = $requestFactory->getRequest($basket, OrderRequest::INTENT_CAPTURE);
+        $request = $requestFactory->getRequest(
+            $basket, OrderRequest::INTENT_CAPTURE,
+   OrderRequestFactory::USER_ACTION_CONTINUE);
 
         try {
             $response = $service->createOrder($request, '', '');
