@@ -102,7 +102,7 @@ class Config
      */
     public function getLiveClientId(): string
     {
-        return Registry::getConfig()->getConfigParam('sPayPalClientId');
+        return (string) Registry::getConfig()->getConfigParam('sPayPalClientId', '');
     }
 
     /**
@@ -110,7 +110,7 @@ class Config
      */
     public function getLiveClientSecret(): string
     {
-        return Registry::getConfig()->getConfigParam('sPayPalClientSecret');
+        return Registry::getConfig()->getConfigParam('sPayPalClientSecret', '');
     }
 
     /**
@@ -118,7 +118,7 @@ class Config
      */
     public function getSandboxClientId(): string
     {
-        return Registry::getConfig()->getConfigParam('sPayPalSandboxClientId');
+        return Registry::getConfig()->getConfigParam('sPayPalSandboxClientId', '');
     }
 
     /**
@@ -126,7 +126,7 @@ class Config
      */
     public function getSandboxClientSecret(): string
     {
-        return Registry::getConfig()->getConfigParam('sPayPalSandboxClientSecret');
+        return Registry::getConfig()->getConfigParam('sPayPalSandboxClientSecret', '');
     }
 
     /**
@@ -134,7 +134,7 @@ class Config
      */
     public function showPayPalMiniBasketButton(): bool
     {
-        return (bool) Registry::getConfig()->getConfigParam('blPayPalShowMiniBasketButton');
+        return (bool) Registry::getConfig()->getConfigParam('blPayPalShowMiniBasketButton', false);
     }
 
     /**
