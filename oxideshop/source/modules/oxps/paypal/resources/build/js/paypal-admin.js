@@ -18,24 +18,52 @@
  * @copyright (C) OXID eSales AG 2003-2020
  */
 
+function copyToClipboard(element) {
+    document.querySelector(element).select();
+    document.execCommand('copy');
+}
+
 function onboardedCallbackLive(authCode, sharedId) {
-    // Callback which is passed to the onboarding session
+    callOnboardingControllerAutoConfigurationFromCallback(authCode, sharedId, false);
 }
 
 function onboardedCallbackSandbox(authCode, sharedId) {
-    // Callback which is passed to the onboarding session
-    fetch('/seller-server/login-seller', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify({
-        authCode: authCode,
-        sharedId: sharedId
-      })
-    }).then(function(res) {
-      if (!response.ok) {
-        alert("Something went wrong!");
-      }
+    callOnboardingControllerAutoConfigurationFromCallback(authCode, sharedId, true);
+}
+
+function callOnboardingControllerAutoConfigurationFromCallback(authCode, sharedId, isSandBox) {
+    fetch(window.selfLink + 'cl=OnboardingController&fnc=autoConfigurationFromCallback', {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+            authCode: authCode,
+            sharedId: sharedId,
+            isSandBox: isSandBox
+        })
+    })
+    .then(
+        function(response) {
+            console.log(response);
+            if (response.status !== 200) {
+                console.log('Error - Status Code: ' + response.status);
+                return;
+            }
+
+            response.json().then(function(data) {
+                console.log(data);
+                if(window.isSandBox) {
+                    jQuery("#client-sandbox-id").val(data.client_id);
+                    jQuery("#client-sandbox-secret").val(data.client_secret);
+                } else {
+                    jQuery("#client-id").val(data.client_id);
+                    jQuery("#client-secret").val(data.client_secret);
+                }
+            });
+        }
+    )
+    .catch(function(err) {
+        console.log('Fetch Error :-S', err);
     });
 }

@@ -1,4 +1,9 @@
 [{include file="headitem.tpl" title="paypal"}]
+[{assign var="isSandBox" value=$config->isSandbox()}];
+<script>
+    window.isSandBox = '[{$isSandBox}]';
+    window.selfLink = '[{$oViewConf->getSelfLink()|replace:"&amp;":"&"}]';
+</script>
 
 <div id="content" class="paypal-config">
     <h1>[{oxmultilang ident="paypal"}] [{oxmultilang ident="OXPS_PAYPAL_CONFIG"}]</h1>
@@ -10,7 +15,7 @@
         [{/if}]
     </div>
 
-    <form action="[{$oViewConf->getSelfLink()}]">
+    <form name="configForm" action="[{$oViewConf->getSelfLink()}]">
         [{$oViewConf->getHiddenSid()}]
         <input type="hidden" name="cl" value="[{$oViewConf->getActiveClassName()}]">
         <input type="hidden" name="fnc" value="save">
@@ -33,25 +38,16 @@
         <p class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_CREDENTIALS"}]</p>
 
         [{assign var='liveMerchantSignUpLink' value=$oView->getLiveSignUpMerchantIntegrationLink()}]
-        <p><a target="_blank"
+        <p class="live"><a target="_blank"
               href="[{$liveMerchantSignUpLink}]"
               data-paypal-button="PPLtBlue">
                 [{oxmultilang ident="OXPS_PAYPAL_LIVE_BUTTON_CREDENTIALS"}]
            </a>
         </p>
 
-        [{assign var='sandboxMerchantSignUpLink' value=$oView->getSandboxSignUpMerchantIntegrationLink()}]
-        <p><a target="_blank"
-              href="[{$sandboxMerchantSignUpLink}]"
-              data-paypal-onboard-complete="onboardedCallbackSandbox"
-              data-paypal-button="PPLtBlue">
-              [{oxmultilang ident="OXPS_PAYPAL_SANDBOX_BUTTON_CREDENTIALS"}]
-            </a>
-        </p>
+        <h3 class="live">[{oxmultilang ident="OXPS_PAYPAL_LIVE_CREDENTIALS"}]</h3>
 
-        <h3>[{oxmultilang ident="OXPS_PAYPAL_LIVE_CREDENTIALS"}]</h3>
-
-        <div class="form-group">
+        <div class="form-group live">
             <label for="client-id">[{oxmultilang ident="OXPS_PAYPAL_CLIENT_ID"}]</label>
             <div class="controls">
                 <input type="text" class="form-control" id="client-id" name="conf[sPaypalClientId]" value="[{$config->getClientId()}]" />
@@ -59,7 +55,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group live">
             <label for="client-secret">[{oxmultilang ident="OXPS_PAYPAL_CLIENT_SECRET"}]</label>
             <div class="controls">
                 <input type="text" class="form-control" id="client-secret" name="conf[sPaypalClientSecret]" value="[{$config->getClientSecret()}]" />
@@ -67,9 +63,19 @@
             </div>
         </div>
 
-        <h3>[{oxmultilang ident="OXPS_PAYPAL_SANDBOX_CREDENTIALS"}]</h3>
+        [{assign var='sandboxMerchantSignUpLink' value=$oView->getSandboxSignUpMerchantIntegrationLink()}]
 
-        <div class="form-group">
+        <p class="sandbox"><a target="_blank"
+              href="[{$sandboxMerchantSignUpLink}]"
+              data-paypal-onboard-complete="onboardedCallbackSandbox"
+              data-paypal-button="PPLtBlue">
+                [{oxmultilang ident="OXPS_PAYPAL_SANDBOX_BUTTON_CREDENTIALS"}]
+            </a>
+        </p>
+
+        <h3 class="sandbox">[{oxmultilang ident="OXPS_PAYPAL_SANDBOX_CREDENTIALS"}]</h3>
+
+        <div class="form-group sandbox">
             <label for="client-sandbox-id">[{oxmultilang ident="OXPS_PAYPAL_CLIENT_ID"}]</label>
             <div class="controls">
                 <input type="text" class="form-control" id="client-sandbox-id" name="conf[sPaypalSandboxClientId]" value="[{$config->getSandboxClientId()}]" />
@@ -77,15 +83,7 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="client-sandbox-secret">[{oxmultilang ident="OXPS_PAYPAL_CLIENT_SECRET"}]</label>
-            <div class="controls">
-                <input type="text" class="form-control" id="client-sandbox-secret" name="conf[sPaypalSandboxClientSecret]" value="[{$config->getSandboxClientSecret()}]" />
-                <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_SANDBOX_CLIENT_SECRET"}]</span>
-            </div>
-        </div>
-
-        <div class="form-group">
+        <div class="form-group sandbox">
             <label for="client-sandbox-secret">[{oxmultilang ident="OXPS_PAYPAL_CLIENT_SECRET"}]</label>
             <div class="controls">
                 <input type="text" class="form-control" id="client-sandbox-secret" name="conf[sPaypalSandboxClientSecret]" value="[{$config->getSandboxClientSecret()}]" />
@@ -112,4 +110,28 @@
     </form>
 </div>
 [{include file="bottomitem.tpl"}]
+
 <script id="paypal-js" src="https://www.sandbox.paypal.com/webapps/merchantboarding/js/lib/lightbox/partner.js"></script>
+<script>
+    jQuery(document).ready(function(){
+        if(window.isSandBox) {
+            displayByOpMode('sandbox');
+        } else {
+            displayByOpMode('live');
+        }
+
+        jQuery("#opmode").change(function() {
+            displayByOpMode(jQuery("#opmode").val());
+        });
+    });
+
+    function displayByOpMode(opmode) {
+        if(opmode === 'sandbox') {
+            jQuery(".live").hide();
+            jQuery(".sandbox").show();
+        } else {
+            jQuery(".sandbox").hide();
+            jQuery(".live").show();
+        }
+    }
+</script>
