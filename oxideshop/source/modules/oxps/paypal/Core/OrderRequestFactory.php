@@ -26,6 +26,7 @@ use DateTime;
 use libphonenumber\NumberParseException;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
+use OxidEsales\Eshop\Application\Model\Address;
 use OxidEsales\Eshop\Application\Model\Basket;
 use OxidEsales\Eshop\Application\Model\BasketItem;
 use OxidEsales\Eshop\Application\Model\Country;
@@ -42,6 +43,7 @@ use OxidProfessionalServices\PayPal\Api\Model\Orders\Payer;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\PhoneWithType;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\PurchaseUnit;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\PurchaseUnitRequest;
+use OxidProfessionalServices\PayPal\Api\Model\Orders\ShippingDetail;
 use OxidProfessionalServices\PayPal\Core\Utils\PriceToMoney;
 
 /**
@@ -78,13 +80,17 @@ class OrderRequestFactory
      * @param Basket $basket
      * @param string $intent Order::INTENT_CAPTURE or Order::INTENT_AUTHORIZE constant values
      * @param string $userAction USER_ACTION_CONTINUE OR USER_ACTION_PAY_NOW constant values
+     * @param null|string $transactionId transaction id
+     * @param null|string $invoiceId custom invoice number
      *
      * @return OrderRequest
      */
     public function getRequest(
         Basket $basket,
         string $intent,
-        string $userAction = self::USER_ACTION_CONTINUE
+        string $userAction,
+        ?string $transactionId = null,
+        ?string $invoiceId = null
     ): OrderRequest
     {
         $request = $this->request = new OrderRequest();
@@ -94,7 +100,7 @@ class OrderRequestFactory
         if ($user = $basket->getUser()) {
             $request->payer = $this->getPayer();
         }
-        $request->purchase_units = $this->getPurchaseUnits();
+        $request->purchase_units = $this->getPurchaseUnits($transactionId, $invoiceId);
         $request->payer = $this->getPayer();
         $request->application_context = $this->getApplicationContext($userAction);
 
@@ -122,18 +128,20 @@ class OrderRequestFactory
     /**
      * @return PurchaseUnit[]
      */
-    protected function getPurchaseUnits(): array
+    protected function getPurchaseUnits(?string $transactionId, ?string $invoiceId): array
     {
         $purchaseUnit = new PurchaseUnitRequest();
+        $shopName = Registry::getConfig()->getActiveShop()->getFieldData('oxname');
+        $lang = Registry::getLang();
 
-        $purchaseUnit->custom_id = '123'; //TODO
-        $purchaseUnit->invoice_id = '132'; //TODO
-        $purchaseUnit->description = '123'; //TODO
-        $purchaseUnit->soft_descriptor = '123'; //TODO
+        $purchaseUnit->custom_id = $transactionId;
+        $purchaseUnit->invoice_id =  $invoiceId;
+        $description = sprintf($lang->translateString('OXPS_PAYPAL_DESCRIPTION'), $shopName);
+        $purchaseUnit->description = $description;
 
         $purchaseUnit->amount = $this->getAmount();
         $purchaseUnit->items = $this->getItems();
-        $purchaseUnit->shipping->address = $this->getAddress();
+        $purchaseUnit->shipping->address = $this->getShippingAddress();
 
         return [$purchaseUnit];
     }
@@ -147,27 +155,25 @@ class OrderRequestFactory
         $basket = $this->basket;
         $currency = $this->basket->getBasketCurrency();
 
-        //Total amount with taxes
-        $amount->value = $this->basket->getPrice()->getBruttoPrice();
+        //Total amount
+        $amount->value = $this->basket->getSumOfCostOfAllItemsPayPalBasket();
         $amount->currency_code = $this->basket->getBasketCurrency()->name;
 
         //Cost breakdown
         $breakdown = $amount->breakdown = new AmountBreakdown();
 
         //Item total cost
-        $itemTotal = $basket->getProductsPrice()->getNettoSum();
+        $itemTotal = $basket->getProductsPrice()->getSum($basket->isCalculationModeNetto());
         $breakdown->item_total = PriceToMoney::convert($itemTotal, $currency);
 
-        //Item tax sum
-        $tax = $basket->getPayPalProductVat();
-        $breakdown->tax_total = PriceToMoney::convert($tax, $currency);
-
-//        //Other costs
-//        $handling = '';
-//        $breakdown->handling = '';
+        if ($basket->isCalculationModeNetto()) {
+            //Item tax sum
+            $tax = $basket->getPayPalProductVat();
+            $breakdown->tax_total = PriceToMoney::convert($tax, $currency);
+        }
 
         //Shipping cost
-        $shippingCost = $basket->getDeliveryCost()->getBruttoPrice();
+        $shippingCost = $basket->getDeliveryCost()->getPrice();
         $breakdown->shipping = PriceToMoney::convert($shippingCost, $currency);
 
         //Discount
@@ -184,17 +190,50 @@ class OrderRequestFactory
     {
         $basket = $this->basket;
         $currency = $basket->getBasketCurrency();
+        $language = Registry::getLang();
         $items = [];
+        $nettoPrices = $basket->isCalculationModeNetto();
+
 
         /** @var BasketItem $basketItem */
         foreach ($basket->getContents() as $basketItem) {
             $item = new Item();
             $item->name = $basketItem->getTitle();
             $itemUnitPrice = $basketItem->getUnitPrice();
-            $item->unit_amount = PriceToMoney::convert($itemUnitPrice->getNettoPrice(), $currency);
-            $item->tax = PriceToMoney::convert($itemUnitPrice->getVatValue(), $currency);
+            $item->unit_amount = PriceToMoney::convert($itemUnitPrice->getPrice(), $currency);
+
+            if ($nettoPrices)
+                $item->tax = PriceToMoney::convert($itemUnitPrice->getVatValue(), $currency);
+
             $item->quantity = $basketItem->getAmount();
             $items[] = $item;
+        }
+
+        if ($wrapping = $basket->getPayPalWrappingCosts()) {
+            $item = new Item();
+            $item->name = $language->translateString('GIFT_WRAPPING');
+            $item->unit_amount = PriceToMoney::convert($wrapping, $currency);
+            if ($nettoPrices)
+                $item->tax = PriceToMoney::convert($basket->getPayPalWrappingVat(), $currency);
+            $item->quantity = 1;
+        }
+
+        if ($giftCard = $basket->getPayPalGiftCardCosts()) {
+            $item = new Item();
+            $item->name = $language->translateString('GREETING_CARD');
+            $item->unit_amount = PriceToMoney::convert($giftCard, $currency);
+            if ($nettoPrices)
+                $item->tax = PriceToMoney::convert($basket->getPayPalGiftCardVat(), $currency);
+            $item->quantity = 1;
+        }
+
+        if (($payment = $this->getPayPalPaymentCosts()) > 0) {
+            $item = new Item();
+            $item->name = $language->translateString('PAYMENT_METHOD');
+            $item->unit_amount = PriceToMoney::convert($payment, $currency);
+            if ($nettoPrices)
+                $item->tax = PriceToMoney::convert($basket->getPayPalPayCostVat(), $currency);
+            $item->quantity = 1;
         }
 
         return $items;
@@ -222,7 +261,7 @@ class OrderRequestFactory
             $payer->birth_date = $birthDate->format('Y-m-d');
         }
 
-        $payer->address = $this->getAddress();
+        $payer->address = $this->getBillingAddress();
 
         return $payer;
     }
@@ -230,26 +269,66 @@ class OrderRequestFactory
     /**
      * @return AddressPortable
      */
-    protected function getAddress(): AddressPortable
+    protected function getBillingAddress(): AddressPortable
     {
         $user = $this->basket->getBasketUser();
 
         $state = oxNew(State::class);
         $state->load($user->getFieldData('oxstateid'));
 
-        //TODO move it to a method
-        $userCountry = oxNew(Country::class);
-        $userCountry->load($user->getFieldData('oxcountryid'));
+        $country = oxNew(Country::class);
+        $country->load($user->getFieldData('oxcountryid'));
 
         $address = new AddressPortable();
         $addressLine = $user->getFieldData('oxstreet') . " " . $user->getFieldData('oxstreetnr');
         $address->address_line_1 = $addressLine;
-        $address->admin_area_1 = $state->getFieldData('oxtitle'); //TODO state codes
+        $address->admin_area_1 = $state->getFieldData('oxtitle');
         $address->admin_area_2 = $user->getFieldData('oxcity');
-        $address->country_code = $userCountry->oxcountry__oxisoalpha2->value;
+        $address->country_code = $country->oxcountry__oxisoalpha2->value;
         $address->postal_code = $user->getFieldData('oxzip');
 
         return $address;
+    }
+
+    /**
+     * @return ShippingDetail|null
+     */
+    protected function getShippingAddress(): ?ShippingDetail
+    {
+        $user = $this->basket->getBasketUser();
+        $deliveryId = Registry::getSession()->getVariable("deladrid");
+        $deliveryAddress = oxNew(Address::class);
+        $shipping = new ShippingDetail();
+        $name = $shipping->name = new Name();
+        if ($deliveryId && $deliveryAddress->load($deliveryId)) {
+            $fullName = $deliveryAddress->oxaddress__oxfname->value . " " . $deliveryAddress->oxaddress__oxlname->value;
+            $name->full_name = $fullName;
+
+            $address = new AddressPortable();
+
+            $state = oxNew(State::class);
+            $state->load($deliveryAddress->getFieldData('oxstateid'));
+
+            $country = oxNew(Country::class);
+            $country->load($deliveryAddress->getFieldData('oxcountryid'));
+
+            $addressLine =
+                $deliveryAddress->getFieldData('oxstreet') . " " . $deliveryAddress->getFieldData('oxstreetnr');
+            $address->address_line_1 = $addressLine;
+            $address->admin_area_1 = $state->getFieldData('oxtitle');
+            $address->admin_area_2 = $deliveryAddress->getFieldData('oxcity');
+            $address->country_code = $country->oxcountry__oxisoalpha2->value;
+            $address->postal_code = $deliveryAddress->getFieldData('oxzip');
+
+            $shipping->address = $address;
+        } else {
+            $fullName = $user->getFieldData('oxstreet') . " " . $user->getFieldData('oxstreetnr');
+            $name->full_name = $fullName;
+
+            $shipping->address = $this->getBillingAddress();
+        }
+
+        return $shipping;
     }
 
     /**
@@ -268,10 +347,9 @@ class OrderRequestFactory
             'oxfax' => 'FAX'
         ];
 
-        //TODO Move to user object
-        $userCountry = oxNew(Country::class);
-        $userCountry->load($user->getFieldData('oxcountryid'));
-        $countryCode = $userCountry->oxcountry__oxisoalpha2->value;
+        $country = oxNew(Country::class);
+        $country->load($user->getFieldData('oxcountryid'));
+        $countryCode = $country->oxcountry__oxisoalpha2->value;
 
         $number = null;
 

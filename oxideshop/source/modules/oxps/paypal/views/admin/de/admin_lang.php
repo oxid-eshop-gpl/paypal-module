@@ -44,6 +44,7 @@ $aLang = [
         'Ein oder mehrere Konfigurationswerte sind entweder nicht festgelegt oder falsch. Bitte überprüfen Sie sie noch einmal.<br>
         <b>Modul inaktiv.</b>',
     'OXPS_PAYPAL_CONF_VALID'         => 'Konfigurationswerte OK.<br><b>Modul ist aktiv</b>',
+    'OXPS_PAYPAL_DESCRIPTION'        => 'Zahlung bei %s',
     'OXPS_PAYPAL_BUTTON_PLACEMEMT_TITLE' => 'Einstellungen für die Tastenplatzierung',
     'OXPS_PAYPAL_PRODUCT_DETAILS_BUTTON_PLACEMENT' => 'Produktdetailseite',
     'OXPS_PAYPAL_ADD_TO_BASKET_MODAL_PLACEMENT' => 'Modal in den Warenkorb legen',
