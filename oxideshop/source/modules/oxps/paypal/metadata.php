@@ -20,6 +20,7 @@
  * @copyright (C) OXID eSales AG 2003-2020
  */
 
+use OxidProfessionalServices\PayPal\Controller\Admin\OnboardingController;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalConfigController;
 use OxidProfessionalServices\PayPal\Controller\WebhookController;
 
@@ -46,7 +47,8 @@ $aModule = [
     'extend' => [],
     'controllers' => [
         'PaypalConfigController' => PaypalConfigController::class,
-        'PaypalWebhookController' => WebhookController::class
+        'PaypalWebhookController' => WebhookController::class,
+        'OnboardingController' => OnboardingController::class
     ],
     'templates' => [
         'paypalconfig.tpl' => 'oxps/paypal/views/admin/tpl/paypalconfig.tpl',

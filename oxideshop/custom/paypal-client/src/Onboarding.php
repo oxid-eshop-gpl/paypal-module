@@ -1,17 +1,20 @@
 <?php
 
-
 namespace OxidProfessionalServices\PayPal\Api;
 
-
+use OxidProfessionalServices\PayPal\Api\Model\Partner\Operation;
+use OxidProfessionalServices\PayPal\Api\Model\Partner\ReferralData;
+use OxidProfessionalServices\PayPal\Api\Model\Partner\RestApiIntegration;
+use OxidProfessionalServices\PayPal\Api\Model\Partner\RestApiIntegrationFirstPartyDetails;
+use OxidProfessionalServices\PayPal\Api\Service\Partner;
 use Psr\Log\LoggerInterface;
 
 class Onboarding extends Client
 {
     /**
-     * @var array
+     * @var string
      */
-    protected $signupLinkResponse;
+    private $partnerId;
 
     /**
      * during onboarding you do not have shop owners credentials
@@ -32,97 +35,10 @@ class Onboarding extends Client
         $oxidPartnerId,
         $debug = false
     ) {
-        parent::__construct($logger, $endpoint, $oxidClientId, $oxidClientSecret, $oxidPartnerId, $debug);
+        $this->partnerId = $oxidPartnerId;
+        parent::__construct($logger, $endpoint, $oxidClientId, $oxidClientSecret, '', $debug);
     }
 
-    /**
-     * Generate a PayPal sign-up link
-     * to include onboarding sellers with PayPal.
-     * @param $authCode string this is returned by paypal in the call back function
-     * @param $sellerNonce string the random number that was used to generate the paypal register/login link
-     */
-    public function generateSignupLink($authCode, $sellerNonce)
-    {
-        $client = $this->httpClient;
-        $url = $this->endpoint . "/v2/customer/partner-referrals";
-
-        $res = $client->post($url, [
-            "headers" => [
-                "Authorization" => "Bearer $authCode",
-                "Content-Type" => self::CONTENT_TYPE_JSON,
-                "Accept" => self::CONTENT_TYPE_JSON
-            ],
-            "operations" => [
-                "operation" => "API_INTEGRATION",
-                "api_integration_preference" => [
-                    "rest_api_integration" => [
-                        "integration_method"  => "PAYPAL",
-                        "integration_type"    => "FIRST_PARTY",
-                        "first_party_details" => [
-                            "features" => [
-                                "PAYMENT",
-                                "REFUND"
-                            ],
-                            "seller_nonce" => $sellerNonce
-                        ]
-                    ]
-                ]
-            ],
-            "products" => [
-                "EXPRESS_CHECKOUT"
-            ],
-            "legal_consents" => [
-                [
-                    "type"    => "SHARE_DATA_CONSENT",
-                    "granted" => true
-                ]
-            ]
-        ]);
-        $this->setSignupLinkResponse(json_decode('' . $res->getBody(), true));
-    }
-
-    /**
-     * use this if you want to inject a token into the auth headers set by this client.
-     * You may want to use this with the return from getTokenResponse() so you are able to cache the
-     * the auth between requests.
-     * @param $tokenResponse
-     */
-    public function setSignupLinkResponse($signupLinkResponse)
-    {
-        $this->signupLinkResponse = $signupLinkResponse;
-    }
-
-    /**
-     * use this if you want to store the auth response for later reuse
-     * see also setSignupLinkResponse
-     * @return array the token response from the auth call
-     */
-    public function getSignupLinkResponse()
-    {
-        return $this->signupLinkResponse;
-    }
-
-    /**
-     * @return bool|string
-     */
-    public function getSignupLink()
-    {
-        if(!$this->isAuthenticated()) {
-            return false;
-        }
-
-        $signupLink = "";
-
-        foreach ($this->getSignupLinkResponse()['links'] as $signupLinkData) {
-            if ($signupLinkData["rel"] == "action_url") {
-                $signupLink = $signupLinkData["href"];
-                break;
-            }
-        }
-        return $signupLink;
-    }
-
-    //TODO: add create paypal link function
 
     /**
      * Auth after seller used on browser to login into the paypal account
@@ -142,14 +58,14 @@ class Onboarding extends Client
         $authBase64 = base64_encode("$sharedId:");
         $client = $this->httpClient;
         $url = $this->endpoint . "/v1/oauth2/token";
+        $headers = [
+            "Authorization" => "Basic $authBase64",
+            "PayPal-Partner-Attribution-Id" => self::PAYPAL_PARTNER_ATTR_ID,
+            "Accept" => self::CONTENT_TYPE_JSON
+        ];
 
         $res = $client->post($url, [
-            "headers" => [
-                "Authorization" => "Bearer $authBase64",
-                "Content-Type" => self::CONTENT_TYPE_JSON,
-                "PayPal-Partner-Attribution-Id" => self::PAYPAL_PARTNER_ATTR_ID,
-                "Accept" => self::CONTENT_TYPE_JSON
-            ],
+            "headers" => $headers,
             'form_params' => [
                 "grant_type" => "authorization_code",
                 "code" => $authCode,
@@ -160,5 +76,15 @@ class Onboarding extends Client
         $this->tokenResponse = json_decode('' . $res->getBody(), true);
     }
 
-
+    public function getCredentials()
+    {
+        $partnerId = $this->partnerId;
+        $request = $this->createRequest(
+            'GET',
+            "/v1/customer/partners/{$partnerId}/merchant-integrations/credentials",
+            []
+        );
+        $response = $this->send($request);
+        return json_decode($response->getBody(), true);
+    }
 }

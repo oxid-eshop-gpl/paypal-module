@@ -64,12 +64,6 @@ class Client
     private $merchantPayerId;
 
     /**
-     * @var string
-     */
-    private $technicalClientId = "AS-lHBWs8cudxxonSeQ1eRbdn1Nr-7baqAURRNJnIuP-PPQFzFF1XkjDYV3NG3M6O75st2D98DOil4Vd";
-
-
-    /**
      * Client constructor.
      * @param LoggerInterface $logger
      * @param string $endpoint
@@ -86,7 +80,7 @@ class Client
         $endpoint,
         $clientId,
         $clientSecret,
-        $payerId,
+        $payerId = "",
         $debug = false
     ) {
         $this->endpoint = $endpoint;
@@ -147,19 +141,10 @@ class Client
     }
 
     /**
-     * set the clientId from the technical account for your app.
-     * every app must have a account, this helps paypal to understand how there API is beeing used
-     * it will be transfered in the PayPal-Auth-Assertion header inside the iss field
-     * @param $clientId string clientId from the technical account for your app.
-     */
-    public function setTechnicalClientId($clientId)
-    {
-        $this->technicalClientId = $clientId;
-    }
-    /**
-     * normal auth if $clientId and $clientSecret are already available
-     * @param $clientId
-     * @param $clientSecret
+     * explicit auth you can use this to make the auth before sending your request.
+     * This call is time consuming and should be done only once within 8 hours
+     * see Client::setTokenResponse()
+     * this call will be done implicitly if a request is sent and the client is not yet authenticated
      * @return $this
      */
     public function auth()
@@ -224,13 +209,14 @@ class Client
         $headers["Authorization"] = "Bearer " . $this->tokenResponse['access_token'];
 
         $joseHeader = base64_encode('{"alg":"none"}');
+
         $payerId = $this->merchantPayerId;
+        if ($payerId !== "") {
+            $partnerClientId = $this->merchantClientId;
+            $payload = base64_encode("{\"iss\": \"$partnerClientId\", \"payer_id\":\"$payerId\"}");
 
-
-        $partnerClientId = $this->merchantClientId;
-        $payload = base64_encode("{\"iss\": \"$partnerClientId\", \"payer_id\":\"$payerId\"}");
-
-        $headers['PayPal-Auth-Assertion'] = "{$joseHeader}.{$payload}.";
+            $headers['PayPal-Auth-Assertion'] = "{$joseHeader}.{$payload}.";
+        }
 
         $headers[self::PAYPAL_PARTNER_ATTR_ID_HEADER] = self::PAYPAL_PARTNER_ATTR_ID;
         foreach ($headers as $headerName => $headerValue) {

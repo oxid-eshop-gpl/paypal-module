@@ -26,6 +26,9 @@
 /oxideshop/source/cache/
 /oxideshop/source/Setup/
 /oxideshop/source/*
+!/oxideshop/source/modules
+/oxideshop/source/modules/*
+!/oxideshop/source/modules/oxps
 !/oxideshop/source/.htaccess
 !/oxideshop/source/config.inc.php
 

@@ -49,7 +49,9 @@ class Config
                 !$this->getSandboxClientSecret()
             )
         ) {
-            throw oxNew(StandardException::class);
+            throw oxNew(
+                StandardException::class
+            );
         }
     }
 
@@ -99,7 +101,7 @@ class Config
      * the request for the merchant ClientId.
      * For this purpose, this ClientId is unencrypted, here as part
      * of this open Source Module
-     *
+     * this method is private see getTechnicalClientId which respects the sandbox mode for you
      * @return string
      */
     public function getLiveOxidClientId(): string
@@ -127,7 +129,7 @@ class Config
      * the request for the merchant ClientId and Secret.
      * For this purpose, this ClientId is unencrypted, here as part
      * of this open Source Module
-     *
+     * this method is private see getTechnicalPartnerId which respects the sandbox mode for you
      * @return string
      */
     public function getLiveOxidPartnerId(): string
@@ -175,5 +177,35 @@ class Config
     public function getSandboxOxidSecret(): string
     {
         return "EANkP__pSQ25b1cXuO4CrC_KeDc78rKtgUpeEDthejOVjkJV9sv0mfjxM_A4qXyMqbdCIeib0tDfQY_6";
+    }
+
+    /**
+     * @return string
+     */
+    public function getTechnicalClientId()
+    {
+        return $this->isSandbox() ?
+            $this->getSandboxOxidClientId()
+            : $this->getLiveOxidClientId();
+    }
+
+    /**
+     * @return string
+     */
+    public function getTechnicalPartnerId()
+    {
+        return $this->isSandbox() ?
+            $this->getSandboxOxidPartnerId()
+            : $this->getLiveOxidPartnerId();
+    }
+
+    /**
+     * return string
+     */
+    public function getTechnicalClientSecret()
+    {
+        return $this->isSandbox() ?
+            $this->getSandboxOxidSecret()
+            : $this->getLiveOxidSecret();
     }
 }

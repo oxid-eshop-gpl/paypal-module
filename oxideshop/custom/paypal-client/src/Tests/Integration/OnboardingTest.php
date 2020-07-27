@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 class OnboardingTest extends TestCase
 {
     /**
-     * @var Client
+     * @var Onboarding
      */
     private $client;
 
@@ -18,20 +18,12 @@ class OnboardingTest extends TestCase
         $this->client = ClientFactory::createClient(Onboarding::class);
     }
 
-    public function testGetSignupLink()
+
+    public function testGetCredentials()
     {
-        $this->client->auth();
-        $accessToken = $this->client->getTokenResponse();
-
-        $this->assertIsArray($accessToken);
-        $this->assertArrayHasKey('access_token', $accessToken);
-
-        $this->client->generateSignupLink(
-            $accessToken['access_token'],
-            $this->client->createSellerNonce()
-        );
-
-        $this->assertIsArray($this->client->getSignupLinkResponse());
-        $this->assertIsString($this->client->getSignupLink());
+        $nonce = "2fa6adc6527ed9d2889e4096f11ebb4598ccc604371010b129cc7a9b40e9e3e61b1c7961ee384196cafe";
+        $authCode = "C21AAFPEjZ4u0-mDhkWwjGgZPYfoyvkdZSu78u0tdPcWKeAAxI8394Nm2ylawYojazmDbxa1V8_SGMwXmdsx-ha8JOh7fK9LQ";
+        $sharedId = "AZin-OJCArjesnPdnin_qaM-CsFkbVDimXC0vdvzP00fAz0ut1orNMCr94k-vdGZ7rK8M1c4JSLo03_Q";
+        $this->client->authAfterWebLogin($authCode, $sharedId, $nonce);
     }
 }

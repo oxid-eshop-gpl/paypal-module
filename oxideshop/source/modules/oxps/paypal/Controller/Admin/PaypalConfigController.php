@@ -26,10 +26,6 @@ use OxidEsales\Eshop\Application\Controller\Admin\AdminController;
 use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Core\Config;
-use Symfony\Component\Console\Logger\ConsoleLogger;
-use Symfony\Component\Console\Output\ConsoleOutput;
-use Symfony\Component\Console\Output\OutputInterface;
-use OxidProfessionalServices\PayPal\Api\Onboarding;
 
 /**
  * Controller for admin > Paypal/Configuration page
@@ -77,7 +73,7 @@ class PaypalConfigController extends AdminController
 
     /**
      * Template Getter: Get a Link for SignUp the Live Merchant Integration
-     *
+     * see getSignUpMerchantIntegrationLink
      * @return string
      */
     public function getLiveSignUpMerchantIntegrationLink(): string
@@ -93,7 +89,7 @@ class PaypalConfigController extends AdminController
 
     /**
      * Template Getter: Get a Link for SignUp the Live Merchant Integration
-     *
+     * see getSignUpMerchantIntegrationLink
      * @return string
      */
     public function getSandboxSignUpMerchantIntegrationLink(): string
@@ -124,7 +120,7 @@ class PaypalConfigController extends AdminController
             'product' => 'EXPRESS_CHECKOUT',
             'integrationType' => 'FO',
             'partnerClientId' => $clientId,
-            //'returnToPartnerUrl' => $returnUrl,
+            'returnToPartnerUrl' => $returnUrl,
             //'partnerLogoUrl' => '',
             'displayMode' => 'minibrowser',
             'features' => 'PAYMENT,REFUND'
@@ -156,42 +152,6 @@ class PaypalConfigController extends AdminController
         return $nonce;
     }
 
-    public function invalidateNonce(): void
-    {
-        Registry::getSession()->deleteVariable('PAYPAL_MODULE_NONCE');
-    }
-
-    /**
-     * Template Getter: Get a Link for SignUp the Live Merchant Integration
-     *
-     * @return string
-     */
-    public function getProductionSignUpMerchantIntegrationLink(): string
-    {
-
-        $output = new ConsoleOutput(OutputInterface::VERBOSITY_DEBUG);
-        $logger = new ConsoleLogger($output);
-        $config = new Config();
-
-        $oxidSandboxIntegrationClient = new Onboarding(
-            $logger,
-            Onboarding::SANDBOX_URL,
-            $config->getSandboxOxidClientId(),
-            $config->getSandboxOxidSecret(),
-            $config->getSandboxOxidPartnerId()
-        );
-
-        $oxidSandboxIntegrationClient->auth();
-
-        $accessToken = $oxidSandboxIntegrationClient->getTokenResponse();
-
-        $oxidSandboxIntegrationClient->generateSignupLink(
-            $accessToken['access_token'],
-            $oxidSandboxIntegrationClient->createSellerNonce()
-        );
-
-        return $oxidSandboxIntegrationClient->getSignupLink();
-    }
 
     /**
      * Saves configuration values

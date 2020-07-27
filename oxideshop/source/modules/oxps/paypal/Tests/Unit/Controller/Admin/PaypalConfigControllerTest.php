@@ -40,13 +40,13 @@ class PaypalConfigControllerTest extends UnitTestCase
         $this->sut = new PaypalConfigController();
     }
 
-    public function testGetSandboxSignUpMerchantIntegrationLink()
+    public function testGetSignUpMerchantIntegrationLink()
     {
-        $this->sut->getSandboxSignUpMerchantIntegrationLink();
-    }
-
-    public function testGetLiveUpMerchantIntegrationLink()
-    {
-        $this->sut->getLiveSignUpMerchantIntegrationLink();
+        $url = $this->sut->getSignUpMerchantIntegrationLink();
+        $urlInfo = parse_url($url);
+        $this->assertNotEmpty($urlInfo['query']);
+        $this->markTestIncomplete(
+            'This test has not been implemented yet.'
+        );
     }
 }
