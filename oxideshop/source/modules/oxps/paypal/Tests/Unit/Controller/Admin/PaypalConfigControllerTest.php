@@ -42,7 +42,7 @@ class PaypalConfigControllerTest extends UnitTestCase
 
     public function testGetSignUpMerchantIntegrationLink()
     {
-        $url = $this->sut->getSignUpMerchantIntegrationLink();
+        $url = $this->sut->getSandboxSignUpMerchantIntegrationLink();
         $urlInfo = parse_url($url);
         $this->assertNotEmpty($urlInfo['query']);
         $this->markTestIncomplete(

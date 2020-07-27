@@ -118,7 +118,7 @@ class Config
      */
     public function getSandboxClientId(): string
     {
-        return Registry::getConfig()->getConfigParam('sPayPalSandboxClientId', '');
+        return (string) Registry::getConfig()->getConfigParam('sPayPalSandboxClientId', '');
     }
 
     /**
@@ -126,7 +126,7 @@ class Config
      */
     public function getSandboxClientSecret(): string
     {
-        return Registry::getConfig()->getConfigParam('sPayPalSandboxClientSecret', '');
+        return (string) Registry::getConfig()->getConfigParam('sPayPalSandboxClientSecret', '');
     }
 
     /**
