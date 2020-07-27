@@ -87,6 +87,16 @@
             <label for="client-sandbox-secret">[{oxmultilang ident="OXPS_PAYPAL_CLIENT_SECRET"}]</label>
             <div class="controls">
                 <div>
+                    <input type="text" class="form-control" id="client-sandbox-secret" name="conf[sPaypalSandboxClientSecret]" value="[{$config->getSandboxClientSecret()}]" />
+                </div>
+                <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_SANDBOX_CLIENT_SECRET"}]</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label >[{oxmultilang ident="OXPS_PAYPAL_BUTTON_PLACEMEMT_TITLE"}]</label>
+            <div class="controls">
+                <div>
                     <div class="checkbox"><label><input type="checkbox" name="conf[blPayPalShowProductDetailsButton]" [{if $config->showPayPalProductDetailsButton()}]checked[{/if}] value="1">[{oxmultilang ident="OXPS_PAYPAL_PRODUCT_DETAILS_BUTTON_PLACEMENT"}]</label></div>
                     <div class="checkbox"><label><input type="checkbox" name="conf[blPayPalShowMiniBasketButton]" [{if $config->showPayPalMiniBasketButton()}]checked[{/if}] value="1">[{oxmultilang ident="OXPS_PAYPAL_MINI_BASKET_BUTTON_PLACEMENT"}]</label></div>
                     <div class="checkbox"><label><input type="checkbox" name="conf[blPayPalShowAddToBasketModalButton]" [{if $config->showPayPalAddToBasketModalButton()}]checked[{/if}] value="1">[{oxmultilang ident="OXPS_PAYPAL_ADD_TO_BASKET_MODAL_PLACEMENT"}]</label></div>
@@ -94,6 +104,7 @@
                 <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_BUTTON_PLACEMEMT"}]</span>
             </div>
         </div>
+
 
         <h3>[{oxmultilang ident="OXPS_PAYPAL_WEBHOOK_TITLE"}]</h3>
 
