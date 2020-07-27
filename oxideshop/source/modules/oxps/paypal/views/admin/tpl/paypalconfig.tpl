@@ -87,7 +87,7 @@
             <label for="client-sandbox-secret">[{oxmultilang ident="OXPS_PAYPAL_CLIENT_SECRET"}]</label>
             <div class="controls">
                 <div>
-                    <input type="text" class="form-control" id="client-sandbox-secret" name="conf[sPaypalSandboxClientSecret]" value="[{$config->getSandboxClientSecret()}]" />
+                    <input type="text" class="form-control" id="client-sandbox-secret" name="conf[sPayPalSandboxClientSecret]" value="[{$config->getSandboxClientSecret()}]" />
                 </div>
                 <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_SANDBOX_CLIENT_SECRET"}]</span>
             </div>
