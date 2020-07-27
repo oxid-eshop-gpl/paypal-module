@@ -3,23 +3,15 @@
 namespace OxidProfessionalServices\PayPal\Api\Service;
 
 use JsonMapper;
+use OxidProfessionalServices\PayPal\Api\BaseService;
 use OxidProfessionalServices\PayPal\Api\Client;
 use OxidProfessionalServices\PayPal\Api\Model\Catalog\Product;
 use OxidProfessionalServices\PayPal\Api\Model\Catalog\ProductCollection;
 use OxidProfessionalServices\PayPal\Api\Model\Catalog\ProductRequestPOST;
 
-class Catalog
+class Catalog extends BaseService
 {
-    /** @var Client */
-    public $client;
-
-    /**
-     * @param $client Client
-     */
-    public function __construct(Client $client)
-    {
-        $this->client = $client;
-    }
+    protected $basePath = '/v1/catalogs';
 
     public function createProduct(ProductRequestPOST $productRequest, $prefer = 'return=minimal'): Product
     {
@@ -28,10 +20,9 @@ class Catalog
         $headers['Prefer'] = $prefer;
 
         $body = json_encode($productRequest, true);
-        $request = $this->client->createRequest('POST', "/v1/catalogs/products", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('POST', "/products", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new Product());
     }
 
@@ -40,10 +31,9 @@ class Catalog
         $headers = [];
 
         $body = null;
-        $request = $this->client->createRequest('GET', "/v1/catalogs/products", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('GET', "/products", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new ProductCollection());
     }
 
@@ -52,23 +42,18 @@ class Catalog
         $headers = [];
 
         $body = null;
-        $request = $this->client->createRequest('GET', "/v1/catalogs/products/{$productId}", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('GET', "/products/{$productId}", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new Product());
     }
 
-    public function updateProduct($productId, array $patchRequest)
+    public function updateProduct($productId, array $patchRequest): void
     {
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($patchRequest, true);
-        $request = $this->client->createRequest('PATCH', "/v1/catalogs/products/{$productId}", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
-        $mapper = new JsonMapper();
-        return $mapper->map($jsonProduct, new Product());
+        $response = $this->send('PATCH', "/products/{$productId}", $headers, $body);
     }
 }

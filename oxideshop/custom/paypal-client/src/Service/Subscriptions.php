@@ -3,6 +3,7 @@
 namespace OxidProfessionalServices\PayPal\Api\Service;
 
 use JsonMapper;
+use OxidProfessionalServices\PayPal\Api\BaseService;
 use OxidProfessionalServices\PayPal\Api\Client;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Plan;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\PlanCollection;
@@ -17,22 +18,12 @@ use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\SubscriptionReviseRe
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\SubscriptionReviseResponse;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\SubscriptionSaveRequest;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\SubscriptionSuspendRequest;
-use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Transaction;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\TransactionsList;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\UpdatePricingSchemesListRequest;
 
-class Subscriptions
+class Subscriptions extends BaseService
 {
-    /** @var Client */
-    public $client;
-
-    /**
-     * @param $client Client
-     */
-    public function __construct(Client $client)
-    {
-        $this->client = $client;
-    }
+    protected $basePath = '/v1/billing';
 
     public function createPlan(PlanRequestPOST $planRequest, $prefer = 'return=minimal'): Plan
     {
@@ -41,10 +32,9 @@ class Subscriptions
         $headers['Prefer'] = $prefer;
 
         $body = json_encode($planRequest, true);
-        $request = $this->client->createRequest('POST', "/v1/billing/plans", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('POST', "/plans", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new Plan());
     }
 
@@ -62,10 +52,9 @@ class Subscriptions
         $headers['Prefer'] = $prefer;
 
         $body = null;
-        $request = $this->client->createRequest('GET', "/v1/billing/plans", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('GET', "/plans", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new PlanCollection());
     }
 
@@ -75,74 +64,53 @@ class Subscriptions
         $headers['PayPal-Subject-Account'] = $payPalSubjectAccount;
 
         $body = null;
-        $request = $this->client->createRequest('GET', "/v1/billing/plans/{$id}", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('GET', "/plans/{$id}", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new Plan());
     }
 
-    public function updatePlan($id, array $patchRequest)
+    public function updatePlan($id, array $patchRequest): void
     {
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($patchRequest, true);
-        $request = $this->client->createRequest('PATCH', "/v1/billing/plans/{$id}", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
-        $mapper = new JsonMapper();
-        return $mapper->map($jsonProduct, new Plan());
+        $response = $this->send('PATCH', "/plans/{$id}", $headers, $body);
     }
 
-    public function replacePlan($id, Plan $plan)
+    public function replacePlan($id, Plan $plan): void
     {
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($plan, true);
-        $request = $this->client->createRequest('PUT', "/v1/billing/plans/{$id}", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
-        $mapper = new JsonMapper();
-        return $mapper->map($jsonProduct, new Plan());
+        $response = $this->send('PUT', "/plans/{$id}", $headers, $body);
     }
 
-    public function activatePlan($id)
+    public function activatePlan($id): void
     {
         $headers = [];
 
         $body = null;
-        $request = $this->client->createRequest('POST', "/v1/billing/plans/{$id}/activate", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
-        $mapper = new JsonMapper();
-        return $mapper->map($jsonProduct, new Plan());
+        $response = $this->send('POST', "/plans/{$id}/activate", $headers, $body);
     }
 
-    public function deactivatePlan($id)
+    public function deactivatePlan($id): void
     {
         $headers = [];
 
         $body = null;
-        $request = $this->client->createRequest('POST', "/v1/billing/plans/{$id}/deactivate", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
-        $mapper = new JsonMapper();
-        return $mapper->map($jsonProduct, new Plan());
+        $response = $this->send('POST', "/plans/{$id}/deactivate", $headers, $body);
     }
 
-    public function updatePricing($id, UpdatePricingSchemesListRequest $updatePricingSchemesListRequest)
+    public function updatePricing($id, UpdatePricingSchemesListRequest $updatePricingSchemesListRequest): void
     {
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($updatePricingSchemesListRequest, true);
-        $request = $this->client->createRequest('POST', "/v1/billing/plans/{$id}/update-pricing-schemes", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
-        $mapper = new JsonMapper();
-        return $mapper->map($jsonProduct, new Plan());
+        $response = $this->send('POST', "/plans/{$id}/update-pricing-schemes", $headers, $body);
     }
 
     public function createSubscription(SubscriptionRequestPost $subscriptionRequest, $prefer = 'return=minimal'): Subscription
@@ -152,10 +120,9 @@ class Subscriptions
         $headers['Prefer'] = $prefer;
 
         $body = json_encode($subscriptionRequest, true);
-        $request = $this->client->createRequest('POST', "/v1/billing/subscriptions", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('POST', "/subscriptions", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new Subscription());
     }
 
@@ -175,10 +142,9 @@ class Subscriptions
         $headers = [];
 
         $body = null;
-        $request = $this->client->createRequest('GET', "/v1/billing/subscriptions", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('GET', "/subscriptions", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new SubscriptionCollection());
     }
 
@@ -187,24 +153,19 @@ class Subscriptions
         $headers = [];
 
         $body = null;
-        $request = $this->client->createRequest('GET', "/v1/billing/subscriptions/{$id}", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('GET', "/subscriptions/{$id}", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new Subscription());
     }
 
-    public function updateSubscription($id, array $patchRequest)
+    public function updateSubscription($id, array $patchRequest): void
     {
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($patchRequest, true);
-        $request = $this->client->createRequest('PATCH', "/v1/billing/subscriptions/{$id}", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
-        $mapper = new JsonMapper();
-        return $mapper->map($jsonProduct, new Subscription());
+        $response = $this->send('PATCH', "/subscriptions/{$id}", $headers, $body);
     }
 
     public function updateQuantityOfProductOrServiceInSubscription($id, SubscriptionReviseRequest $subscriptionReviseRequest): SubscriptionReviseResponse
@@ -213,76 +174,55 @@ class Subscriptions
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($subscriptionReviseRequest, true);
-        $request = $this->client->createRequest('POST', "/v1/billing/subscriptions/{$id}/revise", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('POST', "/subscriptions/{$id}/revise", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new SubscriptionReviseResponse());
     }
 
-    public function saveSubscription($id, SubscriptionSaveRequest $subscriptionSaveRequest)
+    public function saveSubscription($id, SubscriptionSaveRequest $subscriptionSaveRequest): void
     {
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($subscriptionSaveRequest, true);
-        $request = $this->client->createRequest('POST', "/v1/billing/subscriptions/{$id}/save", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
-        $mapper = new JsonMapper();
-        return $mapper->map($jsonProduct, new SubscriptionReviseResponse());
+        $response = $this->send('POST', "/subscriptions/{$id}/save", $headers, $body);
     }
 
-    public function suspendSubscription($id, SubscriptionSuspendRequest $subscriptionSuspendRequest)
+    public function suspendSubscription($id, SubscriptionSuspendRequest $subscriptionSuspendRequest): void
     {
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($subscriptionSuspendRequest, true);
-        $request = $this->client->createRequest('POST', "/v1/billing/subscriptions/{$id}/suspend", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
-        $mapper = new JsonMapper();
-        return $mapper->map($jsonProduct, new SubscriptionReviseResponse());
+        $response = $this->send('POST', "/subscriptions/{$id}/suspend", $headers, $body);
     }
 
-    public function cancelSubscription($id, SubscriptionCancelRequest $subscriptionCancelRequest)
+    public function cancelSubscription($id, SubscriptionCancelRequest $subscriptionCancelRequest): void
     {
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($subscriptionCancelRequest, true);
-        $request = $this->client->createRequest('POST', "/v1/billing/subscriptions/{$id}/cancel", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
-        $mapper = new JsonMapper();
-        return $mapper->map($jsonProduct, new SubscriptionReviseResponse());
+        $response = $this->send('POST', "/subscriptions/{$id}/cancel", $headers, $body);
     }
 
-    public function activateSubscription($id, SubscriptionActivateRequest $subscriptionActivateRequest)
+    public function activateSubscription($id, SubscriptionActivateRequest $subscriptionActivateRequest): void
     {
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($subscriptionActivateRequest, true);
-        $request = $this->client->createRequest('POST', "/v1/billing/subscriptions/{$id}/activate", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
-        $mapper = new JsonMapper();
-        return $mapper->map($jsonProduct, new SubscriptionReviseResponse());
+        $response = $this->send('POST', "/subscriptions/{$id}/activate", $headers, $body);
     }
 
-    public function captureAuthorizedPaymentOnSubscription($id, SubscriptionCaptureRequest $subscriptionCaptureRequest): Transaction
+    public function captureAuthorizedPaymentOnSubscription($id, SubscriptionCaptureRequest $subscriptionCaptureRequest): void
     {
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($subscriptionCaptureRequest, true);
-        $request = $this->client->createRequest('POST', "/v1/billing/subscriptions/{$id}/capture", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
-        $mapper = new JsonMapper();
-        return $mapper->map($jsonProduct, new Transaction());
+        $response = $this->send('POST', "/subscriptions/{$id}/capture", $headers, $body);
     }
 
     public function listTransactionsForSubscription($id, $startTime, $endTime): TransactionsList
@@ -290,10 +230,9 @@ class Subscriptions
         $headers = [];
 
         $body = null;
-        $request = $this->client->createRequest('GET', "/v1/billing/subscriptions/{$id}/transactions", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('GET', "/subscriptions/{$id}/transactions", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new TransactionsList());
     }
 }

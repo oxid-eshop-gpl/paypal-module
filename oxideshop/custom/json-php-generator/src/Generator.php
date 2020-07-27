@@ -6,6 +6,7 @@ use Exception;
 use JsonSerializable;
 use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\PsrPrinter;
+use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
 use Webmozart\Assert\Assert;
 
 class Generator
@@ -231,7 +232,9 @@ class Generator
             $class->addComment($comment);
         }
         $class->addComment("generated from: $defName");
-
+        if ($className == "Error" || $className == "ErrorDetails") {
+            return;
+        }
         $properties = [];
         if (isset($defs['allOf'])) {
             $firstRef = true;

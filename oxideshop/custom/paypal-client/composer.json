@@ -9,6 +9,7 @@
         "psr/log": "^1.1",
         "league/oauth2-client": "^2.4",
         "ext-json": "*",
+        "ext-yaml": "*",
         "netresearch/jsonmapper": "^3.0",
         "webmozart/assert": "^1.9"
     },

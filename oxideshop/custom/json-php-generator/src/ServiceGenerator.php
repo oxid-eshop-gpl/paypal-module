@@ -4,6 +4,8 @@ namespace OxidProfessionalServices;
 
 use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\PsrPrinter;
+use OxidProfessionalServices\PayPal\Api\BaseService;
+use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
 
 class ServiceGenerator extends Generator
 {
@@ -33,20 +35,17 @@ class ServiceGenerator extends Generator
         $ns = new PhpNamespace($namespace);
         $ns->addUse(\JsonMapper::class);
         $serviceClass = $ns->addClass($className);
+        $ns->addUse(BaseService::class);
+        $serviceClass->addExtend(BaseService::class);
         $ns->addUse('OxidProfessionalServices\PayPal\Api\Client');
-        $serviceClass->addProperty('client')->addComment('@var Client');
-        $method = $serviceClass->addMethod('__construct')->setVisibility('public');
-        $method->addParameter('client')->setType('OxidProfessionalServices\PayPal\Api\Client');
-        $method->addComment('@param $client Client');
-        $method->setBody('$this->client = $client;');
-
-
+        $basePath = $this->fileContent['basePath'];
+        $serviceClass->addProperty('basePath')->setValue($basePath)->setVisibility('protected');
         $refMap = [];
         foreach ($this->references as $defName => $type) {
             $def = $this->definitions[$defName];
 
-            if (isset($def['type']) && $def['type'] == 'object'){
-                $type = '\\' . $modelNamespace . '\\' .$className . '\\'. $type;
+            if (isset($def['type']) && $def['type'] == 'object') {
+                $type = '\\' . $modelNamespace . '\\' . $className . '\\' . $type;
             }
             $refMap[$defName] = $type;
         }
@@ -103,12 +102,13 @@ class ServiceGenerator extends Generator
                 }
 
                 $res = null;
+                $errorResponseSchema = null;
                 foreach ($def['responses'] as $code => $response) {
                     if ($code >= 200 && $code <= 300) {
                         $res = $response;
-                        break;
                     }
                 }
+                $responseType = "void";
                 if ($res) {
                     if (isset($res['schema'])) {
                         $defName = $res['schema']['$ref'];
@@ -117,21 +117,27 @@ class ServiceGenerator extends Generator
                         $ns->addUse($responseType);
                         $method->setReturnType($responseType);
                         $responseType = (substr($responseType, strrpos($responseType, '\\') + 1));
+                    } else {
+                        $method->setReturnType($responseType);
                     }
                 }
-                $basePath = $this->fileContent['basePath'];
-                $fullPath = $basePath . $path;
+
                 $httpMethod = strtoupper($httpMethod);
                 $methodBody = <<<PHP
 \$headers = [];
 $methodBody
 $requestBody
-\$request = \$this->client->createRequest('$httpMethod', "$fullPath", \$headers, \$body);
-\$response = \$this->client->send(\$request);
-\$jsonProduct = json_decode(\$response->getBody());
+\$response = \$this->send('$httpMethod', "$path", \$headers, \$body);
+
+PHP;
+                if ($responseType != "void") {
+                    $methodBody .= <<<PHP
 \$mapper = new JsonMapper();
+\$jsonProduct = json_decode(\$response->getBody());
 return \$mapper->map(\$jsonProduct, new ${responseType}());
 PHP;
+                }
+
                     $method->setBody($methodBody);
                     $method->setVisibility('public');
             }

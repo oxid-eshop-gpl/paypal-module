@@ -3,23 +3,15 @@
 namespace OxidProfessionalServices\PayPal\Api\Service;
 
 use JsonMapper;
+use OxidProfessionalServices\PayPal\Api\BaseService;
 use OxidProfessionalServices\PayPal\Api\Client;
 use OxidProfessionalServices\PayPal\Api\Model\Partner\CreateReferralDataResponse;
 use OxidProfessionalServices\PayPal\Api\Model\Partner\ReferralData;
 use OxidProfessionalServices\PayPal\Api\Model\Partner\ReferralDataResponse;
 
-class Partner
+class Partner extends BaseService
 {
-    /** @var Client */
-    public $client;
-
-    /**
-     * @param $client Client
-     */
-    public function __construct(Client $client)
-    {
-        $this->client = $client;
-    }
+    protected $basePath = '/v2/customer';
 
     public function createPartnerReferral(ReferralData $referralData): CreateReferralDataResponse
     {
@@ -27,10 +19,9 @@ class Partner
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($referralData, true);
-        $request = $this->client->createRequest('POST', "/v2/customer/partner-referrals", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('POST', "/partner-referrals", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new CreateReferralDataResponse());
     }
 
@@ -39,10 +30,9 @@ class Partner
         $headers = [];
 
         $body = null;
-        $request = $this->client->createRequest('GET', "/v2/customer/partner-referrals/{$partnerReferralId}", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('GET', "/partner-referrals/{$partnerReferralId}", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new ReferralDataResponse());
     }
 }

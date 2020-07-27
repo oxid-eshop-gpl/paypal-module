@@ -3,6 +3,7 @@
 namespace OxidProfessionalServices\PayPal\Api\Service;
 
 use JsonMapper;
+use OxidProfessionalServices\PayPal\Api\BaseService;
 use OxidProfessionalServices\PayPal\Api\Client;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\AcceptClaim;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\AcceptOffer;
@@ -35,18 +36,9 @@ use OxidProfessionalServices\PayPal\Api\Model\Disputes\SendMessage;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\SubsequentAction;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\SuggestionResponse;
 
-class Disputes
+class Disputes extends BaseService
 {
-    /** @var Client */
-    public $client;
-
-    /**
-     * @param $client Client
-     */
-    public function __construct(Client $client)
-    {
-        $this->client = $client;
-    }
+    protected $basePath = '/v1/customer';
 
     public function notifyPayPalAboutReferredDisputeAdjudicationUpdates($disputeId, AdjudicationInfo $adjudicationInfo): SubsequentAction
     {
@@ -54,10 +46,9 @@ class Disputes
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($adjudicationInfo, true);
-        $request = $this->client->createRequest('POST', "/v1/customer/referred-disputes/{$disputeId}/process-adjudication-event", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('POST', "/referred-disputes/{$disputeId}/process-adjudication-event", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new SubsequentAction());
     }
 
@@ -67,10 +58,9 @@ class Disputes
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($requireEvidenceRequest, true);
-        $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/require-evidence", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('POST', "/disputes/{$disputeId}/require-evidence", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new SubsequentAction());
     }
 
@@ -80,10 +70,9 @@ class Disputes
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($refundInfo, true);
-        $request = $this->client->createRequest('POST', "/v1/customer/referred-disputes/{$disputeId}/process-refund-event", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('POST', "/referred-disputes/{$disputeId}/process-refund-event", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new SubsequentAction());
     }
 
@@ -93,10 +82,9 @@ class Disputes
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($eligibilityRequest, true);
-        $request = $this->client->createRequest('POST', "/v1/customer/disputes/validate-eligibility", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('POST', "/disputes/validate-eligibility", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new DisputeEligibility());
     }
 
@@ -134,10 +122,9 @@ class Disputes
         $headers = [];
 
         $body = null;
-        $request = $this->client->createRequest('GET', "/v1/customer/disputes", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('GET', "/disputes", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new DisputeSearch());
     }
 
@@ -147,10 +134,9 @@ class Disputes
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($dispute, true);
-        $request = $this->client->createRequest('POST', "/v1/customer/disputes", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('POST', "/disputes", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new DisputeCreate());
     }
 
@@ -160,10 +146,9 @@ class Disputes
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($evidence, true);
-        $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/appeal", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('POST', "/disputes/{$disputeId}/appeal", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new SubsequentAction());
     }
 
@@ -173,10 +158,9 @@ class Disputes
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($disputeCreateRequest, true);
-        $request = $this->client->createRequest('POST', "/v1/customer/referred-disputes", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('POST', "/referred-disputes", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new DisputeCreateResponse());
     }
 
@@ -185,10 +169,9 @@ class Disputes
         $headers = [];
 
         $body = null;
-        $request = $this->client->createRequest('GET', "/v1/customer/referred-disputes", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('GET', "/referred-disputes", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new ReferredDisputes());
     }
 
@@ -198,10 +181,9 @@ class Disputes
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($cancelRequest, true);
-        $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/cancel", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('POST', "/disputes/{$disputeId}/cancel", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new SubsequentAction());
     }
 
@@ -211,10 +193,9 @@ class Disputes
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($escalateRequest, true);
-        $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/escalate", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('POST', "/disputes/{$disputeId}/escalate", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new SubsequentAction());
     }
 
@@ -224,10 +205,9 @@ class Disputes
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($adjudicateRequest, true);
-        $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/adjudicate", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('POST', "/disputes/{$disputeId}/adjudicate", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new SubsequentAction());
     }
 
@@ -236,24 +216,19 @@ class Disputes
         $headers = [];
 
         $body = null;
-        $request = $this->client->createRequest('GET', "/v1/customer/disputes/{$disputeId}", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('GET', "/disputes/{$disputeId}", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new Dispute());
     }
 
-    public function partiallyUpdateDispute($disputeId, array $patchRequest)
+    public function partiallyUpdateDispute($disputeId, array $patchRequest): void
     {
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($patchRequest, true);
-        $request = $this->client->createRequest('PATCH', "/v1/customer/disputes/{$disputeId}", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
-        $mapper = new JsonMapper();
-        return $mapper->map($jsonProduct, new Dispute());
+        $response = $this->send('PATCH', "/disputes/{$disputeId}", $headers, $body);
     }
 
     public function acceptClaim($disputeId, AcceptClaim $acceptClaimRequest): SubsequentAction
@@ -262,10 +237,9 @@ class Disputes
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($acceptClaimRequest, true);
-        $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/accept-claim", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('POST', "/disputes/{$disputeId}/accept-claim", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new SubsequentAction());
     }
 
@@ -275,10 +249,9 @@ class Disputes
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($sendMessage, true);
-        $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/send-message", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('POST', "/disputes/{$disputeId}/send-message", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new SubsequentAction());
     }
 
@@ -288,10 +261,9 @@ class Disputes
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($acknowledgeReturnItemRequest, true);
-        $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/acknowledge-return-item", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('POST', "/disputes/{$disputeId}/acknowledge-return-item", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new SubsequentAction());
     }
 
@@ -301,10 +273,9 @@ class Disputes
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($metricsRequest, true);
-        $request = $this->client->createRequest('POST', "/v1/customer/disputes/compute-metrics", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('POST', "/disputes/compute-metrics", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new Metrics());
     }
 
@@ -314,10 +285,9 @@ class Disputes
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($changeReason, true);
-        $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/changeReason", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('POST', "/disputes/{$disputeId}/changeReason", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new DisputesChangeReason());
     }
 
@@ -327,10 +297,9 @@ class Disputes
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($denyOfferRequest, true);
-        $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/deny-offer", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('POST', "/disputes/{$disputeId}/deny-offer", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new SubsequentAction());
     }
 
@@ -339,10 +308,9 @@ class Disputes
         $headers = [];
 
         $body = null;
-        $request = $this->client->createRequest('GET', "/v1/customer/disputes/search-suggestions", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('GET', "/disputes/search-suggestions", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new SuggestionResponse());
     }
 
@@ -352,10 +320,9 @@ class Disputes
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($eligibilityRequest, true);
-        $request = $this->client->createRequest('POST', "/v1/customer/validate-referred-dispute-eligibility", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('POST', "/validate-referred-dispute-eligibility", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new EligibilityResponse());
     }
 
@@ -364,24 +331,19 @@ class Disputes
         $headers = [];
 
         $body = null;
-        $request = $this->client->createRequest('GET', "/v1/customer/disputes/{$disputeId}/partner-actions/{$actionId}", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('GET', "/disputes/{$disputeId}/partner-actions/{$actionId}", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new PartnerAction());
     }
 
-    public function partiallyUpdateDisputeAction($disputeId, $actionId, array $patchRequest)
+    public function partiallyUpdateDisputeAction($disputeId, $actionId, array $patchRequest): void
     {
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($patchRequest, true);
-        $request = $this->client->createRequest('PATCH', "/v1/customer/disputes/{$disputeId}/partner-actions/{$actionId}", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
-        $mapper = new JsonMapper();
-        return $mapper->map($jsonProduct, new PartnerAction());
+        $response = $this->send('PATCH', "/disputes/{$disputeId}/partner-actions/{$actionId}", $headers, $body);
     }
 
     public function showReferredDisputeDetails($disputeId): Dispute
@@ -389,10 +351,9 @@ class Disputes
         $headers = [];
 
         $body = null;
-        $request = $this->client->createRequest('GET', "/v1/customer/referred-disputes/{$disputeId}", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('GET', "/referred-disputes/{$disputeId}", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new Dispute());
     }
 
@@ -402,10 +363,9 @@ class Disputes
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($provideSupportingInfoRequest, true);
-        $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/provide-supporting-info", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('POST', "/disputes/{$disputeId}/provide-supporting-info", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new SubsequentAction());
     }
 
@@ -415,10 +375,9 @@ class Disputes
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($makeOfferRequest, true);
-        $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/make-offer", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('POST', "/disputes/{$disputeId}/make-offer", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new SubsequentAction());
     }
 
@@ -428,10 +387,9 @@ class Disputes
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($evidence, true);
-        $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/provide-evidence", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('POST', "/disputes/{$disputeId}/provide-evidence", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new SubsequentAction());
     }
 
@@ -441,10 +399,9 @@ class Disputes
         $headers['Content-Type'] = 'application/json';
 
         $body = json_encode($acceptOfferRequest, true);
-        $request = $this->client->createRequest('POST', "/v1/customer/disputes/{$disputeId}/accept-offer", $headers, $body);
-        $response = $this->client->send($request);
-        $jsonProduct = json_decode($response->getBody());
+        $response = $this->send('POST', "/disputes/{$disputeId}/accept-offer", $headers, $body);
         $mapper = new JsonMapper();
+        $jsonProduct = json_decode($response->getBody());
         return $mapper->map($jsonProduct, new SubsequentAction());
     }
 }

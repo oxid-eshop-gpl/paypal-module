@@ -16,7 +16,7 @@ abstract class ClientFactory
             $class,
             $setting['clientId'],
             $setting['clientSecret'],
-            $setting['payerId'],
+            '',
             $setting['debug']
         );
     }
