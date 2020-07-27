@@ -23,7 +23,7 @@ class OnboardingController extends AdminController
         $nonce = Registry::getSession()->getVariable('PAYPAL_MODULE_NONCE');
         $config = new Config();
         $oxidConfig = Registry::getConfig();
-        $oxidConfig->setConfigParam('blPaypalSandboxMode', $isSandbox);
+        $oxidConfig->setConfigParam('blPayPalSandboxMode', $isSandbox);
         $url = $config->isSandbox() ? Client::SANDBOX_URL : Client::PRODUCTION_URL;
         $client = new Onboarding(
             Registry::getLogger(),
