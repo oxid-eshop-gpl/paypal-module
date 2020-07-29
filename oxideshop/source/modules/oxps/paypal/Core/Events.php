@@ -22,6 +22,9 @@
 
 namespace OxidProfessionalServices\PayPal\Core;
 
+use OxidEsales\Eshop\Core\DatabaseProvider;
+use OxidProfessionalServices\PayPal\Repository\LogRepository;
+
 class Events
 {
     /**
@@ -29,6 +32,7 @@ class Events
      */
     public static function onActivate()
     {
+        self::createLogTable();
     }
 
     /**
@@ -38,5 +42,66 @@ class Events
      */
     public static function onDeactivate(): void
     {
+    }
+
+    protected static function createLogTable(): void
+    {
+        $sql = sprintf(
+            'CREATE TABLE IF NOT EXISTS %s (
+                        `OXPS_PAYPAL_PAYLOGID` 
+                            char(32) 
+                            character set latin1 
+                            collate latin1_general_ci 
+                            NOT NULL 
+                            COMMENT \'Record id\',
+                        `OXPS_PAYPAL_OXSHOPID` 
+                            char(32) 
+                            character set latin1 
+                            collate latin1_general_ci 
+                            NOT NULL 
+                            COMMENT \'Shop id (oxshops)\',
+                        `OXPS_PAYPAL_OXUSERID` 
+                            char(32) 
+                            character set latin1 
+                            collate latin1_general_ci 
+                            NOT NULL 
+                            COMMENT \'User id (oxuser)\',
+                        `OXPS_PAYPAL_OXORDERID` 
+                            char(32) 
+                            character set latin1 
+                            collate latin1_general_ci 
+                            NOT NULL 
+                            COMMENT \'Order id (oxorder)\',
+                        `OXPS_PAYPAL_RESPONSE_MSG` 
+                            TEXT 
+                            NOT NULL 
+                            COMMENT \'Response from Amazon SDK\',
+                        `OXPS_PAYPAL_STATUS_CODE` 
+                            VARCHAR(100) 
+                            NOT NULL 
+                            COMMENT \'Status code from Amazon SDK\',
+                        `OXPS_PAYPAL_REQUEST_TYPE` 
+                            VARCHAR(100) 
+                            NOT NULL 
+                            COMMENT \'Request type\',        
+                        `OXTIMESTAMP` 
+                            timestamp 
+                            NOT NULL 
+                            default CURRENT_TIMESTAMP 
+                            on update CURRENT_TIMESTAMP 
+                            COMMENT \'Timestamp\',
+                        `OXPS_PAYPAL_IDENTIFIER`
+                            char(32)
+                            character set latin1
+                            collate latin1_general_ci
+                            NOT NULL
+                            COMMENT \'Amazon index to search by\',    
+                        PRIMARY KEY (`OXPS_PAYPAL_PAYLOGID`)) 
+                            ENGINE=InnoDB 
+                            COMMENT \'Amazon Payment transaction log\'',
+            LogRepository::TABLE_NAME
+        );
+
+        DatabaseProvider::getDb()->execute($sql);
     }
 }
