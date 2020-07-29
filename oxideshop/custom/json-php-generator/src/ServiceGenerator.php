@@ -4,8 +4,7 @@ namespace OxidProfessionalServices;
 
 use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\PsrPrinter;
-use OxidProfessionalServices\PayPal\Api\BaseService;
-use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
+use OxidProfessionalServices\PayPal\Api\Service\BaseService;
 
 class ServiceGenerator extends Generator
 {
@@ -152,7 +151,7 @@ PHP;
      */
     private function writeClassFile($className, PhpNamespace $ns): void
     {
-        $directory = '../paypal-client/src/Service/';
+        $directory = '../paypal-client/generated/Service/';
 
         if (!is_dir($directory)) {
             mkdir($directory, 0744, true);
@@ -170,6 +169,7 @@ PHP;
 
     /**
      * @param $methodName
+     * @return string
      */
     private function cleanMethodName($methodName): string
     {

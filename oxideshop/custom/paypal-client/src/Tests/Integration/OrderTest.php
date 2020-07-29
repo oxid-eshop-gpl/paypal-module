@@ -3,11 +3,7 @@
 namespace OxidProfessionalServices\PayPal\Api\Tests\Integration;
 
 use OxidProfessionalServices\PayPal\Api\Client;
-use OxidProfessionalServices\PayPal\Api\Model\Orders\AddressName;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\AddressPortable;
-use OxidProfessionalServices\PayPal\Api\Model\Orders\AmountBreakdown;
-use OxidProfessionalServices\PayPal\Api\Model\Orders\AmountWithBreakdown;
-use OxidProfessionalServices\PayPal\Api\Model\Orders\DateNoTime;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\Name;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\Order;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderRequest;
@@ -15,7 +11,6 @@ use OxidProfessionalServices\PayPal\Api\Model\Orders\Payer;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\Phone;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\PhoneWithType;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\PurchaseUnitRequest;
-use OxidProfessionalServices\PayPal\Api\Model\Orders\TaxInfo;
 use OxidProfessionalServices\PayPal\Api\Service\Orders;
 use PHPUnit\Framework\TestCase;
 

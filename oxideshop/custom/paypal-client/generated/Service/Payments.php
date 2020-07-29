@@ -3,7 +3,6 @@
 namespace OxidProfessionalServices\PayPal\Api\Service;
 
 use JsonMapper;
-use OxidProfessionalServices\PayPal\Api\BaseService;
 use OxidProfessionalServices\PayPal\Api\Client;
 use OxidProfessionalServices\PayPal\Api\Model\Payments\Authorization;
 use OxidProfessionalServices\PayPal\Api\Model\Payments\AuthorizationRequest;

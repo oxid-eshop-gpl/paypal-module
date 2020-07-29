@@ -6,7 +6,6 @@ use Exception;
 use JsonSerializable;
 use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\PsrPrinter;
-use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
 use Webmozart\Assert\Assert;
 
 class Generator
@@ -47,7 +46,7 @@ class Generator
 
         $this->buildRefs();
 
-        shell_exec('rm -rf ../paypal-client/src/Model/' . $subNameSpace);
+        shell_exec('rm -rf ../paypal-client/generated/Model/' . $subNameSpace);
 
 
         foreach ($this->definitions as $defName => $defs) {
@@ -65,7 +64,7 @@ class Generator
         $directory = str_replace(
             'OxidProfessionalServices\PayPal\Api\Model\\',
             '',
-            '../paypal-client/src/Model/' . $subNameSpace
+            '../paypal-client/generated/Model/' . $subNameSpace
         );
 
         if (!is_dir($directory)) {
