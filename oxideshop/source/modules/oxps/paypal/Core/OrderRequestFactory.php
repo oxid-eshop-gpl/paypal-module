@@ -101,7 +101,6 @@ class OrderRequestFactory
             $request->payer = $this->getPayer();
         }
         $request->purchase_units = $this->getPurchaseUnits($transactionId, $invoiceId);
-        $request->payer = $this->getPayer();
         $request->application_context = $this->getApplicationContext($userAction);
 
         return $request;
@@ -141,7 +140,8 @@ class OrderRequestFactory
 
         $purchaseUnit->amount = $this->getAmount();
         $purchaseUnit->items = $this->getItems();
-        $purchaseUnit->shipping = $this->getShippingAddress();
+        if ($this->basket->getBasketUser())
+            $purchaseUnit->shipping = $this->getShippingAddress();
 
         return [$purchaseUnit];
     }
