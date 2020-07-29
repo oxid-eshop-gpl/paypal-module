@@ -22,7 +22,7 @@ class ListTransactionTest extends TestCase
 
     public function testListTransaction()
     {
-        $res = $this->reportServiceUnderTest->listTransactions("195073527K898493V",null, null, null,"2014-07-01T00:00:00-0700", "2020-07-29T11:59:59-0700");
+        $res = $this->reportServiceUnderTest->listTransactions(null,null, null, null,"2020-07-01T00:00:00-0700", "2020-07-29T11:59:59-0700");
 
     }
 }
