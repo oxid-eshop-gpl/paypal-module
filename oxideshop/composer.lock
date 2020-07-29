@@ -2188,7 +2188,7 @@
             "dist": {
                 "type": "path",
                 "url": "source/modules/oxps/paypal",
-                "reference": "3b61c374f5435549f2d1ed8438e5c2ce9ba3bde5"
+                "reference": "987c0ace43b4135a7c5d02fa879b3604769d7562"
             },
             "archive": {
                 "exclude": [
@@ -2196,8 +2196,7 @@
                 ]
             },
             "require": {
-                "ext-json": "*",
-                "oxid-professional-services/paypal-client": "*"
+                "ext-json": "*"
             },
             "type": "oxideshop-module",
             "extra": {
@@ -2231,7 +2230,7 @@
             "dist": {
                 "type": "path",
                 "url": "custom/paypal-client",
-                "reference": "4eca483730bd3d525fadb5bc48354ca221c4a623"
+                "reference": "1a7587b384bd3d603ce30c64816e5bf3ccfbcfc9"
             },
             "require": {
                 "ext-json": "*",
@@ -2251,7 +2250,10 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "OxidProfessionalServices\\PayPal\\Api\\": "src"
+                    "OxidProfessionalServices\\PayPal\\Api\\": [
+                        "src",
+                        "generated"
+                    ]
                 }
             }
         },
