@@ -19,7 +19,9 @@ class ApiException extends \Exception
         $message = $e->getRequest()->getMethod() . ' ' . $e->getRequest()->getUri() . " returned: $code $phrase";
         $error = json_decode($e->getResponse()->getBody(), true);
         if ($error) {
-            $message .= "\nReturned Message: " . $error['message'];
+            if (isset($error['message'])) {
+                $message .= "\nReturned Message: " . $error['message'];
+            }
             if (isset($error['details']) ) {
                 $details = $error['details'];
                 $message .= "\nError Details: \n" . json_encode($details) . "\n";
