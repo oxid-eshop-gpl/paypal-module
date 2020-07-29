@@ -91,8 +91,7 @@ class OrderRequestFactory
         string $userAction,
         ?string $transactionId = null,
         ?string $invoiceId = null
-    ): OrderRequest
-    {
+    ): OrderRequest {
         $request = $this->request = new OrderRequest();
         $this->basket = $basket;
 
@@ -204,8 +203,9 @@ class OrderRequestFactory
             $itemUnitPrice = $basketItem->getUnitPrice();
             $item->unit_amount = PriceToMoney::convert($itemUnitPrice->getPrice(), $currency);
 
-            if ($nettoPrices)
+            if ($nettoPrices) {
                 $item->tax = PriceToMoney::convert($itemUnitPrice->getVatValue(), $currency);
+            }
 
             $item->quantity = $basketItem->getAmount();
             $items[] = $item;
@@ -215,8 +215,11 @@ class OrderRequestFactory
             $item = new Item();
             $item->name = $language->translateString('GIFT_WRAPPING');
             $item->unit_amount = PriceToMoney::convert($wrapping, $currency);
-            if ($nettoPrices)
+
+            if ($nettoPrices) {
                 $item->tax = PriceToMoney::convert($basket->getPayPalWrappingVat(), $currency);
+            }
+
             $item->quantity = 1;
             $items[] = $item;
         }
@@ -225,8 +228,11 @@ class OrderRequestFactory
             $item = new Item();
             $item->name = $language->translateString('GREETING_CARD');
             $item->unit_amount = PriceToMoney::convert($giftCard, $currency);
-            if ($nettoPrices)
+
+            if ($nettoPrices) {
                 $item->tax = PriceToMoney::convert($basket->getPayPalGiftCardVat(), $currency);
+            }
+
             $item->quantity = 1;
             $items[] = $item;
         }
@@ -235,8 +241,11 @@ class OrderRequestFactory
             $item = new Item();
             $item->name = $language->translateString('PAYMENT_METHOD');
             $item->unit_amount = PriceToMoney::convert($payment, $currency);
-            if ($nettoPrices)
+
+            if ($nettoPrices) {
                 $item->tax = PriceToMoney::convert($basket->getPayPalPayCostVat(), $currency);
+            }
+
             $item->quantity = 1;
             $items[] = $item;
         }
@@ -360,7 +369,11 @@ class OrderRequestFactory
 
         foreach ($userPhoneFields as $numberField => $numberType) {
             $number = $user->getFieldData($numberField);
-            if (!$number) continue;
+
+            if (!$number) {
+                continue;
+            }
+
             try {
                 $phoneNumber = $phoneUtils->parse($number, $countryCode);
                 if ($phoneUtils->isValidNumber($phoneNumber)) {
@@ -368,7 +381,8 @@ class OrderRequestFactory
                     $type = $numberType;
                     break;
                 }
-            } catch (NumberParseException $exception) {}
+            } catch (NumberParseException $exception) {
+            }
         }
 
         if (!$number) {

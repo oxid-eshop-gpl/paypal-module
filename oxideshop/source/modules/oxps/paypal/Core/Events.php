@@ -22,12 +22,6 @@
 
 namespace OxidProfessionalServices\PayPal\Core;
 
-use OxidEsales\Eshop\Application\Model\Payment;
-use OxidEsales\Eshop\Core\DatabaseProvider;
-use OxidEsales\Eshop\Core\DbMetaDataHandler;
-use OxidEsales\Eshop\Core\Field;
-use OxidEsales\Eshop\Core\Registry;
-
 class Events
 {
     /**
@@ -35,7 +29,6 @@ class Events
      */
     public static function onActivate()
     {
-
     }
 
     /**
@@ -45,6 +38,5 @@ class Events
      */
     public static function onDeactivate(): void
     {
-
     }
 }

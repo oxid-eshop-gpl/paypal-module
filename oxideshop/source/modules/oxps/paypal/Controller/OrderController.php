@@ -30,5 +30,4 @@ namespace OxidProfessionalServices\PayPal\Controller;
  */
 class OrderController extends OrderController_parent
 {
-
 }

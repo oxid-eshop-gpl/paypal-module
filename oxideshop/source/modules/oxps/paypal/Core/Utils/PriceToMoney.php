@@ -45,7 +45,7 @@ class PriceToMoney
         if ($price instanceof Price) {
             if ($mode === self::BRUTTO_MODE) {
                 $value = $price->getBruttoPrice();
-            } else if ($mode === self::NETTO_MODE) {
+            } elseif ($mode === self::NETTO_MODE) {
                 $value = $price->getNettoPrice();
             } else {
                 $value = $price->getPrice();

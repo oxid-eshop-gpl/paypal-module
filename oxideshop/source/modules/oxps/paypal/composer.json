@@ -6,8 +6,7 @@
   "license": "proprietary",
   "version": "0.0.1",
   "require": {
-    "ext-json": "*",
-    "oxid-professional-services/paypal-client": "*"
+    "ext-json": "*"
   },
   "archive": {
     "exclude": ["/resources"]

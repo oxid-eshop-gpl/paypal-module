@@ -136,6 +136,12 @@
         }
 
         jQuery("#opmode").change(function() {
+            if(jQuery("#opmode").val() == 'sandbox') {
+                window.isSandBox = true;
+            } else {
+                window.isSandBox = false;
+            }
+
             displayByOpMode(jQuery("#opmode").val());
         });
     });

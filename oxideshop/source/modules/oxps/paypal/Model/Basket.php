@@ -83,7 +83,9 @@ class Basket extends Basket_parent
 
         $wrappingCost = $this->getCosts('oxwrapping');
         if ($wrappingCost) {
-            $amount = $this->isCalculationModeNetto() ? $wrappingCost->getNettoPrice() : $wrappingCost->getBruttoPrice();
+            $amount = $this->isCalculationModeNetto() ?
+                $wrappingCost->getNettoPrice() :
+                $wrappingCost->getBruttoPrice();
         }
 
         return $amount;
