@@ -58,6 +58,16 @@ class OrderRequestFactoryTest extends UnitTestCase
             ]
         ];
 
-        $this->assertEquals(json_encode($result), json_encode($sut->getRequest($orderMock, OrderRequest::INTENT_CAPTURE)));
+        $this->assertEquals(
+            json_encode(
+                $result
+            ),
+            json_encode(
+                $sut->getRequest(
+                    $orderMock,
+                    OrderRequest::INTENT_CAPTURE
+                )
+            )
+        );
     }
 }

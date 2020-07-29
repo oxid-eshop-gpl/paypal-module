@@ -9,13 +9,13 @@
         "psr/log": "^1.1",
         "league/oauth2-client": "^2.4",
         "ext-json": "*",
-        "ext-yaml": "*",
         "netresearch/jsonmapper": "^3.0",
         "webmozart/assert": "^1.9"
     },
     "require-dev": {
         "php" : "^7.1",
-        "phpunit/phpunit": "^7.5.20"
+        "phpunit/phpunit": "^7.5.20",
+        "ext-json": "*"
     },
     "autoload": {
     "psr-4": {
