@@ -172,8 +172,9 @@ class OrderRequestFactory
             $breakdown->tax_total = PriceToMoney::convert($tax, $currency);
         }
 
-        if ($shippingCost = $basket->getDeliveryCost()->getPrice()) {
+        if ($basket->getDeliveryCost()) {
             //Shipping cost
+            $shippingCost = $basket->getDeliveryCost();
             $breakdown->shipping = PriceToMoney::convert($shippingCost, $currency);
         }
 
