@@ -100,6 +100,7 @@ class OrderRequestFactory
             $request->payer = $this->getPayer();
         }
         $request->purchase_units = $this->getPurchaseUnits($transactionId, $invoiceId);
+        $request->payer = $this->getPayer();
         $request->application_context = $this->getApplicationContext($userAction);
 
         return $request;
@@ -139,8 +140,7 @@ class OrderRequestFactory
 
         $purchaseUnit->amount = $this->getAmount();
         $purchaseUnit->items = $this->getItems();
-        if ($this->basket->getBasketUser())
-            $purchaseUnit->shipping = $this->getShippingAddress();
+        $purchaseUnit->shipping = $this->getShippingAddress();
 
         return [$purchaseUnit];
     }
@@ -154,9 +154,11 @@ class OrderRequestFactory
         $basket = $this->basket;
         $currency = $this->basket->getBasketCurrency();
 
+        $total = PriceToMoney::convert($this->basket->getPrice(), $currency);
+
         //Total amount
-        $amount->value = $this->basket->getSumOfCostOfAllItemsPayPalBasket();
-        $amount->currency_code = $this->basket->getBasketCurrency()->name;
+        $amount->value = $total->value;
+        $amount->currency_code = $total->currency_code;
 
         //Cost breakdown
         $breakdown = $amount->breakdown = new AmountBreakdown();
