@@ -67,6 +67,6 @@ class ViewConfig extends ViewConfig_parent
 
         $params['commit'] = $config->getTopActiveView() == 'order' ? 'true' : 'false';
 
-        return Constants::PAYPAL_JS_SDK_URL.'?'.http_build_query($params);
+        return Constants::PAYPAL_JS_SDK_URL . '?' . http_build_query($params);
     }
 }
