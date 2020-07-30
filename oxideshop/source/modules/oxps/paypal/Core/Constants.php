@@ -22,7 +22,6 @@
 
 namespace OxidProfessionalServices\PayPal\Core;
 
-
 class Constants
 {
     public const PAYPAL_JS_SDK_URL = 'https://www.paypal.com/sdk/js';

@@ -61,8 +61,9 @@ class ViewConfig extends ViewConfig_parent
         $params['integration-date'] = Constants::PAYPAL_INTEGRATION_DATE;
         $params['intent'] = strtolower(Constants::PAYPAL_ORDER_INTENT_CAPTURE);
 
-        if ($currency = $config->getActShopCurrencyObject())
+        if ($currency = $config->getActShopCurrencyObject()) {
             $params['currency'] = strtoupper($currency->name);
+        }
 
         $params['commit'] = $config->getTopActiveView() == 'order' ? 'true' : 'false';
 
