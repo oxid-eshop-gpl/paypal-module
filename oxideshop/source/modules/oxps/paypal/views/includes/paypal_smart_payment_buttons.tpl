@@ -23,7 +23,7 @@ paypal.Buttons({
         }).then(function(res) {
             return res.json();
         }).then(function(details) {
-            alert('Transaction funds captured from ' + details.payer_given_name);
+            alert('Transaction funds captured from ' + details.payer.name.given_name);
         })
     },
     onCancel: function(data, actions) {
