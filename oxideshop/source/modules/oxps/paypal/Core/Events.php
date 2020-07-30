@@ -22,7 +22,10 @@
 
 namespace OxidProfessionalServices\PayPal\Core;
 
+use OxidEsales\Eshop\Application\Model\Payment;
 use OxidEsales\Eshop\Core\DatabaseProvider;
+use OxidEsales\Eshop\Core\Field;
+use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Repository\LogRepository;
 
 class Events
@@ -33,6 +36,64 @@ class Events
     public static function onActivate()
     {
         self::createLogTable();
+        self::addPaymentMethod();
+        self::enablePaymentMethod();
+    }
+
+    /**
+     * Add PayPal payment method set EN and DE long descriptions
+     */
+    public static function addPaymentMethod(): void
+    {
+        $paymentDescriptions = array(
+            'en' => '<div>PayPal v2</div>',
+            'de' => '<div>PayPal v2</div>'
+        );
+
+        $payment = oxNew(Payment::class);
+        if (!$payment->load('oxidpaypal')) {
+            $payment->setId('oxidpaypal');
+            $payment->oxpayments__oxactive = new Field(1);
+            $payment->oxpayments__oxdesc = new Field('PayPal');
+            $payment->oxpayments__oxaddsum = new Field(0);
+            $payment->oxpayments__oxaddsumtype = new Field('abs');
+            $payment->oxpayments__oxfromboni = new Field(0);
+            $payment->oxpayments__oxfromamount = new Field(0);
+            $payment->oxpayments__oxtoamount = new Field(10000);
+
+            $languages = Registry::getLang()->getLanguageIds();
+            foreach ($paymentDescriptions as $languageAbbreviation => $description) {
+                $languageId = array_search($languageAbbreviation, $languages);
+                if ($languageId !== false) {
+                    $payment->setLanguage($languageId);
+                    $payment->oxpayments__oxlongdesc = new Field($description);
+                    $payment->save();
+                }
+            }
+        }
+    }
+
+    /**
+     * Disables payment method
+     */
+    public static function disablePaymentMethod(): void
+    {
+        $payment = oxNew(Payment::class);
+        if ($payment->load('oxidpaypal')) {
+            $payment->oxpayments__oxactive = new Field(0);
+            $payment->save();
+        }
+    }
+
+    /**
+     * Activates PayPal payment method
+     */
+    public static function enablePaymentMethod(): void
+    {
+        $payment = oxNew(Payment::class);
+        $payment->load('oxidpaypal');
+        $payment->oxpayments__oxactive = new Field(1);
+        $payment->save();
     }
 
     /**
@@ -42,7 +103,9 @@ class Events
      */
     public static function onDeactivate(): void
     {
+        self::disablePaymentMethod();
     }
+
 
     protected static function createLogTable(): void
     {
