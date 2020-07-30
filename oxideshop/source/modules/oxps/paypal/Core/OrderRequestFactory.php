@@ -140,8 +140,9 @@ class OrderRequestFactory
 
         $purchaseUnit->amount = $this->getAmount();
         $purchaseUnit->items = $this->getItems();
-        if ($this->basket->getBasketUser())
+        if ($this->basket->getBasketUser()) {
             $purchaseUnit->shipping = $this->getShippingAddress();
+        }
 
         return [$purchaseUnit];
     }
