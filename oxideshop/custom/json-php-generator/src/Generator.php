@@ -24,27 +24,22 @@ class Generator
      * @var array
      */
     protected $references = [];
+    /**
+     * @var PhpNamespace
+     */
+    private $currentNameSpace;
+    private $subNameSpace;
 
     /**
      * @param string $jsonFile
      * @param string $namespace
      * @param string $subNameSpace
      */
-    public function __construct($jsonFile, $namespace, $subNameSpace)
-    {
-        $this->generateModels($jsonFile, $namespace, $subNameSpace);
-    }
-
-    /**
-     * @param string $jsonFile
-     * @param string $namespace
-     * @param string $subNameSpace
-     */
-    private function generateModels($jsonFile, $namespace, $subNameSpace): void
+    public function generateModels($jsonFile, $namespace, $subNameSpace): void
     {
         $this->readDefinition($jsonFile);
 
-        $this->buildRefs();
+        $this->buildRefs($subNameSpace);
 
         shell_exec('rm -rf ../paypal-client/generated/Model/' . $subNameSpace);
 
@@ -87,7 +82,8 @@ class Generator
      */
     private function getRefNameFromRefString($defName)
     {
-        return str_replace('#/definitions/', '', $defName);
+        $defName = str_replace('/', '-', $defName);
+        return str_replace('#-definitions-', '', $defName);
     }
 
     /**
@@ -133,22 +129,10 @@ class Generator
         $refName = $this->getRefNameFromRefString($defName);
         $className = $this->replaceNumbers($this->getClassNameFromRefName($refName));
         if ($className == "LinkSchema") {
-            $x = 1;
             $this->definitions[$defName]['type'] = 'mixed';
                  return "mixed";
         }
 
-        /*
-        if (strpos($defName, 'MerchantsCommonComponentsSpecification') === false) {
-            if(isset($defs['title'])) {
-                $title = implode('', explode(' ', $defs['title']));
-                $title = preg_replace("/[^A-Za-z0-9 ]/", '', $title);
-                if ($title != $defClassName) {
-                    //not sure which name is better e.g. Title = ProductDetails vs Product
-                }
-            }
-        }
-*/
         return $className;
     }
 
@@ -158,8 +142,9 @@ class Generator
     /**
      * @return void
      */
-    protected function buildRefs(): void
+    protected function buildRefs($modelNamespace): void
     {
+        $this->references = [];
         foreach ($this->definitions as $defName => $defs) {
             if (!isset($defs['type'])) {
                 $defs['type'] = "string";
@@ -184,6 +169,14 @@ class Generator
 
                 if ($type == 'object') {
                     $className = $this->calculateClassName($defName, $defs);
+                    if ($className !== "mixed") {
+                        if ($this->isCommonType($defName)) {
+                            $subNameSpace = $this->getSubNameSpaceForCommonTypes($defName);
+                            $className = "$subNameSpace\\" . $className;
+                        } else {
+                            $className = $modelNamespace . '\\' . $className;
+                        }
+                    }
                     if (isset($this->references[$defName])) {
                         throw new Exception("duplicate Class Name");
                     }
@@ -200,9 +193,15 @@ class Generator
      */
     protected function readDefinition($jsonFile): void
     {
+        if (is_dir($jsonFile)) {
+            return;
+        }
         $this->fileContent = json_decode(file_get_contents($jsonFile), true);
-
-        $this->definitions = $this->fileContent['definitions'];
+        $definitions = $this->fileContent['definitions'] ?? [];
+        $path_parts = pathinfo($jsonFile);
+        $dirName = $path_parts['dirname'] . '/' . $path_parts['filename'];
+        $definitions = $this->readDefinitionsFromDir($dirName, $definitions);
+        $this->definitions = $definitions;
     }
 
     /**
@@ -213,10 +212,17 @@ class Generator
      */
     private function generateModelClass($namespace, $subNameSpace, $defName, $defs): void
     {
-        $ns = new PhpNamespace($namespace . '\\' . $subNameSpace);
-        $ns->addUse(Assert::class);
         $className = $this->calculateClassName($defName, $defs);
-        if ($className == "array") {
+
+        if ($this->isCommonType($defName)) {
+            $subNameSpace = $this->getSubNameSpaceForCommonTypes($defName);
+        }
+
+        $this->currentNameSpace = $ns = new PhpNamespace($namespace . '\\' . $subNameSpace);
+        $this->subNameSpace = $subNameSpace;
+        $ns->getName();
+        $ns->addUse(Assert::class);
+        if ($className == "array" || $className == "") {
             return;
         }
         if (isset($defs['type'])) {
@@ -235,20 +241,19 @@ class Generator
             return;
         }
         $properties = [];
+        $parent = "";
         if (isset($defs['allOf'])) {
             $firstRef = true;
             foreach ($defs['allOf'] as $partialDef) {
                 if (isset($partialDef['$ref'])) {
                     $ref = $this->getRefNameFromRefString($partialDef['$ref']);
                     if ($firstRef) {
-                        $parent = $this->references[$ref];
-                        if ($parent == "string") {
+                        $parent = $this->references[$ref] ?? "";
+                        if ($parent == "string" || $parent == "") {
                             continue;
                         }
-                        $parent = "$namespace\\$subNameSpace\\$parent";
-                        $ns->addUse($parent);
-
-                        $class->addExtend($parent);
+                        $this->useRef($ref);
+                        $class->addExtend($namespace . '\\' . $parent);
                         $firstRef = false;
                         continue;
                     }
@@ -262,7 +267,13 @@ class Generator
 
         if (isset($defs['properties'])) {
             $validateMethod = $class->addMethod('validate')->setVisibility('public');
+            $mapMethod = $class->addMethod('map')->setVisibility('private');
             $constructor = $class->addMethod("__construct")->setVisibility('public');
+            $constructor->addParameter('data')->setDefaultValue(null)->setType('array');
+            if ($parent != "") {
+                $constructor->addBody("parent::__construct(\$data);");
+            }
+            $mapMethod->addParameter("data")->setType('array');
 
             $validateMethod->addParameter("from")->setDefaultValue(null);
             $validateMethod->addBody('$within = isset($from) ? "within $from" : ""; ');
@@ -292,7 +303,12 @@ class Generator
                             if (isset($arrayItemsDef['$ref'])) {
                                 $ref = $this->getRefNameFromRefString($parameter['items']['$ref']);
                                 if (isset($this->references[$ref])) {
-                                    $itemType = $this->references[$ref];
+                                    $itemType = $this->useRef($ref);
+                                } elseif ($this->isCommonType($ref)) {
+                                    $nestedSubNameSpace = $this->getSubNameSpaceForCommonTypes($ref);
+                                    $nestedClassId = $this->calculateClassName($ref, null);
+                                    $itemType = $nestedClassId;
+                                    $ns->addUse("$namespace\\$nestedSubNameSpace\\$nestedClassId");
                                 }
                             }
                             if (isset($arrayItemsDef['type'])) {
@@ -308,18 +324,17 @@ class Generator
                     $propType = $parameter['type'];
                     $propDef = $parameter;
                     $this->addProperty($propDef, $name, $class, $propType, $defs);
-                } else {
+                } elseif (!empty($parameter['$ref'])) {
                     // use the $this->references[] map here when you come across a reference
-                    if (!empty($parameter['$ref'])) {
-                        $ref = $this->getRefNameFromRefString($parameter['$ref']);
-                        if (isset($this->references[$ref])) {
-                            $propType = $this->references[$ref];
-                            $propDef = $this->definitions[$ref];
-                            $this->addProperty($propDef, $name, $class, $propType, $defs);
-                        }
+                    $ref = $this->getRefNameFromRefString($parameter['$ref']);
+                    if (isset($this->references[$ref])) {
+                        $propType = $this->useRef($ref);
+                        $propDef = $this->definitions[$ref];
+                        $this->addProperty($propDef, $name, $class, $propType, $defs);
                     }
                 }
             }
+            $constructor->addBody("if (isset(\$data)) { \$this->map(\$data); }");
         }
 
         $ns->addUse(JsonSerializable::class);
@@ -328,6 +343,83 @@ class Generator
         $class->addTrait($namespace . '\\BaseModel');
 
         $this->writeClassFile($subNameSpace, $className, $ns);
+    }
+
+    /**
+     * @param string $ref the reference from the schema
+     * @return string the type/relative classname
+     */
+    public function useRef($ref)
+    {
+        $subNameSpace = $this->subNameSpace;
+        $nameSpace = $this->currentNameSpace->getName();
+        $baseNameSpace = substr($nameSpace, 0, strlen($subNameSpace) * -1);
+        $propType = null;
+        $propType = $this->references[$ref];
+        if (preg_match('/(.*)\\\\(.*)/', $propType, $matches)) {
+            $refFull = $baseNameSpace . $propType;
+            $propType = $matches[2];
+            if ($matches[1] !== $subNameSpace) {
+                $this->currentNameSpace->addUse($refFull);
+            }
+        }
+        return $propType;
+    }
+
+    /**
+     * @param string $ref the reference from the schema
+     * @return string|null the relative namespace for the common type
+     */
+    protected function getSubNameSpaceForCommonTypes($ref)
+    {
+        $subNameSpace = null;
+        if ($this->isCommonTypeV3($ref)) {
+            $subNameSpace = 'CommonV3';
+        } elseif ($this->isCommonTypeV4($ref)) {
+            $subNameSpace = 'CommonV4';
+        } elseif ($this->isMerchantV1($ref)) {
+            $subNameSpace = 'MerchantV1';
+        }
+        return $subNameSpace;
+    }
+
+    /**
+     * @param string $ref the reference from the schema
+     * @return bool true if the reference is referencing a common type
+     */
+    protected function isCommonType($ref)
+    {
+        return $this->isCommonTypeV3($ref) || $this->isCommonTypeV4($ref) || $this->isMerchantV1($ref);
+    }
+
+    /**
+     * @param string $ref the reference from the schema
+     * @return bool true if the reference is referencing a common type
+     */
+    protected function isCommonTypeV4($ref)
+    {
+        return strpos($ref, 'components-v4') !== false;
+    }
+
+    /**
+     * @param string $ref the reference from the schema
+     * @return bool true if the reference is referencing a common type
+     */
+    protected function isMerchantV1($ref)
+    {
+        return strpos($ref, 'MerchantsCommonComponentsSpecification-v1') !== false
+            || strpos($ref, 'MerchantCommonComponentsSpecification-v1') !== false
+            || strpos($ref, 'merchant.CommonComponentsSpecification-v1') !== false
+            ;
+    }
+
+    /**
+     * @param string $ref the reference from the schema
+     * @return bool true if the reference is referencing a common type
+     */
+    protected function isCommonTypeV3($ref)
+    {
+        return strpos($ref, 'components-v3') !== false;
     }
 
     /**
@@ -354,11 +446,12 @@ class Generator
      * @param $comment
      * @return string|string[]|null
      */
-    private function formatComment($comment)
+    protected function formatComment($comment)
     {
         $comment = preg_replace("/(.{1,110})(?:\n|$| )/", "$1\n", $comment);
         return $comment;
     }
+
 
     /**
      * @param $propDef
@@ -369,7 +462,9 @@ class Generator
     private function addProperty($propDef, $name, \Nette\PhpGenerator\ClassType $class, $propType, $classDef): void
     {
         $validateMethod = $class->getMethod('validate');
+        $mapMethod = $class->getMethod('map');
         $constructor = $class->getMethod('__construct');
+
         $property = $class->addProperty($name)
             ->setVisibility('public');
 
@@ -423,6 +518,10 @@ class Generator
                 $constructor->addBody("\$this->$name = [];");
             }
         }
+        if ($propType === "mixed[]") {
+            $propType = 'array';
+        }
+        $propType = $propType == "integer" ? 'int' : $propType;
         $typehint =  $required ? $propType : "$propType | null";
         $property->addComment('@var ' . $typehint);
 
@@ -430,84 +529,80 @@ class Generator
         if (isset($propDef['minItems'])) {
             $minItems = $propDef['minItems'];
             $property->addComment("maxItems: " . $minItems);
-            $validateMethod->addBody(
-                "${emptyOr}Assert::minCount(
-    \$this->$name,
-    $minItems,
-    \"$name in $className must have min. count of $minItems \$within\"
-);"
-            );
+            $validateMethod->addBody("${emptyOr}Assert::minCount(");
+            $validateMethod->addBody("    \$this->$name,");
+            $validateMethod->addBody("    $minItems,");
+            $validateMethod->addBody("    \"$name in $className must have min. count of $minItems \$within\"");
+            $validateMethod->addBody(");");
         }
 
         if (isset($propDef['maxItems'])) {
             $maxItems = $propDef['maxItems'];
             $property->addComment("maxItems: " . $maxItems);
-            $validateMethod->addBody(
-                "${emptyOr}Assert::maxCount(
-    \$this->$name,
-    $maxItems,
-    \"$name in $className must have max. count of $maxItems \$within\"
-);"
-            );
+            $validateMethod->addBody("${emptyOr}Assert::maxCount(");
+            $validateMethod->addBody("    \$this->$name,");
+            $validateMethod->addBody("    $maxItems,");
+            $validateMethod->addBody("    \"$name in $className must have max. count of $maxItems \$within\"");
+            $validateMethod->addBody(");");
         }
 
         if (isset($propDef['minLength']) && $propDef['minLength'] > 0) {
             $minLength = $propDef['minLength'];
             $property->addComment("minLength: " . $minLength);
-            $validateMethod->addBody(
-                "${emptyOr}Assert::minLength(
-    \$this->$name,
-    $minLength,
-    \"$name in $className must have minlength of $minLength \$within\"
-);"
-            );
+            $validateMethod->addBody("${emptyOr}Assert::minLength(");
+            $validateMethod->addBody("    \$this->$name,");
+            $validateMethod->addBody("    $minLength,");
+            $validateMethod->addBody("    \"$name in $className must have minlength of $minLength \$within\"");
+            $validateMethod->addBody(");");
         }
         if (isset($propDef['maxLength'])) {
             assert(!isset($this->value) || $this->value < 0);
             $maxLength = $propDef['maxLength'];
-            $validateMethod->addBody(
-                "${emptyOr}Assert::maxLength(
-    \$this->$name,
-    $maxLength,
-    \"$name in $className must have maxlength of $maxLength \$within\"
-);"
-            );
+            $validateMethod->addBody("${emptyOr}Assert::maxLength(");
+            $validateMethod->addBody("    \$this->$name,");
+            $validateMethod->addBody("    $maxLength,");
+            $validateMethod->addBody("    \"$name in $className must have maxlength of $maxLength \$within\"");
+            $validateMethod->addBody(");");
             $property->addComment("maxLength: " . $maxLength);
         }
-
+        $mapMethod->addBody("if (isset(\$data['$name'])) {");
         if ($this->isObjectType($propType)) {
-            $validateMethod->addBody(
-                "${emptyOr}Assert::isInstanceOf(
-    \$this->$name,
-    $propType::class,
-    \"$name in $className must be instance of $propType \$within\"
-);"
-            );
+            $mapMethod->addBody("    \$this->$name = new $propType(\$data['$name']);");
+            $validateMethod->addBody("${emptyOr}Assert::isInstanceOf(");
+            $validateMethod->addBody("    \$this->$name,");
+            $validateMethod->addBody("    $propType::class,");
+            $validateMethod->addBody("    \"$name in $className must be instance of $propType \$within\"");
+            $validateMethod->addBody(");");
             $validateMethod->addBody("$emptyOr \$this->${name}->validate($className::class);");
-        }
-        if (strpos($propType, '[') !== false || strpos($propType, 'array') === 0) {
-            $validateMethod->addBody(
-                "${emptyOr}Assert::isArray(
-    \$this->$name,
-    \"$name in $className must be array \$within\"
-);"
-            );
+        } elseif ($this->isArrayType($propType)) {
+            $validateMethod->addBody("${emptyOr}Assert::isArray(");
+            $validateMethod->addBody("    \$this->$name,");
+            $validateMethod->addBody("    \"$name in $className must be array \$within\"");
+            $validateMethod->addBody(");");
+            $mapMethod->addBody("    \$this->$name = [];");
+            $mapMethod->addBody("    foreach (\$data['$name'] as \$item) {");
+
             $itemType = false;
             if (preg_match("/(.*)\[\]/", $propType, $matches)) {
                 $itemType = $matches[1];
             }
+            $mapItem = "        \$this->${name}[] = \$item;";
             if ($itemType) {
                 if ($this->isObjectType($itemType)) {
-                    $validateMethod->addBody("
-if (isset(\$this->$name)) {
-    foreach (\$this->$name as \$item) {
-        \$item->validate($className::class);
-    }
-}
-                        ");
+                    $mapItem = "        \$this->${name}[] = new ${itemType}(\$item);";
+                    $validateMethod->addBody("if (isset(\$this->$name)) {");
+                    $validateMethod->addBody("    foreach (\$this->$name as \$item) {");
+                    $validateMethod->addBody("        \$item->validate($className::class);");
+                    $validateMethod->addBody("    }");
+                    $validateMethod->addBody("}");
                 }
             }
+            $mapMethod->addBody($mapItem);
+            $mapMethod->addBody('    }');
+        } else {
+            $mapMethod->addBody("    \$this->$name = \$data['$name'];");
         }
+        $mapMethod->addBody("}");
     }
 
     private function isObjectType($propType)
@@ -520,6 +615,7 @@ if (isset(\$this->$name)) {
         }
         return $propType != "string"
             && $propType != "integer"
+            && $propType != "int"
             && $propType != "mixed"
             && $propType != "boolean"
             && $propType != "mixed";
@@ -537,5 +633,30 @@ if (isset(\$this->$name)) {
             return true;
         }
         return false;
+    }
+
+    /**
+     * @param string $dirName
+     * @param array $definitions
+     * @return array
+     */
+    protected function readDefinitionsFromDir(string $dirName, array $definitions): array
+    {
+        if (is_dir($dirName)) {
+            $files = scandir($dirName);
+            foreach ($files as $file) {
+                if ($file == '.' || $file == '..') {
+                    continue;
+                }
+                $full_file = $dirName . '/' . $file;
+                if (is_file($full_file)) {
+                    $definitions[$file] = json_decode(file_get_contents($full_file), true);
+                }
+                if (is_dir($full_file)) {
+                    $definitions = $this->readDefinitionsFromDir($full_file, $definitions);
+                }
+            }
+        }
+        return $definitions;
     }
 }

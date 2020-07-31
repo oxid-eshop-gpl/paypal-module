@@ -112,18 +112,15 @@ class EligibilityResponse implements JsonSerializable
             $this->existing_disputes,
             "existing_disputes in EligibilityResponse must be array $within"
         );
-
         if (isset($this->existing_disputes)) {
             foreach ($this->existing_disputes as $item) {
                 $item->validate(EligibilityResponse::class);
             }
         }
-
         !isset($this->existing_refunds) || Assert::isArray(
             $this->existing_refunds,
             "existing_refunds in EligibilityResponse must be array $within"
         );
-
         if (isset($this->existing_refunds)) {
             foreach ($this->existing_refunds as $item) {
                 $item->validate(EligibilityResponse::class);
@@ -131,7 +128,33 @@ class EligibilityResponse implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['eligible'])) {
+            $this->eligible = $data['eligible'];
+        }
+        if (isset($data['allowable_life_cycle'])) {
+            $this->allowable_life_cycle = $data['allowable_life_cycle'];
+        }
+        if (isset($data['ineligibility_reason'])) {
+            $this->ineligibility_reason = $data['ineligibility_reason'];
+        }
+        if (isset($data['existing_disputes'])) {
+            $this->existing_disputes = [];
+            foreach ($data['existing_disputes'] as $item) {
+                $this->existing_disputes[] = new ExistingDispute($item);
+            }
+        }
+        if (isset($data['existing_refunds'])) {
+            $this->existing_refunds = [];
+            foreach ($data['existing_refunds'] as $item) {
+                $this->existing_refunds[] = new RefundTransaction($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

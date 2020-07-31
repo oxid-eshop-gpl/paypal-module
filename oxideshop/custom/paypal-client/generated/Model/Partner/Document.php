@@ -4,6 +4,8 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV4\FileReference;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV4\LinkDescription;
 use Webmozart\Assert\Assert;
 
 /**
@@ -202,13 +204,11 @@ class Document implements JsonSerializable
             $this->files,
             "files in Document must be array $within"
         );
-
         if (isset($this->files)) {
             foreach ($this->files as $item) {
                 $item->validate(Document::class);
             }
         }
-
         Assert::notNull($this->links, "links in Document must not be NULL $within");
         Assert::minCount(
             $this->links,
@@ -224,7 +224,6 @@ class Document implements JsonSerializable
             $this->links,
             "links in Document must be array $within"
         );
-
         if (isset($this->links)) {
             foreach ($this->links as $item) {
                 $item->validate(Document::class);
@@ -232,10 +231,51 @@ class Document implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['id'])) {
+            $this->id = $data['id'];
+        }
+        if (isset($data['labels'])) {
+            $this->labels = [];
+            foreach ($data['labels'] as $item) {
+                $this->labels[] = $item;
+            }
+        }
+        if (isset($data['name'])) {
+            $this->name = $data['name'];
+        }
+        if (isset($data['identification_number'])) {
+            $this->identification_number = $data['identification_number'];
+        }
+        if (isset($data['issue_date'])) {
+            $this->issue_date = $data['issue_date'];
+        }
+        if (isset($data['expiry_date'])) {
+            $this->expiry_date = $data['expiry_date'];
+        }
+        if (isset($data['issuing_country_code'])) {
+            $this->issuing_country_code = $data['issuing_country_code'];
+        }
+        if (isset($data['files'])) {
+            $this->files = [];
+            foreach ($data['files'] as $item) {
+                $this->files[] = new FileReference($item);
+            }
+        }
+        if (isset($data['links'])) {
+            $this->links = [];
+            foreach ($data['links'] as $item) {
+                $this->links[] = new LinkDescription($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->labels = [];
         $this->files = [];
         $this->links = [];
+        if (isset($data)) { $this->map($data); }
     }
 }

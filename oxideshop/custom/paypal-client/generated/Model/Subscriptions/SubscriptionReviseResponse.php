@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\LinkDescription;
 use Webmozart\Assert\Assert;
 
 /**
@@ -31,7 +32,6 @@ class SubscriptionReviseResponse extends CustomizedXUnsupportedFiveEightSevenFiv
             $this->links,
             "links in SubscriptionReviseResponse must be array $within"
         );
-
         if (isset($this->links)) {
             foreach ($this->links as $item) {
                 $item->validate(SubscriptionReviseResponse::class);
@@ -39,7 +39,19 @@ class SubscriptionReviseResponse extends CustomizedXUnsupportedFiveEightSevenFiv
         }
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['links'])) {
+            $this->links = [];
+            foreach ($data['links'] as $item) {
+                $this->links[] = new LinkDescription($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        parent::__construct($data);
+        if (isset($data)) { $this->map($data); }
     }
 }

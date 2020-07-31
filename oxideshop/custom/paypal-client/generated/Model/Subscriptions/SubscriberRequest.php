@@ -4,6 +4,8 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\Payer;
+use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\ShippingDetail;
 use Webmozart\Assert\Assert;
 
 /**
@@ -48,7 +50,19 @@ class SubscriberRequest extends Payer implements JsonSerializable
         !isset($this->payment_source) ||  $this->payment_source->validate(SubscriberRequest::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['shipping_address'])) {
+            $this->shipping_address = new ShippingDetail($data['shipping_address']);
+        }
+        if (isset($data['payment_source'])) {
+            $this->payment_source = new PaymentSource($data['payment_source']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        parent::__construct($data);
+        if (isset($data)) { $this->map($data); }
     }
 }

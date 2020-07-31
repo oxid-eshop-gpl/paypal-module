@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -76,7 +77,24 @@ class RefundRequest implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['amount'])) {
+            $this->amount = new Money($data['amount']);
+        }
+        if (isset($data['invoice_id'])) {
+            $this->invoice_id = $data['invoice_id'];
+        }
+        if (isset($data['custom_id'])) {
+            $this->custom_id = $data['custom_id'];
+        }
+        if (isset($data['note_to_payer'])) {
+            $this->note_to_payer = $data['note_to_payer'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

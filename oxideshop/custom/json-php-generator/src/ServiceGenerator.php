@@ -4,6 +4,7 @@ namespace OxidProfessionalServices;
 
 use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\PsrPrinter;
+use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
 use OxidProfessionalServices\PayPal\Api\Service\BaseService;
 
 class ServiceGenerator extends Generator
@@ -16,12 +17,14 @@ class ServiceGenerator extends Generator
      * @param string $namespace
      * @param string $subNameSpace
      */
-    public function __construct($jsonFile, $namespace, $modelNamespace, $subNameSpace)
+    public function generateServiceAndModels($jsonFile, $namespace, $modelNamespace, $subNameSpace)
     {
         $this->namespace = $namespace;
-        parent::__construct($jsonFile, $modelNamespace, $subNameSpace);
+
+        $this->generateModels($jsonFile, $modelNamespace, $subNameSpace);
         $this->generateService($namespace, $modelNamespace, $subNameSpace);
     }
+
 
     /**
      * @param string $jsonFile
@@ -32,11 +35,9 @@ class ServiceGenerator extends Generator
     {
 
         $ns = new PhpNamespace($namespace);
-        $ns->addUse(\JsonMapper::class);
         $serviceClass = $ns->addClass($className);
         $ns->addUse(BaseService::class);
         $serviceClass->addExtend(BaseService::class);
-        $ns->addUse('OxidProfessionalServices\PayPal\Api\Client');
         $basePath = $this->fileContent['basePath'];
         $serviceClass->addProperty('basePath')->setValue($basePath)->setVisibility('protected');
         $refMap = [];
@@ -44,7 +45,7 @@ class ServiceGenerator extends Generator
             $def = $this->definitions[$defName];
 
             if (isset($def['type']) && $def['type'] == 'object') {
-                $type = '\\' . $modelNamespace . '\\' . $className . '\\' . $type;
+                $type = '\\' . $modelNamespace . '\\' . $type;
             }
             $refMap[$defName] = $type;
         }
@@ -56,12 +57,14 @@ class ServiceGenerator extends Generator
                 $methodName = $this->cleanMethodName($methodName);
                 $method = $serviceClass->addMethod($methodName);
                 $methodBody = '';
+                $methodBodyQueryParameter = '';
+                $methodBodyHeaders = '';
                 $requestBody = "\$body = null;";
                 $definedParameters = $def['parameters'];
                 uasort($definedParameters, function ($e) {
                     return (int)isset($e['default']) . $e['name'];
                 });
-
+                $method->addComment($this->formatComment($def['description']));
                 foreach ($definedParameters as $parameterDefinition) {
                     $origParamName = $parameterDefinition['name'];
                     if ($origParamName == "Authorization" || "PayPal-Request-Id" == $origParamName) {
@@ -83,12 +86,16 @@ class ServiceGenerator extends Generator
 
 
                     if ($parameterDefinition['in'] == "body") {
-                        $methodBody .= "\$headers['Content-Type'] = 'application/json';\n";
+                        $methodBodyHeaders .= "\$headers['Content-Type'] = 'application/json';\n";
                         $requestBody = "\$body = json_encode(\$$paramName, true);";
                     } elseif ($parameterDefinition['in'] == "header") {
-                        $methodBody .= "\$headers['$origParamName'] = \$$paramName;\n";
+                        $methodBodyHeaders .= "\$headers['$origParamName'] = \$$paramName;\n";
+                    } elseif ($parameterDefinition['in'] == "query") {
+                        $methodBodyQueryParameter .= "\$params['$origParamName'] = \$$paramName;\n";
                     }
-
+                    $paramType = $parameterDefinition['type'] ?? 'mixed';
+                    $paramDesc = $parameterDefinition['description'] ?? '';
+                    $method->addComment($this->formatComment("@param \$$paramName $paramType $paramDesc"));
                     if (isset($parameterDefinition['schema'])) {
                         $defName = $parameterDefinition['schema']['$ref'];
                         $defName = str_replace('#/definitions/', '', $defName);
@@ -107,33 +114,56 @@ class ServiceGenerator extends Generator
                         $res = $response;
                     }
                 }
+                $ns->addUse(ApiException::class);
+                $method->addComment("@throws ApiException");
+
                 $responseType = "void";
                 if ($res) {
                     if (isset($res['schema'])) {
                         $defName = $res['schema']['$ref'];
                         $defName = str_replace('#/definitions/', '', $defName);
-                        $responseType = $refMap[$defName];
+                        $defName = basename($defName);
+                        if (isset($refMap[$defName])) {
+                            $responseType = $refMap[$defName];
+                        } else {
+                            $responseType = \stdClass::class;
+                        }
                         $ns->addUse($responseType);
                         $method->setReturnType($responseType);
                         $responseType = (substr($responseType, strrpos($responseType, '\\') + 1));
                     } else {
                         $method->setReturnType($responseType);
                     }
+                    $method->addComment("@return $responseType");
                 }
 
                 $httpMethod = strtoupper($httpMethod);
+                $headersParam = '[]';
+                if ($methodBodyHeaders != '') {
+                    $headersParam = '$headers';
+                    $methodBodyHeaders = "\$headers = [];\n$methodBodyHeaders";
+                }
+                $paramsParam = '[]';
+                if ($methodBodyQueryParameter != '') {
+                    $paramsParam = '$params';
+                    $methodBodyQueryParameter = <<<PHP
+\$params = [];
+$methodBodyQueryParameter
+PHP;
+                }
                 $methodBody = <<<PHP
-\$headers = [];
+\$path = "$path";
 $methodBody
+$methodBodyHeaders
+$methodBodyQueryParameter
 $requestBody
-\$response = \$this->send('$httpMethod', "$path", \$headers, \$body);
+\$response = \$this->send('$httpMethod', \$path, $paramsParam, $headersParam, \$body);
 
 PHP;
                 if ($responseType != "void") {
                     $methodBody .= <<<PHP
-\$mapper = new JsonMapper();
-\$jsonProduct = json_decode(\$response->getBody());
-return \$mapper->map(\$jsonProduct, new ${responseType}());
+\$jsonData = json_decode(\$response->getBody(), true);
+return new ${responseType}(\$jsonData);
 PHP;
                 }
 

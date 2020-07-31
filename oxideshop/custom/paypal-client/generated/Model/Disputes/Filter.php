@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -253,7 +254,48 @@ class Filter implements JsonSerializable
         !isset($this->dispute_amount_lte) ||  $this->dispute_amount_lte->validate(Filter::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['email'])) {
+            $this->email = $data['email'];
+        }
+        if (isset($data['name'])) {
+            $this->name = $data['name'];
+        }
+        if (isset($data['reasons'])) {
+            $this->reasons = $data['reasons'];
+        }
+        if (isset($data['statuses'])) {
+            $this->statuses = $data['statuses'];
+        }
+        if (isset($data['create_time_before'])) {
+            $this->create_time_before = $data['create_time_before'];
+        }
+        if (isset($data['create_time_after'])) {
+            $this->create_time_after = $data['create_time_after'];
+        }
+        if (isset($data['update_time_before'])) {
+            $this->update_time_before = $data['update_time_before'];
+        }
+        if (isset($data['update_time_after'])) {
+            $this->update_time_after = $data['update_time_after'];
+        }
+        if (isset($data['response_due_date_before'])) {
+            $this->response_due_date_before = $data['response_due_date_before'];
+        }
+        if (isset($data['response_due_date_after'])) {
+            $this->response_due_date_after = $data['response_due_date_after'];
+        }
+        if (isset($data['dispute_amount_gte'])) {
+            $this->dispute_amount_gte = new Money($data['dispute_amount_gte']);
+        }
+        if (isset($data['dispute_amount_lte'])) {
+            $this->dispute_amount_lte = new Money($data['dispute_amount_lte']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

@@ -120,7 +120,30 @@ class ServiceDetails implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['description'])) {
+            $this->description = $data['description'];
+        }
+        if (isset($data['service_started'])) {
+            $this->service_started = $data['service_started'];
+        }
+        if (isset($data['note'])) {
+            $this->note = $data['note'];
+        }
+        if (isset($data['sub_reasons'])) {
+            $this->sub_reasons = [];
+            foreach ($data['sub_reasons'] as $item) {
+                $this->sub_reasons[] = $item;
+            }
+        }
+        if (isset($data['purchase_url'])) {
+            $this->purchase_url = $data['purchase_url'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

@@ -53,7 +53,15 @@ class FeePolicy implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['transaction_fee'])) {
+            $this->transaction_fee = $data['transaction_fee'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

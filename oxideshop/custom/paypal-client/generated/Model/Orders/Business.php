@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV4\BusinessName;
 use Webmozart\Assert\Assert;
 
 /**
@@ -199,13 +200,11 @@ class Business extends Party implements JsonSerializable
             $this->names,
             "names in Business must be array $within"
         );
-
         if (isset($this->names)) {
             foreach ($this->names as $item) {
                 $item->validate(Business::class);
             }
         }
-
         !isset($this->type) || Assert::minLength(
             $this->type,
             1,
@@ -237,13 +236,11 @@ class Business extends Party implements JsonSerializable
             $this->identifications,
             "identifications in Business must be array $within"
         );
-
         if (isset($this->identifications)) {
             foreach ($this->identifications as $item) {
                 $item->validate(Business::class);
             }
         }
-
         !isset($this->description) || Assert::minLength(
             $this->description,
             1,
@@ -269,13 +266,11 @@ class Business extends Party implements JsonSerializable
             $this->owners,
             "owners in Business must be array $within"
         );
-
         if (isset($this->owners)) {
             foreach ($this->owners as $item) {
                 $item->validate(Business::class);
             }
         }
-
         !isset($this->url) || Assert::minLength(
             $this->url,
             1,
@@ -294,10 +289,49 @@ class Business extends Party implements JsonSerializable
         !isset($this->customer_service_contacts) ||  $this->customer_service_contacts->validate(Business::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['names'])) {
+            $this->names = [];
+            foreach ($data['names'] as $item) {
+                $this->names[] = new BusinessName($item);
+            }
+        }
+        if (isset($data['type'])) {
+            $this->type = $data['type'];
+        }
+        if (isset($data['category'])) {
+            $this->category = new BusinessCategory($data['category']);
+        }
+        if (isset($data['identifications'])) {
+            $this->identifications = [];
+            foreach ($data['identifications'] as $item) {
+                $this->identifications[] = new BusinessIdentification($item);
+            }
+        }
+        if (isset($data['description'])) {
+            $this->description = $data['description'];
+        }
+        if (isset($data['owners'])) {
+            $this->owners = [];
+            foreach ($data['owners'] as $item) {
+                $this->owners[] = new Person($item);
+            }
+        }
+        if (isset($data['url'])) {
+            $this->url = $data['url'];
+        }
+        if (isset($data['customer_service_contacts'])) {
+            $this->customer_service_contacts = new CustomerServiceContact($data['customer_service_contacts']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        parent::__construct($data);
         $this->names = [];
         $this->identifications = [];
         $this->owners = [];
+        if (isset($data)) { $this->map($data); }
     }
 }

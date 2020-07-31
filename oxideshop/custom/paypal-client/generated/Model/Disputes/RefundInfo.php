@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -174,8 +175,34 @@ class RefundInfo implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['recipient'])) {
+            $this->recipient = $data['recipient'];
+        }
+        if (isset($data['amount'])) {
+            $this->amount = new Money($data['amount']);
+        }
+        if (isset($data['create_time'])) {
+            $this->create_time = $data['create_time'];
+        }
+        if (isset($data['transaction_id'])) {
+            $this->transaction_id = $data['transaction_id'];
+        }
+        if (isset($data['payout_type'])) {
+            $this->payout_type = $data['payout_type'];
+        }
+        if (isset($data['seller_protection_eligible'])) {
+            $this->seller_protection_eligible = $data['seller_protection_eligible'];
+        }
+        if (isset($data['transaction_source'])) {
+            $this->transaction_source = $data['transaction_source'];
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->amount = new Money();
+        if (isset($data)) { $this->map($data); }
     }
 }

@@ -109,7 +109,27 @@ class BillingAgreement implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['description'])) {
+            $this->description = $data['description'];
+        }
+        if (isset($data['billing_experience_preference'])) {
+            $this->billing_experience_preference = new BillingExperiencePreference($data['billing_experience_preference']);
+        }
+        if (isset($data['merchant_custom_data'])) {
+            $this->merchant_custom_data = $data['merchant_custom_data'];
+        }
+        if (isset($data['approval_url'])) {
+            $this->approval_url = $data['approval_url'];
+        }
+        if (isset($data['ec_token'])) {
+            $this->ec_token = $data['ec_token'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

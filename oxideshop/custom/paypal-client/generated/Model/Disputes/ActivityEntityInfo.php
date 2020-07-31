@@ -70,7 +70,27 @@ class ActivityEntityInfo implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['last_known_valid_transaction_date'])) {
+            $this->last_known_valid_transaction_date = $data['last_known_valid_transaction_date'];
+        }
+        if (isset($data['card_replacement_address_confirmed'])) {
+            $this->card_replacement_address_confirmed = $data['card_replacement_address_confirmed'];
+        }
+        if (isset($data['card_shared_with_someone_else'])) {
+            $this->card_shared_with_someone_else = $data['card_shared_with_someone_else'];
+        }
+        if (isset($data['merchant_has_card_details'])) {
+            $this->merchant_has_card_details = $data['merchant_has_card_details'];
+        }
+        if (isset($data['card_settings_changed'])) {
+            $this->card_settings_changed = $data['card_settings_changed'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

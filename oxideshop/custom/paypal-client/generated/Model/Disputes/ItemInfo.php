@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -186,7 +187,33 @@ class ItemInfo implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['item_id'])) {
+            $this->item_id = $data['item_id'];
+        }
+        if (isset($data['item_description'])) {
+            $this->item_description = $data['item_description'];
+        }
+        if (isset($data['item_quantity'])) {
+            $this->item_quantity = $data['item_quantity'];
+        }
+        if (isset($data['partner_transaction_id'])) {
+            $this->partner_transaction_id = $data['partner_transaction_id'];
+        }
+        if (isset($data['reason'])) {
+            $this->reason = $data['reason'];
+        }
+        if (isset($data['dispute_amount'])) {
+            $this->dispute_amount = new Money($data['dispute_amount']);
+        }
+        if (isset($data['notes'])) {
+            $this->notes = $data['notes'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

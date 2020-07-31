@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -33,7 +34,7 @@ class PricingScheme implements JsonSerializable
     /**
      * The version of the pricing scheme.
      *
-     * @var integer | null
+     * @var int | null
      */
     public $version;
 
@@ -153,13 +154,11 @@ class PricingScheme implements JsonSerializable
             $this->tiers,
             "tiers in PricingScheme must be array $within"
         );
-
         if (isset($this->tiers)) {
             foreach ($this->tiers as $item) {
                 $item->validate(PricingScheme::class);
             }
         }
-
         !isset($this->roll_out_strategy) || Assert::isInstanceOf(
             $this->roll_out_strategy,
             RollOutStrategy::class,
@@ -188,8 +187,40 @@ class PricingScheme implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['version'])) {
+            $this->version = $data['version'];
+        }
+        if (isset($data['status'])) {
+            $this->status = $data['status'];
+        }
+        if (isset($data['fixed_price'])) {
+            $this->fixed_price = new Money($data['fixed_price']);
+        }
+        if (isset($data['tier_mode'])) {
+            $this->tier_mode = $data['tier_mode'];
+        }
+        if (isset($data['tiers'])) {
+            $this->tiers = [];
+            foreach ($data['tiers'] as $item) {
+                $this->tiers[] = new PricingTier($item);
+            }
+        }
+        if (isset($data['roll_out_strategy'])) {
+            $this->roll_out_strategy = new RollOutStrategy($data['roll_out_strategy']);
+        }
+        if (isset($data['create_time'])) {
+            $this->create_time = $data['create_time'];
+        }
+        if (isset($data['update_time'])) {
+            $this->update_time = $data['update_time'];
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->tiers = [];
+        if (isset($data)) { $this->map($data); }
     }
 }

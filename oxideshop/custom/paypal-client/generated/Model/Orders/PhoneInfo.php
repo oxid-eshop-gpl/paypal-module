@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV4\Phone;
 use Webmozart\Assert\Assert;
 
 /**
@@ -66,7 +67,18 @@ class PhoneInfo implements JsonSerializable
         !isset($this->phone_number) ||  $this->phone_number->validate(PhoneInfo::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['phone_number'])) {
+            $this->phone_number = new Phone($data['phone_number']);
+        }
+        if (isset($data['phone_type'])) {
+            $this->phone_type = $data['phone_type'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

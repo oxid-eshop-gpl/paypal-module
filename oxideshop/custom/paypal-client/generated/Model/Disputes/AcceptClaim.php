@@ -4,6 +4,8 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\AddressPortable;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -132,7 +134,27 @@ class AcceptClaim implements JsonSerializable
         !isset($this->refund_amount) ||  $this->refund_amount->validate(AcceptClaim::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['note'])) {
+            $this->note = $data['note'];
+        }
+        if (isset($data['accept_claim_reason'])) {
+            $this->accept_claim_reason = $data['accept_claim_reason'];
+        }
+        if (isset($data['invoice_id'])) {
+            $this->invoice_id = $data['invoice_id'];
+        }
+        if (isset($data['return_shipping_address'])) {
+            $this->return_shipping_address = new AddressPortable($data['return_shipping_address']);
+        }
+        if (isset($data['refund_amount'])) {
+            $this->refund_amount = new Money($data['refund_amount']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

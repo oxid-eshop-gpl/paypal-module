@@ -4,6 +4,8 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
+use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\PaymentSource;
 use Webmozart\Assert\Assert;
 
 /**
@@ -59,7 +61,21 @@ class OrderAuthorizeRequest implements JsonSerializable
         !isset($this->amount) ||  $this->amount->validate(OrderAuthorizeRequest::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['payment_source'])) {
+            $this->payment_source = new PaymentSource($data['payment_source']);
+        }
+        if (isset($data['reference_id'])) {
+            $this->reference_id = $data['reference_id'];
+        }
+        if (isset($data['amount'])) {
+            $this->amount = new Money($data['amount']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

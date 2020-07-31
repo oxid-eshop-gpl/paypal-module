@@ -53,8 +53,22 @@ class RestApiIntegrationFirstPartyDetails implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['features'])) {
+            $this->features = [];
+            foreach ($data['features'] as $item) {
+                $this->features[] = $item;
+            }
+        }
+        if (isset($data['seller_nonce'])) {
+            $this->seller_nonce = $data['seller_nonce'];
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->features = [];
+        if (isset($data)) { $this->map($data); }
     }
 }

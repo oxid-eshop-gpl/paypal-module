@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV4\Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -46,7 +47,18 @@ class CurrencyRange implements JsonSerializable
         !isset($this->maximum_amount) ||  $this->maximum_amount->validate(CurrencyRange::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['minimum_amount'])) {
+            $this->minimum_amount = new Money($data['minimum_amount']);
+        }
+        if (isset($data['maximum_amount'])) {
+            $this->maximum_amount = new Money($data['maximum_amount']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

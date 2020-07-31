@@ -43,7 +43,15 @@ class BirthDetails implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['date_of_birth'])) {
+            $this->date_of_birth = $data['date_of_birth'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

@@ -276,7 +276,6 @@ class AccountActivity implements JsonSerializable
             $this->reversal_actions,
             "reversal_actions in AccountActivity must be array $within"
         );
-
         if (isset($this->reversal_actions)) {
             foreach ($this->reversal_actions as $item) {
                 $item->validate(AccountActivity::class);
@@ -284,7 +283,39 @@ class AccountActivity implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['id'])) {
+            $this->id = $data['id'];
+        }
+        if (isset($data['create_time'])) {
+            $this->create_time = $data['create_time'];
+        }
+        if (isset($data['entity_type'])) {
+            $this->entity_type = $data['entity_type'];
+        }
+        if (isset($data['entity_subtype'])) {
+            $this->entity_subtype = $data['entity_subtype'];
+        }
+        if (isset($data['action_performed'])) {
+            $this->action_performed = $data['action_performed'];
+        }
+        if (isset($data['entity_id'])) {
+            $this->entity_id = $data['entity_id'];
+        }
+        if (isset($data['activity_entity_info'])) {
+            $this->activity_entity_info = new ActivityEntityInfo($data['activity_entity_info']);
+        }
+        if (isset($data['reversal_actions'])) {
+            $this->reversal_actions = [];
+            foreach ($data['reversal_actions'] as $item) {
+                $this->reversal_actions[] = new ReversalAction($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

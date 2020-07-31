@@ -28,7 +28,15 @@ class Mandate implements JsonSerializable
         Assert::notNull($this->accepted, "accepted in Mandate must not be NULL $within");
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['accepted'])) {
+            $this->accepted = $data['accepted'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

@@ -42,7 +42,6 @@ class FinancialInstruments implements JsonSerializable
             $this->banks,
             "banks in FinancialInstruments must be array $within"
         );
-
         if (isset($this->banks)) {
             foreach ($this->banks as $item) {
                 $item->validate(FinancialInstruments::class);
@@ -50,8 +49,19 @@ class FinancialInstruments implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['banks'])) {
+            $this->banks = [];
+            foreach ($data['banks'] as $item) {
+                $this->banks[] = new Bank($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->banks = [];
+        if (isset($data)) { $this->map($data); }
     }
 }

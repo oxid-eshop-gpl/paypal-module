@@ -83,13 +83,11 @@ class PaymentContextData implements JsonSerializable
             $this->facilitators,
             "facilitators in PaymentContextData must be array $within"
         );
-
         if (isset($this->facilitators)) {
             foreach ($this->facilitators as $item) {
                 $item->validate(PaymentContextData::class);
             }
         }
-
         Assert::notNull($this->payment_units, "payment_units in PaymentContextData must not be NULL $within");
         Assert::minCount(
             $this->payment_units,
@@ -105,7 +103,6 @@ class PaymentContextData implements JsonSerializable
             $this->payment_units,
             "payment_units in PaymentContextData must be array $within"
         );
-
         if (isset($this->payment_units)) {
             foreach ($this->payment_units as $item) {
                 $item->validate(PaymentContextData::class);
@@ -113,9 +110,32 @@ class PaymentContextData implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['intent'])) {
+            $this->intent = $data['intent'];
+        }
+        if (isset($data['application_context'])) {
+            $this->application_context = new OrderApplicationContext($data['application_context']);
+        }
+        if (isset($data['facilitators'])) {
+            $this->facilitators = [];
+            foreach ($data['facilitators'] as $item) {
+                $this->facilitators[] = new Facilitator($item);
+            }
+        }
+        if (isset($data['payment_units'])) {
+            $this->payment_units = [];
+            foreach ($data['payment_units'] as $item) {
+                $this->payment_units[] = new PaymentUnit($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->facilitators = [];
         $this->payment_units = [];
+        if (isset($data)) { $this->map($data); }
     }
 }

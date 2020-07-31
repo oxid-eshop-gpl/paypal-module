@@ -365,13 +365,11 @@ class Evidence implements JsonSerializable
             $this->documents,
             "documents in Evidence must be array $within"
         );
-
         if (isset($this->documents)) {
             foreach ($this->documents as $item) {
                 $item->validate(Evidence::class);
             }
         }
-
         !isset($this->notes) || Assert::maxLength(
             $this->notes,
             2000,
@@ -409,7 +407,36 @@ class Evidence implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['evidence_type'])) {
+            $this->evidence_type = $data['evidence_type'];
+        }
+        if (isset($data['evidence_info'])) {
+            $this->evidence_info = new EvidenceInfo($data['evidence_info']);
+        }
+        if (isset($data['documents'])) {
+            $this->documents = [];
+            foreach ($data['documents'] as $item) {
+                $this->documents[] = new Document($item);
+            }
+        }
+        if (isset($data['notes'])) {
+            $this->notes = $data['notes'];
+        }
+        if (isset($data['source'])) {
+            $this->source = $data['source'];
+        }
+        if (isset($data['date'])) {
+            $this->date = $data['date'];
+        }
+        if (isset($data['item_id'])) {
+            $this->item_id = $data['item_id'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

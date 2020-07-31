@@ -81,7 +81,21 @@ class Eligibility implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['encrypted_transaction_id'])) {
+            $this->encrypted_transaction_id = $data['encrypted_transaction_id'];
+        }
+        if (isset($data['dispute_id'])) {
+            $this->dispute_id = $data['dispute_id'];
+        }
+        if (isset($data['buyer_note'])) {
+            $this->buyer_note = $data['buyer_note'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -91,7 +92,6 @@ class Offer implements JsonSerializable
             $this->history,
             "history in Offer must be array $within"
         );
-
         if (isset($this->history)) {
             foreach ($this->history as $item) {
                 $item->validate(Offer::class);
@@ -99,7 +99,27 @@ class Offer implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['buyer_requested_amount'])) {
+            $this->buyer_requested_amount = new Money($data['buyer_requested_amount']);
+        }
+        if (isset($data['seller_offered_amount'])) {
+            $this->seller_offered_amount = new Money($data['seller_offered_amount']);
+        }
+        if (isset($data['offer_type'])) {
+            $this->offer_type = $data['offer_type'];
+        }
+        if (isset($data['history'])) {
+            $this->history = [];
+            foreach ($data['history'] as $item) {
+                $this->history[] = new OfferHistory($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

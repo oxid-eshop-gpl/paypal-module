@@ -194,7 +194,39 @@ class Extensions implements JsonSerializable
         !isset($this->external_case_properties) ||  $this->external_case_properties->validate(Extensions::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['merchant_contacted'])) {
+            $this->merchant_contacted = $data['merchant_contacted'];
+        }
+        if (isset($data['merchant_contacted_outcome'])) {
+            $this->merchant_contacted_outcome = $data['merchant_contacted_outcome'];
+        }
+        if (isset($data['merchant_contacted_time'])) {
+            $this->merchant_contacted_time = $data['merchant_contacted_time'];
+        }
+        if (isset($data['merchant_contacted_mode'])) {
+            $this->merchant_contacted_mode = $data['merchant_contacted_mode'];
+        }
+        if (isset($data['buyer_contacted_time'])) {
+            $this->buyer_contacted_time = $data['buyer_contacted_time'];
+        }
+        if (isset($data['billing_dispute_properties'])) {
+            $this->billing_dispute_properties = new BillingDisputesProperties($data['billing_dispute_properties']);
+        }
+        if (isset($data['unauthorized_dispute_properties'])) {
+            $this->unauthorized_dispute_properties = new UnauthorizedDisputeProperties($data['unauthorized_dispute_properties']);
+        }
+        if (isset($data['merchandize_dispute_properties'])) {
+            $this->merchandize_dispute_properties = new MerchandizeDisputeProperties($data['merchandize_dispute_properties']);
+        }
+        if (isset($data['external_case_properties'])) {
+            $this->external_case_properties = new ExternalCaseProperties($data['external_case_properties']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

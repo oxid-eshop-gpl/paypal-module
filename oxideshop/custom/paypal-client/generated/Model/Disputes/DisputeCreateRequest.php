@@ -160,13 +160,11 @@ class DisputeCreateRequest implements JsonSerializable
             $this->evidences,
             "evidences in DisputeCreateRequest must be array $within"
         );
-
         if (isset($this->evidences)) {
             foreach ($this->evidences as $item) {
                 $item->validate(DisputeCreateRequest::class);
             }
         }
-
         !isset($this->reason) || Assert::minLength(
             $this->reason,
             1,
@@ -191,7 +189,6 @@ class DisputeCreateRequest implements JsonSerializable
             $this->messages,
             "messages in DisputeCreateRequest must be array $within"
         );
-
         if (isset($this->messages)) {
             foreach ($this->messages as $item) {
                 $item->validate(DisputeCreateRequest::class);
@@ -199,9 +196,44 @@ class DisputeCreateRequest implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['dispute_flow'])) {
+            $this->dispute_flow = $data['dispute_flow'];
+        }
+        if (isset($data['extensions'])) {
+            $this->extensions = new Extensions($data['extensions']);
+        }
+        if (isset($data['transaction'])) {
+            $this->transaction = new Transaction($data['transaction']);
+        }
+        if (isset($data['reference_dispute'])) {
+            $this->reference_dispute = new ReferenceDispute($data['reference_dispute']);
+        }
+        if (isset($data['evidences'])) {
+            $this->evidences = [];
+            foreach ($data['evidences'] as $item) {
+                $this->evidences[] = new Evidence($item);
+            }
+        }
+        if (isset($data['reason'])) {
+            $this->reason = $data['reason'];
+        }
+        if (isset($data['sub_reason'])) {
+            $this->sub_reason = $data['sub_reason'];
+        }
+        if (isset($data['messages'])) {
+            $this->messages = [];
+            foreach ($data['messages'] as $item) {
+                $this->messages[] = new Message($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->transaction = new Transaction();
         $this->reference_dispute = new ReferenceDispute();
+        if (isset($data)) { $this->map($data); }
     }
 }

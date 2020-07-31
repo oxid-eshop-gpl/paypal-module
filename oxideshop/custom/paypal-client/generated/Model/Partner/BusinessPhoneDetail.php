@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV4\Phone;
 use Webmozart\Assert\Assert;
 
 /**
@@ -103,8 +104,32 @@ class BusinessPhoneDetail extends Phone implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['contact_name'])) {
+            $this->contact_name = $data['contact_name'];
+        }
+        if (isset($data['inactive'])) {
+            $this->inactive = $data['inactive'];
+        }
+        if (isset($data['primary'])) {
+            $this->primary = $data['primary'];
+        }
+        if (isset($data['type'])) {
+            $this->type = $data['type'];
+        }
+        if (isset($data['tags'])) {
+            $this->tags = [];
+            foreach ($data['tags'] as $item) {
+                $this->tags[] = $item;
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        parent::__construct($data);
         $this->tags = [];
+        if (isset($data)) { $this->map($data); }
     }
 }

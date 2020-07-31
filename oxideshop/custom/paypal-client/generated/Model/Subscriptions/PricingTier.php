@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -73,8 +74,22 @@ class PricingTier implements JsonSerializable
          $this->amount->validate(PricingTier::class);
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['starting_quantity'])) {
+            $this->starting_quantity = $data['starting_quantity'];
+        }
+        if (isset($data['ending_quantity'])) {
+            $this->ending_quantity = $data['ending_quantity'];
+        }
+        if (isset($data['amount'])) {
+            $this->amount = new Money($data['amount']);
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->amount = new Money();
+        if (isset($data)) { $this->map($data); }
     }
 }

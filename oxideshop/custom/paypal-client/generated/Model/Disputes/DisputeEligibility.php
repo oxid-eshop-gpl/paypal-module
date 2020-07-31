@@ -135,13 +135,11 @@ class DisputeEligibility implements JsonSerializable
             $this->eligible_dispute_reasons,
             "eligible_dispute_reasons in DisputeEligibility must be array $within"
         );
-
         if (isset($this->eligible_dispute_reasons)) {
             foreach ($this->eligible_dispute_reasons as $item) {
                 $item->validate(DisputeEligibility::class);
             }
         }
-
         Assert::notNull($this->ineligible_dispute_reasons, "ineligible_dispute_reasons in DisputeEligibility must not be NULL $within");
         Assert::minCount(
             $this->ineligible_dispute_reasons,
@@ -152,13 +150,11 @@ class DisputeEligibility implements JsonSerializable
             $this->ineligible_dispute_reasons,
             "ineligible_dispute_reasons in DisputeEligibility must be array $within"
         );
-
         if (isset($this->ineligible_dispute_reasons)) {
             foreach ($this->ineligible_dispute_reasons as $item) {
                 $item->validate(DisputeEligibility::class);
             }
         }
-
         !isset($this->recommended_dispute_reason) || Assert::minLength(
             $this->recommended_dispute_reason,
             1,
@@ -171,9 +167,35 @@ class DisputeEligibility implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['seller_transaction_id'])) {
+            $this->seller_transaction_id = $data['seller_transaction_id'];
+        }
+        if (isset($data['buyer_transaction_id'])) {
+            $this->buyer_transaction_id = $data['buyer_transaction_id'];
+        }
+        if (isset($data['eligible_dispute_reasons'])) {
+            $this->eligible_dispute_reasons = [];
+            foreach ($data['eligible_dispute_reasons'] as $item) {
+                $this->eligible_dispute_reasons[] = new EligibleDisputeReason($item);
+            }
+        }
+        if (isset($data['ineligible_dispute_reasons'])) {
+            $this->ineligible_dispute_reasons = [];
+            foreach ($data['ineligible_dispute_reasons'] as $item) {
+                $this->ineligible_dispute_reasons[] = new IneligibleDisputeReason($item);
+            }
+        }
+        if (isset($data['recommended_dispute_reason'])) {
+            $this->recommended_dispute_reason = $data['recommended_dispute_reason'];
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->eligible_dispute_reasons = [];
         $this->ineligible_dispute_reasons = [];
+        if (isset($data)) { $this->map($data); }
     }
 }

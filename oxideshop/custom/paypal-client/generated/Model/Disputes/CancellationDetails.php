@@ -99,7 +99,24 @@ class CancellationDetails implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['cancellation_date'])) {
+            $this->cancellation_date = $data['cancellation_date'];
+        }
+        if (isset($data['cancellation_number'])) {
+            $this->cancellation_number = $data['cancellation_number'];
+        }
+        if (isset($data['cancelled'])) {
+            $this->cancelled = $data['cancelled'];
+        }
+        if (isset($data['cancellation_mode'])) {
+            $this->cancellation_mode = $data['cancellation_mode'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

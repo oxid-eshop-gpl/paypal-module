@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV4\AddressPortable;
 use Webmozart\Assert\Assert;
 
 /**
@@ -149,13 +150,11 @@ class Bank implements JsonSerializable
             $this->identifiers,
             "identifiers in Bank must be array $within"
         );
-
         if (isset($this->identifiers)) {
             foreach ($this->identifiers as $item) {
                 $item->validate(Bank::class);
             }
         }
-
         !isset($this->branch_location) || Assert::isInstanceOf(
             $this->branch_location,
             AddressPortable::class,
@@ -170,8 +169,37 @@ class Bank implements JsonSerializable
         !isset($this->mandate) ||  $this->mandate->validate(Bank::class);
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['nick_name'])) {
+            $this->nick_name = $data['nick_name'];
+        }
+        if (isset($data['account_number'])) {
+            $this->account_number = $data['account_number'];
+        }
+        if (isset($data['account_type'])) {
+            $this->account_type = $data['account_type'];
+        }
+        if (isset($data['currency_code'])) {
+            $this->currency_code = $data['currency_code'];
+        }
+        if (isset($data['identifiers'])) {
+            $this->identifiers = [];
+            foreach ($data['identifiers'] as $item) {
+                $this->identifiers[] = new Identifier($item);
+            }
+        }
+        if (isset($data['branch_location'])) {
+            $this->branch_location = new AddressPortable($data['branch_location']);
+        }
+        if (isset($data['mandate'])) {
+            $this->mandate = new Mandate($data['mandate']);
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->identifiers = [];
+        if (isset($data)) { $this->map($data); }
     }
 }

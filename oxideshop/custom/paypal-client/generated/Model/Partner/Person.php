@@ -128,13 +128,11 @@ class Person implements JsonSerializable
             $this->names,
             "names in Person must be array $within"
         );
-
         if (isset($this->names)) {
             foreach ($this->names as $item) {
                 $item->validate(Person::class);
             }
         }
-
         !isset($this->citizenship) || Assert::minLength(
             $this->citizenship,
             2,
@@ -160,13 +158,11 @@ class Person implements JsonSerializable
             $this->addresses,
             "addresses in Person must be array $within"
         );
-
         if (isset($this->addresses)) {
             foreach ($this->addresses as $item) {
                 $item->validate(Person::class);
             }
         }
-
         Assert::notNull($this->phones, "phones in Person must not be NULL $within");
         Assert::minCount(
             $this->phones,
@@ -182,13 +178,11 @@ class Person implements JsonSerializable
             $this->phones,
             "phones in Person must be array $within"
         );
-
         if (isset($this->phones)) {
             foreach ($this->phones as $item) {
                 $item->validate(Person::class);
             }
         }
-
         !isset($this->birth_details) || Assert::isInstanceOf(
             $this->birth_details,
             BirthDetails::class,
@@ -210,7 +204,6 @@ class Person implements JsonSerializable
             $this->documents,
             "documents in Person must be array $within"
         );
-
         if (isset($this->documents)) {
             foreach ($this->documents as $item) {
                 $item->validate(Person::class);
@@ -218,11 +211,52 @@ class Person implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['id'])) {
+            $this->id = $data['id'];
+        }
+        if (isset($data['party_id'])) {
+            $this->party_id = $data['party_id'];
+        }
+        if (isset($data['names'])) {
+            $this->names = [];
+            foreach ($data['names'] as $item) {
+                $this->names[] = new PersonName($item);
+            }
+        }
+        if (isset($data['citizenship'])) {
+            $this->citizenship = $data['citizenship'];
+        }
+        if (isset($data['addresses'])) {
+            $this->addresses = [];
+            foreach ($data['addresses'] as $item) {
+                $this->addresses[] = new PersonAddressDetail($item);
+            }
+        }
+        if (isset($data['phones'])) {
+            $this->phones = [];
+            foreach ($data['phones'] as $item) {
+                $this->phones[] = new PersonPhoneDetail($item);
+            }
+        }
+        if (isset($data['birth_details'])) {
+            $this->birth_details = new BirthDetails($data['birth_details']);
+        }
+        if (isset($data['documents'])) {
+            $this->documents = [];
+            foreach ($data['documents'] as $item) {
+                $this->documents[] = new PersonDocument($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->names = [];
         $this->addresses = [];
         $this->phones = [];
         $this->documents = [];
+        if (isset($data)) { $this->map($data); }
     }
 }

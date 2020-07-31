@@ -95,7 +95,18 @@ class EligibleDisputeReason implements JsonSerializable
         !isset($this->allowable_life_cycle) ||  $this->allowable_life_cycle->validate(EligibleDisputeReason::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['dispute_reason'])) {
+            $this->dispute_reason = $data['dispute_reason'];
+        }
+        if (isset($data['allowable_life_cycle'])) {
+            $this->allowable_life_cycle = new EligibleDisputeReasonAllowableLifeCycle($data['allowable_life_cycle']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

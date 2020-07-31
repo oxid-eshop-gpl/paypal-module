@@ -82,8 +82,25 @@ class PaymentMethodDirective implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['payment_processing_type'])) {
+            $this->payment_processing_type = $data['payment_processing_type'];
+        }
+        if (isset($data['processing_decision'])) {
+            $this->processing_decision = $data['processing_decision'];
+        }
+        if (isset($data['reason'])) {
+            $this->reason = [];
+            foreach ($data['reason'] as $item) {
+                $this->reason[] = $item;
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->reason = [];
+        if (isset($data)) { $this->map($data); }
     }
 }

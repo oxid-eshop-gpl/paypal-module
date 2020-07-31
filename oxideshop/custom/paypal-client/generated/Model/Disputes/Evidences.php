@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\AddressPortable;
 use Webmozart\Assert\Assert;
 
 /**
@@ -46,13 +47,11 @@ class Evidences implements JsonSerializable
             $this->evidences,
             "evidences in Evidences must be array $within"
         );
-
         if (isset($this->evidences)) {
             foreach ($this->evidences as $item) {
                 $item->validate(Evidences::class);
             }
         }
-
         !isset($this->return_shipping_address) || Assert::isInstanceOf(
             $this->return_shipping_address,
             AddressPortable::class,
@@ -61,8 +60,22 @@ class Evidences implements JsonSerializable
         !isset($this->return_shipping_address) ||  $this->return_shipping_address->validate(Evidences::class);
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['evidences'])) {
+            $this->evidences = [];
+            foreach ($data['evidences'] as $item) {
+                $this->evidences[] = new Evidence($item);
+            }
+        }
+        if (isset($data['return_shipping_address'])) {
+            $this->return_shipping_address = new AddressPortable($data['return_shipping_address']);
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->evidences = [];
+        if (isset($data)) { $this->map($data); }
     }
 }

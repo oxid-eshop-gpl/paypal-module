@@ -4,6 +4,8 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\Payer;
+use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\PaymentSource;
 use Webmozart\Assert\Assert;
 
 /**
@@ -110,13 +112,11 @@ class OrderRequest implements JsonSerializable
             $this->purchase_units,
             "purchase_units in OrderRequest must be array $within"
         );
-
         if (isset($this->purchase_units)) {
             foreach ($this->purchase_units as $item) {
                 $item->validate(OrderRequest::class);
             }
         }
-
         !isset($this->payment_source) || Assert::isInstanceOf(
             $this->payment_source,
             PaymentSource::class,
@@ -131,8 +131,34 @@ class OrderRequest implements JsonSerializable
         !isset($this->application_context) ||  $this->application_context->validate(OrderRequest::class);
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['intent'])) {
+            $this->intent = $data['intent'];
+        }
+        if (isset($data['processing_instruction'])) {
+            $this->processing_instruction = $data['processing_instruction'];
+        }
+        if (isset($data['payer'])) {
+            $this->payer = new Payer($data['payer']);
+        }
+        if (isset($data['purchase_units'])) {
+            $this->purchase_units = [];
+            foreach ($data['purchase_units'] as $item) {
+                $this->purchase_units[] = new PurchaseUnitRequest($item);
+            }
+        }
+        if (isset($data['payment_source'])) {
+            $this->payment_source = new PaymentSource($data['payment_source']);
+        }
+        if (isset($data['application_context'])) {
+            $this->application_context = new OrderApplicationContext($data['application_context']);
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->purchase_units = [];
+        if (isset($data)) { $this->map($data); }
     }
 }

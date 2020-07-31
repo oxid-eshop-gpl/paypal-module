@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -54,7 +55,18 @@ class IncorrectTransactionAmount implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['correct_transaction_amount'])) {
+            $this->correct_transaction_amount = new Money($data['correct_transaction_amount']);
+        }
+        if (isset($data['correct_transaction_time'])) {
+            $this->correct_transaction_time = $data['correct_transaction_time'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

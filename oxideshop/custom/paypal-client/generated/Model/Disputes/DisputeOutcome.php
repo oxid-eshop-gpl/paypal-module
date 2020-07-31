@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -100,7 +101,21 @@ class DisputeOutcome implements JsonSerializable
         !isset($this->amount_refunded) ||  $this->amount_refunded->validate(DisputeOutcome::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['outcome_code'])) {
+            $this->outcome_code = $data['outcome_code'];
+        }
+        if (isset($data['outcome_reason'])) {
+            $this->outcome_reason = $data['outcome_reason'];
+        }
+        if (isset($data['amount_refunded'])) {
+            $this->amount_refunded = new Money($data['amount_refunded']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

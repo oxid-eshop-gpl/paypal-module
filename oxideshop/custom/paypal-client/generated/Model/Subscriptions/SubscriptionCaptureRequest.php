@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -79,8 +80,22 @@ class SubscriptionCaptureRequest implements JsonSerializable
          $this->amount->validate(SubscriptionCaptureRequest::class);
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['note'])) {
+            $this->note = $data['note'];
+        }
+        if (isset($data['capture_type'])) {
+            $this->capture_type = $data['capture_type'];
+        }
+        if (isset($data['amount'])) {
+            $this->amount = new Money($data['amount']);
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->amount = new Money();
+        if (isset($data)) { $this->map($data); }
     }
 }

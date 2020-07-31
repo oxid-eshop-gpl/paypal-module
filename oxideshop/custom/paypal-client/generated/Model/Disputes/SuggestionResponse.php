@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\LinkDescription;
 use Webmozart\Assert\Assert;
 
 /**
@@ -86,7 +87,6 @@ class SuggestionResponse implements JsonSerializable
             $this->links,
             "links in SuggestionResponse must be array $within"
         );
-
         if (isset($this->links)) {
             foreach ($this->links as $item) {
                 $item->validate(SuggestionResponse::class);
@@ -94,9 +94,29 @@ class SuggestionResponse implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['suggestions'])) {
+            $this->suggestions = [];
+            foreach ($data['suggestions'] as $item) {
+                $this->suggestions[] = $item;
+            }
+        }
+        if (isset($data['corrected_search_text'])) {
+            $this->corrected_search_text = $data['corrected_search_text'];
+        }
+        if (isset($data['links'])) {
+            $this->links = [];
+            foreach ($data['links'] as $item) {
+                $this->links[] = new LinkDescription($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->suggestions = [];
         $this->links = [];
+        if (isset($data)) { $this->map($data); }
     }
 }

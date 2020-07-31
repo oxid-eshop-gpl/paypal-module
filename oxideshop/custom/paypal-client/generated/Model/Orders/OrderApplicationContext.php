@@ -4,6 +4,9 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\ClientConfiguration;
+use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\PaymentMethod;
+use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\PaymentSource;
 use Webmozart\Assert\Assert;
 
 /**
@@ -191,7 +194,48 @@ class OrderApplicationContext implements JsonSerializable
         !isset($this->preferred_payment_source) ||  $this->preferred_payment_source->validate(OrderApplicationContext::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['brand_name'])) {
+            $this->brand_name = $data['brand_name'];
+        }
+        if (isset($data['locale'])) {
+            $this->locale = $data['locale'];
+        }
+        if (isset($data['landing_page'])) {
+            $this->landing_page = $data['landing_page'];
+        }
+        if (isset($data['shipping_preference'])) {
+            $this->shipping_preference = $data['shipping_preference'];
+        }
+        if (isset($data['user_action'])) {
+            $this->user_action = $data['user_action'];
+        }
+        if (isset($data['payment_method'])) {
+            $this->payment_method = new PaymentMethod($data['payment_method']);
+        }
+        if (isset($data['return_url'])) {
+            $this->return_url = $data['return_url'];
+        }
+        if (isset($data['cancel_url'])) {
+            $this->cancel_url = $data['cancel_url'];
+        }
+        if (isset($data['payment_token'])) {
+            $this->payment_token = $data['payment_token'];
+        }
+        if (isset($data['client_configuration'])) {
+            $this->client_configuration = new ClientConfiguration($data['client_configuration']);
+        }
+        if (isset($data['vault'])) {
+            $this->vault = $data['vault'];
+        }
+        if (isset($data['preferred_payment_source'])) {
+            $this->preferred_payment_source = new PaymentSource($data['preferred_payment_source']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

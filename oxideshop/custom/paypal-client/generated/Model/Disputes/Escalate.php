@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -105,7 +106,21 @@ class Escalate implements JsonSerializable
         !isset($this->buyer_requested_amount) ||  $this->buyer_requested_amount->validate(Escalate::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['note'])) {
+            $this->note = $data['note'];
+        }
+        if (isset($data['buyer_escalation_reason'])) {
+            $this->buyer_escalation_reason = $data['buyer_escalation_reason'];
+        }
+        if (isset($data['buyer_requested_amount'])) {
+            $this->buyer_requested_amount = new Money($data['buyer_requested_amount']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

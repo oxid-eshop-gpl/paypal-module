@@ -4,6 +4,9 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
+use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\PaymentInstruction;
+use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\SupplementaryData;
 use Webmozart\Assert\Assert;
 
 /**
@@ -70,7 +73,25 @@ class CaptureRequest extends SupplementaryPurchaseData implements JsonSerializab
         !isset($this->supplementary_data) ||  $this->supplementary_data->validate(CaptureRequest::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['amount'])) {
+            $this->amount = new Money($data['amount']);
+        }
+        if (isset($data['final_capture'])) {
+            $this->final_capture = $data['final_capture'];
+        }
+        if (isset($data['payment_instruction'])) {
+            $this->payment_instruction = new PaymentInstruction($data['payment_instruction']);
+        }
+        if (isset($data['supplementary_data'])) {
+            $this->supplementary_data = new SupplementaryData($data['supplementary_data']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        parent::__construct($data);
+        if (isset($data)) { $this->map($data); }
     }
 }

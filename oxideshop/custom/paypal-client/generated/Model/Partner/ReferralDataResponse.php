@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV4\LinkDescription;
 use Webmozart\Assert\Assert;
 
 /**
@@ -69,7 +70,6 @@ class ReferralDataResponse implements JsonSerializable
             $this->links,
             "links in ReferralDataResponse must be array $within"
         );
-
         if (isset($this->links)) {
             foreach ($this->links as $item) {
                 $item->validate(ReferralDataResponse::class);
@@ -77,8 +77,28 @@ class ReferralDataResponse implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['partner_referral_id'])) {
+            $this->partner_referral_id = $data['partner_referral_id'];
+        }
+        if (isset($data['submitter_payer_id'])) {
+            $this->submitter_payer_id = $data['submitter_payer_id'];
+        }
+        if (isset($data['referral_data'])) {
+            $this->referral_data = new ReferralData($data['referral_data']);
+        }
+        if (isset($data['links'])) {
+            $this->links = [];
+            foreach ($data['links'] as $item) {
+                $this->links[] = new LinkDescription($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->links = [];
+        if (isset($data)) { $this->map($data); }
     }
 }

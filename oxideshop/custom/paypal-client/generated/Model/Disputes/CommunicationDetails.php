@@ -82,7 +82,21 @@ class CommunicationDetails implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['email'])) {
+            $this->email = $data['email'];
+        }
+        if (isset($data['note'])) {
+            $this->note = $data['note'];
+        }
+        if (isset($data['time_posted'])) {
+            $this->time_posted = $data['time_posted'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -141,13 +142,11 @@ class ChangeReason implements JsonSerializable
             $this->disputed_account_activities,
             "disputed_account_activities in ChangeReason must be array $within"
         );
-
         if (isset($this->disputed_account_activities)) {
             foreach ($this->disputed_account_activities as $item) {
                 $item->validate(ChangeReason::class);
             }
         }
-
         !isset($this->transaction_ids) || Assert::isArray(
             $this->transaction_ids,
             "transaction_ids in ChangeReason must be array $within"
@@ -162,7 +161,6 @@ class ChangeReason implements JsonSerializable
             $this->item_info,
             "item_info in ChangeReason must be array $within"
         );
-
         if (isset($this->item_info)) {
             foreach ($this->item_info as $item) {
                 $item->validate(ChangeReason::class);
@@ -170,7 +168,42 @@ class ChangeReason implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['reason'])) {
+            $this->reason = $data['reason'];
+        }
+        if (isset($data['note'])) {
+            $this->note = $data['note'];
+        }
+        if (isset($data['extensions'])) {
+            $this->extensions = new Extensions($data['extensions']);
+        }
+        if (isset($data['disputed_account_activities'])) {
+            $this->disputed_account_activities = [];
+            foreach ($data['disputed_account_activities'] as $item) {
+                $this->disputed_account_activities[] = new AccountActivity($item);
+            }
+        }
+        if (isset($data['transaction_ids'])) {
+            $this->transaction_ids = [];
+            foreach ($data['transaction_ids'] as $item) {
+                $this->transaction_ids[] = $item;
+            }
+        }
+        if (isset($data['buyer_requested_amount'])) {
+            $this->buyer_requested_amount = new Money($data['buyer_requested_amount']);
+        }
+        if (isset($data['item_info'])) {
+            $this->item_info = [];
+            foreach ($data['item_info'] as $item) {
+                $this->item_info[] = new ItemInfo($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

@@ -140,7 +140,24 @@ class SubscriptionStatus implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['status'])) {
+            $this->status = $data['status'];
+        }
+        if (isset($data['status_change_note'])) {
+            $this->status_change_note = $data['status_change_note'];
+        }
+        if (isset($data['status_update_time'])) {
+            $this->status_update_time = $data['status_update_time'];
+        }
+        if (isset($data['status_changed_by'])) {
+            $this->status_changed_by = $data['status_changed_by'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

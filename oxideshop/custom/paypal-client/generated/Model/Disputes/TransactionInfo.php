@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -306,13 +307,11 @@ class TransactionInfo implements JsonSerializable
             $this->items,
             "items in TransactionInfo must be array $within"
         );
-
         if (isset($this->items)) {
             foreach ($this->items as $item) {
                 $item->validate(TransactionInfo::class);
             }
         }
-
         !isset($this->seller_protection_type) || Assert::minLength(
             $this->seller_protection_type,
             1,
@@ -341,7 +340,60 @@ class TransactionInfo implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['buyer_transaction_id'])) {
+            $this->buyer_transaction_id = $data['buyer_transaction_id'];
+        }
+        if (isset($data['seller_transaction_id'])) {
+            $this->seller_transaction_id = $data['seller_transaction_id'];
+        }
+        if (isset($data['create_time'])) {
+            $this->create_time = $data['create_time'];
+        }
+        if (isset($data['transaction_status'])) {
+            $this->transaction_status = $data['transaction_status'];
+        }
+        if (isset($data['gross_amount'])) {
+            $this->gross_amount = new Money($data['gross_amount']);
+        }
+        if (isset($data['invoice_number'])) {
+            $this->invoice_number = $data['invoice_number'];
+        }
+        if (isset($data['custom'])) {
+            $this->custom = $data['custom'];
+        }
+        if (isset($data['buyer'])) {
+            $this->buyer = new Buyer($data['buyer']);
+        }
+        if (isset($data['seller'])) {
+            $this->seller = new Seller($data['seller']);
+        }
+        if (isset($data['facilitator'])) {
+            $this->facilitator = new Facilitator($data['facilitator']);
+        }
+        if (isset($data['items'])) {
+            $this->items = [];
+            foreach ($data['items'] as $item) {
+                $this->items[] = new ItemInfo($item);
+            }
+        }
+        if (isset($data['seller_protection_eligible'])) {
+            $this->seller_protection_eligible = $data['seller_protection_eligible'];
+        }
+        if (isset($data['seller_protection_type'])) {
+            $this->seller_protection_type = $data['seller_protection_type'];
+        }
+        if (isset($data['regulation_info'])) {
+            $this->regulation_info = new RegulationInfo($data['regulation_info']);
+        }
+        if (isset($data['provisional_credit_status'])) {
+            $this->provisional_credit_status = $data['provisional_credit_status'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

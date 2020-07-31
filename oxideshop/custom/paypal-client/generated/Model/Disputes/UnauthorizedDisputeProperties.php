@@ -73,7 +73,30 @@ class UnauthorizedDisputeProperties implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['password_changed'])) {
+            $this->password_changed = $data['password_changed'];
+        }
+        if (isset($data['pin_changed'])) {
+            $this->pin_changed = $data['pin_changed'];
+        }
+        if (isset($data['security_questions_changed'])) {
+            $this->security_questions_changed = $data['security_questions_changed'];
+        }
+        if (isset($data['review_sla'])) {
+            $this->review_sla = $data['review_sla'];
+        }
+        if (isset($data['rejected_dispute_transactions'])) {
+            $this->rejected_dispute_transactions = [];
+            foreach ($data['rejected_dispute_transactions'] as $item) {
+                $this->rejected_dispute_transactions[] = $item;
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

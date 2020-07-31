@@ -4,6 +4,10 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\LinkDescription;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
+use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\FundingInstrumentResponse;
+use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\Payee;
 use Webmozart\Assert\Assert;
 
 /**
@@ -237,7 +241,6 @@ class Subscription extends SubscriptionStatus implements JsonSerializable
             $this->links,
             "links in Subscription must be array $within"
         );
-
         if (isset($this->links)) {
             foreach ($this->links as $item) {
                 $item->validate(Subscription::class);
@@ -245,7 +248,58 @@ class Subscription extends SubscriptionStatus implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['id'])) {
+            $this->id = $data['id'];
+        }
+        if (isset($data['plan_id'])) {
+            $this->plan_id = $data['plan_id'];
+        }
+        if (isset($data['start_time'])) {
+            $this->start_time = $data['start_time'];
+        }
+        if (isset($data['quantity'])) {
+            $this->quantity = $data['quantity'];
+        }
+        if (isset($data['shipping_amount'])) {
+            $this->shipping_amount = new Money($data['shipping_amount']);
+        }
+        if (isset($data['payee'])) {
+            $this->payee = new Payee($data['payee']);
+        }
+        if (isset($data['subscriber'])) {
+            $this->subscriber = new Subscriber($data['subscriber']);
+        }
+        if (isset($data['billing_info'])) {
+            $this->billing_info = new SubscriptionBillingInfo($data['billing_info']);
+        }
+        if (isset($data['auto_renewal'])) {
+            $this->auto_renewal = $data['auto_renewal'];
+        }
+        if (isset($data['create_time'])) {
+            $this->create_time = $data['create_time'];
+        }
+        if (isset($data['update_time'])) {
+            $this->update_time = $data['update_time'];
+        }
+        if (isset($data['preferred_currency_conversion'])) {
+            $this->preferred_currency_conversion = $data['preferred_currency_conversion'];
+        }
+        if (isset($data['preferred_funding_source'])) {
+            $this->preferred_funding_source = new FundingInstrumentResponse($data['preferred_funding_source']);
+        }
+        if (isset($data['links'])) {
+            $this->links = [];
+            foreach ($data['links'] as $item) {
+                $this->links[] = new LinkDescription($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        parent::__construct($data);
+        if (isset($data)) { $this->map($data); }
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -116,7 +117,24 @@ class ExternalCaseProperties implements JsonSerializable
         !isset($this->reversal_fee) ||  $this->reversal_fee->validate(ExternalCaseProperties::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['reference_id'])) {
+            $this->reference_id = $data['reference_id'];
+        }
+        if (isset($data['external_type'])) {
+            $this->external_type = $data['external_type'];
+        }
+        if (isset($data['recovery_type'])) {
+            $this->recovery_type = $data['recovery_type'];
+        }
+        if (isset($data['reversal_fee'])) {
+            $this->reversal_fee = new Money($data['reversal_fee']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

@@ -104,7 +104,27 @@ class PartnerConfigOverride implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['partner_logo_url'])) {
+            $this->partner_logo_url = $data['partner_logo_url'];
+        }
+        if (isset($data['return_url'])) {
+            $this->return_url = $data['return_url'];
+        }
+        if (isset($data['return_url_description'])) {
+            $this->return_url_description = $data['return_url_description'];
+        }
+        if (isset($data['action_renewal_url'])) {
+            $this->action_renewal_url = $data['action_renewal_url'];
+        }
+        if (isset($data['show_add_credit_card'])) {
+            $this->show_add_credit_card = $data['show_add_credit_card'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

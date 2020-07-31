@@ -81,7 +81,21 @@ class Seller implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['email'])) {
+            $this->email = $data['email'];
+        }
+        if (isset($data['merchant_id'])) {
+            $this->merchant_id = $data['merchant_id'];
+        }
+        if (isset($data['name'])) {
+            $this->name = $data['name'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

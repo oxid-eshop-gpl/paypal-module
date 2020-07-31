@@ -580,7 +580,24 @@ class TrackingInfo implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['carrier_name'])) {
+            $this->carrier_name = $data['carrier_name'];
+        }
+        if (isset($data['carrier_name_other'])) {
+            $this->carrier_name_other = $data['carrier_name_other'];
+        }
+        if (isset($data['tracking_url'])) {
+            $this->tracking_url = $data['tracking_url'];
+        }
+        if (isset($data['tracking_number'])) {
+            $this->tracking_number = $data['tracking_number'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

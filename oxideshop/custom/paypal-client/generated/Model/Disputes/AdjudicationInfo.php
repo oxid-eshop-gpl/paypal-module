@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -100,13 +101,11 @@ class AdjudicationInfo implements JsonSerializable
             $this->items,
             "items in AdjudicationInfo must be array $within"
         );
-
         if (isset($this->items)) {
             foreach ($this->items as $item) {
                 $item->validate(AdjudicationInfo::class);
             }
         }
-
         !isset($this->outcome) || Assert::isInstanceOf(
             $this->outcome,
             Outcome::class,
@@ -123,13 +122,11 @@ class AdjudicationInfo implements JsonSerializable
             $this->evidences,
             "evidences in AdjudicationInfo must be array $within"
         );
-
         if (isset($this->evidences)) {
             foreach ($this->evidences as $item) {
                 $item->validate(AdjudicationInfo::class);
             }
         }
-
         !isset($this->dispute_reason) || Assert::minLength(
             $this->dispute_reason,
             1,
@@ -154,7 +151,6 @@ class AdjudicationInfo implements JsonSerializable
             $this->messages,
             "messages in AdjudicationInfo must be array $within"
         );
-
         if (isset($this->messages)) {
             foreach ($this->messages as $item) {
                 $item->validate(AdjudicationInfo::class);
@@ -162,7 +158,45 @@ class AdjudicationInfo implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['dispute_amount'])) {
+            $this->dispute_amount = new Money($data['dispute_amount']);
+        }
+        if (isset($data['items'])) {
+            $this->items = [];
+            foreach ($data['items'] as $item) {
+                $this->items[] = new ItemInfo($item);
+            }
+        }
+        if (isset($data['outcome'])) {
+            $this->outcome = new Outcome($data['outcome']);
+        }
+        if (isset($data['extensions'])) {
+            $this->extensions = new Extensions($data['extensions']);
+        }
+        if (isset($data['evidences'])) {
+            $this->evidences = [];
+            foreach ($data['evidences'] as $item) {
+                $this->evidences[] = new Evidence($item);
+            }
+        }
+        if (isset($data['dispute_reason'])) {
+            $this->dispute_reason = $data['dispute_reason'];
+        }
+        if (isset($data['closure_reason'])) {
+            $this->closure_reason = $data['closure_reason'];
+        }
+        if (isset($data['messages'])) {
+            $this->messages = [];
+            foreach ($data['messages'] as $item) {
+                $this->messages[] = new Message($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

@@ -101,7 +101,18 @@ class IneligibleDisputeReason implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['dispute_reason'])) {
+            $this->dispute_reason = $data['dispute_reason'];
+        }
+        if (isset($data['ineligibility_reason'])) {
+            $this->ineligibility_reason = $data['ineligibility_reason'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

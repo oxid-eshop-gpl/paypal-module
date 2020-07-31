@@ -86,7 +86,21 @@ class Message implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['posted_by'])) {
+            $this->posted_by = $data['posted_by'];
+        }
+        if (isset($data['time_posted'])) {
+            $this->time_posted = $data['time_posted'];
+        }
+        if (isset($data['content'])) {
+            $this->content = $data['content'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

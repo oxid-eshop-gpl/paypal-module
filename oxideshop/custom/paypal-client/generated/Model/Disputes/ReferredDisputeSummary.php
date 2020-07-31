@@ -4,6 +4,8 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\LinkDescription;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -160,13 +162,11 @@ class ReferredDisputeSummary implements JsonSerializable
             $this->reference_disputes,
             "reference_disputes in ReferredDisputeSummary must be array $within"
         );
-
         if (isset($this->reference_disputes)) {
             foreach ($this->reference_disputes as $item) {
                 $item->validate(ReferredDisputeSummary::class);
             }
         }
-
         !isset($this->dispute_amount) || Assert::isInstanceOf(
             $this->dispute_amount,
             Money::class,
@@ -207,7 +207,6 @@ class ReferredDisputeSummary implements JsonSerializable
             $this->links,
             "links in ReferredDisputeSummary must be array $within"
         );
-
         if (isset($this->links)) {
             foreach ($this->links as $item) {
                 $item->validate(ReferredDisputeSummary::class);
@@ -215,7 +214,45 @@ class ReferredDisputeSummary implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['dispute_id'])) {
+            $this->dispute_id = $data['dispute_id'];
+        }
+        if (isset($data['create_time'])) {
+            $this->create_time = $data['create_time'];
+        }
+        if (isset($data['update_time'])) {
+            $this->update_time = $data['update_time'];
+        }
+        if (isset($data['reference_disputes'])) {
+            $this->reference_disputes = [];
+            foreach ($data['reference_disputes'] as $item) {
+                $this->reference_disputes[] = new ReferenceDispute($item);
+            }
+        }
+        if (isset($data['dispute_amount'])) {
+            $this->dispute_amount = new Money($data['dispute_amount']);
+        }
+        if (isset($data['reason'])) {
+            $this->reason = $data['reason'];
+        }
+        if (isset($data['status'])) {
+            $this->status = $data['status'];
+        }
+        if (isset($data['dispute_flow'])) {
+            $this->dispute_flow = $data['dispute_flow'];
+        }
+        if (isset($data['links'])) {
+            $this->links = [];
+            foreach ($data['links'] as $item) {
+                $this->links[] = new LinkDescription($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

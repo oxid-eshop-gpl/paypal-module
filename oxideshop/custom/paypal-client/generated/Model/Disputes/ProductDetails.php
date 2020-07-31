@@ -135,7 +135,33 @@ class ProductDetails implements JsonSerializable
         !isset($this->return_details) ||  $this->return_details->validate(ProductDetails::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['description'])) {
+            $this->description = $data['description'];
+        }
+        if (isset($data['product_received'])) {
+            $this->product_received = $data['product_received'];
+        }
+        if (isset($data['product_received_time'])) {
+            $this->product_received_time = $data['product_received_time'];
+        }
+        if (isset($data['sub_reasons'])) {
+            $this->sub_reasons = [];
+            foreach ($data['sub_reasons'] as $item) {
+                $this->sub_reasons[] = $item;
+            }
+        }
+        if (isset($data['purchase_url'])) {
+            $this->purchase_url = $data['purchase_url'];
+        }
+        if (isset($data['return_details'])) {
+            $this->return_details = new ReturnDetails($data['return_details']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

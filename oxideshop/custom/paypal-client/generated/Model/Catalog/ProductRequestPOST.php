@@ -1954,7 +1954,33 @@ class ProductRequestPOST implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['id'])) {
+            $this->id = $data['id'];
+        }
+        if (isset($data['name'])) {
+            $this->name = $data['name'];
+        }
+        if (isset($data['description'])) {
+            $this->description = $data['description'];
+        }
+        if (isset($data['type'])) {
+            $this->type = $data['type'];
+        }
+        if (isset($data['category'])) {
+            $this->category = $data['category'];
+        }
+        if (isset($data['image_url'])) {
+            $this->image_url = $data['image_url'];
+        }
+        if (isset($data['home_url'])) {
+            $this->home_url = $data['home_url'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

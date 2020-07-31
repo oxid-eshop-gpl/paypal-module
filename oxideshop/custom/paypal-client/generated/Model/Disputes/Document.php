@@ -58,7 +58,18 @@ class Document implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['name'])) {
+            $this->name = $data['name'];
+        }
+        if (isset($data['url'])) {
+            $this->url = $data['url'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

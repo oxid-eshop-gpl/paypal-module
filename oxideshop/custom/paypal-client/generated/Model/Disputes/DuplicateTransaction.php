@@ -40,7 +40,18 @@ class DuplicateTransaction implements JsonSerializable
         !isset($this->original_transaction) ||  $this->original_transaction->validate(DuplicateTransaction::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['received_duplicate'])) {
+            $this->received_duplicate = $data['received_duplicate'];
+        }
+        if (isset($data['original_transaction'])) {
+            $this->original_transaction = new TransactionInfo($data['original_transaction']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\PaymentSource;
 use Webmozart\Assert\Assert;
 
 /**
@@ -31,7 +32,19 @@ class ExtendedPaymentSource extends PaymentSource implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['contingencies'])) {
+            $this->contingencies = [];
+            foreach ($data['contingencies'] as $item) {
+                $this->contingencies[] = $item;
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        parent::__construct($data);
+        if (isset($data)) { $this->map($data); }
     }
 }

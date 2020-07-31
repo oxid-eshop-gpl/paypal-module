@@ -115,7 +115,7 @@ class Client
 
     /**
      * @param RequestInterface $request
-     * @throws Throwable for now a GuzzleException but you should not rely on this the only commitment for this
+     * @throws GuzzleException but you should not rely on this the only commitment for this
      * exception object is that the method getCode() return the http result code if there is one.
      * @return ResponseInterface
      */

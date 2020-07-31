@@ -84,7 +84,21 @@ class BusinessIncorporation implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['incorporation_country_code'])) {
+            $this->incorporation_country_code = $data['incorporation_country_code'];
+        }
+        if (isset($data['incorporation_date'])) {
+            $this->incorporation_date = $data['incorporation_date'];
+        }
+        if (isset($data['incorporation_province_code'])) {
+            $this->incorporation_province_code = $data['incorporation_province_code'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

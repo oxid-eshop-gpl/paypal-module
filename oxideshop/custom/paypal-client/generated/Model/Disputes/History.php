@@ -161,7 +161,21 @@ class History implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['date'])) {
+            $this->date = $data['date'];
+        }
+        if (isset($data['actor'])) {
+            $this->actor = $data['actor'];
+        }
+        if (isset($data['event_type'])) {
+            $this->event_type = $data['event_type'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -42,7 +43,6 @@ class RefundDetails implements JsonSerializable
             $this->refunds,
             "refunds in RefundDetails must be array $within"
         );
-
         if (isset($this->refunds)) {
             foreach ($this->refunds as $item) {
                 $item->validate(RefundDetails::class);
@@ -50,7 +50,21 @@ class RefundDetails implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['allowed_refund_amount'])) {
+            $this->allowed_refund_amount = new Money($data['allowed_refund_amount']);
+        }
+        if (isset($data['refunds'])) {
+            $this->refunds = [];
+            foreach ($data['refunds'] as $item) {
+                $this->refunds[] = new Refund($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

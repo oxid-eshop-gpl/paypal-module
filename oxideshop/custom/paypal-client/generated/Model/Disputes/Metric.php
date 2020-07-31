@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -27,7 +28,7 @@ class Metric implements JsonSerializable
     /**
      * The count of items in a group.
      *
-     * @var integer | null
+     * @var int | null
      */
     public $count;
 
@@ -55,7 +56,6 @@ class Metric implements JsonSerializable
             $this->amount,
             "amount in Metric must be array $within"
         );
-
         if (isset($this->amount)) {
             foreach ($this->amount as $item) {
                 $item->validate(Metric::class);
@@ -63,7 +63,24 @@ class Metric implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['key'])) {
+            $this->key = $data['key'];
+        }
+        if (isset($data['count'])) {
+            $this->count = $data['count'];
+        }
+        if (isset($data['amount'])) {
+            $this->amount = [];
+            foreach ($data['amount'] as $item) {
+                $this->amount[] = new Money($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

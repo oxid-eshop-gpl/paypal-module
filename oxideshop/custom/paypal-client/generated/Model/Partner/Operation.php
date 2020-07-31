@@ -84,7 +84,21 @@ class Operation implements JsonSerializable
         !isset($this->billing_agreement) ||  $this->billing_agreement->validate(Operation::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['operation'])) {
+            $this->operation = $data['operation'];
+        }
+        if (isset($data['api_integration_preference'])) {
+            $this->api_integration_preference = new IntegrationDetails($data['api_integration_preference']);
+        }
+        if (isset($data['billing_agreement'])) {
+            $this->billing_agreement = new BillingAgreement($data['billing_agreement']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

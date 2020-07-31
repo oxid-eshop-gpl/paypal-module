@@ -51,7 +51,6 @@ class EligibilityRequest implements JsonSerializable
             $this->disputed_items,
             "disputed_items in EligibilityRequest must be array $within"
         );
-
         if (isset($this->disputed_items)) {
             foreach ($this->disputed_items as $item) {
                 $item->validate(EligibilityRequest::class);
@@ -59,7 +58,21 @@ class EligibilityRequest implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['transaction_id'])) {
+            $this->transaction_id = $data['transaction_id'];
+        }
+        if (isset($data['disputed_items'])) {
+            $this->disputed_items = [];
+            foreach ($data['disputed_items'] as $item) {
+                $this->disputed_items[] = new EligibilityRequestItem($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

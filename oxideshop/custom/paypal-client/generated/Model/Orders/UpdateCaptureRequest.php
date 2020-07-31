@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\CaptureStatusDetails;
 use Webmozart\Assert\Assert;
 
 /**
@@ -94,7 +95,21 @@ class UpdateCaptureRequest implements JsonSerializable
         !isset($this->status_details) ||  $this->status_details->validate(UpdateCaptureRequest::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['id'])) {
+            $this->id = $data['id'];
+        }
+        if (isset($data['status'])) {
+            $this->status = $data['status'];
+        }
+        if (isset($data['status_details'])) {
+            $this->status_details = new CaptureStatusDetails($data['status_details']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

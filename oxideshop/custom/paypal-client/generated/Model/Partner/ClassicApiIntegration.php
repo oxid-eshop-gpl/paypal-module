@@ -96,7 +96,21 @@ class ClassicApiIntegration implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['integration_type'])) {
+            $this->integration_type = $data['integration_type'];
+        }
+        if (isset($data['third_party_details'])) {
+            $this->third_party_details = new ClassicApiIntegrationThirdPartyDetails($data['third_party_details']);
+        }
+        if (isset($data['first_party_details'])) {
+            $this->first_party_details = $data['first_party_details'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

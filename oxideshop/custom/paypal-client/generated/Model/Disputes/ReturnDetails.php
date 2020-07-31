@@ -103,7 +103,27 @@ class ReturnDetails implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['return_time'])) {
+            $this->return_time = $data['return_time'];
+        }
+        if (isset($data['mode'])) {
+            $this->mode = $data['mode'];
+        }
+        if (isset($data['receipt'])) {
+            $this->receipt = $data['receipt'];
+        }
+        if (isset($data['return_confirmation_number'])) {
+            $this->return_confirmation_number = $data['return_confirmation_number'];
+        }
+        if (isset($data['returned'])) {
+            $this->returned = $data['returned'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

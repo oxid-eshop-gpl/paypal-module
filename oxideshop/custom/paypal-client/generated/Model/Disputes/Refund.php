@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -92,7 +93,24 @@ class Refund implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['gross_amount'])) {
+            $this->gross_amount = new Money($data['gross_amount']);
+        }
+        if (isset($data['transaction_time'])) {
+            $this->transaction_time = $data['transaction_time'];
+        }
+        if (isset($data['transaction_id'])) {
+            $this->transaction_id = $data['transaction_id'];
+        }
+        if (isset($data['invoice_number'])) {
+            $this->invoice_number = $data['invoice_number'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

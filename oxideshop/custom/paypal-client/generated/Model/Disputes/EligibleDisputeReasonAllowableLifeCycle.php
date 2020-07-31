@@ -68,7 +68,18 @@ class EligibleDisputeReasonAllowableLifeCycle implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['stage'])) {
+            $this->stage = $data['stage'];
+        }
+        if (isset($data['reason'])) {
+            $this->reason = $data['reason'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

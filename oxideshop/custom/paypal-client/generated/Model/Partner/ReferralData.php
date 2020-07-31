@@ -153,13 +153,11 @@ class ReferralData extends Account implements JsonSerializable
             $this->operations,
             "operations in ReferralData must be array $within"
         );
-
         if (isset($this->operations)) {
             foreach ($this->operations as $item) {
                 $item->validate(ReferralData::class);
             }
         }
-
         Assert::notNull($this->products, "products in ReferralData must not be NULL $within");
         Assert::minCount(
             $this->products,
@@ -190,7 +188,6 @@ class ReferralData extends Account implements JsonSerializable
             $this->legal_consents,
             "legal_consents in ReferralData must be array $within"
         );
-
         if (isset($this->legal_consents)) {
             foreach ($this->legal_consents as $item) {
                 $item->validate(ReferralData::class);
@@ -198,10 +195,49 @@ class ReferralData extends Account implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['email'])) {
+            $this->email = $data['email'];
+        }
+        if (isset($data['preferred_language_code'])) {
+            $this->preferred_language_code = $data['preferred_language_code'];
+        }
+        if (isset($data['tracking_id'])) {
+            $this->tracking_id = $data['tracking_id'];
+        }
+        if (isset($data['partner_config_override'])) {
+            $this->partner_config_override = new PartnerConfigOverride($data['partner_config_override']);
+        }
+        if (isset($data['financial_instruments'])) {
+            $this->financial_instruments = new FinancialInstruments($data['financial_instruments']);
+        }
+        if (isset($data['operations'])) {
+            $this->operations = [];
+            foreach ($data['operations'] as $item) {
+                $this->operations[] = new Operation($item);
+            }
+        }
+        if (isset($data['products'])) {
+            $this->products = [];
+            foreach ($data['products'] as $item) {
+                $this->products[] = $item;
+            }
+        }
+        if (isset($data['legal_consents'])) {
+            $this->legal_consents = [];
+            foreach ($data['legal_consents'] as $item) {
+                $this->legal_consents[] = new LegalConsent($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        parent::__construct($data);
         $this->operations = [];
         $this->products = [];
         $this->legal_consents = [];
+        if (isset($data)) { $this->map($data); }
     }
 }

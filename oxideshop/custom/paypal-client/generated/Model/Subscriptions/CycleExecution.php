@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -36,14 +37,14 @@ class CycleExecution implements JsonSerializable
     /**
      * The order in which to run this cycle among other billing cycles.
      *
-     * @var integer
+     * @var int
      */
     public $sequence;
 
     /**
      * The number of billing cycles that have completed.
      *
-     * @var integer
+     * @var int
      */
     public $cycles_completed;
 
@@ -51,14 +52,14 @@ class CycleExecution implements JsonSerializable
      * For a finite billing cycle, cycles_remaining is the number of remaining cycles. For an infinite billing cycle,
      * cycles_remaining is set as 0.
      *
-     * @var integer | null
+     * @var int | null
      */
     public $cycles_remaining;
 
     /**
      * The active pricing scheme version for the billing cycle.
      *
-     * @var integer | null
+     * @var int | null
      */
     public $current_pricing_scheme_version;
 
@@ -75,7 +76,7 @@ class CycleExecution implements JsonSerializable
      * billing cycles can be executed infinite times (value of <code>0</code> for <code>total_cycles</code>) or a
      * finite number of times (value between <code>1</code> and <code>999</code> for <code>total_cycles</code>).
      *
-     * @var integer | null
+     * @var int | null
      */
     public $total_cycles;
 
@@ -103,7 +104,33 @@ class CycleExecution implements JsonSerializable
         !isset($this->amount_payable_per_cycle) ||  $this->amount_payable_per_cycle->validate(CycleExecution::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['tenure_type'])) {
+            $this->tenure_type = $data['tenure_type'];
+        }
+        if (isset($data['sequence'])) {
+            $this->sequence = $data['sequence'];
+        }
+        if (isset($data['cycles_completed'])) {
+            $this->cycles_completed = $data['cycles_completed'];
+        }
+        if (isset($data['cycles_remaining'])) {
+            $this->cycles_remaining = $data['cycles_remaining'];
+        }
+        if (isset($data['current_pricing_scheme_version'])) {
+            $this->current_pricing_scheme_version = $data['current_pricing_scheme_version'];
+        }
+        if (isset($data['amount_payable_per_cycle'])) {
+            $this->amount_payable_per_cycle = new Money($data['amount_payable_per_cycle']);
+        }
+        if (isset($data['total_cycles'])) {
+            $this->total_cycles = $data['total_cycles'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

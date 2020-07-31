@@ -4,6 +4,8 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\LinkDescription;
+use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\Payee;
 use Webmozart\Assert\Assert;
 
 /**
@@ -42,7 +44,7 @@ class Plan implements JsonSerializable
     /**
      * The version of the plan.
      *
-     * @var integer | null
+     * @var int | null
      */
     public $version;
 
@@ -243,13 +245,11 @@ class Plan implements JsonSerializable
             $this->billing_cycles,
             "billing_cycles in Plan must be array $within"
         );
-
         if (isset($this->billing_cycles)) {
             foreach ($this->billing_cycles as $item) {
                 $item->validate(Plan::class);
             }
         }
-
         !isset($this->payment_preferences) || Assert::isInstanceOf(
             $this->payment_preferences,
             PaymentPreferences::class,
@@ -292,7 +292,6 @@ class Plan implements JsonSerializable
             $this->links,
             "links in Plan must be array $within"
         );
-
         if (isset($this->links)) {
             foreach ($this->links as $item) {
                 $item->validate(Plan::class);
@@ -300,8 +299,64 @@ class Plan implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['id'])) {
+            $this->id = $data['id'];
+        }
+        if (isset($data['version'])) {
+            $this->version = $data['version'];
+        }
+        if (isset($data['product_id'])) {
+            $this->product_id = $data['product_id'];
+        }
+        if (isset($data['name'])) {
+            $this->name = $data['name'];
+        }
+        if (isset($data['status'])) {
+            $this->status = $data['status'];
+        }
+        if (isset($data['description'])) {
+            $this->description = $data['description'];
+        }
+        if (isset($data['usage_type'])) {
+            $this->usage_type = $data['usage_type'];
+        }
+        if (isset($data['billing_cycles'])) {
+            $this->billing_cycles = [];
+            foreach ($data['billing_cycles'] as $item) {
+                $this->billing_cycles[] = new BillingCycle($item);
+            }
+        }
+        if (isset($data['payment_preferences'])) {
+            $this->payment_preferences = new PaymentPreferences($data['payment_preferences']);
+        }
+        if (isset($data['taxes'])) {
+            $this->taxes = new Taxes($data['taxes']);
+        }
+        if (isset($data['quantity_supported'])) {
+            $this->quantity_supported = $data['quantity_supported'];
+        }
+        if (isset($data['payee'])) {
+            $this->payee = new Payee($data['payee']);
+        }
+        if (isset($data['create_time'])) {
+            $this->create_time = $data['create_time'];
+        }
+        if (isset($data['update_time'])) {
+            $this->update_time = $data['update_time'];
+        }
+        if (isset($data['links'])) {
+            $this->links = [];
+            foreach ($data['links'] as $item) {
+                $this->links[] = new LinkDescription($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->billing_cycles = [];
+        if (isset($data)) { $this->map($data); }
     }
 }

@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -46,7 +47,18 @@ class CanceledRecurringBilling implements JsonSerializable
         !isset($this->cancellation_details) ||  $this->cancellation_details->validate(CanceledRecurringBilling::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['expected_refund'])) {
+            $this->expected_refund = new Money($data['expected_refund']);
+        }
+        if (isset($data['cancellation_details'])) {
+            $this->cancellation_details = new CancellationDetails($data['cancellation_details']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

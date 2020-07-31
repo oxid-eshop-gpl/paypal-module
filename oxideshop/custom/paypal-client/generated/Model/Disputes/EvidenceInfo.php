@@ -36,20 +36,35 @@ class EvidenceInfo implements JsonSerializable
             $this->tracking_info,
             "tracking_info in EvidenceInfo must be array $within"
         );
-
         if (isset($this->tracking_info)) {
             foreach ($this->tracking_info as $item) {
                 $item->validate(EvidenceInfo::class);
             }
         }
-
         !isset($this->refund_ids) || Assert::isArray(
             $this->refund_ids,
             "refund_ids in EvidenceInfo must be array $within"
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['tracking_info'])) {
+            $this->tracking_info = [];
+            foreach ($data['tracking_info'] as $item) {
+                $this->tracking_info[] = new TrackingInfo($item);
+            }
+        }
+        if (isset($data['refund_ids'])) {
+            $this->refund_ids = [];
+            foreach ($data['refund_ids'] as $item) {
+                $this->refund_ids[] = $item;
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

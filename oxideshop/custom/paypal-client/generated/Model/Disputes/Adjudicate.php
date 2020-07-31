@@ -48,7 +48,15 @@ class Adjudicate implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['adjudication_outcome'])) {
+            $this->adjudication_outcome = $data['adjudication_outcome'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

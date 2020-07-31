@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\AddressPortable;
 use Webmozart\Assert\Assert;
 
 /**
@@ -90,7 +91,24 @@ class MerchandizeDisputeProperties implements JsonSerializable
         !isset($this->return_shipping_address) ||  $this->return_shipping_address->validate(MerchandizeDisputeProperties::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['issue_type'])) {
+            $this->issue_type = $data['issue_type'];
+        }
+        if (isset($data['product_details'])) {
+            $this->product_details = new ProductDetails($data['product_details']);
+        }
+        if (isset($data['service_details'])) {
+            $this->service_details = new ServiceDetails($data['service_details']);
+        }
+        if (isset($data['return_shipping_address'])) {
+            $this->return_shipping_address = new AddressPortable($data['return_shipping_address']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

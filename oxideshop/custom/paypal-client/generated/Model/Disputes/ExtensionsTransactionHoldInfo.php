@@ -65,7 +65,21 @@ class ExtensionsTransactionHoldInfo implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['hold_required'])) {
+            $this->hold_required = $data['hold_required'];
+        }
+        if (isset($data['id'])) {
+            $this->id = $data['id'];
+        }
+        if (isset($data['reason'])) {
+            $this->reason = $data['reason'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

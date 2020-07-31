@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\PaymentMethod;
 use Webmozart\Assert\Assert;
 
 /**
@@ -148,7 +149,30 @@ class CustomizedXUnsupportedNineEightNineFourApplicationContext implements JsonS
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['brand_name'])) {
+            $this->brand_name = $data['brand_name'];
+        }
+        if (isset($data['locale'])) {
+            $this->locale = $data['locale'];
+        }
+        if (isset($data['shipping_preference'])) {
+            $this->shipping_preference = $data['shipping_preference'];
+        }
+        if (isset($data['payment_method'])) {
+            $this->payment_method = new PaymentMethod($data['payment_method']);
+        }
+        if (isset($data['return_url'])) {
+            $this->return_url = $data['return_url'];
+        }
+        if (isset($data['cancel_url'])) {
+            $this->cancel_url = $data['cancel_url'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

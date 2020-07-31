@@ -78,7 +78,21 @@ class BusinessCategory implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['category'])) {
+            $this->category = $data['category'];
+        }
+        if (isset($data['sub_category'])) {
+            $this->sub_category = $data['sub_category'];
+        }
+        if (isset($data['mcc_code'])) {
+            $this->mcc_code = $data['mcc_code'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

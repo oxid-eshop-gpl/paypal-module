@@ -191,7 +191,30 @@ class ReversalAction implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['id'])) {
+            $this->id = $data['id'];
+        }
+        if (isset($data['original_activity_id'])) {
+            $this->original_activity_id = $data['original_activity_id'];
+        }
+        if (isset($data['entity_type'])) {
+            $this->entity_type = $data['entity_type'];
+        }
+        if (isset($data['entity_subtype'])) {
+            $this->entity_subtype = $data['entity_subtype'];
+        }
+        if (isset($data['action_performed'])) {
+            $this->action_performed = $data['action_performed'];
+        }
+        if (isset($data['status'])) {
+            $this->status = $data['status'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

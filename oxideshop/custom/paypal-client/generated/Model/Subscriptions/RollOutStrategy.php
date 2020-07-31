@@ -68,7 +68,18 @@ class RollOutStrategy implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['effective_time'])) {
+            $this->effective_time = $data['effective_time'];
+        }
+        if (isset($data['process_change_from'])) {
+            $this->process_change_from = $data['process_change_from'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

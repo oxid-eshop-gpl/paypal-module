@@ -66,7 +66,6 @@ class CustomerServiceContact implements JsonSerializable
             $this->phones,
             "phones in CustomerServiceContact must be array $within"
         );
-
         if (isset($this->phones)) {
             foreach ($this->phones as $item) {
                 $item->validate(CustomerServiceContact::class);
@@ -74,9 +73,26 @@ class CustomerServiceContact implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['emails'])) {
+            $this->emails = [];
+            foreach ($data['emails'] as $item) {
+                $this->emails[] = $item;
+            }
+        }
+        if (isset($data['phones'])) {
+            $this->phones = [];
+            foreach ($data['phones'] as $item) {
+                $this->phones[] = new PhoneInfo($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->emails = [];
         $this->phones = [];
+        if (isset($data)) { $this->map($data); }
     }
 }

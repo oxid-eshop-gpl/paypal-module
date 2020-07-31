@@ -85,7 +85,24 @@ class Cancel implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['note'])) {
+            $this->note = $data['note'];
+        }
+        if (isset($data['transaction_ids'])) {
+            $this->transaction_ids = [];
+            foreach ($data['transaction_ids'] as $item) {
+                $this->transaction_ids[] = $item;
+            }
+        }
+        if (isset($data['cancellation_reason'])) {
+            $this->cancellation_reason = $data['cancellation_reason'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

@@ -4,6 +4,8 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
+use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\ShippingDetail;
 use Webmozart\Assert\Assert;
 
 /**
@@ -107,7 +109,27 @@ class CustomizedXUnsupportedFiveEightSevenFiveSubscriptionReviseRequest implemen
         !isset($this->shipping_address) ||  $this->shipping_address->validate(CustomizedXUnsupportedFiveEightSevenFiveSubscriptionReviseRequest::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['plan_id'])) {
+            $this->plan_id = $data['plan_id'];
+        }
+        if (isset($data['quantity'])) {
+            $this->quantity = $data['quantity'];
+        }
+        if (isset($data['effective_time'])) {
+            $this->effective_time = $data['effective_time'];
+        }
+        if (isset($data['shipping_amount'])) {
+            $this->shipping_amount = new Money($data['shipping_amount']);
+        }
+        if (isset($data['shipping_address'])) {
+            $this->shipping_address = new ShippingDetail($data['shipping_address']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

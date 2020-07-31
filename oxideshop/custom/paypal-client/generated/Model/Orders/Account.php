@@ -239,8 +239,46 @@ class Account implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['account_number'])) {
+            $this->account_number = $data['account_number'];
+        }
+        if (isset($data['account_id'])) {
+            $this->account_id = $data['account_id'];
+        }
+        if (isset($data['tier'])) {
+            $this->tier = $data['tier'];
+        }
+        if (isset($data['registration_type'])) {
+            $this->registration_type = $data['registration_type'];
+        }
+        if (isset($data['legal_country_code'])) {
+            $this->legal_country_code = $data['legal_country_code'];
+        }
+        if (isset($data['account_tags'])) {
+            $this->account_tags = [];
+            foreach ($data['account_tags'] as $item) {
+                $this->account_tags[] = $item;
+            }
+        }
+        if (isset($data['status'])) {
+            $this->status = $data['status'];
+        }
+        if (isset($data['pricing_category'])) {
+            $this->pricing_category = $data['pricing_category'];
+        }
+        if (isset($data['legal_entity'])) {
+            $this->legal_entity = $data['legal_entity'];
+        }
+        if (isset($data['time_created'])) {
+            $this->time_created = $data['time_created'];
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->account_tags = [];
+        if (isset($data)) { $this->map($data); }
     }
 }

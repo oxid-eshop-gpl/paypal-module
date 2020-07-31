@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\LinkDescription;
 use Webmozart\Assert\Assert;
 
 /**
@@ -27,14 +28,14 @@ class PlanCollection implements JsonSerializable
     /**
      * The total number of items.
      *
-     * @var integer | null
+     * @var int | null
      */
     public $total_items;
 
     /**
      * The total number of pages.
      *
-     * @var integer | null
+     * @var int | null
      */
     public $total_pages;
 
@@ -63,18 +64,15 @@ class PlanCollection implements JsonSerializable
             $this->plans,
             "plans in PlanCollection must be array $within"
         );
-
         if (isset($this->plans)) {
             foreach ($this->plans as $item) {
                 $item->validate(PlanCollection::class);
             }
         }
-
         !isset($this->links) || Assert::isArray(
             $this->links,
             "links in PlanCollection must be array $within"
         );
-
         if (isset($this->links)) {
             foreach ($this->links as $item) {
                 $item->validate(PlanCollection::class);
@@ -82,8 +80,31 @@ class PlanCollection implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['plans'])) {
+            $this->plans = [];
+            foreach ($data['plans'] as $item) {
+                $this->plans[] = new Plan($item);
+            }
+        }
+        if (isset($data['total_items'])) {
+            $this->total_items = $data['total_items'];
+        }
+        if (isset($data['total_pages'])) {
+            $this->total_pages = $data['total_pages'];
+        }
+        if (isset($data['links'])) {
+            $this->links = [];
+            foreach ($data['links'] as $item) {
+                $this->links[] = new LinkDescription($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->plans = [];
+        if (isset($data)) { $this->map($data); }
     }
 }

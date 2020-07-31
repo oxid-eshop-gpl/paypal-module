@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\LinkDescription;
 use Webmozart\Assert\Assert;
 
 /**
@@ -25,14 +26,14 @@ class ReferredDisputes implements JsonSerializable
     /**
      * The total number of items/Disputes available for the given search criteria.
      *
-     * @var integer | null
+     * @var int | null
      */
     public $total_items;
 
     /**
      * The total number of pages in the response.
      *
-     * @var integer | null
+     * @var int | null
      */
     public $total_pages;
 
@@ -50,18 +51,15 @@ class ReferredDisputes implements JsonSerializable
             $this->items,
             "items in ReferredDisputes must be array $within"
         );
-
         if (isset($this->items)) {
             foreach ($this->items as $item) {
                 $item->validate(ReferredDisputes::class);
             }
         }
-
         !isset($this->links) || Assert::isArray(
             $this->links,
             "links in ReferredDisputes must be array $within"
         );
-
         if (isset($this->links)) {
             foreach ($this->links as $item) {
                 $item->validate(ReferredDisputes::class);
@@ -69,7 +67,30 @@ class ReferredDisputes implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['items'])) {
+            $this->items = [];
+            foreach ($data['items'] as $item) {
+                $this->items[] = new ReferredDisputeSummary($item);
+            }
+        }
+        if (isset($data['total_items'])) {
+            $this->total_items = $data['total_items'];
+        }
+        if (isset($data['total_pages'])) {
+            $this->total_pages = $data['total_pages'];
+        }
+        if (isset($data['links'])) {
+            $this->links = [];
+            foreach ($data['links'] as $item) {
+                $this->links[] = new LinkDescription($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

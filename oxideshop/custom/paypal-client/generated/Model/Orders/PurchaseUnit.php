@@ -4,6 +4,12 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\AmountWithBreakdown;
+use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\Item;
+use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\Payee;
+use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\PaymentInstruction;
+use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\ShippingDetail;
+use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\SupplementaryData;
 use Webmozart\Assert\Assert;
 
 /**
@@ -191,13 +197,11 @@ class PurchaseUnit implements JsonSerializable
             $this->items,
             "items in PurchaseUnit must be array $within"
         );
-
         if (isset($this->items)) {
             foreach ($this->items as $item) {
                 $item->validate(PurchaseUnit::class);
             }
         }
-
         !isset($this->shipping) || Assert::isInstanceOf(
             $this->shipping,
             ShippingDetail::class,
@@ -218,7 +222,54 @@ class PurchaseUnit implements JsonSerializable
         !isset($this->payments) ||  $this->payments->validate(PurchaseUnit::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['reference_id'])) {
+            $this->reference_id = $data['reference_id'];
+        }
+        if (isset($data['amount'])) {
+            $this->amount = new AmountWithBreakdown($data['amount']);
+        }
+        if (isset($data['payee'])) {
+            $this->payee = new Payee($data['payee']);
+        }
+        if (isset($data['payment_instruction'])) {
+            $this->payment_instruction = new PaymentInstruction($data['payment_instruction']);
+        }
+        if (isset($data['description'])) {
+            $this->description = $data['description'];
+        }
+        if (isset($data['custom_id'])) {
+            $this->custom_id = $data['custom_id'];
+        }
+        if (isset($data['invoice_id'])) {
+            $this->invoice_id = $data['invoice_id'];
+        }
+        if (isset($data['id'])) {
+            $this->id = $data['id'];
+        }
+        if (isset($data['soft_descriptor'])) {
+            $this->soft_descriptor = $data['soft_descriptor'];
+        }
+        if (isset($data['items'])) {
+            $this->items = [];
+            foreach ($data['items'] as $item) {
+                $this->items[] = new Item($item);
+            }
+        }
+        if (isset($data['shipping'])) {
+            $this->shipping = new ShippingDetail($data['shipping']);
+        }
+        if (isset($data['supplementary_data'])) {
+            $this->supplementary_data = new SupplementaryData($data['supplementary_data']);
+        }
+        if (isset($data['payments'])) {
+            $this->payments = new PaymentCollection($data['payments']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

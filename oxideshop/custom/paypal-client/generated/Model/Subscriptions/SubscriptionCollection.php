@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\LinkDescription;
 use Webmozart\Assert\Assert;
 
 /**
@@ -27,14 +28,14 @@ class SubscriptionCollection implements JsonSerializable
     /**
      * The total number of items.
      *
-     * @var integer | null
+     * @var int | null
      */
     public $total_items;
 
     /**
      * The total number of pages.
      *
-     * @var integer | null
+     * @var int | null
      */
     public $total_pages;
 
@@ -63,18 +64,15 @@ class SubscriptionCollection implements JsonSerializable
             $this->subscriptions,
             "subscriptions in SubscriptionCollection must be array $within"
         );
-
         if (isset($this->subscriptions)) {
             foreach ($this->subscriptions as $item) {
                 $item->validate(SubscriptionCollection::class);
             }
         }
-
         !isset($this->links) || Assert::isArray(
             $this->links,
             "links in SubscriptionCollection must be array $within"
         );
-
         if (isset($this->links)) {
             foreach ($this->links as $item) {
                 $item->validate(SubscriptionCollection::class);
@@ -82,8 +80,31 @@ class SubscriptionCollection implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['subscriptions'])) {
+            $this->subscriptions = [];
+            foreach ($data['subscriptions'] as $item) {
+                $this->subscriptions[] = new Subscription($item);
+            }
+        }
+        if (isset($data['total_items'])) {
+            $this->total_items = $data['total_items'];
+        }
+        if (isset($data['total_pages'])) {
+            $this->total_pages = $data['total_pages'];
+        }
+        if (isset($data['links'])) {
+            $this->links = [];
+            foreach ($data['links'] as $item) {
+                $this->links[] = new LinkDescription($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->subscriptions = [];
+        if (isset($data)) { $this->map($data); }
     }
 }

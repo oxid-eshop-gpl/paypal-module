@@ -103,7 +103,24 @@ class RestApiIntegration implements JsonSerializable
         !isset($this->third_party_details) ||  $this->third_party_details->validate(RestApiIntegration::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['integration_method'])) {
+            $this->integration_method = $data['integration_method'];
+        }
+        if (isset($data['integration_type'])) {
+            $this->integration_type = $data['integration_type'];
+        }
+        if (isset($data['first_party_details'])) {
+            $this->first_party_details = new RestApiIntegrationFirstPartyDetails($data['first_party_details']);
+        }
+        if (isset($data['third_party_details'])) {
+            $this->third_party_details = new RestApiIntegrationThirdPartyDetails($data['third_party_details']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

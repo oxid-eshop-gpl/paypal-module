@@ -78,13 +78,11 @@ class BusinessEntity extends Business implements JsonSerializable
             $this->office_bearers,
             "office_bearers in BusinessEntity must be array $within"
         );
-
         if (isset($this->office_bearers)) {
             foreach ($this->office_bearers as $item) {
                 $item->validate(BusinessEntity::class);
             }
         }
-
         !isset($this->annual_sales_volume_range) || Assert::isInstanceOf(
             $this->annual_sales_volume_range,
             CurrencyRange::class,
@@ -109,8 +107,32 @@ class BusinessEntity extends Business implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['beneficial_owners'])) {
+            $this->beneficial_owners = new BeneficialOwners($data['beneficial_owners']);
+        }
+        if (isset($data['office_bearers'])) {
+            $this->office_bearers = [];
+            foreach ($data['office_bearers'] as $item) {
+                $this->office_bearers[] = new OfficeBearer($item);
+            }
+        }
+        if (isset($data['annual_sales_volume_range'])) {
+            $this->annual_sales_volume_range = new CurrencyRange($data['annual_sales_volume_range']);
+        }
+        if (isset($data['average_monthly_volume_range'])) {
+            $this->average_monthly_volume_range = new CurrencyRange($data['average_monthly_volume_range']);
+        }
+        if (isset($data['business_description'])) {
+            $this->business_description = $data['business_description'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        parent::__construct($data);
         $this->office_bearers = [];
+        if (isset($data)) { $this->map($data); }
     }
 }

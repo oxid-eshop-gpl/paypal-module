@@ -4,6 +4,8 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV4\IdentityDocument;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV4\Name;
 use Webmozart\Assert\Assert;
 
 /**
@@ -76,13 +78,11 @@ class Person extends Party implements JsonSerializable
             $this->names,
             "names in Person must be array $within"
         );
-
         if (isset($this->names)) {
             foreach ($this->names as $item) {
                 $item->validate(Person::class);
             }
         }
-
         !isset($this->citizenship) || Assert::minLength(
             $this->citizenship,
             2,
@@ -118,7 +118,6 @@ class Person extends Party implements JsonSerializable
             $this->identifications,
             "identifications in Person must be array $within"
         );
-
         if (isset($this->identifications)) {
             foreach ($this->identifications as $item) {
                 $item->validate(Person::class);
@@ -126,9 +125,33 @@ class Person extends Party implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['names'])) {
+            $this->names = [];
+            foreach ($data['names'] as $item) {
+                $this->names[] = new Name($item);
+            }
+        }
+        if (isset($data['citizenship'])) {
+            $this->citizenship = $data['citizenship'];
+        }
+        if (isset($data['birth_date'])) {
+            $this->birth_date = $data['birth_date'];
+        }
+        if (isset($data['identifications'])) {
+            $this->identifications = [];
+            foreach ($data['identifications'] as $item) {
+                $this->identifications[] = new IdentityDocument($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        parent::__construct($data);
         $this->names = [];
         $this->identifications = [];
+        if (isset($data)) { $this->map($data); }
     }
 }

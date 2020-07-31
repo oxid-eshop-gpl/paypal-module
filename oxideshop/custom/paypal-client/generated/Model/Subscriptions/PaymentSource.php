@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\Card;
 use Webmozart\Assert\Assert;
 
 /**
@@ -35,7 +36,15 @@ class PaymentSource implements JsonSerializable
         !isset($this->card) ||  $this->card->validate(PaymentSource::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['card'])) {
+            $this->card = new Card($data['card']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

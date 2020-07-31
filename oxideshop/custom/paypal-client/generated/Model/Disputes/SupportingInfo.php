@@ -81,13 +81,11 @@ class SupportingInfo implements JsonSerializable
             $this->documents,
             "documents in SupportingInfo must be array $within"
         );
-
         if (isset($this->documents)) {
             foreach ($this->documents as $item) {
                 $item->validate(SupportingInfo::class);
             }
         }
-
         !isset($this->source) || Assert::minLength(
             $this->source,
             1,
@@ -110,7 +108,27 @@ class SupportingInfo implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['notes'])) {
+            $this->notes = $data['notes'];
+        }
+        if (isset($data['documents'])) {
+            $this->documents = [];
+            foreach ($data['documents'] as $item) {
+                $this->documents[] = new Document($item);
+            }
+        }
+        if (isset($data['source'])) {
+            $this->source = $data['source'];
+        }
+        if (isset($data['provided_time'])) {
+            $this->provided_time = $data['provided_time'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

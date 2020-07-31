@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -100,7 +101,27 @@ class CreditNotProcessed implements JsonSerializable
         !isset($this->service_details) ||  $this->service_details->validate(CreditNotProcessed::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['issue_type'])) {
+            $this->issue_type = $data['issue_type'];
+        }
+        if (isset($data['expected_refund'])) {
+            $this->expected_refund = new Money($data['expected_refund']);
+        }
+        if (isset($data['cancellation_details'])) {
+            $this->cancellation_details = new CancellationDetails($data['cancellation_details']);
+        }
+        if (isset($data['product_details'])) {
+            $this->product_details = new ProductDetails($data['product_details']);
+        }
+        if (isset($data['service_details'])) {
+            $this->service_details = new ServiceDetails($data['service_details']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

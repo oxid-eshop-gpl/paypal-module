@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV4\Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -41,7 +42,18 @@ class AuthTolerance implements JsonSerializable
         !isset($this->absolute) ||  $this->absolute->validate(AuthTolerance::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['percent'])) {
+            $this->percent = $data['percent'];
+        }
+        if (isset($data['absolute'])) {
+            $this->absolute = new Money($data['absolute']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

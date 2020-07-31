@@ -46,7 +46,18 @@ class BillingExperiencePreference implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['experience_id'])) {
+            $this->experience_id = $data['experience_id'];
+        }
+        if (isset($data['billing_context_set'])) {
+            $this->billing_context_set = $data['billing_context_set'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

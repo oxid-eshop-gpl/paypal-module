@@ -47,7 +47,18 @@ class IntegrationDetails implements JsonSerializable
         !isset($this->rest_api_integration) ||  $this->rest_api_integration->validate(IntegrationDetails::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['classic_api_integration'])) {
+            $this->classic_api_integration = new ClassicApiIntegration($data['classic_api_integration']);
+        }
+        if (isset($data['rest_api_integration'])) {
+            $this->rest_api_integration = new RestApiIntegration($data['rest_api_integration']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

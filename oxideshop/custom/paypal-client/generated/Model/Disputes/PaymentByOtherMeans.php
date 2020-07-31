@@ -103,7 +103,24 @@ class PaymentByOtherMeans implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['charge_different_from_original'])) {
+            $this->charge_different_from_original = $data['charge_different_from_original'];
+        }
+        if (isset($data['received_duplicate'])) {
+            $this->received_duplicate = $data['received_duplicate'];
+        }
+        if (isset($data['payment_method'])) {
+            $this->payment_method = $data['payment_method'];
+        }
+        if (isset($data['payment_instrument_suffix'])) {
+            $this->payment_instrument_suffix = $data['payment_instrument_suffix'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

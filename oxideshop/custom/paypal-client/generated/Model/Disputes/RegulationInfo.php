@@ -89,7 +89,18 @@ class RegulationInfo implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['regulation_covered'])) {
+            $this->regulation_covered = $data['regulation_covered'];
+        }
+        if (isset($data['resolution_sla'])) {
+            $this->resolution_sla = $data['resolution_sla'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

@@ -164,13 +164,11 @@ class Party implements JsonSerializable
             $this->phones,
             "phones in Party must be array $within"
         );
-
         if (isset($this->phones)) {
             foreach ($this->phones as $item) {
                 $item->validate(Party::class);
             }
         }
-
         Assert::notNull($this->addresses, "addresses in Party must not be NULL $within");
         Assert::minCount(
             $this->addresses,
@@ -186,13 +184,11 @@ class Party implements JsonSerializable
             $this->addresses,
             "addresses in Party must be array $within"
         );
-
         if (isset($this->addresses)) {
             foreach ($this->addresses as $item) {
                 $item->validate(Party::class);
             }
         }
-
         !isset($this->create_time) || Assert::minLength(
             $this->create_time,
             20,
@@ -215,10 +211,51 @@ class Party implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['id'])) {
+            $this->id = $data['id'];
+        }
+        if (isset($data['external_id'])) {
+            $this->external_id = $data['external_id'];
+        }
+        if (isset($data['primary'])) {
+            $this->primary = $data['primary'];
+        }
+        if (isset($data['primary_email'])) {
+            $this->primary_email = $data['primary_email'];
+        }
+        if (isset($data['emails'])) {
+            $this->emails = [];
+            foreach ($data['emails'] as $item) {
+                $this->emails[] = $item;
+            }
+        }
+        if (isset($data['phones'])) {
+            $this->phones = [];
+            foreach ($data['phones'] as $item) {
+                $this->phones[] = new PhoneInfo($item);
+            }
+        }
+        if (isset($data['addresses'])) {
+            $this->addresses = [];
+            foreach ($data['addresses'] as $item) {
+                $this->addresses[] = new AddressWithConfirmation($item);
+            }
+        }
+        if (isset($data['create_time'])) {
+            $this->create_time = $data['create_time'];
+        }
+        if (isset($data['update_time'])) {
+            $this->update_time = $data['update_time'];
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->emails = [];
         $this->phones = [];
         $this->addresses = [];
+        if (isset($data)) { $this->map($data); }
     }
 }

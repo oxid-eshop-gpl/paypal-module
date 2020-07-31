@@ -36,7 +36,6 @@ class Metrics implements JsonSerializable
             $this->metrics,
             "metrics in Metrics must be array $within"
         );
-
         if (isset($this->metrics)) {
             foreach ($this->metrics as $item) {
                 $item->validate(Metrics::class);
@@ -44,8 +43,19 @@ class Metrics implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['metrics'])) {
+            $this->metrics = [];
+            foreach ($data['metrics'] as $item) {
+                $this->metrics[] = new Metric($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->metrics = [];
+        if (isset($data)) { $this->map($data); }
     }
 }

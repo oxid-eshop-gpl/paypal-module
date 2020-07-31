@@ -98,7 +98,21 @@ class Outcome implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['faulty_party'])) {
+            $this->faulty_party = $data['faulty_party'];
+        }
+        if (isset($data['adjudication_reason'])) {
+            $this->adjudication_reason = $data['adjudication_reason'];
+        }
+        if (isset($data['resolution_date'])) {
+            $this->resolution_date = $data['resolution_date'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

@@ -68,7 +68,18 @@ class Email implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['type'])) {
+            $this->type = $data['type'];
+        }
+        if (isset($data['email'])) {
+            $this->email = $data['email'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }

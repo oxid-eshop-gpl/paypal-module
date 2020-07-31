@@ -85,7 +85,27 @@ class BillingDisputesProperties implements JsonSerializable
         !isset($this->canceled_recurring_billing) ||  $this->canceled_recurring_billing->validate(BillingDisputesProperties::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['duplicate_transaction'])) {
+            $this->duplicate_transaction = new DuplicateTransaction($data['duplicate_transaction']);
+        }
+        if (isset($data['incorrect_transaction_amount'])) {
+            $this->incorrect_transaction_amount = new IncorrectTransactionAmount($data['incorrect_transaction_amount']);
+        }
+        if (isset($data['payment_by_other_means'])) {
+            $this->payment_by_other_means = new PaymentByOtherMeans($data['payment_by_other_means']);
+        }
+        if (isset($data['credit_not_processed'])) {
+            $this->credit_not_processed = new CreditNotProcessed($data['credit_not_processed']);
+        }
+        if (isset($data['canceled_recurring_billing'])) {
+            $this->canceled_recurring_billing = new CanceledRecurringBilling($data['canceled_recurring_billing']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) { $this->map($data); }
     }
 }
