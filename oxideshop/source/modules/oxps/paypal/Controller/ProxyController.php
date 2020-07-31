@@ -37,7 +37,6 @@ use OxidProfessionalServices\PayPal\Core\ServiceFactory;
  */
 class ProxyController extends FrontendController
 {
-
     public function createOrder()
     {
         $context = (string) Registry::getRequest()->getRequestEscapedParameter('context', 'continue');
@@ -81,11 +80,11 @@ class ProxyController extends FrontendController
 
             try {
                 /** @var Order $response */
-                if($context !== 'continue') {
+                if($context === 'pay_now') {
                     $response = $service->capturePaymentForOrder('', $orderId, $request, '');
                     $orderManager->prepareOrderForPayNowFromCaptureOrderResponse($response);
                 } else {
-                    $orderManager->prepareOrderForContinue($response);
+                    $orderManager->prepareOrderForContinue($orderId);
                 }
             } catch (Exception $exception) {
                 Registry::getLogger()->error("Error on order capture call.", [$exception]);

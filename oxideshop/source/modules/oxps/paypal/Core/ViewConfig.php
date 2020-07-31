@@ -32,12 +32,12 @@ class ViewConfig extends ViewConfig_parent
     /**
      * This could be
      *
-     * continue allows adding multiple items with checkout
-     * pay_now direct payment and capture
+     * @string continue allows adding multiple items with checkout
+     * @string pay_now direct payment and capture
      *
      * @var string
      */
-    private $paymentFlowStrategy = 'pay_now';
+    private $paymentFlowStrategy = 'continue';
 
     /**
      * @return string
