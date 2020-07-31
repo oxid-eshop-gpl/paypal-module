@@ -50,8 +50,8 @@ class ServiceFactory
         if ($this->client === null) {
             /** @var Config $config */
             $config = oxNew(Config::class);
-            $client = oxNew(
-                Client::class,
+
+            $client = new Client(
                 Registry::getLogger(),
                 $config->isSandbox() ? Client::SANDBOX_URL : Client::PRODUCTION_URL,
                 $config->getClientId(),
@@ -62,6 +62,7 @@ class ServiceFactory
                 //so not ask for it on the configuration page
                 false
             );
+
             $this->client = $client;
         }
 

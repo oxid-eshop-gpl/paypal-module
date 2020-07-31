@@ -22,6 +22,8 @@
 
 namespace OxidProfessionalServices\PayPal\Core;
 
+use OxidEsales\Eshop\Core\Registry;
+
 /**
  * @mixin \OxidEsales\Eshop\Core\ViewConfig
  */
@@ -41,5 +43,30 @@ class ViewConfig extends ViewConfig_parent
     public function getPayPalConfig(): Config
     {
         return oxNew(Config::class);
+    }
+
+    /**
+     * Gets PayPal JS SDK url
+     *
+     * @return string
+     */
+    public function getPayPalJsSdkUrl(): string
+    {
+        $payPalConfig = $this->getPayPalConfig();
+        $config = Registry::getConfig();
+
+        $params = [];
+
+        $params['client-id'] = $payPalConfig->getClientId();
+        $params['integration-date'] = Constants::PAYPAL_INTEGRATION_DATE;
+        $params['intent'] = strtolower(Constants::PAYPAL_ORDER_INTENT_CAPTURE);
+
+        if ($currency = $config->getActShopCurrencyObject()) {
+            $params['currency'] = strtoupper($currency->name);
+        }
+
+        $params['commit'] = $config->getTopActiveView() == 'order' ? 'true' : 'false';
+
+        return Constants::PAYPAL_JS_SDK_URL . '?' . http_build_query($params);
     }
 }

@@ -25,6 +25,7 @@ namespace OxidProfessionalServices\PayPal\Controller;
 use Exception;
 use OxidEsales\Eshop\Application\Controller\FrontendController;
 use OxidEsales\Eshop\Core\Registry;
+use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderCaptureRequest;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderRequest;
 use OxidProfessionalServices\PayPal\Core\OrderRequestFactory;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
@@ -62,6 +63,20 @@ class ProxyController extends FrontendController
 
     public function captureOrder()
     {
+        if ($orderId = (string) Registry::getRequest()->getRequestEscapedParameter('orderID')) {
+            /** @var ServiceFactory $serviceFactory */
+            $serviceFactory = Registry::get(ServiceFactory::class);
+            $service = $serviceFactory->getOrderService();
+
+            $request = new OrderCaptureRequest();
+            try {
+                $response = $service->capturePaymentForOrder('', $orderId, $request, '');
+            } catch (Exception $exception) {
+                Registry::getLogger()->error("Error on order capture call.", [$exception]);
+            }
+
+            $this->outputJson($response);
+        }
     }
 
     /**
