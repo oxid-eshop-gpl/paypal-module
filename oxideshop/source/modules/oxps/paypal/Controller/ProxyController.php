@@ -80,7 +80,7 @@ class ProxyController extends FrontendController
 
             try {
                 /** @var Order $response */
-                if($context === 'pay_now') {
+                if ($context === 'pay_now') {
                     $response = $service->capturePaymentForOrder('', $orderId, $request, '');
                     $orderManager->prepareOrderForPayNowFromCaptureOrderResponse($response);
                 } else {
