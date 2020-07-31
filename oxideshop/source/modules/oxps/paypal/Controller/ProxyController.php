@@ -72,21 +72,20 @@ class ProxyController extends FrontendController
         $context = (string) Registry::getRequest()->getRequestEscapedParameter('context', 'continue');
 
         if ($orderId = (string) Registry::getRequest()->getRequestEscapedParameter('orderID')) {
-
             $orderManager = new OrderManager();
 
             /** @var ServiceFactory $serviceFactory */
             $serviceFactory = Registry::get(ServiceFactory::class);
             $service = $serviceFactory->getOrderService();
-
             $request = new OrderCaptureRequest();
+
             try {
                 /** @var Order $response */
                 if($context !== 'continue') {
                     $response = $service->capturePaymentForOrder('', $orderId, $request, '');
                     $orderManager->prepareOrderForPayNowFromCaptureOrderResponse($response);
                 } else {
-                    $orderManager->prepareOrderForContinueFromCaptureOrderResponse($response);
+                    $orderManager->prepareOrderForContinue($response);
                 }
             } catch (Exception $exception) {
                 Registry::getLogger()->error("Error on order capture call.", [$exception]);

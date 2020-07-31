@@ -23,7 +23,7 @@ class OrderManager
         }
     }
 
-    public function prepareOrderForContinueFromCaptureOrderResponse($orderCaptureResponse)
+    public function prepareOrderForContinue($orderCaptureResponse)
     {
         $requestId = $orderCaptureResponse->id;
         $payer = $orderCaptureResponse->payer;
