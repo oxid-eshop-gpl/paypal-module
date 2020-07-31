@@ -1,8 +1,11 @@
 [{capture name="paypal_init"}]
+
+
+window.paymentStrategy = "[{$oViewConf->getPaymentFlowStrategy()}]";
 [{literal}]
 paypal.Buttons({
     createOrder: function(data, actions) {
-        return fetch('/index.php?cl=PayPalProxyController&fnc=createOrder', {
+        return fetch('/index.php?cl=PayPalProxyController&fnc=createOrder&context=' + window.paymentStrategy, {
             method: 'post',
             headers: {
                 'content-type': 'application/json'
@@ -17,7 +20,7 @@ paypal.Buttons({
     onApprove: function(data, actions) {
         captureData = new FormData();
         captureData.append('orderID', data.orderID);
-        return fetch('/index.php?cl=PayPalProxyController&fnc=captureOrder', {
+        return fetch('/index.php?cl=PayPalProxyController&fnc=captureOrder&context=' + window.paymentStrategy, {
             method: 'post',
             body: captureData
         }).then(function(res) {

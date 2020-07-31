@@ -25,8 +25,10 @@ namespace OxidProfessionalServices\PayPal\Controller;
 use Exception;
 use OxidEsales\Eshop\Application\Controller\FrontendController;
 use OxidEsales\Eshop\Core\Registry;
+use OxidProfessionalServices\PayPal\Api\Model\Orders\Order;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderCaptureRequest;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderRequest;
+use OxidProfessionalServices\PayPal\Core\OrderManager;
 use OxidProfessionalServices\PayPal\Core\OrderRequestFactory;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 
@@ -38,6 +40,8 @@ class ProxyController extends FrontendController
 
     public function createOrder()
     {
+        $context = (string) Registry::getRequest()->getRequestEscapedParameter('context', 'continue');
+
         $basket = Registry::getSession()->getBasket();
 
         /** @var ServiceFactory $serviceFactory */
@@ -49,7 +53,9 @@ class ProxyController extends FrontendController
         $request = $requestFactory->getRequest(
             $basket,
             OrderRequest::INTENT_CAPTURE,
-            OrderRequestFactory::USER_ACTION_CONTINUE
+            $context === 'continue' ?
+                OrderRequestFactory::USER_ACTION_CONTINUE :
+                OrderRequestFactory::USER_ACTION_PAY_NOW
         );
 
         try {
@@ -63,14 +69,25 @@ class ProxyController extends FrontendController
 
     public function captureOrder()
     {
+        $context = (string) Registry::getRequest()->getRequestEscapedParameter('context', 'continue');
+
         if ($orderId = (string) Registry::getRequest()->getRequestEscapedParameter('orderID')) {
+
+            $orderManager = new OrderManager();
+
             /** @var ServiceFactory $serviceFactory */
             $serviceFactory = Registry::get(ServiceFactory::class);
             $service = $serviceFactory->getOrderService();
 
             $request = new OrderCaptureRequest();
             try {
-                $response = $service->capturePaymentForOrder('', $orderId, $request, '');
+                /** @var Order $response */
+                if($context !== 'continue') {
+                    $response = $service->capturePaymentForOrder('', $orderId, $request, '');
+                    $orderManager->prepareOrderForPayNowFromCaptureOrderResponse($response);
+                } else {
+                    $orderManager->prepareOrderForContinueFromCaptureOrderResponse($response);
+                }
             } catch (Exception $exception) {
                 Registry::getLogger()->error("Error on order capture call.", [$exception]);
             }

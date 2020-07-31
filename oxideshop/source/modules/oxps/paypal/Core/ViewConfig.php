@@ -30,6 +30,24 @@ use OxidEsales\Eshop\Core\Registry;
 class ViewConfig extends ViewConfig_parent
 {
     /**
+     * This could be
+     *
+     * continue allows adding multiple items with checkout
+     * pay_now direct payment and capture
+     *
+     * @var string
+     */
+    private $paymentFlowStrategy = 'pay_now';
+
+    /**
+     * @return string
+     */
+    public function getPaymentFlowStrategy(): string
+    {
+        return $this->paymentFlowStrategy;
+    }
+
+    /**
      * @return bool
      */
     public function isPayPalActive(): bool

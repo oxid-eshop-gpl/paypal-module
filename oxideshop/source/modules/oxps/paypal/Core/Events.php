@@ -158,10 +158,10 @@ class Events
                             character set latin1
                             collate latin1_general_ci
                             NOT NULL
-                            COMMENT \'Amazon index to search by\',    
+                            COMMENT \'Paypal index to search by\',    
                         PRIMARY KEY (`OXPS_PAYPAL_PAYLOGID`)) 
                             ENGINE=InnoDB 
-                            COMMENT \'Amazon Payment transaction log\'',
+                            COMMENT \'Paypal Payment transaction log\'',
             LogRepository::TABLE_NAME
         );
 

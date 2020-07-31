@@ -1,6 +1,6 @@
 <?php
 
-namespace OxidProfessionalServices\Paypal\Core;
+namespace OxidProfessionalServices\PayPal\Core;
 
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger as MonoLogLogger;
