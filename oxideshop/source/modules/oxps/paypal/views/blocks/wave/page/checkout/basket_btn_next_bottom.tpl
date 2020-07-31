@@ -3,7 +3,7 @@
     <div class="float-right">
         [{include file="paypal_smart_payment_buttons.tpl" buttonId="PayPalPayButtonNextCart2" buttonClass="small"}]
     </div>
-    <div class="float-right button-or">
+    <div class="float-right paypal-button-or">
         [{"OR"|oxmultilangassign|oxupper}]
     </div>
 [{/if}]
