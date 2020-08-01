@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * The details of the refund status.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-refund_status_details.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-refund_status_details.json
  */
 class RefundStatusDetails implements JsonSerializable
 {
@@ -35,12 +35,14 @@ class RefundStatusDetails implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['reason'])) {
-        $this->reason = $data['reason'];
+            $this->reason = $data['reason'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

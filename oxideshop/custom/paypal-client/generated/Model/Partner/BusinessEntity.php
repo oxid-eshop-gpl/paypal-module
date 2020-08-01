@@ -133,6 +133,8 @@ class BusinessEntity extends Business implements JsonSerializable
     {
         parent::__construct($data);
         $this->office_bearers = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

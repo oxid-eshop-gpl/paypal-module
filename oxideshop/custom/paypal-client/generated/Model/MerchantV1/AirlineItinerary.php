@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * The airline itinerary details.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-airline_itinerary.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-airline_itinerary.json
  */
 class AirlineItinerary implements JsonSerializable
 {
@@ -97,28 +97,30 @@ class AirlineItinerary implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['ticket'])) {
-        $this->ticket = new AirlineTicket($data['ticket']);
+            $this->ticket = new AirlineTicket($data['ticket']);
         }
         if (isset($data['passenger'])) {
-        $this->passenger = new AirlinePassenger($data['passenger']);
+            $this->passenger = new AirlinePassenger($data['passenger']);
         }
         if (isset($data['flight_leg_details'])) {
-        $this->flight_leg_details = [];
-        foreach($data['flight_leg_details'] as $item) {
-        $this->flight_leg_details[] = FlightLeg::map($item);
-        }
+            $this->flight_leg_details = [];
+            foreach ($data['flight_leg_details'] as $item) {
+                $this->flight_leg_details[] = new FlightLeg($item);
+            }
         }
         if (isset($data['clearing_sequence'])) {
-        $this->clearing_sequence = $data['clearing_sequence'];
+            $this->clearing_sequence = $data['clearing_sequence'];
         }
         if (isset($data['clearing_count'])) {
-        $this->clearing_count = $data['clearing_count'];
+            $this->clearing_count = $data['clearing_count'];
         }
     }
 
     public function __construct(array $data = null)
     {
         $this->flight_leg_details = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

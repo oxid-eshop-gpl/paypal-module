@@ -9,7 +9,8 @@ use Webmozart\Assert\Assert;
 /**
  * Business incorporation information.
  *
- * generated from: customer_common-v1-schema-account_model-business_incorporation.json
+ * generated from:
+ * customized_x_unsupported_9859_customer_common-v1-schema-account_model-business_incorporation.json
  */
 class BusinessIncorporation implements JsonSerializable
 {
@@ -40,15 +41,6 @@ class BusinessIncorporation implements JsonSerializable
      */
     public $incorporation_date;
 
-    /**
-     * The province of incorporation.
-     *
-     * @var string | null
-     * minLength: 1
-     * maxLength: 50
-     */
-    public $incorporation_province_code;
-
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
@@ -72,16 +64,6 @@ class BusinessIncorporation implements JsonSerializable
             10,
             "incorporation_date in BusinessIncorporation must have maxlength of 10 $within"
         );
-        !isset($this->incorporation_province_code) || Assert::minLength(
-            $this->incorporation_province_code,
-            1,
-            "incorporation_province_code in BusinessIncorporation must have minlength of 1 $within"
-        );
-        !isset($this->incorporation_province_code) || Assert::maxLength(
-            $this->incorporation_province_code,
-            50,
-            "incorporation_province_code in BusinessIncorporation must have maxlength of 50 $within"
-        );
     }
 
     private function map(array $data)
@@ -92,13 +74,12 @@ class BusinessIncorporation implements JsonSerializable
         if (isset($data['incorporation_date'])) {
             $this->incorporation_date = $data['incorporation_date'];
         }
-        if (isset($data['incorporation_province_code'])) {
-            $this->incorporation_province_code = $data['incorporation_province_code'];
-        }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

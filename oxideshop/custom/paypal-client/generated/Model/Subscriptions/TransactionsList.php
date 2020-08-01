@@ -105,6 +105,8 @@ class TransactionsList implements JsonSerializable
     public function __construct(array $data = null)
     {
         $this->transactions = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

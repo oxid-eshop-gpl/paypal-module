@@ -11,7 +11,7 @@ use Webmozart\Assert\Assert;
  * The merchant information. The merchant is also known as the payee. Appears to the customer in checkout,
  * transactions, email receipts, and transaction history.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-payee_displayable.json
+ * generated from: merchant.CommonComponentsSpecification-v1-schema-payee_displayable.json
  */
 class PayeeDisplayable implements JsonSerializable
 {
@@ -69,18 +69,20 @@ class PayeeDisplayable implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['business_email'])) {
-        $this->business_email = $data['business_email'];
+            $this->business_email = $data['business_email'];
         }
         if (isset($data['business_phone'])) {
-        $this->business_phone = new Phone($data['business_phone']);
+            $this->business_phone = new Phone($data['business_phone']);
         }
         if (isset($data['brand_name'])) {
-        $this->brand_name = $data['brand_name'];
+            $this->brand_name = $data['brand_name'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

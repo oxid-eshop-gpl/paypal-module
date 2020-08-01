@@ -11,7 +11,7 @@ use Webmozart\Assert\Assert;
  * The breakdown of the amount. Breakdown provides details such as total item amount, total tax amount, shipping,
  * handling, insurance, and discounts, if any.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-amount_breakdown.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-amount_breakdown.json
  */
 class AmountBreakdown implements JsonSerializable
 {
@@ -116,30 +116,32 @@ class AmountBreakdown implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['item_total'])) {
-        $this->item_total = new Money($data['item_total']);
+            $this->item_total = new Money($data['item_total']);
         }
         if (isset($data['shipping'])) {
-        $this->shipping = new Money($data['shipping']);
+            $this->shipping = new Money($data['shipping']);
         }
         if (isset($data['handling'])) {
-        $this->handling = new Money($data['handling']);
+            $this->handling = new Money($data['handling']);
         }
         if (isset($data['tax_total'])) {
-        $this->tax_total = new Money($data['tax_total']);
+            $this->tax_total = new Money($data['tax_total']);
         }
         if (isset($data['insurance'])) {
-        $this->insurance = new Money($data['insurance']);
+            $this->insurance = new Money($data['insurance']);
         }
         if (isset($data['shipping_discount'])) {
-        $this->shipping_discount = new Money($data['shipping_discount']);
+            $this->shipping_discount = new Money($data['shipping_discount']);
         }
         if (isset($data['discount'])) {
-        $this->discount = new Money($data['discount']);
+            $this->discount = new Money($data['discount']);
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

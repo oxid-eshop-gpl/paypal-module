@@ -256,6 +256,8 @@ class Party implements JsonSerializable
         $this->emails = [];
         $this->phones = [];
         $this->addresses = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

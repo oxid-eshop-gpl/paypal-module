@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * The documents associated with the business.
  *
- * generated from: customer_common_overrides-business_document.json
+ * generated from: customized_x_unsupported_4705_customer_common_overrides-business_document.json
  */
 class BusinessDocument extends Document implements JsonSerializable
 {
@@ -86,6 +86,8 @@ class BusinessDocument extends Document implements JsonSerializable
     public function __construct(array $data = null)
     {
         parent::__construct($data);
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

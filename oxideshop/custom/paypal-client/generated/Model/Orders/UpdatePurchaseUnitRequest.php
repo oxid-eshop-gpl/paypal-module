@@ -68,6 +68,8 @@ class UpdatePurchaseUnitRequest implements JsonSerializable
     public function __construct(array $data = null)
     {
         $this->payments = new UpdatePaymentCollectionRequest();
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

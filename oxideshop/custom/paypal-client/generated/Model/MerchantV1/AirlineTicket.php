@@ -10,7 +10,7 @@ use Webmozart\Assert\Assert;
 /**
  * The details for the airline ticket.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-airline_ticket.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-airline_ticket.json
  */
 class AirlineTicket implements JsonSerializable
 {
@@ -169,36 +169,38 @@ class AirlineTicket implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['number'])) {
-        $this->number = $data['number'];
+            $this->number = $data['number'];
         }
         if (isset($data['issue_date'])) {
-        $this->issue_date = $data['issue_date'];
+            $this->issue_date = $data['issue_date'];
         }
         if (isset($data['issuing_carrier_code'])) {
-        $this->issuing_carrier_code = $data['issuing_carrier_code'];
+            $this->issuing_carrier_code = $data['issuing_carrier_code'];
         }
         if (isset($data['travel_agency_name'])) {
-        $this->travel_agency_name = $data['travel_agency_name'];
+            $this->travel_agency_name = $data['travel_agency_name'];
         }
         if (isset($data['travel_agency_code'])) {
-        $this->travel_agency_code = $data['travel_agency_code'];
+            $this->travel_agency_code = $data['travel_agency_code'];
         }
         if (isset($data['restricted_ticket'])) {
-        $this->restricted_ticket = $data['restricted_ticket'];
+            $this->restricted_ticket = $data['restricted_ticket'];
         }
         if (isset($data['fare'])) {
-        $this->fare = new Money($data['fare']);
+            $this->fare = new Money($data['fare']);
         }
         if (isset($data['tax'])) {
-        $this->tax = new Money($data['tax']);
+            $this->tax = new Money($data['tax']);
         }
         if (isset($data['fee'])) {
-        $this->fee = new Money($data['fee']);
+            $this->fee = new Money($data['fee']);
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

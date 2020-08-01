@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * Information needed to pay using PayU.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-payu_request.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-payu_request.json
  */
 class PayuRequest implements JsonSerializable
 {
@@ -89,18 +89,20 @@ class PayuRequest implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['name'])) {
-        $this->name = $data['name'];
+            $this->name = $data['name'];
         }
         if (isset($data['email'])) {
-        $this->email = $data['email'];
+            $this->email = $data['email'];
         }
         if (isset($data['country_code'])) {
-        $this->country_code = $data['country_code'];
+            $this->country_code = $data['country_code'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

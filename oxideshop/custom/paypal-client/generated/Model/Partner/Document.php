@@ -276,6 +276,8 @@ class Document implements JsonSerializable
         $this->labels = [];
         $this->files = [];
         $this->links = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

@@ -62,6 +62,8 @@ class FinancialInstruments implements JsonSerializable
     public function __construct(array $data = null)
     {
         $this->banks = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

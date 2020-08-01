@@ -106,27 +106,29 @@ class AddressPortableAddressDetails implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['street_number'])) {
-        $this->street_number = $data['street_number'];
+            $this->street_number = $data['street_number'];
         }
         if (isset($data['street_name'])) {
-        $this->street_name = $data['street_name'];
+            $this->street_name = $data['street_name'];
         }
         if (isset($data['street_type'])) {
-        $this->street_type = $data['street_type'];
+            $this->street_type = $data['street_type'];
         }
         if (isset($data['delivery_service'])) {
-        $this->delivery_service = $data['delivery_service'];
+            $this->delivery_service = $data['delivery_service'];
         }
         if (isset($data['building_name'])) {
-        $this->building_name = $data['building_name'];
+            $this->building_name = $data['building_name'];
         }
         if (isset($data['sub_building'])) {
-        $this->sub_building = $data['sub_building'];
+            $this->sub_building = $data['sub_building'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

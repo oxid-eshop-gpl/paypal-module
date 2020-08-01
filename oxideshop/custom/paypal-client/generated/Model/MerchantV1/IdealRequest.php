@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * Information needed to pay using iDEAL.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-ideal_request.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-ideal_request.json
  */
 class IdealRequest implements JsonSerializable
 {
@@ -87,18 +87,20 @@ class IdealRequest implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['name'])) {
-        $this->name = $data['name'];
+            $this->name = $data['name'];
         }
         if (isset($data['country_code'])) {
-        $this->country_code = $data['country_code'];
+            $this->country_code = $data['country_code'];
         }
         if (isset($data['bic'])) {
-        $this->bic = $data['bic'];
+            $this->bic = $data['bic'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

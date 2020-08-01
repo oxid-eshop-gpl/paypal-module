@@ -349,6 +349,8 @@ class PaymentDirectives implements JsonSerializable
         $this->policy_directives = [];
         $this->payment_method_directives = [];
         $this->pricing_directives = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

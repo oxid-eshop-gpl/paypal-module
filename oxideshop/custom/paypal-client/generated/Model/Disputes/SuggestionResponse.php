@@ -117,6 +117,8 @@ class SuggestionResponse implements JsonSerializable
     {
         $this->suggestions = [];
         $this->links = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

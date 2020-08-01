@@ -578,6 +578,8 @@ class PartnerTransactionInfo implements JsonSerializable
     public function __construct(array $data = null)
     {
         $this->fees = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

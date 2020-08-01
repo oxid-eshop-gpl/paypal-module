@@ -61,6 +61,8 @@ class PartnerFeeInfo implements JsonSerializable
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

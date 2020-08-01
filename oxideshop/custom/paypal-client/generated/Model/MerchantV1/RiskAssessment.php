@@ -54,19 +54,21 @@ class RiskAssessment implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['score'])) {
-        $this->score = $data['score'];
+            $this->score = $data['score'];
         }
         if (isset($data['reasons'])) {
-        $this->reasons = [];
-        foreach($data['reasons'] as $item) {
-        $this->reasons[] = $item;
-        }
+            $this->reasons = [];
+            foreach ($data['reasons'] as $item) {
+                $this->reasons[] = $item;
+            }
         }
     }
 
     public function __construct(array $data = null)
     {
         $this->reasons = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

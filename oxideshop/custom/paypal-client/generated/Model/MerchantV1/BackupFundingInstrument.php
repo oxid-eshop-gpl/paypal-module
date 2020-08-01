@@ -37,13 +37,15 @@ class BackupFundingInstrument implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['card'])) {
-        $this->card = new CardResponse($data['card']);
+            $this->card = new CardResponse($data['card']);
         }
     }
 
     public function __construct(array $data = null)
     {
         $this->card = new CardResponse();
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

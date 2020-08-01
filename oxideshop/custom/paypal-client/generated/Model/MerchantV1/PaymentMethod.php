@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * The customer and merchant payment preferences.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-payment_method.json
+ * generated from: merchant.CommonComponentsSpecification-v1-schema-payment_method.json
  */
 class PaymentMethod implements JsonSerializable
 {
@@ -27,17 +27,23 @@ class PaymentMethod implements JsonSerializable
     /** Accepts only immediate payment from the customer. For example, credit card, PayPal balance, or instant ACH. Ensures that at the time of capture, the payment does not have the `pending` status. */
     public const PAYEE_PREFERRED_IMMEDIATE_PAYMENT_REQUIRED = 'IMMEDIATE_PAYMENT_REQUIRED';
 
-    /** The API caller (merchant/partner) accepts authorization and payment information from a consumer over the telephone. */
-    public const STANDARD_ENTRY_CLASS_CODE_TEL = 'TEL';
+    /** If the payments is an e-commerce payment initiated by the customer. Customer typically enters payment information (e.g. card number, approves payment within the PayPal Checkout flow) and such information that has not been previously stored on file. */
+    public const CATEGORY_CUSTOMER_PRESENT_SINGLE_PURCHASE = 'CUSTOMER_PRESENT_SINGLE_PURCHASE';
 
-    /** The API caller (merchant/partner) accepts Debit transactions from a consumer on their website. */
-    public const STANDARD_ENTRY_CLASS_CODE_WEB = 'WEB';
+    /** Subsequent recurring payments (e.g. subscriptions with a fixed amount on a predefined schedule when customer is not present. */
+    public const CATEGORY_CUSTOMER_NOT_PRESENT_RECURRING = 'CUSTOMER_NOT_PRESENT_RECURRING';
 
-    /** Cash concentration and disbursement for corporate debit transaction. Used to disburse or consolidate funds. Entries are usually Optional high-dollar, low-volume, and time-critical. (e.g. intra-company transfers or invoice payments to suppliers). */
-    public const STANDARD_ENTRY_CLASS_CODE_CCD = 'CCD';
+    /** The first payment initiated by the customer which is expected to be followed by a series of subsequent recurring payments transactions (e.g. subscriptions with a fixed amount on a predefined schedule when customer is not present. This is typically used for scenarios where customer stores credentials and makes a purchase on a given date and also set’s up a subscription. */
+    public const CATEGORY_CUSTOMER_PRESENT_RECURRING_FIRST = 'CUSTOMER_PRESENT_RECURRING_FIRST';
 
-    /** Prearranged payment and deposit entries. Used for debit payments authorized by a consumer account holder, and usually initiated by a company. These are usually recurring debits (such as insurance premiums). */
-    public const STANDARD_ENTRY_CLASS_CODE_PPD = 'PPD';
+    /** Also known as (card-on-file) transactions. Payment details are stored to enable checkout with one-click, or simply to streamline the checkout process. For card transaction customers typically do not enter a CVC number as part of the Checkout process. */
+    public const CATEGORY_CUSTOMER_PRESENT_UNSCHEDULED = 'CUSTOMER_PRESENT_UNSCHEDULED';
+
+    /** Unscheduled payments that are not recurring on a predefined schedule (e.g. balance top-up). */
+    public const CATEGORY_CUSTOMER_NOT_PRESENT_UNSCHEDULED = 'CUSTOMER_NOT_PRESENT_UNSCHEDULED';
+
+    /** Payments that are initiated by the customer via the merchant by mail or telephone. */
+    public const CATEGORY_MAIL_ORDER_TELEPHONE_ORDER = 'MAIL_ORDER_TELEPHONE_ORDER';
 
     /**
      * The customer-selected payment method on the merchant site.
@@ -51,35 +57,35 @@ class PaymentMethod implements JsonSerializable
     public $payer_selected = 'PAYPAL';
 
     /**
-     * The merchant-preferred payment methods.
+     * The merchant-preferred payment sources.
      *
      * use one of constants defined in this class to set the value:
      * @see PAYEE_PREFERRED_UNRESTRICTED
      * @see PAYEE_PREFERRED_IMMEDIATE_PAYMENT_REQUIRED
      * @var string | null
      * minLength: 1
-     * maxLength: 255
      */
     public $payee_preferred = 'UNRESTRICTED';
 
     /**
-     * NACHA (the regulatory body governing the ACH network) requires that API callers (merchants, partners) obtain
-     * the consumer’s explicit authorization before initiating a transaction. To stay compliant, you’ll need to
-     * make sure that you retain a compliant authorization for each transaction that you originate to the ACH Network
-     * using this API. ACH transactions are categorized (using SEC codes) by how you capture authorization from the
-     * Receiver (the person whose bank account is being debited or credited). PayPal supports the following SEC
-     * codes.
+     * Provides context (e.g. frequency of payment (Single, Recurring) along with whether (Customer is Present, Not
+     * Present) for the payment being processed. For Card and PayPal Vaulted/Billing Agreement transactions, this
+     * helps specify the appropriate indicators to the networks (e.g. Mastercard, Visa) which ensures compliance as
+     * well as ensure a better auth-rate. For bank processing, indicates to clearing house whether the transaction is
+     * recurring or not depending on the option chosen.
      *
      * use one of constants defined in this class to set the value:
-     * @see STANDARD_ENTRY_CLASS_CODE_TEL
-     * @see STANDARD_ENTRY_CLASS_CODE_WEB
-     * @see STANDARD_ENTRY_CLASS_CODE_CCD
-     * @see STANDARD_ENTRY_CLASS_CODE_PPD
+     * @see CATEGORY_CUSTOMER_PRESENT_SINGLE_PURCHASE
+     * @see CATEGORY_CUSTOMER_NOT_PRESENT_RECURRING
+     * @see CATEGORY_CUSTOMER_PRESENT_RECURRING_FIRST
+     * @see CATEGORY_CUSTOMER_PRESENT_UNSCHEDULED
+     * @see CATEGORY_CUSTOMER_NOT_PRESENT_UNSCHEDULED
+     * @see CATEGORY_MAIL_ORDER_TELEPHONE_ORDER
      * @var string | null
      * minLength: 3
      * maxLength: 255
      */
-    public $standard_entry_class_code = 'WEB';
+    public $category = 'CUSTOMER_PRESENT_SINGLE_PURCHASE';
 
     public function validate($from = null)
     {
@@ -94,38 +100,35 @@ class PaymentMethod implements JsonSerializable
             1,
             "payee_preferred in PaymentMethod must have minlength of 1 $within"
         );
-        !isset($this->payee_preferred) || Assert::maxLength(
-            $this->payee_preferred,
-            255,
-            "payee_preferred in PaymentMethod must have maxlength of 255 $within"
-        );
-        !isset($this->standard_entry_class_code) || Assert::minLength(
-            $this->standard_entry_class_code,
+        !isset($this->category) || Assert::minLength(
+            $this->category,
             3,
-            "standard_entry_class_code in PaymentMethod must have minlength of 3 $within"
+            "category in PaymentMethod must have minlength of 3 $within"
         );
-        !isset($this->standard_entry_class_code) || Assert::maxLength(
-            $this->standard_entry_class_code,
+        !isset($this->category) || Assert::maxLength(
+            $this->category,
             255,
-            "standard_entry_class_code in PaymentMethod must have maxlength of 255 $within"
+            "category in PaymentMethod must have maxlength of 255 $within"
         );
     }
 
     private function map(array $data)
     {
         if (isset($data['payer_selected'])) {
-        $this->payer_selected = $data['payer_selected'];
+            $this->payer_selected = $data['payer_selected'];
         }
         if (isset($data['payee_preferred'])) {
-        $this->payee_preferred = $data['payee_preferred'];
+            $this->payee_preferred = $data['payee_preferred'];
         }
-        if (isset($data['standard_entry_class_code'])) {
-        $this->standard_entry_class_code = $data['standard_entry_class_code'];
+        if (isset($data['category'])) {
+            $this->category = $data['category'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

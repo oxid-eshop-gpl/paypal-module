@@ -36,12 +36,14 @@ class BankResponse implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['ach_debit'])) {
-        $this->ach_debit = new AchDebitResponse($data['ach_debit']);
+            $this->ach_debit = new AchDebitResponse($data['ach_debit']);
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

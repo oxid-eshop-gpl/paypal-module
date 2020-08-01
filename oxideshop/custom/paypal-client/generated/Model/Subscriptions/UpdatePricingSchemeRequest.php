@@ -55,6 +55,8 @@ class UpdatePricingSchemeRequest implements JsonSerializable
     public function __construct(array $data = null)
     {
         $this->pricing_scheme = new PricingScheme();
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

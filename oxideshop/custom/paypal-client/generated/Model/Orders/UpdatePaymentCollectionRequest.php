@@ -100,6 +100,8 @@ class UpdatePaymentCollectionRequest implements JsonSerializable
     {
         $this->authorizations = [];
         $this->captures = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

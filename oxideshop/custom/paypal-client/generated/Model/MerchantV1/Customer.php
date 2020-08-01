@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * The details about a customer in merchant's or partner's system of records.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-customer.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-customer.json
  */
 class Customer implements JsonSerializable
 {
@@ -42,12 +42,14 @@ class Customer implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['id'])) {
-        $this->id = $data['id'];
+            $this->id = $data['id'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

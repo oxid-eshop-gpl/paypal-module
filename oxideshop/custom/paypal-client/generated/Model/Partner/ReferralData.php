@@ -238,6 +238,8 @@ class ReferralData extends Account implements JsonSerializable
         $this->operations = [];
         $this->products = [];
         $this->legal_consents = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

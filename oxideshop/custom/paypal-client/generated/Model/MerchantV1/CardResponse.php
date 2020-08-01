@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * The payment card to use to fund a payment. Card can be a credit or debit card.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-card_response.json
+ * generated from: merchant.CommonComponentsSpecification-v1-schema-card_response.json
  */
 class CardResponse implements JsonSerializable
 {
@@ -158,20 +158,6 @@ class CardResponse implements JsonSerializable
      */
     public $bin;
 
-    /**
-     * Results of Authentication such as 3D Secure.
-     *
-     * @var AuthenticationResponse | null
-     */
-    public $authentication_result;
-
-    /**
-     * Additional attributes associated with the use of this card.
-     *
-     * @var CardAttributesResponse | null
-     */
-    public $attributes;
-
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
@@ -200,53 +186,37 @@ class CardResponse implements JsonSerializable
             8,
             "bin in CardResponse must have maxlength of 8 $within"
         );
-        !isset($this->authentication_result) || Assert::isInstanceOf(
-            $this->authentication_result,
-            AuthenticationResponse::class,
-            "authentication_result in CardResponse must be instance of AuthenticationResponse $within"
-        );
-        !isset($this->authentication_result) ||  $this->authentication_result->validate(CardResponse::class);
-        !isset($this->attributes) || Assert::isInstanceOf(
-            $this->attributes,
-            CardAttributesResponse::class,
-            "attributes in CardResponse must be instance of CardAttributesResponse $within"
-        );
-        !isset($this->attributes) ||  $this->attributes->validate(CardResponse::class);
     }
 
     private function map(array $data)
     {
         if (isset($data['id'])) {
-        $this->id = $data['id'];
+            $this->id = $data['id'];
         }
         if (isset($data['last_n_chars'])) {
-        $this->last_n_chars = $data['last_n_chars'];
+            $this->last_n_chars = $data['last_n_chars'];
         }
         if (isset($data['last_digits'])) {
-        $this->last_digits = $data['last_digits'];
+            $this->last_digits = $data['last_digits'];
         }
         if (isset($data['brand'])) {
-        $this->brand = $data['brand'];
+            $this->brand = $data['brand'];
         }
         if (isset($data['type'])) {
-        $this->type = $data['type'];
+            $this->type = $data['type'];
         }
         if (isset($data['issuer'])) {
-        $this->issuer = $data['issuer'];
+            $this->issuer = $data['issuer'];
         }
         if (isset($data['bin'])) {
-        $this->bin = $data['bin'];
-        }
-        if (isset($data['authentication_result'])) {
-        $this->authentication_result = new AuthenticationResponse($data['authentication_result']);
-        }
-        if (isset($data['attributes'])) {
-        $this->attributes = new CardAttributesResponse($data['attributes']);
+            $this->bin = $data['bin'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

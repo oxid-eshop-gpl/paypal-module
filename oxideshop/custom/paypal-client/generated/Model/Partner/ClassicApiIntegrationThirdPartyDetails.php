@@ -59,6 +59,8 @@ class ClassicApiIntegrationThirdPartyDetails implements JsonSerializable
     public function __construct(array $data = null)
     {
         $this->permissions = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

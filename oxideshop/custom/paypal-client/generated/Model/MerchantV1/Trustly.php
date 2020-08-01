@@ -104,21 +104,23 @@ class Trustly implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['name'])) {
-        $this->name = $data['name'];
+            $this->name = $data['name'];
         }
         if (isset($data['country_code'])) {
-        $this->country_code = $data['country_code'];
+            $this->country_code = $data['country_code'];
         }
         if (isset($data['bic'])) {
-        $this->bic = $data['bic'];
+            $this->bic = $data['bic'];
         }
         if (isset($data['iban_last_chars'])) {
-        $this->iban_last_chars = $data['iban_last_chars'];
+            $this->iban_last_chars = $data['iban_last_chars'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

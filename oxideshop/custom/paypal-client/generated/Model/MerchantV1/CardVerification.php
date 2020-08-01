@@ -10,7 +10,7 @@ use Webmozart\Assert\Assert;
  * The API caller can opt in to verify the card through PayPal offered verification services (e.g. Smart Dollar
  * Auth, 3DS).
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-card_verification.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-card_verification.json
  */
 class CardVerification implements JsonSerializable
 {
@@ -50,12 +50,14 @@ class CardVerification implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['method'])) {
-        $this->method = $data['method'];
+            $this->method = $data['method'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

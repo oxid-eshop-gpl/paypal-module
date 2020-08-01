@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * Information needed to pay using Verkkopankki (Finnish Online Banking).
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-verkkopankki_request.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-verkkopankki_request.json
  */
 class VerkkopankkiRequest implements JsonSerializable
 {
@@ -111,21 +111,23 @@ class VerkkopankkiRequest implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['name'])) {
-        $this->name = $data['name'];
+            $this->name = $data['name'];
         }
         if (isset($data['email'])) {
-        $this->email = $data['email'];
+            $this->email = $data['email'];
         }
         if (isset($data['country_code'])) {
-        $this->country_code = $data['country_code'];
+            $this->country_code = $data['country_code'];
         }
         if (isset($data['bank_id'])) {
-        $this->bank_id = $data['bank_id'];
+            $this->bank_id = $data['bank_id'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

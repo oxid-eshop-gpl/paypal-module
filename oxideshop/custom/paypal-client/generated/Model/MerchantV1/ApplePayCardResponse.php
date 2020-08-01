@@ -76,19 +76,21 @@ class ApplePayCardResponse extends CardResponse implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['name'])) {
-        $this->name = $data['name'];
+            $this->name = $data['name'];
         }
         if (isset($data['billing_address'])) {
-        $this->billing_address = new AddressPortable($data['billing_address']);
+            $this->billing_address = new AddressPortable($data['billing_address']);
         }
         if (isset($data['country_code'])) {
-        $this->country_code = $data['country_code'];
+            $this->country_code = $data['country_code'];
         }
     }
 
     public function __construct(array $data = null)
     {
         parent::__construct($data);
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

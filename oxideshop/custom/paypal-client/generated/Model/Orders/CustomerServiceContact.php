@@ -93,6 +93,8 @@ class CustomerServiceContact implements JsonSerializable
     {
         $this->emails = [];
         $this->phones = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

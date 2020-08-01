@@ -10,7 +10,7 @@ use Webmozart\Assert\Assert;
  * The phone number in its canonical international [E.164 numbering plan
  * format](https://www.itu.int/rec/T-REC-E.164/en).
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-common_components-v4-schema-json-openapi-2.0-phone.json
+ * generated from: customer_common-v1-schema-common_components-v4-schema-json-openapi-2.0-phone.json
  */
 class Phone implements JsonSerializable
 {
@@ -89,18 +89,20 @@ class Phone implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['country_code'])) {
-        $this->country_code = $data['country_code'];
+            $this->country_code = $data['country_code'];
         }
         if (isset($data['national_number'])) {
-        $this->national_number = $data['national_number'];
+            $this->national_number = $data['national_number'];
         }
         if (isset($data['extension_number'])) {
-        $this->extension_number = $data['extension_number'];
+            $this->extension_number = $data['extension_number'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

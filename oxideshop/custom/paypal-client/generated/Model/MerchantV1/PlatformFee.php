@@ -12,7 +12,7 @@ use Webmozart\Assert\Assert;
  * separate or isolated transaction leg from the external perspective. The platform fee is limited in scope and
  * is always associated with the original payment for the purchase unit.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-platform_fee.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-platform_fee.json
  */
 class PlatformFee implements JsonSerializable
 {
@@ -54,16 +54,18 @@ class PlatformFee implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['amount'])) {
-        $this->amount = new Money($data['amount']);
+            $this->amount = new Money($data['amount']);
         }
         if (isset($data['payee'])) {
-        $this->payee = new PayeeBase($data['payee']);
+            $this->payee = new PayeeBase($data['payee']);
         }
     }
 
     public function __construct(array $data = null)
     {
         $this->amount = new Money();
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

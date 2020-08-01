@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * The date and time stamps that are common to authorized payment, captured payment, and refund transactions.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-activity_timestamps.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-activity_timestamps.json
  */
 class ActivityTimestamps implements JsonSerializable
 {
@@ -65,15 +65,17 @@ class ActivityTimestamps implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['create_time'])) {
-        $this->create_time = $data['create_time'];
+            $this->create_time = $data['create_time'];
         }
         if (isset($data['update_time'])) {
-        $this->update_time = $data['update_time'];
+            $this->update_time = $data['update_time'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

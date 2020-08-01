@@ -10,7 +10,7 @@ use Webmozart\Assert\Assert;
  * The level of protection offered as defined by [PayPal Seller Protection for
  * Merchants](https://www.paypal.com/us/webapps/mpp/security/seller-protection).
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-seller_protection.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-seller_protection.json
  */
 class SellerProtection implements JsonSerializable
 {
@@ -56,18 +56,20 @@ class SellerProtection implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['status'])) {
-        $this->status = $data['status'];
+            $this->status = $data['status'];
         }
         if (isset($data['dispute_categories'])) {
-        $this->dispute_categories = [];
-        foreach($data['dispute_categories'] as $item) {
-        $this->dispute_categories[] = $item;
-        }
+            $this->dispute_categories = [];
+            foreach ($data['dispute_categories'] as $item) {
+                $this->dispute_categories[] = $item;
+            }
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

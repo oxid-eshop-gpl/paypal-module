@@ -10,7 +10,7 @@ use Webmozart\Assert\Assert;
 /**
  * The options that the payee or merchant offers to the payer to ship or pick up their items.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-shipping_option.json
+ * generated from: merchant.CommonComponentsSpecification-v1-schema-shipping_option.json
  */
 class ShippingOption implements JsonSerializable
 {
@@ -95,24 +95,26 @@ class ShippingOption implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['id'])) {
-        $this->id = $data['id'];
+            $this->id = $data['id'];
         }
         if (isset($data['label'])) {
-        $this->label = $data['label'];
+            $this->label = $data['label'];
         }
         if (isset($data['type'])) {
-        $this->type = $data['type'];
+            $this->type = $data['type'];
         }
         if (isset($data['amount'])) {
-        $this->amount = new Money($data['amount']);
+            $this->amount = new Money($data['amount']);
         }
         if (isset($data['selected'])) {
-        $this->selected = $data['selected'];
+            $this->selected = $data['selected'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

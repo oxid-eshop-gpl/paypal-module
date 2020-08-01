@@ -15,7 +15,7 @@ use Webmozart\Assert\Assert;
  * currencies and decimal precision, see the PayPal REST APIs <a
  * href="/docs/integration/direct/rest/currency-codes/">Currency Codes</a>.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-amount_with_breakdown.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-amount_with_breakdown.json
  */
 class AmountWithBreakdown extends Money implements JsonSerializable
 {
@@ -43,13 +43,15 @@ class AmountWithBreakdown extends Money implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['breakdown'])) {
-        $this->breakdown = new AmountBreakdown($data['breakdown']);
+            $this->breakdown = new AmountBreakdown($data['breakdown']);
         }
     }
 
     public function __construct(array $data = null)
     {
         parent::__construct($data);
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

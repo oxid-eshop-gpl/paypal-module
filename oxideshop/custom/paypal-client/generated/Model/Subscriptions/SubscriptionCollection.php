@@ -105,6 +105,8 @@ class SubscriptionCollection implements JsonSerializable
     public function __construct(array $data = null)
     {
         $this->subscriptions = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

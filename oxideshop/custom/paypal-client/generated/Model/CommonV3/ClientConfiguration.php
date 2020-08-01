@@ -10,7 +10,8 @@ use Webmozart\Assert\Assert;
  * Client configuration that captures the product flows and specific experiences that a user completes a paypal
  * transaction.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-common_components-v3-schema-json-openapi-2.0-client_configuration.json
+ * generated from:
+ * MerchantsCommonComponentsSpecification-v1-schema-common_components-v3-schema-json-openapi-2.0-client_configuration.json
  */
 class ClientConfiguration implements JsonSerializable
 {
@@ -249,24 +250,26 @@ class ClientConfiguration implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['product_code'])) {
-        $this->product_code = $data['product_code'];
+            $this->product_code = $data['product_code'];
         }
         if (isset($data['product_feature'])) {
-        $this->product_feature = $data['product_feature'];
+            $this->product_feature = $data['product_feature'];
         }
         if (isset($data['api'])) {
-        $this->api = $data['api'];
+            $this->api = $data['api'];
         }
         if (isset($data['integration_artifact'])) {
-        $this->integration_artifact = $data['integration_artifact'];
+            $this->integration_artifact = $data['integration_artifact'];
         }
         if (isset($data['experience'])) {
-        $this->experience = new ProductExperience($data['experience']);
+            $this->experience = new ProductExperience($data['experience']);
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * The details of the captured payment status.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-capture_status_details.json
+ * generated from: merchant.CommonComponentsSpecification-v1-schema-capture_status_details.json
  */
 class CaptureStatusDetails implements JsonSerializable
 {
@@ -75,12 +75,14 @@ class CaptureStatusDetails implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['reason'])) {
-        $this->reason = $data['reason'];
+            $this->reason = $data['reason'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

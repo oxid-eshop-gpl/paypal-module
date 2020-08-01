@@ -36,12 +36,14 @@ class PaypalWalletAttributesResponse implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['vault'])) {
-        $this->vault = new VaultResponse($data['vault']);
+            $this->vault = new VaultResponse($data['vault']);
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

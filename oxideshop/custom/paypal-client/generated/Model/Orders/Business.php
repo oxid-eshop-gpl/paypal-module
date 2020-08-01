@@ -332,6 +332,8 @@ class Business extends Party implements JsonSerializable
         $this->names = [];
         $this->identifications = [];
         $this->owners = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

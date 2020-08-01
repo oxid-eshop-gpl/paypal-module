@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * Information about the parent transaction.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-parent_transaction.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-parent_transaction.json
  */
 class ParentTransaction implements JsonSerializable
 {
@@ -46,15 +46,17 @@ class ParentTransaction implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['id'])) {
-        $this->id = $data['id'];
+            $this->id = $data['id'];
         }
         if (isset($data['type'])) {
-        $this->type = $data['type'];
+            $this->type = $data['type'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

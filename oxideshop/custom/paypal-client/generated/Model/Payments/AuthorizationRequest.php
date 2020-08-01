@@ -184,6 +184,8 @@ class AuthorizationRequest implements JsonSerializable
     public function __construct(array $data = null)
     {
         $this->amount = new AmountWithBreakdown();
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

@@ -76,6 +76,8 @@ class Evidences implements JsonSerializable
     public function __construct(array $data = null)
     {
         $this->evidences = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

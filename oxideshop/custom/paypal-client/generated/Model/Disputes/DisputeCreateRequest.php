@@ -234,6 +234,8 @@ class DisputeCreateRequest implements JsonSerializable
     {
         $this->transaction = new Transaction();
         $this->reference_dispute = new ReferenceDispute();
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

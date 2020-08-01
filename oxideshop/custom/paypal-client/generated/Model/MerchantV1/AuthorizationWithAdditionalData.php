@@ -50,16 +50,18 @@ class AuthorizationWithAdditionalData extends Authorization implements JsonSeria
     private function map(array $data)
     {
         if (isset($data['risk_assessment'])) {
-        $this->risk_assessment = new RiskAssessments($data['risk_assessment']);
+            $this->risk_assessment = new RiskAssessments($data['risk_assessment']);
         }
         if (isset($data['processor_response'])) {
-        $this->processor_response = new ProcessorResponse($data['processor_response']);
+            $this->processor_response = new ProcessorResponse($data['processor_response']);
         }
     }
 
     public function __construct(array $data = null)
     {
         parent::__construct($data);
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

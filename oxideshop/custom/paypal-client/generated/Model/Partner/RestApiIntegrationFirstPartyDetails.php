@@ -69,6 +69,8 @@ class RestApiIntegrationFirstPartyDetails implements JsonSerializable
     public function __construct(array $data = null)
     {
         $this->features = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

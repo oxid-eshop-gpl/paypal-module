@@ -10,7 +10,7 @@ use Webmozart\Assert\Assert;
 /**
  * The refund information.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-refund.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-refund.json
  */
 class Refund extends RefundStatus implements JsonSerializable
 {
@@ -131,37 +131,39 @@ class Refund extends RefundStatus implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['id'])) {
-        $this->id = $data['id'];
+            $this->id = $data['id'];
         }
         if (isset($data['amount'])) {
-        $this->amount = new Money($data['amount']);
+            $this->amount = new Money($data['amount']);
         }
         if (isset($data['invoice_id'])) {
-        $this->invoice_id = $data['invoice_id'];
+            $this->invoice_id = $data['invoice_id'];
         }
         if (isset($data['note_to_payer'])) {
-        $this->note_to_payer = $data['note_to_payer'];
+            $this->note_to_payer = $data['note_to_payer'];
         }
         if (isset($data['seller_payable_breakdown'])) {
-        $this->seller_payable_breakdown = new RefundSellerPayableBreakdown($data['seller_payable_breakdown']);
+            $this->seller_payable_breakdown = new RefundSellerPayableBreakdown($data['seller_payable_breakdown']);
         }
         if (isset($data['links'])) {
-        $this->links = [];
-        foreach($data['links'] as $item) {
-        $this->links[] = LinkDescription::map($item);
-        }
+            $this->links = [];
+            foreach ($data['links'] as $item) {
+                $this->links[] = new LinkDescription($item);
+            }
         }
         if (isset($data['create_time'])) {
-        $this->create_time = $data['create_time'];
+            $this->create_time = $data['create_time'];
         }
         if (isset($data['update_time'])) {
-        $this->update_time = $data['update_time'];
+            $this->update_time = $data['update_time'];
         }
     }
 
     public function __construct(array $data = null)
     {
         parent::__construct($data);
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

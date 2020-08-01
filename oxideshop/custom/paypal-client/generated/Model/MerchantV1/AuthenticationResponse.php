@@ -72,15 +72,17 @@ class AuthenticationResponse implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['liability_shift'])) {
-        $this->liability_shift = $data['liability_shift'];
+            $this->liability_shift = $data['liability_shift'];
         }
         if (isset($data['three_d_secure'])) {
-        $this->three_d_secure = new ThreeDSecureAuthenticationResponse($data['three_d_secure']);
+            $this->three_d_secure = new ThreeDSecureAuthenticationResponse($data['three_d_secure']);
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

@@ -1,0 +1,5 @@
+{
+    "AddressPortablePostalCodeValidation": "string",
+    "NameValidation": "string",
+    "BusinessNameValidation": "string"
+}

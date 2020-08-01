@@ -136,6 +136,8 @@ class PaymentContextData implements JsonSerializable
     {
         $this->facilitators = [];
         $this->payment_units = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

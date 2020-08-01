@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * An email address at which the person or business can be contacted.
  *
- * generated from: customer_common_overrides-email.json
+ * generated from: customized_x_unsupported_1635_customer_common_overrides-email.json
  */
 class Email implements JsonSerializable
 {
@@ -80,6 +80,8 @@ class Email implements JsonSerializable
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

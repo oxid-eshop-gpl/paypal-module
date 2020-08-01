@@ -11,7 +11,7 @@ use Webmozart\Assert\Assert;
 /**
  * The shipping details.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-shipping_detail.json
+ * generated from: merchant.CommonComponentsSpecification-v1-schema-shipping_detail.json
  */
 class ShippingDetail implements JsonSerializable
 {
@@ -76,21 +76,23 @@ class ShippingDetail implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['name'])) {
-        $this->name = new Name($data['name']);
+            $this->name = new Name($data['name']);
         }
         if (isset($data['options'])) {
-        $this->options = [];
-        foreach($data['options'] as $item) {
-        $this->options[] = ShippingOption::map($item);
-        }
+            $this->options = [];
+            foreach ($data['options'] as $item) {
+                $this->options[] = new ShippingOption($item);
+            }
         }
         if (isset($data['address'])) {
-        $this->address = new AddressPortable($data['address']);
+            $this->address = new AddressPortable($data['address']);
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

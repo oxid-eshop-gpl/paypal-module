@@ -105,6 +105,8 @@ class ProductCollection implements JsonSerializable
     public function __construct(array $data = null)
     {
         $this->products = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

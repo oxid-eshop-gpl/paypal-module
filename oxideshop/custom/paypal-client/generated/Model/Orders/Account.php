@@ -279,6 +279,8 @@ class Account implements JsonSerializable
     public function __construct(array $data = null)
     {
         $this->account_tags = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

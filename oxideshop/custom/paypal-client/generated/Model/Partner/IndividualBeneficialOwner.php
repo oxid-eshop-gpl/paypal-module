@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * The individual owner of the account.
  *
- * generated from: customer_common_overrides-individual_beneficial_owner.json
+ * generated from: customized_x_unsupported_9745_customer_common_overrides-individual_beneficial_owner.json
  */
 class IndividualBeneficialOwner extends Person implements JsonSerializable
 {
@@ -38,6 +38,8 @@ class IndividualBeneficialOwner extends Person implements JsonSerializable
     public function __construct(array $data = null)
     {
         parent::__construct($data);
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

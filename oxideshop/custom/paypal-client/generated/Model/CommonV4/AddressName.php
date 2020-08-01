@@ -9,7 +9,8 @@ use Webmozart\Assert\Assert;
 /**
  * The name and address, typically used for billing and shipping purposes.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-common_components-v4-schema-json-openapi-2.0-address_name.json
+ * generated from:
+ * MerchantsCommonComponentsSpecification-v1-schema-common_components-v4-schema-json-openapi-2.0-address_name.json
  */
 class AddressName extends AddressPortable implements JsonSerializable
 {
@@ -42,13 +43,15 @@ class AddressName extends AddressPortable implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['addressee'])) {
-        $this->addressee = $data['addressee'];
+            $this->addressee = $data['addressee'];
         }
     }
 
     public function __construct(array $data = null)
     {
         parent::__construct($data);
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

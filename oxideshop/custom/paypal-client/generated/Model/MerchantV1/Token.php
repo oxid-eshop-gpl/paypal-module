@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * The tokenized payment source to fund a payment.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-token.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-token.json
  */
 class Token implements JsonSerializable
 {
@@ -92,15 +92,17 @@ class Token implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['id'])) {
-        $this->id = $data['id'];
+            $this->id = $data['id'];
         }
         if (isset($data['type'])) {
-        $this->type = $data['type'];
+            $this->type = $data['type'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

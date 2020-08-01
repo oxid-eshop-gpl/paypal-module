@@ -63,6 +63,8 @@ class SubscriberRequest extends Payer implements JsonSerializable
     public function __construct(array $data = null)
     {
         parent::__construct($data);
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

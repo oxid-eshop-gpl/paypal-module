@@ -7,9 +7,9 @@ use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
 use Webmozart\Assert\Assert;
 
 /**
- * A customer- or merchant-posted message for the dispute.
+ * The customer- or merchant-provided messages about the dispute.
  *
- * generated from: response-message.json
+ * generated from: referred-message.json
  */
 class Message implements JsonSerializable
 {
@@ -21,17 +21,13 @@ class Message implements JsonSerializable
     /** The merchant posted the message. */
     public const POSTED_BY_SELLER = 'SELLER';
 
-    /** The arbiter of the dispute posted the message. */
-    public const POSTED_BY_ARBITER = 'ARBITER';
-
     /**
-     * Indicates whether the customer, merchant, or dispute arbiter posted the message.
+     * The customer or merchant who posted the message.
      *
      * use one of constants defined in this class to set the value:
      * @see POSTED_BY_BUYER
      * @see POSTED_BY_SELLER
-     * @see POSTED_BY_ARBITER
-     * @var string | null
+     * @var string
      * minLength: 1
      * maxLength: 255
      */
@@ -46,12 +42,12 @@ class Message implements JsonSerializable
      * minLength: 20
      * maxLength: 64
      */
-    public $time_posted;
+    public $posted_time;
 
     /**
-     * The message text.
+     * The customer- or merchant-posted content.
      *
-     * @var string | null
+     * @var string
      * maxLength: 2000
      */
     public $content;
@@ -59,27 +55,29 @@ class Message implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->posted_by) || Assert::minLength(
+        Assert::notNull($this->posted_by, "posted_by in Message must not be NULL $within");
+        Assert::minLength(
             $this->posted_by,
             1,
             "posted_by in Message must have minlength of 1 $within"
         );
-        !isset($this->posted_by) || Assert::maxLength(
+        Assert::maxLength(
             $this->posted_by,
             255,
             "posted_by in Message must have maxlength of 255 $within"
         );
-        !isset($this->time_posted) || Assert::minLength(
-            $this->time_posted,
+        !isset($this->posted_time) || Assert::minLength(
+            $this->posted_time,
             20,
-            "time_posted in Message must have minlength of 20 $within"
+            "posted_time in Message must have minlength of 20 $within"
         );
-        !isset($this->time_posted) || Assert::maxLength(
-            $this->time_posted,
+        !isset($this->posted_time) || Assert::maxLength(
+            $this->posted_time,
             64,
-            "time_posted in Message must have maxlength of 64 $within"
+            "posted_time in Message must have maxlength of 64 $within"
         );
-        !isset($this->content) || Assert::maxLength(
+        Assert::notNull($this->content, "content in Message must not be NULL $within");
+        Assert::maxLength(
             $this->content,
             2000,
             "content in Message must have maxlength of 2000 $within"
@@ -91,8 +89,8 @@ class Message implements JsonSerializable
         if (isset($data['posted_by'])) {
             $this->posted_by = $data['posted_by'];
         }
-        if (isset($data['time_posted'])) {
-            $this->time_posted = $data['time_posted'];
+        if (isset($data['posted_time'])) {
+            $this->posted_time = $data['posted_time'];
         }
         if (isset($data['content'])) {
             $this->content = $data['content'];
@@ -101,6 +99,8 @@ class Message implements JsonSerializable
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

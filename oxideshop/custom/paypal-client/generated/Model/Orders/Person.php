@@ -152,6 +152,8 @@ class Person extends Party implements JsonSerializable
         parent::__construct($data);
         $this->names = [];
         $this->identifications = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

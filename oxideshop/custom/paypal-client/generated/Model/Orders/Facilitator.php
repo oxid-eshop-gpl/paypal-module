@@ -137,6 +137,8 @@ class Facilitator extends Participant implements JsonSerializable
     {
         parent::__construct($data);
         $this->segments = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

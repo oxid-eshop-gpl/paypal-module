@@ -10,7 +10,7 @@ use Webmozart\Assert\Assert;
  * The tax ID of the customer. The customer is also known as the payer. Both `tax_id` and `tax_id_type` are
  * required.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-tax_info.json
+ * generated from: merchant.CommonComponentsSpecification-v1-schema-tax_info.json
  */
 class TaxInfo implements JsonSerializable
 {
@@ -56,15 +56,17 @@ class TaxInfo implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['tax_id'])) {
-        $this->tax_id = $data['tax_id'];
+            $this->tax_id = $data['tax_id'];
         }
         if (isset($data['tax_id_type'])) {
-        $this->tax_id_type = $data['tax_id_type'];
+            $this->tax_id_type = $data['tax_id_type'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

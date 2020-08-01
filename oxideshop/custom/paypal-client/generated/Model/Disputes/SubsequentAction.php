@@ -8,9 +8,9 @@ use OxidProfessionalServices\PayPal\Api\Model\CommonV3\LinkDescription;
 use Webmozart\Assert\Assert;
 
 /**
- * The subsequent action.
+ * A list of subsequent actions.
  *
- * generated from: response-subsequent_action.json
+ * generated from: referred-subsequent_action.json
  */
 class SubsequentAction implements JsonSerializable
 {
@@ -49,6 +49,8 @@ class SubsequentAction implements JsonSerializable
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

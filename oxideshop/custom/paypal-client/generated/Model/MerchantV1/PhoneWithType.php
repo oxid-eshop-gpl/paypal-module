@@ -10,7 +10,7 @@ use Webmozart\Assert\Assert;
 /**
  * The phone information.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-phone_with_type.json
+ * generated from: merchant.CommonComponentsSpecification-v1-schema-phone_with_type.json
  */
 class PhoneWithType implements JsonSerializable
 {
@@ -46,16 +46,18 @@ class PhoneWithType implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['phone_type'])) {
-        $this->phone_type = $data['phone_type'];
+            $this->phone_type = $data['phone_type'];
         }
         if (isset($data['phone_number'])) {
-        $this->phone_number = new Phone($data['phone_number']);
+            $this->phone_number = new Phone($data['phone_number']);
         }
     }
 
     public function __construct(array $data = null)
     {
         $this->phone_number = new Phone();
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

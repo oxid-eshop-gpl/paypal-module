@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * The API caller-provided information about the store.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-point_of_sale.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-point_of_sale.json
  */
 class PointOfSale implements JsonSerializable
 {
@@ -61,15 +61,17 @@ class PointOfSale implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['store_id'])) {
-        $this->store_id = $data['store_id'];
+            $this->store_id = $data['store_id'];
         }
         if (isset($data['terminal_id'])) {
-        $this->terminal_id = $data['terminal_id'];
+            $this->terminal_id = $data['terminal_id'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

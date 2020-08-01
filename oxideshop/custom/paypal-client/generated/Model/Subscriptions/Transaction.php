@@ -136,6 +136,8 @@ class Transaction extends CaptureStatus implements JsonSerializable
     {
         parent::__construct($data);
         $this->amount_with_breakdown = new AmountWithBreakdown();
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

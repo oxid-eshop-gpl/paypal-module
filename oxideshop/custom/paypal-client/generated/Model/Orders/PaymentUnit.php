@@ -447,6 +447,8 @@ class PaymentUnit implements JsonSerializable
     {
         $this->items = [];
         $this->context_attributes = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

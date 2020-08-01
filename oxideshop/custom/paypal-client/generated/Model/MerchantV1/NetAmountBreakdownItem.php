@@ -11,7 +11,7 @@ use Webmozart\Assert\Assert;
  * The net amount. Returned when the currency of the refund is different from the currency of the PayPal account
  * where the merchant holds their funds.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-net_amount_breakdown_item.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-net_amount_breakdown_item.json
  */
 class NetAmountBreakdownItem implements JsonSerializable
 {
@@ -64,18 +64,20 @@ class NetAmountBreakdownItem implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['payable_amount'])) {
-        $this->payable_amount = new Money($data['payable_amount']);
+            $this->payable_amount = new Money($data['payable_amount']);
         }
         if (isset($data['converted_amount'])) {
-        $this->converted_amount = new Money($data['converted_amount']);
+            $this->converted_amount = new Money($data['converted_amount']);
         }
         if (isset($data['exchange_rate'])) {
-        $this->exchange_rate = new ExchangeRate($data['exchange_rate']);
+            $this->exchange_rate = new ExchangeRate($data['exchange_rate']);
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

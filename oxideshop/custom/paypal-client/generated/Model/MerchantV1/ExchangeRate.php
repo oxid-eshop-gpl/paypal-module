@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * The exchange rate that determines the amount to convert from one currency to another currency.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-exchange_rate.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-exchange_rate.json
  */
 class ExchangeRate implements JsonSerializable
 {
@@ -71,18 +71,20 @@ class ExchangeRate implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['source_currency'])) {
-        $this->source_currency = $data['source_currency'];
+            $this->source_currency = $data['source_currency'];
         }
         if (isset($data['target_currency'])) {
-        $this->target_currency = $data['target_currency'];
+            $this->target_currency = $data['target_currency'];
         }
         if (isset($data['value'])) {
-        $this->value = $data['value'];
+            $this->value = $data['value'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

@@ -9,7 +9,8 @@ use Webmozart\Assert\Assert;
 /**
  * The status of a captured payment.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-capture_status.json
+ * generated from:
+ * customized_x_unsupported_3053_merchant.CommonComponentsSpecification-v1-schema-capture_status.json
  */
 class CaptureStatus implements JsonSerializable
 {
@@ -30,9 +31,6 @@ class CaptureStatus implements JsonSerializable
     /** An amount greater than or equal to this captured payment's amount was refunded to the payer. */
     public const STATUS_REFUNDED = 'REFUNDED';
 
-    /** There was an error while capturing payment. */
-    public const STATUS_FAILED = 'FAILED';
-
     /**
      * The status of the captured payment.
      *
@@ -42,41 +40,26 @@ class CaptureStatus implements JsonSerializable
      * @see STATUS_PARTIALLY_REFUNDED
      * @see STATUS_PENDING
      * @see STATUS_REFUNDED
-     * @see STATUS_FAILED
      * @var string | null
      */
     public $status;
 
-    /**
-     * The details of the captured payment status.
-     *
-     * @var CaptureStatusDetails | null
-     */
-    public $status_details;
-
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
-        !isset($this->status_details) || Assert::isInstanceOf(
-            $this->status_details,
-            CaptureStatusDetails::class,
-            "status_details in CaptureStatus must be instance of CaptureStatusDetails $within"
-        );
-        !isset($this->status_details) ||  $this->status_details->validate(CaptureStatus::class);
     }
 
     private function map(array $data)
     {
         if (isset($data['status'])) {
-        $this->status = $data['status'];
-        }
-        if (isset($data['status_details'])) {
-        $this->status_details = new CaptureStatusDetails($data['status_details']);
+            $this->status = $data['status'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

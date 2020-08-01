@@ -205,6 +205,8 @@ class SubscriptionBillingInfo implements JsonSerializable
     {
         $this->outstanding_balance = new Money();
         $this->cycle_executions = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

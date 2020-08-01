@@ -122,34 +122,36 @@ class RefundSellerPayableBreakdown implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['gross_amount'])) {
-        $this->gross_amount = new Money($data['gross_amount']);
+            $this->gross_amount = new Money($data['gross_amount']);
         }
         if (isset($data['paypal_fee'])) {
-        $this->paypal_fee = new Money($data['paypal_fee']);
+            $this->paypal_fee = new Money($data['paypal_fee']);
         }
         if (isset($data['net_amount'])) {
-        $this->net_amount = new Money($data['net_amount']);
+            $this->net_amount = new Money($data['net_amount']);
         }
         if (isset($data['platform_fees'])) {
-        $this->platform_fees = [];
-        foreach($data['platform_fees'] as $item) {
-        $this->platform_fees[] = PlatformFee::map($item);
-        }
+            $this->platform_fees = [];
+            foreach ($data['platform_fees'] as $item) {
+                $this->platform_fees[] = new PlatformFee($item);
+            }
         }
         if (isset($data['net_amount_breakdown'])) {
-        $this->net_amount_breakdown = [];
-        foreach($data['net_amount_breakdown'] as $item) {
-        $this->net_amount_breakdown[] = NetAmountBreakdownItem::map($item);
-        }
+            $this->net_amount_breakdown = [];
+            foreach ($data['net_amount_breakdown'] as $item) {
+                $this->net_amount_breakdown[] = new NetAmountBreakdownItem($item);
+            }
         }
         if (isset($data['total_refunded_amount'])) {
-        $this->total_refunded_amount = new Money($data['total_refunded_amount']);
+            $this->total_refunded_amount = new Money($data['total_refunded_amount']);
         }
     }
 
     public function __construct(array $data = null)
     {
         $this->platform_fees = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

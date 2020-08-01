@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * The name of the party.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-common_components-v4-schema-json-openapi-2.0-name.json
+ * generated from: customer_common-v1-schema-common_components-v4-schema-json-openapi-2.0-name.json
  */
 class Name implements JsonSerializable
 {
@@ -103,27 +103,29 @@ class Name implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['prefix'])) {
-        $this->prefix = $data['prefix'];
+            $this->prefix = $data['prefix'];
         }
         if (isset($data['given_name'])) {
-        $this->given_name = $data['given_name'];
+            $this->given_name = $data['given_name'];
         }
         if (isset($data['surname'])) {
-        $this->surname = $data['surname'];
+            $this->surname = $data['surname'];
         }
         if (isset($data['middle_name'])) {
-        $this->middle_name = $data['middle_name'];
+            $this->middle_name = $data['middle_name'];
         }
         if (isset($data['suffix'])) {
-        $this->suffix = $data['suffix'];
+            $this->suffix = $data['suffix'];
         }
         if (isset($data['full_name'])) {
-        $this->full_name = $data['full_name'];
+            $this->full_name = $data['full_name'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

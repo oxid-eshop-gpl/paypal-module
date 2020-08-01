@@ -11,7 +11,7 @@ use Webmozart\Assert\Assert;
 /**
  * The authorized payment transaction.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-authorization.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-authorization.json
  */
 class Authorization extends AuthorizationStatus implements JsonSerializable
 {
@@ -179,43 +179,45 @@ class Authorization extends AuthorizationStatus implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['id'])) {
-        $this->id = $data['id'];
+            $this->id = $data['id'];
         }
         if (isset($data['amount'])) {
-        $this->amount = new Money($data['amount']);
+            $this->amount = new Money($data['amount']);
         }
         if (isset($data['invoice_id'])) {
-        $this->invoice_id = $data['invoice_id'];
+            $this->invoice_id = $data['invoice_id'];
         }
         if (isset($data['custom_id'])) {
-        $this->custom_id = $data['custom_id'];
+            $this->custom_id = $data['custom_id'];
         }
         if (isset($data['alternate_id'])) {
-        $this->alternate_id = $data['alternate_id'];
+            $this->alternate_id = $data['alternate_id'];
         }
         if (isset($data['seller_protection'])) {
-        $this->seller_protection = new SellerProtection($data['seller_protection']);
+            $this->seller_protection = new SellerProtection($data['seller_protection']);
         }
         if (isset($data['expiration_time'])) {
-        $this->expiration_time = $data['expiration_time'];
+            $this->expiration_time = $data['expiration_time'];
         }
         if (isset($data['links'])) {
-        $this->links = [];
-        foreach($data['links'] as $item) {
-        $this->links[] = LinkDescription::map($item);
-        }
+            $this->links = [];
+            foreach ($data['links'] as $item) {
+                $this->links[] = new LinkDescription($item);
+            }
         }
         if (isset($data['create_time'])) {
-        $this->create_time = $data['create_time'];
+            $this->create_time = $data['create_time'];
         }
         if (isset($data['update_time'])) {
-        $this->update_time = $data['update_time'];
+            $this->update_time = $data['update_time'];
         }
     }
 
     public function __construct(array $data = null)
     {
         parent::__construct($data);
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

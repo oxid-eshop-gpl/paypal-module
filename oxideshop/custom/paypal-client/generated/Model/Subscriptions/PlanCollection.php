@@ -105,6 +105,8 @@ class PlanCollection implements JsonSerializable
     public function __construct(array $data = null)
     {
         $this->plans = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

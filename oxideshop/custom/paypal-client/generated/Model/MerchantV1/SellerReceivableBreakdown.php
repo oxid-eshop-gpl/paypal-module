@@ -10,7 +10,7 @@ use Webmozart\Assert\Assert;
 /**
  * The detailed breakdown of the capture activity.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-seller_receivable_breakdown.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-seller_receivable_breakdown.json
  */
 class SellerReceivableBreakdown implements JsonSerializable
 {
@@ -133,28 +133,28 @@ class SellerReceivableBreakdown implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['gross_amount'])) {
-        $this->gross_amount = new Money($data['gross_amount']);
+            $this->gross_amount = new Money($data['gross_amount']);
         }
         if (isset($data['paypal_fee'])) {
-        $this->paypal_fee = new Money($data['paypal_fee']);
+            $this->paypal_fee = new Money($data['paypal_fee']);
         }
         if (isset($data['paypal_fee_in_receivable_currency'])) {
-        $this->paypal_fee_in_receivable_currency = new Money($data['paypal_fee_in_receivable_currency']);
+            $this->paypal_fee_in_receivable_currency = new Money($data['paypal_fee_in_receivable_currency']);
         }
         if (isset($data['net_amount'])) {
-        $this->net_amount = new Money($data['net_amount']);
+            $this->net_amount = new Money($data['net_amount']);
         }
         if (isset($data['receivable_amount'])) {
-        $this->receivable_amount = new Money($data['receivable_amount']);
+            $this->receivable_amount = new Money($data['receivable_amount']);
         }
         if (isset($data['exchange_rate'])) {
-        $this->exchange_rate = new ExchangeRate($data['exchange_rate']);
+            $this->exchange_rate = new ExchangeRate($data['exchange_rate']);
         }
         if (isset($data['platform_fees'])) {
-        $this->platform_fees = [];
-        foreach($data['platform_fees'] as $item) {
-        $this->platform_fees[] = PlatformFee::map($item);
-        }
+            $this->platform_fees = [];
+            foreach ($data['platform_fees'] as $item) {
+                $this->platform_fees[] = new PlatformFee($item);
+            }
         }
     }
 
@@ -162,6 +162,8 @@ class SellerReceivableBreakdown implements JsonSerializable
     {
         $this->gross_amount = new Money();
         $this->platform_fees = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

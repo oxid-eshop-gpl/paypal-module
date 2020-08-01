@@ -2,7 +2,6 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Service;
 
-use JsonMapper;
 use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
 use OxidProfessionalServices\PayPal\Api\Model\Partner\CreateReferralDataResponse;
 use OxidProfessionalServices\PayPal\Api\Model\Partner\ReferralData;

@@ -92,6 +92,8 @@ class CaptureRequest extends SupplementaryPurchaseData implements JsonSerializab
     public function __construct(array $data = null)
     {
         parent::__construct($data);
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

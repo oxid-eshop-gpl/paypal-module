@@ -12,7 +12,7 @@ use Webmozart\Assert\Assert;
 /**
  * A captured payment.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-capture.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-capture.json
  */
 class Capture extends CaptureStatus implements JsonSerializable
 {
@@ -230,58 +230,60 @@ class Capture extends CaptureStatus implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['id'])) {
-        $this->id = $data['id'];
+            $this->id = $data['id'];
         }
         if (isset($data['amount'])) {
-        $this->amount = new Money($data['amount']);
+            $this->amount = new Money($data['amount']);
         }
         if (isset($data['parent_transaction'])) {
-        $this->parent_transaction = new ParentTransaction($data['parent_transaction']);
+            $this->parent_transaction = new ParentTransaction($data['parent_transaction']);
         }
         if (isset($data['invoice_id'])) {
-        $this->invoice_id = $data['invoice_id'];
+            $this->invoice_id = $data['invoice_id'];
         }
         if (isset($data['custom_id'])) {
-        $this->custom_id = $data['custom_id'];
+            $this->custom_id = $data['custom_id'];
         }
         if (isset($data['seller_protection'])) {
-        $this->seller_protection = new SellerProtection($data['seller_protection']);
+            $this->seller_protection = new SellerProtection($data['seller_protection']);
         }
         if (isset($data['final_capture'])) {
-        $this->final_capture = $data['final_capture'];
+            $this->final_capture = $data['final_capture'];
         }
         if (isset($data['seller_receivable_breakdown'])) {
-        $this->seller_receivable_breakdown = new SellerReceivableBreakdown($data['seller_receivable_breakdown']);
+            $this->seller_receivable_breakdown = new SellerReceivableBreakdown($data['seller_receivable_breakdown']);
         }
         if (isset($data['disbursement_mode'])) {
-        $this->disbursement_mode = $data['disbursement_mode'];
+            $this->disbursement_mode = $data['disbursement_mode'];
         }
         if (isset($data['error'])) {
-        $this->error = new Error($data['error']);
+            $this->error = new Error($data['error']);
         }
         if (isset($data['links'])) {
-        $this->links = [];
-        foreach($data['links'] as $item) {
-        $this->links[] = LinkDescription::map($item);
-        }
+            $this->links = [];
+            foreach ($data['links'] as $item) {
+                $this->links[] = new LinkDescription($item);
+            }
         }
         if (isset($data['processor_response'])) {
-        $this->processor_response = new ProcessorResponse($data['processor_response']);
+            $this->processor_response = new ProcessorResponse($data['processor_response']);
         }
         if (isset($data['supplementary_data'])) {
-        $this->supplementary_data = new SupplementaryData($data['supplementary_data']);
+            $this->supplementary_data = new SupplementaryData($data['supplementary_data']);
         }
         if (isset($data['create_time'])) {
-        $this->create_time = $data['create_time'];
+            $this->create_time = $data['create_time'];
         }
         if (isset($data['update_time'])) {
-        $this->update_time = $data['update_time'];
+            $this->update_time = $data['update_time'];
         }
     }
 
     public function __construct(array $data = null)
     {
         parent::__construct($data);
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

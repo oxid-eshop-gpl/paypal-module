@@ -2,7 +2,6 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Service;
 
-use JsonMapper;
 use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Plan;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\PlanCollection;

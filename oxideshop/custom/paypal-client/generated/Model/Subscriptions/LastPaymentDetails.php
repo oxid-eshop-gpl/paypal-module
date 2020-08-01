@@ -70,6 +70,8 @@ class LastPaymentDetails implements JsonSerializable
     public function __construct(array $data = null)
     {
         $this->amount = new Money();
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

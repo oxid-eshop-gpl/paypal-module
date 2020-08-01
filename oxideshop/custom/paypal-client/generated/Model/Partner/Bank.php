@@ -200,6 +200,8 @@ class Bank implements JsonSerializable
     public function __construct(array $data = null)
     {
         $this->identifiers = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * Additional 3D Secure authentication data.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-3ds_result.json
+ * generated from: merchant.CommonComponentsSpecification-v1-schema-3ds_result.json
  */
 class ThreedsResult extends AuthenticationResultType implements JsonSerializable
 {
@@ -102,7 +102,7 @@ class ThreedsResult extends AuthenticationResultType implements JsonSerializable
     /** Challenge required; decoupled authentication confirmed. */
     public const PARES_STATUS_D = 'D';
 
-    /** Informational only; 3DS requestor challenge preference acknowledged. */
+    /** Informational anly; 3DS requestor challenge preference acknowledged. */
     public const PARES_STATUS_I = 'I';
 
     /** Indicates fixed password. */
@@ -509,61 +509,63 @@ class ThreedsResult extends AuthenticationResultType implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['eci_flag'])) {
-        $this->eci_flag = $data['eci_flag'];
+            $this->eci_flag = $data['eci_flag'];
         }
         if (isset($data['ucaf_indicator'])) {
-        $this->ucaf_indicator = $data['ucaf_indicator'];
+            $this->ucaf_indicator = $data['ucaf_indicator'];
         }
         if (isset($data['card_brand'])) {
-        $this->card_brand = $data['card_brand'];
+            $this->card_brand = $data['card_brand'];
         }
         if (isset($data['cavv'])) {
-        $this->cavv = $data['cavv'];
+            $this->cavv = $data['cavv'];
         }
         if (isset($data['xid'])) {
-        $this->xid = $data['xid'];
+            $this->xid = $data['xid'];
         }
         if (isset($data['enrolled'])) {
-        $this->enrolled = $data['enrolled'];
+            $this->enrolled = $data['enrolled'];
         }
         if (isset($data['pares_status'])) {
-        $this->pares_status = $data['pares_status'];
+            $this->pares_status = $data['pares_status'];
         }
         if (isset($data['merchant_name'])) {
-        $this->merchant_name = $data['merchant_name'];
+            $this->merchant_name = $data['merchant_name'];
         }
         if (isset($data['three_ds_version'])) {
-        $this->three_ds_version = $data['three_ds_version'];
+            $this->three_ds_version = $data['three_ds_version'];
         }
         if (isset($data['directory_server_transaction_id'])) {
-        $this->directory_server_transaction_id = $data['directory_server_transaction_id'];
+            $this->directory_server_transaction_id = $data['directory_server_transaction_id'];
         }
         if (isset($data['authentication_type'])) {
-        $this->authentication_type = $data['authentication_type'];
+            $this->authentication_type = $data['authentication_type'];
         }
         if (isset($data['access_control_server_transaction_id'])) {
-        $this->access_control_server_transaction_id = $data['access_control_server_transaction_id'];
+            $this->access_control_server_transaction_id = $data['access_control_server_transaction_id'];
         }
         if (isset($data['signature_verification_status'])) {
-        $this->signature_verification_status = $data['signature_verification_status'];
+            $this->signature_verification_status = $data['signature_verification_status'];
         }
         if (isset($data['paypal_acquiring_mid'])) {
-        $this->paypal_acquiring_mid = $data['paypal_acquiring_mid'];
+            $this->paypal_acquiring_mid = $data['paypal_acquiring_mid'];
         }
         if (isset($data['paypal_acquiring_bin'])) {
-        $this->paypal_acquiring_bin = $data['paypal_acquiring_bin'];
+            $this->paypal_acquiring_bin = $data['paypal_acquiring_bin'];
         }
         if (isset($data['cavv_algorithm'])) {
-        $this->cavv_algorithm = $data['cavv_algorithm'];
+            $this->cavv_algorithm = $data['cavv_algorithm'];
         }
         if (isset($data['three_ds_server_transaction_id'])) {
-        $this->three_ds_server_transaction_id = $data['three_ds_server_transaction_id'];
+            $this->three_ds_server_transaction_id = $data['three_ds_server_transaction_id'];
         }
     }
 
     public function __construct(array $data = null)
     {
         parent::__construct($data);
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

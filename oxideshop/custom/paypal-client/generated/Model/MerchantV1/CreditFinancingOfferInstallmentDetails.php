@@ -49,15 +49,17 @@ class CreditFinancingOfferInstallmentDetails implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['period'])) {
-        $this->period = $data['period'];
+            $this->period = $data['period'];
         }
         if (isset($data['payment_due'])) {
-        $this->payment_due = new Money($data['payment_due']);
+            $this->payment_due = new Money($data['payment_due']);
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

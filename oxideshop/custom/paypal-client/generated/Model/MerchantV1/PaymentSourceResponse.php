@@ -283,69 +283,71 @@ class PaymentSourceResponse implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['card'])) {
-        $this->card = new CardResponse($data['card']);
+            $this->card = new CardResponse($data['card']);
         }
         if (isset($data['paypal'])) {
-        $this->paypal = new PaypalWalletResponse($data['paypal']);
+            $this->paypal = new PaypalWalletResponse($data['paypal']);
         }
         if (isset($data['wallet'])) {
-        $this->wallet = new WalletsResponse($data['wallet']);
+            $this->wallet = new WalletsResponse($data['wallet']);
         }
         if (isset($data['bank'])) {
-        $this->bank = new BankResponse($data['bank']);
+            $this->bank = new BankResponse($data['bank']);
         }
         if (isset($data['alipay'])) {
-        $this->alipay = new Alipay($data['alipay']);
+            $this->alipay = new Alipay($data['alipay']);
         }
         if (isset($data['bancontact'])) {
-        $this->bancontact = new Bancontact($data['bancontact']);
+            $this->bancontact = new Bancontact($data['bancontact']);
         }
         if (isset($data['blik'])) {
-        $this->blik = new Blik($data['blik']);
+            $this->blik = new Blik($data['blik']);
         }
         if (isset($data['eps'])) {
-        $this->eps = new Eps($data['eps']);
+            $this->eps = new Eps($data['eps']);
         }
         if (isset($data['giropay'])) {
-        $this->giropay = new Giropay($data['giropay']);
+            $this->giropay = new Giropay($data['giropay']);
         }
         if (isset($data['ideal'])) {
-        $this->ideal = new Ideal($data['ideal']);
+            $this->ideal = new Ideal($data['ideal']);
         }
         if (isset($data['multibanco'])) {
-        $this->multibanco = new Multibanco($data['multibanco']);
+            $this->multibanco = new Multibanco($data['multibanco']);
         }
         if (isset($data['mybank'])) {
-        $this->mybank = new Mybank($data['mybank']);
+            $this->mybank = new Mybank($data['mybank']);
         }
         if (isset($data['payu'])) {
-        $this->payu = new Payu($data['payu']);
+            $this->payu = new Payu($data['payu']);
         }
         if (isset($data['p24'])) {
-        $this->p24 = new PTwoFour($data['p24']);
+            $this->p24 = new PTwoFour($data['p24']);
         }
         if (isset($data['poli'])) {
-        $this->poli = new Poli($data['poli']);
+            $this->poli = new Poli($data['poli']);
         }
         if (isset($data['sofort'])) {
-        $this->sofort = new Sofort($data['sofort']);
+            $this->sofort = new Sofort($data['sofort']);
         }
         if (isset($data['trustly'])) {
-        $this->trustly = new Trustly($data['trustly']);
+            $this->trustly = new Trustly($data['trustly']);
         }
         if (isset($data['trustpay'])) {
-        $this->trustpay = new Trustpay($data['trustpay']);
+            $this->trustpay = new Trustpay($data['trustpay']);
         }
         if (isset($data['verkkopankki'])) {
-        $this->verkkopankki = new Verkkopankki($data['verkkopankki']);
+            $this->verkkopankki = new Verkkopankki($data['verkkopankki']);
         }
         if (isset($data['wechatpay'])) {
-        $this->wechatpay = new Wechatpay($data['wechatpay']);
+            $this->wechatpay = new Wechatpay($data['wechatpay']);
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

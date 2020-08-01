@@ -82,24 +82,26 @@ class CreditFinancingOffer implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['issuer'])) {
-        $this->issuer = $data['issuer'];
+            $this->issuer = $data['issuer'];
         }
         if (isset($data['total_payment'])) {
-        $this->total_payment = new Money($data['total_payment']);
+            $this->total_payment = new Money($data['total_payment']);
         }
         if (isset($data['total_interest'])) {
-        $this->total_interest = new Money($data['total_interest']);
+            $this->total_interest = new Money($data['total_interest']);
         }
         if (isset($data['installment_details'])) {
-        $this->installment_details = new CreditFinancingOfferInstallmentDetails($data['installment_details']);
+            $this->installment_details = new CreditFinancingOfferInstallmentDetails($data['installment_details']);
         }
         if (isset($data['term'])) {
-        $this->term = $data['term'];
+            $this->term = $data['term'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

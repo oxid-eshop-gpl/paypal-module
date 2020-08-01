@@ -9,7 +9,8 @@ use Webmozart\Assert\Assert;
 /**
  * Resource consolidating common request and response attirbutes for vaulting PayPal Wallet.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-vault_paypal_wallet_base.json
+ * generated from:
+ * customized_x_unsupported_7804_MerchantCommonComponentsSpecification-v1-schema-vault_paypal_wallet_base.json
  */
 class VaultPaypalWalletBase implements JsonSerializable
 {
@@ -53,13 +54,6 @@ class VaultPaypalWalletBase implements JsonSerializable
      * maxLength: 25
      */
     public $product_label;
-
-    /**
-     * The shipping details.
-     *
-     * @var ShippingDetail | null
-     */
-    public $shipping;
 
     /**
      * The usage type associated with the PayPal payment token.
@@ -120,12 +114,6 @@ class VaultPaypalWalletBase implements JsonSerializable
             25,
             "product_label in VaultPaypalWalletBase must have maxlength of 25 $within"
         );
-        !isset($this->shipping) || Assert::isInstanceOf(
-            $this->shipping,
-            ShippingDetail::class,
-            "shipping in VaultPaypalWalletBase must be instance of ShippingDetail $within"
-        );
-        !isset($this->shipping) ||  $this->shipping->validate(VaultPaypalWalletBase::class);
         Assert::notNull($this->usage_type, "usage_type in VaultPaypalWalletBase must not be NULL $within");
         Assert::minLength(
             $this->usage_type,
@@ -152,27 +140,26 @@ class VaultPaypalWalletBase implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['description'])) {
-        $this->description = $data['description'];
+            $this->description = $data['description'];
         }
         if (isset($data['product_label'])) {
-        $this->product_label = $data['product_label'];
-        }
-        if (isset($data['shipping'])) {
-        $this->shipping = new ShippingDetail($data['shipping']);
+            $this->product_label = $data['product_label'];
         }
         if (isset($data['usage_type'])) {
-        $this->usage_type = $data['usage_type'];
+            $this->usage_type = $data['usage_type'];
         }
         if (isset($data['customer_type'])) {
-        $this->customer_type = $data['customer_type'];
+            $this->customer_type = $data['customer_type'];
         }
         if (isset($data['permit_multiple_payment_tokens'])) {
-        $this->permit_multiple_payment_tokens = $data['permit_multiple_payment_tokens'];
+            $this->permit_multiple_payment_tokens = $data['permit_multiple_payment_tokens'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

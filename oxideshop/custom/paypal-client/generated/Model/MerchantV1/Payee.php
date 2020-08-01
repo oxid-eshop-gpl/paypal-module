@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * The merchant who receives the funds and fulfills the order. The merchant is also known as the payee.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-payee.json
+ * generated from: customized_x_unsupported_8146_merchant.CommonComponentsSpecification-v1-schema-payee.json
  */
 class Payee extends PayeeBase implements JsonSerializable
 {
@@ -37,13 +37,15 @@ class Payee extends PayeeBase implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['display_data'])) {
-        $this->display_data = new PayeeDisplayable($data['display_data']);
+            $this->display_data = new PayeeDisplayable($data['display_data']);
         }
     }
 
     public function __construct(array $data = null)
     {
         parent::__construct($data);
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

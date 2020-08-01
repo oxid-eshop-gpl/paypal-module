@@ -10,7 +10,7 @@ use Webmozart\Assert\Assert;
 /**
  * The airline passenger details.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-airline_passenger.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-airline_passenger.json
  */
 class AirlinePassenger implements JsonSerializable
 {
@@ -102,21 +102,23 @@ class AirlinePassenger implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['name'])) {
-        $this->name = new Name($data['name']);
+            $this->name = new Name($data['name']);
         }
         if (isset($data['date_of_birth'])) {
-        $this->date_of_birth = $data['date_of_birth'];
+            $this->date_of_birth = $data['date_of_birth'];
         }
         if (isset($data['country_code'])) {
-        $this->country_code = $data['country_code'];
+            $this->country_code = $data['country_code'];
         }
         if (isset($data['customer_code'])) {
-        $this->customer_code = $data['customer_code'];
+            $this->customer_code = $data['customer_code'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

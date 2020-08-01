@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * Additional attributes associated with the use of this card
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-card_attributes.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-card_attributes.json
  */
 class CardAttributes implements JsonSerializable
 {
@@ -50,15 +50,17 @@ class CardAttributes implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['customer'])) {
-        $this->customer = new Customer($data['customer']);
+            $this->customer = new Customer($data['customer']);
         }
         if (isset($data['verification'])) {
-        $this->verification = new CardVerification($data['verification']);
+            $this->verification = new CardVerification($data['verification']);
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

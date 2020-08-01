@@ -10,7 +10,7 @@ use Webmozart\Assert\Assert;
 /**
  * A simple postal address with coarse-grained fields.
  *
- * generated from: customer_common_overrides-business_address_detail.json
+ * generated from: customized_x_unsupported_6338_customer_common_overrides-business_address_detail.json
  */
 class BusinessAddressDetail extends AddressPortable implements JsonSerializable
 {
@@ -29,21 +29,6 @@ class BusinessAddressDetail extends AddressPortable implements JsonSerializable
      * maxLength: 255
      */
     public $type;
-
-    /**
-     * Whether this is the primary address of the user. This cannot be directly set to `false`, but rather it is
-     * toggled `false` in the datastore when another address is set to primary.
-     *
-     * @var boolean | null
-     */
-    public $primary;
-
-    /**
-     * Whether this address has been inactivated.
-     *
-     * @var boolean | null
-     */
-    public $inactive;
 
     public function validate($from = null)
     {
@@ -66,17 +51,13 @@ class BusinessAddressDetail extends AddressPortable implements JsonSerializable
         if (isset($data['type'])) {
             $this->type = $data['type'];
         }
-        if (isset($data['primary'])) {
-            $this->primary = $data['primary'];
-        }
-        if (isset($data['inactive'])) {
-            $this->inactive = $data['inactive'];
-        }
     }
 
     public function __construct(array $data = null)
     {
         parent::__construct($data);
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

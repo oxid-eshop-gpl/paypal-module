@@ -10,7 +10,7 @@ use Webmozart\Assert\Assert;
  * The details for the merchant who receives the funds and fulfills the order. The merchant is also known as the
  * payee.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-payee_base.json
+ * generated from: merchant.CommonComponentsSpecification-v1-schema-payee_base.json
  */
 class PayeeBase implements JsonSerializable
 {
@@ -73,18 +73,20 @@ class PayeeBase implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['email_address'])) {
-        $this->email_address = $data['email_address'];
+            $this->email_address = $data['email_address'];
         }
         if (isset($data['merchant_id'])) {
-        $this->merchant_id = $data['merchant_id'];
+            $this->merchant_id = $data['merchant_id'];
         }
         if (isset($data['client_id'])) {
-        $this->client_id = $data['client_id'];
+            $this->client_id = $data['client_id'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

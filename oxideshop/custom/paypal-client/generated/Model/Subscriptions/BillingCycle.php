@@ -119,6 +119,8 @@ class BillingCycle implements JsonSerializable
     public function __construct(array $data = null)
     {
         $this->frequency = new Frequency();
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

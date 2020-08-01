@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * Indicates the form of authentication used on the financial instrument.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-authentication_result_type.json
+ * generated from: merchant.CommonComponentsSpecification-v1-schema-authentication_result_type.json
  */
 class AuthenticationResultType implements JsonSerializable
 {
@@ -35,12 +35,14 @@ class AuthenticationResultType implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['type'])) {
-        $this->type = $data['type'];
+            $this->type = $data['type'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

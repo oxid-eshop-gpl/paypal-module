@@ -98,6 +98,8 @@ class BeneficialOwners implements JsonSerializable
     {
         $this->individual_beneficial_owners = [];
         $this->business_beneficial_owners = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

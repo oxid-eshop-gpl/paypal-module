@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * Basic vault instruction specification that can be extended by specific payment sources that supports vaulting.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-vault_instruction_base.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-vault_instruction_base.json
  */
 class VaultInstructionBase implements JsonSerializable
 {
@@ -48,12 +48,14 @@ class VaultInstructionBase implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['confirm_payment_token'])) {
-        $this->confirm_payment_token = $data['confirm_payment_token'];
+            $this->confirm_payment_token = $data['confirm_payment_token'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

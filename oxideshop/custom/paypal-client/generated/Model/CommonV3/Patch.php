@@ -9,7 +9,8 @@ use Webmozart\Assert\Assert;
 /**
  * The JSON patch object to apply partial updates to resources.
  *
- * generated from: merchant.CommonComponentsSpecification-v1-schema-common_components-v3-schema-json-openapi-2.0-patch.json
+ * generated from:
+ * merchant.CommonComponentsSpecification-v1-schema-common_components-v3-schema-json-openapi-2.0-patch.json
  */
 class Patch implements JsonSerializable
 {
@@ -79,21 +80,23 @@ class Patch implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['op'])) {
-        $this->op = $data['op'];
+            $this->op = $data['op'];
         }
         if (isset($data['path'])) {
-        $this->path = $data['path'];
+            $this->path = $data['path'];
         }
         if (isset($data['value'])) {
-        $this->value = $data['value'];
+            $this->value = $data['value'];
         }
         if (isset($data['from'])) {
-        $this->from = $data['from'];
+            $this->from = $data['from'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

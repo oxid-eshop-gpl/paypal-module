@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * The bank source used to fund the payment
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-bank.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-bank.json
  */
 class Bank implements JsonSerializable
 {
@@ -36,12 +36,14 @@ class Bank implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['ach_debit'])) {
-        $this->ach_debit = new AchDebit($data['ach_debit']);
+            $this->ach_debit = new AchDebit($data['ach_debit']);
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

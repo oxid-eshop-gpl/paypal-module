@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * The status fields for an authorized payment.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-authorization_status.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-authorization_status.json
  */
 class AuthorizationStatus implements JsonSerializable
 {
@@ -76,15 +76,17 @@ class AuthorizationStatus implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['status'])) {
-        $this->status = $data['status'];
+            $this->status = $data['status'];
         }
         if (isset($data['status_details'])) {
-        $this->status_details = new AuthorizationStatusDetails($data['status_details']);
+            $this->status_details = new AuthorizationStatusDetails($data['status_details']);
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

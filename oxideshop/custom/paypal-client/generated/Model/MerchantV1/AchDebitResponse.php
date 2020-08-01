@@ -80,18 +80,20 @@ class AchDebitResponse implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['last_digits'])) {
-        $this->last_digits = $data['last_digits'];
+            $this->last_digits = $data['last_digits'];
         }
         if (isset($data['routing_number'])) {
-        $this->routing_number = $data['routing_number'];
+            $this->routing_number = $data['routing_number'];
         }
         if (isset($data['account_holder_name'])) {
-        $this->account_holder_name = $data['account_holder_name'];
+            $this->account_holder_name = $data['account_holder_name'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

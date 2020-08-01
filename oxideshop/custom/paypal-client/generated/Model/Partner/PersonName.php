@@ -10,7 +10,7 @@ use Webmozart\Assert\Assert;
 /**
  * The name of the person.
  *
- * generated from: customer_common-v1-schema-account_model-person_name.json
+ * generated from: customized_x_unsupported_5585_customer_common-v1-schema-account_model-person_name.json
  */
 class PersonName extends Name implements JsonSerializable
 {
@@ -56,6 +56,8 @@ class PersonName extends Name implements JsonSerializable
     public function __construct(array $data = null)
     {
         parent::__construct($data);
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

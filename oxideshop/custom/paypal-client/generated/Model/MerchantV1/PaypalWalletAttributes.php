@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * Additional attributes associated with the use of this paypal wallet
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-paypal_wallet_attributes.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-paypal_wallet_attributes.json
  */
 class PaypalWalletAttributes implements JsonSerializable
 {
@@ -36,12 +36,14 @@ class PaypalWalletAttributes implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['customer'])) {
-        $this->customer = new Customer($data['customer']);
+            $this->customer = new Customer($data['customer']);
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

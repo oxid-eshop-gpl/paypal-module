@@ -106,27 +106,29 @@ class BankAccountResponse implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['id'])) {
-        $this->id = $data['id'];
+            $this->id = $data['id'];
         }
         if (isset($data['last_n_chars'])) {
-        $this->last_n_chars = $data['last_n_chars'];
+            $this->last_n_chars = $data['last_n_chars'];
         }
         if (isset($data['bank_name'])) {
-        $this->bank_name = $data['bank_name'];
+            $this->bank_name = $data['bank_name'];
         }
         if (isset($data['account_type'])) {
-        $this->account_type = $data['account_type'];
+            $this->account_type = $data['account_type'];
         }
         if (isset($data['country_code'])) {
-        $this->country_code = $data['country_code'];
+            $this->country_code = $data['country_code'];
         }
         if (isset($data['backup_funding_instrument'])) {
-        $this->backup_funding_instrument = new BackupFundingInstrument($data['backup_funding_instrument']);
+            $this->backup_funding_instrument = new BackupFundingInstrument($data['backup_funding_instrument']);
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

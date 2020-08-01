@@ -221,6 +221,8 @@ class PricingScheme implements JsonSerializable
     public function __construct(array $data = null)
     {
         $this->tiers = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

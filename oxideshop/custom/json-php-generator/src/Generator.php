@@ -69,10 +69,8 @@ class Generator
         $className = str_replace('\\', '/', $directory . '/' . $className . '.php');
         $printer = new PsrPrinter();
         $phpContent = $printer->printNamespace($ns);
-        if (!file_exists($className)) {
-            if (!file_put_contents($className, '<?php' . PHP_EOL . PHP_EOL . $phpContent)) {
-                echo "error writing file " . $className . PHP_EOL;
-            }
+        if (!file_put_contents($className, '<?php' . PHP_EOL . PHP_EOL . $phpContent)) {
+            echo "error writing file " . $className . PHP_EOL;
         }
     }
 
@@ -236,25 +234,25 @@ class Generator
             $comment = $this->formatComment($comment);
             $class->addComment($comment);
         }
-        $class->addComment("generated from: $defName");
+        $class->addComment($this->formatComment("generated from: $defName"));
         if ($className == "Error" || $className == "ErrorDetails") {
             return;
         }
         $properties = [];
         $parent = "";
+        $hasParent = false;
         if (isset($defs['allOf'])) {
-            $firstRef = true;
             foreach ($defs['allOf'] as $partialDef) {
                 if (isset($partialDef['$ref'])) {
                     $ref = $this->getRefNameFromRefString($partialDef['$ref']);
-                    if ($firstRef) {
+                    if (!$hasParent) {
                         $parent = $this->references[$ref] ?? "";
                         if ($parent == "string" || $parent == "") {
                             continue;
                         }
                         $this->useRef($ref);
                         $class->addExtend($namespace . '\\' . $parent);
-                        $firstRef = false;
+                        $hasParent = true;
                         continue;
                     }
                     $partialDef = $this->definitions[$ref];
@@ -265,7 +263,13 @@ class Generator
             $defs['properties'] = $properties;
         }
 
-        if (isset($defs['properties'])) {
+        $hasProperties = isset($defs['properties']) && $defs['properties'];
+        if (!($hasProperties || $hasParent)) {
+            $this->markAsScalar($className);
+            return;
+        }
+
+        if ($hasProperties) {
             $validateMethod = $class->addMethod('validate')->setVisibility('public');
             $mapMethod = $class->addMethod('map')->setVisibility('private');
             $constructor = $class->addMethod("__construct")->setVisibility('public');
@@ -334,7 +338,9 @@ class Generator
                     }
                 }
             }
-            $constructor->addBody("if (isset(\$data)) { \$this->map(\$data); }");
+            $constructor->addBody("if (isset(\$data)) {");
+            $constructor->addBody("    \$this->map(\$data);");
+            $constructor->addBody("}");
         }
 
         $ns->addUse(JsonSerializable::class);
@@ -407,6 +413,7 @@ class Generator
      */
     protected function isMerchantV1($ref)
     {
+        //556 models without this vs 372
         return strpos($ref, 'MerchantsCommonComponentsSpecification-v1') !== false
             || strpos($ref, 'MerchantCommonComponentsSpecification-v1') !== false
             || strpos($ref, 'merchant.CommonComponentsSpecification-v1') !== false
@@ -634,6 +641,25 @@ class Generator
         }
         return false;
     }
+
+    /**
+     * debug function to check what kind of types are skipped because they
+     * do have no properties and may be simple strings.
+     * So far there are no issues with that types because the three are only referenced as patterns
+     * but they may become an issue if they are getting
+     * referenced
+     * somewhere. In future this types should be recognized as scalar types by the isObjectType method
+     * @param $className
+     */
+    protected function markAsScalar($className)
+    {
+        $this->scalarTypes[$className] = 'string';
+        file_put_contents(
+            __DIR__ . '/scalarTypes.json',
+            json_encode($this->scalarTypes, JSON_PRETTY_PRINT)
+        );
+    }
+
 
     /**
      * @param string $dirName

@@ -9,7 +9,8 @@ use Webmozart\Assert\Assert;
 /**
  * The request-related [HATEOAS link](/docs/api/reference/api-responses/#hateoas-links) information.
  *
- * generated from: merchant.CommonComponentsSpecification-v1-schema-common_components-v3-schema-json-openapi-2.0-link_description.json
+ * generated from:
+ * merchant.CommonComponentsSpecification-v1-schema-common_components-v3-schema-json-openapi-2.0-link_description.json
  */
 class LinkDescription implements JsonSerializable
 {
@@ -85,33 +86,35 @@ class LinkDescription implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['href'])) {
-        $this->href = $data['href'];
+            $this->href = $data['href'];
         }
         if (isset($data['rel'])) {
-        $this->rel = $data['rel'];
+            $this->rel = $data['rel'];
         }
         if (isset($data['method'])) {
-        $this->method = $data['method'];
+            $this->method = $data['method'];
         }
         if (isset($data['title'])) {
-        $this->title = $data['title'];
+            $this->title = $data['title'];
         }
         if (isset($data['mediaType'])) {
-        $this->mediaType = $data['mediaType'];
+            $this->mediaType = $data['mediaType'];
         }
         if (isset($data['encType'])) {
-        $this->encType = $data['encType'];
+            $this->encType = $data['encType'];
         }
         if (isset($data['schema'])) {
-        $this->schema = $data['schema'];
+            $this->schema = $data['schema'];
         }
         if (isset($data['targetSchema'])) {
-        $this->targetSchema = $data['targetSchema'];
+            $this->targetSchema = $data['targetSchema'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

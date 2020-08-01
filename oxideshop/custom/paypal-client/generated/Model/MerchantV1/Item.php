@@ -10,7 +10,7 @@ use Webmozart\Assert\Assert;
 /**
  * The details for the items to be purchased.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-item.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-item.json
  */
 class Item implements JsonSerializable
 {
@@ -143,31 +143,33 @@ class Item implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['name'])) {
-        $this->name = $data['name'];
+            $this->name = $data['name'];
         }
         if (isset($data['unit_amount'])) {
-        $this->unit_amount = new Money($data['unit_amount']);
+            $this->unit_amount = new Money($data['unit_amount']);
         }
         if (isset($data['tax'])) {
-        $this->tax = new Money($data['tax']);
+            $this->tax = new Money($data['tax']);
         }
         if (isset($data['quantity'])) {
-        $this->quantity = $data['quantity'];
+            $this->quantity = $data['quantity'];
         }
         if (isset($data['description'])) {
-        $this->description = $data['description'];
+            $this->description = $data['description'];
         }
         if (isset($data['sku'])) {
-        $this->sku = $data['sku'];
+            $this->sku = $data['sku'];
         }
         if (isset($data['category'])) {
-        $this->category = $data['category'];
+            $this->category = $data['category'];
         }
     }
 
     public function __construct(array $data = null)
     {
         $this->unit_amount = new Money();
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

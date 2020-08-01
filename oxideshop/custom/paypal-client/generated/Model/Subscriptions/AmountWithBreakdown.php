@@ -111,6 +111,8 @@ class AmountWithBreakdown implements JsonSerializable
     {
         $this->gross_amount = new Money();
         $this->net_amount = new Money();
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

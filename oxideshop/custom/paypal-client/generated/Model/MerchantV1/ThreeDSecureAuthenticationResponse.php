@@ -111,15 +111,17 @@ class ThreeDSecureAuthenticationResponse implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['authentication_status'])) {
-        $this->authentication_status = $data['authentication_status'];
+            $this->authentication_status = $data['authentication_status'];
         }
         if (isset($data['enrollment_status'])) {
-        $this->enrollment_status = $data['enrollment_status'];
+            $this->enrollment_status = $data['enrollment_status'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

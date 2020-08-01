@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * The currency and amount for a financial transaction, such as a balance or payment due.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-common_components-v4-schema-json-openapi-2.0-money.json
+ * generated from: merchant_common_components-v1-schema-common_components-v4-schema-json-openapi-2.0-money.json
  */
 class Money implements JsonSerializable
 {
@@ -61,15 +61,17 @@ class Money implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['currency_code'])) {
-        $this->currency_code = $data['currency_code'];
+            $this->currency_code = $data['currency_code'];
         }
         if (isset($data['value'])) {
-        $this->value = $data['value'];
+            $this->value = $data['value'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

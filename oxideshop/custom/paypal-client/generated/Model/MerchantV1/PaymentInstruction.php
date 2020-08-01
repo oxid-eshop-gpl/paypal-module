@@ -11,7 +11,7 @@ use Webmozart\Assert\Assert;
  * Commerce Platform, such as delayed disbursement and collection of a platform fee. Applies during order
  * creation for captured payments or during capture of authorized payments.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-payment_instruction.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-payment_instruction.json
  */
 class PaymentInstruction implements JsonSerializable
 {
@@ -70,19 +70,21 @@ class PaymentInstruction implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['platform_fees'])) {
-        $this->platform_fees = [];
-        foreach($data['platform_fees'] as $item) {
-        $this->platform_fees[] = PlatformFee::map($item);
-        }
+            $this->platform_fees = [];
+            foreach ($data['platform_fees'] as $item) {
+                $this->platform_fees[] = new PlatformFee($item);
+            }
         }
         if (isset($data['disbursement_mode'])) {
-        $this->disbursement_mode = $data['disbursement_mode'];
+            $this->disbursement_mode = $data['disbursement_mode'];
         }
     }
 
     public function __construct(array $data = null)
     {
         $this->platform_fees = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

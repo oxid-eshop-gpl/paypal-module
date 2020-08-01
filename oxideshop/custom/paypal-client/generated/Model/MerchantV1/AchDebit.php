@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * ACH bank details required to fund the payment.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-ach_debit.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-ach_debit.json
  */
 class AchDebit implements JsonSerializable
 {
@@ -111,21 +111,23 @@ class AchDebit implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['account_number'])) {
-        $this->account_number = $data['account_number'];
+            $this->account_number = $data['account_number'];
         }
         if (isset($data['routing_number'])) {
-        $this->routing_number = $data['routing_number'];
+            $this->routing_number = $data['routing_number'];
         }
         if (isset($data['account_type'])) {
-        $this->account_type = $data['account_type'];
+            $this->account_type = $data['account_type'];
         }
         if (isset($data['account_holder_name'])) {
-        $this->account_holder_name = $data['account_holder_name'];
+            $this->account_holder_name = $data['account_holder_name'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

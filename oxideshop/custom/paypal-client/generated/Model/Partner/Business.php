@@ -275,6 +275,8 @@ class Business implements JsonSerializable
         $this->addresses = [];
         $this->phones = [];
         $this->documents = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

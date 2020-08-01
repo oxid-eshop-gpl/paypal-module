@@ -241,6 +241,8 @@ class PlanRequestPOST implements JsonSerializable
     {
         $this->billing_cycles = [];
         $this->payment_preferences = new PaymentPreferences();
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

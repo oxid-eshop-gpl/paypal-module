@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * Information needed to pay using MyBank.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-mybank_request.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-mybank_request.json
  */
 class MybankRequest implements JsonSerializable
 {
@@ -67,15 +67,17 @@ class MybankRequest implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['name'])) {
-        $this->name = $data['name'];
+            $this->name = $data['name'];
         }
         if (isset($data['country_code'])) {
-        $this->country_code = $data['country_code'];
+            $this->country_code = $data['country_code'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

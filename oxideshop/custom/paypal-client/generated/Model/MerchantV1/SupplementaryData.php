@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * The supplementary data.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-supplementary_data.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-supplementary_data.json
  */
 class SupplementaryData implements JsonSerializable
 {
@@ -65,19 +65,21 @@ class SupplementaryData implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['airline'])) {
-        $this->airline = [];
-        foreach($data['airline'] as $item) {
-        $this->airline[] = AirlineItinerary::map($item);
-        }
+            $this->airline = [];
+            foreach ($data['airline'] as $item) {
+                $this->airline[] = new AirlineItinerary($item);
+            }
         }
         if (isset($data['point_of_sale'])) {
-        $this->point_of_sale = new PointOfSale($data['point_of_sale']);
+            $this->point_of_sale = new PointOfSale($data['point_of_sale']);
         }
     }
 
     public function __construct(array $data = null)
     {
         $this->airline = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

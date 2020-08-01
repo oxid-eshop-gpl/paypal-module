@@ -196,6 +196,8 @@ class DisputeEligibility implements JsonSerializable
     {
         $this->eligible_dispute_reasons = [];
         $this->ineligible_dispute_reasons = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

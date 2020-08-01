@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * Information needed to pay using WeChat Pay.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-wechatpay_request.json
+ * generated from: MerchantCommonComponentsSpecification-v1-schema-wechatpay_request.json
  */
 class WechatpayRequest implements JsonSerializable
 {
@@ -67,15 +67,17 @@ class WechatpayRequest implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['name'])) {
-        $this->name = $data['name'];
+            $this->name = $data['name'];
         }
         if (isset($data['country_code'])) {
-        $this->country_code = $data['country_code'];
+            $this->country_code = $data['country_code'];
         }
     }
 
     public function __construct(array $data = null)
     {
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

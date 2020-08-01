@@ -239,6 +239,8 @@ class Order extends ActivityTimestamps implements JsonSerializable
     {
         parent::__construct($data);
         $this->purchase_units = [];
-        if (isset($data)) { $this->map($data); }
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }
