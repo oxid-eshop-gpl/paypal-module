@@ -9,8 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * The request-related [HATEOAS link](/docs/api/reference/api-responses/#hateoas-links) information.
  *
- * generated from:
- * customized_x_unsupported_5411_merchant_common_components-v1-schema-common_components-v4-schema-json-openapi-2.0-link_description.json
+ * generated from: customer_common-v1-schema-common_components-v4-schema-json-openapi-2.0-link_description.json
  */
 class LinkDescription implements JsonSerializable
 {
@@ -41,6 +40,41 @@ class LinkDescription implements JsonSerializable
      */
     public $method;
 
+    /**
+     * The link title.
+     *
+     * @var string | null
+     */
+    public $title;
+
+    /**
+     * The media type, as defined by [RFC 2046](https://www.ietf.org/rfc/rfc2046.txt). Describes the link target.
+     *
+     * @var string | null
+     */
+    public $mediaType;
+
+    /**
+     * The media type in which to submit the request data.
+     *
+     * @var string | null
+     */
+    public $encType = 'application/json';
+
+    /**
+     * The request data or link target.
+     *
+     * @var mixed | null
+     */
+    public $schema;
+
+    /**
+     * The request data or link target.
+     *
+     * @var mixed | null
+     */
+    public $targetSchema;
+
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
@@ -58,6 +92,21 @@ class LinkDescription implements JsonSerializable
         }
         if (isset($data['method'])) {
             $this->method = $data['method'];
+        }
+        if (isset($data['title'])) {
+            $this->title = $data['title'];
+        }
+        if (isset($data['mediaType'])) {
+            $this->mediaType = $data['mediaType'];
+        }
+        if (isset($data['encType'])) {
+            $this->encType = $data['encType'];
+        }
+        if (isset($data['schema'])) {
+            $this->schema = $data['schema'];
+        }
+        if (isset($data['targetSchema'])) {
+            $this->targetSchema = $data['targetSchema'];
         }
     }
 

@@ -4,7 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -122,7 +122,7 @@ class TransactionInfo implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var Money | null
+     * @var CommonV3Money | null
      */
     public $gross_amount;
 
@@ -261,8 +261,8 @@ class TransactionInfo implements JsonSerializable
         );
         !isset($this->gross_amount) || Assert::isInstanceOf(
             $this->gross_amount,
-            Money::class,
-            "gross_amount in TransactionInfo must be instance of Money $within"
+            CommonV3Money::class,
+            "gross_amount in TransactionInfo must be instance of CommonV3Money $within"
         );
         !isset($this->gross_amount) ||  $this->gross_amount->validate(TransactionInfo::class);
         !isset($this->invoice_number) || Assert::minLength(
@@ -355,7 +355,7 @@ class TransactionInfo implements JsonSerializable
             $this->transaction_status = $data['transaction_status'];
         }
         if (isset($data['gross_amount'])) {
-            $this->gross_amount = new Money($data['gross_amount']);
+            $this->gross_amount = new CommonV3Money($data['gross_amount']);
         }
         if (isset($data['invoice_number'])) {
             $this->invoice_number = $data['invoice_number'];

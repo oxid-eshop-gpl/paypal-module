@@ -4,15 +4,15 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV4\AddressPortable;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV4\CommonV4AddressPortable;
 use Webmozart\Assert\Assert;
 
 /**
  * A simple postal address with coarse-grained fields.
  *
- * generated from: customized_x_unsupported_5100_customer_common_overrides-person_address_detail.json
+ * generated from: customer_common_overrides-person_address_detail.json
  */
-class PersonAddressDetail extends AddressPortable implements JsonSerializable
+class PersonAddressDetail extends CommonV4AddressPortable implements JsonSerializable
 {
     use BaseModel;
 
@@ -29,6 +29,21 @@ class PersonAddressDetail extends AddressPortable implements JsonSerializable
      * maxLength: 255
      */
     public $type;
+
+    /**
+     * Whether this is the primary address of the user. This cannot be directly set to `false`, but rather it is
+     * toggled `false` in the datastore when another address is set to primary.
+     *
+     * @var boolean | null
+     */
+    public $primary;
+
+    /**
+     * Whether this address has been inactivated.
+     *
+     * @var boolean | null
+     */
+    public $inactive;
 
     public function validate($from = null)
     {
@@ -50,6 +65,12 @@ class PersonAddressDetail extends AddressPortable implements JsonSerializable
     {
         if (isset($data['type'])) {
             $this->type = $data['type'];
+        }
+        if (isset($data['primary'])) {
+            $this->primary = $data['primary'];
+        }
+        if (isset($data['inactive'])) {
+            $this->inactive = $data['inactive'];
         }
     }
 

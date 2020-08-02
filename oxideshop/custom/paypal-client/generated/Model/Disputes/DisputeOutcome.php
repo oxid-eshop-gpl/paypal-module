@@ -4,7 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -66,7 +66,7 @@ class DisputeOutcome implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var Money | null
+     * @var CommonV3Money | null
      */
     public $amount_refunded;
 
@@ -95,8 +95,8 @@ class DisputeOutcome implements JsonSerializable
         );
         !isset($this->amount_refunded) || Assert::isInstanceOf(
             $this->amount_refunded,
-            Money::class,
-            "amount_refunded in DisputeOutcome must be instance of Money $within"
+            CommonV3Money::class,
+            "amount_refunded in DisputeOutcome must be instance of CommonV3Money $within"
         );
         !isset($this->amount_refunded) ||  $this->amount_refunded->validate(DisputeOutcome::class);
     }
@@ -110,7 +110,7 @@ class DisputeOutcome implements JsonSerializable
             $this->outcome_reason = $data['outcome_reason'];
         }
         if (isset($data['amount_refunded'])) {
-            $this->amount_refunded = new Money($data['amount_refunded']);
+            $this->amount_refunded = new CommonV3Money($data['amount_refunded']);
         }
     }
 

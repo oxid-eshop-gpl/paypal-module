@@ -4,8 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\LinkDescription;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -76,7 +75,7 @@ class ReferredDisputeSummary implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var Money | null
+     * @var CommonV3Money | null
      */
     public $dispute_amount;
 
@@ -121,7 +120,7 @@ class ReferredDisputeSummary implements JsonSerializable
     /**
      * An array of request-related [HATEOAS links](/docs/api/hateoas-links/).
      *
-     * @var LinkDescription[] | null
+     * @var array | null
      */
     public $links;
 
@@ -169,8 +168,8 @@ class ReferredDisputeSummary implements JsonSerializable
         }
         !isset($this->dispute_amount) || Assert::isInstanceOf(
             $this->dispute_amount,
-            Money::class,
-            "dispute_amount in ReferredDisputeSummary must be instance of Money $within"
+            CommonV3Money::class,
+            "dispute_amount in ReferredDisputeSummary must be instance of CommonV3Money $within"
         );
         !isset($this->dispute_amount) ||  $this->dispute_amount->validate(ReferredDisputeSummary::class);
         !isset($this->reason) || Assert::minLength(
@@ -207,11 +206,6 @@ class ReferredDisputeSummary implements JsonSerializable
             $this->links,
             "links in ReferredDisputeSummary must be array $within"
         );
-        if (isset($this->links)) {
-            foreach ($this->links as $item) {
-                $item->validate(ReferredDisputeSummary::class);
-            }
-        }
     }
 
     private function map(array $data)
@@ -232,7 +226,7 @@ class ReferredDisputeSummary implements JsonSerializable
             }
         }
         if (isset($data['dispute_amount'])) {
-            $this->dispute_amount = new Money($data['dispute_amount']);
+            $this->dispute_amount = new CommonV3Money($data['dispute_amount']);
         }
         if (isset($data['reason'])) {
             $this->reason = $data['reason'];
@@ -246,7 +240,7 @@ class ReferredDisputeSummary implements JsonSerializable
         if (isset($data['links'])) {
             $this->links = [];
             foreach ($data['links'] as $item) {
-                $this->links[] = new LinkDescription($item);
+                $this->links[] = $item;
             }
         }
     }

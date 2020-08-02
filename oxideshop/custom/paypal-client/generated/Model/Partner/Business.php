@@ -30,14 +30,14 @@ class Business implements JsonSerializable
     /**
      * Business incorporation information.
      *
-     * @var BusinessIncorporation | null
+     * @var BusinessIncorporation2 | null
      */
     public $business_incorporation;
 
     /**
      * Name of the business.
      *
-     * @var BusinessNameDetail[]
+     * @var BusinessNameDetail2[]
      * maxItems: 0
      * maxItems: 5
      */
@@ -64,7 +64,7 @@ class Business implements JsonSerializable
     /**
      * List of addresses associated with the business entity.
      *
-     * @var BusinessAddressDetail[]
+     * @var BusinessAddressDetail2[]
      * maxItems: 0
      * maxItems: 5
      */
@@ -73,7 +73,7 @@ class Business implements JsonSerializable
     /**
      * List of phone number associated with the business.
      *
-     * @var BusinessPhoneDetail[]
+     * @var BusinessPhoneDetail2[]
      * maxItems: 0
      * maxItems: 5
      */
@@ -106,8 +106,8 @@ class Business implements JsonSerializable
         !isset($this->business_industry) ||  $this->business_industry->validate(Business::class);
         !isset($this->business_incorporation) || Assert::isInstanceOf(
             $this->business_incorporation,
-            BusinessIncorporation::class,
-            "business_incorporation in Business must be instance of BusinessIncorporation $within"
+            BusinessIncorporation2::class,
+            "business_incorporation in Business must be instance of BusinessIncorporation2 $within"
         );
         !isset($this->business_incorporation) ||  $this->business_incorporation->validate(Business::class);
         Assert::notNull($this->names, "names in Business must not be NULL $within");
@@ -231,12 +231,12 @@ class Business implements JsonSerializable
             $this->business_industry = new BusinessIndustry($data['business_industry']);
         }
         if (isset($data['business_incorporation'])) {
-            $this->business_incorporation = new BusinessIncorporation($data['business_incorporation']);
+            $this->business_incorporation = new BusinessIncorporation2($data['business_incorporation']);
         }
         if (isset($data['names'])) {
             $this->names = [];
             foreach ($data['names'] as $item) {
-                $this->names[] = new BusinessNameDetail($item);
+                $this->names[] = new BusinessNameDetail2($item);
             }
         }
         if (isset($data['emails'])) {
@@ -251,13 +251,13 @@ class Business implements JsonSerializable
         if (isset($data['addresses'])) {
             $this->addresses = [];
             foreach ($data['addresses'] as $item) {
-                $this->addresses[] = new BusinessAddressDetail($item);
+                $this->addresses[] = new BusinessAddressDetail2($item);
             }
         }
         if (isset($data['phones'])) {
             $this->phones = [];
             foreach ($data['phones'] as $item) {
-                $this->phones[] = new BusinessPhoneDetail($item);
+                $this->phones[] = new BusinessPhoneDetail2($item);
             }
         }
         if (isset($data['documents'])) {

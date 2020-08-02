@@ -4,7 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -58,7 +58,7 @@ class Transaction implements JsonSerializable
     /**
      * An array of items in the transaction in the dispute.
      *
-     * @var ItemInfo[] | null
+     * @var ItemInfo2[] | null
      */
     public $items;
 
@@ -85,7 +85,7 @@ class Transaction implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var Money | null
+     * @var CommonV3Money | null
      */
     public $gross_amount;
 
@@ -134,8 +134,8 @@ class Transaction implements JsonSerializable
         );
         !isset($this->gross_amount) || Assert::isInstanceOf(
             $this->gross_amount,
-            Money::class,
-            "gross_amount in Transaction must be instance of Money $within"
+            CommonV3Money::class,
+            "gross_amount in Transaction must be instance of CommonV3Money $within"
         );
         !isset($this->gross_amount) ||  $this->gross_amount->validate(Transaction::class);
         !isset($this->create_time) || Assert::minLength(
@@ -158,14 +158,14 @@ class Transaction implements JsonSerializable
         if (isset($data['items'])) {
             $this->items = [];
             foreach ($data['items'] as $item) {
-                $this->items[] = new ItemInfo($item);
+                $this->items[] = new ItemInfo2($item);
             }
         }
         if (isset($data['status'])) {
             $this->status = $data['status'];
         }
         if (isset($data['gross_amount'])) {
-            $this->gross_amount = new Money($data['gross_amount']);
+            $this->gross_amount = new CommonV3Money($data['gross_amount']);
         }
         if (isset($data['create_time'])) {
             $this->create_time = $data['create_time'];

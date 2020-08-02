@@ -4,11 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\LinkDescription;
-use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\ActivityTimestamps;
-use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\CreditFinancingOffer;
-use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\Payer;
-use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\PaymentSourceResponse;
 use Webmozart\Assert\Assert;
 
 /**
@@ -125,7 +120,7 @@ class Order extends ActivityTimestamps implements JsonSerializable
      * Checkout Experience (in context) ensure that you include application_context.return_url is specified or you
      * will get "We're sorry, Things don't appear to be working at the moment" after the payer approves the payment.
      *
-     * @var LinkDescription[] | null
+     * @var array | null
      */
     public $links;
 
@@ -185,11 +180,6 @@ class Order extends ActivityTimestamps implements JsonSerializable
             $this->links,
             "links in Order must be array $within"
         );
-        if (isset($this->links)) {
-            foreach ($this->links as $item) {
-                $item->validate(Order::class);
-            }
-        }
         !isset($this->credit_financing_offer) || Assert::isInstanceOf(
             $this->credit_financing_offer,
             CreditFinancingOffer::class,
@@ -227,7 +217,7 @@ class Order extends ActivityTimestamps implements JsonSerializable
         if (isset($data['links'])) {
             $this->links = [];
             foreach ($data['links'] as $item) {
-                $this->links[] = new LinkDescription($item);
+                $this->links[] = $item;
             }
         }
         if (isset($data['credit_financing_offer'])) {

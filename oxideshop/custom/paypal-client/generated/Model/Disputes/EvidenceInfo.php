@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * The evidence-related information.
  *
- * generated from: referred-evidence_info.json
+ * generated from: response-evidence_info.json
  */
 class EvidenceInfo implements JsonSerializable
 {
@@ -18,9 +18,16 @@ class EvidenceInfo implements JsonSerializable
     /**
      * An array of relevant tracking information for the transaction involved in this dispute.
      *
-     * @var TrackingInfoItem[] | null
+     * @var TrackingInfo[] | null
      */
     public $tracking_info;
+
+    /**
+     * An array of refund IDs for the transaction involved in this dispute.
+     *
+     * @var string[] | null
+     */
+    public $refund_ids;
 
     public function validate($from = null)
     {
@@ -34,6 +41,10 @@ class EvidenceInfo implements JsonSerializable
                 $item->validate(EvidenceInfo::class);
             }
         }
+        !isset($this->refund_ids) || Assert::isArray(
+            $this->refund_ids,
+            "refund_ids in EvidenceInfo must be array $within"
+        );
     }
 
     private function map(array $data)
@@ -41,7 +52,13 @@ class EvidenceInfo implements JsonSerializable
         if (isset($data['tracking_info'])) {
             $this->tracking_info = [];
             foreach ($data['tracking_info'] as $item) {
-                $this->tracking_info[] = new TrackingInfoItem($item);
+                $this->tracking_info[] = new TrackingInfo($item);
+            }
+        }
+        if (isset($data['refund_ids'])) {
+            $this->refund_ids = [];
+            foreach ($data['refund_ids'] as $item) {
+                $this->refund_ids[] = $item;
             }
         }
     }

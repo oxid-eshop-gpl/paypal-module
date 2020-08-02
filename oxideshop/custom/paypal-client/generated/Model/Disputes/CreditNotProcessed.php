@@ -4,7 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -37,7 +37,7 @@ class CreditNotProcessed implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var Money | null
+     * @var CommonV3Money | null
      */
     public $expected_refund;
 
@@ -77,8 +77,8 @@ class CreditNotProcessed implements JsonSerializable
         );
         !isset($this->expected_refund) || Assert::isInstanceOf(
             $this->expected_refund,
-            Money::class,
-            "expected_refund in CreditNotProcessed must be instance of Money $within"
+            CommonV3Money::class,
+            "expected_refund in CreditNotProcessed must be instance of CommonV3Money $within"
         );
         !isset($this->expected_refund) ||  $this->expected_refund->validate(CreditNotProcessed::class);
         !isset($this->cancellation_details) || Assert::isInstanceOf(
@@ -107,7 +107,7 @@ class CreditNotProcessed implements JsonSerializable
             $this->issue_type = $data['issue_type'];
         }
         if (isset($data['expected_refund'])) {
-            $this->expected_refund = new Money($data['expected_refund']);
+            $this->expected_refund = new CommonV3Money($data['expected_refund']);
         }
         if (isset($data['cancellation_details'])) {
             $this->cancellation_details = new CancellationDetails($data['cancellation_details']);

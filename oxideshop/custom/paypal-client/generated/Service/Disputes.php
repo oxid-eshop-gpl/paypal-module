@@ -12,6 +12,7 @@ use OxidProfessionalServices\PayPal\Api\Model\Disputes\Cancel;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\ChangeReason;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\DenyOffer;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\Dispute;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\Dispute2;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\DisputeCreate;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\DisputeCreateRequest;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\DisputeCreateResponse;
@@ -25,6 +26,7 @@ use OxidProfessionalServices\PayPal\Api\Model\Disputes\Escalate;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\Evidences;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\MakeOffer;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\Metrics;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\Metrics2;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\PartnerAction;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\ProvideSupportingInfo;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\ReferredDisputes;
@@ -32,6 +34,7 @@ use OxidProfessionalServices\PayPal\Api\Model\Disputes\RefundInfo;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\RequireEvidence;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\SendMessage;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\SubsequentAction;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\SubsequentAction2;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\SuggestionResponse;
 
 class Disputes extends BaseService
@@ -46,9 +49,9 @@ class Disputes extends BaseService
      * @param $adjudicationInfo mixed
      *
      * @throws ApiException
-     * @return SubsequentAction
+     * @return SubsequentAction2
      */
-    public function notifyPayPalAboutReferredDisputeAdjudicationUpdates($disputeId, AdjudicationInfo $adjudicationInfo): SubsequentAction
+    public function notifyPayPalAboutReferredDisputeAdjudicationUpdates($disputeId, AdjudicationInfo $adjudicationInfo): SubsequentAction2
     {
         $path = "/referred-disputes/{$disputeId}/process-adjudication-event";
 
@@ -59,7 +62,7 @@ class Disputes extends BaseService
         $body = json_encode($adjudicationInfo, true);
         $response = $this->send('POST', $path, [], $headers, $body);
         $jsonData = json_decode($response->getBody(), true);
-        return new SubsequentAction($jsonData);
+        return new SubsequentAction2($jsonData);
     }
 
     /**
@@ -103,9 +106,9 @@ class Disputes extends BaseService
      * @param $refundInfo mixed
      *
      * @throws ApiException
-     * @return SubsequentAction
+     * @return SubsequentAction2
      */
-    public function notifyPayPalAboutRefundForReferredDispute($disputeId, RefundInfo $refundInfo): SubsequentAction
+    public function notifyPayPalAboutRefundForReferredDispute($disputeId, RefundInfo $refundInfo): SubsequentAction2
     {
         $path = "/referred-disputes/{$disputeId}/process-refund-event";
 
@@ -116,7 +119,7 @@ class Disputes extends BaseService
         $body = json_encode($refundInfo, true);
         $response = $this->send('POST', $path, [], $headers, $body);
         $jsonData = json_decode($response->getBody(), true);
-        return new SubsequentAction($jsonData);
+        return new SubsequentAction2($jsonData);
     }
 
     /**
@@ -666,7 +669,7 @@ class Disputes extends BaseService
      * @throws ApiException
      * @return Metrics
      */
-    public function computeMetricsForDisputes(Metrics $metricsRequest): Metrics
+    public function computeMetricsForDisputes(Metrics2 $metricsRequest): Metrics
     {
         $path = "/disputes/compute-metrics";
 
@@ -830,9 +833,9 @@ class Disputes extends BaseService
      * @param $disputeId string The ID of the dispute for which to show details.
      *
      * @throws ApiException
-     * @return Dispute
+     * @return Dispute2
      */
-    public function showReferredDisputeDetails($disputeId): Dispute
+    public function showReferredDisputeDetails($disputeId): Dispute2
     {
         $path = "/referred-disputes/{$disputeId}";
 
@@ -841,7 +844,7 @@ class Disputes extends BaseService
         $body = null;
         $response = $this->send('GET', $path, [], [], $body);
         $jsonData = json_decode($response->getBody(), true);
-        return new Dispute($jsonData);
+        return new Dispute2($jsonData);
     }
 
     /**

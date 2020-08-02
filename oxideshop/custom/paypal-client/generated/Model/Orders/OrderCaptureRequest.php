@@ -4,7 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\PaymentSource;
 use Webmozart\Assert\Assert;
 
 /**

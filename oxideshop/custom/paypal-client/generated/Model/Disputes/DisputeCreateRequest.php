@@ -61,7 +61,7 @@ class DisputeCreateRequest implements JsonSerializable
      * The extended properties for the dispute. Includes additional information for a dispute category, such as
      * billing disputes, the original transaction ID, correct amount, and so on.
      *
-     * @var Extensions | null
+     * @var Extensions2 | null
      */
     public $extensions;
 
@@ -82,7 +82,7 @@ class DisputeCreateRequest implements JsonSerializable
     /**
      * An array of partner-submitted evidence documents, such as tracking information.
      *
-     * @var Evidence[] | null
+     * @var Evidence2[] | null
      */
     public $evidences;
 
@@ -119,7 +119,7 @@ class DisputeCreateRequest implements JsonSerializable
     /**
      * An array of customer- or merchant-posted messages.
      *
-     * @var Message[] | null
+     * @var Message2[] | null
      */
     public $messages;
 
@@ -138,8 +138,8 @@ class DisputeCreateRequest implements JsonSerializable
         );
         !isset($this->extensions) || Assert::isInstanceOf(
             $this->extensions,
-            Extensions::class,
-            "extensions in DisputeCreateRequest must be instance of Extensions $within"
+            Extensions2::class,
+            "extensions in DisputeCreateRequest must be instance of Extensions2 $within"
         );
         !isset($this->extensions) ||  $this->extensions->validate(DisputeCreateRequest::class);
         Assert::notNull($this->transaction, "transaction in DisputeCreateRequest must not be NULL $within");
@@ -202,7 +202,7 @@ class DisputeCreateRequest implements JsonSerializable
             $this->dispute_flow = $data['dispute_flow'];
         }
         if (isset($data['extensions'])) {
-            $this->extensions = new Extensions($data['extensions']);
+            $this->extensions = new Extensions2($data['extensions']);
         }
         if (isset($data['transaction'])) {
             $this->transaction = new Transaction($data['transaction']);
@@ -213,7 +213,7 @@ class DisputeCreateRequest implements JsonSerializable
         if (isset($data['evidences'])) {
             $this->evidences = [];
             foreach ($data['evidences'] as $item) {
-                $this->evidences[] = new Evidence($item);
+                $this->evidences[] = new Evidence2($item);
             }
         }
         if (isset($data['reason'])) {
@@ -225,7 +225,7 @@ class DisputeCreateRequest implements JsonSerializable
         if (isset($data['messages'])) {
             $this->messages = [];
             foreach ($data['messages'] as $item) {
-                $this->messages[] = new Message($item);
+                $this->messages[] = new Message2($item);
             }
         }
     }

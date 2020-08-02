@@ -4,7 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\LinkDescription;
 use Webmozart\Assert\Assert;
 
 /**
@@ -42,7 +41,7 @@ class PlanCollection implements JsonSerializable
     /**
      * An array of request-related [HATEOAS links](/docs/api/reference/api-responses/#hateoas-links).
      *
-     * @var LinkDescription[] | null
+     * @var array | null
      */
     public $links;
 
@@ -73,11 +72,6 @@ class PlanCollection implements JsonSerializable
             $this->links,
             "links in PlanCollection must be array $within"
         );
-        if (isset($this->links)) {
-            foreach ($this->links as $item) {
-                $item->validate(PlanCollection::class);
-            }
-        }
     }
 
     private function map(array $data)
@@ -97,7 +91,7 @@ class PlanCollection implements JsonSerializable
         if (isset($data['links'])) {
             $this->links = [];
             foreach ($data['links'] as $item) {
-                $this->links[] = new LinkDescription($item);
+                $this->links[] = $item;
             }
         }
     }

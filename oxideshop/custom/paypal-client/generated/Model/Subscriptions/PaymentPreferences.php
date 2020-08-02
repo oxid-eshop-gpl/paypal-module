@@ -4,7 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -50,7 +50,7 @@ class PaymentPreferences implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var Money | null
+     * @var CommonV3Money | null
      */
     public $setup_fee;
 
@@ -90,8 +90,8 @@ class PaymentPreferences implements JsonSerializable
         );
         !isset($this->setup_fee) || Assert::isInstanceOf(
             $this->setup_fee,
-            Money::class,
-            "setup_fee in PaymentPreferences must be instance of Money $within"
+            CommonV3Money::class,
+            "setup_fee in PaymentPreferences must be instance of CommonV3Money $within"
         );
         !isset($this->setup_fee) ||  $this->setup_fee->validate(PaymentPreferences::class);
         !isset($this->setup_fee_failure_action) || Assert::minLength(
@@ -115,7 +115,7 @@ class PaymentPreferences implements JsonSerializable
             $this->auto_bill_outstanding = $data['auto_bill_outstanding'];
         }
         if (isset($data['setup_fee'])) {
-            $this->setup_fee = new Money($data['setup_fee']);
+            $this->setup_fee = new CommonV3Money($data['setup_fee']);
         }
         if (isset($data['setup_fee_failure_action'])) {
             $this->setup_fee_failure_action = $data['setup_fee_failure_action'];

@@ -4,16 +4,15 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV4\BusinessName;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV4\CommonV4BusinessName;
 use Webmozart\Assert\Assert;
 
 /**
  * Name of the business provided.
  *
- * generated from:
- * customized_x_unsupported_1503_customer_common-v1-schema-account_model-business_name_detail.json
+ * generated from: customer_common-v1-schema-account_model-business_name_detail.json
  */
-class BusinessNameDetail extends BusinessName implements JsonSerializable
+class BusinessNameDetail extends CommonV4BusinessName implements JsonSerializable
 {
     use BaseModel;
 
@@ -22,6 +21,15 @@ class BusinessNameDetail extends BusinessName implements JsonSerializable
 
     /** The legal name of the business. */
     public const TYPE_LEGAL_NAME = 'LEGAL_NAME';
+
+    /**
+     * The encrypted ID for the business name.
+     *
+     * @var string | null
+     * minLength: 1
+     * maxLength: 20
+     */
+    public $id;
 
     /**
      * Business name type
@@ -38,6 +46,16 @@ class BusinessNameDetail extends BusinessName implements JsonSerializable
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
+        !isset($this->id) || Assert::minLength(
+            $this->id,
+            1,
+            "id in BusinessNameDetail must have minlength of 1 $within"
+        );
+        !isset($this->id) || Assert::maxLength(
+            $this->id,
+            20,
+            "id in BusinessNameDetail must have maxlength of 20 $within"
+        );
         Assert::notNull($this->type, "type in BusinessNameDetail must not be NULL $within");
         Assert::minLength(
             $this->type,
@@ -53,6 +71,9 @@ class BusinessNameDetail extends BusinessName implements JsonSerializable
 
     private function map(array $data)
     {
+        if (isset($data['id'])) {
+            $this->id = $data['id'];
+        }
         if (isset($data['type'])) {
             $this->type = $data['type'];
         }

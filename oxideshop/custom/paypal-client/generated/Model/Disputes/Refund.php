@@ -4,7 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -19,7 +19,7 @@ class Refund implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var Money | null
+     * @var CommonV3Money | null
      */
     public $gross_amount;
 
@@ -57,8 +57,8 @@ class Refund implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
         !isset($this->gross_amount) || Assert::isInstanceOf(
             $this->gross_amount,
-            Money::class,
-            "gross_amount in Refund must be instance of Money $within"
+            CommonV3Money::class,
+            "gross_amount in Refund must be instance of CommonV3Money $within"
         );
         !isset($this->gross_amount) ||  $this->gross_amount->validate(Refund::class);
         !isset($this->transaction_time) || Assert::minLength(
@@ -96,7 +96,7 @@ class Refund implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['gross_amount'])) {
-            $this->gross_amount = new Money($data['gross_amount']);
+            $this->gross_amount = new CommonV3Money($data['gross_amount']);
         }
         if (isset($data['transaction_time'])) {
             $this->transaction_time = $data['transaction_time'];

@@ -4,7 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV4\LinkDescription;
 use Webmozart\Assert\Assert;
 
 /**
@@ -40,7 +39,7 @@ class ReferralDataResponse implements JsonSerializable
     /**
      * An array of request-related [HATEOAS links](/docs/api/overview/#hateoas-links).
      *
-     * @var LinkDescription[]
+     * @var array
      * maxItems: 0
      * maxItems: 2
      */
@@ -70,11 +69,6 @@ class ReferralDataResponse implements JsonSerializable
             $this->links,
             "links in ReferralDataResponse must be array $within"
         );
-        if (isset($this->links)) {
-            foreach ($this->links as $item) {
-                $item->validate(ReferralDataResponse::class);
-            }
-        }
     }
 
     private function map(array $data)
@@ -91,7 +85,7 @@ class ReferralDataResponse implements JsonSerializable
         if (isset($data['links'])) {
             $this->links = [];
             foreach ($data['links'] as $item) {
-                $this->links[] = new LinkDescription($item);
+                $this->links[] = $item;
             }
         }
     }

@@ -3,13 +3,13 @@
 namespace OxidProfessionalServices\PayPal\Api\Service;
 
 use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
-use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\Authorization;
-use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\Capture;
-use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\Refund;
+use OxidProfessionalServices\PayPal\Api\Model\Payments\Authorization;
 use OxidProfessionalServices\PayPal\Api\Model\Payments\AuthorizationRequest;
+use OxidProfessionalServices\PayPal\Api\Model\Payments\Capture;
 use OxidProfessionalServices\PayPal\Api\Model\Payments\CaptureRequest;
 use OxidProfessionalServices\PayPal\Api\Model\Payments\OrderCaptureRequest;
 use OxidProfessionalServices\PayPal\Api\Model\Payments\ReauthorizeRequest;
+use OxidProfessionalServices\PayPal\Api\Model\Payments\Refund;
 use OxidProfessionalServices\PayPal\Api\Model\Payments\RefundRequest;
 
 class Payments extends BaseService

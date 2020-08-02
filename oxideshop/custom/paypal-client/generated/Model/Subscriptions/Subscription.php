@@ -4,10 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\LinkDescription;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
-use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\FundingInstrumentResponse;
-use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\Payee;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -66,7 +63,7 @@ class Subscription extends SubscriptionStatus implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var Money | null
+     * @var CommonV3Money | null
      */
     public $shipping_amount;
 
@@ -140,7 +137,7 @@ class Subscription extends SubscriptionStatus implements JsonSerializable
     /**
      * An array of request-related [HATEOAS links](/docs/api/reference/api-responses/#hateoas-links).
      *
-     * @var LinkDescription[] | null
+     * @var array | null
      */
     public $links;
 
@@ -189,8 +186,8 @@ class Subscription extends SubscriptionStatus implements JsonSerializable
         );
         !isset($this->shipping_amount) || Assert::isInstanceOf(
             $this->shipping_amount,
-            Money::class,
-            "shipping_amount in Subscription must be instance of Money $within"
+            CommonV3Money::class,
+            "shipping_amount in Subscription must be instance of CommonV3Money $within"
         );
         !isset($this->shipping_amount) ||  $this->shipping_amount->validate(Subscription::class);
         !isset($this->payee) || Assert::isInstanceOf(
@@ -241,11 +238,6 @@ class Subscription extends SubscriptionStatus implements JsonSerializable
             $this->links,
             "links in Subscription must be array $within"
         );
-        if (isset($this->links)) {
-            foreach ($this->links as $item) {
-                $item->validate(Subscription::class);
-            }
-        }
     }
 
     private function map(array $data)
@@ -263,7 +255,7 @@ class Subscription extends SubscriptionStatus implements JsonSerializable
             $this->quantity = $data['quantity'];
         }
         if (isset($data['shipping_amount'])) {
-            $this->shipping_amount = new Money($data['shipping_amount']);
+            $this->shipping_amount = new CommonV3Money($data['shipping_amount']);
         }
         if (isset($data['payee'])) {
             $this->payee = new Payee($data['payee']);
@@ -292,7 +284,7 @@ class Subscription extends SubscriptionStatus implements JsonSerializable
         if (isset($data['links'])) {
             $this->links = [];
             foreach ($data['links'] as $item) {
-                $this->links[] = new LinkDescription($item);
+                $this->links[] = $item;
             }
         }
     }

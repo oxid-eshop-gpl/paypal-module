@@ -4,7 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV4\Money;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV4\CommonV4Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -19,14 +19,14 @@ class CurrencyRange implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var Money | null
+     * @var CommonV4Money | null
      */
     public $minimum_amount;
 
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var Money | null
+     * @var CommonV4Money | null
      */
     public $maximum_amount;
 
@@ -35,14 +35,14 @@ class CurrencyRange implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
         !isset($this->minimum_amount) || Assert::isInstanceOf(
             $this->minimum_amount,
-            Money::class,
-            "minimum_amount in CurrencyRange must be instance of Money $within"
+            CommonV4Money::class,
+            "minimum_amount in CurrencyRange must be instance of CommonV4Money $within"
         );
         !isset($this->minimum_amount) ||  $this->minimum_amount->validate(CurrencyRange::class);
         !isset($this->maximum_amount) || Assert::isInstanceOf(
             $this->maximum_amount,
-            Money::class,
-            "maximum_amount in CurrencyRange must be instance of Money $within"
+            CommonV4Money::class,
+            "maximum_amount in CurrencyRange must be instance of CommonV4Money $within"
         );
         !isset($this->maximum_amount) ||  $this->maximum_amount->validate(CurrencyRange::class);
     }
@@ -50,10 +50,10 @@ class CurrencyRange implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['minimum_amount'])) {
-            $this->minimum_amount = new Money($data['minimum_amount']);
+            $this->minimum_amount = new CommonV4Money($data['minimum_amount']);
         }
         if (isset($data['maximum_amount'])) {
-            $this->maximum_amount = new Money($data['maximum_amount']);
+            $this->maximum_amount = new CommonV4Money($data['maximum_amount']);
         }
     }
 

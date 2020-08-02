@@ -4,8 +4,8 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\AddressPortable;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3AddressPortable;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -76,14 +76,14 @@ class AcceptClaim implements JsonSerializable
      * HTML 5.1 [Autofilling form controls: the autocomplete
      * attribute](https://www.w3.org/TR/html51/sec-forms.html#autofilling-form-controls-the-autocomplete-attribute).
      *
-     * @var AddressPortable | null
+     * @var CommonV3AddressPortable | null
      */
     public $return_shipping_address;
 
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var Money | null
+     * @var CommonV3Money | null
      */
     public $refund_amount;
 
@@ -122,14 +122,14 @@ class AcceptClaim implements JsonSerializable
         );
         !isset($this->return_shipping_address) || Assert::isInstanceOf(
             $this->return_shipping_address,
-            AddressPortable::class,
-            "return_shipping_address in AcceptClaim must be instance of AddressPortable $within"
+            CommonV3AddressPortable::class,
+            "return_shipping_address in AcceptClaim must be instance of CommonV3AddressPortable $within"
         );
         !isset($this->return_shipping_address) ||  $this->return_shipping_address->validate(AcceptClaim::class);
         !isset($this->refund_amount) || Assert::isInstanceOf(
             $this->refund_amount,
-            Money::class,
-            "refund_amount in AcceptClaim must be instance of Money $within"
+            CommonV3Money::class,
+            "refund_amount in AcceptClaim must be instance of CommonV3Money $within"
         );
         !isset($this->refund_amount) ||  $this->refund_amount->validate(AcceptClaim::class);
     }
@@ -146,10 +146,10 @@ class AcceptClaim implements JsonSerializable
             $this->invoice_id = $data['invoice_id'];
         }
         if (isset($data['return_shipping_address'])) {
-            $this->return_shipping_address = new AddressPortable($data['return_shipping_address']);
+            $this->return_shipping_address = new CommonV3AddressPortable($data['return_shipping_address']);
         }
         if (isset($data['refund_amount'])) {
-            $this->refund_amount = new Money($data['refund_amount']);
+            $this->refund_amount = new CommonV3Money($data['refund_amount']);
         }
     }
 

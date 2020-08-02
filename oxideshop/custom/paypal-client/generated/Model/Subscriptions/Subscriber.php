@@ -4,8 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\Payer;
-use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\ShippingDetail;
 use Webmozart\Assert\Assert;
 
 /**
@@ -13,7 +11,7 @@ use Webmozart\Assert\Assert;
  *
  * generated from: subscriber.json
  */
-class Subscriber extends Payer implements JsonSerializable
+class Subscriber extends Payer2 implements JsonSerializable
 {
     use BaseModel;
 

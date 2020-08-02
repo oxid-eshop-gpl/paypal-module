@@ -4,7 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -105,7 +105,7 @@ class PartnerAction implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var Money | null
+     * @var CommonV3Money | null
      */
     public $amount;
 
@@ -178,8 +178,8 @@ class PartnerAction implements JsonSerializable
         );
         !isset($this->amount) || Assert::isInstanceOf(
             $this->amount,
-            Money::class,
-            "amount in PartnerAction must be instance of Money $within"
+            CommonV3Money::class,
+            "amount in PartnerAction must be instance of CommonV3Money $within"
         );
         !isset($this->amount) ||  $this->amount->validate(PartnerAction::class);
     }
@@ -205,7 +205,7 @@ class PartnerAction implements JsonSerializable
             $this->status = $data['status'];
         }
         if (isset($data['amount'])) {
-            $this->amount = new Money($data['amount']);
+            $this->amount = new CommonV3Money($data['amount']);
         }
     }
 

@@ -4,7 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\AddressPortable;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3AddressPortable;
 use Webmozart\Assert\Assert;
 
 /**
@@ -30,7 +30,7 @@ class Evidences implements JsonSerializable
      * HTML 5.1 [Autofilling form controls: the autocomplete
      * attribute](https://www.w3.org/TR/html51/sec-forms.html#autofilling-form-controls-the-autocomplete-attribute).
      *
-     * @var AddressPortable | null
+     * @var CommonV3AddressPortable | null
      */
     public $return_shipping_address;
 
@@ -54,8 +54,8 @@ class Evidences implements JsonSerializable
         }
         !isset($this->return_shipping_address) || Assert::isInstanceOf(
             $this->return_shipping_address,
-            AddressPortable::class,
-            "return_shipping_address in Evidences must be instance of AddressPortable $within"
+            CommonV3AddressPortable::class,
+            "return_shipping_address in Evidences must be instance of CommonV3AddressPortable $within"
         );
         !isset($this->return_shipping_address) ||  $this->return_shipping_address->validate(Evidences::class);
     }
@@ -69,7 +69,7 @@ class Evidences implements JsonSerializable
             }
         }
         if (isset($data['return_shipping_address'])) {
-            $this->return_shipping_address = new AddressPortable($data['return_shipping_address']);
+            $this->return_shipping_address = new CommonV3AddressPortable($data['return_shipping_address']);
         }
     }
 

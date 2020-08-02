@@ -4,8 +4,8 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV4\IdentityDocument;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV4\Name;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV4\CommonV4IdentityDocument;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV4\CommonV4Name;
 use Webmozart\Assert\Assert;
 
 /**
@@ -20,7 +20,7 @@ class Person extends Party implements JsonSerializable
     /**
      * Names of person.
      *
-     * @var Name[]
+     * @var CommonV4Name[]
      * maxItems: 1
      * maxItems: 10
      */
@@ -54,7 +54,7 @@ class Person extends Party implements JsonSerializable
     /**
      * Identity documents for the entity like passport number.
      *
-     * @var IdentityDocument[]
+     * @var CommonV4IdentityDocument[]
      * maxItems: 1
      * maxItems: 10
      */
@@ -130,7 +130,7 @@ class Person extends Party implements JsonSerializable
         if (isset($data['names'])) {
             $this->names = [];
             foreach ($data['names'] as $item) {
-                $this->names[] = new Name($item);
+                $this->names[] = new CommonV4Name($item);
             }
         }
         if (isset($data['citizenship'])) {
@@ -142,7 +142,7 @@ class Person extends Party implements JsonSerializable
         if (isset($data['identifications'])) {
             $this->identifications = [];
             foreach ($data['identifications'] as $item) {
-                $this->identifications[] = new IdentityDocument($item);
+                $this->identifications[] = new CommonV4IdentityDocument($item);
             }
         }
     }

@@ -30,6 +30,8 @@ class Generator
     private $currentNameSpace;
     private $subNameSpace;
 
+    protected $knownClasses;
+
     /**
      * @param string $jsonFile
      * @param string $namespace
@@ -124,11 +126,23 @@ class Generator
      */
     protected function calculateClassName($defName, $defs)
     {
+        if (isset($this->references[$defName])) {
+            $className = $this->references[$defName];
+            if (preg_match("/\\\\(.*)$/", $className, $matches)) {
+                $className = $matches[1];
+            }
+            return $className;
+        }
+
         $refName = $this->getRefNameFromRefString($defName);
         $className = $this->replaceNumbers($this->getClassNameFromRefName($refName));
-        if ($className == "LinkSchema") {
+        if ($className == "LinkSchema" || $className == "Error" || $className == "LinkDescription") {
             $this->definitions[$defName]['type'] = 'mixed';
                  return "mixed";
+        }
+
+        if ($this->isCommonType($defName)) {
+            $className = $this->getSubNameSpaceForCommonTypes($defName) . $className;
         }
 
         return $className;
@@ -166,18 +180,31 @@ class Generator
                 $type = $defs['type'];
 
                 if ($type == 'object') {
+                    //TODO: for each ref generate a hash
+                    //there might be classes with the same name but different properties
+                    //store class name and hash hash=> classname and classname => hash
+
                     $className = $this->calculateClassName($defName, $defs);
+
                     if ($className !== "mixed") {
                         if ($this->isCommonType($defName)) {
                             $subNameSpace = $this->getSubNameSpaceForCommonTypes($defName);
                             $className = "$subNameSpace\\" . $className;
                         } else {
                             $className = $modelNamespace . '\\' . $className;
+
+                            $thisHash = $this->calculateHash($defs);
+                            $i = 2;
+                            while (isset($this->knownClasses[$className]) && $this->knownClasses[$className] != $thisHash) {
+                                $className = $className . $i++;
+                            }
+                            $this->knownClasses[$className] = $this->calculateHash($defs);
                         }
                     }
                     if (isset($this->references[$defName])) {
-                        throw new Exception("duplicate Class Name");
+                        throw new Exception("duplicate Class Definition");
                     }
+
                     $this->references[$defName] = $className;
                 } else {
                     $this->references[$defName] = $type;
@@ -312,7 +339,9 @@ class Generator
                                     $nestedSubNameSpace = $this->getSubNameSpaceForCommonTypes($ref);
                                     $nestedClassId = $this->calculateClassName($ref, null);
                                     $itemType = $nestedClassId;
-                                    $ns->addUse("$namespace\\$nestedSubNameSpace\\$nestedClassId");
+                                    if ($itemType != "mixed") {
+                                        $ns->addUse("$namespace\\$nestedSubNameSpace\\$nestedClassId");
+                                    }
                                 }
                             }
                             if (isset($arrayItemsDef['type'])) {
@@ -395,6 +424,10 @@ class Generator
      */
     protected function isCommonType($ref)
     {
+        if (strpos($ref, 'customized') !== false) {
+            return false;
+        }
+
         return $this->isCommonTypeV3($ref) || $this->isCommonTypeV4($ref) || $this->isMerchantV1($ref);
     }
 
@@ -413,11 +446,14 @@ class Generator
      */
     protected function isMerchantV1($ref)
     {
-        //556 models without this vs 372
+        return false;
+        /*
+         * it was not possible to reuse common components because they sometimes do differ
         return strpos($ref, 'MerchantsCommonComponentsSpecification-v1') !== false
             || strpos($ref, 'MerchantCommonComponentsSpecification-v1') !== false
             || strpos($ref, 'merchant.CommonComponentsSpecification-v1') !== false
             ;
+        */
     }
 
     /**
@@ -684,5 +720,11 @@ class Generator
             }
         }
         return $definitions;
+    }
+
+    protected function calculateHash($defs)
+    {
+        unset ($defs['comment']);
+        return json_encode($defs);
     }
 }

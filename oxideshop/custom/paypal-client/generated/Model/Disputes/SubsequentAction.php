@@ -4,13 +4,12 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\LinkDescription;
 use Webmozart\Assert\Assert;
 
 /**
- * A list of subsequent actions.
+ * The subsequent action.
  *
- * generated from: referred-subsequent_action.json
+ * generated from: response-subsequent_action.json
  */
 class SubsequentAction implements JsonSerializable
 {
@@ -19,7 +18,7 @@ class SubsequentAction implements JsonSerializable
     /**
      * An array of request-related [HATEOAS links](/docs/api/hateoas-links/).
      *
-     * @var LinkDescription[] | null
+     * @var array | null
      */
     public $links;
 
@@ -30,11 +29,6 @@ class SubsequentAction implements JsonSerializable
             $this->links,
             "links in SubsequentAction must be array $within"
         );
-        if (isset($this->links)) {
-            foreach ($this->links as $item) {
-                $item->validate(SubsequentAction::class);
-            }
-        }
     }
 
     private function map(array $data)
@@ -42,7 +36,7 @@ class SubsequentAction implements JsonSerializable
         if (isset($data['links'])) {
             $this->links = [];
             foreach ($data['links'] as $item) {
-                $this->links[] = new LinkDescription($item);
+                $this->links[] = $item;
             }
         }
     }

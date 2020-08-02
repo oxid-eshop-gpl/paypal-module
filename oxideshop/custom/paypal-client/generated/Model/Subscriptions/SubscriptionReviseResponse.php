@@ -4,7 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\LinkDescription;
 use Webmozart\Assert\Assert;
 
 /**
@@ -21,7 +20,7 @@ class SubscriptionReviseResponse extends CustomizedXUnsupportedFiveEightSevenFiv
     /**
      * An array of request-related [HATEOAS links](/docs/api/reference/api-responses/#hateoas-links).
      *
-     * @var LinkDescription[] | null
+     * @var array | null
      */
     public $links;
 
@@ -32,11 +31,6 @@ class SubscriptionReviseResponse extends CustomizedXUnsupportedFiveEightSevenFiv
             $this->links,
             "links in SubscriptionReviseResponse must be array $within"
         );
-        if (isset($this->links)) {
-            foreach ($this->links as $item) {
-                $item->validate(SubscriptionReviseResponse::class);
-            }
-        }
     }
 
     private function map(array $data)
@@ -44,7 +38,7 @@ class SubscriptionReviseResponse extends CustomizedXUnsupportedFiveEightSevenFiv
         if (isset($data['links'])) {
             $this->links = [];
             foreach ($data['links'] as $item) {
-                $this->links[] = new LinkDescription($item);
+                $this->links[] = $item;
             }
         }
     }

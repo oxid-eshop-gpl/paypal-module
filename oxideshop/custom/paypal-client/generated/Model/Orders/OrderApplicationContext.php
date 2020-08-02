@@ -4,9 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\ClientConfiguration;
-use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\PaymentMethod;
-use OxidProfessionalServices\PayPal\Api\Model\MerchantV1\PaymentSource;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3ClientConfiguration;
 use Webmozart\Assert\Assert;
 
 /**
@@ -133,7 +131,7 @@ class OrderApplicationContext implements JsonSerializable
      * Client configuration that captures the product flows and specific experiences that a user completes a paypal
      * transaction.
      *
-     * @var ClientConfiguration | null
+     * @var CommonV3ClientConfiguration | null
      */
     public $client_configuration;
 
@@ -147,7 +145,7 @@ class OrderApplicationContext implements JsonSerializable
     /**
      * The payment source definition.
      *
-     * @var PaymentSource | null
+     * @var PaymentSource2 | null
      */
     public $preferred_payment_source;
 
@@ -182,14 +180,14 @@ class OrderApplicationContext implements JsonSerializable
         );
         !isset($this->client_configuration) || Assert::isInstanceOf(
             $this->client_configuration,
-            ClientConfiguration::class,
-            "client_configuration in OrderApplicationContext must be instance of ClientConfiguration $within"
+            CommonV3ClientConfiguration::class,
+            "client_configuration in OrderApplicationContext must be instance of CommonV3ClientConfiguration $within"
         );
         !isset($this->client_configuration) ||  $this->client_configuration->validate(OrderApplicationContext::class);
         !isset($this->preferred_payment_source) || Assert::isInstanceOf(
             $this->preferred_payment_source,
-            PaymentSource::class,
-            "preferred_payment_source in OrderApplicationContext must be instance of PaymentSource $within"
+            PaymentSource2::class,
+            "preferred_payment_source in OrderApplicationContext must be instance of PaymentSource2 $within"
         );
         !isset($this->preferred_payment_source) ||  $this->preferred_payment_source->validate(OrderApplicationContext::class);
     }
@@ -224,13 +222,13 @@ class OrderApplicationContext implements JsonSerializable
             $this->payment_token = $data['payment_token'];
         }
         if (isset($data['client_configuration'])) {
-            $this->client_configuration = new ClientConfiguration($data['client_configuration']);
+            $this->client_configuration = new CommonV3ClientConfiguration($data['client_configuration']);
         }
         if (isset($data['vault'])) {
             $this->vault = $data['vault'];
         }
         if (isset($data['preferred_payment_source'])) {
-            $this->preferred_payment_source = new PaymentSource($data['preferred_payment_source']);
+            $this->preferred_payment_source = new PaymentSource2($data['preferred_payment_source']);
         }
     }
 

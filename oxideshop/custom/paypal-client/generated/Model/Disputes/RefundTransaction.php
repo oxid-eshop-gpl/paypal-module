@@ -4,7 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -82,7 +82,7 @@ class RefundTransaction implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var Money | null
+     * @var CommonV3Money | null
      */
     public $gross_amount;
 
@@ -122,8 +122,8 @@ class RefundTransaction implements JsonSerializable
         );
         !isset($this->gross_amount) || Assert::isInstanceOf(
             $this->gross_amount,
-            Money::class,
-            "gross_amount in RefundTransaction must be instance of Money $within"
+            CommonV3Money::class,
+            "gross_amount in RefundTransaction must be instance of CommonV3Money $within"
         );
         !isset($this->gross_amount) ||  $this->gross_amount->validate(RefundTransaction::class);
         !isset($this->create_time) || Assert::minLength(
@@ -147,7 +147,7 @@ class RefundTransaction implements JsonSerializable
             $this->status = $data['status'];
         }
         if (isset($data['gross_amount'])) {
-            $this->gross_amount = new Money($data['gross_amount']);
+            $this->gross_amount = new CommonV3Money($data['gross_amount']);
         }
         if (isset($data['create_time'])) {
             $this->create_time = $data['create_time'];

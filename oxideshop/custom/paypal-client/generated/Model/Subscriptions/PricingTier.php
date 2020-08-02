@@ -4,7 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -37,7 +37,7 @@ class PricingTier implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var Money
+     * @var CommonV3Money
      */
     public $amount;
 
@@ -68,8 +68,8 @@ class PricingTier implements JsonSerializable
         Assert::notNull($this->amount, "amount in PricingTier must not be NULL $within");
         Assert::isInstanceOf(
             $this->amount,
-            Money::class,
-            "amount in PricingTier must be instance of Money $within"
+            CommonV3Money::class,
+            "amount in PricingTier must be instance of CommonV3Money $within"
         );
          $this->amount->validate(PricingTier::class);
     }
@@ -83,13 +83,13 @@ class PricingTier implements JsonSerializable
             $this->ending_quantity = $data['ending_quantity'];
         }
         if (isset($data['amount'])) {
-            $this->amount = new Money($data['amount']);
+            $this->amount = new CommonV3Money($data['amount']);
         }
     }
 
     public function __construct(array $data = null)
     {
-        $this->amount = new Money();
+        $this->amount = new CommonV3Money();
         if (isset($data)) {
             $this->map($data);
         }

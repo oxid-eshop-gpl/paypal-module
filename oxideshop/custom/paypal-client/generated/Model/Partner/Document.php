@@ -4,8 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV4\FileReference;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV4\LinkDescription;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV4\CommonV4FileReference;
 use Webmozart\Assert\Assert;
 
 /**
@@ -96,7 +95,7 @@ class Document implements JsonSerializable
      * The files contained in the document. For example, a document could be represented by a front page file and a
      * back page file, etc.
      *
-     * @var FileReference[]
+     * @var CommonV4FileReference[]
      * maxItems: 1
      * maxItems: 50
      */
@@ -105,7 +104,7 @@ class Document implements JsonSerializable
     /**
      * The HATEOAS links.
      *
-     * @var LinkDescription[]
+     * @var array
      * maxItems: 1
      * maxItems: 10
      */
@@ -224,11 +223,6 @@ class Document implements JsonSerializable
             $this->links,
             "links in Document must be array $within"
         );
-        if (isset($this->links)) {
-            foreach ($this->links as $item) {
-                $item->validate(Document::class);
-            }
-        }
     }
 
     private function map(array $data)
@@ -260,13 +254,13 @@ class Document implements JsonSerializable
         if (isset($data['files'])) {
             $this->files = [];
             foreach ($data['files'] as $item) {
-                $this->files[] = new FileReference($item);
+                $this->files[] = new CommonV4FileReference($item);
             }
         }
         if (isset($data['links'])) {
             $this->links = [];
             foreach ($data['links'] as $item) {
-                $this->links[] = new LinkDescription($item);
+                $this->links[] = $item;
             }
         }
     }

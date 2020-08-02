@@ -58,7 +58,7 @@ class Person implements JsonSerializable
     /**
      * The list of addresses associated with the person.
      *
-     * @var PersonAddressDetail[]
+     * @var PersonAddressDetail2[]
      * maxItems: 0
      * maxItems: 5
      */
@@ -67,7 +67,7 @@ class Person implements JsonSerializable
     /**
      * The list of phone numbers associated with the person.
      *
-     * @var PersonPhoneDetail[]
+     * @var PersonPhoneDetail2[]
      * maxItems: 0
      * maxItems: 5
      */
@@ -231,13 +231,13 @@ class Person implements JsonSerializable
         if (isset($data['addresses'])) {
             $this->addresses = [];
             foreach ($data['addresses'] as $item) {
-                $this->addresses[] = new PersonAddressDetail($item);
+                $this->addresses[] = new PersonAddressDetail2($item);
             }
         }
         if (isset($data['phones'])) {
             $this->phones = [];
             foreach ($data['phones'] as $item) {
-                $this->phones[] = new PersonPhoneDetail($item);
+                $this->phones[] = new PersonPhoneDetail2($item);
             }
         }
         if (isset($data['birth_details'])) {

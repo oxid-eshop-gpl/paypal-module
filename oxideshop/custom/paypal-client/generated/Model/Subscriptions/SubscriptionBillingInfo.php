@@ -4,7 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -19,7 +19,7 @@ class SubscriptionBillingInfo implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var Money
+     * @var CommonV3Money
      */
     public $outstanding_balance;
 
@@ -53,7 +53,7 @@ class SubscriptionBillingInfo implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var Money | null
+     * @var CommonV3Money | null
      */
     public $next_payment;
 
@@ -86,7 +86,7 @@ class SubscriptionBillingInfo implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var Money | null
+     * @var CommonV3Money | null
      */
     public $total_paid_amount;
 
@@ -96,8 +96,8 @@ class SubscriptionBillingInfo implements JsonSerializable
         Assert::notNull($this->outstanding_balance, "outstanding_balance in SubscriptionBillingInfo must not be NULL $within");
         Assert::isInstanceOf(
             $this->outstanding_balance,
-            Money::class,
-            "outstanding_balance in SubscriptionBillingInfo must be instance of Money $within"
+            CommonV3Money::class,
+            "outstanding_balance in SubscriptionBillingInfo must be instance of CommonV3Money $within"
         );
          $this->outstanding_balance->validate(SubscriptionBillingInfo::class);
         Assert::notNull($this->cycle_executions, "cycle_executions in SubscriptionBillingInfo must not be NULL $within");
@@ -138,8 +138,8 @@ class SubscriptionBillingInfo implements JsonSerializable
         );
         !isset($this->next_payment) || Assert::isInstanceOf(
             $this->next_payment,
-            Money::class,
-            "next_payment in SubscriptionBillingInfo must be instance of Money $within"
+            CommonV3Money::class,
+            "next_payment in SubscriptionBillingInfo must be instance of CommonV3Money $within"
         );
         !isset($this->next_payment) ||  $this->next_payment->validate(SubscriptionBillingInfo::class);
         !isset($this->final_payment_time) || Assert::minLength(
@@ -161,8 +161,8 @@ class SubscriptionBillingInfo implements JsonSerializable
         !isset($this->last_failed_payment) ||  $this->last_failed_payment->validate(SubscriptionBillingInfo::class);
         !isset($this->total_paid_amount) || Assert::isInstanceOf(
             $this->total_paid_amount,
-            Money::class,
-            "total_paid_amount in SubscriptionBillingInfo must be instance of Money $within"
+            CommonV3Money::class,
+            "total_paid_amount in SubscriptionBillingInfo must be instance of CommonV3Money $within"
         );
         !isset($this->total_paid_amount) ||  $this->total_paid_amount->validate(SubscriptionBillingInfo::class);
     }
@@ -170,7 +170,7 @@ class SubscriptionBillingInfo implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['outstanding_balance'])) {
-            $this->outstanding_balance = new Money($data['outstanding_balance']);
+            $this->outstanding_balance = new CommonV3Money($data['outstanding_balance']);
         }
         if (isset($data['cycle_executions'])) {
             $this->cycle_executions = [];
@@ -185,7 +185,7 @@ class SubscriptionBillingInfo implements JsonSerializable
             $this->next_billing_time = $data['next_billing_time'];
         }
         if (isset($data['next_payment'])) {
-            $this->next_payment = new Money($data['next_payment']);
+            $this->next_payment = new CommonV3Money($data['next_payment']);
         }
         if (isset($data['final_payment_time'])) {
             $this->final_payment_time = $data['final_payment_time'];
@@ -197,13 +197,13 @@ class SubscriptionBillingInfo implements JsonSerializable
             $this->last_failed_payment = new FailedPaymentDetails($data['last_failed_payment']);
         }
         if (isset($data['total_paid_amount'])) {
-            $this->total_paid_amount = new Money($data['total_paid_amount']);
+            $this->total_paid_amount = new CommonV3Money($data['total_paid_amount']);
         }
     }
 
     public function __construct(array $data = null)
     {
-        $this->outstanding_balance = new Money();
+        $this->outstanding_balance = new CommonV3Money();
         $this->cycle_executions = [];
         if (isset($data)) {
             $this->map($data);

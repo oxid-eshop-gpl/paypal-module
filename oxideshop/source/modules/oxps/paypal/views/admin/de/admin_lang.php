@@ -26,7 +26,6 @@ $aLang = [
     'paypal'                         => 'PayPal',
     'OXPS_PAYPAL_CONFIG'             => 'Konfiguration',
     'OXPS_PAYPAL_GENERAL'            => 'Allgemein',
-    'OXPS_PAYPAL_CREDENTIALS'        => 'Anmeldeinformationen',
     'OXPS_PAYPAL_OPMODE'             => 'Betriebsmodus',
     'OXPS_PAYPAL_OPMODE_LIVE'        => 'Live',
     'OXPS_PAYPAL_OPMODE_SANDBOX'     => 'Sandbox',

@@ -4,8 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\LinkDescription;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -275,14 +274,14 @@ class DisputeInfo implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var Money | null
+     * @var CommonV3Money | null
      */
     public $dispute_amount;
 
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var Money | null
+     * @var CommonV3Money | null
      */
     public $dispute_fee;
 
@@ -453,7 +452,7 @@ class DisputeInfo implements JsonSerializable
     /**
      * An array of request-related [HATEOAS links](/docs/api/hateoas-links/).
      *
-     * @var LinkDescription[] | null
+     * @var array | null
      */
     public $links;
 
@@ -540,14 +539,14 @@ class DisputeInfo implements JsonSerializable
         );
         !isset($this->dispute_amount) || Assert::isInstanceOf(
             $this->dispute_amount,
-            Money::class,
-            "dispute_amount in DisputeInfo must be instance of Money $within"
+            CommonV3Money::class,
+            "dispute_amount in DisputeInfo must be instance of CommonV3Money $within"
         );
         !isset($this->dispute_amount) ||  $this->dispute_amount->validate(DisputeInfo::class);
         !isset($this->dispute_fee) || Assert::isInstanceOf(
             $this->dispute_fee,
-            Money::class,
-            "dispute_fee in DisputeInfo must be instance of Money $within"
+            CommonV3Money::class,
+            "dispute_fee in DisputeInfo must be instance of CommonV3Money $within"
         );
         !isset($this->dispute_fee) ||  $this->dispute_fee->validate(DisputeInfo::class);
         !isset($this->external_reason_code) || Assert::minLength(
@@ -689,11 +688,6 @@ class DisputeInfo implements JsonSerializable
             $this->links,
             "links in DisputeInfo must be array $within"
         );
-        if (isset($this->links)) {
-            foreach ($this->links as $item) {
-                $item->validate(DisputeInfo::class);
-            }
-        }
     }
 
     private function map(array $data)
@@ -729,10 +723,10 @@ class DisputeInfo implements JsonSerializable
             $this->dispute_state = $data['dispute_state'];
         }
         if (isset($data['dispute_amount'])) {
-            $this->dispute_amount = new Money($data['dispute_amount']);
+            $this->dispute_amount = new CommonV3Money($data['dispute_amount']);
         }
         if (isset($data['dispute_fee'])) {
-            $this->dispute_fee = new Money($data['dispute_fee']);
+            $this->dispute_fee = new CommonV3Money($data['dispute_fee']);
         }
         if (isset($data['external_reason_code'])) {
             $this->external_reason_code = $data['external_reason_code'];
@@ -800,7 +794,7 @@ class DisputeInfo implements JsonSerializable
         if (isset($data['links'])) {
             $this->links = [];
             foreach ($data['links'] as $item) {
-                $this->links[] = new LinkDescription($item);
+                $this->links[] = $item;
             }
         }
     }

@@ -4,7 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -31,14 +31,14 @@ class Offer implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var Money | null
+     * @var CommonV3Money | null
      */
     public $buyer_requested_amount;
 
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var Money | null
+     * @var CommonV3Money | null
      */
     public $seller_offered_amount;
 
@@ -68,14 +68,14 @@ class Offer implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
         !isset($this->buyer_requested_amount) || Assert::isInstanceOf(
             $this->buyer_requested_amount,
-            Money::class,
-            "buyer_requested_amount in Offer must be instance of Money $within"
+            CommonV3Money::class,
+            "buyer_requested_amount in Offer must be instance of CommonV3Money $within"
         );
         !isset($this->buyer_requested_amount) ||  $this->buyer_requested_amount->validate(Offer::class);
         !isset($this->seller_offered_amount) || Assert::isInstanceOf(
             $this->seller_offered_amount,
-            Money::class,
-            "seller_offered_amount in Offer must be instance of Money $within"
+            CommonV3Money::class,
+            "seller_offered_amount in Offer must be instance of CommonV3Money $within"
         );
         !isset($this->seller_offered_amount) ||  $this->seller_offered_amount->validate(Offer::class);
         !isset($this->offer_type) || Assert::minLength(
@@ -102,10 +102,10 @@ class Offer implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['buyer_requested_amount'])) {
-            $this->buyer_requested_amount = new Money($data['buyer_requested_amount']);
+            $this->buyer_requested_amount = new CommonV3Money($data['buyer_requested_amount']);
         }
         if (isset($data['seller_offered_amount'])) {
-            $this->seller_offered_amount = new Money($data['seller_offered_amount']);
+            $this->seller_offered_amount = new CommonV3Money($data['seller_offered_amount']);
         }
         if (isset($data['offer_type'])) {
             $this->offer_type = $data['offer_type'];

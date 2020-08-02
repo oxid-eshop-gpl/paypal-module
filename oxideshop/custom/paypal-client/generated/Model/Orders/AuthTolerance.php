@@ -4,7 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV4\Money;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV4\CommonV4Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -27,7 +27,7 @@ class AuthTolerance implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var Money | null
+     * @var CommonV4Money | null
      */
     public $absolute;
 
@@ -36,8 +36,8 @@ class AuthTolerance implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
         !isset($this->absolute) || Assert::isInstanceOf(
             $this->absolute,
-            Money::class,
-            "absolute in AuthTolerance must be instance of Money $within"
+            CommonV4Money::class,
+            "absolute in AuthTolerance must be instance of CommonV4Money $within"
         );
         !isset($this->absolute) ||  $this->absolute->validate(AuthTolerance::class);
     }
@@ -48,7 +48,7 @@ class AuthTolerance implements JsonSerializable
             $this->percent = $data['percent'];
         }
         if (isset($data['absolute'])) {
-            $this->absolute = new Money($data['absolute']);
+            $this->absolute = new CommonV4Money($data['absolute']);
         }
     }
 

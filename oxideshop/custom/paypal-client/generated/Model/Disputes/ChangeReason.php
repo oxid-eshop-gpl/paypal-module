@@ -4,7 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -101,7 +101,7 @@ class ChangeReason implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var Money | null
+     * @var CommonV3Money | null
      */
     public $buyer_requested_amount;
 
@@ -153,8 +153,8 @@ class ChangeReason implements JsonSerializable
         );
         !isset($this->buyer_requested_amount) || Assert::isInstanceOf(
             $this->buyer_requested_amount,
-            Money::class,
-            "buyer_requested_amount in ChangeReason must be instance of Money $within"
+            CommonV3Money::class,
+            "buyer_requested_amount in ChangeReason must be instance of CommonV3Money $within"
         );
         !isset($this->buyer_requested_amount) ||  $this->buyer_requested_amount->validate(ChangeReason::class);
         !isset($this->item_info) || Assert::isArray(
@@ -192,7 +192,7 @@ class ChangeReason implements JsonSerializable
             }
         }
         if (isset($data['buyer_requested_amount'])) {
-            $this->buyer_requested_amount = new Money($data['buyer_requested_amount']);
+            $this->buyer_requested_amount = new CommonV3Money($data['buyer_requested_amount']);
         }
         if (isset($data['item_info'])) {
             $this->item_info = [];

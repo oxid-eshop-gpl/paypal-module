@@ -4,7 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -35,7 +35,7 @@ class Metric implements JsonSerializable
     /**
      * An array of the sums of amounts for each currency.
      *
-     * @var Money[] | null
+     * @var CommonV3Money[] | null
      */
     public $amount;
 
@@ -74,7 +74,7 @@ class Metric implements JsonSerializable
         if (isset($data['amount'])) {
             $this->amount = [];
             foreach ($data['amount'] as $item) {
-                $this->amount[] = new Money($item);
+                $this->amount[] = new CommonV3Money($item);
             }
         }
     }

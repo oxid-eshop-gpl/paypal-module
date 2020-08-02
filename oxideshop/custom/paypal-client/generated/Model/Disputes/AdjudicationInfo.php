@@ -4,7 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -25,14 +25,14 @@ class AdjudicationInfo implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var Money | null
+     * @var CommonV3Money | null
      */
     public $dispute_amount;
 
     /**
      * An array of items in the transaction that is in dispute.
      *
-     * @var ItemInfo[] | null
+     * @var ItemInfo2[] | null
      */
     public $items;
 
@@ -47,14 +47,14 @@ class AdjudicationInfo implements JsonSerializable
      * The extended properties for the dispute. Includes additional information for a dispute category, such as
      * billing disputes, the original transaction ID, correct amount, and so on.
      *
-     * @var Extensions | null
+     * @var Extensions2 | null
      */
     public $extensions;
 
     /**
      * An array of partner-submitted evidences, such as tracking information.
      *
-     * @var Evidence[] | null
+     * @var Evidence2[] | null
      */
     public $evidences;
 
@@ -84,7 +84,7 @@ class AdjudicationInfo implements JsonSerializable
     /**
      * An array of customer- or merchant-posted messages.
      *
-     * @var Message[] | null
+     * @var Message2[] | null
      */
     public $messages;
 
@@ -93,8 +93,8 @@ class AdjudicationInfo implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
         !isset($this->dispute_amount) || Assert::isInstanceOf(
             $this->dispute_amount,
-            Money::class,
-            "dispute_amount in AdjudicationInfo must be instance of Money $within"
+            CommonV3Money::class,
+            "dispute_amount in AdjudicationInfo must be instance of CommonV3Money $within"
         );
         !isset($this->dispute_amount) ||  $this->dispute_amount->validate(AdjudicationInfo::class);
         !isset($this->items) || Assert::isArray(
@@ -114,8 +114,8 @@ class AdjudicationInfo implements JsonSerializable
         !isset($this->outcome) ||  $this->outcome->validate(AdjudicationInfo::class);
         !isset($this->extensions) || Assert::isInstanceOf(
             $this->extensions,
-            Extensions::class,
-            "extensions in AdjudicationInfo must be instance of Extensions $within"
+            Extensions2::class,
+            "extensions in AdjudicationInfo must be instance of Extensions2 $within"
         );
         !isset($this->extensions) ||  $this->extensions->validate(AdjudicationInfo::class);
         !isset($this->evidences) || Assert::isArray(
@@ -161,24 +161,24 @@ class AdjudicationInfo implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['dispute_amount'])) {
-            $this->dispute_amount = new Money($data['dispute_amount']);
+            $this->dispute_amount = new CommonV3Money($data['dispute_amount']);
         }
         if (isset($data['items'])) {
             $this->items = [];
             foreach ($data['items'] as $item) {
-                $this->items[] = new ItemInfo($item);
+                $this->items[] = new ItemInfo2($item);
             }
         }
         if (isset($data['outcome'])) {
             $this->outcome = new Outcome($data['outcome']);
         }
         if (isset($data['extensions'])) {
-            $this->extensions = new Extensions($data['extensions']);
+            $this->extensions = new Extensions2($data['extensions']);
         }
         if (isset($data['evidences'])) {
             $this->evidences = [];
             foreach ($data['evidences'] as $item) {
-                $this->evidences[] = new Evidence($item);
+                $this->evidences[] = new Evidence2($item);
             }
         }
         if (isset($data['dispute_reason'])) {
@@ -190,7 +190,7 @@ class AdjudicationInfo implements JsonSerializable
         if (isset($data['messages'])) {
             $this->messages = [];
             foreach ($data['messages'] as $item) {
-                $this->messages[] = new Message($item);
+                $this->messages[] = new Message2($item);
             }
         }
     }

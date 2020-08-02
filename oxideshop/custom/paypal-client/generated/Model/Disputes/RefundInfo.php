@@ -4,7 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -52,7 +52,7 @@ class RefundInfo implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var Money
+     * @var CommonV3Money
      */
     public $amount;
 
@@ -125,8 +125,8 @@ class RefundInfo implements JsonSerializable
         Assert::notNull($this->amount, "amount in RefundInfo must not be NULL $within");
         Assert::isInstanceOf(
             $this->amount,
-            Money::class,
-            "amount in RefundInfo must be instance of Money $within"
+            CommonV3Money::class,
+            "amount in RefundInfo must be instance of CommonV3Money $within"
         );
          $this->amount->validate(RefundInfo::class);
         Assert::notNull($this->create_time, "create_time in RefundInfo must not be NULL $within");
@@ -181,7 +181,7 @@ class RefundInfo implements JsonSerializable
             $this->recipient = $data['recipient'];
         }
         if (isset($data['amount'])) {
-            $this->amount = new Money($data['amount']);
+            $this->amount = new CommonV3Money($data['amount']);
         }
         if (isset($data['create_time'])) {
             $this->create_time = $data['create_time'];
@@ -202,7 +202,7 @@ class RefundInfo implements JsonSerializable
 
     public function __construct(array $data = null)
     {
-        $this->amount = new Money();
+        $this->amount = new CommonV3Money();
         if (isset($data)) {
             $this->map($data);
         }

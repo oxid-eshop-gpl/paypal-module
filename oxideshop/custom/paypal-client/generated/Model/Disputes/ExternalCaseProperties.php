@@ -4,7 +4,7 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Disputes;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\Money;
+use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -72,7 +72,7 @@ class ExternalCaseProperties implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var Money | null
+     * @var CommonV3Money | null
      */
     public $reversal_fee;
 
@@ -111,8 +111,8 @@ class ExternalCaseProperties implements JsonSerializable
         );
         !isset($this->reversal_fee) || Assert::isInstanceOf(
             $this->reversal_fee,
-            Money::class,
-            "reversal_fee in ExternalCaseProperties must be instance of Money $within"
+            CommonV3Money::class,
+            "reversal_fee in ExternalCaseProperties must be instance of CommonV3Money $within"
         );
         !isset($this->reversal_fee) ||  $this->reversal_fee->validate(ExternalCaseProperties::class);
     }
@@ -129,7 +129,7 @@ class ExternalCaseProperties implements JsonSerializable
             $this->recovery_type = $data['recovery_type'];
         }
         if (isset($data['reversal_fee'])) {
-            $this->reversal_fee = new Money($data['reversal_fee']);
+            $this->reversal_fee = new CommonV3Money($data['reversal_fee']);
         }
     }
 
