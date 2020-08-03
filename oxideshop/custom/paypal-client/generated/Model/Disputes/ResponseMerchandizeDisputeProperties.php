@@ -112,4 +112,19 @@ class ResponseMerchandizeDisputeProperties implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initProductDetails(): ResponseProductDetails
+    {
+        return $this->product_details = new ResponseProductDetails();
+    }
+
+    public function initServiceDetails(): ResponseServiceDetails
+    {
+        return $this->service_details = new ResponseServiceDetails();
+    }
+
+    public function initReturnShippingAddress(): AddressPortable
+    {
+        return $this->return_shipping_address = new AddressPortable();
+    }
 }

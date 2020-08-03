@@ -56,4 +56,9 @@ class ResponseDuplicateTransaction implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initOriginalTransaction(): ResponseTransactionInfo
+    {
+        return $this->original_transaction = new ResponseTransactionInfo();
+    }
 }

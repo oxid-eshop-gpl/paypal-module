@@ -82,4 +82,9 @@ class SupplementaryData implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initPointOfSale(): PointOfSale
+    {
+        return $this->point_of_sale = new PointOfSale();
+    }
 }

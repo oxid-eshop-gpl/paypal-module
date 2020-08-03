@@ -123,4 +123,14 @@ class ResponseOffer implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initBuyerRequestedAmount(): Money
+    {
+        return $this->buyer_requested_amount = new Money();
+    }
+
+    public function initSellerOfferedAmount(): Money
+    {
+        return $this->seller_offered_amount = new Money();
+    }
 }

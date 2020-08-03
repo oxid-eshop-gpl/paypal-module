@@ -165,4 +165,29 @@ class SellerReceivableBreakdown implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initPaypalFee(): Money
+    {
+        return $this->paypal_fee = new Money();
+    }
+
+    public function initPaypalFeeInReceivableCurrency(): Money
+    {
+        return $this->paypal_fee_in_receivable_currency = new Money();
+    }
+
+    public function initNetAmount(): Money
+    {
+        return $this->net_amount = new Money();
+    }
+
+    public function initReceivableAmount(): Money
+    {
+        return $this->receivable_amount = new Money();
+    }
+
+    public function initExchangeRate(): ExchangeRate
+    {
+        return $this->exchange_rate = new ExchangeRate();
+    }
 }

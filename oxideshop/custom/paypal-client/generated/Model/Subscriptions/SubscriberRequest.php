@@ -65,4 +65,14 @@ class SubscriberRequest extends Payer3 implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initShippingAddress(): ShippingDetail
+    {
+        return $this->shipping_address = new ShippingDetail();
+    }
+
+    public function initPaymentSource(): PaymentSource
+    {
+        return $this->payment_source = new PaymentSource();
+    }
 }

@@ -131,4 +131,9 @@ class BankAccountResponse implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initBackupFundingInstrument(): BackupFundingInstrument
+    {
+        return $this->backup_funding_instrument = new BackupFundingInstrument();
+    }
 }

@@ -397,4 +397,29 @@ class ResponseTransactionInfo implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initGrossAmount(): Money
+    {
+        return $this->gross_amount = new Money();
+    }
+
+    public function initBuyer(): ResponseBuyer
+    {
+        return $this->buyer = new ResponseBuyer();
+    }
+
+    public function initSeller(): ResponseSeller
+    {
+        return $this->seller = new ResponseSeller();
+    }
+
+    public function initFacilitator(): ResponseFacilitator
+    {
+        return $this->facilitator = new ResponseFacilitator();
+    }
+
+    public function initRegulationInfo(): ResponseRegulationInfo
+    {
+        return $this->regulation_info = new ResponseRegulationInfo();
+    }
 }

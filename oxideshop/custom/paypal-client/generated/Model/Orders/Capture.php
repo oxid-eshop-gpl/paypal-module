@@ -272,4 +272,34 @@ class Capture extends CaptureStatus implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initAmount(): Money
+    {
+        return $this->amount = new Money();
+    }
+
+    public function initParentTransaction(): ParentTransaction
+    {
+        return $this->parent_transaction = new ParentTransaction();
+    }
+
+    public function initSellerProtection(): SellerProtection
+    {
+        return $this->seller_protection = new SellerProtection();
+    }
+
+    public function initSellerReceivableBreakdown(): SellerReceivableBreakdown
+    {
+        return $this->seller_receivable_breakdown = new SellerReceivableBreakdown();
+    }
+
+    public function initProcessorResponse(): ProcessorResponse
+    {
+        return $this->processor_response = new ProcessorResponse();
+    }
+
+    public function initSupplementaryData(): SupplementaryData
+    {
+        return $this->supplementary_data = new SupplementaryData();
+    }
 }

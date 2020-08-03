@@ -233,4 +233,19 @@ class Order extends ActivityTimestamps implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initPaymentSource(): PaymentSourceResponse
+    {
+        return $this->payment_source = new PaymentSourceResponse();
+    }
+
+    public function initPayer(): Payer
+    {
+        return $this->payer = new Payer();
+    }
+
+    public function initCreditFinancingOffer(): CreditFinancingOffer
+    {
+        return $this->credit_financing_offer = new CreditFinancingOffer();
+    }
 }

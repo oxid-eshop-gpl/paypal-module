@@ -350,4 +350,104 @@ class PaymentSource implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initCard(): Card
+    {
+        return $this->card = new Card();
+    }
+
+    public function initToken(): Token
+    {
+        return $this->token = new Token();
+    }
+
+    public function initBank(): Bank
+    {
+        return $this->bank = new Bank();
+    }
+
+    public function initPaypal(): PaypalWallet
+    {
+        return $this->paypal = new PaypalWallet();
+    }
+
+    public function initAlipay(): AlipayRequest
+    {
+        return $this->alipay = new AlipayRequest();
+    }
+
+    public function initBancontact(): BancontactRequest
+    {
+        return $this->bancontact = new BancontactRequest();
+    }
+
+    public function initBlik(): BlikRequest
+    {
+        return $this->blik = new BlikRequest();
+    }
+
+    public function initEps(): EpsRequest
+    {
+        return $this->eps = new EpsRequest();
+    }
+
+    public function initGiropay(): GiropayRequest
+    {
+        return $this->giropay = new GiropayRequest();
+    }
+
+    public function initIdeal(): IdealRequest
+    {
+        return $this->ideal = new IdealRequest();
+    }
+
+    public function initMultibanco(): MultibancoRequest
+    {
+        return $this->multibanco = new MultibancoRequest();
+    }
+
+    public function initMybank(): MybankRequest
+    {
+        return $this->mybank = new MybankRequest();
+    }
+
+    public function initPayu(): PayuRequest
+    {
+        return $this->payu = new PayuRequest();
+    }
+
+    public function initP24(): PTwoFourRequest
+    {
+        return $this->p24 = new PTwoFourRequest();
+    }
+
+    public function initPoli(): PoliRequest
+    {
+        return $this->poli = new PoliRequest();
+    }
+
+    public function initSofort(): SofortRequest
+    {
+        return $this->sofort = new SofortRequest();
+    }
+
+    public function initTrustly(): TrustlyRequest
+    {
+        return $this->trustly = new TrustlyRequest();
+    }
+
+    public function initTrustpay(): TrustpayRequest
+    {
+        return $this->trustpay = new TrustpayRequest();
+    }
+
+    public function initVerkkopankki(): VerkkopankkiRequest
+    {
+        return $this->verkkopankki = new VerkkopankkiRequest();
+    }
+
+    public function initWechatpay(): WechatpayRequest
+    {
+        return $this->wechatpay = new WechatpayRequest();
+    }
 }

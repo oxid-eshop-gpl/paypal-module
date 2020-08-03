@@ -164,4 +164,24 @@ class Payer implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initName(): Name3
+    {
+        return $this->name = new Name3();
+    }
+
+    public function initPhone(): PhoneWithType
+    {
+        return $this->phone = new PhoneWithType();
+    }
+
+    public function initTaxInfo(): TaxInfo
+    {
+        return $this->tax_info = new TaxInfo();
+    }
+
+    public function initAddress(): AddressPortable3
+    {
+        return $this->address = new AddressPortable3();
+    }
 }

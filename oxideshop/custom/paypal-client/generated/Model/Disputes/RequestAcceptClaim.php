@@ -157,4 +157,14 @@ class RequestAcceptClaim implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initReturnShippingAddress(): AddressPortable
+    {
+        return $this->return_shipping_address = new AddressPortable();
+    }
+
+    public function initRefundAmount(): Money
+    {
+        return $this->refund_amount = new Money();
+    }
 }

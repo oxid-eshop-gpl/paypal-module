@@ -166,4 +166,9 @@ class ResponseProductDetails implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initReturnDetails(): ResponseReturnDetails
+    {
+        return $this->return_details = new ResponseReturnDetails();
+    }
 }

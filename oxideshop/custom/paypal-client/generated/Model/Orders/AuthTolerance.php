@@ -57,4 +57,9 @@ class AuthTolerance implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initAbsolute(): Money2
+    {
+        return $this->absolute = new Money2();
+    }
 }

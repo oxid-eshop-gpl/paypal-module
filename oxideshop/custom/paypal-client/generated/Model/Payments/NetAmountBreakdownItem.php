@@ -79,4 +79,19 @@ class NetAmountBreakdownItem implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initPayableAmount(): Money
+    {
+        return $this->payable_amount = new Money();
+    }
+
+    public function initConvertedAmount(): Money
+    {
+        return $this->converted_amount = new Money();
+    }
+
+    public function initExchangeRate(): ExchangeRate
+    {
+        return $this->exchange_rate = new ExchangeRate();
+    }
 }

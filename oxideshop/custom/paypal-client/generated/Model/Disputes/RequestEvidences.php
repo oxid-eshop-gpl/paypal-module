@@ -79,4 +79,9 @@ class RequestEvidences implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initReturnShippingAddress(): AddressPortable
+    {
+        return $this->return_shipping_address = new AddressPortable();
+    }
 }

@@ -64,15 +64,13 @@ class ReferredExtensions implements JsonSerializable
         }
     }
 
-    public function initTransaction_hold_info(): \ReferredExtensionsTransactionHoldInfo
+    public function initTransactionHoldInfo(): ReferredExtensionsTransactionHoldInfo
     {
-        $this->transaction_hold_info = new ReferredExtensionsTransactionHoldInfo();
-        return $this;
+        return $this->transaction_hold_info = new ReferredExtensionsTransactionHoldInfo();
     }
 
-    public function initTransaction_risk_info(): \ReferredExtensionsTransactionRiskInfo
+    public function initTransactionRiskInfo(): ReferredExtensionsTransactionRiskInfo
     {
-        $this->transaction_risk_info = new ReferredExtensionsTransactionRiskInfo();
-        return $this;
+        return $this->transaction_risk_info = new ReferredExtensionsTransactionRiskInfo();
     }
 }

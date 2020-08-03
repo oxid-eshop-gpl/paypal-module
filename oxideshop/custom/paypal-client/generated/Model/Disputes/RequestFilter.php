@@ -299,4 +299,14 @@ class RequestFilter implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initDisputeAmountGte(): Money
+    {
+        return $this->dispute_amount_gte = new Money();
+    }
+
+    public function initDisputeAmountLte(): Money
+    {
+        return $this->dispute_amount_lte = new Money();
+    }
 }

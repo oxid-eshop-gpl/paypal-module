@@ -238,4 +238,9 @@ class ReferredDisputeCreateRequest implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initExtensions(): ReferredExtensions
+    {
+        return $this->extensions = new ReferredExtensions();
+    }
 }

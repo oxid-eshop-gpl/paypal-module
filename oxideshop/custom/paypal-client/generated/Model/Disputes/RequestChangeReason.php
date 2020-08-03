@@ -207,4 +207,14 @@ class RequestChangeReason implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initExtensions(): ResponseExtensions
+    {
+        return $this->extensions = new ResponseExtensions();
+    }
+
+    public function initBuyerRequestedAmount(): Money
+    {
+        return $this->buyer_requested_amount = new Money();
+    }
 }

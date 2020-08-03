@@ -123,4 +123,14 @@ class AirlineItinerary implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initTicket(): AirlineTicket
+    {
+        return $this->ticket = new AirlineTicket();
+    }
+
+    public function initPassenger(): AirlinePassenger
+    {
+        return $this->passenger = new AirlinePassenger();
+    }
 }

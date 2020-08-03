@@ -161,4 +161,19 @@ class OrderRequest implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initPayer(): Payer
+    {
+        return $this->payer = new Payer();
+    }
+
+    public function initPaymentSource(): PaymentSource
+    {
+        return $this->payment_source = new PaymentSource();
+    }
+
+    public function initApplicationContext(): OrderApplicationContext
+    {
+        return $this->application_context = new OrderApplicationContext();
+    }
 }

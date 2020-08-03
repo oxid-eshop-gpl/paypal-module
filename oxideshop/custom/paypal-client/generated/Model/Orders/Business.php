@@ -335,4 +335,14 @@ class Business extends Party implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initCategory(): BusinessCategory
+    {
+        return $this->category = new BusinessCategory();
+    }
+
+    public function initCustomerServiceContacts(): CustomerServiceContact
+    {
+        return $this->customer_service_contacts = new CustomerServiceContact();
+    }
 }

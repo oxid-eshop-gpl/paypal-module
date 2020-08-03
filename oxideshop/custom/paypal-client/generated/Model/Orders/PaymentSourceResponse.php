@@ -350,4 +350,104 @@ class PaymentSourceResponse implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initCard(): CardResponse
+    {
+        return $this->card = new CardResponse();
+    }
+
+    public function initPaypal(): PaypalWalletResponse
+    {
+        return $this->paypal = new PaypalWalletResponse();
+    }
+
+    public function initWallet(): WalletsResponse
+    {
+        return $this->wallet = new WalletsResponse();
+    }
+
+    public function initBank(): BankResponse
+    {
+        return $this->bank = new BankResponse();
+    }
+
+    public function initAlipay(): Alipay
+    {
+        return $this->alipay = new Alipay();
+    }
+
+    public function initBancontact(): Bancontact
+    {
+        return $this->bancontact = new Bancontact();
+    }
+
+    public function initBlik(): Blik
+    {
+        return $this->blik = new Blik();
+    }
+
+    public function initEps(): Eps
+    {
+        return $this->eps = new Eps();
+    }
+
+    public function initGiropay(): Giropay
+    {
+        return $this->giropay = new Giropay();
+    }
+
+    public function initIdeal(): Ideal
+    {
+        return $this->ideal = new Ideal();
+    }
+
+    public function initMultibanco(): Multibanco
+    {
+        return $this->multibanco = new Multibanco();
+    }
+
+    public function initMybank(): Mybank
+    {
+        return $this->mybank = new Mybank();
+    }
+
+    public function initPayu(): Payu
+    {
+        return $this->payu = new Payu();
+    }
+
+    public function initP24(): PTwoFour
+    {
+        return $this->p24 = new PTwoFour();
+    }
+
+    public function initPoli(): Poli
+    {
+        return $this->poli = new Poli();
+    }
+
+    public function initSofort(): Sofort
+    {
+        return $this->sofort = new Sofort();
+    }
+
+    public function initTrustly(): Trustly
+    {
+        return $this->trustly = new Trustly();
+    }
+
+    public function initTrustpay(): Trustpay
+    {
+        return $this->trustpay = new Trustpay();
+    }
+
+    public function initVerkkopankki(): Verkkopankki
+    {
+        return $this->verkkopankki = new Verkkopankki();
+    }
+
+    public function initWechatpay(): Wechatpay
+    {
+        return $this->wechatpay = new Wechatpay();
+    }
 }

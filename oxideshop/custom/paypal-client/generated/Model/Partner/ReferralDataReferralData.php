@@ -242,4 +242,14 @@ class ReferralDataReferralData extends Account implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initPartnerConfigOverride(): ReferralDataPartnerConfigOverride
+    {
+        return $this->partner_config_override = new ReferralDataPartnerConfigOverride();
+    }
+
+    public function initFinancialInstruments(): ReferralDataFinancialInstruments
+    {
+        return $this->financial_instruments = new ReferralDataFinancialInstruments();
+    }
 }

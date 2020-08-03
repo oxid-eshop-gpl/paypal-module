@@ -575,11 +575,9 @@ class Generator
             }
         } else {
             if ($this->isObjectType($propType)) {
-                $class->addMethod("init" . ucfirst($name))
-                    ->setReturnType($propType)
-                    ->addBody(
-                        '$this' . "->$name = new $propType();"
-                    )->addBody('return $this;');
+                $methodName = "init" . $this->getClassNameFromRefName($name);
+                $class->addMethod($methodName)->setReturnType($this->currentNameSpace->getName() . '\\' . $propType)
+                    ->addBody('return $this' . "->$name = new ${propType}();");
             }
         }
         if ($propType === "mixed[]") {

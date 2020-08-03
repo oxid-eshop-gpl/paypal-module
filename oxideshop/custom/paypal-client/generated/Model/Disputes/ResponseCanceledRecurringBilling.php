@@ -62,4 +62,14 @@ class ResponseCanceledRecurringBilling implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initExpectedRefund(): Money
+    {
+        return $this->expected_refund = new Money();
+    }
+
+    public function initCancellationDetails(): ResponseCancellationDetails
+    {
+        return $this->cancellation_details = new ResponseCancellationDetails();
+    }
 }

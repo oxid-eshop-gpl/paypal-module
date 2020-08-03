@@ -202,4 +202,19 @@ class AirlineTicket implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initFare(): Money
+    {
+        return $this->fare = new Money();
+    }
+
+    public function initTax(): Money
+    {
+        return $this->tax = new Money();
+    }
+
+    public function initFee(): Money
+    {
+        return $this->fee = new Money();
+    }
 }

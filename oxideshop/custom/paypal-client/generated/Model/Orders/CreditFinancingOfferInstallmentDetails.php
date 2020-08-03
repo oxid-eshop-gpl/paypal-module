@@ -61,4 +61,9 @@ class CreditFinancingOfferInstallmentDetails implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initPaymentDue(): Money
+    {
+        return $this->payment_due = new Money();
+    }
 }

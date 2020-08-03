@@ -78,4 +78,14 @@ class OrderAuthorizeRequest implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initPaymentSource(): PaymentSource
+    {
+        return $this->payment_source = new PaymentSource();
+    }
+
+    public function initAmount(): Money
+    {
+        return $this->amount = new Money();
+    }
 }

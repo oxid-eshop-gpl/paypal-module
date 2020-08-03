@@ -804,4 +804,39 @@ class ResponseDisputeInfo implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initDisputeAmount(): Money
+    {
+        return $this->dispute_amount = new Money();
+    }
+
+    public function initDisputeFee(): Money
+    {
+        return $this->dispute_fee = new Money();
+    }
+
+    public function initDisputeOutcome(): ResponseDisputeOutcome
+    {
+        return $this->dispute_outcome = new ResponseDisputeOutcome();
+    }
+
+    public function initExtensions(): ResponseExtensions
+    {
+        return $this->extensions = new ResponseExtensions();
+    }
+
+    public function initOffer(): ResponseOffer
+    {
+        return $this->offer = new ResponseOffer();
+    }
+
+    public function initRefundDetails(): ResponseRefundDetails
+    {
+        return $this->refund_details = new ResponseRefundDetails();
+    }
+
+    public function initCommunicationDetails(): ResponseCommunicationDetails
+    {
+        return $this->communication_details = new ResponseCommunicationDetails();
+    }
 }

@@ -69,4 +69,9 @@ class RefundStatus implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initStatusDetails(): RefundStatusDetails
+    {
+        return $this->status_details = new RefundStatusDetails();
+    }
 }

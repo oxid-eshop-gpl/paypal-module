@@ -120,4 +120,9 @@ class AirlinePassenger implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initName(): Name2
+    {
+        return $this->name = new Name2();
+    }
 }

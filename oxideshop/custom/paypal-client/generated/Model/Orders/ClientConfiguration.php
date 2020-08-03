@@ -272,4 +272,9 @@ class ClientConfiguration implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initExperience(): ProductExperience
+    {
+        return $this->experience = new ProductExperience();
+    }
 }

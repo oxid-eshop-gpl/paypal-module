@@ -83,4 +83,9 @@ class Account implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initBusinessEntity(): BusinessEntity
+    {
+        return $this->business_entity = new BusinessEntity();
+    }
 }

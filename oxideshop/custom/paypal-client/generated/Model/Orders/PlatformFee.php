@@ -67,4 +67,9 @@ class PlatformFee implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initPayee(): PayeeBase
+    {
+        return $this->payee = new PayeeBase();
+    }
 }

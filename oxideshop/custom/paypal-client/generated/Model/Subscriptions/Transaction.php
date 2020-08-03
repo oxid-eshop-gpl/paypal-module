@@ -138,4 +138,9 @@ class Transaction extends CaptureStatus2 implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initPayerName(): Name
+    {
+        return $this->payer_name = new Name();
+    }
 }

@@ -70,4 +70,9 @@ class ResponseIncorrectTransactionAmount implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initCorrectTransactionAmount(): Money
+    {
+        return $this->correct_transaction_amount = new Money();
+    }
 }

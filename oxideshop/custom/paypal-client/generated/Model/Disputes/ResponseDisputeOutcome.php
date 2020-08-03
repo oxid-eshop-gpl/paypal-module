@@ -119,4 +119,9 @@ class ResponseDisputeOutcome implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initAmountRefunded(): Money
+    {
+        return $this->amount_refunded = new Money();
+    }
 }

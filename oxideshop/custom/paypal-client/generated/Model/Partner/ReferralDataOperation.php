@@ -103,4 +103,14 @@ class ReferralDataOperation implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initApiIntegrationPreference(): ReferralDataIntegrationDetails
+    {
+        return $this->api_integration_preference = new ReferralDataIntegrationDetails();
+    }
+
+    public function initBillingAgreement(): ReferralDataBillingAgreement
+    {
+        return $this->billing_agreement = new ReferralDataBillingAgreement();
+    }
 }

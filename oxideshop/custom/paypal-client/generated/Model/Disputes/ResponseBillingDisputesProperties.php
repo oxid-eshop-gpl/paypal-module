@@ -110,4 +110,29 @@ class ResponseBillingDisputesProperties implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initDuplicateTransaction(): ResponseDuplicateTransaction
+    {
+        return $this->duplicate_transaction = new ResponseDuplicateTransaction();
+    }
+
+    public function initIncorrectTransactionAmount(): ResponseIncorrectTransactionAmount
+    {
+        return $this->incorrect_transaction_amount = new ResponseIncorrectTransactionAmount();
+    }
+
+    public function initPaymentByOtherMeans(): ResponsePaymentByOtherMeans
+    {
+        return $this->payment_by_other_means = new ResponsePaymentByOtherMeans();
+    }
+
+    public function initCreditNotProcessed(): ResponseCreditNotProcessed
+    {
+        return $this->credit_not_processed = new ResponseCreditNotProcessed();
+    }
+
+    public function initCanceledRecurringBilling(): ResponseCanceledRecurringBilling
+    {
+        return $this->canceled_recurring_billing = new ResponseCanceledRecurringBilling();
+    }
 }

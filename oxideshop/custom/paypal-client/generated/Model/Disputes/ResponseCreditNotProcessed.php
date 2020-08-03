@@ -125,4 +125,24 @@ class ResponseCreditNotProcessed implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initExpectedRefund(): Money
+    {
+        return $this->expected_refund = new Money();
+    }
+
+    public function initCancellationDetails(): ResponseCancellationDetails
+    {
+        return $this->cancellation_details = new ResponseCancellationDetails();
+    }
+
+    public function initProductDetails(): ResponseProductDetails
+    {
+        return $this->product_details = new ResponseProductDetails();
+    }
+
+    public function initServiceDetails(): ResponseServiceDetails
+    {
+        return $this->service_details = new ResponseServiceDetails();
+    }
 }

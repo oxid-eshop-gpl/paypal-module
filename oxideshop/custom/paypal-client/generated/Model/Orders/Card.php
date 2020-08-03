@@ -273,4 +273,14 @@ class Card implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initBillingAddress(): AddressPortable3
+    {
+        return $this->billing_address = new AddressPortable3();
+    }
+
+    public function initAttributes(): CardAttributes
+    {
+        return $this->attributes = new CardAttributes();
+    }
 }

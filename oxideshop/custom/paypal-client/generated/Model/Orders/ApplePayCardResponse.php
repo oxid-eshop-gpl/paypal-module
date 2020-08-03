@@ -92,4 +92,9 @@ class ApplePayCardResponse extends CardResponse2 implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initBillingAddress(): AddressPortable3
+    {
+        return $this->billing_address = new AddressPortable3();
+    }
 }

@@ -93,4 +93,19 @@ class CaptureRequest extends SupplementaryPurchaseData implements JsonSerializab
             $this->map($data);
         }
     }
+
+    public function initAmount(): Money
+    {
+        return $this->amount = new Money();
+    }
+
+    public function initPaymentInstruction(): PaymentInstruction
+    {
+        return $this->payment_instruction = new PaymentInstruction();
+    }
+
+    public function initSupplementaryData(): SupplementaryData
+    {
+        return $this->supplementary_data = new SupplementaryData();
+    }
 }

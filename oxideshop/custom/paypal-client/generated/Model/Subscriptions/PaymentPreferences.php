@@ -130,4 +130,9 @@ class PaymentPreferences implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initSetupFee(): Money
+    {
+        return $this->setup_fee = new Money();
+    }
 }

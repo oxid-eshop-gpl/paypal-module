@@ -46,4 +46,9 @@ class ApplePayWalletResponse implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initCard(): ApplePayCardResponse
+    {
+        return $this->card = new ApplePayCardResponse();
+    }
 }

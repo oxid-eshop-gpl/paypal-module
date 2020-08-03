@@ -85,4 +85,9 @@ class AuthenticationResponse implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initThreeDSecure(): ThreeDSecureAuthenticationResponse
+    {
+        return $this->three_d_secure = new ThreeDSecureAuthenticationResponse();
+    }
 }

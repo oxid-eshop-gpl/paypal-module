@@ -116,4 +116,9 @@ class ShippingOption implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initAmount(): Money
+    {
+        return $this->amount = new Money();
+    }
 }

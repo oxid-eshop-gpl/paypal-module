@@ -121,4 +121,9 @@ class UpdateAuthorizationRequest implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initStatusDetails(): AuthorizationStatusDetails
+    {
+        return $this->status_details = new AuthorizationStatusDetails();
+    }
 }

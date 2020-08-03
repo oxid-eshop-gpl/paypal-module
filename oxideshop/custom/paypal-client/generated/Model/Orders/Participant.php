@@ -63,4 +63,14 @@ class Participant extends Account implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initPerson(): Person
+    {
+        return $this->person = new Person();
+    }
+
+    public function initBusiness(): Business
+    {
+        return $this->business = new Business();
+    }
 }

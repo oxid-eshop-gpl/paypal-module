@@ -183,4 +183,19 @@ class AuthorizationRequest implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initPaymentSource(): PaymentSource
+    {
+        return $this->payment_source = new PaymentSource();
+    }
+
+    public function initPayee(): Payee
+    {
+        return $this->payee = new Payee();
+    }
+
+    public function initShipping(): ShippingDetail
+    {
+        return $this->shipping = new ShippingDetail();
+    }
 }

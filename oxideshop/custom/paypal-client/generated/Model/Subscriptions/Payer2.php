@@ -87,4 +87,9 @@ class Payer2 implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initName(): Name
+    {
+        return $this->name = new Name();
+    }
 }

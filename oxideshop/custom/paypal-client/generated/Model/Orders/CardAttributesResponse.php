@@ -46,4 +46,9 @@ class CardAttributesResponse implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initVault(): VaultResponse
+    {
+        return $this->vault = new VaultResponse();
+    }
 }

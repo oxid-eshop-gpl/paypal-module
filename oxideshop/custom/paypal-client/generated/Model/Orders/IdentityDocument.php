@@ -166,4 +166,9 @@ class IdentityDocument implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initIssuer(): DocumentIssuer
+    {
+        return $this->issuer = new DocumentIssuer();
+    }
 }

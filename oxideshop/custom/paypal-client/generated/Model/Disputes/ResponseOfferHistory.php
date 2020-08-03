@@ -175,4 +175,9 @@ class ResponseOfferHistory implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initOfferAmount(): Money
+    {
+        return $this->offer_amount = new Money();
+    }
 }

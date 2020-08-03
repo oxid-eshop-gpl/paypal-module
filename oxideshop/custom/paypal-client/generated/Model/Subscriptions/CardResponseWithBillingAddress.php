@@ -72,4 +72,9 @@ class CardResponseWithBillingAddress extends CardResponse implements JsonSeriali
             $this->map($data);
         }
     }
+
+    public function initBillingAddress(): AddressPortable2
+    {
+        return $this->billing_address = new AddressPortable2();
+    }
 }

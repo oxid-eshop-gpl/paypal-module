@@ -153,4 +153,24 @@ class RefundSellerPayableBreakdown implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initGrossAmount(): Money
+    {
+        return $this->gross_amount = new Money();
+    }
+
+    public function initPaypalFee(): Money
+    {
+        return $this->paypal_fee = new Money();
+    }
+
+    public function initNetAmount(): Money
+    {
+        return $this->net_amount = new Money();
+    }
+
+    public function initTotalRefundedAmount(): Money
+    {
+        return $this->total_refunded_amount = new Money();
+    }
 }

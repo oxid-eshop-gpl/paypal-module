@@ -63,4 +63,14 @@ class CardAttributes implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initCustomer(): Customer
+    {
+        return $this->customer = new Customer();
+    }
+
+    public function initVerification(): CardVerification
+    {
+        return $this->verification = new CardVerification();
+    }
 }

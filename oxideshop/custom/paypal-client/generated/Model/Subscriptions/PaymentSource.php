@@ -48,4 +48,9 @@ class PaymentSource implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initCard(): Card2
+    {
+        return $this->card = new Card2();
+    }
 }

@@ -138,4 +138,9 @@ class ResponseExternalCaseProperties implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initReversalFee(): Money
+    {
+        return $this->reversal_fee = new Money();
+    }
 }

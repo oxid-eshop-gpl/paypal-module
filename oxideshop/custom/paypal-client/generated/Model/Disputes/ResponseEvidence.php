@@ -441,4 +441,9 @@ class ResponseEvidence implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initEvidenceInfo(): ResponseEvidenceInfo
+    {
+        return $this->evidence_info = new ResponseEvidenceInfo();
+    }
 }

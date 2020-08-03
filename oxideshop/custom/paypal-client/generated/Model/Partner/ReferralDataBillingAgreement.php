@@ -134,4 +134,9 @@ class ReferralDataBillingAgreement implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initBillingExperiencePreference(): ReferralDataBillingExperiencePreference
+    {
+        return $this->billing_experience_preference = new ReferralDataBillingExperiencePreference();
+    }
 }

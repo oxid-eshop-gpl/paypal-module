@@ -46,4 +46,9 @@ class PartnerTransactionDetail implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initTransactionInfo(): PartnerTransactionInfo
+    {
+        return $this->transaction_info = new PartnerTransactionInfo();
+    }
 }

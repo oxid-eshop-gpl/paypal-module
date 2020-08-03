@@ -177,4 +177,9 @@ class VaultPaypalWalletBase implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initShipping(): ShippingDetail2
+    {
+        return $this->shipping = new ShippingDetail2();
+    }
 }

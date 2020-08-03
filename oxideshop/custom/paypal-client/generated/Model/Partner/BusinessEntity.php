@@ -137,4 +137,19 @@ class BusinessEntity extends Business implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initBeneficialOwners(): BeneficialOwners
+    {
+        return $this->beneficial_owners = new BeneficialOwners();
+    }
+
+    public function initAnnualSalesVolumeRange(): OnboardingCommonCurrencyRange
+    {
+        return $this->annual_sales_volume_range = new OnboardingCommonCurrencyRange();
+    }
+
+    public function initAverageMonthlyVolumeRange(): OnboardingCommonCurrencyRange
+    {
+        return $this->average_monthly_volume_range = new OnboardingCommonCurrencyRange();
+    }
 }

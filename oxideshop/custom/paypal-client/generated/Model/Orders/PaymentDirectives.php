@@ -353,4 +353,9 @@ class PaymentDirectives implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initAuthorizationDirectives(): AuthorizationDirectives
+    {
+        return $this->authorization_directives = new AuthorizationDirectives();
+    }
 }

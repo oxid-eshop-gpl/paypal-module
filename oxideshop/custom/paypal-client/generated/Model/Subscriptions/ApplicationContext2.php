@@ -176,4 +176,9 @@ class ApplicationContext2 implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initPaymentMethod(): PaymentMethod
+    {
+        return $this->payment_method = new PaymentMethod();
+    }
 }

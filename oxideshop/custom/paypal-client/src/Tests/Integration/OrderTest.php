@@ -3,10 +3,8 @@
 namespace OxidProfessionalServices\PayPal\Api\Tests\Integration;
 
 use OxidProfessionalServices\PayPal\Api\Client;
-use OxidProfessionalServices\PayPal\Api\Model\Orders\AddressPortable;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\Phone;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\Payer;
-use OxidProfessionalServices\PayPal\Api\Model\Orders\PhoneWithType;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\Order;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderRequest;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\PurchaseUnitRequest;
@@ -45,16 +43,16 @@ JSON;
         $orderRequest = new OrderRequest();
 
         $orderRequest->payer = new Payer();
-        //$orderRequest->payer->name = Name;
+        $orderRequest->payer->initName();
         $orderRequest->payer->name->given_name = "Johannes";
-        $orderRequest->payer->phone = new PhoneWithType();
+        $orderRequest->payer->initPhone();
         $orderRequest->payer->phone->phone_number = new Phone();
         $orderRequest->payer->phone->phone_number->national_number = "09812943";
 //        $orderRequest->payer->phone->phone_number->country_code = "DE";
 
         //$orderRequest->payer->tax_info = new TaxInfo();
         //$orderRequest->payer->tax_info->tax_id= "";
-        $orderRequest->payer->address = new AddressPortable();
+        $orderRequest->payer->initAddress();
         $orderRequest->payer->address->country_code = "DE";
 
         $purchaseUnitRequest = new PurchaseUnitRequest();

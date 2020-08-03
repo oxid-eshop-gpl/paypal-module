@@ -122,4 +122,9 @@ class Card2 implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initBillingAddress(): AddressPortable
+    {
+        return $this->billing_address = new AddressPortable();
+    }
 }

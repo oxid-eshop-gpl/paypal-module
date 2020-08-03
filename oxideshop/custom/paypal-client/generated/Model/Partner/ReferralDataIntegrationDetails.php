@@ -63,4 +63,14 @@ class ReferralDataIntegrationDetails implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initClassicApiIntegration(): ReferralDataClassicApiIntegration
+    {
+        return $this->classic_api_integration = new ReferralDataClassicApiIntegration();
+    }
+
+    public function initRestApiIntegration(): ReferralDataRestApiIntegration
+    {
+        return $this->rest_api_integration = new ReferralDataRestApiIntegration();
+    }
 }

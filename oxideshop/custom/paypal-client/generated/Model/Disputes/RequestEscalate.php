@@ -124,4 +124,9 @@ class RequestEscalate implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initBuyerRequestedAmount(): Money
+    {
+        return $this->buyer_requested_amount = new Money();
+    }
 }

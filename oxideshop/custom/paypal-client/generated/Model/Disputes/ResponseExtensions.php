@@ -231,4 +231,24 @@ class ResponseExtensions implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initBillingDisputeProperties(): ResponseBillingDisputesProperties
+    {
+        return $this->billing_dispute_properties = new ResponseBillingDisputesProperties();
+    }
+
+    public function initUnauthorizedDisputeProperties(): ResponseUnauthorizedDisputeProperties
+    {
+        return $this->unauthorized_dispute_properties = new ResponseUnauthorizedDisputeProperties();
+    }
+
+    public function initMerchandizeDisputeProperties(): ResponseMerchandizeDisputeProperties
+    {
+        return $this->merchandize_dispute_properties = new ResponseMerchandizeDisputeProperties();
+    }
+
+    public function initExternalCaseProperties(): ResponseExternalCaseProperties
+    {
+        return $this->external_case_properties = new ResponseExternalCaseProperties();
+    }
 }

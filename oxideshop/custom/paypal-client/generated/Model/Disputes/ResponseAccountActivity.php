@@ -320,4 +320,9 @@ class ResponseAccountActivity implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initActivityEntityInfo(): ResponseActivityEntityInfo
+    {
+        return $this->activity_entity_info = new ResponseActivityEntityInfo();
+    }
 }

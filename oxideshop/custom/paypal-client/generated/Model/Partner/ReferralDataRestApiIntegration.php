@@ -126,15 +126,13 @@ class ReferralDataRestApiIntegration implements JsonSerializable
         }
     }
 
-    public function initFirst_party_details(): \ReferralDataRestApiIntegrationFirstPartyDetails
+    public function initFirstPartyDetails(): ReferralDataRestApiIntegrationFirstPartyDetails
     {
-        $this->first_party_details = new ReferralDataRestApiIntegrationFirstPartyDetails();
-        return $this;
+        return $this->first_party_details = new ReferralDataRestApiIntegrationFirstPartyDetails();
     }
 
-    public function initThird_party_details(): \ReferralDataRestApiIntegrationThirdPartyDetails
+    public function initThirdPartyDetails(): ReferralDataRestApiIntegrationThirdPartyDetails
     {
-        $this->third_party_details = new ReferralDataRestApiIntegrationThirdPartyDetails();
-        return $this;
+        return $this->third_party_details = new ReferralDataRestApiIntegrationThirdPartyDetails();
     }
 }

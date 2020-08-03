@@ -62,4 +62,14 @@ class RiskAssessments implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initPayer(): RiskAssessment
+    {
+        return $this->payer = new RiskAssessment();
+    }
+
+    public function initPayee(): RiskAssessment
+    {
+        return $this->payee = new RiskAssessment();
+    }
 }

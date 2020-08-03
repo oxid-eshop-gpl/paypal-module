@@ -62,4 +62,14 @@ class OnboardingCommonCurrencyRange implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initMinimumAmount(): Money
+    {
+        return $this->minimum_amount = new Money();
+    }
+
+    public function initMaximumAmount(): Money
+    {
+        return $this->maximum_amount = new Money();
+    }
 }

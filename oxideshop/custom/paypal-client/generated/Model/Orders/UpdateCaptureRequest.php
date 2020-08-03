@@ -113,4 +113,9 @@ class UpdateCaptureRequest implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initStatusDetails(): CaptureStatusDetails
+    {
+        return $this->status_details = new CaptureStatusDetails();
+    }
 }

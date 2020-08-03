@@ -261,4 +261,9 @@ class Person implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initBirthDetails(): BirthDetails
+    {
+        return $this->birth_details = new BirthDetails();
+    }
 }

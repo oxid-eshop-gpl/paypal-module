@@ -217,4 +217,9 @@ class ResponseItemInfo implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initDisputeAmount(): Money
+    {
+        return $this->dispute_amount = new Money();
+    }
 }

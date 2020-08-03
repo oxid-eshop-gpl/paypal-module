@@ -158,4 +158,19 @@ class SubscriptionRequestPost implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initShippingAmount(): Money
+    {
+        return $this->shipping_amount = new Money();
+    }
+
+    public function initSubscriber(): SubscriberRequest
+    {
+        return $this->subscriber = new SubscriberRequest();
+    }
+
+    public function initApplicationContext(): ApplicationContext
+    {
+        return $this->application_context = new ApplicationContext();
+    }
 }

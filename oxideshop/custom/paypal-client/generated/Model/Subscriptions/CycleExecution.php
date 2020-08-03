@@ -134,4 +134,9 @@ class CycleExecution implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initAmountPayablePerCycle(): Money
+    {
+        return $this->amount_payable_per_cycle = new Money();
+    }
 }

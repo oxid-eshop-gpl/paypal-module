@@ -143,4 +143,39 @@ class AmountBreakdown implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initItemTotal(): Money
+    {
+        return $this->item_total = new Money();
+    }
+
+    public function initShipping(): Money
+    {
+        return $this->shipping = new Money();
+    }
+
+    public function initHandling(): Money
+    {
+        return $this->handling = new Money();
+    }
+
+    public function initTaxTotal(): Money
+    {
+        return $this->tax_total = new Money();
+    }
+
+    public function initInsurance(): Money
+    {
+        return $this->insurance = new Money();
+    }
+
+    public function initShippingDiscount(): Money
+    {
+        return $this->shipping_discount = new Money();
+    }
+
+    public function initDiscount(): Money
+    {
+        return $this->discount = new Money();
+    }
 }

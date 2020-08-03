@@ -46,4 +46,9 @@ class OrderCaptureRequest implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initPaymentSource(): PaymentSource
+    {
+        return $this->payment_source = new PaymentSource();
+    }
 }

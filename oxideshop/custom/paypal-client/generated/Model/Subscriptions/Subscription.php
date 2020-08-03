@@ -295,4 +295,29 @@ class Subscription extends SubscriptionStatus implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initShippingAmount(): Money
+    {
+        return $this->shipping_amount = new Money();
+    }
+
+    public function initPayee(): Payee
+    {
+        return $this->payee = new Payee();
+    }
+
+    public function initSubscriber(): Subscriber
+    {
+        return $this->subscriber = new Subscriber();
+    }
+
+    public function initBillingInfo(): SubscriptionBillingInfo
+    {
+        return $this->billing_info = new SubscriptionBillingInfo();
+    }
+
+    public function initPreferredFundingSource(): FundingInstrumentResponse
+    {
+        return $this->preferred_funding_source = new FundingInstrumentResponse();
+    }
 }

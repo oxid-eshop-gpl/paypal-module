@@ -390,4 +390,24 @@ class ReferredDispute implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initTransaction(): ReferredTransaction
+    {
+        return $this->transaction = new ReferredTransaction();
+    }
+
+    public function initExtensions(): ReferredExtensions
+    {
+        return $this->extensions = new ReferredExtensions();
+    }
+
+    public function initRefundInfo(): ReferredRefundInfo
+    {
+        return $this->refund_info = new ReferredRefundInfo();
+    }
+
+    public function initOutcome(): ReferredOutcome
+    {
+        return $this->outcome = new ReferredOutcome();
+    }
 }

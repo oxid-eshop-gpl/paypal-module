@@ -82,4 +82,9 @@ class PhoneInfo implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initPhoneNumber(): Phone2
+    {
+        return $this->phone_number = new Phone2();
+    }
 }

@@ -213,4 +213,14 @@ class Authorization extends AuthorizationStatus implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initAmount(): Money
+    {
+        return $this->amount = new Money();
+    }
+
+    public function initSellerProtection(): SellerProtection
+    {
+        return $this->seller_protection = new SellerProtection();
+    }
 }

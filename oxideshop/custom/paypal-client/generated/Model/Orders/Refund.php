@@ -161,9 +161,13 @@ class Refund extends RefundStatus implements JsonSerializable
         }
     }
 
-    public function initSeller_payable_breakdown(): \RefundSellerPayableBreakdown
+    public function initAmount(): Money
     {
-        $this->seller_payable_breakdown = new RefundSellerPayableBreakdown();
-        return $this;
+        return $this->amount = new Money();
+    }
+
+    public function initSellerPayableBreakdown(): RefundSellerPayableBreakdown
+    {
+        return $this->seller_payable_breakdown = new RefundSellerPayableBreakdown();
     }
 }

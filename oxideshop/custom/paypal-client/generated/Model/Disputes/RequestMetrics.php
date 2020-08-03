@@ -124,4 +124,9 @@ class RequestMetrics implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initFilter(): RequestFilter
+    {
+        return $this->filter = new RequestFilter();
+    }
 }

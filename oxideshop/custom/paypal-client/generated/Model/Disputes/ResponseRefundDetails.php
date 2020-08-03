@@ -68,4 +68,9 @@ class ResponseRefundDetails implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initAllowedRefundAmount(): Money
+    {
+        return $this->allowed_refund_amount = new Money();
+    }
 }

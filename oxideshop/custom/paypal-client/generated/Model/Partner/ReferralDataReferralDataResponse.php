@@ -97,4 +97,9 @@ class ReferralDataReferralDataResponse implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initReferralData(): ReferralDataReferralData
+    {
+        return $this->referral_data = new ReferralDataReferralData();
+    }
 }

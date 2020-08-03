@@ -279,4 +279,19 @@ class Business implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initBusinessType(): BusinessTypeInfo
+    {
+        return $this->business_type = new BusinessTypeInfo();
+    }
+
+    public function initBusinessIndustry(): BusinessIndustry
+    {
+        return $this->business_industry = new BusinessIndustry();
+    }
+
+    public function initBusinessIncorporation(): BusinessIncorporation2
+    {
+        return $this->business_incorporation = new BusinessIncorporation2();
+    }
 }

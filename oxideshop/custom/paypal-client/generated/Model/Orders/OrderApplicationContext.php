@@ -237,4 +237,19 @@ class OrderApplicationContext implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initPaymentMethod(): PaymentMethod
+    {
+        return $this->payment_method = new PaymentMethod();
+    }
+
+    public function initClientConfiguration(): ClientConfiguration
+    {
+        return $this->client_configuration = new ClientConfiguration();
+    }
+
+    public function initPreferredPaymentSource(): PaymentSource2
+    {
+        return $this->preferred_payment_source = new PaymentSource2();
+    }
 }

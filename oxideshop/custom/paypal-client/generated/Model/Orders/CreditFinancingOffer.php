@@ -104,9 +104,18 @@ class CreditFinancingOffer implements JsonSerializable
         }
     }
 
-    public function initInstallment_details(): \CreditFinancingOfferInstallmentDetails
+    public function initTotalPayment(): Money
     {
-        $this->installment_details = new CreditFinancingOfferInstallmentDetails();
-        return $this;
+        return $this->total_payment = new Money();
+    }
+
+    public function initTotalInterest(): Money
+    {
+        return $this->total_interest = new Money();
+    }
+
+    public function initInstallmentDetails(): CreditFinancingOfferInstallmentDetails
+    {
+        return $this->installment_details = new CreditFinancingOfferInstallmentDetails();
     }
 }

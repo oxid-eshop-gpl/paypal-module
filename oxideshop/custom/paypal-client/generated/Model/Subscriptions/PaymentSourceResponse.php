@@ -46,4 +46,9 @@ class PaymentSourceResponse implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initCard(): CardResponseWithBillingAddress
+    {
+        return $this->card = new CardResponseWithBillingAddress();
+    }
 }

@@ -65,4 +65,14 @@ class OrderValidateRequest implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initPaymentSource(): ExtendedPaymentSource
+    {
+        return $this->payment_source = new ExtendedPaymentSource();
+    }
+
+    public function initApplicationContext(): OrderValidateApplicationContext
+    {
+        return $this->application_context = new OrderValidateApplicationContext();
+    }
 }

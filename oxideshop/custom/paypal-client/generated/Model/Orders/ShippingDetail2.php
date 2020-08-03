@@ -66,4 +66,14 @@ class ShippingDetail2 implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initName(): Name4
+    {
+        return $this->name = new Name4();
+    }
+
+    public function initAddress(): AddressPortable3
+    {
+        return $this->address = new AddressPortable3();
+    }
 }

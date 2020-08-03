@@ -46,4 +46,9 @@ class PaypalWalletResponse implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initAttributes(): PaypalWalletAttributesResponse
+    {
+        return $this->attributes = new PaypalWalletAttributesResponse();
+    }
 }

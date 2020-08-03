@@ -132,4 +132,14 @@ class SubscriptionReviseRequest2 implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initShippingAmount(): Money
+    {
+        return $this->shipping_amount = new Money();
+    }
+
+    public function initShippingAddress(): ShippingDetail
+    {
+        return $this->shipping_address = new ShippingDetail();
+    }
 }

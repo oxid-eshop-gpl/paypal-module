@@ -78,4 +78,9 @@ class AuthorizationDirectives implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initTolerance(): AuthTolerance
+    {
+        return $this->tolerance = new AuthTolerance();
+    }
 }

@@ -46,4 +46,9 @@ class PaypalWalletAttributes implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initCustomer(): Customer
+    {
+        return $this->customer = new Customer();
+    }
 }

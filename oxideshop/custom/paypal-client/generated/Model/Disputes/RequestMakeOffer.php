@@ -151,4 +151,14 @@ class RequestMakeOffer implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initOfferAmount(): Money
+    {
+        return $this->offer_amount = new Money();
+    }
+
+    public function initReturnShippingAddress(): AddressPortable
+    {
+        return $this->return_shipping_address = new AddressPortable();
+    }
 }

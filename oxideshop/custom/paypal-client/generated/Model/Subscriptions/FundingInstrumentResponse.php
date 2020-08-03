@@ -78,4 +78,19 @@ class FundingInstrumentResponse implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initCard(): CardResponse
+    {
+        return $this->card = new CardResponse();
+    }
+
+    public function initBankAccount(): BankAccountResponse
+    {
+        return $this->bank_account = new BankAccountResponse();
+    }
+
+    public function initCredit(): PaypalCredit
+    {
+        return $this->credit = new PaypalCredit();
+    }
 }

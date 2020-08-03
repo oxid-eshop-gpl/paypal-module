@@ -123,4 +123,9 @@ class BillingCycle implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initPricingScheme(): PricingScheme
+    {
+        return $this->pricing_scheme = new PricingScheme();
+    }
 }

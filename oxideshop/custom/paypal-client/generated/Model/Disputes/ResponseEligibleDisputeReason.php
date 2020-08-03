@@ -112,9 +112,8 @@ class ResponseEligibleDisputeReason implements JsonSerializable
         }
     }
 
-    public function initAllowable_life_cycle(): \ResponseEligibleDisputeReasonAllowableLifeCycle
+    public function initAllowableLifeCycle(): ResponseEligibleDisputeReasonAllowableLifeCycle
     {
-        $this->allowable_life_cycle = new ResponseEligibleDisputeReasonAllowableLifeCycle();
-        return $this;
+        return $this->allowable_life_cycle = new ResponseEligibleDisputeReasonAllowableLifeCycle();
     }
 }

@@ -64,4 +64,14 @@ class AuthorizationWithAdditionalData extends Authorization implements JsonSeria
             $this->map($data);
         }
     }
+
+    public function initRiskAssessment(): RiskAssessments
+    {
+        return $this->risk_assessment = new RiskAssessments();
+    }
+
+    public function initProcessorResponse(): ProcessorResponse
+    {
+        return $this->processor_response = new ProcessorResponse();
+    }
 }

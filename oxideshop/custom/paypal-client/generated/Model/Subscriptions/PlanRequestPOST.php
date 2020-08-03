@@ -245,4 +245,9 @@ class PlanRequestPOST implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initTaxes(): Taxes
+    {
+        return $this->taxes = new Taxes();
+    }
 }

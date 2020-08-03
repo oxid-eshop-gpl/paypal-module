@@ -84,4 +84,9 @@ class PayeeDisplayable implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initBusinessPhone(): Phone
+    {
+        return $this->business_phone = new Phone();
+    }
 }

@@ -48,4 +48,9 @@ class Payee extends PayeeBase implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initDisplayData(): PayeeDisplayable
+    {
+        return $this->display_data = new PayeeDisplayable();
+    }
 }

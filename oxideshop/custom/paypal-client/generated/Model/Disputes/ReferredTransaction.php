@@ -177,4 +177,9 @@ class ReferredTransaction implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initGrossAmount(): Money
+    {
+        return $this->gross_amount = new Money();
+    }
 }

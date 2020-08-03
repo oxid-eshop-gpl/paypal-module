@@ -449,4 +449,34 @@ class PaymentUnit implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initAmount(): AmountWithBreakdown
+    {
+        return $this->amount = new AmountWithBreakdown();
+    }
+
+    public function initShippingDetails(): ShippingDetails
+    {
+        return $this->shipping_details = new ShippingDetails();
+    }
+
+    public function initSoftDescriptorDetails(): SoftDescriptorDetails
+    {
+        return $this->soft_descriptor_details = new SoftDescriptorDetails();
+    }
+
+    public function initOdfiDetails(): OdfiDetails
+    {
+        return $this->odfi_details = new OdfiDetails();
+    }
+
+    public function initReceiver(): Participant
+    {
+        return $this->receiver = new Participant();
+    }
+
+    public function initPaymentDirectives(): PaymentDirectives
+    {
+        return $this->payment_directives = new PaymentDirectives();
+    }
 }

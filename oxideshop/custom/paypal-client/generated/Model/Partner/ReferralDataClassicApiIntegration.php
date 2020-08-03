@@ -116,9 +116,8 @@ class ReferralDataClassicApiIntegration implements JsonSerializable
         }
     }
 
-    public function initThird_party_details(): \ReferralDataClassicApiIntegrationThirdPartyDetails
+    public function initThirdPartyDetails(): ReferralDataClassicApiIntegrationThirdPartyDetails
     {
-        $this->third_party_details = new ReferralDataClassicApiIntegrationThirdPartyDetails();
-        return $this;
+        return $this->third_party_details = new ReferralDataClassicApiIntegrationThirdPartyDetails();
     }
 }

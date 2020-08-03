@@ -200,4 +200,19 @@ class ReferredAdjudicationInfo implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initDisputeAmount(): Money
+    {
+        return $this->dispute_amount = new Money();
+    }
+
+    public function initOutcome(): ReferredOutcome
+    {
+        return $this->outcome = new ReferredOutcome();
+    }
+
+    public function initExtensions(): ReferredExtensions
+    {
+        return $this->extensions = new ReferredExtensions();
+    }
 }

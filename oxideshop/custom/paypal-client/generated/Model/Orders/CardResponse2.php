@@ -211,4 +211,14 @@ class CardResponse2 implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initAuthenticationResult(): AuthenticationResponse
+    {
+        return $this->authentication_result = new AuthenticationResponse();
+    }
+
+    public function initAttributes(): CardAttributesResponse
+    {
+        return $this->attributes = new CardAttributesResponse();
+    }
 }

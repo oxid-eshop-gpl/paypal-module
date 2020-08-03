@@ -171,4 +171,9 @@ class Item implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initTax(): Money
+    {
+        return $this->tax = new Money();
+    }
 }

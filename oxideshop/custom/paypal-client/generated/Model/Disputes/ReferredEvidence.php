@@ -90,4 +90,9 @@ class ReferredEvidence implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initEvidenceInfo(): ReferredEvidenceInfo
+    {
+        return $this->evidence_info = new ReferredEvidenceInfo();
+    }
 }

@@ -140,4 +140,9 @@ class PaymentContextData implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initApplicationContext(): OrderApplicationContext
+    {
+        return $this->application_context = new OrderApplicationContext();
+    }
 }

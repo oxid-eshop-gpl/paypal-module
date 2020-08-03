@@ -354,4 +354,19 @@ class Plan implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initPaymentPreferences(): PaymentPreferences
+    {
+        return $this->payment_preferences = new PaymentPreferences();
+    }
+
+    public function initTaxes(): Taxes
+    {
+        return $this->taxes = new Taxes();
+    }
+
+    public function initPayee(): Payee
+    {
+        return $this->payee = new Payee();
+    }
 }

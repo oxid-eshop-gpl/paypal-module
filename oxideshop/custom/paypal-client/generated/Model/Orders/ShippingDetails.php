@@ -82,4 +82,9 @@ class ShippingDetails implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initShippingAddress(): AddressWithConfirmation
+    {
+        return $this->shipping_address = new AddressWithConfirmation();
+    }
 }

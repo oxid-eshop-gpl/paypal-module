@@ -142,4 +142,39 @@ class TransactionDetail implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initTransactionInfo(): TransactionInfo
+    {
+        return $this->transaction_info = new TransactionInfo();
+    }
+
+    public function initPayerInfo(): PayerInfo
+    {
+        return $this->payer_info = new PayerInfo();
+    }
+
+    public function initShippingInfo(): ShippingInfo
+    {
+        return $this->shipping_info = new ShippingInfo();
+    }
+
+    public function initCartInfo(): CartInfo
+    {
+        return $this->cart_info = new CartInfo();
+    }
+
+    public function initStoreInfo(): StoreInfo
+    {
+        return $this->store_info = new StoreInfo();
+    }
+
+    public function initAuctionInfo(): AuctionInfo
+    {
+        return $this->auction_info = new AuctionInfo();
+    }
+
+    public function initIncentiveInfo(): IncentiveInfo
+    {
+        return $this->incentive_info = new IncentiveInfo();
+    }
 }

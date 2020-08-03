@@ -53,4 +53,9 @@ class AmountWithBreakdown extends Money implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initBreakdown(): AmountBreakdown
+    {
+        return $this->breakdown = new AmountBreakdown();
+    }
 }

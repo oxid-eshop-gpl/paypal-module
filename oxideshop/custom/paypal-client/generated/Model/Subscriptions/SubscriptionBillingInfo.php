@@ -208,4 +208,24 @@ class SubscriptionBillingInfo implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initLastPayment(): LastPaymentDetails
+    {
+        return $this->last_payment = new LastPaymentDetails();
+    }
+
+    public function initNextPayment(): Money
+    {
+        return $this->next_payment = new Money();
+    }
+
+    public function initLastFailedPayment(): FailedPaymentDetails
+    {
+        return $this->last_failed_payment = new FailedPaymentDetails();
+    }
+
+    public function initTotalPaidAmount(): Money
+    {
+        return $this->total_paid_amount = new Money();
+    }
 }

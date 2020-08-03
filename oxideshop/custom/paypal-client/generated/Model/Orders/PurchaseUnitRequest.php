@@ -235,4 +235,24 @@ class PurchaseUnitRequest implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initPayee(): Payee
+    {
+        return $this->payee = new Payee();
+    }
+
+    public function initPaymentInstruction(): PaymentInstruction
+    {
+        return $this->payment_instruction = new PaymentInstruction();
+    }
+
+    public function initShipping(): ShippingDetail
+    {
+        return $this->shipping = new ShippingDetail();
+    }
+
+    public function initSupplementaryData(): SupplementaryData
+    {
+        return $this->supplementary_data = new SupplementaryData();
+    }
 }

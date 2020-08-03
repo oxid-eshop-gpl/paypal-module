@@ -46,4 +46,9 @@ class Bank implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initAchDebit(): AchDebit
+    {
+        return $this->ach_debit = new AchDebit();
+    }
 }

@@ -224,4 +224,14 @@ class PricingScheme implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initFixedPrice(): Money
+    {
+        return $this->fixed_price = new Money();
+    }
+
+    public function initRollOutStrategy(): RollOutStrategy
+    {
+        return $this->roll_out_strategy = new RollOutStrategy();
+    }
 }

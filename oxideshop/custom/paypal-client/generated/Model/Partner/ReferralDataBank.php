@@ -203,4 +203,14 @@ class ReferralDataBank implements JsonSerializable
             $this->map($data);
         }
     }
+
+    public function initBranchLocation(): AddressPortable3
+    {
+        return $this->branch_location = new AddressPortable3();
+    }
+
+    public function initMandate(): ReferralDataMandate
+    {
+        return $this->mandate = new ReferralDataMandate();
+    }
 }

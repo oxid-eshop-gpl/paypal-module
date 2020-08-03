@@ -22,6 +22,9 @@ class ListTransactionTest extends TestCase
 
     public function testListTransaction()
     {
+        $date = new \DateTime();
+        $today = $date->format(\DateTime::W3C);
+        $past = $date->sub(new \DateInterval("P10D"))->format(\DateTime::W3C);
         $res = $this->reportServiceUnderTest->listTransactions(
             null,
             null,
@@ -29,11 +32,12 @@ class ListTransactionTest extends TestCase
             null,
             null,
             null,
-            "2020-07-01T00:00:00-0700",
-            "2020-07-29T11:59:59-0700",
+            $past,
+            $today,
             null,
             0,
             10
         );
+        $this->assertEquals(1, $res->page);
     }
 }

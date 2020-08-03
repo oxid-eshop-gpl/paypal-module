@@ -218,9 +218,8 @@ class AddressPortable implements JsonSerializable
         }
     }
 
-    public function initAddress_details(): \AddressPortableAddressDetails
+    public function initAddressDetails(): AddressPortableAddressDetails
     {
-        $this->address_details = new AddressPortableAddressDetails();
-        return $this;
+        return $this->address_details = new AddressPortableAddressDetails();
     }
 }
