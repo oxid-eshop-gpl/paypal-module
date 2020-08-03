@@ -54,7 +54,7 @@ class Frequency implements JsonSerializable
      * align="right">52</td></tr><tr><td><code>MONTH</code></td><td
      * align="right">12</td></tr><tr><td><code>YEAR</code></td><td align="right">1</td></tr></tbody></table>
      *
-     * @var integer | null
+     * @var int | null
      */
     public $interval_count = 1;
 
@@ -74,7 +74,20 @@ class Frequency implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['interval_unit'])) {
+            $this->interval_unit = $data['interval_unit'];
+        }
+        if (isset($data['interval_count'])) {
+            $this->interval_count = $data['interval_count'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

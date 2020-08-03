@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * The business beneficial owner of the account.
  *
- * generated from: customer_common_overrides-business_beneficial_owner.json
+ * generated from: customized_x_unsupported_5853_customer_common_overrides-business_beneficial_owner.json
  */
 class BusinessBeneficialOwner extends Business implements JsonSerializable
 {
@@ -28,7 +28,18 @@ class BusinessBeneficialOwner extends Business implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['percentage_of_ownership'])) {
+            $this->percentage_of_ownership = $data['percentage_of_ownership'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        parent::__construct($data);
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

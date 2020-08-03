@@ -47,7 +47,31 @@ class AuthorizationWithAdditionalData extends Authorization implements JsonSeria
         !isset($this->processor_response) ||  $this->processor_response->validate(AuthorizationWithAdditionalData::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['risk_assessment'])) {
+            $this->risk_assessment = new RiskAssessments($data['risk_assessment']);
+        }
+        if (isset($data['processor_response'])) {
+            $this->processor_response = new ProcessorResponse($data['processor_response']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        parent::__construct($data);
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initRiskAssessment(): RiskAssessments
+    {
+        return $this->risk_assessment = new RiskAssessments();
+    }
+
+    public function initProcessorResponse(): ProcessorResponse
+    {
+        return $this->processor_response = new ProcessorResponse();
     }
 }

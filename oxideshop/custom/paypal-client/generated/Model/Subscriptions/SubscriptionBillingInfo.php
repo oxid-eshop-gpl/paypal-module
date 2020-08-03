@@ -71,7 +71,7 @@ class SubscriptionBillingInfo implements JsonSerializable
      * The number of consecutive payment failures. Resets to `0` after a successful payment. If this reaches the
      * `payment_failure_threshold` value, the subscription updates to the `SUSPENDED` state.
      *
-     * @var integer
+     * @var int
      */
     public $failed_payments_count;
 
@@ -114,13 +114,11 @@ class SubscriptionBillingInfo implements JsonSerializable
             $this->cycle_executions,
             "cycle_executions in SubscriptionBillingInfo must be array $within"
         );
-
         if (isset($this->cycle_executions)) {
             foreach ($this->cycle_executions as $item) {
                 $item->validate(SubscriptionBillingInfo::class);
             }
         }
-
         !isset($this->last_payment) || Assert::isInstanceOf(
             $this->last_payment,
             LastPaymentDetails::class,
@@ -168,9 +166,66 @@ class SubscriptionBillingInfo implements JsonSerializable
         !isset($this->total_paid_amount) ||  $this->total_paid_amount->validate(SubscriptionBillingInfo::class);
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['outstanding_balance'])) {
+            $this->outstanding_balance = new Money($data['outstanding_balance']);
+        }
+        if (isset($data['cycle_executions'])) {
+            $this->cycle_executions = [];
+            foreach ($data['cycle_executions'] as $item) {
+                $this->cycle_executions[] = new CycleExecution($item);
+            }
+        }
+        if (isset($data['last_payment'])) {
+            $this->last_payment = new LastPaymentDetails($data['last_payment']);
+        }
+        if (isset($data['next_billing_time'])) {
+            $this->next_billing_time = $data['next_billing_time'];
+        }
+        if (isset($data['next_payment'])) {
+            $this->next_payment = new Money($data['next_payment']);
+        }
+        if (isset($data['final_payment_time'])) {
+            $this->final_payment_time = $data['final_payment_time'];
+        }
+        if (isset($data['failed_payments_count'])) {
+            $this->failed_payments_count = $data['failed_payments_count'];
+        }
+        if (isset($data['last_failed_payment'])) {
+            $this->last_failed_payment = new FailedPaymentDetails($data['last_failed_payment']);
+        }
+        if (isset($data['total_paid_amount'])) {
+            $this->total_paid_amount = new Money($data['total_paid_amount']);
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->outstanding_balance = new Money();
         $this->cycle_executions = [];
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initLastPayment(): LastPaymentDetails
+    {
+        return $this->last_payment = new LastPaymentDetails();
+    }
+
+    public function initNextPayment(): Money
+    {
+        return $this->next_payment = new Money();
+    }
+
+    public function initLastFailedPayment(): FailedPaymentDetails
+    {
+        return $this->last_failed_payment = new FailedPaymentDetails();
+    }
+
+    public function initTotalPaidAmount(): Money
+    {
+        return $this->total_paid_amount = new Money();
     }
 }

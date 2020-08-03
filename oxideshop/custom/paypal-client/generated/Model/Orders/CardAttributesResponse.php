@@ -33,7 +33,22 @@ class CardAttributesResponse implements JsonSerializable
         !isset($this->vault) ||  $this->vault->validate(CardAttributesResponse::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['vault'])) {
+            $this->vault = new VaultResponse($data['vault']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initVault(): VaultResponse
+    {
+        return $this->vault = new VaultResponse();
     }
 }

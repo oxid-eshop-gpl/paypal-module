@@ -33,7 +33,17 @@ class BusinessName implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['business_name'])) {
+            $this->business_name = $data['business_name'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

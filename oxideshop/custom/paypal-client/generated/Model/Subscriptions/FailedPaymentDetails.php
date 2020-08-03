@@ -129,8 +129,27 @@ class FailedPaymentDetails implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['amount'])) {
+            $this->amount = new Money($data['amount']);
+        }
+        if (isset($data['time'])) {
+            $this->time = $data['time'];
+        }
+        if (isset($data['reason_code'])) {
+            $this->reason_code = $data['reason_code'];
+        }
+        if (isset($data['next_payment_retry_time'])) {
+            $this->next_payment_retry_time = $data['next_payment_retry_time'];
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->amount = new Money();
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

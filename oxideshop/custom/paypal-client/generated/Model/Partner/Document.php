@@ -103,7 +103,7 @@ class Document implements JsonSerializable
     /**
      * The HATEOAS links.
      *
-     * @var LinkDescription[]
+     * @var array
      * maxItems: 1
      * maxItems: 10
      */
@@ -202,13 +202,11 @@ class Document implements JsonSerializable
             $this->files,
             "files in Document must be array $within"
         );
-
         if (isset($this->files)) {
             foreach ($this->files as $item) {
                 $item->validate(Document::class);
             }
         }
-
         Assert::notNull($this->links, "links in Document must not be NULL $within");
         Assert::minCount(
             $this->links,
@@ -224,18 +222,55 @@ class Document implements JsonSerializable
             $this->links,
             "links in Document must be array $within"
         );
+    }
 
-        if (isset($this->links)) {
-            foreach ($this->links as $item) {
-                $item->validate(Document::class);
+    private function map(array $data)
+    {
+        if (isset($data['id'])) {
+            $this->id = $data['id'];
+        }
+        if (isset($data['labels'])) {
+            $this->labels = [];
+            foreach ($data['labels'] as $item) {
+                $this->labels[] = $item;
+            }
+        }
+        if (isset($data['name'])) {
+            $this->name = $data['name'];
+        }
+        if (isset($data['identification_number'])) {
+            $this->identification_number = $data['identification_number'];
+        }
+        if (isset($data['issue_date'])) {
+            $this->issue_date = $data['issue_date'];
+        }
+        if (isset($data['expiry_date'])) {
+            $this->expiry_date = $data['expiry_date'];
+        }
+        if (isset($data['issuing_country_code'])) {
+            $this->issuing_country_code = $data['issuing_country_code'];
+        }
+        if (isset($data['files'])) {
+            $this->files = [];
+            foreach ($data['files'] as $item) {
+                $this->files[] = new FileReference($item);
+            }
+        }
+        if (isset($data['links'])) {
+            $this->links = [];
+            foreach ($data['links'] as $item) {
+                $this->links[] = $item;
             }
         }
     }
 
-    public function __construct()
+    public function __construct(array $data = null)
     {
         $this->labels = [];
         $this->files = [];
         $this->links = [];
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

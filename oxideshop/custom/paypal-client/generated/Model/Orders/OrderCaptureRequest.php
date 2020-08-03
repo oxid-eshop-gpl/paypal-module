@@ -33,7 +33,22 @@ class OrderCaptureRequest implements JsonSerializable
         !isset($this->payment_source) ||  $this->payment_source->validate(OrderCaptureRequest::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['payment_source'])) {
+            $this->payment_source = new PaymentSource($data['payment_source']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initPaymentSource(): PaymentSource
+    {
+        return $this->payment_source = new PaymentSource();
     }
 }

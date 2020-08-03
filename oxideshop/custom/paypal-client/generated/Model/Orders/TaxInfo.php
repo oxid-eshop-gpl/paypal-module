@@ -53,7 +53,20 @@ class TaxInfo implements JsonSerializable
         Assert::notNull($this->tax_id_type, "tax_id_type in TaxInfo must not be NULL $within");
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['tax_id'])) {
+            $this->tax_id = $data['tax_id'];
+        }
+        if (isset($data['tax_id_type'])) {
+            $this->tax_id_type = $data['tax_id_type'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

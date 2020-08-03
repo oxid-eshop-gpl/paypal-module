@@ -11,7 +11,7 @@ use Webmozart\Assert\Assert;
  *
  * generated from: subscriber.json
  */
-class Subscriber extends Payer implements JsonSerializable
+class Subscriber extends Payer2 implements JsonSerializable
 {
     use BaseModel;
 
@@ -46,7 +46,31 @@ class Subscriber extends Payer implements JsonSerializable
         !isset($this->payment_source) ||  $this->payment_source->validate(Subscriber::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['shipping_address'])) {
+            $this->shipping_address = new ShippingDetail($data['shipping_address']);
+        }
+        if (isset($data['payment_source'])) {
+            $this->payment_source = new PaymentSourceResponse($data['payment_source']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        parent::__construct($data);
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initShippingAddress(): ShippingDetail
+    {
+        return $this->shipping_address = new ShippingDetail();
+    }
+
+    public function initPaymentSource(): PaymentSourceResponse
+    {
+        return $this->payment_source = new PaymentSourceResponse();
     }
 }

@@ -40,7 +40,22 @@ class ReauthorizeRequest implements JsonSerializable
         !isset($this->amount) ||  $this->amount->validate(ReauthorizeRequest::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['amount'])) {
+            $this->amount = new Money($data['amount']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initAmount(): Money
+    {
+        return $this->amount = new Money();
     }
 }

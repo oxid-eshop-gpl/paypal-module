@@ -18,7 +18,7 @@ class Payer implements JsonSerializable
     /**
      * The name of the party.
      *
-     * @var Name | null
+     * @var Name3 | null
      */
     public $name;
 
@@ -75,7 +75,7 @@ class Payer implements JsonSerializable
      * HTML 5.1 [Autofilling form controls: the autocomplete
      * attribute](https://www.w3.org/TR/html51/sec-forms.html#autofilling-form-controls-the-autocomplete-attribute).
      *
-     * @var AddressPortable | null
+     * @var AddressPortable3 | null
      */
     public $address;
 
@@ -84,8 +84,8 @@ class Payer implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
         !isset($this->name) || Assert::isInstanceOf(
             $this->name,
-            Name::class,
-            "name in Payer must be instance of Name $within"
+            Name3::class,
+            "name in Payer must be instance of Name3 $within"
         );
         !isset($this->name) ||  $this->name->validate(Payer::class);
         !isset($this->email_address) || Assert::maxLength(
@@ -127,13 +127,61 @@ class Payer implements JsonSerializable
         !isset($this->tax_info) ||  $this->tax_info->validate(Payer::class);
         !isset($this->address) || Assert::isInstanceOf(
             $this->address,
-            AddressPortable::class,
-            "address in Payer must be instance of AddressPortable $within"
+            AddressPortable3::class,
+            "address in Payer must be instance of AddressPortable3 $within"
         );
         !isset($this->address) ||  $this->address->validate(Payer::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['name'])) {
+            $this->name = new Name3($data['name']);
+        }
+        if (isset($data['email_address'])) {
+            $this->email_address = $data['email_address'];
+        }
+        if (isset($data['payer_id'])) {
+            $this->payer_id = $data['payer_id'];
+        }
+        if (isset($data['phone'])) {
+            $this->phone = new PhoneWithType($data['phone']);
+        }
+        if (isset($data['birth_date'])) {
+            $this->birth_date = $data['birth_date'];
+        }
+        if (isset($data['tax_info'])) {
+            $this->tax_info = new TaxInfo($data['tax_info']);
+        }
+        if (isset($data['address'])) {
+            $this->address = new AddressPortable3($data['address']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initName(): Name3
+    {
+        return $this->name = new Name3();
+    }
+
+    public function initPhone(): PhoneWithType
+    {
+        return $this->phone = new PhoneWithType();
+    }
+
+    public function initTaxInfo(): TaxInfo
+    {
+        return $this->tax_info = new TaxInfo();
+    }
+
+    public function initAddress(): AddressPortable3
+    {
+        return $this->address = new AddressPortable3();
     }
 }

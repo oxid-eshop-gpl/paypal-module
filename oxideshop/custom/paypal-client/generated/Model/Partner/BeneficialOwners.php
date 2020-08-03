@@ -51,13 +51,11 @@ class BeneficialOwners implements JsonSerializable
             $this->individual_beneficial_owners,
             "individual_beneficial_owners in BeneficialOwners must be array $within"
         );
-
         if (isset($this->individual_beneficial_owners)) {
             foreach ($this->individual_beneficial_owners as $item) {
                 $item->validate(BeneficialOwners::class);
             }
         }
-
         Assert::notNull($this->business_beneficial_owners, "business_beneficial_owners in BeneficialOwners must not be NULL $within");
         Assert::minCount(
             $this->business_beneficial_owners,
@@ -73,7 +71,6 @@ class BeneficialOwners implements JsonSerializable
             $this->business_beneficial_owners,
             "business_beneficial_owners in BeneficialOwners must be array $within"
         );
-
         if (isset($this->business_beneficial_owners)) {
             foreach ($this->business_beneficial_owners as $item) {
                 $item->validate(BeneficialOwners::class);
@@ -81,9 +78,28 @@ class BeneficialOwners implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['individual_beneficial_owners'])) {
+            $this->individual_beneficial_owners = [];
+            foreach ($data['individual_beneficial_owners'] as $item) {
+                $this->individual_beneficial_owners[] = new IndividualBeneficialOwner($item);
+            }
+        }
+        if (isset($data['business_beneficial_owners'])) {
+            $this->business_beneficial_owners = [];
+            foreach ($data['business_beneficial_owners'] as $item) {
+                $this->business_beneficial_owners[] = new BusinessBeneficialOwner($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->individual_beneficial_owners = [];
         $this->business_beneficial_owners = [];
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

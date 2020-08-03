@@ -57,7 +57,6 @@ class PaymentDetailsRequest implements JsonSerializable
             $this->purchase_units,
             "purchase_units in PaymentDetailsRequest must be array $within"
         );
-
         if (isset($this->purchase_units)) {
             foreach ($this->purchase_units as $item) {
                 $item->validate(PaymentDetailsRequest::class);
@@ -65,8 +64,29 @@ class PaymentDetailsRequest implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['payment_source'])) {
+            $this->payment_source = new PaymentSource($data['payment_source']);
+        }
+        if (isset($data['purchase_units'])) {
+            $this->purchase_units = [];
+            foreach ($data['purchase_units'] as $item) {
+                $this->purchase_units[] = new UpdatePurchaseUnitRequest($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->purchase_units = [];
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initPaymentSource(): PaymentSource
+    {
+        return $this->payment_source = new PaymentSource();
     }
 }

@@ -184,7 +184,20 @@ class BusinessTypeInfo implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['type'])) {
+            $this->type = $data['type'];
+        }
+        if (isset($data['subtype'])) {
+            $this->subtype = $data['subtype'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

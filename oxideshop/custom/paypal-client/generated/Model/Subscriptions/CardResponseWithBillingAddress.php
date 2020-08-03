@@ -30,7 +30,7 @@ class CardResponseWithBillingAddress extends CardResponse implements JsonSeriali
      * HTML 5.1 [Autofilling form controls: the autocomplete
      * attribute](https://www.w3.org/TR/html51/sec-forms.html#autofilling-form-controls-the-autocomplete-attribute).
      *
-     * @var AddressPortable | null
+     * @var AddressPortable2 | null
      */
     public $billing_address;
 
@@ -49,13 +49,32 @@ class CardResponseWithBillingAddress extends CardResponse implements JsonSeriali
         );
         !isset($this->billing_address) || Assert::isInstanceOf(
             $this->billing_address,
-            AddressPortable::class,
-            "billing_address in CardResponseWithBillingAddress must be instance of AddressPortable $within"
+            AddressPortable2::class,
+            "billing_address in CardResponseWithBillingAddress must be instance of AddressPortable2 $within"
         );
         !isset($this->billing_address) ||  $this->billing_address->validate(CardResponseWithBillingAddress::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['name'])) {
+            $this->name = $data['name'];
+        }
+        if (isset($data['billing_address'])) {
+            $this->billing_address = new AddressPortable2($data['billing_address']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        parent::__construct($data);
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initBillingAddress(): AddressPortable2
+    {
+        return $this->billing_address = new AddressPortable2();
     }
 }

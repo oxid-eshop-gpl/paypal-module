@@ -56,7 +56,7 @@ class ProductCollectionElement implements JsonSerializable
     /**
      * An array of request-related [HATEOAS links](/docs/api/overview/#hateoas-links).
      *
-     * @var LinkDescription[] | null
+     * @var array | null
      */
     public $links;
 
@@ -107,15 +107,34 @@ class ProductCollectionElement implements JsonSerializable
             $this->links,
             "links in ProductCollectionElement must be array $within"
         );
+    }
 
-        if (isset($this->links)) {
-            foreach ($this->links as $item) {
-                $item->validate(ProductCollectionElement::class);
+    private function map(array $data)
+    {
+        if (isset($data['id'])) {
+            $this->id = $data['id'];
+        }
+        if (isset($data['name'])) {
+            $this->name = $data['name'];
+        }
+        if (isset($data['description'])) {
+            $this->description = $data['description'];
+        }
+        if (isset($data['create_time'])) {
+            $this->create_time = $data['create_time'];
+        }
+        if (isset($data['links'])) {
+            $this->links = [];
+            foreach ($data['links'] as $item) {
+                $this->links[] = $item;
             }
         }
     }
 
-    public function __construct()
+    public function __construct(array $data = null)
     {
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

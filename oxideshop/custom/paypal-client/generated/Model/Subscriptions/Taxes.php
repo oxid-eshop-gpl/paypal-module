@@ -36,7 +36,20 @@ class Taxes implements JsonSerializable
         Assert::notNull($this->percentage, "percentage in Taxes must not be NULL $within");
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['percentage'])) {
+            $this->percentage = $data['percentage'];
+        }
+        if (isset($data['inclusive'])) {
+            $this->inclusive = $data['inclusive'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

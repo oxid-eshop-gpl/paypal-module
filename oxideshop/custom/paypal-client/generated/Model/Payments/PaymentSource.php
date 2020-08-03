@@ -280,7 +280,174 @@ class PaymentSource implements JsonSerializable
         !isset($this->wechatpay) ||  $this->wechatpay->validate(PaymentSource::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['card'])) {
+            $this->card = new Card($data['card']);
+        }
+        if (isset($data['token'])) {
+            $this->token = new Token($data['token']);
+        }
+        if (isset($data['bank'])) {
+            $this->bank = new Bank($data['bank']);
+        }
+        if (isset($data['paypal'])) {
+            $this->paypal = new PaypalWallet($data['paypal']);
+        }
+        if (isset($data['alipay'])) {
+            $this->alipay = new AlipayRequest($data['alipay']);
+        }
+        if (isset($data['bancontact'])) {
+            $this->bancontact = new BancontactRequest($data['bancontact']);
+        }
+        if (isset($data['blik'])) {
+            $this->blik = new BlikRequest($data['blik']);
+        }
+        if (isset($data['eps'])) {
+            $this->eps = new EpsRequest($data['eps']);
+        }
+        if (isset($data['giropay'])) {
+            $this->giropay = new GiropayRequest($data['giropay']);
+        }
+        if (isset($data['ideal'])) {
+            $this->ideal = new IdealRequest($data['ideal']);
+        }
+        if (isset($data['multibanco'])) {
+            $this->multibanco = new MultibancoRequest($data['multibanco']);
+        }
+        if (isset($data['mybank'])) {
+            $this->mybank = new MybankRequest($data['mybank']);
+        }
+        if (isset($data['payu'])) {
+            $this->payu = new PayuRequest($data['payu']);
+        }
+        if (isset($data['p24'])) {
+            $this->p24 = new PTwoFourRequest($data['p24']);
+        }
+        if (isset($data['poli'])) {
+            $this->poli = new PoliRequest($data['poli']);
+        }
+        if (isset($data['sofort'])) {
+            $this->sofort = new SofortRequest($data['sofort']);
+        }
+        if (isset($data['trustly'])) {
+            $this->trustly = new TrustlyRequest($data['trustly']);
+        }
+        if (isset($data['trustpay'])) {
+            $this->trustpay = new TrustpayRequest($data['trustpay']);
+        }
+        if (isset($data['verkkopankki'])) {
+            $this->verkkopankki = new VerkkopankkiRequest($data['verkkopankki']);
+        }
+        if (isset($data['wechatpay'])) {
+            $this->wechatpay = new WechatpayRequest($data['wechatpay']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initCard(): Card
+    {
+        return $this->card = new Card();
+    }
+
+    public function initToken(): Token
+    {
+        return $this->token = new Token();
+    }
+
+    public function initBank(): Bank
+    {
+        return $this->bank = new Bank();
+    }
+
+    public function initPaypal(): PaypalWallet
+    {
+        return $this->paypal = new PaypalWallet();
+    }
+
+    public function initAlipay(): AlipayRequest
+    {
+        return $this->alipay = new AlipayRequest();
+    }
+
+    public function initBancontact(): BancontactRequest
+    {
+        return $this->bancontact = new BancontactRequest();
+    }
+
+    public function initBlik(): BlikRequest
+    {
+        return $this->blik = new BlikRequest();
+    }
+
+    public function initEps(): EpsRequest
+    {
+        return $this->eps = new EpsRequest();
+    }
+
+    public function initGiropay(): GiropayRequest
+    {
+        return $this->giropay = new GiropayRequest();
+    }
+
+    public function initIdeal(): IdealRequest
+    {
+        return $this->ideal = new IdealRequest();
+    }
+
+    public function initMultibanco(): MultibancoRequest
+    {
+        return $this->multibanco = new MultibancoRequest();
+    }
+
+    public function initMybank(): MybankRequest
+    {
+        return $this->mybank = new MybankRequest();
+    }
+
+    public function initPayu(): PayuRequest
+    {
+        return $this->payu = new PayuRequest();
+    }
+
+    public function initP24(): PTwoFourRequest
+    {
+        return $this->p24 = new PTwoFourRequest();
+    }
+
+    public function initPoli(): PoliRequest
+    {
+        return $this->poli = new PoliRequest();
+    }
+
+    public function initSofort(): SofortRequest
+    {
+        return $this->sofort = new SofortRequest();
+    }
+
+    public function initTrustly(): TrustlyRequest
+    {
+        return $this->trustly = new TrustlyRequest();
+    }
+
+    public function initTrustpay(): TrustpayRequest
+    {
+        return $this->trustpay = new TrustpayRequest();
+    }
+
+    public function initVerkkopankki(): VerkkopankkiRequest
+    {
+        return $this->verkkopankki = new VerkkopankkiRequest();
+    }
+
+    public function initWechatpay(): WechatpayRequest
+    {
+        return $this->wechatpay = new WechatpayRequest();
     }
 }

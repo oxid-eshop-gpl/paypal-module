@@ -49,7 +49,30 @@ class OrderValidateRequest implements JsonSerializable
         !isset($this->application_context) ||  $this->application_context->validate(OrderValidateRequest::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['payment_source'])) {
+            $this->payment_source = new ExtendedPaymentSource($data['payment_source']);
+        }
+        if (isset($data['application_context'])) {
+            $this->application_context = new OrderValidateApplicationContext($data['application_context']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initPaymentSource(): ExtendedPaymentSource
+    {
+        return $this->payment_source = new ExtendedPaymentSource();
+    }
+
+    public function initApplicationContext(): OrderValidateApplicationContext
+    {
+        return $this->application_context = new OrderValidateApplicationContext();
     }
 }

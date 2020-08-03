@@ -64,7 +64,7 @@ class SubscriptionReviseRequest implements JsonSerializable
      * The application context, which customizes the payer experience during the subscription approval process with
      * PayPal.
      *
-     * @var CustomizedXUnsupportedNineEightNineFourApplicationContext | null
+     * @var ApplicationContext2 | null
      */
     public $application_context;
 
@@ -115,13 +115,53 @@ class SubscriptionReviseRequest implements JsonSerializable
         !isset($this->shipping_address) ||  $this->shipping_address->validate(SubscriptionReviseRequest::class);
         !isset($this->application_context) || Assert::isInstanceOf(
             $this->application_context,
-            CustomizedXUnsupportedNineEightNineFourApplicationContext::class,
-            "application_context in SubscriptionReviseRequest must be instance of CustomizedXUnsupportedNineEightNineFourApplicationContext $within"
+            ApplicationContext2::class,
+            "application_context in SubscriptionReviseRequest must be instance of ApplicationContext2 $within"
         );
         !isset($this->application_context) ||  $this->application_context->validate(SubscriptionReviseRequest::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['plan_id'])) {
+            $this->plan_id = $data['plan_id'];
+        }
+        if (isset($data['quantity'])) {
+            $this->quantity = $data['quantity'];
+        }
+        if (isset($data['effective_time'])) {
+            $this->effective_time = $data['effective_time'];
+        }
+        if (isset($data['shipping_amount'])) {
+            $this->shipping_amount = new Money($data['shipping_amount']);
+        }
+        if (isset($data['shipping_address'])) {
+            $this->shipping_address = new ShippingDetail($data['shipping_address']);
+        }
+        if (isset($data['application_context'])) {
+            $this->application_context = new ApplicationContext2($data['application_context']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initShippingAmount(): Money
+    {
+        return $this->shipping_amount = new Money();
+    }
+
+    public function initShippingAddress(): ShippingDetail
+    {
+        return $this->shipping_address = new ShippingDetail();
+    }
+
+    public function initApplicationContext(): ApplicationContext2
+    {
+        return $this->application_context = new ApplicationContext2();
     }
 }

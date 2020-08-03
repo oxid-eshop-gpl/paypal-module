@@ -229,13 +229,11 @@ class PaymentDirectives implements JsonSerializable
             $this->policy_directives,
             "policy_directives in PaymentDirectives must be array $within"
         );
-
         if (isset($this->policy_directives)) {
             foreach ($this->policy_directives as $item) {
                 $item->validate(PaymentDirectives::class);
             }
         }
-
         Assert::notNull($this->payment_method_directives, "payment_method_directives in PaymentDirectives must not be NULL $within");
         Assert::minCount(
             $this->payment_method_directives,
@@ -251,13 +249,11 @@ class PaymentDirectives implements JsonSerializable
             $this->payment_method_directives,
             "payment_method_directives in PaymentDirectives must be array $within"
         );
-
         if (isset($this->payment_method_directives)) {
             foreach ($this->payment_method_directives as $item) {
                 $item->validate(PaymentDirectives::class);
             }
         }
-
         Assert::notNull($this->pricing_directives, "pricing_directives in PaymentDirectives must not be NULL $within");
         Assert::minCount(
             $this->pricing_directives,
@@ -273,13 +269,11 @@ class PaymentDirectives implements JsonSerializable
             $this->pricing_directives,
             "pricing_directives in PaymentDirectives must be array $within"
         );
-
         if (isset($this->pricing_directives)) {
             foreach ($this->pricing_directives as $item) {
                 $item->validate(PaymentDirectives::class);
             }
         }
-
         !isset($this->authorization_directives) || Assert::isInstanceOf(
             $this->authorization_directives,
             AuthorizationDirectives::class,
@@ -298,10 +292,70 @@ class PaymentDirectives implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['disbursement_type'])) {
+            $this->disbursement_type = $data['disbursement_type'];
+        }
+        if (isset($data['linked_group_id'])) {
+            $this->linked_group_id = $data['linked_group_id'];
+        }
+        if (isset($data['settlement_account_number'])) {
+            $this->settlement_account_number = $data['settlement_account_number'];
+        }
+        if (isset($data['loss_account_number'])) {
+            $this->loss_account_number = $data['loss_account_number'];
+        }
+        if (isset($data['liability_type'])) {
+            $this->liability_type = $data['liability_type'];
+        }
+        if (isset($data['special_deny'])) {
+            $this->special_deny = $data['special_deny'];
+        }
+        if (isset($data['allow_duplicate_invoice_id'])) {
+            $this->allow_duplicate_invoice_id = $data['allow_duplicate_invoice_id'];
+        }
+        if (isset($data['policy_directives'])) {
+            $this->policy_directives = [];
+            foreach ($data['policy_directives'] as $item) {
+                $this->policy_directives[] = new PolicyDirective($item);
+            }
+        }
+        if (isset($data['payment_method_directives'])) {
+            $this->payment_method_directives = [];
+            foreach ($data['payment_method_directives'] as $item) {
+                $this->payment_method_directives[] = new PaymentMethodDirective($item);
+            }
+        }
+        if (isset($data['pricing_directives'])) {
+            $this->pricing_directives = [];
+            foreach ($data['pricing_directives'] as $item) {
+                $this->pricing_directives[] = new PricingDirective($item);
+            }
+        }
+        if (isset($data['authorization_directives'])) {
+            $this->authorization_directives = new AuthorizationDirectives($data['authorization_directives']);
+        }
+        if (isset($data['currency_receiving_directive'])) {
+            $this->currency_receiving_directive = $data['currency_receiving_directive'];
+        }
+        if (isset($data['immediate_payment_required'])) {
+            $this->immediate_payment_required = $data['immediate_payment_required'];
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->policy_directives = [];
         $this->payment_method_directives = [];
         $this->pricing_directives = [];
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initAuthorizationDirectives(): AuthorizationDirectives
+    {
+        return $this->authorization_directives = new AuthorizationDirectives();
     }
 }

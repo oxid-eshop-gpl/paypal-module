@@ -49,13 +49,11 @@ class SupplementaryData implements JsonSerializable
             $this->airline,
             "airline in SupplementaryData must be array $within"
         );
-
         if (isset($this->airline)) {
             foreach ($this->airline as $item) {
                 $item->validate(SupplementaryData::class);
             }
         }
-
         !isset($this->point_of_sale) || Assert::isInstanceOf(
             $this->point_of_sale,
             PointOfSale::class,
@@ -64,8 +62,29 @@ class SupplementaryData implements JsonSerializable
         !isset($this->point_of_sale) ||  $this->point_of_sale->validate(SupplementaryData::class);
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['airline'])) {
+            $this->airline = [];
+            foreach ($data['airline'] as $item) {
+                $this->airline[] = new AirlineItinerary($item);
+            }
+        }
+        if (isset($data['point_of_sale'])) {
+            $this->point_of_sale = new PointOfSale($data['point_of_sale']);
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->airline = [];
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initPointOfSale(): PointOfSale
+    {
+        return $this->point_of_sale = new PointOfSale();
     }
 }

@@ -44,7 +44,7 @@ class AirlineItinerary implements JsonSerializable
      * authorization. In the case of single capture against an authorization, the value should be 1. Also, this value
      * must be less than or equal to the clearing count.
      *
-     * @var integer | null
+     * @var int | null
      */
     public $clearing_sequence;
 
@@ -53,7 +53,7 @@ class AirlineItinerary implements JsonSerializable
      * messages associated with a single authorization request. Applicable to multiple captures against an
      * authorization. In the case of single capture against an authorization the value should be 1.
      *
-     * @var integer | null
+     * @var int | null
      */
     public $clearing_count;
 
@@ -87,7 +87,6 @@ class AirlineItinerary implements JsonSerializable
             $this->flight_leg_details,
             "flight_leg_details in AirlineItinerary must be array $within"
         );
-
         if (isset($this->flight_leg_details)) {
             foreach ($this->flight_leg_details as $item) {
                 $item->validate(AirlineItinerary::class);
@@ -95,8 +94,43 @@ class AirlineItinerary implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['ticket'])) {
+            $this->ticket = new AirlineTicket($data['ticket']);
+        }
+        if (isset($data['passenger'])) {
+            $this->passenger = new AirlinePassenger($data['passenger']);
+        }
+        if (isset($data['flight_leg_details'])) {
+            $this->flight_leg_details = [];
+            foreach ($data['flight_leg_details'] as $item) {
+                $this->flight_leg_details[] = new FlightLeg($item);
+            }
+        }
+        if (isset($data['clearing_sequence'])) {
+            $this->clearing_sequence = $data['clearing_sequence'];
+        }
+        if (isset($data['clearing_count'])) {
+            $this->clearing_count = $data['clearing_count'];
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->flight_leg_details = [];
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initTicket(): AirlineTicket
+    {
+        return $this->ticket = new AirlineTicket();
+    }
+
+    public function initPassenger(): AirlinePassenger
+    {
+        return $this->passenger = new AirlinePassenger();
     }
 }

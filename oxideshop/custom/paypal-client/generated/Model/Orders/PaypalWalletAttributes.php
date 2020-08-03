@@ -33,7 +33,22 @@ class PaypalWalletAttributes implements JsonSerializable
         !isset($this->customer) ||  $this->customer->validate(PaypalWalletAttributes::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['customer'])) {
+            $this->customer = new Customer($data['customer']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initCustomer(): Customer
+    {
+        return $this->customer = new Customer();
     }
 }

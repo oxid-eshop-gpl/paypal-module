@@ -55,7 +55,7 @@ class Refund extends RefundStatus implements JsonSerializable
     /**
      * An array of related [HATEOAS links](/docs/api/reference/api-responses/#hateoas-links).
      *
-     * @var LinkDescription[] | null
+     * @var array | null
      */
     public $links;
 
@@ -100,13 +100,6 @@ class Refund extends RefundStatus implements JsonSerializable
             $this->links,
             "links in Refund must be array $within"
         );
-
-        if (isset($this->links)) {
-            foreach ($this->links as $item) {
-                $item->validate(Refund::class);
-            }
-        }
-
         !isset($this->create_time) || Assert::minLength(
             $this->create_time,
             20,
@@ -129,7 +122,52 @@ class Refund extends RefundStatus implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['id'])) {
+            $this->id = $data['id'];
+        }
+        if (isset($data['amount'])) {
+            $this->amount = new Money($data['amount']);
+        }
+        if (isset($data['invoice_id'])) {
+            $this->invoice_id = $data['invoice_id'];
+        }
+        if (isset($data['note_to_payer'])) {
+            $this->note_to_payer = $data['note_to_payer'];
+        }
+        if (isset($data['seller_payable_breakdown'])) {
+            $this->seller_payable_breakdown = new RefundSellerPayableBreakdown($data['seller_payable_breakdown']);
+        }
+        if (isset($data['links'])) {
+            $this->links = [];
+            foreach ($data['links'] as $item) {
+                $this->links[] = $item;
+            }
+        }
+        if (isset($data['create_time'])) {
+            $this->create_time = $data['create_time'];
+        }
+        if (isset($data['update_time'])) {
+            $this->update_time = $data['update_time'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        parent::__construct($data);
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initAmount(): Money
+    {
+        return $this->amount = new Money();
+    }
+
+    public function initSellerPayableBreakdown(): RefundSellerPayableBreakdown
+    {
+        return $this->seller_payable_breakdown = new RefundSellerPayableBreakdown();
     }
 }

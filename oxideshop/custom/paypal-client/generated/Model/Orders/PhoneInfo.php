@@ -37,7 +37,7 @@ class PhoneInfo implements JsonSerializable
      * The phone number in its canonical international [E.164 numbering plan
      * format](https://www.itu.int/rec/T-REC-E.164/en).
      *
-     * @var Phone | null
+     * @var Phone2 | null
      */
     public $phone_number;
 
@@ -60,13 +60,31 @@ class PhoneInfo implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
         !isset($this->phone_number) || Assert::isInstanceOf(
             $this->phone_number,
-            Phone::class,
-            "phone_number in PhoneInfo must be instance of Phone $within"
+            Phone2::class,
+            "phone_number in PhoneInfo must be instance of Phone2 $within"
         );
         !isset($this->phone_number) ||  $this->phone_number->validate(PhoneInfo::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['phone_number'])) {
+            $this->phone_number = new Phone2($data['phone_number']);
+        }
+        if (isset($data['phone_type'])) {
+            $this->phone_type = $data['phone_type'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initPhoneNumber(): Phone2
+    {
+        return $this->phone_number = new Phone2();
     }
 }

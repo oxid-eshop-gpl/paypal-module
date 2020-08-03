@@ -11,7 +11,7 @@ use Webmozart\Assert\Assert;
  *
  * generated from: transaction.json
  */
-class Transaction extends CaptureStatus implements JsonSerializable
+class Transaction extends CaptureStatus2 implements JsonSerializable
 {
     use BaseModel;
 
@@ -111,8 +111,36 @@ class Transaction extends CaptureStatus implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['id'])) {
+            $this->id = $data['id'];
+        }
+        if (isset($data['amount_with_breakdown'])) {
+            $this->amount_with_breakdown = new AmountWithBreakdown($data['amount_with_breakdown']);
+        }
+        if (isset($data['payer_name'])) {
+            $this->payer_name = new Name($data['payer_name']);
+        }
+        if (isset($data['payer_email'])) {
+            $this->payer_email = $data['payer_email'];
+        }
+        if (isset($data['time'])) {
+            $this->time = $data['time'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        parent::__construct($data);
         $this->amount_with_breakdown = new AmountWithBreakdown();
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initPayerName(): Name
+    {
+        return $this->payer_name = new Name();
     }
 }

@@ -96,14 +96,14 @@ class Capture extends CaptureStatus implements JsonSerializable
     /**
      * The error details.
      *
-     * @var Error | null
+     * @var mixed | null
      */
     public $error;
 
     /**
      * An array of related [HATEOAS links](/docs/api/reference/api-responses/#hateoas-links).
      *
-     * @var LinkDescription[] | null
+     * @var array | null
      */
     public $links;
 
@@ -175,23 +175,10 @@ class Capture extends CaptureStatus implements JsonSerializable
             "seller_receivable_breakdown in Capture must be instance of SellerReceivableBreakdown $within"
         );
         !isset($this->seller_receivable_breakdown) ||  $this->seller_receivable_breakdown->validate(Capture::class);
-        !isset($this->error) || Assert::isInstanceOf(
-            $this->error,
-            Error::class,
-            "error in Capture must be instance of Error $within"
-        );
-        !isset($this->error) ||  $this->error->validate(Capture::class);
         !isset($this->links) || Assert::isArray(
             $this->links,
             "links in Capture must be array $within"
         );
-
-        if (isset($this->links)) {
-            foreach ($this->links as $item) {
-                $item->validate(Capture::class);
-            }
-        }
-
         !isset($this->processor_response) || Assert::isInstanceOf(
             $this->processor_response,
             ProcessorResponse::class,
@@ -226,7 +213,93 @@ class Capture extends CaptureStatus implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['id'])) {
+            $this->id = $data['id'];
+        }
+        if (isset($data['amount'])) {
+            $this->amount = new Money($data['amount']);
+        }
+        if (isset($data['parent_transaction'])) {
+            $this->parent_transaction = new ParentTransaction($data['parent_transaction']);
+        }
+        if (isset($data['invoice_id'])) {
+            $this->invoice_id = $data['invoice_id'];
+        }
+        if (isset($data['custom_id'])) {
+            $this->custom_id = $data['custom_id'];
+        }
+        if (isset($data['seller_protection'])) {
+            $this->seller_protection = new SellerProtection($data['seller_protection']);
+        }
+        if (isset($data['final_capture'])) {
+            $this->final_capture = $data['final_capture'];
+        }
+        if (isset($data['seller_receivable_breakdown'])) {
+            $this->seller_receivable_breakdown = new SellerReceivableBreakdown($data['seller_receivable_breakdown']);
+        }
+        if (isset($data['disbursement_mode'])) {
+            $this->disbursement_mode = $data['disbursement_mode'];
+        }
+        if (isset($data['error'])) {
+            $this->error = $data['error'];
+        }
+        if (isset($data['links'])) {
+            $this->links = [];
+            foreach ($data['links'] as $item) {
+                $this->links[] = $item;
+            }
+        }
+        if (isset($data['processor_response'])) {
+            $this->processor_response = new ProcessorResponse($data['processor_response']);
+        }
+        if (isset($data['supplementary_data'])) {
+            $this->supplementary_data = new SupplementaryData($data['supplementary_data']);
+        }
+        if (isset($data['create_time'])) {
+            $this->create_time = $data['create_time'];
+        }
+        if (isset($data['update_time'])) {
+            $this->update_time = $data['update_time'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        parent::__construct($data);
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initAmount(): Money
+    {
+        return $this->amount = new Money();
+    }
+
+    public function initParentTransaction(): ParentTransaction
+    {
+        return $this->parent_transaction = new ParentTransaction();
+    }
+
+    public function initSellerProtection(): SellerProtection
+    {
+        return $this->seller_protection = new SellerProtection();
+    }
+
+    public function initSellerReceivableBreakdown(): SellerReceivableBreakdown
+    {
+        return $this->seller_receivable_breakdown = new SellerReceivableBreakdown();
+    }
+
+    public function initProcessorResponse(): ProcessorResponse
+    {
+        return $this->processor_response = new ProcessorResponse();
+    }
+
+    public function initSupplementaryData(): SupplementaryData
+    {
+        return $this->supplementary_data = new SupplementaryData();
     }
 }

@@ -34,7 +34,23 @@ class Payee extends PayeeBase implements JsonSerializable
         !isset($this->display_data) ||  $this->display_data->validate(Payee::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['display_data'])) {
+            $this->display_data = new PayeeDisplayable($data['display_data']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        parent::__construct($data);
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initDisplayData(): PayeeDisplayable
+    {
+        return $this->display_data = new PayeeDisplayable();
     }
 }

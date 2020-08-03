@@ -30,14 +30,14 @@ class Business implements JsonSerializable
     /**
      * Business incorporation information.
      *
-     * @var BusinessIncorporation | null
+     * @var BusinessIncorporation2 | null
      */
     public $business_incorporation;
 
     /**
      * Name of the business.
      *
-     * @var BusinessNameDetail[]
+     * @var BusinessNameDetail2[]
      * maxItems: 0
      * maxItems: 5
      */
@@ -64,7 +64,7 @@ class Business implements JsonSerializable
     /**
      * List of addresses associated with the business entity.
      *
-     * @var BusinessAddressDetail[]
+     * @var BusinessAddressDetail2[]
      * maxItems: 0
      * maxItems: 5
      */
@@ -73,7 +73,7 @@ class Business implements JsonSerializable
     /**
      * List of phone number associated with the business.
      *
-     * @var BusinessPhoneDetail[]
+     * @var BusinessPhoneDetail2[]
      * maxItems: 0
      * maxItems: 5
      */
@@ -106,8 +106,8 @@ class Business implements JsonSerializable
         !isset($this->business_industry) ||  $this->business_industry->validate(Business::class);
         !isset($this->business_incorporation) || Assert::isInstanceOf(
             $this->business_incorporation,
-            BusinessIncorporation::class,
-            "business_incorporation in Business must be instance of BusinessIncorporation $within"
+            BusinessIncorporation2::class,
+            "business_incorporation in Business must be instance of BusinessIncorporation2 $within"
         );
         !isset($this->business_incorporation) ||  $this->business_incorporation->validate(Business::class);
         Assert::notNull($this->names, "names in Business must not be NULL $within");
@@ -125,13 +125,11 @@ class Business implements JsonSerializable
             $this->names,
             "names in Business must be array $within"
         );
-
         if (isset($this->names)) {
             foreach ($this->names as $item) {
                 $item->validate(Business::class);
             }
         }
-
         Assert::notNull($this->emails, "emails in Business must not be NULL $within");
         Assert::minCount(
             $this->emails,
@@ -147,13 +145,11 @@ class Business implements JsonSerializable
             $this->emails,
             "emails in Business must be array $within"
         );
-
         if (isset($this->emails)) {
             foreach ($this->emails as $item) {
                 $item->validate(Business::class);
             }
         }
-
         !isset($this->website) || Assert::minLength(
             $this->website,
             1,
@@ -179,13 +175,11 @@ class Business implements JsonSerializable
             $this->addresses,
             "addresses in Business must be array $within"
         );
-
         if (isset($this->addresses)) {
             foreach ($this->addresses as $item) {
                 $item->validate(Business::class);
             }
         }
-
         Assert::notNull($this->phones, "phones in Business must not be NULL $within");
         Assert::minCount(
             $this->phones,
@@ -201,13 +195,11 @@ class Business implements JsonSerializable
             $this->phones,
             "phones in Business must be array $within"
         );
-
         if (isset($this->phones)) {
             foreach ($this->phones as $item) {
                 $item->validate(Business::class);
             }
         }
-
         Assert::notNull($this->documents, "documents in Business must not be NULL $within");
         Assert::minCount(
             $this->documents,
@@ -223,7 +215,6 @@ class Business implements JsonSerializable
             $this->documents,
             "documents in Business must be array $within"
         );
-
         if (isset($this->documents)) {
             foreach ($this->documents as $item) {
                 $item->validate(Business::class);
@@ -231,12 +222,76 @@ class Business implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['business_type'])) {
+            $this->business_type = new BusinessTypeInfo($data['business_type']);
+        }
+        if (isset($data['business_industry'])) {
+            $this->business_industry = new BusinessIndustry($data['business_industry']);
+        }
+        if (isset($data['business_incorporation'])) {
+            $this->business_incorporation = new BusinessIncorporation2($data['business_incorporation']);
+        }
+        if (isset($data['names'])) {
+            $this->names = [];
+            foreach ($data['names'] as $item) {
+                $this->names[] = new BusinessNameDetail2($item);
+            }
+        }
+        if (isset($data['emails'])) {
+            $this->emails = [];
+            foreach ($data['emails'] as $item) {
+                $this->emails[] = new Email($item);
+            }
+        }
+        if (isset($data['website'])) {
+            $this->website = $data['website'];
+        }
+        if (isset($data['addresses'])) {
+            $this->addresses = [];
+            foreach ($data['addresses'] as $item) {
+                $this->addresses[] = new BusinessAddressDetail2($item);
+            }
+        }
+        if (isset($data['phones'])) {
+            $this->phones = [];
+            foreach ($data['phones'] as $item) {
+                $this->phones[] = new BusinessPhoneDetail2($item);
+            }
+        }
+        if (isset($data['documents'])) {
+            $this->documents = [];
+            foreach ($data['documents'] as $item) {
+                $this->documents[] = new BusinessDocument($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->names = [];
         $this->emails = [];
         $this->addresses = [];
         $this->phones = [];
         $this->documents = [];
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initBusinessType(): BusinessTypeInfo
+    {
+        return $this->business_type = new BusinessTypeInfo();
+    }
+
+    public function initBusinessIndustry(): BusinessIndustry
+    {
+        return $this->business_industry = new BusinessIndustry();
+    }
+
+    public function initBusinessIncorporation(): BusinessIncorporation2
+    {
+        return $this->business_incorporation = new BusinessIncorporation2();
     }
 }

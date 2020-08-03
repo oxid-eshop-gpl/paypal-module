@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * The office bearer associated to the account.
  *
- * generated from: customer_common_overrides-office_bearer.json
+ * generated from: customized_x_unsupported_296_customer_common_overrides-office_bearer.json
  */
 class OfficeBearer extends Person implements JsonSerializable
 {
@@ -64,7 +64,18 @@ class OfficeBearer extends Person implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['role'])) {
+            $this->role = $data['role'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        parent::__construct($data);
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

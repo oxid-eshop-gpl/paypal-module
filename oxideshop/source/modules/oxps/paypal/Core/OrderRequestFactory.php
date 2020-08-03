@@ -36,7 +36,6 @@ use OxidProfessionalServices\PayPal\Api\Model\Orders\AddressPortable;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\AmountBreakdown;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\AmountWithBreakdown;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\Item;
-use OxidProfessionalServices\PayPal\Api\Model\Orders\Name;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderApplicationContext;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderRequest;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\Payer;
@@ -266,7 +265,7 @@ class OrderRequestFactory
         $payer = new Payer();
         $user = $this->basket->getBasketUser();
 
-        $name = $payer->name = new Name();
+        $name = $payer->initName();
         $name->given_name = $user->getFieldData('oxfname');
         $name->surname = $user->getFieldData('oxlname');
 
@@ -318,7 +317,7 @@ class OrderRequestFactory
         $deliveryId = Registry::getSession()->getVariable("deladrid");
         $deliveryAddress = oxNew(Address::class);
         $shipping = new ShippingDetail();
-        $name = $shipping->name = new Name();
+        $name = $shipping->initName();
         if ($deliveryId && $deliveryAddress->load($deliveryId)) {
             $fullName = $deliveryAddress->oxaddress__oxfname->value . " " . $deliveryAddress->oxaddress__oxlname->value;
             $name->full_name = $fullName;

@@ -58,7 +58,20 @@ class PointOfSale implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['store_id'])) {
+            $this->store_id = $data['store_id'];
+        }
+        if (isset($data['terminal_id'])) {
+            $this->terminal_id = $data['terminal_id'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

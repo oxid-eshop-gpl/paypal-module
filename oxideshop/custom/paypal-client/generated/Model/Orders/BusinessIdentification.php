@@ -92,7 +92,31 @@ class BusinessIdentification implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['type'])) {
+            $this->type = $data['type'];
+        }
+        if (isset($data['identifier'])) {
+            $this->identifier = $data['identifier'];
+        }
+        if (isset($data['issuer'])) {
+            $this->issuer = new DocumentIssuer($data['issuer']);
+        }
+        if (isset($data['issued_time'])) {
+            $this->issued_time = $data['issued_time'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initIssuer(): DocumentIssuer
+    {
+        return $this->issuer = new DocumentIssuer();
     }
 }

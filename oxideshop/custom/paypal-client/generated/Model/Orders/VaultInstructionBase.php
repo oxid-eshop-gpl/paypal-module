@@ -45,7 +45,17 @@ class VaultInstructionBase implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['confirm_payment_token'])) {
+            $this->confirm_payment_token = $data['confirm_payment_token'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

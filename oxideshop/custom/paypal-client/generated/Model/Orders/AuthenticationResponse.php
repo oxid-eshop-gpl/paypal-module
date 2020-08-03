@@ -69,7 +69,25 @@ class AuthenticationResponse implements JsonSerializable
         !isset($this->three_d_secure) ||  $this->three_d_secure->validate(AuthenticationResponse::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['liability_shift'])) {
+            $this->liability_shift = $data['liability_shift'];
+        }
+        if (isset($data['three_d_secure'])) {
+            $this->three_d_secure = new ThreeDSecureAuthenticationResponse($data['three_d_secure']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initThreeDSecure(): ThreeDSecureAuthenticationResponse
+    {
+        return $this->three_d_secure = new ThreeDSecureAuthenticationResponse();
     }
 }

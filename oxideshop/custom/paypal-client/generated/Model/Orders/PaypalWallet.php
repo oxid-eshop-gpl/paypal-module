@@ -61,7 +61,25 @@ class PaypalWallet implements JsonSerializable
         !isset($this->attributes) ||  $this->attributes->validate(PaypalWallet::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['payment_method_preference'])) {
+            $this->payment_method_preference = $data['payment_method_preference'];
+        }
+        if (isset($data['attributes'])) {
+            $this->attributes = new PaypalWalletAttributes($data['attributes']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initAttributes(): PaypalWalletAttributes
+    {
+        return $this->attributes = new PaypalWalletAttributes();
     }
 }

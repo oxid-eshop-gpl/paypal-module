@@ -9,7 +9,8 @@ use Webmozart\Assert\Assert;
 /**
  * The business name of the party.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-common_components-v4-schema-json-openapi-2.0-business_name.json
+ * generated from:
+ * MerchantsCommonComponentsSpecification-v1-schema-common_components-v4-schema-json-openapi-2.0-business_name.json
  */
 class BusinessName implements JsonSerializable
 {
@@ -198,7 +199,20 @@ class BusinessName implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['business_name'])) {
+            $this->business_name = $data['business_name'];
+        }
+        if (isset($data['orthography'])) {
+            $this->orthography = $data['orthography'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

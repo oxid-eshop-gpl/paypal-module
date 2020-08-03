@@ -50,13 +50,11 @@ class Account implements JsonSerializable
             $this->individual_owners,
             "individual_owners in Account must be array $within"
         );
-
         if (isset($this->individual_owners)) {
             foreach ($this->individual_owners as $item) {
                 $item->validate(Account::class);
             }
         }
-
         !isset($this->business_entity) || Assert::isInstanceOf(
             $this->business_entity,
             BusinessEntity::class,
@@ -65,8 +63,29 @@ class Account implements JsonSerializable
         !isset($this->business_entity) ||  $this->business_entity->validate(Account::class);
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['individual_owners'])) {
+            $this->individual_owners = [];
+            foreach ($data['individual_owners'] as $item) {
+                $this->individual_owners[] = new IndividualOwner($item);
+            }
+        }
+        if (isset($data['business_entity'])) {
+            $this->business_entity = new BusinessEntity($data['business_entity']);
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->individual_owners = [];
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initBusinessEntity(): BusinessEntity
+    {
+        return $this->business_entity = new BusinessEntity();
     }
 }

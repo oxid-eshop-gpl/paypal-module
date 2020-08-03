@@ -18,7 +18,7 @@ class RiskAssessment implements JsonSerializable
     /**
      * The fine-grained numeric evaluation. Value is from `0` to `999`.
      *
-     * @var integer | null
+     * @var int | null
      */
     public $score;
 
@@ -51,8 +51,24 @@ class RiskAssessment implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['score'])) {
+            $this->score = $data['score'];
+        }
+        if (isset($data['reasons'])) {
+            $this->reasons = [];
+            foreach ($data['reasons'] as $item) {
+                $this->reasons[] = $item;
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->reasons = [];
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

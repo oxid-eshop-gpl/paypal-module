@@ -33,7 +33,22 @@ class BankResponse implements JsonSerializable
         !isset($this->ach_debit) ||  $this->ach_debit->validate(BankResponse::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['ach_debit'])) {
+            $this->ach_debit = new AchDebitResponse($data['ach_debit']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initAchDebit(): AchDebitResponse
+    {
+        return $this->ach_debit = new AchDebitResponse();
     }
 }

@@ -122,7 +122,6 @@ class SellerReceivableBreakdown implements JsonSerializable
             $this->platform_fees,
             "platform_fees in SellerReceivableBreakdown must be array $within"
         );
-
         if (isset($this->platform_fees)) {
             foreach ($this->platform_fees as $item) {
                 $item->validate(SellerReceivableBreakdown::class);
@@ -130,9 +129,65 @@ class SellerReceivableBreakdown implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['gross_amount'])) {
+            $this->gross_amount = new Money($data['gross_amount']);
+        }
+        if (isset($data['paypal_fee'])) {
+            $this->paypal_fee = new Money($data['paypal_fee']);
+        }
+        if (isset($data['paypal_fee_in_receivable_currency'])) {
+            $this->paypal_fee_in_receivable_currency = new Money($data['paypal_fee_in_receivable_currency']);
+        }
+        if (isset($data['net_amount'])) {
+            $this->net_amount = new Money($data['net_amount']);
+        }
+        if (isset($data['receivable_amount'])) {
+            $this->receivable_amount = new Money($data['receivable_amount']);
+        }
+        if (isset($data['exchange_rate'])) {
+            $this->exchange_rate = new ExchangeRate($data['exchange_rate']);
+        }
+        if (isset($data['platform_fees'])) {
+            $this->platform_fees = [];
+            foreach ($data['platform_fees'] as $item) {
+                $this->platform_fees[] = new PlatformFee($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->gross_amount = new Money();
         $this->platform_fees = [];
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initPaypalFee(): Money
+    {
+        return $this->paypal_fee = new Money();
+    }
+
+    public function initPaypalFeeInReceivableCurrency(): Money
+    {
+        return $this->paypal_fee_in_receivable_currency = new Money();
+    }
+
+    public function initNetAmount(): Money
+    {
+        return $this->net_amount = new Money();
+    }
+
+    public function initReceivableAmount(): Money
+    {
+        return $this->receivable_amount = new Money();
+    }
+
+    public function initExchangeRate(): ExchangeRate
+    {
+        return $this->exchange_rate = new ExchangeRate();
     }
 }

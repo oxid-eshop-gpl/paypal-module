@@ -129,13 +129,11 @@ class AuthorizationRequest implements JsonSerializable
             $this->items,
             "items in AuthorizationRequest must be array $within"
         );
-
         if (isset($this->items)) {
             foreach ($this->items as $item) {
                 $item->validate(AuthorizationRequest::class);
             }
         }
-
         !isset($this->shipping) || Assert::isInstanceOf(
             $this->shipping,
             ShippingDetail::class,
@@ -144,8 +142,60 @@ class AuthorizationRequest implements JsonSerializable
         !isset($this->shipping) ||  $this->shipping->validate(AuthorizationRequest::class);
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['order_id'])) {
+            $this->order_id = $data['order_id'];
+        }
+        if (isset($data['payment_source'])) {
+            $this->payment_source = new PaymentSource($data['payment_source']);
+        }
+        if (isset($data['amount'])) {
+            $this->amount = new AmountWithBreakdown($data['amount']);
+        }
+        if (isset($data['payee'])) {
+            $this->payee = new Payee($data['payee']);
+        }
+        if (isset($data['description'])) {
+            $this->description = $data['description'];
+        }
+        if (isset($data['custom_id'])) {
+            $this->custom_id = $data['custom_id'];
+        }
+        if (isset($data['invoice_id'])) {
+            $this->invoice_id = $data['invoice_id'];
+        }
+        if (isset($data['items'])) {
+            $this->items = [];
+            foreach ($data['items'] as $item) {
+                $this->items[] = new Item($item);
+            }
+        }
+        if (isset($data['shipping'])) {
+            $this->shipping = new ShippingDetail($data['shipping']);
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->amount = new AmountWithBreakdown();
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initPaymentSource(): PaymentSource
+    {
+        return $this->payment_source = new PaymentSource();
+    }
+
+    public function initPayee(): Payee
+    {
+        return $this->payee = new Payee();
+    }
+
+    public function initShipping(): ShippingDetail
+    {
+        return $this->shipping = new ShippingDetail();
     }
 }

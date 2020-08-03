@@ -46,7 +46,30 @@ class RiskAssessments implements JsonSerializable
         !isset($this->payee) ||  $this->payee->validate(RiskAssessments::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['payer'])) {
+            $this->payer = new RiskAssessment($data['payer']);
+        }
+        if (isset($data['payee'])) {
+            $this->payee = new RiskAssessment($data['payee']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initPayer(): RiskAssessment
+    {
+        return $this->payer = new RiskAssessment();
+    }
+
+    public function initPayee(): RiskAssessment
+    {
+        return $this->payee = new RiskAssessment();
     }
 }

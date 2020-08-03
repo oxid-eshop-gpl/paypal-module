@@ -111,7 +111,23 @@ class PaymentMethod implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['payer_selected'])) {
+            $this->payer_selected = $data['payer_selected'];
+        }
+        if (isset($data['payee_preferred'])) {
+            $this->payee_preferred = $data['payee_preferred'];
+        }
+        if (isset($data['standard_entry_class_code'])) {
+            $this->standard_entry_class_code = $data['standard_entry_class_code'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

@@ -55,7 +55,6 @@ class ShippingDetails implements JsonSerializable
             $this->options,
             "options in ShippingDetails must be array $within"
         );
-
         if (isset($this->options)) {
             foreach ($this->options as $item) {
                 $item->validate(ShippingDetails::class);
@@ -63,8 +62,29 @@ class ShippingDetails implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['shipping_address'])) {
+            $this->shipping_address = new AddressWithConfirmation($data['shipping_address']);
+        }
+        if (isset($data['options'])) {
+            $this->options = [];
+            foreach ($data['options'] as $item) {
+                $this->options[] = new ShippingOption($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->options = [];
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initShippingAddress(): AddressWithConfirmation
+    {
+        return $this->shipping_address = new AddressWithConfirmation();
     }
 }

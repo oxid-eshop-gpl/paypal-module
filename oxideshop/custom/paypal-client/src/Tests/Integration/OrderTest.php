@@ -3,13 +3,10 @@
 namespace OxidProfessionalServices\PayPal\Api\Tests\Integration;
 
 use OxidProfessionalServices\PayPal\Api\Client;
-use OxidProfessionalServices\PayPal\Api\Model\Orders\AddressPortable;
-use OxidProfessionalServices\PayPal\Api\Model\Orders\Name;
+use OxidProfessionalServices\PayPal\Api\Model\Orders\Phone;
+use OxidProfessionalServices\PayPal\Api\Model\Orders\Payer;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\Order;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderRequest;
-use OxidProfessionalServices\PayPal\Api\Model\Orders\Payer;
-use OxidProfessionalServices\PayPal\Api\Model\Orders\Phone;
-use OxidProfessionalServices\PayPal\Api\Model\Orders\PhoneWithType;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\PurchaseUnitRequest;
 use OxidProfessionalServices\PayPal\Api\Service\Orders;
 use PHPUnit\Framework\TestCase;
@@ -34,9 +31,8 @@ class OrderTest extends TestCase
         $json = <<<'JSON'
 {"id":"9R353891UB6120313","links":[{"href":"https:\/\/api.sandbox.paypal.com\/v2\/checkout\/orders\/9R353891UB6120313","rel":"self","method":"GET"},{"href":"https:\/\/www.sandbox.paypal.com\/checkoutnow?token=9R353891UB6120313","rel":"approve","method":"GET"},{"href":"https:\/\/api.sandbox.paypal.com\/v2\/checkout\/orders\/9R353891UB6120313","rel":"update","method":"PATCH"},{"href":"https:\/\/api.sandbox.paypal.com\/v2\/checkout\/orders\/9R353891UB6120313\/capture","rel":"capture","method":"POST"}],"status":"CREATED"}
 JSON;
-        $json = \GuzzleHttp\json_decode($json);
-        $mapper = new \JsonMapper();
-        $order = $mapper->map($json, new Order());
+        $json = \GuzzleHttp\json_decode($json, true);
+        $order = new Order($json);
         $this->assertEquals($order->id, "9R353891UB6120313");
         $this->assertEquals($order->status, "CREATED");
     }
@@ -47,16 +43,16 @@ JSON;
         $orderRequest = new OrderRequest();
 
         $orderRequest->payer = new Payer();
-        $orderRequest->payer->name = new Name();
+        $orderRequest->payer->initName();
         $orderRequest->payer->name->given_name = "Johannes";
-        $orderRequest->payer->phone = new PhoneWithType();
+        $orderRequest->payer->initPhone();
         $orderRequest->payer->phone->phone_number = new Phone();
         $orderRequest->payer->phone->phone_number->national_number = "09812943";
 //        $orderRequest->payer->phone->phone_number->country_code = "DE";
 
         //$orderRequest->payer->tax_info = new TaxInfo();
         //$orderRequest->payer->tax_info->tax_id= "";
-        $orderRequest->payer->address = new AddressPortable();
+        $orderRequest->payer->initAddress();
         $orderRequest->payer->address->country_code = "DE";
 
         $purchaseUnitRequest = new PurchaseUnitRequest();

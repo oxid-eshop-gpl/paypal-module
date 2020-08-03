@@ -26,7 +26,7 @@ class AuthTolerance implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var Money | null
+     * @var Money2 | null
      */
     public $absolute;
 
@@ -35,13 +35,31 @@ class AuthTolerance implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
         !isset($this->absolute) || Assert::isInstanceOf(
             $this->absolute,
-            Money::class,
-            "absolute in AuthTolerance must be instance of Money $within"
+            Money2::class,
+            "absolute in AuthTolerance must be instance of Money2 $within"
         );
         !isset($this->absolute) ||  $this->absolute->validate(AuthTolerance::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['percent'])) {
+            $this->percent = $data['percent'];
+        }
+        if (isset($data['absolute'])) {
+            $this->absolute = new Money2($data['absolute']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initAbsolute(): Money2
+    {
+        return $this->absolute = new Money2();
     }
 }

@@ -59,7 +59,33 @@ class OrderAuthorizeRequest implements JsonSerializable
         !isset($this->amount) ||  $this->amount->validate(OrderAuthorizeRequest::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['payment_source'])) {
+            $this->payment_source = new PaymentSource($data['payment_source']);
+        }
+        if (isset($data['reference_id'])) {
+            $this->reference_id = $data['reference_id'];
+        }
+        if (isset($data['amount'])) {
+            $this->amount = new Money($data['amount']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initPaymentSource(): PaymentSource
+    {
+        return $this->payment_source = new PaymentSource();
+    }
+
+    public function initAmount(): Money
+    {
+        return $this->amount = new Money();
     }
 }

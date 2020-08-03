@@ -87,9 +87,46 @@ class AmountWithBreakdown implements JsonSerializable
          $this->net_amount->validate(AmountWithBreakdown::class);
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['gross_amount'])) {
+            $this->gross_amount = new Money($data['gross_amount']);
+        }
+        if (isset($data['fee_amount'])) {
+            $this->fee_amount = new Money($data['fee_amount']);
+        }
+        if (isset($data['shipping_amount'])) {
+            $this->shipping_amount = new Money($data['shipping_amount']);
+        }
+        if (isset($data['tax_amount'])) {
+            $this->tax_amount = new Money($data['tax_amount']);
+        }
+        if (isset($data['net_amount'])) {
+            $this->net_amount = new Money($data['net_amount']);
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->gross_amount = new Money();
         $this->net_amount = new Money();
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initFeeAmount(): Money
+    {
+        return $this->fee_amount = new Money();
+    }
+
+    public function initShippingAmount(): Money
+    {
+        return $this->shipping_amount = new Money();
+    }
+
+    public function initTaxAmount(): Money
+    {
+        return $this->tax_amount = new Money();
     }
 }

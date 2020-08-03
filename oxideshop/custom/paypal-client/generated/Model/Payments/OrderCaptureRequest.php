@@ -27,7 +27,18 @@ class OrderCaptureRequest extends CaptureRequest implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['order_id'])) {
+            $this->order_id = $data['order_id'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        parent::__construct($data);
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

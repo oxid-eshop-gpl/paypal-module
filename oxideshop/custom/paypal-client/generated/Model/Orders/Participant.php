@@ -46,7 +46,31 @@ class Participant extends Account implements JsonSerializable
         !isset($this->business) ||  $this->business->validate(Participant::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['person'])) {
+            $this->person = new Person($data['person']);
+        }
+        if (isset($data['business'])) {
+            $this->business = new Business($data['business']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        parent::__construct($data);
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initPerson(): Person
+    {
+        return $this->person = new Person();
+    }
+
+    public function initBusiness(): Business
+    {
+        return $this->business = new Business();
     }
 }

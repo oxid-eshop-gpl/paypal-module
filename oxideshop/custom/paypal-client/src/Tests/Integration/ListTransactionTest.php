@@ -3,13 +3,13 @@
 namespace OxidProfessionalServices\PayPal\Api\Tests\Integration;
 
 use OxidProfessionalServices\PayPal\Api\Client;
-use OxidProfessionalServices\PayPal\Api\Service\ReportingService;
+use OxidProfessionalServices\PayPal\Api\Service\TransactionSearch;
 use PHPUnit\Framework\TestCase;
 
 class ListTransactionTest extends TestCase
 {
     /**
-     * @var ReportingService
+     * @var TransactionSearch
      */
     private $reportServiceUnderTest;
 
@@ -17,12 +17,27 @@ class ListTransactionTest extends TestCase
     {
         parent::setUp();
         $client = ClientFactory::createClient(Client::class);
-        $this->reportServiceUnderTest = new ReportingService($client);
+        $this->reportServiceUnderTest = new TransactionSearch($client);
     }
 
     public function testListTransaction()
     {
-        $res = $this->reportServiceUnderTest->listTransactions(null,null, null, null,"2020-07-01T00:00:00-0700", "2020-07-29T11:59:59-0700");
-
+        $date = new \DateTime();
+        $today = $date->format(\DateTime::W3C);
+        $past = $date->sub(new \DateInterval("P10D"))->format(\DateTime::W3C);
+        $res = $this->reportServiceUnderTest->listTransactions(
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            $past,
+            $today,
+            null,
+            0,
+            10
+        );
+        $this->assertEquals(1, $res->page);
     }
 }

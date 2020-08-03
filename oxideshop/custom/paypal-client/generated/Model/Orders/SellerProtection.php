@@ -53,7 +53,23 @@ class SellerProtection implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['status'])) {
+            $this->status = $data['status'];
+        }
+        if (isset($data['dispute_categories'])) {
+            $this->dispute_categories = [];
+            foreach ($data['dispute_categories'] as $item) {
+                $this->dispute_categories[] = $item;
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

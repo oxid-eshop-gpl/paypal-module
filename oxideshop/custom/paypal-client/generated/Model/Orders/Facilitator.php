@@ -114,8 +114,31 @@ class Facilitator extends Participant implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['type'])) {
+            $this->type = $data['type'];
+        }
+        if (isset($data['client_id'])) {
+            $this->client_id = $data['client_id'];
+        }
+        if (isset($data['integration_identifier'])) {
+            $this->integration_identifier = $data['integration_identifier'];
+        }
+        if (isset($data['segments'])) {
+            $this->segments = [];
+            foreach ($data['segments'] as $item) {
+                $this->segments[] = $item;
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        parent::__construct($data);
         $this->segments = [];
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

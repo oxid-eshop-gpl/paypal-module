@@ -214,7 +214,51 @@ class CardResponse implements JsonSerializable
         !isset($this->attributes) ||  $this->attributes->validate(CardResponse::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['id'])) {
+            $this->id = $data['id'];
+        }
+        if (isset($data['last_n_chars'])) {
+            $this->last_n_chars = $data['last_n_chars'];
+        }
+        if (isset($data['last_digits'])) {
+            $this->last_digits = $data['last_digits'];
+        }
+        if (isset($data['brand'])) {
+            $this->brand = $data['brand'];
+        }
+        if (isset($data['type'])) {
+            $this->type = $data['type'];
+        }
+        if (isset($data['issuer'])) {
+            $this->issuer = $data['issuer'];
+        }
+        if (isset($data['bin'])) {
+            $this->bin = $data['bin'];
+        }
+        if (isset($data['authentication_result'])) {
+            $this->authentication_result = new AuthenticationResponse($data['authentication_result']);
+        }
+        if (isset($data['attributes'])) {
+            $this->attributes = new CardAttributesResponse($data['attributes']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initAuthenticationResult(): AuthenticationResponse
+    {
+        return $this->authentication_result = new AuthenticationResponse();
+    }
+
+    public function initAttributes(): CardAttributesResponse
+    {
+        return $this->attributes = new CardAttributesResponse();
     }
 }

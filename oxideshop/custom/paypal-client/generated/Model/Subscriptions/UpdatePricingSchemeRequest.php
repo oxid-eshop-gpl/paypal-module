@@ -18,7 +18,7 @@ class UpdatePricingSchemeRequest implements JsonSerializable
     /**
      * The billing cycle sequence.
      *
-     * @var integer
+     * @var int
      */
     public $billing_cycle_sequence;
 
@@ -42,8 +42,21 @@ class UpdatePricingSchemeRequest implements JsonSerializable
          $this->pricing_scheme->validate(UpdatePricingSchemeRequest::class);
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['billing_cycle_sequence'])) {
+            $this->billing_cycle_sequence = $data['billing_cycle_sequence'];
+        }
+        if (isset($data['pricing_scheme'])) {
+            $this->pricing_scheme = new PricingScheme($data['pricing_scheme']);
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->pricing_scheme = new PricingScheme();
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }
