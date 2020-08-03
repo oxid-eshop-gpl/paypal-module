@@ -3,6 +3,7 @@
 namespace OxidProfessionalServices\PayPal\Api\Tests\Integration;
 
 use OxidProfessionalServices\PayPal\Api\Client;
+use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
 use OxidProfessionalServices\PayPal\Api\Model\Catalog\Patch;
 use OxidProfessionalServices\PayPal\Api\Model\Catalog\ProductRequestPOST;
 use OxidProfessionalServices\PayPal\Api\Service\Catalog;
@@ -25,23 +26,29 @@ class CatalogTest extends TestCase
     public function testPatch()
     {
         $pd = new ProductRequestPOST();
-        $pd->id = "123456";
+        $pd->id = "123459_" . rand(0, 1000);
         $pd->name = "foo";
 
-        $res = $this->catalogUnderTest->showProductDetails($pd->id);
-        if (!$res) {
-            $pd->type = ProductRequestPOST::TYPE_PHYSICAL;
-            $pd->description = "bla bla";
-            $pd->home_url = "https://oxid.de/foo";
-            $pd->validate();
+        $pd->type = ProductRequestPOST::TYPE_PHYSICAL;
+        $pd->description = "bla bla";
+        $pd->home_url = "https://oxid.de/foo";
+        $pd->validate();
+        try {
             $res = $this->catalogUnderTest->createProduct($pd);
+        } catch (ApiException $e) {
+
         }
+        $res = $this->catalogUnderTest->showProductDetails($pd->id);
+
         $patch = new Patch();
         $patch->op = Patch::OP_REPLACE;
         $patch->path = "/description";
         $patch->value = "https://www.google.de/test.jpg";
         $patch->validate();
-        $res = $this->catalogUnderTest->updateProduct($pd->id, [$patch]);
+        $this->catalogUnderTest->updateProduct($pd->id, [$patch]);
+
+        $res = $this->catalogUnderTest->showProductDetails($pd->id);
+        $this->assertEquals("https://www.google.de/test.jpg", $res->description);
     }
 
     public function testCreateProduct()
@@ -58,10 +65,13 @@ class CatalogTest extends TestCase
         $pd->validate();
 
         $res = $this->catalogUnderTest->createProduct($pd);
+        $this->assertEquals($pd->id, $res->id);
+        $this->assertEquals($pd->name, $res->name);
     }
 
     public function testGetProducts()
     {
-        $res = $this->catalogUnderTest->listProducts();
+        $res = $this->catalogUnderTest->listProducts(true);
+        $this->assertGreaterThan(-1,$res->total_items);
     }
 }

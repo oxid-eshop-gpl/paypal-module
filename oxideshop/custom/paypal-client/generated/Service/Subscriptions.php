@@ -97,7 +97,7 @@ class Subscriptions extends BaseService
         $params = [];
         $params['product_id'] = $productId;
         $params['plan_ids'] = $planIds;
-        $params['total_required'] = $totalRequired;
+        $params['total_required'] = var_export($totalRequired, true);
         $params['page'] = $page;
         $params['page_size'] = $pageSize;
 
@@ -330,7 +330,7 @@ class Subscriptions extends BaseService
         $params['status_updated_after'] = $statusUpdatedAfter;
         $params['filter'] = $filter;
         $params['payer_ids'] = $payerIds;
-        $params['total_required'] = $totalRequired;
+        $params['total_required'] = var_export($totalRequired, true);
         $params['page'] = $page;
         $params['page_size'] = $pageSize;
 

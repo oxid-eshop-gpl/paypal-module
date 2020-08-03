@@ -60,7 +60,7 @@ class Catalog extends BaseService
 
 
         $params = [];
-        $params['total_required'] = $totalRequired;
+        $params['total_required'] = var_export($totalRequired, true);
         $params['page'] = $page;
         $params['page_size'] = $pageSize;
 

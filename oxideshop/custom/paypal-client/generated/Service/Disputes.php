@@ -324,7 +324,7 @@ class Disputes extends BaseService
         $params['page'] = $page;
         $params['page_size'] = $pageSize;
         $params['next_page_token'] = $nextPageToken;
-        $params['total_required'] = $totalRequired;
+        $params['total_required'] = var_export($totalRequired, true);
         $params['fields'] = $fields;
         $params['start_time'] = $startTime;
 

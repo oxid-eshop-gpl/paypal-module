@@ -84,6 +84,7 @@ class ServiceGenerator extends Generator
                         $methodParam->setDefaultValue($parameterDefinition['default']);
                     }
 
+                    $paramType = $parameterDefinition['type'] ?? 'mixed';
 
                     if ($parameterDefinition['in'] == "body") {
                         $methodBodyHeaders .= "\$headers['Content-Type'] = 'application/json';\n";
@@ -91,9 +92,12 @@ class ServiceGenerator extends Generator
                     } elseif ($parameterDefinition['in'] == "header") {
                         $methodBodyHeaders .= "\$headers['$origParamName'] = \$$paramName;\n";
                     } elseif ($parameterDefinition['in'] == "query") {
-                        $methodBodyQueryParameter .= "\$params['$origParamName'] = \$$paramName;\n";
+                        $convertedParamExpr = "\$$paramName";
+                        if ($paramType == 'boolean') {
+                            $convertedParamExpr = "var_export($convertedParamExpr, true)";
+                        }
+                        $methodBodyQueryParameter .= "\$params['$origParamName'] = $convertedParamExpr;\n";
                     }
-                    $paramType = $parameterDefinition['type'] ?? 'mixed';
                     $paramDesc = $parameterDefinition['description'] ?? '';
                     $method->addComment($this->formatComment("@param \$$paramName $paramType $paramDesc"));
                     if (isset($parameterDefinition['schema'])) {
