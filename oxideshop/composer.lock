@@ -74,16 +74,16 @@
         },
         {
             "name": "composer/composer",
-            "version": "1.10.9",
+            "version": "1.10.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "83c3250093d5491600a822e176b107a945baf95a"
+                "reference": "32966a3b1d48bc01472a8321fd6472b44fad033a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/83c3250093d5491600a822e176b107a945baf95a",
-                "reference": "83c3250093d5491600a822e176b107a945baf95a",
+                "url": "https://api.github.com/repos/composer/composer/zipball/32966a3b1d48bc01472a8321fd6472b44fad033a",
+                "reference": "32966a3b1d48bc01472a8321fd6472b44fad033a",
                 "shasum": ""
             },
             "require": {
@@ -164,7 +164,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-07-16T10:57:00+00:00"
+            "time": "2020-08-03T09:35:19+00:00"
         },
         {
             "name": "composer/semver",
@@ -2142,7 +2142,7 @@
             "dist": {
                 "type": "path",
                 "url": "source/modules/oxps/paypal",
-                "reference": "274f222f4c00211105009230d2bc2f3af9407ac1"
+                "reference": "987c0ace43b4135a7c5d02fa879b3604769d7562"
             },
             "archive": {
                 "exclude": [
@@ -2150,8 +2150,7 @@
                 ]
             },
             "require": {
-                "ext-json": "*",
-                "oxid-professional-services/paypal-client": "*"
+                "ext-json": "*"
             },
             "type": "oxideshop-module",
             "extra": {
