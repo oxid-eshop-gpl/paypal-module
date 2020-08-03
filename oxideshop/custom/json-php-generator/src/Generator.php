@@ -754,8 +754,16 @@ class Generator
             $defs['properties'] = $propHashes;
         }
         $json_encode = json_encode($defs, JSON_PRETTY_PRINT);
-        $json_encode = str_replace("MerchantCommonComponentsSpecification","MerchantsCommonComponentsSpecification", $json_encode);
-        $json_encode = str_replace("merchant.CommonComponentsSpecification","MerchantsCommonComponentsSpecification", $json_encode);
+        $json_encode = str_replace(
+            "MerchantCommonComponentsSpecification",
+            "MerchantsCommonComponentsSpecification",
+            $json_encode
+        );
+        $json_encode = str_replace(
+            "merchant.CommonComponentsSpecification",
+            "MerchantsCommonComponentsSpecification",
+            $json_encode
+        );
         return $json_encode;
     }
 
