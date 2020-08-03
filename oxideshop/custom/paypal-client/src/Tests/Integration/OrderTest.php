@@ -3,7 +3,6 @@
 namespace OxidProfessionalServices\PayPal\Api\Tests\Integration;
 
 use OxidProfessionalServices\PayPal\Api\Client;
-use OxidProfessionalServices\PayPal\Api\Model\Orders\Phone;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\Payer;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\Order;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderRequest;
@@ -46,7 +45,6 @@ JSON;
         $orderRequest->payer->initName();
         $orderRequest->payer->name->given_name = "Johannes";
         $orderRequest->payer->initPhone();
-        $orderRequest->payer->phone->phone_number = new Phone();
         $orderRequest->payer->phone->phone_number->national_number = "09812943";
 //        $orderRequest->payer->phone->phone_number->country_code = "DE";
 

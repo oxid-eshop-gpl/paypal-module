@@ -10,7 +10,7 @@ use Webmozart\Assert\Assert;
  * The currency and amount for a financial transaction, such as a balance or payment due.
  *
  * generated from:
- * MerchantsCommonComponentsSpecification-v1-schema-common_components-v3-schema-json-openapi-2.0-money.json
+ * MerchantsCommonComponentsSpecification-v1-schema-common_components-v4-schema-json-openapi-2.0-money.json
  */
 class Money implements JsonSerializable
 {

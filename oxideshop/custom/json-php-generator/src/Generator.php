@@ -745,9 +745,30 @@ class Generator
     {
         unset($defs['comment']);
         unset($defs['description']);
+        unset($defs['x-pattern']);
+        if (isset($defs['properties'])) {
+            $propHashes = [];
+            foreach ($defs['properties'] as $prop) {
+                $propHashes[] = $this->calculateHashForProp($prop);
+            }
+            $defs['properties'] = $propHashes;
+        }
         $json_encode = json_encode($defs, JSON_PRETTY_PRINT);
         $json_encode = str_replace("MerchantCommonComponentsSpecification","MerchantsCommonComponentsSpecification", $json_encode);
         $json_encode = str_replace("merchant.CommonComponentsSpecification","MerchantsCommonComponentsSpecification", $json_encode);
         return $json_encode;
     }
+
+    public function calculateHashForProp($prop)
+    {
+        unset($prop['description']);
+        if (isset($prop['$ref'])) {
+            $ref = $this->getRefNameFromRefString($prop['$ref']);
+            if (isset($this->definitions[$ref])) {
+                $prop['$ref'] = $this->calculateHash($this->definitions[$ref]);
+            }
+        }
+        return $prop;
+    }
+
 }

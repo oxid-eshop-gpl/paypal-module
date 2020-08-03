@@ -78,7 +78,7 @@ class ReferralDataBank implements JsonSerializable
      * HTML 5.1 [Autofilling form controls: the autocomplete
      * attribute](https://www.w3.org/TR/html51/sec-forms.html#autofilling-form-controls-the-autocomplete-attribute).
      *
-     * @var AddressPortable3 | null
+     * @var AddressPortable2 | null
      */
     public $branch_location;
 
@@ -156,8 +156,8 @@ class ReferralDataBank implements JsonSerializable
         }
         !isset($this->branch_location) || Assert::isInstanceOf(
             $this->branch_location,
-            AddressPortable3::class,
-            "branch_location in ReferralDataBank must be instance of AddressPortable3 $within"
+            AddressPortable2::class,
+            "branch_location in ReferralDataBank must be instance of AddressPortable2 $within"
         );
         !isset($this->branch_location) ||  $this->branch_location->validate(ReferralDataBank::class);
         !isset($this->mandate) || Assert::isInstanceOf(
@@ -189,7 +189,7 @@ class ReferralDataBank implements JsonSerializable
             }
         }
         if (isset($data['branch_location'])) {
-            $this->branch_location = new AddressPortable3($data['branch_location']);
+            $this->branch_location = new AddressPortable2($data['branch_location']);
         }
         if (isset($data['mandate'])) {
             $this->mandate = new ReferralDataMandate($data['mandate']);
@@ -204,9 +204,9 @@ class ReferralDataBank implements JsonSerializable
         }
     }
 
-    public function initBranchLocation(): AddressPortable3
+    public function initBranchLocation(): AddressPortable2
     {
-        return $this->branch_location = new AddressPortable3();
+        return $this->branch_location = new AddressPortable2();
     }
 
     public function initMandate(): ReferralDataMandate

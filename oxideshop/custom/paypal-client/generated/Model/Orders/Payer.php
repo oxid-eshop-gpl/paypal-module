@@ -75,7 +75,7 @@ class Payer implements JsonSerializable
      * HTML 5.1 [Autofilling form controls: the autocomplete
      * attribute](https://www.w3.org/TR/html51/sec-forms.html#autofilling-form-controls-the-autocomplete-attribute).
      *
-     * @var AddressPortable3 | null
+     * @var AddressPortable2 | null
      */
     public $address;
 
@@ -127,8 +127,8 @@ class Payer implements JsonSerializable
         !isset($this->tax_info) ||  $this->tax_info->validate(Payer::class);
         !isset($this->address) || Assert::isInstanceOf(
             $this->address,
-            AddressPortable3::class,
-            "address in Payer must be instance of AddressPortable3 $within"
+            AddressPortable2::class,
+            "address in Payer must be instance of AddressPortable2 $within"
         );
         !isset($this->address) ||  $this->address->validate(Payer::class);
     }
@@ -154,7 +154,7 @@ class Payer implements JsonSerializable
             $this->tax_info = new TaxInfo($data['tax_info']);
         }
         if (isset($data['address'])) {
-            $this->address = new AddressPortable3($data['address']);
+            $this->address = new AddressPortable2($data['address']);
         }
     }
 
@@ -180,8 +180,8 @@ class Payer implements JsonSerializable
         return $this->tax_info = new TaxInfo();
     }
 
-    public function initAddress(): AddressPortable3
+    public function initAddress(): AddressPortable2
     {
-        return $this->address = new AddressPortable3();
+        return $this->address = new AddressPortable2();
     }
 }
