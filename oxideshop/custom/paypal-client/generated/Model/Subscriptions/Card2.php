@@ -4,7 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3AddressPortable;
 use Webmozart\Assert\Assert;
 
 /**
@@ -56,7 +55,7 @@ class Card2 implements JsonSerializable
      * HTML 5.1 [Autofilling form controls: the autocomplete
      * attribute](https://www.w3.org/TR/html51/sec-forms.html#autofilling-form-controls-the-autocomplete-attribute).
      *
-     * @var CommonV3AddressPortable | null
+     * @var AddressPortable | null
      */
     public $billing_address;
 
@@ -92,8 +91,8 @@ class Card2 implements JsonSerializable
         );
         !isset($this->billing_address) || Assert::isInstanceOf(
             $this->billing_address,
-            CommonV3AddressPortable::class,
-            "billing_address in Card2 must be instance of CommonV3AddressPortable $within"
+            AddressPortable::class,
+            "billing_address in Card2 must be instance of AddressPortable $within"
         );
         !isset($this->billing_address) ||  $this->billing_address->validate(Card2::class);
     }
@@ -113,7 +112,7 @@ class Card2 implements JsonSerializable
             $this->security_code = $data['security_code'];
         }
         if (isset($data['billing_address'])) {
-            $this->billing_address = new CommonV3AddressPortable($data['billing_address']);
+            $this->billing_address = new AddressPortable($data['billing_address']);
         }
     }
 

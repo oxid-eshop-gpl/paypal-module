@@ -29,7 +29,7 @@ class ApplePayCardResponse extends CardResponse2 implements JsonSerializable
      * HTML 5.1 [Autofilling form controls: the autocomplete
      * attribute](https://www.w3.org/TR/html51/sec-forms.html#autofilling-form-controls-the-autocomplete-attribute).
      *
-     * @var AddressPortable | null
+     * @var AddressPortable3 | null
      */
     public $billing_address;
 
@@ -56,8 +56,8 @@ class ApplePayCardResponse extends CardResponse2 implements JsonSerializable
         );
         !isset($this->billing_address) || Assert::isInstanceOf(
             $this->billing_address,
-            AddressPortable::class,
-            "billing_address in ApplePayCardResponse must be instance of AddressPortable $within"
+            AddressPortable3::class,
+            "billing_address in ApplePayCardResponse must be instance of AddressPortable3 $within"
         );
         !isset($this->billing_address) ||  $this->billing_address->validate(ApplePayCardResponse::class);
         !isset($this->country_code) || Assert::minLength(
@@ -78,7 +78,7 @@ class ApplePayCardResponse extends CardResponse2 implements JsonSerializable
             $this->name = $data['name'];
         }
         if (isset($data['billing_address'])) {
-            $this->billing_address = new AddressPortable($data['billing_address']);
+            $this->billing_address = new AddressPortable3($data['billing_address']);
         }
         if (isset($data['country_code'])) {
             $this->country_code = $data['country_code'];

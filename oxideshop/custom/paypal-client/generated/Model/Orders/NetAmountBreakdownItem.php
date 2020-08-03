@@ -4,7 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -20,14 +19,14 @@ class NetAmountBreakdownItem implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var CommonV3Money | null
+     * @var Money | null
      */
     public $payable_amount;
 
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var CommonV3Money | null
+     * @var Money | null
      */
     public $converted_amount;
 
@@ -43,14 +42,14 @@ class NetAmountBreakdownItem implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
         !isset($this->payable_amount) || Assert::isInstanceOf(
             $this->payable_amount,
-            CommonV3Money::class,
-            "payable_amount in NetAmountBreakdownItem must be instance of CommonV3Money $within"
+            Money::class,
+            "payable_amount in NetAmountBreakdownItem must be instance of Money $within"
         );
         !isset($this->payable_amount) ||  $this->payable_amount->validate(NetAmountBreakdownItem::class);
         !isset($this->converted_amount) || Assert::isInstanceOf(
             $this->converted_amount,
-            CommonV3Money::class,
-            "converted_amount in NetAmountBreakdownItem must be instance of CommonV3Money $within"
+            Money::class,
+            "converted_amount in NetAmountBreakdownItem must be instance of Money $within"
         );
         !isset($this->converted_amount) ||  $this->converted_amount->validate(NetAmountBreakdownItem::class);
         !isset($this->exchange_rate) || Assert::isInstanceOf(
@@ -64,10 +63,10 @@ class NetAmountBreakdownItem implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['payable_amount'])) {
-            $this->payable_amount = new CommonV3Money($data['payable_amount']);
+            $this->payable_amount = new Money($data['payable_amount']);
         }
         if (isset($data['converted_amount'])) {
-            $this->converted_amount = new CommonV3Money($data['converted_amount']);
+            $this->converted_amount = new Money($data['converted_amount']);
         }
         if (isset($data['exchange_rate'])) {
             $this->exchange_rate = new ExchangeRate($data['exchange_rate']);

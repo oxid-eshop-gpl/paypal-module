@@ -3,9 +3,9 @@
 namespace OxidProfessionalServices\PayPal\Api\Service;
 
 use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
-use OxidProfessionalServices\PayPal\Api\Model\Partner\CreateReferralDataResponse;
-use OxidProfessionalServices\PayPal\Api\Model\Partner\ReferralData;
-use OxidProfessionalServices\PayPal\Api\Model\Partner\ReferralDataResponse;
+use OxidProfessionalServices\PayPal\Api\Model\Partner\ReferralDataCreateReferralDataResponse;
+use OxidProfessionalServices\PayPal\Api\Model\Partner\ReferralDataReferralData;
+use OxidProfessionalServices\PayPal\Api\Model\Partner\ReferralDataReferralDataResponse;
 
 class Partner extends BaseService
 {
@@ -18,9 +18,9 @@ class Partner extends BaseService
      * @param $referralData mixed
      *
      * @throws ApiException
-     * @return CreateReferralDataResponse
+     * @return ReferralDataCreateReferralDataResponse
      */
-    public function createPartnerReferral(ReferralData $referralData): CreateReferralDataResponse
+    public function createPartnerReferral(ReferralDataReferralData $referralData): ReferralDataCreateReferralDataResponse
     {
         $path = "/partner-referrals";
 
@@ -31,7 +31,7 @@ class Partner extends BaseService
         $body = json_encode($referralData, true);
         $response = $this->send('POST', $path, [], $headers, $body);
         $jsonData = json_decode($response->getBody(), true);
-        return new CreateReferralDataResponse($jsonData);
+        return new ReferralDataCreateReferralDataResponse($jsonData);
     }
 
     /**
@@ -40,9 +40,9 @@ class Partner extends BaseService
      * @param $partnerReferralId string The ID of the partner-referrals data for which to show details.
      *
      * @throws ApiException
-     * @return ReferralDataResponse
+     * @return ReferralDataReferralDataResponse
      */
-    public function showReferralData($partnerReferralId): ReferralDataResponse
+    public function showReferralData($partnerReferralId): ReferralDataReferralDataResponse
     {
         $path = "/partner-referrals/{$partnerReferralId}";
 
@@ -51,6 +51,6 @@ class Partner extends BaseService
         $body = null;
         $response = $this->send('GET', $path, [], [], $body);
         $jsonData = json_decode($response->getBody(), true);
-        return new ReferralDataResponse($jsonData);
+        return new ReferralDataReferralDataResponse($jsonData);
     }
 }

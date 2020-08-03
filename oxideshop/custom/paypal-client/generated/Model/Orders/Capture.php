@@ -4,7 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -32,7 +31,7 @@ class Capture extends CaptureStatus implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var CommonV3Money | null
+     * @var Money | null
      */
     public $amount;
 
@@ -149,8 +148,8 @@ class Capture extends CaptureStatus implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
         !isset($this->amount) || Assert::isInstanceOf(
             $this->amount,
-            CommonV3Money::class,
-            "amount in Capture must be instance of CommonV3Money $within"
+            Money::class,
+            "amount in Capture must be instance of Money $within"
         );
         !isset($this->amount) ||  $this->amount->validate(Capture::class);
         !isset($this->parent_transaction) || Assert::isInstanceOf(
@@ -220,7 +219,7 @@ class Capture extends CaptureStatus implements JsonSerializable
             $this->id = $data['id'];
         }
         if (isset($data['amount'])) {
-            $this->amount = new CommonV3Money($data['amount']);
+            $this->amount = new Money($data['amount']);
         }
         if (isset($data['parent_transaction'])) {
             $this->parent_transaction = new ParentTransaction($data['parent_transaction']);

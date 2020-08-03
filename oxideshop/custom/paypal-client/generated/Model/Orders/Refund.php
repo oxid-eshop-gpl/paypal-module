@@ -4,7 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -26,7 +25,7 @@ class Refund extends RefundStatus implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var CommonV3Money | null
+     * @var Money | null
      */
     public $amount;
 
@@ -87,8 +86,8 @@ class Refund extends RefundStatus implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
         !isset($this->amount) || Assert::isInstanceOf(
             $this->amount,
-            CommonV3Money::class,
-            "amount in Refund must be instance of CommonV3Money $within"
+            Money::class,
+            "amount in Refund must be instance of Money $within"
         );
         !isset($this->amount) ||  $this->amount->validate(Refund::class);
         !isset($this->seller_payable_breakdown) || Assert::isInstanceOf(
@@ -129,7 +128,7 @@ class Refund extends RefundStatus implements JsonSerializable
             $this->id = $data['id'];
         }
         if (isset($data['amount'])) {
-            $this->amount = new CommonV3Money($data['amount']);
+            $this->amount = new Money($data['amount']);
         }
         if (isset($data['invoice_id'])) {
             $this->invoice_id = $data['invoice_id'];
@@ -160,5 +159,11 @@ class Refund extends RefundStatus implements JsonSerializable
         if (isset($data)) {
             $this->map($data);
         }
+    }
+
+    public function initSeller_payable_breakdown(): \RefundSellerPayableBreakdown
+    {
+        $this->seller_payable_breakdown = new RefundSellerPayableBreakdown();
+        return $this;
     }
 }

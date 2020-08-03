@@ -4,7 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV4\CommonV4Phone;
 use Webmozart\Assert\Assert;
 
 /**
@@ -13,7 +12,7 @@ use Webmozart\Assert\Assert;
  *
  * generated from: customized_x_unsupported_8120_customer_common_overrides-business_phone_detail.json
  */
-class BusinessPhoneDetail2 extends CommonV4Phone implements JsonSerializable
+class BusinessPhoneDetail2 extends Phone implements JsonSerializable
 {
     use BaseModel;
 

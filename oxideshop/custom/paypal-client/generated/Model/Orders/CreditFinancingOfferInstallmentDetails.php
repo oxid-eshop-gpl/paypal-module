@@ -4,7 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -31,7 +30,7 @@ class CreditFinancingOfferInstallmentDetails implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var CommonV3Money | null
+     * @var Money | null
      */
     public $payment_due;
 
@@ -40,8 +39,8 @@ class CreditFinancingOfferInstallmentDetails implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
         !isset($this->payment_due) || Assert::isInstanceOf(
             $this->payment_due,
-            CommonV3Money::class,
-            "payment_due in CreditFinancingOfferInstallmentDetails must be instance of CommonV3Money $within"
+            Money::class,
+            "payment_due in CreditFinancingOfferInstallmentDetails must be instance of Money $within"
         );
         !isset($this->payment_due) ||  $this->payment_due->validate(CreditFinancingOfferInstallmentDetails::class);
     }
@@ -52,7 +51,7 @@ class CreditFinancingOfferInstallmentDetails implements JsonSerializable
             $this->period = $data['period'];
         }
         if (isset($data['payment_due'])) {
-            $this->payment_due = new CommonV3Money($data['payment_due']);
+            $this->payment_due = new Money($data['payment_due']);
         }
     }
 

@@ -13,7 +13,7 @@ use Webmozart\Assert\Assert;
  *
  * generated from: subscription_revise_response.json
  */
-class SubscriptionReviseResponse extends CustomizedXUnsupportedFiveEightSevenFiveSubscriptionReviseRequest implements JsonSerializable
+class SubscriptionReviseResponse extends SubscriptionReviseRequest2 implements JsonSerializable
 {
     use BaseModel;
 

@@ -4,8 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3AddressPortable;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Name;
 use Webmozart\Assert\Assert;
 
 /**
@@ -21,7 +19,7 @@ class ShippingDetail2 implements JsonSerializable
     /**
      * The name of the party.
      *
-     * @var CommonV3Name | null
+     * @var Name | null
      */
     public $name;
 
@@ -31,7 +29,7 @@ class ShippingDetail2 implements JsonSerializable
      * HTML 5.1 [Autofilling form controls: the autocomplete
      * attribute](https://www.w3.org/TR/html51/sec-forms.html#autofilling-form-controls-the-autocomplete-attribute).
      *
-     * @var CommonV3AddressPortable | null
+     * @var AddressPortable | null
      */
     public $address;
 
@@ -40,14 +38,14 @@ class ShippingDetail2 implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
         !isset($this->name) || Assert::isInstanceOf(
             $this->name,
-            CommonV3Name::class,
-            "name in ShippingDetail2 must be instance of CommonV3Name $within"
+            Name::class,
+            "name in ShippingDetail2 must be instance of Name $within"
         );
         !isset($this->name) ||  $this->name->validate(ShippingDetail2::class);
         !isset($this->address) || Assert::isInstanceOf(
             $this->address,
-            CommonV3AddressPortable::class,
-            "address in ShippingDetail2 must be instance of CommonV3AddressPortable $within"
+            AddressPortable::class,
+            "address in ShippingDetail2 must be instance of AddressPortable $within"
         );
         !isset($this->address) ||  $this->address->validate(ShippingDetail2::class);
     }
@@ -55,10 +53,10 @@ class ShippingDetail2 implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['name'])) {
-            $this->name = new CommonV3Name($data['name']);
+            $this->name = new Name($data['name']);
         }
         if (isset($data['address'])) {
-            $this->address = new CommonV3AddressPortable($data['address']);
+            $this->address = new AddressPortable($data['address']);
         }
     }
 

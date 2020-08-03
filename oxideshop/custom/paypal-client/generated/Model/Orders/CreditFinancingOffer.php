@@ -4,7 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -31,14 +30,14 @@ class CreditFinancingOffer implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var CommonV3Money | null
+     * @var Money | null
      */
     public $total_payment;
 
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var CommonV3Money | null
+     * @var Money | null
      */
     public $total_interest;
 
@@ -61,14 +60,14 @@ class CreditFinancingOffer implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
         !isset($this->total_payment) || Assert::isInstanceOf(
             $this->total_payment,
-            CommonV3Money::class,
-            "total_payment in CreditFinancingOffer must be instance of CommonV3Money $within"
+            Money::class,
+            "total_payment in CreditFinancingOffer must be instance of Money $within"
         );
         !isset($this->total_payment) ||  $this->total_payment->validate(CreditFinancingOffer::class);
         !isset($this->total_interest) || Assert::isInstanceOf(
             $this->total_interest,
-            CommonV3Money::class,
-            "total_interest in CreditFinancingOffer must be instance of CommonV3Money $within"
+            Money::class,
+            "total_interest in CreditFinancingOffer must be instance of Money $within"
         );
         !isset($this->total_interest) ||  $this->total_interest->validate(CreditFinancingOffer::class);
         !isset($this->installment_details) || Assert::isInstanceOf(
@@ -85,10 +84,10 @@ class CreditFinancingOffer implements JsonSerializable
             $this->issuer = $data['issuer'];
         }
         if (isset($data['total_payment'])) {
-            $this->total_payment = new CommonV3Money($data['total_payment']);
+            $this->total_payment = new Money($data['total_payment']);
         }
         if (isset($data['total_interest'])) {
-            $this->total_interest = new CommonV3Money($data['total_interest']);
+            $this->total_interest = new Money($data['total_interest']);
         }
         if (isset($data['installment_details'])) {
             $this->installment_details = new CreditFinancingOfferInstallmentDetails($data['installment_details']);
@@ -103,5 +102,11 @@ class CreditFinancingOffer implements JsonSerializable
         if (isset($data)) {
             $this->map($data);
         }
+    }
+
+    public function initInstallment_details(): \CreditFinancingOfferInstallmentDetails
+    {
+        $this->installment_details = new CreditFinancingOfferInstallmentDetails();
+        return $this;
     }
 }

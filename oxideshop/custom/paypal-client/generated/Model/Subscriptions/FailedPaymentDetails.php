@@ -4,7 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -43,7 +42,7 @@ class FailedPaymentDetails implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var CommonV3Money
+     * @var Money
      */
     public $amount;
 
@@ -93,8 +92,8 @@ class FailedPaymentDetails implements JsonSerializable
         Assert::notNull($this->amount, "amount in FailedPaymentDetails must not be NULL $within");
         Assert::isInstanceOf(
             $this->amount,
-            CommonV3Money::class,
-            "amount in FailedPaymentDetails must be instance of CommonV3Money $within"
+            Money::class,
+            "amount in FailedPaymentDetails must be instance of Money $within"
         );
          $this->amount->validate(FailedPaymentDetails::class);
         Assert::notNull($this->time, "time in FailedPaymentDetails must not be NULL $within");
@@ -133,7 +132,7 @@ class FailedPaymentDetails implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['amount'])) {
-            $this->amount = new CommonV3Money($data['amount']);
+            $this->amount = new Money($data['amount']);
         }
         if (isset($data['time'])) {
             $this->time = $data['time'];
@@ -148,7 +147,7 @@ class FailedPaymentDetails implements JsonSerializable
 
     public function __construct(array $data = null)
     {
-        $this->amount = new CommonV3Money();
+        $this->amount = new Money();
         if (isset($data)) {
             $this->map($data);
         }

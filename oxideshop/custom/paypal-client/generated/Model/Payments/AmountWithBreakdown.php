@@ -4,7 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -17,7 +16,7 @@ use Webmozart\Assert\Assert;
  *
  * generated from: MerchantCommonComponentsSpecification-v1-schema-amount_with_breakdown.json
  */
-class AmountWithBreakdown extends CommonV3Money implements JsonSerializable
+class AmountWithBreakdown extends Money implements JsonSerializable
 {
     use BaseModel;
 

@@ -4,7 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV4\CommonV4AddressName;
 use Webmozart\Assert\Assert;
 
 /**
@@ -12,7 +11,7 @@ use Webmozart\Assert\Assert;
  *
  * generated from: model-address_with_confirmation.json
  */
-class AddressWithConfirmation extends CommonV4AddressName implements JsonSerializable
+class AddressWithConfirmation extends AddressName implements JsonSerializable
 {
     use BaseModel;
 

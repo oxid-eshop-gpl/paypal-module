@@ -4,7 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -19,21 +18,21 @@ class RefundSellerPayableBreakdown implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var CommonV3Money | null
+     * @var Money | null
      */
     public $gross_amount;
 
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var CommonV3Money | null
+     * @var Money | null
      */
     public $paypal_fee;
 
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var CommonV3Money | null
+     * @var Money | null
      */
     public $net_amount;
 
@@ -57,7 +56,7 @@ class RefundSellerPayableBreakdown implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var CommonV3Money | null
+     * @var Money | null
      */
     public $total_refunded_amount;
 
@@ -66,20 +65,20 @@ class RefundSellerPayableBreakdown implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
         !isset($this->gross_amount) || Assert::isInstanceOf(
             $this->gross_amount,
-            CommonV3Money::class,
-            "gross_amount in RefundSellerPayableBreakdown must be instance of CommonV3Money $within"
+            Money::class,
+            "gross_amount in RefundSellerPayableBreakdown must be instance of Money $within"
         );
         !isset($this->gross_amount) ||  $this->gross_amount->validate(RefundSellerPayableBreakdown::class);
         !isset($this->paypal_fee) || Assert::isInstanceOf(
             $this->paypal_fee,
-            CommonV3Money::class,
-            "paypal_fee in RefundSellerPayableBreakdown must be instance of CommonV3Money $within"
+            Money::class,
+            "paypal_fee in RefundSellerPayableBreakdown must be instance of Money $within"
         );
         !isset($this->paypal_fee) ||  $this->paypal_fee->validate(RefundSellerPayableBreakdown::class);
         !isset($this->net_amount) || Assert::isInstanceOf(
             $this->net_amount,
-            CommonV3Money::class,
-            "net_amount in RefundSellerPayableBreakdown must be instance of CommonV3Money $within"
+            Money::class,
+            "net_amount in RefundSellerPayableBreakdown must be instance of Money $within"
         );
         !isset($this->net_amount) ||  $this->net_amount->validate(RefundSellerPayableBreakdown::class);
         Assert::notNull($this->platform_fees, "platform_fees in RefundSellerPayableBreakdown must not be NULL $within");
@@ -113,8 +112,8 @@ class RefundSellerPayableBreakdown implements JsonSerializable
         }
         !isset($this->total_refunded_amount) || Assert::isInstanceOf(
             $this->total_refunded_amount,
-            CommonV3Money::class,
-            "total_refunded_amount in RefundSellerPayableBreakdown must be instance of CommonV3Money $within"
+            Money::class,
+            "total_refunded_amount in RefundSellerPayableBreakdown must be instance of Money $within"
         );
         !isset($this->total_refunded_amount) ||  $this->total_refunded_amount->validate(RefundSellerPayableBreakdown::class);
     }
@@ -122,13 +121,13 @@ class RefundSellerPayableBreakdown implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['gross_amount'])) {
-            $this->gross_amount = new CommonV3Money($data['gross_amount']);
+            $this->gross_amount = new Money($data['gross_amount']);
         }
         if (isset($data['paypal_fee'])) {
-            $this->paypal_fee = new CommonV3Money($data['paypal_fee']);
+            $this->paypal_fee = new Money($data['paypal_fee']);
         }
         if (isset($data['net_amount'])) {
-            $this->net_amount = new CommonV3Money($data['net_amount']);
+            $this->net_amount = new Money($data['net_amount']);
         }
         if (isset($data['platform_fees'])) {
             $this->platform_fees = [];
@@ -143,7 +142,7 @@ class RefundSellerPayableBreakdown implements JsonSerializable
             }
         }
         if (isset($data['total_refunded_amount'])) {
-            $this->total_refunded_amount = new CommonV3Money($data['total_refunded_amount']);
+            $this->total_refunded_amount = new Money($data['total_refunded_amount']);
         }
     }
 

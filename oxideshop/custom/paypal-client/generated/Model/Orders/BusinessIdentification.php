@@ -4,7 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV4\CommonV4DocumentIssuer;
 use Webmozart\Assert\Assert;
 
 /**
@@ -37,7 +36,7 @@ class BusinessIdentification implements JsonSerializable
     /**
      * The document-issuing authority information.
      *
-     * @var CommonV4DocumentIssuer | null
+     * @var DocumentIssuer | null
      */
     public $issuer;
 
@@ -77,8 +76,8 @@ class BusinessIdentification implements JsonSerializable
         );
         !isset($this->issuer) || Assert::isInstanceOf(
             $this->issuer,
-            CommonV4DocumentIssuer::class,
-            "issuer in BusinessIdentification must be instance of CommonV4DocumentIssuer $within"
+            DocumentIssuer::class,
+            "issuer in BusinessIdentification must be instance of DocumentIssuer $within"
         );
         !isset($this->issuer) ||  $this->issuer->validate(BusinessIdentification::class);
         !isset($this->issued_time) || Assert::minLength(
@@ -102,7 +101,7 @@ class BusinessIdentification implements JsonSerializable
             $this->identifier = $data['identifier'];
         }
         if (isset($data['issuer'])) {
-            $this->issuer = new CommonV4DocumentIssuer($data['issuer']);
+            $this->issuer = new DocumentIssuer($data['issuer']);
         }
         if (isset($data['issued_time'])) {
             $this->issued_time = $data['issued_time'];

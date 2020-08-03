@@ -4,7 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV4\CommonV4AddressPortable;
 use Webmozart\Assert\Assert;
 
 /**
@@ -12,7 +11,7 @@ use Webmozart\Assert\Assert;
  *
  * generated from: customized_x_unsupported_6338_customer_common_overrides-business_address_detail.json
  */
-class BusinessAddressDetail2 extends CommonV4AddressPortable implements JsonSerializable
+class BusinessAddressDetail2 extends AddressPortable implements JsonSerializable
 {
     use BaseModel;
 

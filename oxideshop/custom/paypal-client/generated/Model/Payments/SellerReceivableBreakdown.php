@@ -4,7 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Payments;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -19,35 +18,35 @@ class SellerReceivableBreakdown implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var CommonV3Money
+     * @var Money
      */
     public $gross_amount;
 
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var CommonV3Money | null
+     * @var Money | null
      */
     public $paypal_fee;
 
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var CommonV3Money | null
+     * @var Money | null
      */
     public $paypal_fee_in_receivable_currency;
 
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var CommonV3Money | null
+     * @var Money | null
      */
     public $net_amount;
 
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var CommonV3Money | null
+     * @var Money | null
      */
     public $receivable_amount;
 
@@ -74,32 +73,32 @@ class SellerReceivableBreakdown implements JsonSerializable
         Assert::notNull($this->gross_amount, "gross_amount in SellerReceivableBreakdown must not be NULL $within");
         Assert::isInstanceOf(
             $this->gross_amount,
-            CommonV3Money::class,
-            "gross_amount in SellerReceivableBreakdown must be instance of CommonV3Money $within"
+            Money::class,
+            "gross_amount in SellerReceivableBreakdown must be instance of Money $within"
         );
          $this->gross_amount->validate(SellerReceivableBreakdown::class);
         !isset($this->paypal_fee) || Assert::isInstanceOf(
             $this->paypal_fee,
-            CommonV3Money::class,
-            "paypal_fee in SellerReceivableBreakdown must be instance of CommonV3Money $within"
+            Money::class,
+            "paypal_fee in SellerReceivableBreakdown must be instance of Money $within"
         );
         !isset($this->paypal_fee) ||  $this->paypal_fee->validate(SellerReceivableBreakdown::class);
         !isset($this->paypal_fee_in_receivable_currency) || Assert::isInstanceOf(
             $this->paypal_fee_in_receivable_currency,
-            CommonV3Money::class,
-            "paypal_fee_in_receivable_currency in SellerReceivableBreakdown must be instance of CommonV3Money $within"
+            Money::class,
+            "paypal_fee_in_receivable_currency in SellerReceivableBreakdown must be instance of Money $within"
         );
         !isset($this->paypal_fee_in_receivable_currency) ||  $this->paypal_fee_in_receivable_currency->validate(SellerReceivableBreakdown::class);
         !isset($this->net_amount) || Assert::isInstanceOf(
             $this->net_amount,
-            CommonV3Money::class,
-            "net_amount in SellerReceivableBreakdown must be instance of CommonV3Money $within"
+            Money::class,
+            "net_amount in SellerReceivableBreakdown must be instance of Money $within"
         );
         !isset($this->net_amount) ||  $this->net_amount->validate(SellerReceivableBreakdown::class);
         !isset($this->receivable_amount) || Assert::isInstanceOf(
             $this->receivable_amount,
-            CommonV3Money::class,
-            "receivable_amount in SellerReceivableBreakdown must be instance of CommonV3Money $within"
+            Money::class,
+            "receivable_amount in SellerReceivableBreakdown must be instance of Money $within"
         );
         !isset($this->receivable_amount) ||  $this->receivable_amount->validate(SellerReceivableBreakdown::class);
         !isset($this->exchange_rate) || Assert::isInstanceOf(
@@ -133,19 +132,19 @@ class SellerReceivableBreakdown implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['gross_amount'])) {
-            $this->gross_amount = new CommonV3Money($data['gross_amount']);
+            $this->gross_amount = new Money($data['gross_amount']);
         }
         if (isset($data['paypal_fee'])) {
-            $this->paypal_fee = new CommonV3Money($data['paypal_fee']);
+            $this->paypal_fee = new Money($data['paypal_fee']);
         }
         if (isset($data['paypal_fee_in_receivable_currency'])) {
-            $this->paypal_fee_in_receivable_currency = new CommonV3Money($data['paypal_fee_in_receivable_currency']);
+            $this->paypal_fee_in_receivable_currency = new Money($data['paypal_fee_in_receivable_currency']);
         }
         if (isset($data['net_amount'])) {
-            $this->net_amount = new CommonV3Money($data['net_amount']);
+            $this->net_amount = new Money($data['net_amount']);
         }
         if (isset($data['receivable_amount'])) {
-            $this->receivable_amount = new CommonV3Money($data['receivable_amount']);
+            $this->receivable_amount = new Money($data['receivable_amount']);
         }
         if (isset($data['exchange_rate'])) {
             $this->exchange_rate = new ExchangeRate($data['exchange_rate']);
@@ -160,7 +159,7 @@ class SellerReceivableBreakdown implements JsonSerializable
 
     public function __construct(array $data = null)
     {
-        $this->gross_amount = new CommonV3Money();
+        $this->gross_amount = new Money();
         $this->platform_fees = [];
         if (isset($data)) {
             $this->map($data);

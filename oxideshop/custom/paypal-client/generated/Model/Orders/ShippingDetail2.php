@@ -19,7 +19,7 @@ class ShippingDetail2 implements JsonSerializable
     /**
      * The name of the party.
      *
-     * @var Name2 | null
+     * @var Name4 | null
      */
     public $name;
 
@@ -29,7 +29,7 @@ class ShippingDetail2 implements JsonSerializable
      * HTML 5.1 [Autofilling form controls: the autocomplete
      * attribute](https://www.w3.org/TR/html51/sec-forms.html#autofilling-form-controls-the-autocomplete-attribute).
      *
-     * @var AddressPortable | null
+     * @var AddressPortable3 | null
      */
     public $address;
 
@@ -38,14 +38,14 @@ class ShippingDetail2 implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
         !isset($this->name) || Assert::isInstanceOf(
             $this->name,
-            Name2::class,
-            "name in ShippingDetail2 must be instance of Name2 $within"
+            Name4::class,
+            "name in ShippingDetail2 must be instance of Name4 $within"
         );
         !isset($this->name) ||  $this->name->validate(ShippingDetail2::class);
         !isset($this->address) || Assert::isInstanceOf(
             $this->address,
-            AddressPortable::class,
-            "address in ShippingDetail2 must be instance of AddressPortable $within"
+            AddressPortable3::class,
+            "address in ShippingDetail2 must be instance of AddressPortable3 $within"
         );
         !isset($this->address) ||  $this->address->validate(ShippingDetail2::class);
     }
@@ -53,10 +53,10 @@ class ShippingDetail2 implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['name'])) {
-            $this->name = new Name2($data['name']);
+            $this->name = new Name4($data['name']);
         }
         if (isset($data['address'])) {
-            $this->address = new AddressPortable($data['address']);
+            $this->address = new AddressPortable3($data['address']);
         }
     }
 

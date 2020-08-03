@@ -4,7 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -48,7 +47,7 @@ class SubscriptionRequestPost implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var CommonV3Money | null
+     * @var Money | null
      */
     public $shipping_amount;
 
@@ -110,8 +109,8 @@ class SubscriptionRequestPost implements JsonSerializable
         );
         !isset($this->shipping_amount) || Assert::isInstanceOf(
             $this->shipping_amount,
-            CommonV3Money::class,
-            "shipping_amount in SubscriptionRequestPost must be instance of CommonV3Money $within"
+            Money::class,
+            "shipping_amount in SubscriptionRequestPost must be instance of Money $within"
         );
         !isset($this->shipping_amount) ||  $this->shipping_amount->validate(SubscriptionRequestPost::class);
         !isset($this->subscriber) || Assert::isInstanceOf(
@@ -140,7 +139,7 @@ class SubscriptionRequestPost implements JsonSerializable
             $this->quantity = $data['quantity'];
         }
         if (isset($data['shipping_amount'])) {
-            $this->shipping_amount = new CommonV3Money($data['shipping_amount']);
+            $this->shipping_amount = new Money($data['shipping_amount']);
         }
         if (isset($data['subscriber'])) {
             $this->subscriber = new SubscriberRequest($data['subscriber']);

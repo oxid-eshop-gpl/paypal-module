@@ -4,7 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV4\CommonV4Phone;
 use Webmozart\Assert\Assert;
 
 /**
@@ -38,7 +37,7 @@ class PhoneInfo implements JsonSerializable
      * The phone number in its canonical international [E.164 numbering plan
      * format](https://www.itu.int/rec/T-REC-E.164/en).
      *
-     * @var CommonV4Phone | null
+     * @var Phone2 | null
      */
     public $phone_number;
 
@@ -61,8 +60,8 @@ class PhoneInfo implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
         !isset($this->phone_number) || Assert::isInstanceOf(
             $this->phone_number,
-            CommonV4Phone::class,
-            "phone_number in PhoneInfo must be instance of CommonV4Phone $within"
+            Phone2::class,
+            "phone_number in PhoneInfo must be instance of Phone2 $within"
         );
         !isset($this->phone_number) ||  $this->phone_number->validate(PhoneInfo::class);
     }
@@ -70,7 +69,7 @@ class PhoneInfo implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['phone_number'])) {
-            $this->phone_number = new CommonV4Phone($data['phone_number']);
+            $this->phone_number = new Phone2($data['phone_number']);
         }
         if (isset($data['phone_type'])) {
             $this->phone_type = $data['phone_type'];

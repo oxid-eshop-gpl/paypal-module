@@ -4,7 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -50,7 +49,7 @@ class SubscriptionReviseRequest implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var CommonV3Money | null
+     * @var Money | null
      */
     public $shipping_amount;
 
@@ -65,7 +64,7 @@ class SubscriptionReviseRequest implements JsonSerializable
      * The application context, which customizes the payer experience during the subscription approval process with
      * PayPal.
      *
-     * @var CustomizedXUnsupportedNineEightNineFourApplicationContext | null
+     * @var ApplicationContext2 | null
      */
     public $application_context;
 
@@ -104,8 +103,8 @@ class SubscriptionReviseRequest implements JsonSerializable
         );
         !isset($this->shipping_amount) || Assert::isInstanceOf(
             $this->shipping_amount,
-            CommonV3Money::class,
-            "shipping_amount in SubscriptionReviseRequest must be instance of CommonV3Money $within"
+            Money::class,
+            "shipping_amount in SubscriptionReviseRequest must be instance of Money $within"
         );
         !isset($this->shipping_amount) ||  $this->shipping_amount->validate(SubscriptionReviseRequest::class);
         !isset($this->shipping_address) || Assert::isInstanceOf(
@@ -116,8 +115,8 @@ class SubscriptionReviseRequest implements JsonSerializable
         !isset($this->shipping_address) ||  $this->shipping_address->validate(SubscriptionReviseRequest::class);
         !isset($this->application_context) || Assert::isInstanceOf(
             $this->application_context,
-            CustomizedXUnsupportedNineEightNineFourApplicationContext::class,
-            "application_context in SubscriptionReviseRequest must be instance of CustomizedXUnsupportedNineEightNineFourApplicationContext $within"
+            ApplicationContext2::class,
+            "application_context in SubscriptionReviseRequest must be instance of ApplicationContext2 $within"
         );
         !isset($this->application_context) ||  $this->application_context->validate(SubscriptionReviseRequest::class);
     }
@@ -134,13 +133,13 @@ class SubscriptionReviseRequest implements JsonSerializable
             $this->effective_time = $data['effective_time'];
         }
         if (isset($data['shipping_amount'])) {
-            $this->shipping_amount = new CommonV3Money($data['shipping_amount']);
+            $this->shipping_amount = new Money($data['shipping_amount']);
         }
         if (isset($data['shipping_address'])) {
             $this->shipping_address = new ShippingDetail($data['shipping_address']);
         }
         if (isset($data['application_context'])) {
-            $this->application_context = new CustomizedXUnsupportedNineEightNineFourApplicationContext($data['application_context']);
+            $this->application_context = new ApplicationContext2($data['application_context']);
         }
     }
 

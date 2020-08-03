@@ -4,7 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Name;
 use Webmozart\Assert\Assert;
 
 /**
@@ -19,7 +18,7 @@ class Payer2 implements JsonSerializable
     /**
      * The name of the party.
      *
-     * @var CommonV3Name | null
+     * @var Name | null
      */
     public $name;
 
@@ -48,8 +47,8 @@ class Payer2 implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
         !isset($this->name) || Assert::isInstanceOf(
             $this->name,
-            CommonV3Name::class,
-            "name in Payer2 must be instance of CommonV3Name $within"
+            Name::class,
+            "name in Payer2 must be instance of Name $within"
         );
         !isset($this->name) ||  $this->name->validate(Payer2::class);
         !isset($this->email_address) || Assert::maxLength(
@@ -72,7 +71,7 @@ class Payer2 implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['name'])) {
-            $this->name = new CommonV3Name($data['name']);
+            $this->name = new Name($data['name']);
         }
         if (isset($data['email_address'])) {
             $this->email_address = $data['email_address'];

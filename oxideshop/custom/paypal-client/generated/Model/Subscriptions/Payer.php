@@ -18,7 +18,7 @@ class Payer implements JsonSerializable
     /**
      * The name of the party.
      *
-     * @var Name | null
+     * @var Name2 | null
      */
     public $name;
 
@@ -75,7 +75,7 @@ class Payer implements JsonSerializable
      * HTML 5.1 [Autofilling form controls: the autocomplete
      * attribute](https://www.w3.org/TR/html51/sec-forms.html#autofilling-form-controls-the-autocomplete-attribute).
      *
-     * @var AddressPortable | null
+     * @var AddressPortable2 | null
      */
     public $address;
 
@@ -84,8 +84,8 @@ class Payer implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
         !isset($this->name) || Assert::isInstanceOf(
             $this->name,
-            Name::class,
-            "name in Payer must be instance of Name $within"
+            Name2::class,
+            "name in Payer must be instance of Name2 $within"
         );
         !isset($this->name) ||  $this->name->validate(Payer::class);
         !isset($this->email_address) || Assert::maxLength(
@@ -127,8 +127,8 @@ class Payer implements JsonSerializable
         !isset($this->tax_info) ||  $this->tax_info->validate(Payer::class);
         !isset($this->address) || Assert::isInstanceOf(
             $this->address,
-            AddressPortable::class,
-            "address in Payer must be instance of AddressPortable $within"
+            AddressPortable2::class,
+            "address in Payer must be instance of AddressPortable2 $within"
         );
         !isset($this->address) ||  $this->address->validate(Payer::class);
     }
@@ -136,7 +136,7 @@ class Payer implements JsonSerializable
     private function map(array $data)
     {
         if (isset($data['name'])) {
-            $this->name = new Name($data['name']);
+            $this->name = new Name2($data['name']);
         }
         if (isset($data['email_address'])) {
             $this->email_address = $data['email_address'];
@@ -154,7 +154,7 @@ class Payer implements JsonSerializable
             $this->tax_info = new TaxInfo($data['tax_info']);
         }
         if (isset($data['address'])) {
-            $this->address = new AddressPortable($data['address']);
+            $this->address = new AddressPortable2($data['address']);
         }
     }
 

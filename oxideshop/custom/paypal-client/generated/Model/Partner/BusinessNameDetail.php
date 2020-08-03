@@ -4,7 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV4\CommonV4BusinessName;
 use Webmozart\Assert\Assert;
 
 /**
@@ -12,7 +11,7 @@ use Webmozart\Assert\Assert;
  *
  * generated from: customer_common-v1-schema-account_model-business_name_detail.json
  */
-class BusinessNameDetail extends CommonV4BusinessName implements JsonSerializable
+class BusinessNameDetail extends BusinessName implements JsonSerializable
 {
     use BaseModel;
 

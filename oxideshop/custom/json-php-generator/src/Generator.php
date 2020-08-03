@@ -4,6 +4,7 @@ namespace OxidProfessionalServices;
 
 use Exception;
 use JsonSerializable;
+use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\PsrPrinter;
 use Webmozart\Assert\Assert;
@@ -134,15 +135,21 @@ class Generator
             return $className;
         }
 
+
         $refName = $this->getRefNameFromRefString($defName);
+        $refName = preg_replace('/customized_x_unsupported_[0-9]+_(.*)/', '$1', $refName);
         $className = $this->replaceNumbers($this->getClassNameFromRefName($refName));
         if ($className == "LinkSchema" || $className == "Error" || $className == "LinkDescription") {
             $this->definitions[$defName]['type'] = 'mixed';
-                 return "mixed";
+                return "mixed";
         }
 
-        if ($this->isCommonType($defName)) {
-            $className = $this->getSubNameSpaceForCommonTypes($defName) . $className;
+        if (!$this->isFqnInRef($defName)) {
+            $uniqueName = str_replace('-', '_', $refName);
+            $uniqueName = str_replace('model', '', $uniqueName);
+            $uniqueName = $this->replaceNumbers($this->getClassNameFromRefName($uniqueName));
+            $className = $uniqueName;
+
         }
 
         return $className;
@@ -151,9 +158,9 @@ class Generator
 
     protected $uniqueType = [];
 
-    /**
-     * @return void
-     */
+   /**
+    * @return void
+    */
     protected function buildRefs($modelNamespace): void
     {
         $this->references = [];
@@ -187,19 +194,15 @@ class Generator
                     $className = $this->calculateClassName($defName, $defs);
 
                     if ($className !== "mixed") {
-                        if ($this->isCommonType($defName)) {
-                            $subNameSpace = $this->getSubNameSpaceForCommonTypes($defName);
-                            $className = "$subNameSpace\\" . $className;
-                        } else {
-                            $className = $modelNamespace . '\\' . $className;
+                        $className = $modelNamespace . '\\' . $className;
 
-                            $thisHash = $this->calculateHash($defs);
-                            $i = 2;
-                            while (isset($this->knownClasses[$className]) && $this->knownClasses[$className] != $thisHash) {
-                                $className = $className . $i++;
-                            }
-                            $this->knownClasses[$className] = $this->calculateHash($defs);
+                        $thisHash = $this->calculateHash($defs);
+                        $i = 2;
+                        $baseClassName = $className;
+                        while (isset($this->knownClasses[$className]) && $this->knownClasses[$className] != $thisHash) {
+                            $className = $baseClassName . $i++;
                         }
+                        $this->knownClasses[$className] = $this->calculateHash($defs);
                     }
                     if (isset($this->references[$defName])) {
                         throw new Exception("duplicate Class Definition");
@@ -238,10 +241,6 @@ class Generator
     private function generateModelClass($namespace, $subNameSpace, $defName, $defs): void
     {
         $className = $this->calculateClassName($defName, $defs);
-
-        if ($this->isCommonType($defName)) {
-            $subNameSpace = $this->getSubNameSpaceForCommonTypes($defName);
-        }
 
         $this->currentNameSpace = $ns = new PhpNamespace($namespace . '\\' . $subNameSpace);
         $this->subNameSpace = $subNameSpace;
@@ -336,11 +335,10 @@ class Generator
                                 if (isset($this->references[$ref])) {
                                     $itemType = $this->useRef($ref);
                                 } elseif ($this->isCommonType($ref)) {
-                                    $nestedSubNameSpace = $this->getSubNameSpaceForCommonTypes($ref);
                                     $nestedClassId = $this->calculateClassName($ref, null);
                                     $itemType = $nestedClassId;
                                     if ($itemType != "mixed") {
-                                        $ns->addUse("$namespace\\$nestedSubNameSpace\\$nestedClassId");
+                                        $ns->addUse("$namespace\\$subNameSpace\\$nestedClassId");
                                     }
                                 }
                             }
@@ -447,15 +445,30 @@ class Generator
     protected function isMerchantV1($ref)
     {
         return false;
-        /*
-         * it was not possible to reuse common components because they sometimes do differ
-        return strpos($ref, 'MerchantsCommonComponentsSpecification-v1') !== false
-            || strpos($ref, 'MerchantCommonComponentsSpecification-v1') !== false
-            || strpos($ref, 'merchant.CommonComponentsSpecification-v1') !== false
-            ;
-        */
+        //I tried
+        // return strpos($ref, 'MerchantsCommonComponentsSpecification-v1') !== false
+        //            || strpos($ref, 'MerchantCommonComponentsSpecification-v1') !== false
+        //            || strpos($ref, 'merchant.CommonComponentsSpecification-v1') !== false
+        //            ;
+        //but the quality of there common classes does not allow to
+        //to build a common set of merchant classes.
+        //it was not possible to reuse common components because they sometimes do differ
+        //and reference specific objects where they should only reference the common type
     }
 
+    /**
+     * @param string $ref the reference from the schema
+     * @return bool true if the reference is referencing a common type
+     */
+    protected function isFqnInRef($ref)
+    {
+        return $this->isCommonType($ref)
+            || strpos($ref, 'customer_common') !== false
+            || strpos($ref, 'CommonComponents') !== false
+            || strpos($ref, 'common_components') !== false
+            || strpos($ref, 'customized') !== false
+            ;
+    }
     /**
      * @param string $ref the reference from the schema
      * @return bool true if the reference is referencing a common type
@@ -500,9 +513,9 @@ class Generator
      * @param $propDef
      * @param $property
      * @param $name
-     * @param \Nette\PhpGenerator\ClassType $class
+     * @param ClassType $class
      */
-    private function addProperty($propDef, $name, \Nette\PhpGenerator\ClassType $class, $propType, $classDef): void
+    private function addProperty($propDef, $name, ClassType $class, $propType, $classDef): void
     {
         $validateMethod = $class->getMethod('validate');
         $mapMethod = $class->getMethod('map');
@@ -559,6 +572,14 @@ class Generator
             }
             if ($this->isArrayType($propType)) {
                 $constructor->addBody("\$this->$name = [];");
+            }
+        } else {
+            if ($this->isObjectType($propType)) {
+                $class->addMethod("init" . ucfirst($name))
+                    ->setReturnType($propType)
+                    ->addBody(
+                        '$this' . "->$name = new $propType();"
+                    )->addBody('return $this;');
             }
         }
         if ($propType === "mixed[]") {
@@ -724,7 +745,11 @@ class Generator
 
     protected function calculateHash($defs)
     {
-        unset ($defs['comment']);
-        return json_encode($defs);
+        unset($defs['comment']);
+        unset($defs['description']);
+        $json_encode = json_encode($defs, JSON_PRETTY_PRINT);
+        $json_encode = str_replace("MerchantCommonComponentsSpecification","MerchantsCommonComponentsSpecification", $json_encode);
+        $json_encode = str_replace("merchant.CommonComponentsSpecification","MerchantsCommonComponentsSpecification", $json_encode);
+        return $json_encode;
     }
 }

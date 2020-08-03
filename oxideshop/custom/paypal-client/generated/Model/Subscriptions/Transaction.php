@@ -4,7 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Name;
 use Webmozart\Assert\Assert;
 
 /**
@@ -35,7 +34,7 @@ class Transaction extends CaptureStatus2 implements JsonSerializable
     /**
      * The name of the party.
      *
-     * @var CommonV3Name | null
+     * @var Name | null
      */
     public $payer_name;
 
@@ -85,8 +84,8 @@ class Transaction extends CaptureStatus2 implements JsonSerializable
          $this->amount_with_breakdown->validate(Transaction::class);
         !isset($this->payer_name) || Assert::isInstanceOf(
             $this->payer_name,
-            CommonV3Name::class,
-            "payer_name in Transaction must be instance of CommonV3Name $within"
+            Name::class,
+            "payer_name in Transaction must be instance of Name $within"
         );
         !isset($this->payer_name) ||  $this->payer_name->validate(Transaction::class);
         !isset($this->payer_email) || Assert::minLength(
@@ -121,7 +120,7 @@ class Transaction extends CaptureStatus2 implements JsonSerializable
             $this->amount_with_breakdown = new AmountWithBreakdown($data['amount_with_breakdown']);
         }
         if (isset($data['payer_name'])) {
-            $this->payer_name = new CommonV3Name($data['payer_name']);
+            $this->payer_name = new Name($data['payer_name']);
         }
         if (isset($data['payer_email'])) {
             $this->payer_email = $data['payer_email'];

@@ -4,7 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV4\CommonV4BusinessName;
 use Webmozart\Assert\Assert;
 
 /**
@@ -91,7 +90,7 @@ class Business extends Party implements JsonSerializable
     /**
      * Names of business.
      *
-     * @var CommonV4BusinessName[]
+     * @var BusinessName[]
      * maxItems: 1
      * maxItems: 10
      */
@@ -294,7 +293,7 @@ class Business extends Party implements JsonSerializable
         if (isset($data['names'])) {
             $this->names = [];
             foreach ($data['names'] as $item) {
-                $this->names[] = new CommonV4BusinessName($item);
+                $this->names[] = new BusinessName($item);
             }
         }
         if (isset($data['type'])) {

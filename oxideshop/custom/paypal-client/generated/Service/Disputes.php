@@ -3,39 +3,39 @@
 namespace OxidProfessionalServices\PayPal\Api\Service;
 
 use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\AcceptClaim;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\AcceptOffer;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\AcknowledgeReturnItem;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\Adjudicate;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\AdjudicationInfo;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\Cancel;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\ChangeReason;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\DenyOffer;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\Dispute;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\Dispute2;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\DisputeCreate;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\DisputeCreateRequest;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\DisputeCreateResponse;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\DisputeEligibility;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\DisputeSearch;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\DisputesChangeReason;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\Eligibility;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\EligibilityRequest;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\EligibilityResponse;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\Escalate;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\Evidences;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\MakeOffer;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\Metrics;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\Metrics2;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\PartnerAction;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\ProvideSupportingInfo;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\ReferredDisputes;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\RefundInfo;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\RequireEvidence;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\SendMessage;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\SubsequentAction;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\SubsequentAction2;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\SuggestionResponse;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\ReferredAdjudicationInfo;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\ReferredDispute;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\ReferredDisputeCreateRequest;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\ReferredDisputeCreateResponse;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\ReferredEligibilityRequest;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\ReferredEligibilityResponse;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\ReferredReferredDisputes;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\ReferredRefundInfo;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\ReferredSubsequentAction;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\RequestAcceptClaim;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\RequestAcceptOffer;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\RequestAcknowledgeReturnItem;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\RequestAdjudicate;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\RequestCancel;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\RequestChangeReason;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\RequestDenyOffer;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\RequestEligibility;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\RequestEscalate;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\RequestEvidences;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\RequestMakeOffer;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\RequestMetrics;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\RequestProvideSupportingInfo;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\RequestRequireEvidence;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\RequestSendMessage;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\ResponseDispute;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\ResponseDisputeCreate;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\ResponseDisputeEligibility;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\ResponseDisputeSearch;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\ResponseDisputesChangeReason;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\ResponseMetrics;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\ResponsePartnerAction;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\ResponseSubsequentAction;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\ResponseSuggestionResponse;
 
 class Disputes extends BaseService
 {
@@ -49,9 +49,9 @@ class Disputes extends BaseService
      * @param $adjudicationInfo mixed
      *
      * @throws ApiException
-     * @return SubsequentAction2
+     * @return ReferredSubsequentAction
      */
-    public function notifyPayPalAboutReferredDisputeAdjudicationUpdates($disputeId, AdjudicationInfo $adjudicationInfo): SubsequentAction2
+    public function notifyPayPalAboutReferredDisputeAdjudicationUpdates($disputeId, ReferredAdjudicationInfo $adjudicationInfo): ReferredSubsequentAction
     {
         $path = "/referred-disputes/{$disputeId}/process-adjudication-event";
 
@@ -62,7 +62,7 @@ class Disputes extends BaseService
         $body = json_encode($adjudicationInfo, true);
         $response = $this->send('POST', $path, [], $headers, $body);
         $jsonData = json_decode($response->getBody(), true);
-        return new SubsequentAction2($jsonData);
+        return new ReferredSubsequentAction($jsonData);
     }
 
     /**
@@ -82,9 +82,9 @@ class Disputes extends BaseService
      * @param $requireEvidenceRequest mixed
      *
      * @throws ApiException
-     * @return SubsequentAction
+     * @return ResponseSubsequentAction
      */
-    public function updateDisputeStatus($disputeId, RequireEvidence $requireEvidenceRequest): SubsequentAction
+    public function updateDisputeStatus($disputeId, RequestRequireEvidence $requireEvidenceRequest): ResponseSubsequentAction
     {
         $path = "/disputes/{$disputeId}/require-evidence";
 
@@ -95,7 +95,7 @@ class Disputes extends BaseService
         $body = json_encode($requireEvidenceRequest, true);
         $response = $this->send('POST', $path, [], $headers, $body);
         $jsonData = json_decode($response->getBody(), true);
-        return new SubsequentAction($jsonData);
+        return new ResponseSubsequentAction($jsonData);
     }
 
     /**
@@ -106,9 +106,9 @@ class Disputes extends BaseService
      * @param $refundInfo mixed
      *
      * @throws ApiException
-     * @return SubsequentAction2
+     * @return ReferredSubsequentAction
      */
-    public function notifyPayPalAboutRefundForReferredDispute($disputeId, RefundInfo $refundInfo): SubsequentAction2
+    public function notifyPayPalAboutRefundForReferredDispute($disputeId, ReferredRefundInfo $refundInfo): ReferredSubsequentAction
     {
         $path = "/referred-disputes/{$disputeId}/process-refund-event";
 
@@ -119,7 +119,7 @@ class Disputes extends BaseService
         $body = json_encode($refundInfo, true);
         $response = $this->send('POST', $path, [], $headers, $body);
         $jsonData = json_decode($response->getBody(), true);
-        return new SubsequentAction2($jsonData);
+        return new ReferredSubsequentAction($jsonData);
     }
 
     /**
@@ -131,9 +131,9 @@ class Disputes extends BaseService
      * @param $eligibilityRequest mixed
      *
      * @throws ApiException
-     * @return DisputeEligibility
+     * @return ResponseDisputeEligibility
      */
-    public function determineDisputeEligibility(Eligibility $eligibilityRequest): DisputeEligibility
+    public function determineDisputeEligibility(RequestEligibility $eligibilityRequest): ResponseDisputeEligibility
     {
         $path = "/disputes/validate-eligibility";
 
@@ -144,7 +144,7 @@ class Disputes extends BaseService
         $body = json_encode($eligibilityRequest, true);
         $response = $this->send('POST', $path, [], $headers, $body);
         $jsonData = json_decode($response->getBody(), true);
-        return new DisputeEligibility($jsonData);
+        return new ResponseDisputeEligibility($jsonData);
     }
 
     /**
@@ -261,7 +261,7 @@ class Disputes extends BaseService
      * `start_time` and `disputed_transaction_id` query parameters.
      *
      * @throws ApiException
-     * @return DisputeSearch
+     * @return ResponseDisputeSearch
      */
     public function listDisputes(
         $accountNumber,
@@ -293,7 +293,7 @@ class Disputes extends BaseService
         $totalRequired = false,
         $fields = 'summary',
         $startTime = 'Current date and time'
-    ): DisputeSearch {
+    ): ResponseDisputeSearch {
         $path = "/disputes";
 
 
@@ -331,7 +331,7 @@ class Disputes extends BaseService
         $body = null;
         $response = $this->send('GET', $path, $params, [], $body);
         $jsonData = json_decode($response->getBody(), true);
-        return new DisputeSearch($jsonData);
+        return new ResponseDisputeSearch($jsonData);
     }
 
     /**
@@ -341,9 +341,9 @@ class Disputes extends BaseService
      * @param $dispute mixed
      *
      * @throws ApiException
-     * @return DisputeCreate
+     * @return ResponseDisputeCreate
      */
-    public function createDispute(Dispute $dispute): DisputeCreate
+    public function createDispute(ResponseDispute $dispute): ResponseDisputeCreate
     {
         $path = "/disputes";
 
@@ -354,7 +354,7 @@ class Disputes extends BaseService
         $body = json_encode($dispute, true);
         $response = $this->send('POST', $path, [], $headers, $body);
         $jsonData = json_decode($response->getBody(), true);
-        return new DisputeCreate($jsonData);
+        return new ResponseDisputeCreate($jsonData);
     }
 
     /**
@@ -372,9 +372,9 @@ class Disputes extends BaseService
      * @param $evidence mixed
      *
      * @throws ApiException
-     * @return SubsequentAction
+     * @return ResponseSubsequentAction
      */
-    public function appealDispute($disputeId, Evidences $evidence): SubsequentAction
+    public function appealDispute($disputeId, RequestEvidences $evidence): ResponseSubsequentAction
     {
         $path = "/disputes/{$disputeId}/appeal";
 
@@ -385,7 +385,7 @@ class Disputes extends BaseService
         $body = json_encode($evidence, true);
         $response = $this->send('POST', $path, [], $headers, $body);
         $jsonData = json_decode($response->getBody(), true);
-        return new SubsequentAction($jsonData);
+        return new ResponseSubsequentAction($jsonData);
     }
 
     /**
@@ -394,9 +394,9 @@ class Disputes extends BaseService
      * @param $disputeCreateRequest mixed
      *
      * @throws ApiException
-     * @return DisputeCreateResponse
+     * @return ReferredDisputeCreateResponse
      */
-    public function createReferredDispute(DisputeCreateRequest $disputeCreateRequest): DisputeCreateResponse
+    public function createReferredDispute(ReferredDisputeCreateRequest $disputeCreateRequest): ReferredDisputeCreateResponse
     {
         $path = "/referred-disputes";
 
@@ -407,7 +407,7 @@ class Disputes extends BaseService
         $body = json_encode($disputeCreateRequest, true);
         $response = $this->send('POST', $path, [], $headers, $body);
         $jsonData = json_decode($response->getBody(), true);
-        return new DisputeCreateResponse($jsonData);
+        return new ReferredDisputeCreateResponse($jsonData);
     }
 
     /**
@@ -444,9 +444,9 @@ class Disputes extends BaseService
      * @param $pageSize integer Limits the number of disputes in the response to this value.
      *
      * @throws ApiException
-     * @return ReferredDisputes
+     * @return ReferredReferredDisputes
      */
-    public function listReferredDisputes($createTimeBefore, $createTimeAfter, $pageToken, $status, $disputeFlows, $pageSize = 10): ReferredDisputes
+    public function listReferredDisputes($createTimeBefore, $createTimeAfter, $pageToken, $status, $disputeFlows, $pageSize = 10): ReferredReferredDisputes
     {
         $path = "/referred-disputes";
 
@@ -462,7 +462,7 @@ class Disputes extends BaseService
         $body = null;
         $response = $this->send('GET', $path, $params, [], $body);
         $jsonData = json_decode($response->getBody(), true);
-        return new ReferredDisputes($jsonData);
+        return new ReferredReferredDisputes($jsonData);
     }
 
     /**
@@ -474,9 +474,9 @@ class Disputes extends BaseService
      * @param $cancelRequest mixed
      *
      * @throws ApiException
-     * @return SubsequentAction
+     * @return ResponseSubsequentAction
      */
-    public function cancelDispute($disputeId, Cancel $cancelRequest): SubsequentAction
+    public function cancelDispute($disputeId, RequestCancel $cancelRequest): ResponseSubsequentAction
     {
         $path = "/disputes/{$disputeId}/cancel";
 
@@ -487,7 +487,7 @@ class Disputes extends BaseService
         $body = json_encode($cancelRequest, true);
         $response = $this->send('POST', $path, [], $headers, $body);
         $jsonData = json_decode($response->getBody(), true);
-        return new SubsequentAction($jsonData);
+        return new ResponseSubsequentAction($jsonData);
     }
 
     /**
@@ -499,9 +499,9 @@ class Disputes extends BaseService
      * @param $escalateRequest mixed
      *
      * @throws ApiException
-     * @return SubsequentAction
+     * @return ResponseSubsequentAction
      */
-    public function escalateDisputeToClaim($disputeId, Escalate $escalateRequest): SubsequentAction
+    public function escalateDisputeToClaim($disputeId, RequestEscalate $escalateRequest): ResponseSubsequentAction
     {
         $path = "/disputes/{$disputeId}/escalate";
 
@@ -512,7 +512,7 @@ class Disputes extends BaseService
         $body = json_encode($escalateRequest, true);
         $response = $this->send('POST', $path, [], $headers, $body);
         $jsonData = json_decode($response->getBody(), true);
-        return new SubsequentAction($jsonData);
+        return new ResponseSubsequentAction($jsonData);
     }
 
     /**
@@ -526,9 +526,9 @@ class Disputes extends BaseService
      * @param $adjudicateRequest mixed
      *
      * @throws ApiException
-     * @return SubsequentAction
+     * @return ResponseSubsequentAction
      */
-    public function settleDispute($disputeId, Adjudicate $adjudicateRequest): SubsequentAction
+    public function settleDispute($disputeId, RequestAdjudicate $adjudicateRequest): ResponseSubsequentAction
     {
         $path = "/disputes/{$disputeId}/adjudicate";
 
@@ -539,7 +539,7 @@ class Disputes extends BaseService
         $body = json_encode($adjudicateRequest, true);
         $response = $this->send('POST', $path, [], $headers, $body);
         $jsonData = json_decode($response->getBody(), true);
-        return new SubsequentAction($jsonData);
+        return new ResponseSubsequentAction($jsonData);
     }
 
     /**
@@ -550,9 +550,9 @@ class Disputes extends BaseService
      * @param $disputeId string The ID of the dispute for which to show details.
      *
      * @throws ApiException
-     * @return Dispute
+     * @return ResponseDispute
      */
-    public function showDisputeDetails($disputeId): Dispute
+    public function showDisputeDetails($disputeId): ResponseDispute
     {
         $path = "/disputes/{$disputeId}";
 
@@ -561,7 +561,7 @@ class Disputes extends BaseService
         $body = null;
         $response = $this->send('GET', $path, [], [], $body);
         $jsonData = json_decode($response->getBody(), true);
-        return new Dispute($jsonData);
+        return new ResponseDispute($jsonData);
     }
 
     /**
@@ -595,9 +595,9 @@ class Disputes extends BaseService
      * @param $acceptClaimRequest mixed
      *
      * @throws ApiException
-     * @return SubsequentAction
+     * @return ResponseSubsequentAction
      */
-    public function acceptClaim($disputeId, AcceptClaim $acceptClaimRequest): SubsequentAction
+    public function acceptClaim($disputeId, RequestAcceptClaim $acceptClaimRequest): ResponseSubsequentAction
     {
         $path = "/disputes/{$disputeId}/accept-claim";
 
@@ -608,7 +608,7 @@ class Disputes extends BaseService
         $body = json_encode($acceptClaimRequest, true);
         $response = $this->send('POST', $path, [], $headers, $body);
         $jsonData = json_decode($response->getBody(), true);
-        return new SubsequentAction($jsonData);
+        return new ResponseSubsequentAction($jsonData);
     }
 
     /**
@@ -620,9 +620,9 @@ class Disputes extends BaseService
      * @param $sendMessage mixed
      *
      * @throws ApiException
-     * @return SubsequentAction
+     * @return ResponseSubsequentAction
      */
-    public function sendMessageAboutDisputeToOtherParty($disputeId, SendMessage $sendMessage): SubsequentAction
+    public function sendMessageAboutDisputeToOtherParty($disputeId, RequestSendMessage $sendMessage): ResponseSubsequentAction
     {
         $path = "/disputes/{$disputeId}/send-message";
 
@@ -633,7 +633,7 @@ class Disputes extends BaseService
         $body = json_encode($sendMessage, true);
         $response = $this->send('POST', $path, [], $headers, $body);
         $jsonData = json_decode($response->getBody(), true);
-        return new SubsequentAction($jsonData);
+        return new ResponseSubsequentAction($jsonData);
     }
 
     /**
@@ -645,9 +645,9 @@ class Disputes extends BaseService
      * @param $acknowledgeReturnItemRequest mixed
      *
      * @throws ApiException
-     * @return SubsequentAction
+     * @return ResponseSubsequentAction
      */
-    public function acknowledgeReturnedItem($disputeId, AcknowledgeReturnItem $acknowledgeReturnItemRequest): SubsequentAction
+    public function acknowledgeReturnedItem($disputeId, RequestAcknowledgeReturnItem $acknowledgeReturnItemRequest): ResponseSubsequentAction
     {
         $path = "/disputes/{$disputeId}/acknowledge-return-item";
 
@@ -658,7 +658,7 @@ class Disputes extends BaseService
         $body = json_encode($acknowledgeReturnItemRequest, true);
         $response = $this->send('POST', $path, [], $headers, $body);
         $jsonData = json_decode($response->getBody(), true);
-        return new SubsequentAction($jsonData);
+        return new ResponseSubsequentAction($jsonData);
     }
 
     /**
@@ -667,9 +667,9 @@ class Disputes extends BaseService
      * @param $metricsRequest mixed
      *
      * @throws ApiException
-     * @return Metrics
+     * @return ResponseMetrics
      */
-    public function computeMetricsForDisputes(Metrics2 $metricsRequest): Metrics
+    public function computeMetricsForDisputes(RequestMetrics $metricsRequest): ResponseMetrics
     {
         $path = "/disputes/compute-metrics";
 
@@ -680,7 +680,7 @@ class Disputes extends BaseService
         $body = json_encode($metricsRequest, true);
         $response = $this->send('POST', $path, [], $headers, $body);
         $jsonData = json_decode($response->getBody(), true);
-        return new Metrics($jsonData);
+        return new ResponseMetrics($jsonData);
     }
 
     /**
@@ -691,9 +691,9 @@ class Disputes extends BaseService
      * @param $changeReason mixed
      *
      * @throws ApiException
-     * @return DisputesChangeReason
+     * @return ResponseDisputesChangeReason
      */
-    public function changeReasonForDispute($disputeId, ChangeReason $changeReason): DisputesChangeReason
+    public function changeReasonForDispute($disputeId, RequestChangeReason $changeReason): ResponseDisputesChangeReason
     {
         $path = "/disputes/{$disputeId}/changeReason";
 
@@ -704,7 +704,7 @@ class Disputes extends BaseService
         $body = json_encode($changeReason, true);
         $response = $this->send('POST', $path, [], $headers, $body);
         $jsonData = json_decode($response->getBody(), true);
-        return new DisputesChangeReason($jsonData);
+        return new ResponseDisputesChangeReason($jsonData);
     }
 
     /**
@@ -715,9 +715,9 @@ class Disputes extends BaseService
      * @param $denyOfferRequest mixed
      *
      * @throws ApiException
-     * @return SubsequentAction
+     * @return ResponseSubsequentAction
      */
-    public function denyOfferToResolveDispute($disputeId, DenyOffer $denyOfferRequest): SubsequentAction
+    public function denyOfferToResolveDispute($disputeId, RequestDenyOffer $denyOfferRequest): ResponseSubsequentAction
     {
         $path = "/disputes/{$disputeId}/deny-offer";
 
@@ -728,7 +728,7 @@ class Disputes extends BaseService
         $body = json_encode($denyOfferRequest, true);
         $response = $this->send('POST', $path, [], $headers, $body);
         $jsonData = json_decode($response->getBody(), true);
-        return new SubsequentAction($jsonData);
+        return new ResponseSubsequentAction($jsonData);
     }
 
     /**
@@ -742,9 +742,9 @@ class Disputes extends BaseService
      * is not specified, suggestions will be retrieved over all the supported fields.
      *
      * @throws ApiException
-     * @return SuggestionResponse
+     * @return ResponseSuggestionResponse
      */
-    public function suggestionValuesForSearchText($searchText, $searchField): SuggestionResponse
+    public function suggestionValuesForSearchText($searchText, $searchField): ResponseSuggestionResponse
     {
         $path = "/disputes/search-suggestions";
 
@@ -756,7 +756,7 @@ class Disputes extends BaseService
         $body = null;
         $response = $this->send('GET', $path, $params, [], $body);
         $jsonData = json_decode($response->getBody(), true);
-        return new SuggestionResponse($jsonData);
+        return new ResponseSuggestionResponse($jsonData);
     }
 
     /**
@@ -765,9 +765,9 @@ class Disputes extends BaseService
      * @param $eligibilityRequest mixed
      *
      * @throws ApiException
-     * @return EligibilityResponse
+     * @return ReferredEligibilityResponse
      */
-    public function determineEligibilityForReferredDisputeCreation(EligibilityRequest $eligibilityRequest): EligibilityResponse
+    public function determineEligibilityForReferredDisputeCreation(ReferredEligibilityRequest $eligibilityRequest): ReferredEligibilityResponse
     {
         $path = "/validate-referred-dispute-eligibility";
 
@@ -778,7 +778,7 @@ class Disputes extends BaseService
         $body = json_encode($eligibilityRequest, true);
         $response = $this->send('POST', $path, [], $headers, $body);
         $jsonData = json_decode($response->getBody(), true);
-        return new EligibilityResponse($jsonData);
+        return new ReferredEligibilityResponse($jsonData);
     }
 
     /**
@@ -789,9 +789,9 @@ class Disputes extends BaseService
      * @param $actionId string The ID of the action for which to show details.
      *
      * @throws ApiException
-     * @return PartnerAction
+     * @return ResponsePartnerAction
      */
-    public function showDisputeActionDetails($disputeId, $actionId): PartnerAction
+    public function showDisputeActionDetails($disputeId, $actionId): ResponsePartnerAction
     {
         $path = "/disputes/{$disputeId}/partner-actions/{$actionId}";
 
@@ -800,7 +800,7 @@ class Disputes extends BaseService
         $body = null;
         $response = $this->send('GET', $path, [], [], $body);
         $jsonData = json_decode($response->getBody(), true);
-        return new PartnerAction($jsonData);
+        return new ResponsePartnerAction($jsonData);
     }
 
     /**
@@ -833,9 +833,9 @@ class Disputes extends BaseService
      * @param $disputeId string The ID of the dispute for which to show details.
      *
      * @throws ApiException
-     * @return Dispute2
+     * @return ReferredDispute
      */
-    public function showReferredDisputeDetails($disputeId): Dispute2
+    public function showReferredDisputeDetails($disputeId): ReferredDispute
     {
         $path = "/referred-disputes/{$disputeId}";
 
@@ -844,7 +844,7 @@ class Disputes extends BaseService
         $body = null;
         $response = $this->send('GET', $path, [], [], $body);
         $jsonData = json_decode($response->getBody(), true);
-        return new Dispute2($jsonData);
+        return new ReferredDispute($jsonData);
     }
 
     /**
@@ -866,9 +866,9 @@ class Disputes extends BaseService
      * @param $supportingDocument file A file with evidence.
      *
      * @throws ApiException
-     * @return SubsequentAction
+     * @return ResponseSubsequentAction
      */
-    public function provideSupportingInformationForDispute($disputeId, ProvideSupportingInfo $provideSupportingInfoRequest, $supportingDocument): SubsequentAction
+    public function provideSupportingInformationForDispute($disputeId, RequestProvideSupportingInfo $provideSupportingInfoRequest, $supportingDocument): ResponseSubsequentAction
     {
         $path = "/disputes/{$disputeId}/provide-supporting-info";
 
@@ -879,7 +879,7 @@ class Disputes extends BaseService
         $body = json_encode($provideSupportingInfoRequest, true);
         $response = $this->send('POST', $path, [], $headers, $body);
         $jsonData = json_decode($response->getBody(), true);
-        return new SubsequentAction($jsonData);
+        return new ResponseSubsequentAction($jsonData);
     }
 
     /**
@@ -891,9 +891,9 @@ class Disputes extends BaseService
      * @param $makeOfferRequest mixed
      *
      * @throws ApiException
-     * @return SubsequentAction
+     * @return ResponseSubsequentAction
      */
-    public function makeOfferToResolveDispute($disputeId, MakeOffer $makeOfferRequest): SubsequentAction
+    public function makeOfferToResolveDispute($disputeId, RequestMakeOffer $makeOfferRequest): ResponseSubsequentAction
     {
         $path = "/disputes/{$disputeId}/make-offer";
 
@@ -904,7 +904,7 @@ class Disputes extends BaseService
         $body = json_encode($makeOfferRequest, true);
         $response = $this->send('POST', $path, [], $headers, $body);
         $jsonData = json_decode($response->getBody(), true);
-        return new SubsequentAction($jsonData);
+        return new ResponseSubsequentAction($jsonData);
     }
 
     /**
@@ -926,9 +926,9 @@ class Disputes extends BaseService
      * @param $evidence file A file with evidence.
      *
      * @throws ApiException
-     * @return SubsequentAction
+     * @return ResponseSubsequentAction
      */
-    public function provideEvidence($disputeId, $evidence): SubsequentAction
+    public function provideEvidence($disputeId, $evidence): ResponseSubsequentAction
     {
         $path = "/disputes/{$disputeId}/provide-evidence";
 
@@ -939,7 +939,7 @@ class Disputes extends BaseService
         $body = json_encode($evidence, true);
         $response = $this->send('POST', $path, [], $headers, $body);
         $jsonData = json_decode($response->getBody(), true);
-        return new SubsequentAction($jsonData);
+        return new ResponseSubsequentAction($jsonData);
     }
 
     /**
@@ -951,9 +951,9 @@ class Disputes extends BaseService
      * @param $acceptOfferRequest mixed
      *
      * @throws ApiException
-     * @return SubsequentAction
+     * @return ResponseSubsequentAction
      */
-    public function acceptOfferToResolveDispute($disputeId, AcceptOffer $acceptOfferRequest): SubsequentAction
+    public function acceptOfferToResolveDispute($disputeId, RequestAcceptOffer $acceptOfferRequest): ResponseSubsequentAction
     {
         $path = "/disputes/{$disputeId}/accept-offer";
 
@@ -964,6 +964,6 @@ class Disputes extends BaseService
         $body = json_encode($acceptOfferRequest, true);
         $response = $this->send('POST', $path, [], $headers, $body);
         $jsonData = json_decode($response->getBody(), true);
-        return new SubsequentAction($jsonData);
+        return new ResponseSubsequentAction($jsonData);
     }
 }

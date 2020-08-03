@@ -4,7 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Phone;
 use Webmozart\Assert\Assert;
 
 /**
@@ -32,7 +31,7 @@ class PayeeDisplayable implements JsonSerializable
      * The phone number, in its canonical international [E.164 numbering plan
      * format](https://www.itu.int/rec/T-REC-E.164/en).
      *
-     * @var CommonV3Phone | null
+     * @var Phone | null
      */
     public $business_phone;
 
@@ -55,8 +54,8 @@ class PayeeDisplayable implements JsonSerializable
         );
         !isset($this->business_phone) || Assert::isInstanceOf(
             $this->business_phone,
-            CommonV3Phone::class,
-            "business_phone in PayeeDisplayable must be instance of CommonV3Phone $within"
+            Phone::class,
+            "business_phone in PayeeDisplayable must be instance of Phone $within"
         );
         !isset($this->business_phone) ||  $this->business_phone->validate(PayeeDisplayable::class);
         !isset($this->brand_name) || Assert::maxLength(
@@ -72,7 +71,7 @@ class PayeeDisplayable implements JsonSerializable
             $this->business_email = $data['business_email'];
         }
         if (isset($data['business_phone'])) {
-            $this->business_phone = new CommonV3Phone($data['business_phone']);
+            $this->business_phone = new Phone($data['business_phone']);
         }
         if (isset($data['brand_name'])) {
             $this->brand_name = $data['brand_name'];

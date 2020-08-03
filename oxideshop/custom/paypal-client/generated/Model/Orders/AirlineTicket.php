@@ -4,7 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -75,21 +74,21 @@ class AirlineTicket implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var CommonV3Money | null
+     * @var Money | null
      */
     public $fare;
 
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var CommonV3Money | null
+     * @var Money | null
      */
     public $tax;
 
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var CommonV3Money | null
+     * @var Money | null
      */
     public $fee;
 
@@ -148,20 +147,20 @@ class AirlineTicket implements JsonSerializable
         );
         !isset($this->fare) || Assert::isInstanceOf(
             $this->fare,
-            CommonV3Money::class,
-            "fare in AirlineTicket must be instance of CommonV3Money $within"
+            Money::class,
+            "fare in AirlineTicket must be instance of Money $within"
         );
         !isset($this->fare) ||  $this->fare->validate(AirlineTicket::class);
         !isset($this->tax) || Assert::isInstanceOf(
             $this->tax,
-            CommonV3Money::class,
-            "tax in AirlineTicket must be instance of CommonV3Money $within"
+            Money::class,
+            "tax in AirlineTicket must be instance of Money $within"
         );
         !isset($this->tax) ||  $this->tax->validate(AirlineTicket::class);
         !isset($this->fee) || Assert::isInstanceOf(
             $this->fee,
-            CommonV3Money::class,
-            "fee in AirlineTicket must be instance of CommonV3Money $within"
+            Money::class,
+            "fee in AirlineTicket must be instance of Money $within"
         );
         !isset($this->fee) ||  $this->fee->validate(AirlineTicket::class);
     }
@@ -187,13 +186,13 @@ class AirlineTicket implements JsonSerializable
             $this->restricted_ticket = $data['restricted_ticket'];
         }
         if (isset($data['fare'])) {
-            $this->fare = new CommonV3Money($data['fare']);
+            $this->fare = new Money($data['fare']);
         }
         if (isset($data['tax'])) {
-            $this->tax = new CommonV3Money($data['tax']);
+            $this->tax = new Money($data['tax']);
         }
         if (isset($data['fee'])) {
-            $this->fee = new CommonV3Money($data['fee']);
+            $this->fee = new Money($data['fee']);
         }
     }
 

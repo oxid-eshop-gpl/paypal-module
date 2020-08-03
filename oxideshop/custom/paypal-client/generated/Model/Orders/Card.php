@@ -143,7 +143,7 @@ class Card implements JsonSerializable
      * HTML 5.1 [Autofilling form controls: the autocomplete
      * attribute](https://www.w3.org/TR/html51/sec-forms.html#autofilling-form-controls-the-autocomplete-attribute).
      *
-     * @var AddressPortable | null
+     * @var AddressPortable3 | null
      */
     public $billing_address;
 
@@ -204,8 +204,8 @@ class Card implements JsonSerializable
         );
         !isset($this->billing_address) || Assert::isInstanceOf(
             $this->billing_address,
-            AddressPortable::class,
-            "billing_address in Card must be instance of AddressPortable $within"
+            AddressPortable3::class,
+            "billing_address in Card must be instance of AddressPortable3 $within"
         );
         !isset($this->billing_address) ||  $this->billing_address->validate(Card::class);
         !isset($this->authentication_results) || Assert::maxCount(
@@ -254,7 +254,7 @@ class Card implements JsonSerializable
             $this->card_type = $data['card_type'];
         }
         if (isset($data['billing_address'])) {
-            $this->billing_address = new AddressPortable($data['billing_address']);
+            $this->billing_address = new AddressPortable3($data['billing_address']);
         }
         if (isset($data['authentication_results'])) {
             $this->authentication_results = [];

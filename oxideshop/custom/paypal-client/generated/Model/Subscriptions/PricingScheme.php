@@ -4,7 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -54,7 +53,7 @@ class PricingScheme implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var CommonV3Money | null
+     * @var Money | null
      */
     public $fixed_price;
 
@@ -125,8 +124,8 @@ class PricingScheme implements JsonSerializable
         );
         !isset($this->fixed_price) || Assert::isInstanceOf(
             $this->fixed_price,
-            CommonV3Money::class,
-            "fixed_price in PricingScheme must be instance of CommonV3Money $within"
+            Money::class,
+            "fixed_price in PricingScheme must be instance of Money $within"
         );
         !isset($this->fixed_price) ||  $this->fixed_price->validate(PricingScheme::class);
         !isset($this->tier_mode) || Assert::minLength(
@@ -196,7 +195,7 @@ class PricingScheme implements JsonSerializable
             $this->status = $data['status'];
         }
         if (isset($data['fixed_price'])) {
-            $this->fixed_price = new CommonV3Money($data['fixed_price']);
+            $this->fixed_price = new Money($data['fixed_price']);
         }
         if (isset($data['tier_mode'])) {
             $this->tier_mode = $data['tier_mode'];

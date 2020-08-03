@@ -34,14 +34,14 @@ class BusinessEntity extends Business implements JsonSerializable
     /**
      * The currency range, from the minimum inclusive amount to the maximum inclusive amount.
      *
-     * @var CurrencyRange | null
+     * @var OnboardingCommonCurrencyRange | null
      */
     public $annual_sales_volume_range;
 
     /**
      * The currency range, from the minimum inclusive amount to the maximum inclusive amount.
      *
-     * @var CurrencyRange | null
+     * @var OnboardingCommonCurrencyRange | null
      */
     public $average_monthly_volume_range;
 
@@ -85,14 +85,14 @@ class BusinessEntity extends Business implements JsonSerializable
         }
         !isset($this->annual_sales_volume_range) || Assert::isInstanceOf(
             $this->annual_sales_volume_range,
-            CurrencyRange::class,
-            "annual_sales_volume_range in BusinessEntity must be instance of CurrencyRange $within"
+            OnboardingCommonCurrencyRange::class,
+            "annual_sales_volume_range in BusinessEntity must be instance of OnboardingCommonCurrencyRange $within"
         );
         !isset($this->annual_sales_volume_range) ||  $this->annual_sales_volume_range->validate(BusinessEntity::class);
         !isset($this->average_monthly_volume_range) || Assert::isInstanceOf(
             $this->average_monthly_volume_range,
-            CurrencyRange::class,
-            "average_monthly_volume_range in BusinessEntity must be instance of CurrencyRange $within"
+            OnboardingCommonCurrencyRange::class,
+            "average_monthly_volume_range in BusinessEntity must be instance of OnboardingCommonCurrencyRange $within"
         );
         !isset($this->average_monthly_volume_range) ||  $this->average_monthly_volume_range->validate(BusinessEntity::class);
         !isset($this->business_description) || Assert::minLength(
@@ -119,10 +119,10 @@ class BusinessEntity extends Business implements JsonSerializable
             }
         }
         if (isset($data['annual_sales_volume_range'])) {
-            $this->annual_sales_volume_range = new CurrencyRange($data['annual_sales_volume_range']);
+            $this->annual_sales_volume_range = new OnboardingCommonCurrencyRange($data['annual_sales_volume_range']);
         }
         if (isset($data['average_monthly_volume_range'])) {
-            $this->average_monthly_volume_range = new CurrencyRange($data['average_monthly_volume_range']);
+            $this->average_monthly_volume_range = new OnboardingCommonCurrencyRange($data['average_monthly_volume_range']);
         }
         if (isset($data['business_description'])) {
             $this->business_description = $data['business_description'];

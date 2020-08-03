@@ -4,7 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Partner;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV4\CommonV4FileReference;
 use Webmozart\Assert\Assert;
 
 /**
@@ -95,7 +94,7 @@ class Document implements JsonSerializable
      * The files contained in the document. For example, a document could be represented by a front page file and a
      * back page file, etc.
      *
-     * @var CommonV4FileReference[]
+     * @var FileReference[]
      * maxItems: 1
      * maxItems: 50
      */
@@ -254,7 +253,7 @@ class Document implements JsonSerializable
         if (isset($data['files'])) {
             $this->files = [];
             foreach ($data['files'] as $item) {
-                $this->files[] = new CommonV4FileReference($item);
+                $this->files[] = new FileReference($item);
             }
         }
         if (isset($data['links'])) {

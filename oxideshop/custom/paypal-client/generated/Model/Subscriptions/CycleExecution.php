@@ -4,7 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Subscriptions;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -66,7 +65,7 @@ class CycleExecution implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var CommonV3Money | null
+     * @var Money | null
      */
     public $amount_payable_per_cycle;
 
@@ -98,8 +97,8 @@ class CycleExecution implements JsonSerializable
         Assert::notNull($this->cycles_completed, "cycles_completed in CycleExecution must not be NULL $within");
         !isset($this->amount_payable_per_cycle) || Assert::isInstanceOf(
             $this->amount_payable_per_cycle,
-            CommonV3Money::class,
-            "amount_payable_per_cycle in CycleExecution must be instance of CommonV3Money $within"
+            Money::class,
+            "amount_payable_per_cycle in CycleExecution must be instance of Money $within"
         );
         !isset($this->amount_payable_per_cycle) ||  $this->amount_payable_per_cycle->validate(CycleExecution::class);
     }
@@ -122,7 +121,7 @@ class CycleExecution implements JsonSerializable
             $this->current_pricing_scheme_version = $data['current_pricing_scheme_version'];
         }
         if (isset($data['amount_payable_per_cycle'])) {
-            $this->amount_payable_per_cycle = new CommonV3Money($data['amount_payable_per_cycle']);
+            $this->amount_payable_per_cycle = new Money($data['amount_payable_per_cycle']);
         }
         if (isset($data['total_cycles'])) {
             $this->total_cycles = $data['total_cycles'];

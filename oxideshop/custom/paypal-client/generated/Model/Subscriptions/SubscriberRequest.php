@@ -11,7 +11,7 @@ use Webmozart\Assert\Assert;
  *
  * generated from: subscriber_request.json
  */
-class SubscriberRequest extends Payer23 implements JsonSerializable
+class SubscriberRequest extends Payer3 implements JsonSerializable
 {
     use BaseModel;
 

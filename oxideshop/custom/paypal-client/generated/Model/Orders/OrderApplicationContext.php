@@ -4,7 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3ClientConfiguration;
 use Webmozart\Assert\Assert;
 
 /**
@@ -131,7 +130,7 @@ class OrderApplicationContext implements JsonSerializable
      * Client configuration that captures the product flows and specific experiences that a user completes a paypal
      * transaction.
      *
-     * @var CommonV3ClientConfiguration | null
+     * @var ClientConfiguration | null
      */
     public $client_configuration;
 
@@ -180,8 +179,8 @@ class OrderApplicationContext implements JsonSerializable
         );
         !isset($this->client_configuration) || Assert::isInstanceOf(
             $this->client_configuration,
-            CommonV3ClientConfiguration::class,
-            "client_configuration in OrderApplicationContext must be instance of CommonV3ClientConfiguration $within"
+            ClientConfiguration::class,
+            "client_configuration in OrderApplicationContext must be instance of ClientConfiguration $within"
         );
         !isset($this->client_configuration) ||  $this->client_configuration->validate(OrderApplicationContext::class);
         !isset($this->preferred_payment_source) || Assert::isInstanceOf(
@@ -222,7 +221,7 @@ class OrderApplicationContext implements JsonSerializable
             $this->payment_token = $data['payment_token'];
         }
         if (isset($data['client_configuration'])) {
-            $this->client_configuration = new CommonV3ClientConfiguration($data['client_configuration']);
+            $this->client_configuration = new ClientConfiguration($data['client_configuration']);
         }
         if (isset($data['vault'])) {
             $this->vault = $data['vault'];

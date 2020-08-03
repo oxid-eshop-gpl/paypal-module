@@ -4,7 +4,6 @@ namespace OxidProfessionalServices\PayPal\Api\Model\Orders;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
-use OxidProfessionalServices\PayPal\Api\Model\CommonV3\CommonV3Money;
 use Webmozart\Assert\Assert;
 
 /**
@@ -37,14 +36,14 @@ class Item implements JsonSerializable
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var CommonV3Money
+     * @var Money
      */
     public $unit_amount;
 
     /**
      * The currency and amount for a financial transaction, such as a balance or payment due.
      *
-     * @var CommonV3Money | null
+     * @var Money | null
      */
     public $tax;
 
@@ -102,14 +101,14 @@ class Item implements JsonSerializable
         Assert::notNull($this->unit_amount, "unit_amount in Item must not be NULL $within");
         Assert::isInstanceOf(
             $this->unit_amount,
-            CommonV3Money::class,
-            "unit_amount in Item must be instance of CommonV3Money $within"
+            Money::class,
+            "unit_amount in Item must be instance of Money $within"
         );
          $this->unit_amount->validate(Item::class);
         !isset($this->tax) || Assert::isInstanceOf(
             $this->tax,
-            CommonV3Money::class,
-            "tax in Item must be instance of CommonV3Money $within"
+            Money::class,
+            "tax in Item must be instance of Money $within"
         );
         !isset($this->tax) ||  $this->tax->validate(Item::class);
         Assert::notNull($this->quantity, "quantity in Item must not be NULL $within");
@@ -146,10 +145,10 @@ class Item implements JsonSerializable
             $this->name = $data['name'];
         }
         if (isset($data['unit_amount'])) {
-            $this->unit_amount = new CommonV3Money($data['unit_amount']);
+            $this->unit_amount = new Money($data['unit_amount']);
         }
         if (isset($data['tax'])) {
-            $this->tax = new CommonV3Money($data['tax']);
+            $this->tax = new Money($data['tax']);
         }
         if (isset($data['quantity'])) {
             $this->quantity = $data['quantity'];
@@ -167,7 +166,7 @@ class Item implements JsonSerializable
 
     public function __construct(array $data = null)
     {
-        $this->unit_amount = new CommonV3Money();
+        $this->unit_amount = new Money();
         if (isset($data)) {
             $this->map($data);
         }
