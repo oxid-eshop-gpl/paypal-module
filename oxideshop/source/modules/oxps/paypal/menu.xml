@@ -4,5 +4,10 @@
         <MAINMENU id="paypal">
             <SUBMENU id="OXPS_PAYPAL_CONFIG" cl="PaypalConfigController"/>
         </MAINMENU>
+        <MAINMENU id="mxmanageprod">
+            <SUBMENU id="mxarticles" cl="article" list="article_list">
+                <TAB id="OXPS_PAYPAL_SUBSCRIBE" cl="PaypalSubscribeController" />
+            </SUBMENU>
+        </MAINMENU>
     </OXMENU>
 </OX>

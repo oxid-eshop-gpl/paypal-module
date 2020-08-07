@@ -20,12 +20,17 @@
  * @copyright (C) OXID eSales AG 2003-2020
  */
 
+use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Core\ViewConfig;
 use OxidEsales\Eshop\Application\Model\Basket;
 use OxidProfessionalServices\PayPal\Controller\Admin\OnboardingController;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalConfigController;
+use OxidProfessionalServices\PayPal\Controller\Admin\PaypalSubscribeController;
 use OxidProfessionalServices\PayPal\Controller\ProxyController;
 use OxidProfessionalServices\PayPal\Controller\WebhookController;
+use OxidProfessionalServices\PayPal\Core\ViewConfig as PaypalViewConfig;
+use OxidProfessionalServices\PayPal\Model\Basket as PaypalBasket;
+use OxidProfessionalServices\PayPal\Model\PayPalArticle;
 
 $sMetadataVersion = '2.1';
 
@@ -48,17 +53,20 @@ $aModule = [
     'url' => '',
     'email' => '',
     'extend' => [
-        ViewConfig::class => \OxidProfessionalServices\PayPal\Core\ViewConfig::class,
-        Basket::class => \OxidProfessionalServices\PayPal\Model\Basket::class
+        ViewConfig::class => PaypalViewConfig::class,
+        Basket::class => PaypalBasket::class,
+        Article::class => PayPalArticle::class
     ],
     'controllers' => [
         'PaypalConfigController' => PaypalConfigController::class,
         'PayPalWebhookController' => WebhookController::class,
         'PayPalProxyController' => ProxyController::class,
-        'OnboardingController' => OnboardingController::class
+        'OnboardingController' => OnboardingController::class,
+        'PaypalSubscribeController' => PaypalSubscribeController::class,
     ],
     'templates' => [
         'paypalconfig.tpl' => 'oxps/paypal/views/admin/tpl/paypalconfig.tpl',
+        'subscribe.tpl'    => 'oxps/paypal/views/admin/tpl/subscribe.tpl',
         'paypal_smart_payment_buttons.tpl' => 'oxps/paypal/views/includes/paypal_smart_payment_buttons.tpl',
     ],
     'events' => [
