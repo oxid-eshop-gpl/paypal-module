@@ -49,6 +49,11 @@ class PaypalSubscribeController extends AdminController
         return false;
     }
 
+    public function isPayPalProductLinkedByParentOnly()
+    {
+        return false;
+    }
+
     public function getEditObject()
     {
         $article = oxNew(Article::class);
