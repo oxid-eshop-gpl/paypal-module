@@ -1,4 +1,8 @@
 [{if $sPaymentID == "oxidpaypal"}]
+    [{assign var="bActive" value=false}]
+    [{if $oView->getCheckedPaymentId() == $paymentmethod->oxpayments__oxid->value}]
+        [{assign var="bActive" value=true}]
+    [{/if}]
     <div class="well well-sm">
         <dl>
             <dt>
@@ -6,7 +10,7 @@
                 [{if $oView->getCheckedPaymentId() == $paymentmethod->oxpayments__oxid->value}]checked[{/if}]>
                 <label for="payment_[{$sPaymentID}]"><b>[{$paymentmethod->oxpayments__oxdesc->value}]</b></label>
             </dt>
-            <dd class="payment-option[{if $oView->getCheckedPaymentId() == $paymentmethod->oxpayments__oxid->value}] activePayment[{/if}]">
+            <dd class="payment-option[{if $bActive}] activePayment[{/if}]" [{if $bActive}]style="display: block;"[{/if}]>
                 [{if $paymentmethod->getPrice() && $paymentmethod->oxpayments__oxaddsum->rawValue != 0}]
                     [{if $oxcmp_basket->getPayCostNet()}]
                         [{$paymentmethod->getFNettoPrice()}] [{$currency->sign}] [{oxmultilang ident="OEPAYPAL_PLUS_VAT"}] [{$paymentmethod->getFPriceVat()}]
@@ -15,7 +19,7 @@
                     [{/if}]
                 [{/if}]
                 <div class="paypalDescBox">
-                    [{include file="paypal_smart_payment_buttons.tpl" buttonId="PayPalButtonPaymentPage" buttonClass="small"}]
+                    [{include file="paypal_smart_payment_buttons.tpl" buttonId="PayPalButtonPaymentPage" buttonClass="small" buttonCommit=false}]
                 </div>
             </dd>
         </dl>

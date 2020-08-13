@@ -48,9 +48,11 @@ class ViewConfig extends ViewConfig_parent
     /**
      * Gets PayPal JS SDK url
      *
+     *  @param bool $commit commit the order or Show a Confirmation Page
+     *
      * @return string
      */
-    public function getPayPalJsSdkUrl(): string
+    public function getPayPalJsSdkUrl($commit = true): string
     {
         $payPalConfig = $this->getPayPalConfig();
         $config = Registry::getConfig();
@@ -60,6 +62,7 @@ class ViewConfig extends ViewConfig_parent
         $params['client-id'] = $payPalConfig->getClientId();
         $params['integration-date'] = Constants::PAYPAL_INTEGRATION_DATE;
         $params['intent'] = strtolower(Constants::PAYPAL_ORDER_INTENT_CAPTURE);
+        $params['commit'] = $commit;
 
         if ($currency = $config->getActShopCurrencyObject()) {
             $params['currency'] = strtoupper($currency->name);

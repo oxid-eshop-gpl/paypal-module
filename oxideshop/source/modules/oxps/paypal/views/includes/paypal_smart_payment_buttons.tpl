@@ -38,5 +38,5 @@ paypal.Buttons({
 
 <div id="paypal-button-container"></div>
 
-[{oxscript include=$oViewConf->getPayPalJsSdkUrl()}]
+[{oxscript include=$oViewConf->getPayPalJsSdkUrl($buttonCommit)}]
 [{oxscript add=$smarty.capture.paypal_init}]
