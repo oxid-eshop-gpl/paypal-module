@@ -1,5 +1,5 @@
-[{*
 [{$smarty.block.parent}]
+[{*
 [{assign var="config" value=$oViewConf->getPayPalConfig()}]
 [{if $config->isActive() && $config->showPayPalMiniBasketButton()}]
     <div class="pull-right">
