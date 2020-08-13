@@ -1,3 +1,4 @@
+[{*
 [{assign var="config" value=$oViewConf->getPayPalConfig()}]
 [{if $config->isActive()}]
     <div class="float-right">
@@ -7,4 +8,5 @@
         [{"OR"|oxmultilangassign|oxupper}]
     </div>
 [{/if}]
+*}]
 [{$smarty.block.parent}]
