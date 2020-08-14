@@ -11,6 +11,14 @@ paypal.Buttons({
             return res.json();
         }).then(function(data) {
             console.log(data);
+            [{/literal}]
+            [{if $oViewConf->getTopActiveClassName()=="payment"}]
+                if (data.id && data.status == "CREATED") {
+                    $('#paymentNextStepBottom').show();
+                    $("#payment_oxidpaypal").attr("data-paypal-checkoutsessionid", data.id);
+                }
+            [{/if}]
+            [{literal}]
             return data.id;
         })
     },

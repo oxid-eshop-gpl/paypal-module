@@ -22,10 +22,42 @@
 
 namespace OxidProfessionalServices\PayPal\Core;
 
-class Constants
+use OxidEsales\Eshop\Core\Registry;
+
+class PaypalSession
 {
-    public const PAYPAL_JS_SDK_URL = 'https://www.paypal.com/sdk/js';
-    public const PAYPAL_INTEGRATION_DATE = '2020-07-29';
-    public const PAYPAL_ORDER_INTENT_CAPTURE = 'CAPTURE';
-    public const SESSION_CHECKOUT_ID = 'paypal-checkout-session';
+    /**
+     * @param $checkoutSessionId
+     */
+    public function storePaypalSession($checkoutSessionId): void
+    {
+        Registry::getSession()->setVariable(
+            Constants::SESSION_CHECKOUT_ID,
+            $checkoutSessionId
+        );
+    }
+
+    /**
+     * Checks if active Paypal Session exists
+     *
+     * @return bool
+     */
+    public function isPaypalSessionActive(): bool
+    {
+        if (!$this->getCheckoutSessionId()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Paypal checkout session id getter
+     *
+     * @return mixed
+     */
+    public function getCheckoutSessionId()
+    {
+        return Registry::getSession()->getVariable(Constants::SESSION_CHECKOUT_ID);
+    }
 }

@@ -29,7 +29,7 @@ $(function () {
     });
 
     $oPaymentSelectionPaypal.click(function () {
-        if (1 == 1) {
+        if ($oPaymentSelectionPaypal.attr('data-paypal-checkoutsessionid') == "") {
             $oPaymentSelectionNextStepBottom.hide();
         }
     });

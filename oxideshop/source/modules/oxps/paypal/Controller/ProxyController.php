@@ -29,6 +29,7 @@ use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderCaptureRequest;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderRequest;
 use OxidProfessionalServices\PayPal\Core\OrderRequestFactory;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
+use OxidProfessionalServices\PayPal\Core\PaypalSession;
 
 /**
  * Server side interface for PayPal smart buttons.
@@ -56,6 +57,10 @@ class ProxyController extends FrontendController
             $response = $service->createOrder($request, '', '');
         } catch (Exception $exception) {
             Registry::getLogger()->error("Error on order create call.", [$exception]);
+        }
+
+        if ($response->id) {
+            PaypalSession::storePaypalSession($response->id);
         }
 
         $this->outputJson($response);

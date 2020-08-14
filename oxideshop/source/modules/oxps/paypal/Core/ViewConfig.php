@@ -23,6 +23,7 @@
 namespace OxidProfessionalServices\PayPal\Core;
 
 use OxidEsales\Eshop\Core\Registry;
+use OxidProfessionalServices\PayPal\Core\PaypalSession;
 
 /**
  * @mixin \OxidEsales\Eshop\Core\ViewConfig
@@ -43,6 +44,14 @@ class ViewConfig extends ViewConfig_parent
     public function getPayPalConfig(): Config
     {
         return oxNew(Config::class);
+    }
+
+    /**
+     * @return null or string
+     */
+    public function getCheckoutSessionId(): ?string
+    {
+        return PaypalSession::getCheckoutSessionId();
     }
 
     /**
