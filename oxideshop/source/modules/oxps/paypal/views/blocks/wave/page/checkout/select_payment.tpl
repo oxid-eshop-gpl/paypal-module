@@ -1,5 +1,5 @@
 [{if $sPaymentID == "oxidpaypal"}]
-    [{assign var="sPaypalCheckoutSessionId" value=$oViewConf->getCheckoutSessionId()}]
+    [{assign var="sPaypalCheckoutSessionId" value=$oViewConf->getcheckoutOrderId()}]
     [{assign var="bActive" value=false}]
     [{if $oView->getCheckedPaymentId() == $paymentmethod->oxpayments__oxid->value}]
         [{assign var="bActive" value=true}]

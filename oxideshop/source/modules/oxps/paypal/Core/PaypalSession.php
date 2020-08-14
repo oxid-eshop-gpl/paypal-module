@@ -27,24 +27,24 @@ use OxidEsales\Eshop\Core\Registry;
 class PaypalSession
 {
     /**
-     * @param $checkoutSessionId
+     * @param $checkoutOrderId
      */
-    public function storePaypalSession($checkoutSessionId): void
+    public function storePaypalOrderId($checkoutOrderId): void
     {
         Registry::getSession()->setVariable(
-            Constants::SESSION_CHECKOUT_ID,
-            $checkoutSessionId
+            Constants::SESSION_CHECKOUT_ORDER_ID,
+            $checkoutOrderId
         );
     }
 
     /**
-     * Checks if active Paypal Session exists
+     * Checks if active Paypal Order exists
      *
      * @return bool
      */
-    public function isPaypalSessionActive(): bool
+    public function isPaypalOrderActive(): bool
     {
-        if (!$this->getCheckoutSessionId()) {
+        if (!$this->getcheckoutOrderId()) {
             return false;
         }
 
@@ -52,12 +52,12 @@ class PaypalSession
     }
 
     /**
-     * Paypal checkout session id getter
+     * Paypal checkout order id getter
      *
      * @return mixed
      */
-    public function getCheckoutSessionId()
+    public function getcheckoutOrderId()
     {
-        return Registry::getSession()->getVariable(Constants::SESSION_CHECKOUT_ID);
+        return Registry::getSession()->getVariable(Constants::SESSION_CHECKOUT_ORDER_ID);
     }
 }

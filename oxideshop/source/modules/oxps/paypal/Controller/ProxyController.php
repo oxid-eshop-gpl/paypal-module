@@ -60,7 +60,7 @@ class ProxyController extends FrontendController
         }
 
         if ($response->id) {
-            PaypalSession::storePaypalSession($response->id);
+            PaypalSession::storePaypalOrderId($response->id);
         }
 
         $this->outputJson($response);

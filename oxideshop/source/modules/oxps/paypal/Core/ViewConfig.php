@@ -49,9 +49,9 @@ class ViewConfig extends ViewConfig_parent
     /**
      * @return null or string
      */
-    public function getCheckoutSessionId(): ?string
+    public function getcheckoutOrderId(): ?string
     {
-        return PaypalSession::getCheckoutSessionId();
+        return PaypalSession::getcheckoutOrderId();
     }
 
     /**
