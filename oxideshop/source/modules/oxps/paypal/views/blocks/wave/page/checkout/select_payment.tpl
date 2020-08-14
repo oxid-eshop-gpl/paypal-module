@@ -11,6 +11,15 @@
                 <label for="payment_[{$sPaymentID}]"><b>[{$paymentmethod->oxpayments__oxdesc->value}]</b></label>
             </dt>
             <dd class="payment-option[{if $bActive}] activePayment[{/if}]" [{if $bActive}]style="display: block;"[{/if}]>
+                [{if $bActive}]
+                    [{capture assign="sActivePaymentJS"}]
+                        $(function () {
+                            $("#payment_[{$sPaymentID}]").trigger( "click" );
+                            console.log("#payment_[{$sPaymentID}]");
+                        });
+                    [{/capture}]
+                    [{oxscript add=$sActivePaymentJS}]
+                [{/if}]
                 [{if $paymentmethod->getPrice() && $paymentmethod->oxpayments__oxaddsum->rawValue != 0}]
                     [{if $oxcmp_basket->getPayCostNet()}]
                         [{$paymentmethod->getFNettoPrice()}] [{$currency->sign}] [{oxmultilang ident="OEPAYPAL_PLUS_VAT"}] [{$paymentmethod->getFPriceVat()}]
