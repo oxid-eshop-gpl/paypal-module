@@ -22,6 +22,7 @@
 
 use OxidEsales\Eshop\Core\ViewConfig;
 use OxidEsales\Eshop\Application\Model\Basket;
+use OxidEsales\Eshop\Application\Model\PaymentGateway;
 use OxidProfessionalServices\PayPal\Controller\Admin\OnboardingController;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalConfigController;
 use OxidProfessionalServices\PayPal\Controller\ProxyController;
@@ -48,8 +49,11 @@ $aModule = [
     'url' => '',
     'email' => '',
     'extend' => [
+        // Core
         ViewConfig::class => \OxidProfessionalServices\PayPal\Core\ViewConfig::class,
-        Basket::class => \OxidProfessionalServices\PayPal\Model\Basket::class
+        // Model
+        Basket::class => \OxidProfessionalServices\PayPal\Model\Basket::class,
+        PaymentGateway::class => \OxidProfessionalServices\PayPal\Model\PaymentGateway::class
     ],
     'controllers' => [
         'PaypalConfigController' => PaypalConfigController::class,
