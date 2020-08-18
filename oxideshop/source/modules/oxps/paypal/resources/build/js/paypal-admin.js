@@ -18,20 +18,24 @@
  * @copyright (C) OXID eSales AG 2003-2020
  */
 
-function copyToClipboard(element) {
+function copyToClipboard(element)
+{
     document.querySelector(element).select();
     document.execCommand('copy');
 }
 
-function onboardedCallbackLive(authCode, sharedId) {
+function onboardedCallbackLive(authCode, sharedId)
+{
     callOnboardingControllerAutoConfigurationFromCallback(authCode, sharedId, false);
 }
 
-function onboardedCallbackSandbox(authCode, sharedId) {
+function onboardedCallbackSandbox(authCode, sharedId)
+{
     callOnboardingControllerAutoConfigurationFromCallback(authCode, sharedId, true);
 }
 
-function callOnboardingControllerAutoConfigurationFromCallback(authCode, sharedId, isSandBox) {
+function callOnboardingControllerAutoConfigurationFromCallback(authCode, sharedId, isSandBox)
+{
     fetch(window.selfLink + 'cl=OnboardingController&fnc=autoConfigurationFromCallback', {
         method: 'POST',
         headers: {
@@ -44,16 +48,16 @@ function callOnboardingControllerAutoConfigurationFromCallback(authCode, sharedI
         })
     })
     .then(
-        function(response) {
+        function (response) {
             console.log(response);
             if (response.status !== 200) {
                 console.log('Error - Status Code: ' + response.status);
                 return;
             }
 
-            response.json().then(function(data) {
+            response.json().then(function (data) {
                 console.log(data);
-                if(window.isSandBox) {
+                if (window.isSandBox) {
                     jQuery("#client-sandbox-id").val(data.client_id);
                     jQuery("#client-sandbox-secret").val(data.client_secret);
                 } else {
@@ -63,7 +67,7 @@ function callOnboardingControllerAutoConfigurationFromCallback(authCode, sharedI
             });
         }
     )
-    .catch(function(err) {
+    .catch(function (err) {
         console.log('Fetch Error :-S', err);
     });
 }

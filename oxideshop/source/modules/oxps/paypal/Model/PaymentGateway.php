@@ -50,7 +50,8 @@ class PaymentGateway extends PaymentGateway_parent
         $success = parent::executePayment($amount, $order);
         $session = $this->getSession();
 
-        if ( ($session->getVariable('paymentid') == 'oxidpaypal')
+        if (
+            ($session->getVariable('paymentid') == 'oxidpaypal')
              || ($session->getBasket()->getPaymentId() == 'oxidpaypal')
         ) {
             $success = $this->doAuthorizePayment($order);
@@ -74,7 +75,6 @@ class PaymentGateway extends PaymentGateway_parent
         try {
             // updating order state
             if ($order) {
-
                 if ($checkoutOrderId = PaypalSession::getcheckoutOrderId()) {
 
                     /** @var ServiceFactory $serviceFactory */
@@ -94,12 +94,10 @@ class PaymentGateway extends PaymentGateway_parent
                     PaypalSession::storePaypalOrderId('');
                 }
             } else {
-
                 $exception = oxNew(StandardException::class, 'OEPAYPAL_ORDER_ERROR');
                 throw $exception;
             }
         } catch (Exception $exception) {
-
             $this->_iLastErrorNo = \OxidEsales\Eshop\Application\Model\Order::ORDER_STATE_PAYMENTERROR;
 
             Registry::getLogger()->error("Error on doAuthorizePayment call.", [$exception]);
@@ -107,5 +105,4 @@ class PaymentGateway extends PaymentGateway_parent
 
         return $success;
     }
-
 }
