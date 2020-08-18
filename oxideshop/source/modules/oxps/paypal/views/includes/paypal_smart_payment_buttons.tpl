@@ -32,7 +32,8 @@ paypal.Buttons({
     onCancel: function(data, actions) {
         console.log("Customer cancelled the PayPal Checkout Flow");
     },
-    onError: function () {
+    onError: function (data) {
+        console.log(data);
         console.log("An Error occurred as part of the PayPal JS SDK");
     }
 }).render('#paypal-button-container');

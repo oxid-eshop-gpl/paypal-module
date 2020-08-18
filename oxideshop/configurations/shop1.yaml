@@ -12,7 +12,6 @@ GeneralShopSettings:
         - b2bserviceproducts
         - b2bservices
         - ddoevisualcms
-        - oxps/paypal
         - psr_logger
     aHomeCountry:
         - 8f241f11096877ac0.98748826
@@ -63,6 +62,7 @@ GeneralShopSettings:
             - OxidEsales\B2BModule\BulkOrders\Model\Basket
             - OxidEsales\B2BModule\ScheduledOrders\Model\Basket
             - OxidEsales\B2BModule\ServiceProducts\Model\Basket
+            - OxidProfessionalServices\PayPal\Model\Basket
         OxidEsales\Eshop\Application\Model\Order:
             - OxidEsales\B2BModule\ApprovalProcedure\Model\Order
             - OxidEsales\B2BModule\Budget\Model\Order
@@ -83,9 +83,11 @@ GeneralShopSettings:
             - OxidEsales\B2BModule\BuyingAgent\Core\ViewConfig
             - OxidEsales\B2BModule\Services\Core\ViewConfig
             - OxidEsales\VisualCmsModule\Core\ViewConfig
+            - OxidProfessionalServices\PayPal\Core\ViewConfig
     aModuleVersions:
         moduleinternals: '3.0'
         oxps/modulesconfig: 6.1.0
+        oxps/paypal: 0.0.1
     aNrofCatArticles:
         - '10'
         - '20'
@@ -164,8 +166,8 @@ GeneralShopSettings:
     iNewBasketItemMessage: '1'
     iTopNaviCatCount: '4'
     moduleSmartyPluginDirectories:
-        aarr:
-            legacycompatibility: {  }
+        legacycompatibility: {  }
+        oxps/paypal: {  }
     sCatIconsize: '168*100'
     sCatPromotionsize: '370*107'
     sCustomTheme: ''
@@ -179,6 +181,10 @@ module:
         iDefaultWidgetSize: '1'
         iGridSize: '12'
         iGridsterSize: '6'
+    oxps/paypal:
+        blPayPalSandboxMode: '1'
+        sPayPalSandboxClientId: AQV4lDIA7ABznFNC0DmBTHYtNJ3N3Ew5KAVMQD78XKmjTV4_t2qmAKEKBR6xPoVJihJ97rpQcvroFTSV
+        sPayPalSandboxClientSecret: EO1PoMhHjRJArZbwlenECYlyLzc6w_XvVPsUsUM2YOtPLDyLf9JItqTCcUR1El3IzxjQ2z7PFiDSfmIY
 theme: {  }
 oxshops:
     OXPARENTID: '0'
