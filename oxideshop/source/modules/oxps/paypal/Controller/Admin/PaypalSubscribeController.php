@@ -57,8 +57,20 @@ class PaypalSubscribeController extends AdminController
     public function getEditObject()
     {
         $article = oxNew(Article::class);
-        $article->load(Registry::getRequest()->getRequestEscapedParameter('oxid'));
+        $request = Registry::getRequest();
+        $article->load($request->getRequestParameter('oxid'));
         return $article;
+    }
+
+    public function getCatalogEntries()
+    {
+        /**
+         * @var ServiceFactory $sf
+         */
+        $sf = Registry::get(ServiceFactory::class);
+        $cs = $sf->getCatalogService();
+
+        $products = $cs->listProducts();
     }
 
     public function save(){
