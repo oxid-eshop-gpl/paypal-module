@@ -39,12 +39,11 @@ class ViewConfig extends ViewConfig_parent
     }
 
     /**
-     * TODO: set up the SessionActiveMethod
      * @return bool
      */
     public function isPayPalSessionActive(): bool
     {
-        return false;
+        return PaypalSession::isPaypalOrderActive();
     }
 
     /**
@@ -89,13 +88,11 @@ class ViewConfig extends ViewConfig_parent
         $params['client-id'] = $payPalConfig->getClientId();
         $params['integration-date'] = Constants::PAYPAL_INTEGRATION_DATE;
         $params['intent'] = strtolower(Constants::PAYPAL_ORDER_INTENT_CAPTURE);
-        $params['commit'] = $commit;
+        $params['commit'] = ($commit ? 'true' : 'false');
 
         if ($currency = $config->getActShopCurrencyObject()) {
             $params['currency'] = strtoupper($currency->name);
         }
-
-        $params['commit'] = $config->getTopActiveView() == 'order' ? 'true' : 'false';
 
         return Constants::PAYPAL_JS_SDK_URL . '?' . http_build_query($params);
     }
