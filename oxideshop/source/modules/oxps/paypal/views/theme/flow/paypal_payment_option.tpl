@@ -7,11 +7,11 @@
         <div class="panel-body">
             [{if !$oViewConf->isPaypalSessionActive()}]
             <div class="text-left">
-                [{include file="paypal_smart_payment_buttons.tpl" buttonId="PayPalButtonPaymentPage" buttonClass="small" buttonCommit=false}]
+                [{include file="paypal_smart_payment_buttons.tpl" buttonId="PayPalButtonPaymentPage" buttonClass="col-md-4 col-xs-12" buttonCommit=false}]
             </div>
             [{else}]
             <div class="text-left">
-                [{oxmultilang ident="OXPS_PAYPAL_PAY_PROCESSED" args="#"}]
+                [{oxmultilang ident="OXPS_PAYPAL_PAY_PROCESSED" args=$oViewConf->getSelfLink()|cat:"cl=PayPalProxyController&fnc=cancelPaypalPayment"}]
             </div>
             [{/if}]
         </div>

@@ -59,10 +59,15 @@ class ProxyController extends FrontendController
             Registry::getLogger()->error("Error on order create call.", [$exception]);
         }
 
+        $basket->setPayment('oxidpaypal');
+
         if ($response->id) {
             PaypalSession::storePaypalOrderId($response->id);
         }
 
+        if ($goToOrder = (string) Registry::getRequest()->getRequestEscapedParameter('gotoorder')) {
+            Registry::getUtils()->redirect(Registry::getConfig()->getShopHomeUrl() . 'cl=order', false, 302);
+        }
         $this->outputJson($response);
     }
 
@@ -82,6 +87,13 @@ class ProxyController extends FrontendController
 
             $this->outputJson($response);
         }
+    }
+
+    public function cancelPaypalPayment()
+    {
+        PaypalSession::unsetPaypalOrderId();
+        Registry::getSession()->getBasket()->setPayment(null);
+        Registry::getUtils()->redirect(Registry::getConfig()->getShopHomeUrl() . 'cl=payment', false, 301);
     }
 
     /**

@@ -19,18 +19,7 @@
  */
 
 // Short-Handle for document.ready
+/*
 $(function () {
-    var $oPaymentSelectionPaypal = $('#payment_oxidpaypal'),
-        $oPaymentSelectionList = $('input[name ="paymentid"]'),
-        $oPaymentSelectionNextStepBottom = $('#paymentNextStepBottom');
-
-    $oPaymentSelectionList.click(function () {
-        $oPaymentSelectionNextStepBottom.show();
-    });
-
-    $oPaymentSelectionPaypal.click(function () {
-        if ($oPaymentSelectionPaypal.attr('data-paypal-checkoutsessionid') == "") {
-            $oPaymentSelectionNextStepBottom.hide();
-        }
-    });
 });
+*/

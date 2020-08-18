@@ -201,20 +201,6 @@ $aModule = [
         ],
         [
             'theme' => 'flow',
-            'template' => 'page/checkout/order.tpl',
-            'block' => 'checkout_order_btn_submit_bottom',
-            'file' => '/views/blocks/flow/page/checkout/checkout_order_btn_submit_bottom.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'wave',
-            'template' => 'page/checkout/order.tpl',
-            'block'    => 'checkout_order_btn_submit_bottom',
-            'file'     => '/views/blocks/wave/page/checkout/checkout_order_btn_submit_bottom.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'flow',
             'template' => 'page/checkout/user.tpl',
             'block' => 'checkout_user_main',
             'file' => '/views/blocks/flow/page/checkout/checkout_user_main.tpl',

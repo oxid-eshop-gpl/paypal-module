@@ -12,10 +12,10 @@ paypal.Buttons({
         }).then(function(data) {
             console.log(data);
             [{/literal}]
-            [{if $oViewConf->getTopActiveClassName()=="payment"}]
+            [{if $oViewConf->getTopActiveClassName()=="payment" && !$buttonCommit}]
                 if (data.id && data.status == "CREATED") {
-                    $('#paymentNextStepBottom').show();
-                    $("#payment_oxidpaypal").attr("data-paypal-checkoutsessionid", data.id);
+                    $("#payment_oxidpaypal").prop( "checked", true);
+                    $('#paymentNextStepBottom').trigger("click");
                 }
             [{/if}]
             [{literal}]
@@ -44,7 +44,7 @@ paypal.Buttons({
 [{/literal}]
 [{/capture}]
 
-<div id="paypal-button-container"></div>
+<div id="paypal-button-container" class="[{$buttonClass}]"></div>
 
 [{oxscript include=$oViewConf->getPayPalJsSdkUrl($buttonCommit)}]
 [{oxscript add=$smarty.capture.paypal_init}]
