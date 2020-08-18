@@ -105,7 +105,26 @@ class Verkkopankki implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['name'])) {
+            $this->name = $data['name'];
+        }
+        if (isset($data['email'])) {
+            $this->email = $data['email'];
+        }
+        if (isset($data['country_code'])) {
+            $this->country_code = $data['country_code'];
+        }
+        if (isset($data['bank_name'])) {
+            $this->bank_name = $data['bank_name'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

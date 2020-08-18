@@ -100,7 +100,32 @@ class Name implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['prefix'])) {
+            $this->prefix = $data['prefix'];
+        }
+        if (isset($data['given_name'])) {
+            $this->given_name = $data['given_name'];
+        }
+        if (isset($data['surname'])) {
+            $this->surname = $data['surname'];
+        }
+        if (isset($data['middle_name'])) {
+            $this->middle_name = $data['middle_name'];
+        }
+        if (isset($data['suffix'])) {
+            $this->suffix = $data['suffix'];
+        }
+        if (isset($data['full_name'])) {
+            $this->full_name = $data['full_name'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

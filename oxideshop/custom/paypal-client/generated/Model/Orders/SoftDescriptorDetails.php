@@ -79,7 +79,23 @@ class SoftDescriptorDetails implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['soft_descriptor'])) {
+            $this->soft_descriptor = $data['soft_descriptor'];
+        }
+        if (isset($data['contact_type'])) {
+            $this->contact_type = $data['contact_type'];
+        }
+        if (isset($data['contact_value'])) {
+            $this->contact_value = $data['contact_value'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

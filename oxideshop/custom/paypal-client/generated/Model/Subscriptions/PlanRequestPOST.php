@@ -183,13 +183,11 @@ class PlanRequestPOST implements JsonSerializable
             $this->billing_cycles,
             "billing_cycles in PlanRequestPOST must be array $within"
         );
-
         if (isset($this->billing_cycles)) {
             foreach ($this->billing_cycles as $item) {
                 $item->validate(PlanRequestPOST::class);
             }
         }
-
         Assert::notNull($this->payment_preferences, "payment_preferences in PlanRequestPOST must not be NULL $within");
         Assert::isInstanceOf(
             $this->payment_preferences,
@@ -205,9 +203,51 @@ class PlanRequestPOST implements JsonSerializable
         !isset($this->taxes) ||  $this->taxes->validate(PlanRequestPOST::class);
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['product_id'])) {
+            $this->product_id = $data['product_id'];
+        }
+        if (isset($data['name'])) {
+            $this->name = $data['name'];
+        }
+        if (isset($data['status'])) {
+            $this->status = $data['status'];
+        }
+        if (isset($data['description'])) {
+            $this->description = $data['description'];
+        }
+        if (isset($data['usage_type'])) {
+            $this->usage_type = $data['usage_type'];
+        }
+        if (isset($data['billing_cycles'])) {
+            $this->billing_cycles = [];
+            foreach ($data['billing_cycles'] as $item) {
+                $this->billing_cycles[] = new BillingCycle($item);
+            }
+        }
+        if (isset($data['payment_preferences'])) {
+            $this->payment_preferences = new PaymentPreferences($data['payment_preferences']);
+        }
+        if (isset($data['taxes'])) {
+            $this->taxes = new Taxes($data['taxes']);
+        }
+        if (isset($data['quantity_supported'])) {
+            $this->quantity_supported = $data['quantity_supported'];
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->billing_cycles = [];
         $this->payment_preferences = new PaymentPreferences();
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initTaxes(): Taxes
+    {
+        return $this->taxes = new Taxes();
     }
 }

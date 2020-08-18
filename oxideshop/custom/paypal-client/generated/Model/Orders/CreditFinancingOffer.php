@@ -51,7 +51,7 @@ class CreditFinancingOffer implements JsonSerializable
     /**
      * The payer-selected financing term, in months.
      *
-     * @var integer | null
+     * @var int | null
      */
     public $term;
 
@@ -78,7 +78,44 @@ class CreditFinancingOffer implements JsonSerializable
         !isset($this->installment_details) ||  $this->installment_details->validate(CreditFinancingOffer::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['issuer'])) {
+            $this->issuer = $data['issuer'];
+        }
+        if (isset($data['total_payment'])) {
+            $this->total_payment = new Money($data['total_payment']);
+        }
+        if (isset($data['total_interest'])) {
+            $this->total_interest = new Money($data['total_interest']);
+        }
+        if (isset($data['installment_details'])) {
+            $this->installment_details = new CreditFinancingOfferInstallmentDetails($data['installment_details']);
+        }
+        if (isset($data['term'])) {
+            $this->term = $data['term'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initTotalPayment(): Money
+    {
+        return $this->total_payment = new Money();
+    }
+
+    public function initTotalInterest(): Money
+    {
+        return $this->total_interest = new Money();
+    }
+
+    public function initInstallmentDetails(): CreditFinancingOfferInstallmentDetails
+    {
+        return $this->installment_details = new CreditFinancingOfferInstallmentDetails();
     }
 }

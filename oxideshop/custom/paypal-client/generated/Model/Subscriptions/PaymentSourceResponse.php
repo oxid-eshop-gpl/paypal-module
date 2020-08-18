@@ -33,7 +33,22 @@ class PaymentSourceResponse implements JsonSerializable
         !isset($this->card) ||  $this->card->validate(PaymentSourceResponse::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['card'])) {
+            $this->card = new CardResponseWithBillingAddress($data['card']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initCard(): CardResponseWithBillingAddress
+    {
+        return $this->card = new CardResponseWithBillingAddress();
     }
 }

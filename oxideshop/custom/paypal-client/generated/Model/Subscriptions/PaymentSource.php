@@ -20,7 +20,7 @@ class PaymentSource implements JsonSerializable
     /**
      * The payment card to use to fund a payment. Can be a credit or debit card.
      *
-     * @var Card | null
+     * @var Card2 | null
      */
     public $card;
 
@@ -29,13 +29,28 @@ class PaymentSource implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
         !isset($this->card) || Assert::isInstanceOf(
             $this->card,
-            Card::class,
-            "card in PaymentSource must be instance of Card $within"
+            Card2::class,
+            "card in PaymentSource must be instance of Card2 $within"
         );
         !isset($this->card) ||  $this->card->validate(PaymentSource::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['card'])) {
+            $this->card = new Card2($data['card']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initCard(): Card2
+    {
+        return $this->card = new Card2();
     }
 }

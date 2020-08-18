@@ -53,7 +53,7 @@ class BillingCycle implements JsonSerializable
      * `sequence` of `1` while a regular billing cycle has a `sequence` of `2`, so that trial cycle runs before the
      * regular cycle.
      *
-     * @var integer
+     * @var int
      */
     public $sequence;
 
@@ -63,7 +63,7 @@ class BillingCycle implements JsonSerializable
      * billing cycles can be executed infinite times (value of <code>0</code> for <code>total_cycles</code>) or a
      * finite number of times (value between <code>1</code> and <code>999</code> for <code>total_cycles</code>).
      *
-     * @var integer | null
+     * @var int | null
      */
     public $total_cycles = 1;
 
@@ -97,8 +97,35 @@ class BillingCycle implements JsonSerializable
         Assert::notNull($this->sequence, "sequence in BillingCycle must not be NULL $within");
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['pricing_scheme'])) {
+            $this->pricing_scheme = new PricingScheme($data['pricing_scheme']);
+        }
+        if (isset($data['frequency'])) {
+            $this->frequency = new Frequency($data['frequency']);
+        }
+        if (isset($data['tenure_type'])) {
+            $this->tenure_type = $data['tenure_type'];
+        }
+        if (isset($data['sequence'])) {
+            $this->sequence = $data['sequence'];
+        }
+        if (isset($data['total_cycles'])) {
+            $this->total_cycles = $data['total_cycles'];
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->frequency = new Frequency();
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initPricingScheme(): PricingScheme
+    {
+        return $this->pricing_scheme = new PricingScheme();
     }
 }

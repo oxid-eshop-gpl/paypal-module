@@ -73,7 +73,25 @@ class AuthorizationStatus implements JsonSerializable
         !isset($this->status_details) ||  $this->status_details->validate(AuthorizationStatus::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['status'])) {
+            $this->status = $data['status'];
+        }
+        if (isset($data['status_details'])) {
+            $this->status_details = new AuthorizationStatusDetails($data['status_details']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initStatusDetails(): AuthorizationStatusDetails
+    {
+        return $this->status_details = new AuthorizationStatusDetails();
     }
 }

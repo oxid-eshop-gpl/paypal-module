@@ -50,7 +50,26 @@ class Patch implements JsonSerializable
         Assert::notNull($this->op, "op in Patch must not be NULL $within");
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['op'])) {
+            $this->op = $data['op'];
+        }
+        if (isset($data['path'])) {
+            $this->path = $data['path'];
+        }
+        if (isset($data['value'])) {
+            $this->value = $data['value'];
+        }
+        if (isset($data['from'])) {
+            $this->from = $data['from'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

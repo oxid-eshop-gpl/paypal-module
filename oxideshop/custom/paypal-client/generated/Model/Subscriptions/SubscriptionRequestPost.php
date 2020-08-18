@@ -127,7 +127,50 @@ class SubscriptionRequestPost implements JsonSerializable
         !isset($this->application_context) ||  $this->application_context->validate(SubscriptionRequestPost::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['plan_id'])) {
+            $this->plan_id = $data['plan_id'];
+        }
+        if (isset($data['start_time'])) {
+            $this->start_time = $data['start_time'];
+        }
+        if (isset($data['quantity'])) {
+            $this->quantity = $data['quantity'];
+        }
+        if (isset($data['shipping_amount'])) {
+            $this->shipping_amount = new Money($data['shipping_amount']);
+        }
+        if (isset($data['subscriber'])) {
+            $this->subscriber = new SubscriberRequest($data['subscriber']);
+        }
+        if (isset($data['auto_renewal'])) {
+            $this->auto_renewal = $data['auto_renewal'];
+        }
+        if (isset($data['application_context'])) {
+            $this->application_context = new ApplicationContext($data['application_context']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initShippingAmount(): Money
+    {
+        return $this->shipping_amount = new Money();
+    }
+
+    public function initSubscriber(): SubscriberRequest
+    {
+        return $this->subscriber = new SubscriberRequest();
+    }
+
+    public function initApplicationContext(): ApplicationContext
+    {
+        return $this->application_context = new ApplicationContext();
     }
 }

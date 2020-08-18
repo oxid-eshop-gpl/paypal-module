@@ -45,7 +45,25 @@ class CreditFinancingOfferInstallmentDetails implements JsonSerializable
         !isset($this->payment_due) ||  $this->payment_due->validate(CreditFinancingOfferInstallmentDetails::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['period'])) {
+            $this->period = $data['period'];
+        }
+        if (isset($data['payment_due'])) {
+            $this->payment_due = new Money($data['payment_due']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initPaymentDue(): Money
+    {
+        return $this->payment_due = new Money();
     }
 }

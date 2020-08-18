@@ -65,7 +65,28 @@ class PayeeDisplayable implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['business_email'])) {
+            $this->business_email = $data['business_email'];
+        }
+        if (isset($data['business_phone'])) {
+            $this->business_phone = new Phone($data['business_phone']);
+        }
+        if (isset($data['brand_name'])) {
+            $this->brand_name = $data['brand_name'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initBusinessPhone(): Phone
+    {
+        return $this->business_phone = new Phone();
     }
 }

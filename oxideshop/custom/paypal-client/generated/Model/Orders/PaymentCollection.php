@@ -45,29 +45,24 @@ class PaymentCollection implements JsonSerializable
             $this->authorizations,
             "authorizations in PaymentCollection must be array $within"
         );
-
         if (isset($this->authorizations)) {
             foreach ($this->authorizations as $item) {
                 $item->validate(PaymentCollection::class);
             }
         }
-
         !isset($this->captures) || Assert::isArray(
             $this->captures,
             "captures in PaymentCollection must be array $within"
         );
-
         if (isset($this->captures)) {
             foreach ($this->captures as $item) {
                 $item->validate(PaymentCollection::class);
             }
         }
-
         !isset($this->refunds) || Assert::isArray(
             $this->refunds,
             "refunds in PaymentCollection must be array $within"
         );
-
         if (isset($this->refunds)) {
             foreach ($this->refunds as $item) {
                 $item->validate(PaymentCollection::class);
@@ -75,7 +70,32 @@ class PaymentCollection implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['authorizations'])) {
+            $this->authorizations = [];
+            foreach ($data['authorizations'] as $item) {
+                $this->authorizations[] = new AuthorizationWithAdditionalData($item);
+            }
+        }
+        if (isset($data['captures'])) {
+            $this->captures = [];
+            foreach ($data['captures'] as $item) {
+                $this->captures[] = new Capture($item);
+            }
+        }
+        if (isset($data['refunds'])) {
+            $this->refunds = [];
+            foreach ($data['refunds'] as $item) {
+                $this->refunds[] = new Refund($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

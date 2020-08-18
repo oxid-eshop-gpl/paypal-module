@@ -99,7 +99,23 @@ class PricingDirective implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['participant_type'])) {
+            $this->participant_type = $data['participant_type'];
+        }
+        if (isset($data['account_number'])) {
+            $this->account_number = $data['account_number'];
+        }
+        if (isset($data['type'])) {
+            $this->type = $data['type'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

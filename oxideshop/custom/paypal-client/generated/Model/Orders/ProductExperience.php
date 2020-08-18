@@ -9,7 +9,8 @@ use Webmozart\Assert\Assert;
 /**
  * The product experiences that a user completes on a PayPal transaction.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-common_components-v3-schema-json-openapi-2.0-product_experience.json
+ * generated from:
+ * MerchantsCommonComponentsSpecification-v1-schema-common_components-v3-schema-json-openapi-2.0-product_experience.json
  */
 class ProductExperience implements JsonSerializable
 {
@@ -361,7 +362,29 @@ class ProductExperience implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['user_experience_flow'])) {
+            $this->user_experience_flow = $data['user_experience_flow'];
+        }
+        if (isset($data['entry_point'])) {
+            $this->entry_point = $data['entry_point'];
+        }
+        if (isset($data['payment_method'])) {
+            $this->payment_method = $data['payment_method'];
+        }
+        if (isset($data['channel'])) {
+            $this->channel = $data['channel'];
+        }
+        if (isset($data['product_flow'])) {
+            $this->product_flow = $data['product_flow'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

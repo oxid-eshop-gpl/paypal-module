@@ -55,8 +55,21 @@ class UpdatePurchaseUnitRequest implements JsonSerializable
          $this->payments->validate(UpdatePurchaseUnitRequest::class);
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['reference_id'])) {
+            $this->reference_id = $data['reference_id'];
+        }
+        if (isset($data['payments'])) {
+            $this->payments = new UpdatePaymentCollectionRequest($data['payments']);
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->payments = new UpdatePaymentCollectionRequest();
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

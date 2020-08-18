@@ -280,7 +280,174 @@ class PaymentSourceResponse implements JsonSerializable
         !isset($this->wechatpay) ||  $this->wechatpay->validate(PaymentSourceResponse::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['card'])) {
+            $this->card = new CardResponse($data['card']);
+        }
+        if (isset($data['paypal'])) {
+            $this->paypal = new PaypalWalletResponse($data['paypal']);
+        }
+        if (isset($data['wallet'])) {
+            $this->wallet = new WalletsResponse($data['wallet']);
+        }
+        if (isset($data['bank'])) {
+            $this->bank = new BankResponse($data['bank']);
+        }
+        if (isset($data['alipay'])) {
+            $this->alipay = new Alipay($data['alipay']);
+        }
+        if (isset($data['bancontact'])) {
+            $this->bancontact = new Bancontact($data['bancontact']);
+        }
+        if (isset($data['blik'])) {
+            $this->blik = new Blik($data['blik']);
+        }
+        if (isset($data['eps'])) {
+            $this->eps = new Eps($data['eps']);
+        }
+        if (isset($data['giropay'])) {
+            $this->giropay = new Giropay($data['giropay']);
+        }
+        if (isset($data['ideal'])) {
+            $this->ideal = new Ideal($data['ideal']);
+        }
+        if (isset($data['multibanco'])) {
+            $this->multibanco = new Multibanco($data['multibanco']);
+        }
+        if (isset($data['mybank'])) {
+            $this->mybank = new Mybank($data['mybank']);
+        }
+        if (isset($data['payu'])) {
+            $this->payu = new Payu($data['payu']);
+        }
+        if (isset($data['p24'])) {
+            $this->p24 = new PTwoFour($data['p24']);
+        }
+        if (isset($data['poli'])) {
+            $this->poli = new Poli($data['poli']);
+        }
+        if (isset($data['sofort'])) {
+            $this->sofort = new Sofort($data['sofort']);
+        }
+        if (isset($data['trustly'])) {
+            $this->trustly = new Trustly($data['trustly']);
+        }
+        if (isset($data['trustpay'])) {
+            $this->trustpay = new Trustpay($data['trustpay']);
+        }
+        if (isset($data['verkkopankki'])) {
+            $this->verkkopankki = new Verkkopankki($data['verkkopankki']);
+        }
+        if (isset($data['wechatpay'])) {
+            $this->wechatpay = new Wechatpay($data['wechatpay']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initCard(): CardResponse
+    {
+        return $this->card = new CardResponse();
+    }
+
+    public function initPaypal(): PaypalWalletResponse
+    {
+        return $this->paypal = new PaypalWalletResponse();
+    }
+
+    public function initWallet(): WalletsResponse
+    {
+        return $this->wallet = new WalletsResponse();
+    }
+
+    public function initBank(): BankResponse
+    {
+        return $this->bank = new BankResponse();
+    }
+
+    public function initAlipay(): Alipay
+    {
+        return $this->alipay = new Alipay();
+    }
+
+    public function initBancontact(): Bancontact
+    {
+        return $this->bancontact = new Bancontact();
+    }
+
+    public function initBlik(): Blik
+    {
+        return $this->blik = new Blik();
+    }
+
+    public function initEps(): Eps
+    {
+        return $this->eps = new Eps();
+    }
+
+    public function initGiropay(): Giropay
+    {
+        return $this->giropay = new Giropay();
+    }
+
+    public function initIdeal(): Ideal
+    {
+        return $this->ideal = new Ideal();
+    }
+
+    public function initMultibanco(): Multibanco
+    {
+        return $this->multibanco = new Multibanco();
+    }
+
+    public function initMybank(): Mybank
+    {
+        return $this->mybank = new Mybank();
+    }
+
+    public function initPayu(): Payu
+    {
+        return $this->payu = new Payu();
+    }
+
+    public function initP24(): PTwoFour
+    {
+        return $this->p24 = new PTwoFour();
+    }
+
+    public function initPoli(): Poli
+    {
+        return $this->poli = new Poli();
+    }
+
+    public function initSofort(): Sofort
+    {
+        return $this->sofort = new Sofort();
+    }
+
+    public function initTrustly(): Trustly
+    {
+        return $this->trustly = new Trustly();
+    }
+
+    public function initTrustpay(): Trustpay
+    {
+        return $this->trustpay = new Trustpay();
+    }
+
+    public function initVerkkopankki(): Verkkopankki
+    {
+        return $this->verkkopankki = new Verkkopankki();
+    }
+
+    public function initWechatpay(): Wechatpay
+    {
+        return $this->wechatpay = new Wechatpay();
     }
 }

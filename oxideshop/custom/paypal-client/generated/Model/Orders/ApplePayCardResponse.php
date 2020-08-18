@@ -11,7 +11,7 @@ use Webmozart\Assert\Assert;
  *
  * generated from: MerchantsCommonComponentsSpecification-v1-schema-apple_pay_card_response.json
  */
-class ApplePayCardResponse extends CardResponse implements JsonSerializable
+class ApplePayCardResponse extends CardResponse2 implements JsonSerializable
 {
     use BaseModel;
 
@@ -29,7 +29,7 @@ class ApplePayCardResponse extends CardResponse implements JsonSerializable
      * HTML 5.1 [Autofilling form controls: the autocomplete
      * attribute](https://www.w3.org/TR/html51/sec-forms.html#autofilling-form-controls-the-autocomplete-attribute).
      *
-     * @var AddressPortable | null
+     * @var AddressPortable2 | null
      */
     public $billing_address;
 
@@ -56,8 +56,8 @@ class ApplePayCardResponse extends CardResponse implements JsonSerializable
         );
         !isset($this->billing_address) || Assert::isInstanceOf(
             $this->billing_address,
-            AddressPortable::class,
-            "billing_address in ApplePayCardResponse must be instance of AddressPortable $within"
+            AddressPortable2::class,
+            "billing_address in ApplePayCardResponse must be instance of AddressPortable2 $within"
         );
         !isset($this->billing_address) ||  $this->billing_address->validate(ApplePayCardResponse::class);
         !isset($this->country_code) || Assert::minLength(
@@ -72,7 +72,29 @@ class ApplePayCardResponse extends CardResponse implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['name'])) {
+            $this->name = $data['name'];
+        }
+        if (isset($data['billing_address'])) {
+            $this->billing_address = new AddressPortable2($data['billing_address']);
+        }
+        if (isset($data['country_code'])) {
+            $this->country_code = $data['country_code'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        parent::__construct($data);
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initBillingAddress(): AddressPortable2
+    {
+        return $this->billing_address = new AddressPortable2();
     }
 }

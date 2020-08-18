@@ -257,13 +257,11 @@ class PaymentUnit implements JsonSerializable
             $this->items,
             "items in PaymentUnit must be array $within"
         );
-
         if (isset($this->items)) {
             foreach ($this->items as $item) {
                 $item->validate(PaymentUnit::class);
             }
         }
-
         !isset($this->shipping_details) || Assert::isInstanceOf(
             $this->shipping_details,
             ShippingDetails::class,
@@ -357,13 +355,11 @@ class PaymentUnit implements JsonSerializable
             $this->context_attributes,
             "context_attributes in PaymentUnit must be array $within"
         );
-
         if (isset($this->context_attributes)) {
             foreach ($this->context_attributes as $item) {
                 $item->validate(PaymentUnit::class);
             }
         }
-
         !isset($this->receiver) || Assert::isInstanceOf(
             $this->receiver,
             Participant::class,
@@ -378,9 +374,109 @@ class PaymentUnit implements JsonSerializable
         !isset($this->payment_directives) ||  $this->payment_directives->validate(PaymentUnit::class);
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['reference_id'])) {
+            $this->reference_id = $data['reference_id'];
+        }
+        if (isset($data['parent_reference_id'])) {
+            $this->parent_reference_id = $data['parent_reference_id'];
+        }
+        if (isset($data['idempotency_id'])) {
+            $this->idempotency_id = $data['idempotency_id'];
+        }
+        if (isset($data['partner_attribution_id'])) {
+            $this->partner_attribution_id = $data['partner_attribution_id'];
+        }
+        if (isset($data['payment_category'])) {
+            $this->payment_category = $data['payment_category'];
+        }
+        if (isset($data['amount'])) {
+            $this->amount = new AmountWithBreakdown($data['amount']);
+        }
+        if (isset($data['items'])) {
+            $this->items = [];
+            foreach ($data['items'] as $item) {
+                $this->items[] = new Item($item);
+            }
+        }
+        if (isset($data['shipping_details'])) {
+            $this->shipping_details = new ShippingDetails($data['shipping_details']);
+        }
+        if (isset($data['custom_id'])) {
+            $this->custom_id = $data['custom_id'];
+        }
+        if (isset($data['description'])) {
+            $this->description = $data['description'];
+        }
+        if (isset($data['invoice_id'])) {
+            $this->invoice_id = $data['invoice_id'];
+        }
+        if (isset($data['payment_schedule_category'])) {
+            $this->payment_schedule_category = $data['payment_schedule_category'];
+        }
+        if (isset($data['soft_descriptor_details'])) {
+            $this->soft_descriptor_details = new SoftDescriptorDetails($data['soft_descriptor_details']);
+        }
+        if (isset($data['biller_company_name'])) {
+            $this->biller_company_name = $data['biller_company_name'];
+        }
+        if (isset($data['biller_company_id'])) {
+            $this->biller_company_id = $data['biller_company_id'];
+        }
+        if (isset($data['odfi_details'])) {
+            $this->odfi_details = new OdfiDetails($data['odfi_details']);
+        }
+        if (isset($data['context_attributes'])) {
+            $this->context_attributes = [];
+            foreach ($data['context_attributes'] as $item) {
+                $this->context_attributes[] = new PaymentContextAttribute($item);
+            }
+        }
+        if (isset($data['receiver'])) {
+            $this->receiver = new Participant($data['receiver']);
+        }
+        if (isset($data['payment_directives'])) {
+            $this->payment_directives = new PaymentDirectives($data['payment_directives']);
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->items = [];
         $this->context_attributes = [];
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initAmount(): AmountWithBreakdown
+    {
+        return $this->amount = new AmountWithBreakdown();
+    }
+
+    public function initShippingDetails(): ShippingDetails
+    {
+        return $this->shipping_details = new ShippingDetails();
+    }
+
+    public function initSoftDescriptorDetails(): SoftDescriptorDetails
+    {
+        return $this->soft_descriptor_details = new SoftDescriptorDetails();
+    }
+
+    public function initOdfiDetails(): OdfiDetails
+    {
+        return $this->odfi_details = new OdfiDetails();
+    }
+
+    public function initReceiver(): Participant
+    {
+        return $this->receiver = new Participant();
+    }
+
+    public function initPaymentDirectives(): PaymentDirectives
+    {
+        return $this->payment_directives = new PaymentDirectives();
     }
 }

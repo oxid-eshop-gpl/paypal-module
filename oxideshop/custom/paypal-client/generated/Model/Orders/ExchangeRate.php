@@ -68,7 +68,23 @@ class ExchangeRate implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['source_currency'])) {
+            $this->source_currency = $data['source_currency'];
+        }
+        if (isset($data['target_currency'])) {
+            $this->target_currency = $data['target_currency'];
+        }
+        if (isset($data['value'])) {
+            $this->value = $data['value'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

@@ -41,7 +41,25 @@ class AuthTolerance implements JsonSerializable
         !isset($this->absolute) ||  $this->absolute->validate(AuthTolerance::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['percent'])) {
+            $this->percent = $data['percent'];
+        }
+        if (isset($data['absolute'])) {
+            $this->absolute = new Money($data['absolute']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initAbsolute(): Money
+    {
+        return $this->absolute = new Money();
     }
 }

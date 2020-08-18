@@ -27,21 +27,21 @@ class ProductCollection implements JsonSerializable
     /**
      * The total number of items.
      *
-     * @var integer | null
+     * @var int | null
      */
     public $total_items;
 
     /**
      * The total number of pages.
      *
-     * @var integer | null
+     * @var int | null
      */
     public $total_pages;
 
     /**
      * An array of request-related [HATEOAS links](/docs/api/overview/#hateoas-links).
      *
-     * @var LinkDescription[] | null
+     * @var array | null
      */
     public $links;
 
@@ -63,27 +63,44 @@ class ProductCollection implements JsonSerializable
             $this->products,
             "products in ProductCollection must be array $within"
         );
-
         if (isset($this->products)) {
             foreach ($this->products as $item) {
                 $item->validate(ProductCollection::class);
             }
         }
-
         !isset($this->links) || Assert::isArray(
             $this->links,
             "links in ProductCollection must be array $within"
         );
+    }
 
-        if (isset($this->links)) {
-            foreach ($this->links as $item) {
-                $item->validate(ProductCollection::class);
+    private function map(array $data)
+    {
+        if (isset($data['products'])) {
+            $this->products = [];
+            foreach ($data['products'] as $item) {
+                $this->products[] = new ProductCollectionElement($item);
+            }
+        }
+        if (isset($data['total_items'])) {
+            $this->total_items = $data['total_items'];
+        }
+        if (isset($data['total_pages'])) {
+            $this->total_pages = $data['total_pages'];
+        }
+        if (isset($data['links'])) {
+            $this->links = [];
+            foreach ($data['links'] as $item) {
+                $this->links[] = $item;
             }
         }
     }
 
-    public function __construct()
+    public function __construct(array $data = null)
     {
         $this->products = [];
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

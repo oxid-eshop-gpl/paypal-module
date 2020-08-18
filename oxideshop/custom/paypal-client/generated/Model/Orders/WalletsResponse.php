@@ -33,7 +33,22 @@ class WalletsResponse implements JsonSerializable
         !isset($this->apple_pay) ||  $this->apple_pay->validate(WalletsResponse::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['apple_pay'])) {
+            $this->apple_pay = new ApplePayWalletResponse($data['apple_pay']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initApplePay(): ApplePayWalletResponse
+    {
+        return $this->apple_pay = new ApplePayWalletResponse();
     }
 }

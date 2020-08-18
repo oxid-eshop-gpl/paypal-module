@@ -143,7 +143,7 @@ class Card implements JsonSerializable
      * HTML 5.1 [Autofilling form controls: the autocomplete
      * attribute](https://www.w3.org/TR/html51/sec-forms.html#autofilling-form-controls-the-autocomplete-attribute).
      *
-     * @var AddressPortable | null
+     * @var AddressPortable2 | null
      */
     public $billing_address;
 
@@ -204,8 +204,8 @@ class Card implements JsonSerializable
         );
         !isset($this->billing_address) || Assert::isInstanceOf(
             $this->billing_address,
-            AddressPortable::class,
-            "billing_address in Card must be instance of AddressPortable $within"
+            AddressPortable2::class,
+            "billing_address in Card must be instance of AddressPortable2 $within"
         );
         !isset($this->billing_address) ||  $this->billing_address->validate(Card::class);
         !isset($this->authentication_results) || Assert::maxCount(
@@ -217,13 +217,11 @@ class Card implements JsonSerializable
             $this->authentication_results,
             "authentication_results in Card must be array $within"
         );
-
         if (isset($this->authentication_results)) {
             foreach ($this->authentication_results as $item) {
                 $item->validate(Card::class);
             }
         }
-
         !isset($this->attributes) || Assert::isInstanceOf(
             $this->attributes,
             CardAttributes::class,
@@ -232,7 +230,57 @@ class Card implements JsonSerializable
         !isset($this->attributes) ||  $this->attributes->validate(Card::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['id'])) {
+            $this->id = $data['id'];
+        }
+        if (isset($data['name'])) {
+            $this->name = $data['name'];
+        }
+        if (isset($data['number'])) {
+            $this->number = $data['number'];
+        }
+        if (isset($data['expiry'])) {
+            $this->expiry = $data['expiry'];
+        }
+        if (isset($data['security_code'])) {
+            $this->security_code = $data['security_code'];
+        }
+        if (isset($data['last_digits'])) {
+            $this->last_digits = $data['last_digits'];
+        }
+        if (isset($data['card_type'])) {
+            $this->card_type = $data['card_type'];
+        }
+        if (isset($data['billing_address'])) {
+            $this->billing_address = new AddressPortable2($data['billing_address']);
+        }
+        if (isset($data['authentication_results'])) {
+            $this->authentication_results = [];
+            foreach ($data['authentication_results'] as $item) {
+                $this->authentication_results[] = new ThreedsResult($item);
+            }
+        }
+        if (isset($data['attributes'])) {
+            $this->attributes = new CardAttributes($data['attributes']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initBillingAddress(): AddressPortable2
+    {
+        return $this->billing_address = new AddressPortable2();
+    }
+
+    public function initAttributes(): CardAttributes
+    {
+        return $this->attributes = new CardAttributes();
     }
 }

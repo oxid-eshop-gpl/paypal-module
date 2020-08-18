@@ -2,36 +2,55 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Service;
 
-use JsonMapper;
-use OxidProfessionalServices\PayPal\Api\Client;
-use OxidProfessionalServices\PayPal\Api\Model\Partner\CreateReferralDataResponse;
-use OxidProfessionalServices\PayPal\Api\Model\Partner\ReferralData;
-use OxidProfessionalServices\PayPal\Api\Model\Partner\ReferralDataResponse;
+use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
+use OxidProfessionalServices\PayPal\Api\Model\Partner\ReferralDataCreateReferralDataResponse;
+use OxidProfessionalServices\PayPal\Api\Model\Partner\ReferralDataReferralData;
+use OxidProfessionalServices\PayPal\Api\Model\Partner\ReferralDataReferralDataResponse;
 
 class Partner extends BaseService
 {
     protected $basePath = '/v2/customer';
 
-    public function createPartnerReferral(ReferralData $referralData): CreateReferralDataResponse
+    /**
+     * Creates a partner referral that is shared by the API caller. The referrals contains the client's personal,
+     * business, financial and operations that the partner wants to onbaord the client.
+     *
+     * @param $referralData mixed
+     *
+     * @throws ApiException
+     * @return ReferralDataCreateReferralDataResponse
+     */
+    public function createPartnerReferral(ReferralDataReferralData $referralData): ReferralDataCreateReferralDataResponse
     {
+        $path = "/partner-referrals";
+
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
+
         $body = json_encode($referralData, true);
-        $response = $this->send('POST', "/partner-referrals", $headers, $body);
-        $mapper = new JsonMapper();
-        $jsonProduct = json_decode($response->getBody());
-        return $mapper->map($jsonProduct, new CreateReferralDataResponse());
+        $response = $this->send('POST', $path, [], $headers, $body);
+        $jsonData = json_decode($response->getBody(), true);
+        return new ReferralDataCreateReferralDataResponse($jsonData);
     }
 
-    public function showReferralData($partnerReferralId): ReferralDataResponse
+    /**
+     * Shows details for referral data, by ID, that was shared by the API caller.
+     *
+     * @param $partnerReferralId string The ID of the partner-referrals data for which to show details.
+     *
+     * @throws ApiException
+     * @return ReferralDataReferralDataResponse
+     */
+    public function showReferralData($partnerReferralId): ReferralDataReferralDataResponse
     {
-        $headers = [];
+        $path = "/partner-referrals/{$partnerReferralId}";
+
+
 
         $body = null;
-        $response = $this->send('GET', "/partner-referrals/{$partnerReferralId}", $headers, $body);
-        $mapper = new JsonMapper();
-        $jsonProduct = json_decode($response->getBody());
-        return $mapper->map($jsonProduct, new ReferralDataResponse());
+        $response = $this->send('GET', $path, [], [], $body);
+        $jsonData = json_decode($response->getBody(), true);
+        return new ReferralDataReferralDataResponse($jsonData);
     }
 }

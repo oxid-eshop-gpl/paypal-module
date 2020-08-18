@@ -2,8 +2,7 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Service;
 
-use JsonMapper;
-use OxidProfessionalServices\PayPal\Api\Client;
+use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Plan;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\PlanCollection;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\PlanRequestPOST;
@@ -24,19 +23,62 @@ class Subscriptions extends BaseService
 {
     protected $basePath = '/v1/billing';
 
+    /**
+     * Creates a plan that defines pricing and billing cycle details for subscriptions.
+     *
+     * @param $planRequest mixed
+     *
+     * @param $prefer string The preferred server response upon successful completion of the request. Value
+     * is:<ul><li><code>return=minimal</code>. The server returns a minimal response to optimize communication
+     * between the API caller and the server. A minimal response includes the <code>id</code>, <code>status</code>
+     * and HATEOAS links.</li><li><code>return=representation</code>. The server returns a complete resource
+     * representation, including the current state of the resource.</li></ul>
+     *
+     * @throws ApiException
+     * @return Plan
+     */
     public function createPlan(PlanRequestPOST $planRequest, $prefer = 'return=minimal'): Plan
     {
+        $path = "/plans";
+
         $headers = [];
         $headers['Content-Type'] = 'application/json';
         $headers['Prefer'] = $prefer;
 
+
         $body = json_encode($planRequest, true);
-        $response = $this->send('POST', "/plans", $headers, $body);
-        $mapper = new JsonMapper();
-        $jsonProduct = json_decode($response->getBody());
-        return $mapper->map($jsonProduct, new Plan());
+        $response = $this->send('POST', $path, [], $headers, $body);
+        $jsonData = json_decode($response->getBody(), true);
+        return new Plan($jsonData);
     }
 
+    /**
+     * Lists billing plans.
+     *
+     * @param $payPalSubjectAccount string An internal only header to pass a target account number to API. The value
+     * of the header is a CSV (aka Comma separated values).
+     *
+     * @param $productId string Filters the response by a Product ID.
+     *
+     * @param $planIds string Filters the response by list of plan IDs. Filter supports upto 10 plan IDs.
+     *
+     * @param $totalRequired boolean Indicates whether to show the total count in the response.
+     *
+     * @param $page integer A non-zero integer which is the start index of the entire list of items to return in the
+     * response. The combination of `page=1` and `page_size=20` returns the first 20 items. The combination of
+     * `page=2` and `page_size=20` returns the next 20 items.
+     *
+     * @param $pageSize integer The number of items to return in the response.
+     *
+     * @param $prefer string The preferred server response upon successful completion of the request. Value
+     * is:<ul><li><code>return=minimal</code>. The server returns a minimal response to optimize communication
+     * between the API caller and the server. A minimal response includes the <code>id</code>, <code>name</code>,
+     * <code>description</code> and HATEOAS links.</li><li><code>return=representation</code>. The server returns a
+     * complete resource representation, including the current state of the resource.</li></ul>
+     *
+     * @throws ApiException
+     * @return PlanCollection
+     */
     public function listPlans(
         $payPalSubjectAccount,
         $productId,
@@ -46,85 +88,223 @@ class Subscriptions extends BaseService
         $pageSize = 10,
         $prefer = 'return=minimal'
     ): PlanCollection {
+        $path = "/plans";
+
         $headers = [];
         $headers['PayPal-Subject-Account'] = $payPalSubjectAccount;
         $headers['Prefer'] = $prefer;
 
+        $params = [];
+        $params['product_id'] = $productId;
+        $params['plan_ids'] = $planIds;
+        $params['total_required'] = var_export($totalRequired, true);
+        $params['page'] = $page;
+        $params['page_size'] = $pageSize;
+
         $body = null;
-        $response = $this->send('GET', "/plans", $headers, $body);
-        $mapper = new JsonMapper();
-        $jsonProduct = json_decode($response->getBody());
-        return $mapper->map($jsonProduct, new PlanCollection());
+        $response = $this->send('GET', $path, $params, $headers, $body);
+        $jsonData = json_decode($response->getBody(), true);
+        return new PlanCollection($jsonData);
     }
 
+    /**
+     * Shows details for a plan, by ID.
+     *
+     * @param $payPalSubjectAccount string An internal only header to pass a target account number to API. The value
+     * of the header is a CSV (aka Comma separated values).
+     *
+     * @param $id string The ID of the plan.
+     *
+     * @param $version integer The version of the plan.
+     *
+     * @throws ApiException
+     * @return Plan
+     */
     public function showPlanDetails($payPalSubjectAccount, $id, $version): Plan
     {
+        $path = "/plans/{$id}";
+
         $headers = [];
         $headers['PayPal-Subject-Account'] = $payPalSubjectAccount;
 
+        $params = [];
+        $params['version'] = $version;
+
         $body = null;
-        $response = $this->send('GET', "/plans/{$id}", $headers, $body);
-        $mapper = new JsonMapper();
-        $jsonProduct = json_decode($response->getBody());
-        return $mapper->map($jsonProduct, new Plan());
+        $response = $this->send('GET', $path, $params, $headers, $body);
+        $jsonData = json_decode($response->getBody(), true);
+        return new Plan($jsonData);
     }
 
+    /**
+     * Updates a plan with the `CREATED` or `ACTIVE` status. For an `INACTIVE` plan, you can make only status
+     * updates.<br/>You can patch these attributes and objects:<table><thead><tr><th>Attribute or
+     * object</th><th>Operations</th></tr></thead><tbody><tr><td><code>description</code></td><td>replace</td></tr><tr><td><code>payment_preferences.auto_bill_outstanding</code></td><td>replace</td></tr><tr><td><code>taxes.percentage</code></td><td>replace</td></tr><tr><td><code>payment_preferences.payment_failure_threshold</code></td><td>replace</td></tr><tr><td><code>payment_preferences.setup_fee</code></td><td>replace</td></tr><tr><td><code>payment_preferences.setup_fee_failure_action</code></td><td>replace</td></tr></tbody></table>
+     *
+     * @param $id string The ID of the plan.
+     *
+     * @param $patchRequest mixed
+     *
+     * @throws ApiException
+     * @return void
+     */
     public function updatePlan($id, array $patchRequest): void
     {
+        $path = "/plans/{$id}";
+
         $headers = [];
         $headers['Content-Type'] = 'application/json';
+
 
         $body = json_encode($patchRequest, true);
-        $response = $this->send('PATCH', "/plans/{$id}", $headers, $body);
+        $response = $this->send('PATCH', $path, [], $headers, $body);
     }
 
+    /**
+     * Replaces an entire plan with the `CREATED` status.
+     *
+     * @param $id string The ID of the plan.
+     *
+     * @param $plan mixed
+     *
+     * @throws ApiException
+     * @return void
+     */
     public function replacePlan($id, Plan $plan): void
     {
+        $path = "/plans/{$id}";
+
         $headers = [];
         $headers['Content-Type'] = 'application/json';
+
 
         $body = json_encode($plan, true);
-        $response = $this->send('PUT', "/plans/{$id}", $headers, $body);
+        $response = $this->send('PUT', $path, [], $headers, $body);
     }
 
+    /**
+     * Activates a plan, by ID.
+     *
+     * @param $id string The ID of the plan.
+     *
+     * @throws ApiException
+     * @return void
+     */
     public function activatePlan($id): void
     {
-        $headers = [];
+        $path = "/plans/{$id}/activate";
+
+
 
         $body = null;
-        $response = $this->send('POST', "/plans/{$id}/activate", $headers, $body);
+        $response = $this->send('POST', $path, [], [], $body);
     }
 
+    /**
+     * Deactivates a plan, by ID.
+     *
+     * @param $id string The ID of the plan.
+     *
+     * @throws ApiException
+     * @return void
+     */
     public function deactivatePlan($id): void
     {
-        $headers = [];
+        $path = "/plans/{$id}/deactivate";
+
+
 
         $body = null;
-        $response = $this->send('POST', "/plans/{$id}/deactivate", $headers, $body);
+        $response = $this->send('POST', $path, [], [], $body);
     }
 
+    /**
+     * Updates pricing for a plan. For example, you can update a regular billing cycle from $5 per month to $7 per
+     * month.
+     *
+     * @param $id string The ID for the plan.
+     *
+     * @param $updatePricingSchemesListRequest mixed
+     *
+     * @throws ApiException
+     * @return void
+     */
     public function updatePricing($id, UpdatePricingSchemesListRequest $updatePricingSchemesListRequest): void
     {
+        $path = "/plans/{$id}/update-pricing-schemes";
+
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
+
         $body = json_encode($updatePricingSchemesListRequest, true);
-        $response = $this->send('POST', "/plans/{$id}/update-pricing-schemes", $headers, $body);
+        $response = $this->send('POST', $path, [], $headers, $body);
     }
 
+    /**
+     * Creates a subscription.
+     *
+     * @param $subscriptionRequest mixed
+     *
+     * @param $prefer string The preferred server response upon successful completion of the request. Value
+     * is:<ul><li><code>return=minimal</code>. The server returns a minimal response to optimize communication
+     * between the API caller and the server. A minimal response includes the <code>id</code>, <code>status</code>
+     * and HATEOAS links.</li><li><code>return=representation</code>. The server returns a complete resource
+     * representation, including the current state of the resource.</li></ul>
+     *
+     * @throws ApiException
+     * @return Subscription
+     */
     public function createSubscription(SubscriptionRequestPost $subscriptionRequest, $prefer = 'return=minimal'): Subscription
     {
+        $path = "/subscriptions";
+
         $headers = [];
         $headers['Content-Type'] = 'application/json';
         $headers['Prefer'] = $prefer;
 
+
         $body = json_encode($subscriptionRequest, true);
-        $response = $this->send('POST', "/subscriptions", $headers, $body);
-        $mapper = new JsonMapper();
-        $jsonProduct = json_decode($response->getBody());
-        return $mapper->map($jsonProduct, new Subscription());
+        $response = $this->send('POST', $path, [], $headers, $body);
+        $jsonData = json_decode($response->getBody(), true);
+        return new Subscription($jsonData);
     }
 
+    /**
+     * List all subscriptions for merchant account.
+     *
+     * @param $planIds string Filters the response by list of plan IDs. Filter supports upto <code>70</code> plan
+     * IDs. URLs should not exceed a length of <code>2000</code> characters.
+     *
+     * @param $statuses string Filters the response by list of subscription statuses.
+     *
+     * @param $createdAfter string Filters the response by subscription creation start time for a range of
+     * subscriptions.
+     *
+     * @param $createdBefore string Filters the response by subscription creation end time for a range of
+     * subscriptions.
+     *
+     * @param $statusUpdatedBefore string Filters the response by status update start time for a range of
+     * subscriptions.
+     *
+     * @param $statusUpdatedAfter string Filters the response by status update end time for a range of subscriptions.
+     *
+     * @param $filter string Filter the response using complex expressions that could use comparison operators like
+     * ge, gt, le, lt and logical operators such as 'and' and 'or'.
+     *
+     * @param $payerIds string Filters the response by list of payer IDs.
+     *
+     * @param $totalRequired boolean Indicates whether to show the total count in the response.
+     *
+     * @param $page integer A non-zero integer which is the start index of the entire list of items to return in the
+     * response. The combination of `page=1` and `page_size=20` returns the first 20 items. The combination of
+     * `page=2` and `page_size=20` returns the next 20 items.
+     *
+     * @param $pageSize integer The number of items to return in the response.
+     *
+     * @throws ApiException
+     * @return SubscriptionCollection
+     */
     public function listSubscriptions(
         $planIds,
         $statuses,
@@ -138,100 +318,236 @@ class Subscriptions extends BaseService
         $page = 1,
         $pageSize = 10
     ): SubscriptionCollection {
-        $headers = [];
+        $path = "/subscriptions";
+
+
+        $params = [];
+        $params['plan_ids'] = $planIds;
+        $params['statuses'] = $statuses;
+        $params['created_after'] = $createdAfter;
+        $params['created_before'] = $createdBefore;
+        $params['status_updated_before'] = $statusUpdatedBefore;
+        $params['status_updated_after'] = $statusUpdatedAfter;
+        $params['filter'] = $filter;
+        $params['payer_ids'] = $payerIds;
+        $params['total_required'] = var_export($totalRequired, true);
+        $params['page'] = $page;
+        $params['page_size'] = $pageSize;
 
         $body = null;
-        $response = $this->send('GET', "/subscriptions", $headers, $body);
-        $mapper = new JsonMapper();
-        $jsonProduct = json_decode($response->getBody());
-        return $mapper->map($jsonProduct, new SubscriptionCollection());
+        $response = $this->send('GET', $path, $params, [], $body);
+        $jsonData = json_decode($response->getBody(), true);
+        return new SubscriptionCollection($jsonData);
     }
 
+    /**
+     * Shows details for a subscription, by ID.
+     *
+     * @param $id string The ID of the subscription.
+     *
+     * @param $fields string List of fields that are to be returned in the response. Possible value for fields is
+     * last_failed_payment.
+     *
+     * @throws ApiException
+     * @return Subscription
+     */
     public function showSubscriptionDetails($id, $fields): Subscription
     {
-        $headers = [];
+        $path = "/subscriptions/{$id}";
+
+
+        $params = [];
+        $params['fields'] = $fields;
 
         $body = null;
-        $response = $this->send('GET', "/subscriptions/{$id}", $headers, $body);
-        $mapper = new JsonMapper();
-        $jsonProduct = json_decode($response->getBody());
-        return $mapper->map($jsonProduct, new Subscription());
+        $response = $this->send('GET', $path, $params, [], $body);
+        $jsonData = json_decode($response->getBody(), true);
+        return new Subscription($jsonData);
     }
 
+    /**
+     * Updates a subscription, by ID.
+     *
+     * @param $id string The ID for the subscription.
+     *
+     * @param $patchRequest mixed
+     *
+     * @throws ApiException
+     * @return void
+     */
     public function updateSubscription($id, array $patchRequest): void
     {
+        $path = "/subscriptions/{$id}";
+
         $headers = [];
         $headers['Content-Type'] = 'application/json';
+
 
         $body = json_encode($patchRequest, true);
-        $response = $this->send('PATCH', "/subscriptions/{$id}", $headers, $body);
+        $response = $this->send('PATCH', $path, [], $headers, $body);
     }
 
+    /**
+     * Updates the quantity of the product or service in a subscription. You can also use this method to switch the
+     * plan and update the `shipping_amount`, `shipping_address` values for the subscription. This type of update
+     * requires the buyer's consent.
+     *
+     * @param $id string The ID of the subscription.
+     *
+     * @param $subscriptionReviseRequest mixed
+     *
+     * @throws ApiException
+     * @return SubscriptionReviseResponse
+     */
     public function updateQuantityOfProductOrServiceInSubscription($id, SubscriptionReviseRequest $subscriptionReviseRequest): SubscriptionReviseResponse
     {
+        $path = "/subscriptions/{$id}/revise";
+
         $headers = [];
         $headers['Content-Type'] = 'application/json';
+
 
         $body = json_encode($subscriptionReviseRequest, true);
-        $response = $this->send('POST', "/subscriptions/{$id}/revise", $headers, $body);
-        $mapper = new JsonMapper();
-        $jsonProduct = json_decode($response->getBody());
-        return $mapper->map($jsonProduct, new SubscriptionReviseResponse());
+        $response = $this->send('POST', $path, [], $headers, $body);
+        $jsonData = json_decode($response->getBody(), true);
+        return new SubscriptionReviseResponse($jsonData);
     }
 
+    /**
+     * Internal API to be consumed by PayPal applications and not by merchants. Used to commit the changes to SOR
+     * after the buyer approves the changes made to the subscription.
+     *
+     * @param $id string The ID of the subscription.
+     *
+     * @param $subscriptionSaveRequest mixed
+     *
+     * @throws ApiException
+     * @return void
+     */
     public function saveSubscription($id, SubscriptionSaveRequest $subscriptionSaveRequest): void
     {
+        $path = "/subscriptions/{$id}/save";
+
         $headers = [];
         $headers['Content-Type'] = 'application/json';
+
 
         $body = json_encode($subscriptionSaveRequest, true);
-        $response = $this->send('POST', "/subscriptions/{$id}/save", $headers, $body);
+        $response = $this->send('POST', $path, [], $headers, $body);
     }
 
+    /**
+     * Suspends the subscription.
+     *
+     * @param $id string The ID of the subscription.
+     *
+     * @param $subscriptionSuspendRequest mixed
+     *
+     * @throws ApiException
+     * @return void
+     */
     public function suspendSubscription($id, SubscriptionSuspendRequest $subscriptionSuspendRequest): void
     {
+        $path = "/subscriptions/{$id}/suspend";
+
         $headers = [];
         $headers['Content-Type'] = 'application/json';
+
 
         $body = json_encode($subscriptionSuspendRequest, true);
-        $response = $this->send('POST', "/subscriptions/{$id}/suspend", $headers, $body);
+        $response = $this->send('POST', $path, [], $headers, $body);
     }
 
+    /**
+     * Cancels the subscription.
+     *
+     * @param $id string The ID of the subscription.
+     *
+     * @param $subscriptionCancelRequest mixed
+     *
+     * @throws ApiException
+     * @return void
+     */
     public function cancelSubscription($id, SubscriptionCancelRequest $subscriptionCancelRequest): void
     {
+        $path = "/subscriptions/{$id}/cancel";
+
         $headers = [];
         $headers['Content-Type'] = 'application/json';
+
 
         $body = json_encode($subscriptionCancelRequest, true);
-        $response = $this->send('POST', "/subscriptions/{$id}/cancel", $headers, $body);
+        $response = $this->send('POST', $path, [], $headers, $body);
     }
 
+    /**
+     * Activates the subscription.
+     *
+     * @param $id string The ID of the subscription.
+     *
+     * @param $subscriptionActivateRequest mixed
+     *
+     * @throws ApiException
+     * @return void
+     */
     public function activateSubscription($id, SubscriptionActivateRequest $subscriptionActivateRequest): void
     {
+        $path = "/subscriptions/{$id}/activate";
+
         $headers = [];
         $headers['Content-Type'] = 'application/json';
+
 
         $body = json_encode($subscriptionActivateRequest, true);
-        $response = $this->send('POST', "/subscriptions/{$id}/activate", $headers, $body);
+        $response = $this->send('POST', $path, [], $headers, $body);
     }
 
+    /**
+     * Captures an authorized payment from the subscriber on the subscription.
+     *
+     * @param $id string The ID of the subscription.
+     *
+     * @param $subscriptionCaptureRequest mixed
+     *
+     * @throws ApiException
+     * @return void
+     */
     public function captureAuthorizedPaymentOnSubscription($id, SubscriptionCaptureRequest $subscriptionCaptureRequest): void
     {
+        $path = "/subscriptions/{$id}/capture";
+
         $headers = [];
         $headers['Content-Type'] = 'application/json';
 
+
         $body = json_encode($subscriptionCaptureRequest, true);
-        $response = $this->send('POST', "/subscriptions/{$id}/capture", $headers, $body);
+        $response = $this->send('POST', $path, [], $headers, $body);
     }
 
+    /**
+     * Lists transactions for a subscription.
+     *
+     * @param $id string The ID of the subscription.
+     *
+     * @param $startTime string The start time of the range of transactions to list.
+     *
+     * @param $endTime string The end time of the range of transactions to list.
+     *
+     * @throws ApiException
+     * @return TransactionsList
+     */
     public function listTransactionsForSubscription($id, $startTime, $endTime): TransactionsList
     {
-        $headers = [];
+        $path = "/subscriptions/{$id}/transactions";
+
+
+        $params = [];
+        $params['start_time'] = $startTime;
+        $params['end_time'] = $endTime;
 
         $body = null;
-        $response = $this->send('GET', "/subscriptions/{$id}/transactions", $headers, $body);
-        $mapper = new JsonMapper();
-        $jsonProduct = json_decode($response->getBody());
-        return $mapper->map($jsonProduct, new TransactionsList());
+        $response = $this->send('GET', $path, $params, [], $body);
+        $jsonData = json_decode($response->getBody(), true);
+        return new TransactionsList($jsonData);
     }
 }

@@ -50,8 +50,26 @@ class PlatformFee implements JsonSerializable
         !isset($this->payee) ||  $this->payee->validate(PlatformFee::class);
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['amount'])) {
+            $this->amount = new Money($data['amount']);
+        }
+        if (isset($data['payee'])) {
+            $this->payee = new PayeeBase($data['payee']);
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->amount = new Money();
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initPayee(): PayeeBase
+    {
+        return $this->payee = new PayeeBase();
     }
 }

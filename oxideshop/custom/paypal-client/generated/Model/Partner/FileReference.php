@@ -94,7 +94,29 @@ class FileReference implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['id'])) {
+            $this->id = $data['id'];
+        }
+        if (isset($data['reference_url'])) {
+            $this->reference_url = $data['reference_url'];
+        }
+        if (isset($data['content_type'])) {
+            $this->content_type = $data['content_type'];
+        }
+        if (isset($data['create_time'])) {
+            $this->create_time = $data['create_time'];
+        }
+        if (isset($data['size'])) {
+            $this->size = $data['size'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

@@ -91,7 +91,34 @@ class ShippingOption implements JsonSerializable
         Assert::notNull($this->selected, "selected in ShippingOption must not be NULL $within");
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['id'])) {
+            $this->id = $data['id'];
+        }
+        if (isset($data['label'])) {
+            $this->label = $data['label'];
+        }
+        if (isset($data['type'])) {
+            $this->type = $data['type'];
+        }
+        if (isset($data['amount'])) {
+            $this->amount = new Money($data['amount']);
+        }
+        if (isset($data['selected'])) {
+            $this->selected = $data['selected'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initAmount(): Money
+    {
+        return $this->amount = new Money();
     }
 }

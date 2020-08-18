@@ -13,14 +13,14 @@ use Webmozart\Assert\Assert;
  *
  * generated from: subscription_revise_response.json
  */
-class SubscriptionReviseResponse extends CustomizedXUnsupportedFiveEightSevenFiveSubscriptionReviseRequest implements JsonSerializable
+class SubscriptionReviseResponse extends SubscriptionReviseRequest2 implements JsonSerializable
 {
     use BaseModel;
 
     /**
      * An array of request-related [HATEOAS links](/docs/api/reference/api-responses/#hateoas-links).
      *
-     * @var LinkDescription[] | null
+     * @var array | null
      */
     public $links;
 
@@ -31,15 +31,23 @@ class SubscriptionReviseResponse extends CustomizedXUnsupportedFiveEightSevenFiv
             $this->links,
             "links in SubscriptionReviseResponse must be array $within"
         );
+    }
 
-        if (isset($this->links)) {
-            foreach ($this->links as $item) {
-                $item->validate(SubscriptionReviseResponse::class);
+    private function map(array $data)
+    {
+        if (isset($data['links'])) {
+            $this->links = [];
+            foreach ($data['links'] as $item) {
+                $this->links[] = $item;
             }
         }
     }
 
-    public function __construct()
+    public function __construct(array $data = null)
     {
+        parent::__construct($data);
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

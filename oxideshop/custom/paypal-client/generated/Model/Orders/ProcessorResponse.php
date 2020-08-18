@@ -749,7 +749,26 @@ class ProcessorResponse implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['avs_code'])) {
+            $this->avs_code = $data['avs_code'];
+        }
+        if (isset($data['cvv_code'])) {
+            $this->cvv_code = $data['cvv_code'];
+        }
+        if (isset($data['response_code'])) {
+            $this->response_code = $data['response_code'];
+        }
+        if (isset($data['payment_advice_code'])) {
+            $this->payment_advice_code = $data['payment_advice_code'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

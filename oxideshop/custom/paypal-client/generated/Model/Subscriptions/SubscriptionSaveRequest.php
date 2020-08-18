@@ -40,7 +40,17 @@ class SubscriptionSaveRequest implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['token_id'])) {
+            $this->token_id = $data['token_id'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

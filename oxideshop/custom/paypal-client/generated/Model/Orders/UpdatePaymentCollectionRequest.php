@@ -53,13 +53,11 @@ class UpdatePaymentCollectionRequest implements JsonSerializable
             $this->authorizations,
             "authorizations in UpdatePaymentCollectionRequest must be array $within"
         );
-
         if (isset($this->authorizations)) {
             foreach ($this->authorizations as $item) {
                 $item->validate(UpdatePaymentCollectionRequest::class);
             }
         }
-
         Assert::notNull($this->captures, "captures in UpdatePaymentCollectionRequest must not be NULL $within");
         Assert::minCount(
             $this->captures,
@@ -75,7 +73,6 @@ class UpdatePaymentCollectionRequest implements JsonSerializable
             $this->captures,
             "captures in UpdatePaymentCollectionRequest must be array $within"
         );
-
         if (isset($this->captures)) {
             foreach ($this->captures as $item) {
                 $item->validate(UpdatePaymentCollectionRequest::class);
@@ -83,9 +80,28 @@ class UpdatePaymentCollectionRequest implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['authorizations'])) {
+            $this->authorizations = [];
+            foreach ($data['authorizations'] as $item) {
+                $this->authorizations[] = new UpdateAuthorizationRequest($item);
+            }
+        }
+        if (isset($data['captures'])) {
+            $this->captures = [];
+            foreach ($data['captures'] as $item) {
+                $this->captures[] = new UpdateCaptureRequest($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->authorizations = [];
         $this->captures = [];
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

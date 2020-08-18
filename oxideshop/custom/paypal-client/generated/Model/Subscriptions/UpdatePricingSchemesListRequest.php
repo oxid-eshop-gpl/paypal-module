@@ -42,7 +42,6 @@ class UpdatePricingSchemesListRequest implements JsonSerializable
             $this->pricing_schemes,
             "pricing_schemes in UpdatePricingSchemesListRequest must be array $within"
         );
-
         if (isset($this->pricing_schemes)) {
             foreach ($this->pricing_schemes as $item) {
                 $item->validate(UpdatePricingSchemesListRequest::class);
@@ -50,8 +49,21 @@ class UpdatePricingSchemesListRequest implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['pricing_schemes'])) {
+            $this->pricing_schemes = [];
+            foreach ($data['pricing_schemes'] as $item) {
+                $this->pricing_schemes[] = new UpdatePricingSchemeRequest($item);
+            }
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->pricing_schemes = [];
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

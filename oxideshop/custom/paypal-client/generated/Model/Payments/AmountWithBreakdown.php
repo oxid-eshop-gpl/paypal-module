@@ -39,7 +39,23 @@ class AmountWithBreakdown extends Money implements JsonSerializable
         !isset($this->breakdown) ||  $this->breakdown->validate(AmountWithBreakdown::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['breakdown'])) {
+            $this->breakdown = new AmountBreakdown($data['breakdown']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        parent::__construct($data);
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initBreakdown(): AmountBreakdown
+    {
+        return $this->breakdown = new AmountBreakdown();
     }
 }

@@ -60,7 +60,24 @@ class PersonAddressDetail extends AddressPortable implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['type'])) {
+            $this->type = $data['type'];
+        }
+        if (isset($data['primary'])) {
+            $this->primary = $data['primary'];
+        }
+        if (isset($data['inactive'])) {
+            $this->inactive = $data['inactive'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        parent::__construct($data);
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

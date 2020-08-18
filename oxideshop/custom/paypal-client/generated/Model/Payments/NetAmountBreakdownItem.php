@@ -60,7 +60,38 @@ class NetAmountBreakdownItem implements JsonSerializable
         !isset($this->exchange_rate) ||  $this->exchange_rate->validate(NetAmountBreakdownItem::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['payable_amount'])) {
+            $this->payable_amount = new Money($data['payable_amount']);
+        }
+        if (isset($data['converted_amount'])) {
+            $this->converted_amount = new Money($data['converted_amount']);
+        }
+        if (isset($data['exchange_rate'])) {
+            $this->exchange_rate = new ExchangeRate($data['exchange_rate']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initPayableAmount(): Money
+    {
+        return $this->payable_amount = new Money();
+    }
+
+    public function initConvertedAmount(): Money
+    {
+        return $this->converted_amount = new Money();
+    }
+
+    public function initExchangeRate(): ExchangeRate
+    {
+        return $this->exchange_rate = new ExchangeRate();
     }
 }

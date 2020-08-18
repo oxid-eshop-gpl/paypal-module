@@ -86,7 +86,23 @@ class Phone implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['country_code'])) {
+            $this->country_code = $data['country_code'];
+        }
+        if (isset($data['national_number'])) {
+            $this->national_number = $data['national_number'];
+        }
+        if (isset($data['extension_number'])) {
+            $this->extension_number = $data['extension_number'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

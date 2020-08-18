@@ -33,7 +33,7 @@ class FlightLeg implements JsonSerializable
     /**
      * The flight number of the current leg.
      *
-     * @var integer | null
+     * @var int | null
      */
     public $flight_number;
 
@@ -297,7 +297,77 @@ class FlightLeg implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['flight_code'])) {
+            $this->flight_code = $data['flight_code'];
+        }
+        if (isset($data['flight_number'])) {
+            $this->flight_number = $data['flight_number'];
+        }
+        if (isset($data['carrier_code'])) {
+            $this->carrier_code = $data['carrier_code'];
+        }
+        if (isset($data['service_class'])) {
+            $this->service_class = $data['service_class'];
+        }
+        if (isset($data['departure_date'])) {
+            $this->departure_date = $data['departure_date'];
+        }
+        if (isset($data['departure_time'])) {
+            $this->departure_time = $data['departure_time'];
+        }
+        if (isset($data['departure_airport'])) {
+            $this->departure_airport = $data['departure_airport'];
+        }
+        if (isset($data['arrival_airport'])) {
+            $this->arrival_airport = $data['arrival_airport'];
+        }
+        if (isset($data['stopover_code'])) {
+            $this->stopover_code = $data['stopover_code'];
+        }
+        if (isset($data['fare_basis_code'])) {
+            $this->fare_basis_code = $data['fare_basis_code'];
+        }
+        if (isset($data['arrival_time'])) {
+            $this->arrival_time = $data['arrival_time'];
+        }
+        if (isset($data['conjunction_ticket_number'])) {
+            $this->conjunction_ticket_number = $data['conjunction_ticket_number'];
+        }
+        if (isset($data['fare'])) {
+            $this->fare = new Money($data['fare']);
+        }
+        if (isset($data['tax'])) {
+            $this->tax = new Money($data['tax']);
+        }
+        if (isset($data['fee'])) {
+            $this->fee = new Money($data['fee']);
+        }
+        if (isset($data['additional_notations'])) {
+            $this->additional_notations = $data['additional_notations'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initFare(): Money
+    {
+        return $this->fare = new Money();
+    }
+
+    public function initTax(): Money
+    {
+        return $this->tax = new Money();
+    }
+
+    public function initFee(): Money
+    {
+        return $this->fee = new Money();
     }
 }

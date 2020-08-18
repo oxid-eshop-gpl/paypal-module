@@ -57,7 +57,7 @@ class VaultPaypalWalletBase implements JsonSerializable
     /**
      * The shipping details.
      *
-     * @var ShippingDetail | null
+     * @var ShippingDetail2 | null
      */
     public $shipping;
 
@@ -122,8 +122,8 @@ class VaultPaypalWalletBase implements JsonSerializable
         );
         !isset($this->shipping) || Assert::isInstanceOf(
             $this->shipping,
-            ShippingDetail::class,
-            "shipping in VaultPaypalWalletBase must be instance of ShippingDetail $within"
+            ShippingDetail2::class,
+            "shipping in VaultPaypalWalletBase must be instance of ShippingDetail2 $within"
         );
         !isset($this->shipping) ||  $this->shipping->validate(VaultPaypalWalletBase::class);
         Assert::notNull($this->usage_type, "usage_type in VaultPaypalWalletBase must not be NULL $within");
@@ -149,7 +149,37 @@ class VaultPaypalWalletBase implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['description'])) {
+            $this->description = $data['description'];
+        }
+        if (isset($data['product_label'])) {
+            $this->product_label = $data['product_label'];
+        }
+        if (isset($data['shipping'])) {
+            $this->shipping = new ShippingDetail2($data['shipping']);
+        }
+        if (isset($data['usage_type'])) {
+            $this->usage_type = $data['usage_type'];
+        }
+        if (isset($data['customer_type'])) {
+            $this->customer_type = $data['customer_type'];
+        }
+        if (isset($data['permit_multiple_payment_tokens'])) {
+            $this->permit_multiple_payment_tokens = $data['permit_multiple_payment_tokens'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initShipping(): ShippingDetail2
+    {
+        return $this->shipping = new ShippingDetail2();
     }
 }

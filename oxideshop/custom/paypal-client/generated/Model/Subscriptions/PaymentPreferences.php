@@ -70,7 +70,7 @@ class PaymentPreferences implements JsonSerializable
      * `payment_failure_threshold` is `2`, the subscription automatically updates to the `SUSPEND` state if two
      * consecutive payments fail.
      *
-     * @var integer | null
+     * @var int | null
      */
     public $payment_failure_threshold = 0;
 
@@ -105,7 +105,34 @@ class PaymentPreferences implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['service_type'])) {
+            $this->service_type = $data['service_type'];
+        }
+        if (isset($data['auto_bill_outstanding'])) {
+            $this->auto_bill_outstanding = $data['auto_bill_outstanding'];
+        }
+        if (isset($data['setup_fee'])) {
+            $this->setup_fee = new Money($data['setup_fee']);
+        }
+        if (isset($data['setup_fee_failure_action'])) {
+            $this->setup_fee_failure_action = $data['setup_fee_failure_action'];
+        }
+        if (isset($data['payment_failure_threshold'])) {
+            $this->payment_failure_threshold = $data['payment_failure_threshold'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initSetupFee(): Money
+    {
+        return $this->setup_fee = new Money();
     }
 }

@@ -60,7 +60,6 @@ class PaymentInstruction implements JsonSerializable
             $this->platform_fees,
             "platform_fees in PaymentInstruction must be array $within"
         );
-
         if (isset($this->platform_fees)) {
             foreach ($this->platform_fees as $item) {
                 $item->validate(PaymentInstruction::class);
@@ -68,8 +67,24 @@ class PaymentInstruction implements JsonSerializable
         }
     }
 
-    public function __construct()
+    private function map(array $data)
+    {
+        if (isset($data['platform_fees'])) {
+            $this->platform_fees = [];
+            foreach ($data['platform_fees'] as $item) {
+                $this->platform_fees[] = new PlatformFee($item);
+            }
+        }
+        if (isset($data['disbursement_mode'])) {
+            $this->disbursement_mode = $data['disbursement_mode'];
+        }
+    }
+
+    public function __construct(array $data = null)
     {
         $this->platform_fees = [];
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

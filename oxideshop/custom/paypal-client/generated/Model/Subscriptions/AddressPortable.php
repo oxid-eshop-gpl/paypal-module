@@ -12,7 +12,8 @@ use Webmozart\Assert\Assert;
  * HTML 5.1 [Autofilling form controls: the autocomplete
  * attribute](https://www.w3.org/TR/html51/sec-forms.html#autofilling-form-controls-the-autocomplete-attribute).
  *
- * generated from: merchant.CommonComponentsSpecification-v1-schema-common_components-v3-schema-json-openapi-2.0-address_portable.json
+ * generated from:
+ * merchant.CommonComponentsSpecification-v1-schema-common_components-v3-schema-json-openapi-2.0-address_portable.json
  */
 class AddressPortable implements JsonSerializable
 {
@@ -177,7 +178,49 @@ class AddressPortable implements JsonSerializable
         !isset($this->address_details) ||  $this->address_details->validate(AddressPortable::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['address_line_1'])) {
+            $this->address_line_1 = $data['address_line_1'];
+        }
+        if (isset($data['address_line_2'])) {
+            $this->address_line_2 = $data['address_line_2'];
+        }
+        if (isset($data['address_line_3'])) {
+            $this->address_line_3 = $data['address_line_3'];
+        }
+        if (isset($data['admin_area_4'])) {
+            $this->admin_area_4 = $data['admin_area_4'];
+        }
+        if (isset($data['admin_area_3'])) {
+            $this->admin_area_3 = $data['admin_area_3'];
+        }
+        if (isset($data['admin_area_2'])) {
+            $this->admin_area_2 = $data['admin_area_2'];
+        }
+        if (isset($data['admin_area_1'])) {
+            $this->admin_area_1 = $data['admin_area_1'];
+        }
+        if (isset($data['postal_code'])) {
+            $this->postal_code = $data['postal_code'];
+        }
+        if (isset($data['country_code'])) {
+            $this->country_code = $data['country_code'];
+        }
+        if (isset($data['address_details'])) {
+            $this->address_details = new AddressPortableAddressDetails($data['address_details']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initAddressDetails(): AddressPortableAddressDetails
+    {
+        return $this->address_details = new AddressPortableAddressDetails();
     }
 }

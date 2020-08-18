@@ -112,7 +112,70 @@ class AmountBreakdown implements JsonSerializable
         !isset($this->discount) ||  $this->discount->validate(AmountBreakdown::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['item_total'])) {
+            $this->item_total = new Money($data['item_total']);
+        }
+        if (isset($data['shipping'])) {
+            $this->shipping = new Money($data['shipping']);
+        }
+        if (isset($data['handling'])) {
+            $this->handling = new Money($data['handling']);
+        }
+        if (isset($data['tax_total'])) {
+            $this->tax_total = new Money($data['tax_total']);
+        }
+        if (isset($data['insurance'])) {
+            $this->insurance = new Money($data['insurance']);
+        }
+        if (isset($data['shipping_discount'])) {
+            $this->shipping_discount = new Money($data['shipping_discount']);
+        }
+        if (isset($data['discount'])) {
+            $this->discount = new Money($data['discount']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initItemTotal(): Money
+    {
+        return $this->item_total = new Money();
+    }
+
+    public function initShipping(): Money
+    {
+        return $this->shipping = new Money();
+    }
+
+    public function initHandling(): Money
+    {
+        return $this->handling = new Money();
+    }
+
+    public function initTaxTotal(): Money
+    {
+        return $this->tax_total = new Money();
+    }
+
+    public function initInsurance(): Money
+    {
+        return $this->insurance = new Money();
+    }
+
+    public function initShippingDiscount(): Money
+    {
+        return $this->shipping_discount = new Money();
+    }
+
+    public function initDiscount(): Money
+    {
+        return $this->discount = new Money();
     }
 }

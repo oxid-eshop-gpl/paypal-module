@@ -141,7 +141,32 @@ class PTwoFour implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['name'])) {
+            $this->name = $data['name'];
+        }
+        if (isset($data['email'])) {
+            $this->email = $data['email'];
+        }
+        if (isset($data['country_code'])) {
+            $this->country_code = $data['country_code'];
+        }
+        if (isset($data['payment_descriptor'])) {
+            $this->payment_descriptor = $data['payment_descriptor'];
+        }
+        if (isset($data['method_id'])) {
+            $this->method_id = $data['method_id'];
+        }
+        if (isset($data['method_description'])) {
+            $this->method_description = $data['method_description'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

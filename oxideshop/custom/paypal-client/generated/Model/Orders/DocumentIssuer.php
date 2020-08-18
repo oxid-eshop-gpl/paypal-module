@@ -9,7 +9,8 @@ use Webmozart\Assert\Assert;
 /**
  * The document-issuing authority information.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-common_components-v4-schema-json-openapi-2.0-document_issuer.json
+ * generated from:
+ * MerchantsCommonComponentsSpecification-v1-schema-common_components-v4-schema-json-openapi-2.0-document_issuer.json
  */
 class DocumentIssuer implements JsonSerializable
 {
@@ -83,7 +84,23 @@ class DocumentIssuer implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['country_code'])) {
+            $this->country_code = $data['country_code'];
+        }
+        if (isset($data['province_code'])) {
+            $this->province_code = $data['province_code'];
+        }
+        if (isset($data['authority'])) {
+            $this->authority = $data['authority'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

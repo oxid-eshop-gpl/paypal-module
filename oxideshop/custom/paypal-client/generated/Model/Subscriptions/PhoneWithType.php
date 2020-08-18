@@ -26,7 +26,7 @@ class PhoneWithType implements JsonSerializable
      * The phone number, in its canonical international [E.164 numbering plan
      * format](https://www.itu.int/rec/T-REC-E.164/en).
      *
-     * @var Phone
+     * @var Phone2
      */
     public $phone_number;
 
@@ -36,14 +36,27 @@ class PhoneWithType implements JsonSerializable
         Assert::notNull($this->phone_number, "phone_number in PhoneWithType must not be NULL $within");
         Assert::isInstanceOf(
             $this->phone_number,
-            Phone::class,
-            "phone_number in PhoneWithType must be instance of Phone $within"
+            Phone2::class,
+            "phone_number in PhoneWithType must be instance of Phone2 $within"
         );
          $this->phone_number->validate(PhoneWithType::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
-        $this->phone_number = new Phone();
+        if (isset($data['phone_type'])) {
+            $this->phone_type = $data['phone_type'];
+        }
+        if (isset($data['phone_number'])) {
+            $this->phone_number = new Phone2($data['phone_number']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        $this->phone_number = new Phone2();
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

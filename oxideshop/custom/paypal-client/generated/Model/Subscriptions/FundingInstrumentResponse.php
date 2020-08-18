@@ -59,7 +59,38 @@ class FundingInstrumentResponse implements JsonSerializable
         !isset($this->credit) ||  $this->credit->validate(FundingInstrumentResponse::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['card'])) {
+            $this->card = new CardResponse($data['card']);
+        }
+        if (isset($data['bank_account'])) {
+            $this->bank_account = new BankAccountResponse($data['bank_account']);
+        }
+        if (isset($data['credit'])) {
+            $this->credit = new PaypalCredit($data['credit']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initCard(): CardResponse
+    {
+        return $this->card = new CardResponse();
+    }
+
+    public function initBankAccount(): BankAccountResponse
+    {
+        return $this->bank_account = new BankAccountResponse();
+    }
+
+    public function initCredit(): PaypalCredit
+    {
+        return $this->credit = new PaypalCredit();
     }
 }

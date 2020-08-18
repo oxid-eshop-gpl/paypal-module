@@ -77,7 +77,24 @@ class AddressWithConfirmation extends AddressName implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['id'])) {
+            $this->id = $data['id'];
+        }
+        if (isset($data['confirmation_status'])) {
+            $this->confirmation_status = $data['confirmation_status'];
+        }
+        if (isset($data['confirmation_authority'])) {
+            $this->confirmation_authority = $data['confirmation_authority'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        parent::__construct($data);
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

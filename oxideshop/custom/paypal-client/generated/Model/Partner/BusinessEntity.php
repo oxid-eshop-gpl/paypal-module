@@ -34,14 +34,14 @@ class BusinessEntity extends Business implements JsonSerializable
     /**
      * The currency range, from the minimum inclusive amount to the maximum inclusive amount.
      *
-     * @var CurrencyRange | null
+     * @var OnboardingCommonCurrencyRange | null
      */
     public $annual_sales_volume_range;
 
     /**
      * The currency range, from the minimum inclusive amount to the maximum inclusive amount.
      *
-     * @var CurrencyRange | null
+     * @var OnboardingCommonCurrencyRange | null
      */
     public $average_monthly_volume_range;
 
@@ -78,23 +78,21 @@ class BusinessEntity extends Business implements JsonSerializable
             $this->office_bearers,
             "office_bearers in BusinessEntity must be array $within"
         );
-
         if (isset($this->office_bearers)) {
             foreach ($this->office_bearers as $item) {
                 $item->validate(BusinessEntity::class);
             }
         }
-
         !isset($this->annual_sales_volume_range) || Assert::isInstanceOf(
             $this->annual_sales_volume_range,
-            CurrencyRange::class,
-            "annual_sales_volume_range in BusinessEntity must be instance of CurrencyRange $within"
+            OnboardingCommonCurrencyRange::class,
+            "annual_sales_volume_range in BusinessEntity must be instance of OnboardingCommonCurrencyRange $within"
         );
         !isset($this->annual_sales_volume_range) ||  $this->annual_sales_volume_range->validate(BusinessEntity::class);
         !isset($this->average_monthly_volume_range) || Assert::isInstanceOf(
             $this->average_monthly_volume_range,
-            CurrencyRange::class,
-            "average_monthly_volume_range in BusinessEntity must be instance of CurrencyRange $within"
+            OnboardingCommonCurrencyRange::class,
+            "average_monthly_volume_range in BusinessEntity must be instance of OnboardingCommonCurrencyRange $within"
         );
         !isset($this->average_monthly_volume_range) ||  $this->average_monthly_volume_range->validate(BusinessEntity::class);
         !isset($this->business_description) || Assert::minLength(
@@ -109,8 +107,49 @@ class BusinessEntity extends Business implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['beneficial_owners'])) {
+            $this->beneficial_owners = new BeneficialOwners($data['beneficial_owners']);
+        }
+        if (isset($data['office_bearers'])) {
+            $this->office_bearers = [];
+            foreach ($data['office_bearers'] as $item) {
+                $this->office_bearers[] = new OfficeBearer($item);
+            }
+        }
+        if (isset($data['annual_sales_volume_range'])) {
+            $this->annual_sales_volume_range = new OnboardingCommonCurrencyRange($data['annual_sales_volume_range']);
+        }
+        if (isset($data['average_monthly_volume_range'])) {
+            $this->average_monthly_volume_range = new OnboardingCommonCurrencyRange($data['average_monthly_volume_range']);
+        }
+        if (isset($data['business_description'])) {
+            $this->business_description = $data['business_description'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        parent::__construct($data);
         $this->office_bearers = [];
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initBeneficialOwners(): BeneficialOwners
+    {
+        return $this->beneficial_owners = new BeneficialOwners();
+    }
+
+    public function initAnnualSalesVolumeRange(): OnboardingCommonCurrencyRange
+    {
+        return $this->annual_sales_volume_range = new OnboardingCommonCurrencyRange();
+    }
+
+    public function initAverageMonthlyVolumeRange(): OnboardingCommonCurrencyRange
+    {
+        return $this->average_monthly_volume_range = new OnboardingCommonCurrencyRange();
     }
 }

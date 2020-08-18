@@ -47,7 +47,30 @@ class CardAttributes implements JsonSerializable
         !isset($this->verification) ||  $this->verification->validate(CardAttributes::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['customer'])) {
+            $this->customer = new Customer($data['customer']);
+        }
+        if (isset($data['verification'])) {
+            $this->verification = new CardVerification($data['verification']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initCustomer(): Customer
+    {
+        return $this->customer = new Customer();
+    }
+
+    public function initVerification(): CardVerification
+    {
+        return $this->verification = new CardVerification();
     }
 }

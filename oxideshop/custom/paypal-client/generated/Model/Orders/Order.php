@@ -120,7 +120,7 @@ class Order extends ActivityTimestamps implements JsonSerializable
      * Checkout Experience (in context) ensure that you include application_context.return_url is specified or you
      * will get "We're sorry, Things don't appear to be working at the moment" after the payer approves the payment.
      *
-     * @var LinkDescription[] | null
+     * @var array | null
      */
     public $links;
 
@@ -171,24 +171,15 @@ class Order extends ActivityTimestamps implements JsonSerializable
             $this->purchase_units,
             "purchase_units in Order must be array $within"
         );
-
         if (isset($this->purchase_units)) {
             foreach ($this->purchase_units as $item) {
                 $item->validate(Order::class);
             }
         }
-
         !isset($this->links) || Assert::isArray(
             $this->links,
             "links in Order must be array $within"
         );
-
-        if (isset($this->links)) {
-            foreach ($this->links as $item) {
-                $item->validate(Order::class);
-            }
-        }
-
         !isset($this->credit_financing_offer) || Assert::isInstanceOf(
             $this->credit_financing_offer,
             CreditFinancingOffer::class,
@@ -197,8 +188,64 @@ class Order extends ActivityTimestamps implements JsonSerializable
         !isset($this->credit_financing_offer) ||  $this->credit_financing_offer->validate(Order::class);
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['id'])) {
+            $this->id = $data['id'];
+        }
+        if (isset($data['payment_source'])) {
+            $this->payment_source = new PaymentSourceResponse($data['payment_source']);
+        }
+        if (isset($data['intent'])) {
+            $this->intent = $data['intent'];
+        }
+        if (isset($data['payer'])) {
+            $this->payer = new Payer($data['payer']);
+        }
+        if (isset($data['expiration_time'])) {
+            $this->expiration_time = $data['expiration_time'];
+        }
+        if (isset($data['purchase_units'])) {
+            $this->purchase_units = [];
+            foreach ($data['purchase_units'] as $item) {
+                $this->purchase_units[] = new PurchaseUnit($item);
+            }
+        }
+        if (isset($data['status'])) {
+            $this->status = $data['status'];
+        }
+        if (isset($data['links'])) {
+            $this->links = [];
+            foreach ($data['links'] as $item) {
+                $this->links[] = $item;
+            }
+        }
+        if (isset($data['credit_financing_offer'])) {
+            $this->credit_financing_offer = new CreditFinancingOffer($data['credit_financing_offer']);
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        parent::__construct($data);
         $this->purchase_units = [];
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initPaymentSource(): PaymentSourceResponse
+    {
+        return $this->payment_source = new PaymentSourceResponse();
+    }
+
+    public function initPayer(): Payer
+    {
+        return $this->payer = new Payer();
+    }
+
+    public function initCreditFinancingOffer(): CreditFinancingOffer
+    {
+        return $this->credit_financing_offer = new CreditFinancingOffer();
     }
 }

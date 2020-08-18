@@ -9,7 +9,8 @@ use Webmozart\Assert\Assert;
 /**
  * The identity document.
  *
- * generated from: MerchantsCommonComponentsSpecification-v1-schema-common_components-v4-schema-json-openapi-2.0-identity_document.json
+ * generated from:
+ * MerchantsCommonComponentsSpecification-v1-schema-common_components-v4-schema-json-openapi-2.0-identity_document.json
  */
 class IdentityDocument implements JsonSerializable
 {
@@ -140,7 +141,34 @@ class IdentityDocument implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['type'])) {
+            $this->type = $data['type'];
+        }
+        if (isset($data['issuer'])) {
+            $this->issuer = new DocumentIssuer($data['issuer']);
+        }
+        if (isset($data['id_number'])) {
+            $this->id_number = $data['id_number'];
+        }
+        if (isset($data['issued_date'])) {
+            $this->issued_date = $data['issued_date'];
+        }
+        if (isset($data['expiration_date'])) {
+            $this->expiration_date = $data['expiration_date'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initIssuer(): DocumentIssuer
+    {
+        return $this->issuer = new DocumentIssuer();
     }
 }

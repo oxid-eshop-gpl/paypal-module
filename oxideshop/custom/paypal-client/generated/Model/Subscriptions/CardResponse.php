@@ -188,7 +188,35 @@ class CardResponse implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['id'])) {
+            $this->id = $data['id'];
+        }
+        if (isset($data['last_n_chars'])) {
+            $this->last_n_chars = $data['last_n_chars'];
+        }
+        if (isset($data['last_digits'])) {
+            $this->last_digits = $data['last_digits'];
+        }
+        if (isset($data['brand'])) {
+            $this->brand = $data['brand'];
+        }
+        if (isset($data['type'])) {
+            $this->type = $data['type'];
+        }
+        if (isset($data['issuer'])) {
+            $this->issuer = $data['issuer'];
+        }
+        if (isset($data['bin'])) {
+            $this->bin = $data['bin'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }

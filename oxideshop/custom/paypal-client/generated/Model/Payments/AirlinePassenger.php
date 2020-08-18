@@ -18,7 +18,7 @@ class AirlinePassenger implements JsonSerializable
     /**
      * The name of the party.
      *
-     * @var Name | null
+     * @var Name2 | null
      */
     public $name;
 
@@ -62,8 +62,8 @@ class AirlinePassenger implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
         !isset($this->name) || Assert::isInstanceOf(
             $this->name,
-            Name::class,
-            "name in AirlinePassenger must be instance of Name $within"
+            Name2::class,
+            "name in AirlinePassenger must be instance of Name2 $within"
         );
         !isset($this->name) ||  $this->name->validate(AirlinePassenger::class);
         !isset($this->date_of_birth) || Assert::minLength(
@@ -98,7 +98,31 @@ class AirlinePassenger implements JsonSerializable
         );
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['name'])) {
+            $this->name = new Name2($data['name']);
+        }
+        if (isset($data['date_of_birth'])) {
+            $this->date_of_birth = $data['date_of_birth'];
+        }
+        if (isset($data['country_code'])) {
+            $this->country_code = $data['country_code'];
+        }
+        if (isset($data['customer_code'])) {
+            $this->customer_code = $data['customer_code'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
+    }
+
+    public function initName(): Name2
+    {
+        return $this->name = new Name2();
     }
 }

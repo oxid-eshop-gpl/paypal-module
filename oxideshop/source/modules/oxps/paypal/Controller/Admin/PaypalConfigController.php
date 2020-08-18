@@ -123,7 +123,7 @@ class PaypalConfigController extends AdminController
             'returnToPartnerUrl' => $returnUrl,
             //'partnerLogoUrl' => '',
             'displayMode' => 'minibrowser',
-            'features' => 'PAYMENT,REFUND,ADVANCED_TRANSACTION_SEARCH'
+            'features' => 'PAYMENT,REFUND,ADVANCED_TRANSACTIONS_SEARCH'
         ];
 
         return self::SIGN_UP_HOST . '?' . http_build_query($params);

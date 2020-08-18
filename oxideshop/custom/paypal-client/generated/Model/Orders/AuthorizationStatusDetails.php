@@ -32,7 +32,17 @@ class AuthorizationStatusDetails implements JsonSerializable
         $within = isset($from) ? "within $from" : "";
     }
 
-    public function __construct()
+    private function map(array $data)
     {
+        if (isset($data['reason'])) {
+            $this->reason = $data['reason'];
+        }
+    }
+
+    public function __construct(array $data = null)
+    {
+        if (isset($data)) {
+            $this->map($data);
+        }
     }
 }
