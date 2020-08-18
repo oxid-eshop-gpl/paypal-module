@@ -64,6 +64,8 @@ $aModule = [
     'templates' => [
         'paypalconfig.tpl' => 'oxps/paypal/views/admin/tpl/paypalconfig.tpl',
         'paypal_smart_payment_buttons.tpl' => 'oxps/paypal/views/includes/paypal_smart_payment_buttons.tpl',
+        'flow/paypal_payment_option.tpl' => 'oxps/paypal/views/theme/flow/paypal_payment_option.tpl',
+        'wave/paypal_payment_option.tpl' => 'oxps/paypal/views/theme/wave/paypal_payment_option.tpl'
     ],
     'events' => [
         'onActivate' => '\OxidProfessionalServices\PayPal\Core\Events::onActivate',
@@ -253,6 +255,20 @@ $aModule = [
             'template' => 'page/checkout/payment.tpl',
             'block' => 'select_payment',
             'file' => '/views/blocks/wave/page/checkout/select_payment.tpl',
+            'position' => '5'
+        ],
+        [
+            'theme' => 'flow',
+            'template' => 'page/checkout/payment.tpl',
+            'block' => 'change_payment',
+            'file' => '/views/blocks/flow/page/checkout/change_payment.tpl',
+            'position' => '5'
+        ],
+        [
+            'theme' => 'wave',
+            'template' => 'page/checkout/payment.tpl',
+            'block' => 'change_payment',
+            'file' => '/views/blocks/wave/page/checkout/change_payment.tpl',
             'position' => '5'
         ],
         [

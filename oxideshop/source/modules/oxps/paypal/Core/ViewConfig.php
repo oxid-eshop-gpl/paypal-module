@@ -39,6 +39,24 @@ class ViewConfig extends ViewConfig_parent
     }
 
     /**
+     * TODO: set up the SessionActiveMethod
+     * @return bool
+     */
+    public function isPayPalSessionActive(): bool
+    {
+        return false;
+    }
+
+    /**
+     * TODO: get the exclude-function from amazon
+     * @return bool
+     */
+    public function isPaypalExclude(): bool
+    {
+        return false;
+    }
+
+    /**
      * @return Config
      */
     public function getPayPalConfig(): Config
