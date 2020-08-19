@@ -2,6 +2,10 @@
 
 [{assign var="oxid" value=$oView->getEditObjectId()}]
 [{assign var="edit" value=$oView->getEditObject()}]
+[{assign var="categories" value=$oView->getCategories()}]
+[{assign var="types" value=$oView->getTypes()}]
+[{assign var="images" value=$oView->getDisplayImages()}]
+[{assign var="productUrl" value=$oView->getProductUrl()}]
 
 <form name="transfer" id="transfer" action="[{$oViewConf->getSelfLink()}]" method="post">
     [{$oViewConf->getHiddenSid()}]
@@ -40,7 +44,7 @@
                     Name:
                 </td>
                 <td class="edittext">
-                    <input class="editinput" size="30" name="title" value="[{$edit->oxarticles__oxtitle->value}]" [{ $readonly }]>
+                    <input type="text" class="editinput" size="80" name="title" value="[{$edit->oxarticles__oxtitle->value}]" [{ $readonly }]>
                 </td>
             </tr>
             <tr>
@@ -48,7 +52,7 @@
                     Description:
                 </td>
                 <td class="edittext">
-                    <textarea class="editinput" cols="100" rows="10" name="description">[{$edit->oxarticles__oxshortdesc->value}]</textarea>
+                    <textarea class="editinput" style="width: 500px" rows="10" name="description">[{$edit->oxarticles__oxshortdesc->value}]</textarea>
                 </td>
             </tr>
             <tr>
@@ -56,8 +60,10 @@
                     Product Type:
                 </td>
                 <td class="edittext">
-                     <select class="editinput">
-                         <option>xx</option>
+                     <select style="width: 500px" class="editinput">
+                         [{foreach from=$types item=value key=name}]
+                             <option value="[{$name}]">[{$value}]</option>
+                         [{/foreach}]
                      </select>
                 </td>
             </tr>
@@ -67,9 +73,36 @@
                     Category:
                 </td>
                 <td class="edittext">
-                    <select class="editinput">
-                        <option>xx</option>
+                    <select style="width: 500px" class="editinput">
+                        [{foreach from=$categories item=value key=name}]
+                            <option value="[{$name}]">[{$value}]</option>
+                        [{/foreach}]
                     </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="edittext">
+                    Image URL:
+                </td>
+                [{foreach from=$images item=url}]
+                    <td class="edittext" style="float: left; margin-right: 10px; padding: 10px; border: 1px solid #cccccc;">
+                        <label>
+                            <input type="radio" name="test" value="small" checked>
+                            <img style="height: 100px" src="[{$url}]">
+                        </label>
+                    </td>
+                [{/foreach}]
+            </tr>
+
+
+            <tr>
+                <td class="edittext">
+                    Product URL:
+                </td>
+                <td class="edittext">
+                    <p>[{$productUrl}]</p>
+                    <input type="hidden" name="title" value="[{$productUrl}]">
                 </td>
             </tr>
 
@@ -78,6 +111,8 @@
                     <input type="submit" class="edittext" name="save" value='[{ oxmultilang ident="GENERAL_SAVE" }]' onClick="Javascript:document.myedit.fnc.value='save'" [{ $readonly }]><br>
                 </td>
             </tr>
+
+
         </tbody>
     </table>
 </form>

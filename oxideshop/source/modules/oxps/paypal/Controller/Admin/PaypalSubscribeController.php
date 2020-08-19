@@ -27,6 +27,7 @@ use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Model\Catalog\Patch;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
+use OxidProfessionalServices\PayPal\Model\Category;
 
 /**
  * Controller for admin > Paypal/Configuration page
@@ -39,6 +40,7 @@ class PaypalSubscribeController extends AdminController
         $this->_sThisTemplate = 'subscribe.tpl';
     }
 
+    // needed?
     public function render()
     {
         return parent::render();
@@ -54,6 +56,9 @@ class PaypalSubscribeController extends AdminController
         return false;
     }
 
+    /**
+     * @return object
+     */
     public function getEditObject()
     {
         $article = oxNew(Article::class);
@@ -62,6 +67,9 @@ class PaypalSubscribeController extends AdminController
         return $article;
     }
 
+    /**
+     * @throws \OxidProfessionalServices\PayPal\Api\Exception\ApiException
+     */
     public function getCatalogEntries()
     {
         /**
@@ -71,6 +79,85 @@ class PaypalSubscribeController extends AdminController
         $cs = $sf->getCatalogService();
 
         $products = $cs->listProducts();
+    }
+
+    /**
+     * @return array
+     */
+    public function getCategories()
+    {
+        $category = new Category();
+        return $category->getCategories();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProductUrl()
+    {
+        return $this->getEditObject()->getBaseStdLink($this->_iEditLang);
+    }
+
+    /**
+     * @return array
+     */
+    public function getDisplayImages(): array
+    {
+        $editObject = $this->getEditObject();
+
+        $images = [];
+
+        for ($i = 1; $i < 10; $i++) {
+            $field = 'oxarticles__oxpic' . $i;
+            $rawValue = $editObject->$field->rawValue;
+
+            if(empty($rawValue)) {
+                continue;
+            }
+
+            $img = $this->formatImageUrl(
+                $editObject->ssl_dimagedir,
+                $editObject->$field->rawValue,
+                $i
+            );
+
+            if($this->imgexists($img)) {
+                $images[] = $img;
+            }
+        }
+
+        return $images;
+    }
+
+    /**
+     * @param $url
+     * @return bool
+     */
+    private function imgexists($url) {
+        if (!$fp = curl_init($url)) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * @param string $url
+     * @param string $file
+     * @param int $num
+     * @return string
+     */
+    private function formatImageUrl($url, $file, int $num)
+    {
+        return str_replace(':/out', '/out', $url) . 'master/product/' . $num . '/' . $file;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTypes()
+    {
+        $category = new Category();
+        return $category->getTypes();
     }
 
     public function save(){
