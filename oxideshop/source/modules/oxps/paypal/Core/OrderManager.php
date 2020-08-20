@@ -5,6 +5,7 @@ namespace OxidProfessionalServices\PayPal\Core;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\PurchaseUnit;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\ShippingDetail;
+use OxidProfessionalServices\PayPal\Core\PaypalSession;
 
 class OrderManager
 {
@@ -27,11 +28,6 @@ class OrderManager
 
     public function prepareOrderForContinue($orderId)
     {
-        Registry::getSession()->setVariable(
-            Constants::PAYPAL_SESSION_KEY,
-            [
-                'payer' => $orderId
-            ]
-        );
+        PaypalSession::storePaypalOrderId($orderId);
     }
 }
