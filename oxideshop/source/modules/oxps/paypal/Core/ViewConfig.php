@@ -23,6 +23,7 @@
 namespace OxidProfessionalServices\PayPal\Core;
 
 use OxidEsales\Eshop\Core\Registry;
+use OxidProfessionalServices\PayPal\Core\PaypalSession;
 
 /**
  * @mixin \OxidEsales\Eshop\Core\ViewConfig
@@ -56,6 +57,23 @@ class ViewConfig extends ViewConfig_parent
     }
 
     /**
+     * @return bool
+     */
+    public function isPayPalSessionActive(): bool
+    {
+        return PaypalSession::isPaypalOrderActive();
+    }
+
+    /**
+     * TODO: get the exclude-function from amazon
+     * @return bool
+     */
+    public function isPaypalExclude(): bool
+    {
+        return false;
+    }
+
+    /**
      * @return Config
      */
     public function getPayPalConfig(): Config
@@ -64,11 +82,21 @@ class ViewConfig extends ViewConfig_parent
     }
 
     /**
+     * @return null or string
+     */
+    public function getcheckoutOrderId(): ?string
+    {
+        return PaypalSession::getcheckoutOrderId();
+    }
+
+    /**
      * Gets PayPal JS SDK url
+     *
+     *  @param bool $commit commit the order or Show a Confirmation Page
      *
      * @return string
      */
-    public function getPayPalJsSdkUrl(): string
+    public function getPayPalJsSdkUrl($commit = true): string
     {
         $payPalConfig = $this->getPayPalConfig();
         $config = Registry::getConfig();
@@ -78,12 +106,11 @@ class ViewConfig extends ViewConfig_parent
         $params['client-id'] = $payPalConfig->getClientId();
         $params['integration-date'] = Constants::PAYPAL_INTEGRATION_DATE;
         $params['intent'] = strtolower(Constants::PAYPAL_ORDER_INTENT_CAPTURE);
+        $params['commit'] = ($commit ? 'true' : 'false');
 
         if ($currency = $config->getActShopCurrencyObject()) {
             $params['currency'] = strtoupper($currency->name);
         }
-
-        $params['commit'] = $config->getTopActiveView() == 'order' ? 'true' : 'false';
 
         return Constants::PAYPAL_JS_SDK_URL . '?' . http_build_query($params);
     }

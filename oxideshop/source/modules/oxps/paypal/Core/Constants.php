@@ -28,4 +28,5 @@ class Constants
     public const PAYPAL_INTEGRATION_DATE = '2020-07-29';
     public const PAYPAL_ORDER_INTENT_CAPTURE = 'CAPTURE';
     public const PAYPAL_SESSION_KEY = 'PAYPAL_SESSION';
+    public const SESSION_CHECKOUT_ORDER_ID = 'paypal-checkout-session';
 }
