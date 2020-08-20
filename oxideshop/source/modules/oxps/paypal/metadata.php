@@ -105,14 +105,14 @@ $aModule = [
             'theme' => 'flow',
             'template' => 'page/checkout/basket.tpl',
             'block' => 'basket_btn_next_bottom',
-            'file' => '/views/blocks/flow/page/checkout/basket_btn_next_bottom.tpl',
+            'file' => '/views/blocks/shared/page/checkout/basket_btn_next_bottom.tpl',
             'position' => '5'
         ],
         [
             'theme' => 'wave',
             'template' => 'page/checkout/basket.tpl',
             'block' => 'basket_btn_next_bottom',
-            'file' => '/views/blocks/wave/page/checkout/basket_btn_next_bottom.tpl',
+            'file' => '/views/blocks/shared/page/checkout/basket_btn_next_bottom.tpl',
             'position' => '5'
         ],
         [
@@ -127,6 +127,48 @@ $aModule = [
             'template' => 'page/checkout/order.tpl',
             'block' => 'checkout_order_address',
             'file' => '/views/blocks/wave/page/checkout/checkout_order_address.tpl',
+            'position' => '5'
+        ],
+        [
+            'theme' => 'flow',
+            'template' => 'page/checkout/payment.tpl',
+            'block' => 'select_payment',
+            'file' => '/views/blocks/shared/page/checkout/select_payment.tpl',
+            'position' => '5'
+        ],
+        [
+            'theme' => 'wave',
+            'template' => 'page/checkout/payment.tpl',
+            'block' => 'select_payment',
+            'file' => '/views/blocks/shared/page/checkout/select_payment.tpl',
+            'position' => '5'
+        ],
+        [
+            'theme' => 'flow',
+            'template' => 'page/checkout/payment.tpl',
+            'block' => 'change_payment',
+            'file' => '/views/blocks/flow/page/checkout/change_payment.tpl',
+            'position' => '5'
+        ],
+        [
+            'theme' => 'wave',
+            'template' => 'page/checkout/payment.tpl',
+            'block' => 'change_payment',
+            'file' => '/views/blocks/wave/page/checkout/change_payment.tpl',
+            'position' => '5'
+        ],
+        [
+            'theme' => 'flow',
+            'template' => 'page/checkout/user.tpl',
+            'block' => 'checkout_user_main',
+            'file' => '/views/blocks/flow/page/checkout/checkout_user_main.tpl',
+            'position' => '5'
+        ],
+        [
+            'theme' => 'wave',
+            'template' => 'page/checkout/user.tpl',
+            'block' => 'checkout_user_main',
+            'file' => '/views/blocks/wave/page/checkout/checkout_user_main.tpl',
             'position' => '5'
         ],
         [
@@ -201,20 +243,6 @@ $aModule = [
         ],
         [
             'theme' => 'flow',
-            'template' => 'page/checkout/user.tpl',
-            'block' => 'checkout_user_main',
-            'file' => '/views/blocks/flow/page/checkout/checkout_user_main.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'wave',
-            'template' => 'page/checkout/user.tpl',
-            'block' => 'checkout_user_main',
-            'file' => '/views/blocks/wave/page/checkout/checkout_user_main.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'flow',
             'template' => 'widget/minibasket/minibasket.tpl',
             'block' => 'dd_layout_page_header_icon_menu_minibasket_functions',
             'file' =>
@@ -227,34 +255,6 @@ $aModule = [
             'block' => 'dd_layout_page_header_icon_menu_minibasket_functions',
             'file' =>
                 '/views/blocks/wave/widget/minibasket/dd_layout_page_header_icon_menu_minibasket_functions.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'flow',
-            'template' => 'page/checkout/payment.tpl',
-            'block' => 'select_payment',
-            'file' => '/views/blocks/flow/page/checkout/select_payment.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'wave',
-            'template' => 'page/checkout/payment.tpl',
-            'block' => 'select_payment',
-            'file' => '/views/blocks/wave/page/checkout/select_payment.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'flow',
-            'template' => 'page/checkout/payment.tpl',
-            'block' => 'change_payment',
-            'file' => '/views/blocks/flow/page/checkout/change_payment.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'wave',
-            'template' => 'page/checkout/payment.tpl',
-            'block' => 'change_payment',
-            'file' => '/views/blocks/wave/page/checkout/change_payment.tpl',
             'position' => '5'
         ],
         [
