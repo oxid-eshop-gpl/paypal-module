@@ -13,7 +13,6 @@ paypal.Buttons({
                 'content-type': 'application/json'
             }
         }).then(function(res) {
-            console.log(res);
             return res.json();
         }).then(function(data) {
             [{/literal}]
@@ -30,20 +29,18 @@ paypal.Buttons({
     onApprove: function(data, actions) {
         captureData = new FormData();
         captureData.append('orderID', data.orderID);
-        return fetch('[{/literal}][{$oViewConf->getSelfLink()|cat:"=PayPalProxyController&fnc=captureOrder&context="|cat:$paymentStrategy}][{literal}]', {
+        return fetch('[{/literal}][{$oViewConf->getSelfLink()|cat:"cl=PayPalProxyController&fnc=captureOrder&context="|cat:$paymentStrategy}][{literal}]', {
             method: 'post',
             body: captureData
         }).then(function(res) {
             return res.json();
-        }).then(function(details) {
-            alert('Transaction funds captured from ' + details.payer.name.given_name);
+        }).then(function(data) {
+            console.log('Transaction funds captured from ' + data.payer.name.given_name);
         })
     },
     onCancel: function(data, actions) {
     },
     onError: function (data) {
-        console.log(data);
-    onError: function () {
     }
 }).render('#paypal-button-container');
 [{/literal}]
