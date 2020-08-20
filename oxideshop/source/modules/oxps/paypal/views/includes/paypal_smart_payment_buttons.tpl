@@ -1,7 +1,7 @@
 [{capture name="paypal_init"}]
 
 [{if !$paymentStrategy}]
-    [{assign var="paymentStrategy" value="pay_now"}]
+    [{assign var="paymentStrategy" value="continue"}]
 [{/if}]
 
 [{literal}]

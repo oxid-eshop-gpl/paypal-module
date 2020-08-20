@@ -4,7 +4,7 @@
 [{if $config->isActive() && $config->showPayPalMiniBasketButton()}]
     <div class="float-right">
         <div class="text-center paypal-button-or small">[{"OR"|oxmultilangassign|oxupper}]</div>
-        [{include file="paypal_smart_payment_buttons.tpl" buttonId="PayPalButtonMiniBasket" buttonClass="small" paymentStrategy="pay_now"}]
+        [{include file="paypal_smart_payment_buttons.tpl" buttonId="PayPalButtonMiniBasket" buttonClass="small" paymentStrategy="continue"}]
     </div>
 [{/if}]
 *}]
