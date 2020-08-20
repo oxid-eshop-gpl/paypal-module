@@ -7,7 +7,7 @@
         <div class="card-body oxEqualized">
             [{if !$oViewConf->isPaypalSessionActive()}]
             <div class="text-left">
-                [{include file="paypal_smart_payment_buttons.tpl" buttonId="PayPalButtonPaymentPage" buttonClass="col-md-4 col-12" buttonCommit=false}]
+                [{include file="paypal_smart_payment_buttons.tpl" buttonId="PayPalButtonPaymentPage" buttonClass="col-md-4 col-12" paymentStrategy="continue"}]
             </div>
             [{else}]
             <div class="text-left">

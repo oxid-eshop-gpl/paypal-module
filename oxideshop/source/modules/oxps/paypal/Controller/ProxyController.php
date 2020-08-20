@@ -70,9 +70,6 @@ class ProxyController extends FrontendController
             PaypalSession::storePaypalOrderId($response->id);
         }
 
-        if ($goToOrder = (string) Registry::getRequest()->getRequestEscapedParameter('gotoorder')) {
-            Registry::getUtils()->redirect(Registry::getConfig()->getShopHomeUrl() . 'cl=order', false, 302);
-        }
         $this->outputJson($response);
     }
 

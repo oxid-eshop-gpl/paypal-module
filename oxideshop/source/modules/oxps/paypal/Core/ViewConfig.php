@@ -31,24 +31,6 @@ use OxidProfessionalServices\PayPal\Core\PaypalSession;
 class ViewConfig extends ViewConfig_parent
 {
     /**
-     * This could be
-     *
-     * @string continue allows adding multiple items with checkout
-     * @string pay_now direct payment and capture
-     *
-     * @var string
-     */
-    private $paymentFlowStrategy = 'continue';
-
-    /**
-     * @return string
-     */
-    public function getPaymentFlowStrategy(): string
-    {
-        return $this->paymentFlowStrategy;
-    }
-
-    /**
      * @return bool
      */
     public function isPayPalActive(): bool
@@ -92,11 +74,11 @@ class ViewConfig extends ViewConfig_parent
     /**
      * Gets PayPal JS SDK url
      *
-     *  @param bool $commit commit the order or Show a Confirmation Page
+     *  @param string $paymentStrategy ('continue', 'pay_now') commit the order or Show a Confirmation Page
      *
      * @return string
      */
-    public function getPayPalJsSdkUrl($commit = true): string
+    public function getPayPalJsSdkUrl($paymentStrategy = true): string
     {
         $payPalConfig = $this->getPayPalConfig();
         $config = Registry::getConfig();
@@ -106,7 +88,7 @@ class ViewConfig extends ViewConfig_parent
         $params['client-id'] = $payPalConfig->getClientId();
         $params['integration-date'] = Constants::PAYPAL_INTEGRATION_DATE;
         $params['intent'] = strtolower(Constants::PAYPAL_ORDER_INTENT_CAPTURE);
-        $params['commit'] = ($commit ? 'true' : 'false');
+        $params['commit'] = ($paymentStrategy == 'pay_now' ? 'true' : 'false');
 
         if ($currency = $config->getActShopCurrencyObject()) {
             $params['currency'] = strtoupper($currency->name);
