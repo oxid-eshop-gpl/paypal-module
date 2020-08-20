@@ -16,7 +16,7 @@
 
 <form name="myedit" id="myedit" action="[{ $oViewConf->getSelfLink() }]" method="post">
     [{ $oViewConf->getHiddenSid() }]
-    <input type="hidden" name="cl" value="PayPal">
+    <input type="hidden" name="cl" value="PaypalSubscribeController">
     <input type="hidden" name="fnc" value="">
     <input type="hidden" name="oxid" value="[{ $oxid }]">
     <input type="hidden" name="paypalProductId" value="[{ $paypalProductId }]">
@@ -60,9 +60,9 @@
                     Product Type:
                 </td>
                 <td class="edittext">
-                     <select style="width: 500px" class="editinput">
+                     <select name="productType" style="width: 500px" class="editinput">
                          [{foreach from=$types item=value key=name}]
-                             <option value="[{$name}]">[{$value}]</option>
+                             <option value="[{$value}]">[{$value}]</option>
                          [{/foreach}]
                      </select>
                 </td>
@@ -73,9 +73,9 @@
                     Category:
                 </td>
                 <td class="edittext">
-                    <select style="width: 500px" class="editinput">
+                    <select name="category" style="width: 500px" class="editinput">
                         [{foreach from=$categories item=value key=name}]
-                            <option value="[{$name}]">[{$value}]</option>
+                            <option value="[{$value}]">[{$value}]</option>
                         [{/foreach}]
                     </select>
                 </td>
@@ -88,13 +88,12 @@
                 [{foreach from=$images item=url}]
                     <td class="edittext" style="float: left; margin-right: 10px; padding: 10px; border: 1px solid #cccccc;">
                         <label>
-                            <input type="radio" name="test" value="small" checked>
+                            <input type="radio" name="imageUrl" value="[{$url}]" checked>
                             <img style="height: 100px" src="[{$url}]">
                         </label>
                     </td>
                 [{/foreach}]
             </tr>
-
 
             <tr>
                 <td class="edittext">
@@ -102,7 +101,7 @@
                 </td>
                 <td class="edittext">
                     <p>[{$productUrl}]</p>
-                    <input type="hidden" name="title" value="[{$productUrl}]">
+                    <input type="hidden" name="homeUrl" value="[{$productUrl}]">
                 </td>
             </tr>
 
@@ -111,7 +110,6 @@
                     <input type="submit" class="edittext" name="save" value='[{ oxmultilang ident="GENERAL_SAVE" }]' onClick="Javascript:document.myedit.fnc.value='save'" [{ $readonly }]><br>
                 </td>
             </tr>
-
 
         </tbody>
     </table>

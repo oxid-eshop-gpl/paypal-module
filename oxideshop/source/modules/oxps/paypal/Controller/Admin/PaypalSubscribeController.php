@@ -24,8 +24,13 @@ namespace OxidProfessionalServices\PayPal\Controller\Admin;
 
 use OxidEsales\Eshop\Application\Controller\Admin\AdminController;
 use OxidEsales\Eshop\Application\Model\Article;
+use OxidEsales\Eshop\Core\DatabaseProvider;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\Eshop\Core\UtilsObject;
 use OxidProfessionalServices\PayPal\Api\Model\Catalog\Patch;
+use OxidProfessionalServices\PayPal\Api\Model\Catalog\Product;
+use OxidProfessionalServices\PayPal\Api\Model\Catalog\ProductRequestPOST;
+use OxidProfessionalServices\Paypal\Core\Logger;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 use OxidProfessionalServices\PayPal\Model\Category;
 
@@ -64,6 +69,9 @@ class PaypalSubscribeController extends AdminController
         $article = oxNew(Article::class);
         $request = Registry::getRequest();
         $article->load($request->getRequestParameter('oxid'));
+
+        $products = $this->getCatalogEntries();
+
         return $article;
     }
 
@@ -79,6 +87,13 @@ class PaypalSubscribeController extends AdminController
         $cs = $sf->getCatalogService();
 
         $products = $cs->listProducts();
+
+        $filteredProducts = [];
+        foreach($products as $product) {
+            $filteredProducts = $product;
+        }
+
+        return $filteredProducts;
     }
 
     /**
@@ -87,7 +102,31 @@ class PaypalSubscribeController extends AdminController
     public function getCategories()
     {
         $category = new Category();
-        return $category->getCategories();
+        $categories = $category->getCategories();
+
+        $categoryArray = [];
+        foreach ($categories as $type => $value) {
+            $categoryArray[] = $value;
+        }
+
+        return $categoryArray;
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getTypes()
+    {
+        $category = new Category();
+        $types = $category->getTypes();
+
+        $typeArray = [];
+        foreach ($types as $type => $value) {
+            $typeArray[] = $value;
+        }
+
+        return $typeArray;
     }
 
     /**
@@ -151,14 +190,6 @@ class PaypalSubscribeController extends AdminController
         return str_replace(':/out', '/out', $url) . 'master/product/' . $num . '/' . $file;
     }
 
-    /**
-     * @return array
-     */
-    public function getTypes()
-    {
-        $category = new Category();
-        return $category->getTypes();
-    }
 
     public function save(){
         /**
@@ -176,7 +207,29 @@ class PaypalSubscribeController extends AdminController
             $patchRequest->path = 'title';
             $cs->updateProduct($productId, [$patchRequest]);
         } else {
-            $cs->createProduct();
+            $productRequest = [];
+            $productRequest['name'] = $request->getRequestParameter('title');
+            $productRequest['description'] = $request->getRequestParameter('description');
+            $productRequest['type'] = $request->getRequestParameter('productType');
+            $productRequest['category'] = $request->getRequestParameter('category');
+            $productRequest['image_url'] = $request->getRequestParameter('imageUrl');
+            $productRequest['home_url'] = $request->getRequestParameter('homeUrl');
+
+            $productRequestPost = new ProductRequestPOST($productRequest);
+
+            /** @var Product $response */
+            $response = $cs->createProduct($productRequestPost);
+
+            $sql = 'INSERT INTO oxps_paypal_subscription_product (';
+            $sql .= 'OXPS_PAYPAL_SUBSCRIPTION_PRODUCT_ID, OXPS_PAYPAL_OXSHOPID, OXPS_PAYPAL_OXARTICLE_ID, ';
+            $sql .= 'OXPS_PAYPAL_PRODUCT_ID) VALUES(?,?,?,?)';
+
+            DatabaseProvider::getDb()->execute($sql, [
+                UtilsObject::getInstance()->generateUId(),
+                $this->getConfig()->getShopId(),
+                $this->getEditObject()->oxarticles__oxid->value,
+                $response->id
+            ]);
         }
     }
 }

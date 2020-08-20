@@ -46,8 +46,11 @@ class ServiceFactory
         return oxNew(Orders::class, $this->getClient());
     }
 
+    /**
+     * @return Catalog
+     */
     public function getCatalogService(): Catalog {
-        return oxNew(Orders::class, $this->getClient());
+        return new Catalog($this->getClient());
     }
 
     private function getClient(): Client
