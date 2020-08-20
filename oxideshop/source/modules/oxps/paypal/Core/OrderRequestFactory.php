@@ -98,8 +98,9 @@ class OrderRequestFactory
         if ($user = $basket->getUser()) {
             $request->payer = $this->getPayer();
         }
+
         $request->purchase_units = $this->getPurchaseUnits($transactionId, $invoiceId);
-        $request->payer = $this->getPayer();
+
         $request->application_context = $this->getApplicationContext($userAction);
 
         return $request;

@@ -35,7 +35,11 @@ paypal.Buttons({
         }).then(function(res) {
             return res.json();
         }).then(function(data) {
-            console.log('Transaction funds captured from ' + data.payer.name.given_name);
+            [{/literal}]
+            [{if $oViewConf->getTopActiveClassName()=="details" && $paymentStrategy=="continue"}]
+                location.reload();
+            [{/if}]
+            [{literal}]
         })
     },
     onCancel: function(data, actions) {
