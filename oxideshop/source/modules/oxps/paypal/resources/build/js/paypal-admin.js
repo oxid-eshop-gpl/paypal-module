@@ -49,14 +49,11 @@ function callOnboardingControllerAutoConfigurationFromCallback(authCode, sharedI
     })
     .then(
         function (response) {
-            console.log(response);
             if (response.status !== 200) {
-                console.log('Error - Status Code: ' + response.status);
                 return;
             }
 
             response.json().then(function (data) {
-                console.log(data);
                 if (window.isSandBox) {
                     jQuery("#client-sandbox-id").val(data.client_id);
                     jQuery("#client-sandbox-secret").val(data.client_secret);
@@ -68,6 +65,5 @@ function callOnboardingControllerAutoConfigurationFromCallback(authCode, sharedI
         }
     )
     .catch(function (err) {
-        console.log('Fetch Error :-S', err);
     });
 }
