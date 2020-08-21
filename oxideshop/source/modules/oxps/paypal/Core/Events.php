@@ -38,6 +38,7 @@ class Events
         self::createLogTable();
         self::addPaymentMethod();
         self::enablePaymentMethod();
+        self::createPaypalOrderTable();
     }
 
     /**
@@ -163,6 +164,49 @@ class Events
                             ENGINE=InnoDB
                             COMMENT \'Paypal Payment transaction log\'',
             LogRepository::TABLE_NAME
+        );
+
+        DatabaseProvider::getDb()->execute($sql);
+    }
+
+    protected static function createPaypalOrderTable(): void
+    {
+        $sql = sprintf(
+            'CREATE TABLE IF NOT EXISTS %s (
+                        `OXPS_PAYPAL_ORDERID`
+                            char(32)
+                            character set latin1
+                            collate latin1_general_ci
+                            NOT NULL
+                            COMMENT \'Record id\',
+                        `OXPS_PAYPAL_OXSHOPID`
+                            char(32)
+                            character set latin1
+                            collate latin1_general_ci
+                            NOT NULL
+                            COMMENT \'Shop id (oxshops)\',
+                        `OXPS_PAYPAL_OXORDERID`
+                            char(32)
+                            character set latin1
+                            collate latin1_general_ci
+                            NOT NULL
+                            COMMENT \'oxorder OXID\',
+                        `OXPS_PAYPAL_PAYPALORDERID`
+                            char(32)
+                            character set latin1
+                            collate latin1_general_ci
+                            NOT NULL
+                            COMMENT \'Paypal Order ID\',
+                        `OXTIMESTAMP`
+                            timestamp
+                            NOT NULL
+                            default CURRENT_TIMESTAMP
+                            on update CURRENT_TIMESTAMP
+                            COMMENT \'Timestamp\',
+                        PRIMARY KEY (`OXPS_PAYPAL_ORDERID`))
+                            ENGINE=InnoDB
+                            COMMENT \'Primary key\'',
+            'oxps_paypal_order'
         );
 
         DatabaseProvider::getDb()->execute($sql);

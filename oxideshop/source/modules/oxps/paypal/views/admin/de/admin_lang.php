@@ -24,6 +24,7 @@ $sLangName = 'Deutsch';
 $aLang = [
     'charset'                        => 'UTF-8',
     'paypal'                         => 'PayPal',
+    'tbclorder_paypal'               => 'PayPal',
     'OXPS_PAYPAL_CONFIG'             => 'Konfiguration',
     'OXPS_PAYPAL_GENERAL'            => 'Allgemein',
     'OXPS_PAYPAL_OPMODE'             => 'Betriebsmodus',

@@ -25,6 +25,7 @@ use OxidEsales\Eshop\Application\Model\Basket;
 use OxidEsales\Eshop\Application\Model\PaymentGateway;
 use OxidProfessionalServices\PayPal\Controller\Admin\OnboardingController;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalConfigController;
+use OxidProfessionalServices\PayPal\Controller\Admin\PaypalOrderController;
 use OxidProfessionalServices\PayPal\Controller\ProxyController;
 use OxidProfessionalServices\PayPal\Controller\WebhookController;
 
@@ -59,7 +60,8 @@ $aModule = [
         'PaypalConfigController' => PaypalConfigController::class,
         'PayPalWebhookController' => WebhookController::class,
         'PayPalProxyController' => ProxyController::class,
-        'OnboardingController' => OnboardingController::class
+        'OnboardingController' => OnboardingController::class,
+        'PaypalOrderController' => PaypalOrderController::class
     ],
     'templates' => [
         'paypalconfig.tpl' => 'oxps/paypal/views/admin/tpl/paypalconfig.tpl',
