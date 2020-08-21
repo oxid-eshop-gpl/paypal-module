@@ -24,6 +24,8 @@ namespace OxidProfessionalServices\PayPal\Model;
 
 use Exception;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\Eshop\Core\DatabaseProvider;
+use OxidEsales\Eshop\Core\UtilsObject;
 use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderCaptureRequest;
 use OxidProfessionalServices\PayPal\Core\PaypalSession;
@@ -89,6 +91,18 @@ class PaymentGateway extends PaymentGateway_parent
                         Registry::getLogger()->error("Error on order capture call.", [$exception]);
                     }
                     $success = true;
+
+
+                    $sql = 'INSERT INTO oxps_paypal_order (';
+                    $sql .= 'OXPS_PAYPAL_ORDERID, OXPS_PAYPAL_OXSHOPID, OXPS_PAYPAL_OXORDERID, ';
+                    $sql .= 'OXPS_PAYPAL_PAYPALORDERID) VALUES(?,?,?,?)';
+
+                    DatabaseProvider::getDb()->execute($sql, [
+                        UtilsObject::getInstance()->generateUId(),
+                        Registry::getConfig()->getShopId(),
+                        $order->getId(),
+                        $checkoutOrderId
+                    ]);
 
                     // destroy Paypal-Session
                     PaypalSession::storePaypalOrderId('');
