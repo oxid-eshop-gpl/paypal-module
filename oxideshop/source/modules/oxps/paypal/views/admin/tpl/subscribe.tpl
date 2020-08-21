@@ -157,6 +157,11 @@
                 <td class="edittext">
                     <input type="submit" class="edittext" name="save" value='[{ oxmultilang ident="GENERAL_SAVE" }]' onClick="Javascript:document.myedit.fnc.value='save'" [{ $readonly }]><br>
                 </td>
+                [{if $hasLinkedObject }]
+                <td class="edittext">
+                    <input type="submit" class="edittext" name="unlink" value='[{ oxmultilang ident="ARTICLE_REVIEW_DELETE" }]' onClick="Javascript:document.myedit.fnc.value='unlink'" [{ $readonly }]><br>
+                </td>
+                [{/if}]
             </tr>
         </tbody>
     </table>

@@ -20,9 +20,11 @@
  * @copyright (C) OXID eSales AG 2003-2020
  */
 
+use OxidEsales\Eshop\Application\Controller\Admin\ArticleList;
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Core\ViewConfig;
 use OxidEsales\Eshop\Application\Model\Basket;
+use OxidProfessionalServices\PayPal\Controller\Admin\ArticleListController;
 use OxidProfessionalServices\PayPal\Controller\Admin\OnboardingController;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalConfigController;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalSubscribeController;
@@ -55,7 +57,8 @@ $aModule = [
     'extend' => [
         ViewConfig::class => PaypalViewConfig::class,
         Basket::class => PaypalBasket::class,
-        Article::class => PayPalArticle::class
+        Article::class => PayPalArticle::class,
+        ArticleList::class => ArticleListController::class
     ],
     'controllers' => [
         'PaypalConfigController' => PaypalConfigController::class,
@@ -63,6 +66,7 @@ $aModule = [
         'PayPalProxyController' => ProxyController::class,
         'OnboardingController' => OnboardingController::class,
         'PaypalSubscribeController' => PaypalSubscribeController::class,
+        'PaypalAdminArticleListController' => ArticleListController::class
     ],
     'templates' => [
         'paypalconfig.tpl' => 'oxps/paypal/views/admin/tpl/paypalconfig.tpl',
@@ -74,6 +78,12 @@ $aModule = [
         'onDeactivate' => '\OxidProfessionalServices\PayPal\Core\Events::onDeactivate'
     ],
     'blocks' => [
+        [
+            'template' => 'article_list.tpl',
+            'block' => 'admin_article_list_item',
+            'file' => 'views/admin/tpl/article_list_extended.tpl'
+//            oxideshop/source/Application/views/admin/tpl/article_list.tpl
+        ],
         [
             'template' => 'headitem.tpl',
             'block' => 'admin_headitem_inccss',

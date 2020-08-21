@@ -24,16 +24,15 @@ namespace OxidProfessionalServices\PayPal\Controller\Admin;
 
 use OxidEsales\Eshop\Application\Controller\Admin\AdminController;
 use OxidEsales\Eshop\Application\Model\Article;
-use OxidEsales\Eshop\Core\DatabaseProvider;
 use OxidEsales\Eshop\Core\Exception\DatabaseConnectionException;
 use OxidEsales\Eshop\Core\Exception\DatabaseErrorException;
 use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\Eshop\Core\UtilsObject;
 use OxidProfessionalServices\PayPal\Api\Model\Catalog\Patch;
 use OxidProfessionalServices\PayPal\Api\Model\Catalog\Product;
 use OxidProfessionalServices\PayPal\Api\Model\Catalog\ProductRequestPOST;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 use OxidProfessionalServices\PayPal\Model\Category;
+use OxidProfessionalServices\PayPal\Repository\SubscriptionRepository;
 
 /**
  * Controller for admin > Paypal/Configuration page
@@ -41,15 +40,29 @@ use OxidProfessionalServices\PayPal\Model\Category;
 class PaypalSubscribeController extends AdminController
 {
     /**
+     * The Product from Paypal's API
      * Caching the linked object to reduce calls to paypal api
-     * @var object
+     * @var Product
      */
     private $linkedObject;
+
+    /**
+     * The Linked data stored in OXID db
+     * Caching the linked object to reduce calls to paypal api
+     * @var array
+     */
+    private $linkedProduct;
+
+    /**
+     * @var SubscriptionRepository
+     */
+    private $repository;
 
     public function __construct()
     {
         parent::__construct();
         $this->_sThisTemplate = 'subscribe.tpl';
+        $this->repository = new SubscriptionRepository();
     }
 
     public function isPayPalProductLinked()
@@ -67,17 +80,14 @@ class PaypalSubscribeController extends AdminController
      */
     public function getEditObject()
     {
-        $article = oxNew(Article::class);
-        $article->load(Registry::getRequest()->getRequestParameter('oxid'));
-
-        return $article;
+        return $this->repository->getEditObject(Registry::getRequest()->getRequestParameter('oxid'));
     }
 
     public function hasLinkedObject()
     {
-        $linkedObject = $this->getLinkedObject();
-        if (!empty($linkedObject)) {
-           return true;
+        $this->setLinkedObject();
+        if (!empty($this->linkedObject)) {
+            return true;
         }
 
         return false;
@@ -85,24 +95,44 @@ class PaypalSubscribeController extends AdminController
 
     public function getLinkedObject()
     {
+        $this->setLinkedObject();
+        return $this->linkedObject;
+    }
+
+    public function setLinkedObject()
+    {
+        if (!empty($this->linkedObject)) {
+            return;
+        }
+
         $article = oxNew(Article::class);
-        $request = Registry::getRequest();
-        $oxid = $request->getRequestParameter('oxid');
+        $oxid = Registry::getRequest()->getRequestParameter('oxid');
         $article->load($oxid);
 
         try {
             $this->getLinkedProductByOxid($oxid);
         } catch (DatabaseConnectionException $e) {
-            return [];
+            return;
         } catch (DatabaseErrorException $e) {
-            return [];
+            return;
         }
 
         if (empty($this->linkedProduct)) {
-            return [];
+            return;
         }
 
-        return $this->getPaypalProductDetail($this->linkedProduct[0]['OXPS_PAYPAL_PRODUCT_ID']);
+        $this->linkedObject = $this->getPaypalProductDetail($this->linkedProduct[0]['OXPS_PAYPAL_PRODUCT_ID']);
+    }
+
+    public function unlink()
+    {
+        $this->setLinkedObject();
+
+        if(empty($this->linkedObject)) {
+            return;
+        }
+
+        $this->repository->deleteLinkedProduct($this->linkedObject->id);
     }
 
     /**
@@ -135,7 +165,7 @@ class PaypalSubscribeController extends AdminController
         $products = $cs->listProducts();
 
         $filteredProducts = [];
-        foreach($products as $product) {
+        foreach ($products as $product) {
             $filteredProducts = $product;
         }
 
@@ -196,7 +226,7 @@ class PaypalSubscribeController extends AdminController
             $field = 'oxarticles__oxpic' . $i;
             $rawValue = $editObject->$field->rawValue;
 
-            if(empty($rawValue)) {
+            if (empty($rawValue)) {
                 continue;
             }
 
@@ -206,7 +236,7 @@ class PaypalSubscribeController extends AdminController
                 $i
             );
 
-            if($this->imgexists($img)) {
+            if ($this->imgexists($img)) {
                 $images[] = $img;
             }
         }
@@ -218,7 +248,8 @@ class PaypalSubscribeController extends AdminController
      * @param $url
      * @return bool
      */
-    private function imgexists($url) {
+    private function imgexists($url)
+    {
         if (!$fp = curl_init($url)) {
             return false;
         }
@@ -236,8 +267,8 @@ class PaypalSubscribeController extends AdminController
         return str_replace(':/out', '/out', $url) . 'master/product/' . $num . '/' . $file;
     }
 
-
-    public function save(){
+    public function save()
+    {
         /**
          * @var ServiceFactory $sf
          */
@@ -247,9 +278,9 @@ class PaypalSubscribeController extends AdminController
         $productId = $request->getRequestEscapedParameter('paypalProductId', "");
 
         if ($this->hasLinkedObject()) {
-            $linkedObject = $this->getLinkedObject();
+             $this->setLinkedObject();
 
-            if($linkedObject->description !== $request->getRequestEscapedParameter('description')) {
+            if ($this->linkedObject->description !== $request->getRequestEscapedParameter('description')) {
                 $patchRequest = new Patch();
                 $patchRequest->op = Patch::OP_REPLACE;
                 $patchRequest->value = $request->getRequestEscapedParameter('description');
@@ -257,7 +288,7 @@ class PaypalSubscribeController extends AdminController
                 $cs->updateProduct($productId, [$patchRequest]);
             }
 
-            if($linkedObject->category !== $request->getRequestEscapedParameter('category')) {
+            if ($this->linkedObject->category !== $request->getRequestEscapedParameter('category')) {
                 $patchRequest = new Patch();
                 $patchRequest->op = Patch::OP_REPLACE;
                 $patchRequest->value = $request->getRequestEscapedParameter('category');
@@ -265,7 +296,7 @@ class PaypalSubscribeController extends AdminController
                 $cs->updateProduct($productId, [$patchRequest]);
             }
 
-            if($linkedObject->image_url !== $request->getRequestEscapedParameter('imageUrl')) {
+            if ($this->linkedObject->image_url !== $request->getRequestEscapedParameter('imageUrl')) {
                 $patchRequest = new Patch();
                 $patchRequest->op = Patch::OP_REPLACE;
                 $patchRequest->value = $request->getRequestEscapedParameter('imageUrl');
@@ -273,7 +304,7 @@ class PaypalSubscribeController extends AdminController
                 $cs->updateProduct($productId, [$patchRequest]);
             }
 
-            if($linkedObject->home_url !== $request->getRequestEscapedParameter('homeUrl')) {
+            if ($this->linkedObject->home_url !== $request->getRequestEscapedParameter('homeUrl')) {
                 $patchRequest = new Patch();
                 $patchRequest->op = Patch::OP_REPLACE;
                 $patchRequest->value = $request->getRequestEscapedParameter('homeUrl');
@@ -295,7 +326,10 @@ class PaypalSubscribeController extends AdminController
             /** @var Product $response */
             $response = $cs->createProduct($productRequestPost);
 
-            $this->saveLinkedProduct($response);
+            $this->repository->saveLinkedProduct(
+                $response,
+                Registry::getRequest()->getRequestParameter('oxid')
+            );
         }
     }
 
@@ -306,32 +340,43 @@ class PaypalSubscribeController extends AdminController
      */
     private function getLinkedProductByOxid($oxid): void
     {
-        if (!empty($this->linkedObject)) {
+        if (!empty($this->linkedProduct)) {
             return;
         }
 
-        $this->linkedProduct = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getAll(
-            'SELECT * FROM oxps_paypal_subscription_product WHERE OXPS_PAYPAL_OXARTICLE_ID = ?',
-            [$oxid]
-        );
+        $this->linkedProduct = $this->repository->getLinkedProductByOxid($oxid);
     }
 
-    /**
-     * @param Product $response
-     * @throws DatabaseConnectionException
-     * @throws DatabaseErrorException
-     */
-    private function saveLinkedProduct(Product $response): void
-    {
-        $sql = 'INSERT INTO oxps_paypal_subscription_product (';
-        $sql .= 'OXPS_PAYPAL_SUBSCRIPTION_PRODUCT_ID, OXPS_PAYPAL_OXSHOPID, OXPS_PAYPAL_OXARTICLE_ID, ';
-        $sql .= 'OXPS_PAYPAL_PRODUCT_ID) VALUES(?,?,?,?)';
-
-        DatabaseProvider::getDb()->execute($sql, [
-            UtilsObject::getInstance()->generateUId(),
-            $this->getConfig()->getShopId(),
-            $this->getEditObject()->oxarticles__oxid->value,
-            $response->id
-        ]);
-    }
+//    /**
+//     * @param Product $response
+//     * @throws DatabaseConnectionException
+//     * @throws DatabaseErrorException
+//     */
+//    private function saveLinkedProduct(Product $response): void
+//    {
+//        $sql = 'INSERT INTO oxps_paypal_subscription_product (';
+//        $sql .= 'OXPS_PAYPAL_SUBSCRIPTION_PRODUCT_ID, OXPS_PAYPAL_OXSHOPID, OXPS_PAYPAL_OXARTICLE_ID, ';
+//        $sql .= 'OXPS_PAYPAL_PRODUCT_ID) VALUES(?,?,?,?)';
+//
+//        DatabaseProvider::getDb()->execute($sql, [
+//            UtilsObject::getInstance()->generateUId(),
+//            $this->getConfig()->getShopId(),
+//            $this->getEditObject()->oxarticles__oxid->value,
+//            $response->id
+//        ]);
+//    }
+//
+//    /**
+//     * @param string $paypalProductId
+//     * @throws DatabaseConnectionException
+//     * @throws DatabaseErrorException
+//     */
+//    private function deleteLinkedProduct($paypalProductId): void
+//    {
+//        $sql = 'DELETE FROM oxps_paypal_subscription_product WHERE OXPS_PAYPAL_PRODUCT_ID = ?';
+//
+//        DatabaseProvider::getDb()->execute($sql, [
+//            $paypalProductId
+//        ]);
+//    }
 }
