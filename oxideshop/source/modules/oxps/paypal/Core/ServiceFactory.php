@@ -25,6 +25,7 @@ namespace OxidProfessionalServices\PayPal\Core;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Client;
 use OxidProfessionalServices\PayPal\Api\Service\Orders;
+use OxidProfessionalServices\PayPal\Api\Service\Payments;
 
 /**
  * Class ServiceFactory
@@ -36,6 +37,15 @@ class ServiceFactory
      * @var Client
      */
     private $client;
+
+
+    /**
+     * @return Payments
+     */
+    public function getPaymentService(): Payments
+    {
+        return oxNew(Payments::class, $this->getClient());
+    }
 
     /**
      * @return Orders

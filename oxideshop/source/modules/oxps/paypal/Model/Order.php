@@ -93,7 +93,27 @@ class Order extends Order_parent
             }
         }
         return $this->payPalOrderId;
+    }
 
+    /**
+     * Checks if the order was paid using PayPal
+     *
+     * @TODO
+     * @return bool
+     */
+    public function paidWithPayPal(): bool
+    {
+        return true;
+    }
 
+    /**
+     * Get order ID used by PayPal
+     *
+     * @TODO
+     * @return string
+     */
+    public function getPayPalOrderId(): string
+    {
+        return '123';
     }
 }

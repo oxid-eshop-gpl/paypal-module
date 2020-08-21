@@ -23,7 +23,14 @@
 namespace OxidProfessionalServices\PayPal\Controller\Admin;
 
 use OxidEsales\Eshop\Application\Controller\Admin\AdminDetailsController;
+use OxidEsales\Eshop\Application\Model\Order;
+use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidEsales\Eshop\Core\Registry;
+use OxidProfessionalServices\PayPal\Api\Model\Orders\Order as PayPalOrder;
+use OxidProfessionalServices\PayPal\Api\Model\Payments\RefundRequest;
+use OxidProfessionalServices\PayPal\Api\Service\Orders;
+use OxidProfessionalServices\PayPal\Api\Service\Payments;
+use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 
 /**
  * Order class wrapper for PayPal module
@@ -31,11 +38,14 @@ use OxidEsales\Eshop\Core\Registry;
 class PaypalOrderController extends AdminDetailsController
 {
     /**
-     * Active order object
-     *
-     * @var oxorder
+     * @var Order
      */
-    protected $_editObj = null;
+    protected $order;
+
+    /**
+     * @var PayPalOrder
+     */
+    protected $payPalOrder;
 
     /**
      * Executes parent method parent::render(), creates oxOrder object,
@@ -49,27 +59,88 @@ class PaypalOrderController extends AdminDetailsController
         parent::render();
 
         $this->_aViewData["sOxid"] = $this->getEditObjectId();
-        $this->_aViewData['oOrder'] = $this->getEditObject();
+        $this->_aViewData['oOrder'] = $this->getOrder();
 
-        $order = $this->getEditObject();
-        var_dump($order->getPaypalOrder($this->getEditObjectId()));
-        return "";
         return "paypalorder.tpl";
     }
 
     /**
-     * Returns editable order object
-     *
-     * @return \OxidEsales\PayPalModule\Model\Order
+     * Refunds order payment
      */
-    public function getEditObject()
+    public function refund(): void
     {
-        $soxId = $this->getEditObjectId();
-        if ($this->_editObj === null && isset($soxId) && $soxId != '-1') {
-            $this->_editObj = oxNew(\OxidEsales\Eshop\Application\Model\Order::class);
-            $this->_editObj->load($soxId);
+        $request = Registry::getRequest();
+        $refundAmount = $request->getRequestEscapedParameter('refundAmount');
+        $invoiceId = $request->getRequestEscapedParameter('invoiceId');
+        $refundAll = $request->getRequestEscapedParameter('refundAll');
+        $noteToPayer = $request->getRequestParameter('noteToPayer');
+
+        $captureId = $this->getOrderPaymentCaptureId();
+        $request = new RefundRequest();
+
+        if (!$refundAll) {
+            //TODO currency_code
+            $request->initAmount();
+            $request->amount->value = $refundAmount;
+            $request->invoice_id = $invoiceId;
+            $request->note_to_payer = $noteToPayer;
         }
 
-        return $this->_editObj;
+        /** @var Payments $paymentService */
+        $paymentService = Registry::get(ServiceFactory::class)->getPaymentService();
+        $response = $paymentService->refundCapturedPayment($captureId, $refundAll, '');
+    }
+
+    /**
+     * Get PayPal order object for the active order
+     *
+     * @return PayPalOrder
+     * @throws StandardException
+     */
+    protected function getPayPalOrder(): PayPalOrder
+    {
+        if (!$this->payPalOrder) {
+            $order = $this->getOrder();
+            if (!$order->paidWithPayPal()) {
+                throw new StandardException("order not paid using PayPal");
+            }
+            /** @var Orders $orderService */
+            $orderService = Registry::get(ServiceFactory::class)->getOrderService();
+            $this->payPalOrder = $orderService->showOrderDetails($order->getPayPalOrderId());
+        }
+
+        return $this->payPalOrder;
+    }
+
+    /**
+     * Get active order
+     *
+     * @return Order
+     * @throws StandardException
+     */
+    protected function getOrder(): Order
+    {
+        if (!$this->order) {
+            $order = oxNew(Order::class);
+            $orderId = $this->getEditObjectId();
+            if ($orderId === null || !$order->load($orderId)) {
+                throw new StandardException('order not found');
+            }
+            $this->order = $order;
+        }
+
+        return $this->order;
+    }
+
+    /**
+     * Get order payment capture id
+     *
+     * @return string
+     * @throws StandardException
+     */
+    protected function getOrderPaymentCaptureId(): string
+    {
+        $order = $this->getPayPalOrder();
+        return $order->purchase_units[0]->payments->captures[0]->id;
     }
 }
