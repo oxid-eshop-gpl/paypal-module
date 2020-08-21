@@ -6,6 +6,11 @@
 [{assign var="types" value=$oView->getTypes()}]
 [{assign var="images" value=$oView->getDisplayImages()}]
 [{assign var="productUrl" value=$oView->getProductUrl()}]
+[{assign var="hasLinkedObject" value=$oView->hasLinkedObject()}]
+
+[{if $hasLinkedObject }]
+    [{assign var="linkedObject" value=$oView->getLinkedObject()}]
+[{/if}]
 
 <form name="transfer" id="transfer" action="[{$oViewConf->getSelfLink()}]" method="post">
     [{$oViewConf->getHiddenSid()}]
@@ -39,12 +44,31 @@
                 [{assign var="readonly" value=""}]
             [{/if}]
 
+            [{if $hasLinkedObject }]
+                [{assign var="title" value=$linkedObject->name}]
+                [{assign var="description" value=$linkedObject->description}]
+                [{assign var="productType" value=$linkedObject->type}]
+                [{assign var="category" value=$linkedObject->category}]
+                [{assign var="imageUrl" value=$linkedObject->image_url}]
+                [{assign var="homeUrl" value=$linkedObject->home_url}]
+                [{assign var="id" value=$linkedObject->id}]
+            [{else}]
+                [{assign var="title" value=$edit->oxarticles__oxtitle->value}]
+                [{assign var="description" value=$edit->oxarticles__oxshortdesc->value}]
+                [{assign var="productType" value=''}]
+                [{assign var="category" value=''}]
+                [{assign var="imageUrl" value=''}]
+                [{assign var="homeUrl" value=$productUrl}]
+            [{/if}]
+
             <tr>
                 <td class="edittext">
                     Name:
                 </td>
                 <td class="edittext">
-                    <input type="text" class="editinput" size="80" name="title" value="[{$edit->oxarticles__oxtitle->value}]" [{ $readonly }]>
+
+
+                    <input type="text" class="editinput" size="80" name="title" value="[{$title}]" [{ $readonly }]>
                 </td>
             </tr>
             <tr>
@@ -52,7 +76,7 @@
                     Description:
                 </td>
                 <td class="edittext">
-                    <textarea class="editinput" style="width: 500px" rows="10" name="description">[{$edit->oxarticles__oxshortdesc->value}]</textarea>
+                    <textarea class="editinput" style="width: 500px" rows="10" name="description">[{$description}]</textarea>
                 </td>
             </tr>
             <tr>
@@ -62,7 +86,11 @@
                 <td class="edittext">
                      <select name="productType" style="width: 500px" class="editinput">
                          [{foreach from=$types item=value key=name}]
-                             <option value="[{$value}]">[{$value}]</option>
+                            [{if $productType == $value }]
+                                 <option value="[{$value}]" selected>[{$value}]</option>
+                            [{else}]
+                                 <option value="[{$value}]">[{$value}]</option>
+                            [{/if}]
                          [{/foreach}]
                      </select>
                 </td>
@@ -75,7 +103,11 @@
                 <td class="edittext">
                     <select name="category" style="width: 500px" class="editinput">
                         [{foreach from=$categories item=value key=name}]
-                            <option value="[{$value}]">[{$value}]</option>
+                            [{if $category == $value }]
+                                <option value="[{$value}]" selected>[{$value}]</option>
+                            [{else}]
+                                <option value="[{$value}]">[{$value}]</option>
+                            [{/if}]
                         [{/foreach}]
                     </select>
                 </td>
@@ -88,7 +120,11 @@
                 [{foreach from=$images item=url}]
                     <td class="edittext" style="float: left; margin-right: 10px; padding: 10px; border: 1px solid #cccccc;">
                         <label>
-                            <input type="radio" name="imageUrl" value="[{$url}]" checked>
+                            [{if $url == $imageUrl }]
+                                <input type="radio" name="imageUrl" value="[{$url}]" checked>
+                            [{else}]
+                                <input type="radio" name="imageUrl" value="[{$url}]">
+                            [{/if}]
                             <img style="height: 100px" src="[{$url}]">
                         </label>
                     </td>
@@ -100,17 +136,28 @@
                     Product URL:
                 </td>
                 <td class="edittext">
-                    <p>[{$productUrl}]</p>
-                    <input type="hidden" name="homeUrl" value="[{$productUrl}]">
+                    <p>[{$homeUrl}]</p>
+                    <input type="hidden" name="homeUrl" value="[{$homeUrl}]">
                 </td>
             </tr>
 
+            [{if $oView->hasLinkedObject() }]
+                <tr>
+                    <td class="edittext">
+                        PAYPAL ID:
+                    </td>
+                    <td class="edittext">
+                        <p>[{$linkedObject->id}]</p>
+                        <input type="hidden" name="id" value="[{$linkedObject->id}]">
+                        <input type="hidden" name="paypalProductId" value="[{$linkedObject->id}]">
+                    </td>
+                </tr>
+            [{/if}]
             <tr>
                 <td class="edittext">
                     <input type="submit" class="edittext" name="save" value='[{ oxmultilang ident="GENERAL_SAVE" }]' onClick="Javascript:document.myedit.fnc.value='save'" [{ $readonly }]><br>
                 </td>
             </tr>
-
         </tbody>
     </table>
 </form>

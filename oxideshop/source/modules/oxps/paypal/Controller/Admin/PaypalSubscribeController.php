@@ -25,12 +25,13 @@ namespace OxidProfessionalServices\PayPal\Controller\Admin;
 use OxidEsales\Eshop\Application\Controller\Admin\AdminController;
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Core\DatabaseProvider;
+use OxidEsales\Eshop\Core\Exception\DatabaseConnectionException;
+use OxidEsales\Eshop\Core\Exception\DatabaseErrorException;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\UtilsObject;
 use OxidProfessionalServices\PayPal\Api\Model\Catalog\Patch;
 use OxidProfessionalServices\PayPal\Api\Model\Catalog\Product;
 use OxidProfessionalServices\PayPal\Api\Model\Catalog\ProductRequestPOST;
-use OxidProfessionalServices\Paypal\Core\Logger;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 use OxidProfessionalServices\PayPal\Model\Category;
 
@@ -39,16 +40,16 @@ use OxidProfessionalServices\PayPal\Model\Category;
  */
 class PaypalSubscribeController extends AdminController
 {
+    /**
+     * Caching the linked object to reduce calls to paypal api
+     * @var object
+     */
+    private $linkedObject;
+
     public function __construct()
     {
         parent::__construct();
         $this->_sThisTemplate = 'subscribe.tpl';
-    }
-
-    // needed?
-    public function render()
-    {
-        return parent::render();
     }
 
     public function isPayPalProductLinked()
@@ -67,12 +68,57 @@ class PaypalSubscribeController extends AdminController
     public function getEditObject()
     {
         $article = oxNew(Article::class);
-        $request = Registry::getRequest();
-        $article->load($request->getRequestParameter('oxid'));
-
-        $products = $this->getCatalogEntries();
+        $article->load(Registry::getRequest()->getRequestParameter('oxid'));
 
         return $article;
+    }
+
+    public function hasLinkedObject()
+    {
+        $linkedObject = $this->getLinkedObject();
+        if (!empty($linkedObject)) {
+           return true;
+        }
+
+        return false;
+    }
+
+    public function getLinkedObject()
+    {
+        $article = oxNew(Article::class);
+        $request = Registry::getRequest();
+        $oxid = $request->getRequestParameter('oxid');
+        $article->load($oxid);
+
+        try {
+            $this->getLinkedProductByOxid($oxid);
+        } catch (DatabaseConnectionException $e) {
+            return [];
+        } catch (DatabaseErrorException $e) {
+            return [];
+        }
+
+        if (empty($this->linkedProduct)) {
+            return [];
+        }
+
+        return $this->getPaypalProductDetail($this->linkedProduct[0]['OXPS_PAYPAL_PRODUCT_ID']);
+    }
+
+    /**
+     * @param $id
+     * @return Product
+     * @throws \OxidProfessionalServices\PayPal\Api\Exception\ApiException
+     */
+    public function getPaypalProductDetail($id): Product
+    {
+        /**
+         * @var ServiceFactory $sf
+         */
+        $sf = Registry::get(ServiceFactory::class);
+        $cs = $sf->getCatalogService();
+
+        return $cs->showProductDetails($id);
     }
 
     /**
@@ -197,19 +243,48 @@ class PaypalSubscribeController extends AdminController
          */
         $sf = Registry::get(ServiceFactory::class);
         $cs = $sf->getCatalogService();
-        //@todo:
         $request = Registry::getRequest();
         $productId = $request->getRequestEscapedParameter('paypalProductId', "");
-        if ($productId != "") {
-            $patchRequest = new Patch();
-            $patchRequest->op = Patch::OP_REPLACE;
-            $patchRequest->value = $request->getRequestEscapedParameter('title');
-            $patchRequest->path = 'title';
-            $cs->updateProduct($productId, [$patchRequest]);
+
+        if ($this->hasLinkedObject()) {
+            $linkedObject = $this->getLinkedObject();
+
+            if($linkedObject->description !== $request->getRequestEscapedParameter('description')) {
+                $patchRequest = new Patch();
+                $patchRequest->op = Patch::OP_REPLACE;
+                $patchRequest->value = $request->getRequestEscapedParameter('description');
+                $patchRequest->path = '/description';
+                $cs->updateProduct($productId, [$patchRequest]);
+            }
+
+            if($linkedObject->category !== $request->getRequestEscapedParameter('category')) {
+                $patchRequest = new Patch();
+                $patchRequest->op = Patch::OP_REPLACE;
+                $patchRequest->value = $request->getRequestEscapedParameter('category');
+                $patchRequest->path = '/category';
+                $cs->updateProduct($productId, [$patchRequest]);
+            }
+
+            if($linkedObject->image_url !== $request->getRequestEscapedParameter('imageUrl')) {
+                $patchRequest = new Patch();
+                $patchRequest->op = Patch::OP_REPLACE;
+                $patchRequest->value = $request->getRequestEscapedParameter('imageUrl');
+                $patchRequest->path = '/image_url';
+                $cs->updateProduct($productId, [$patchRequest]);
+            }
+
+            if($linkedObject->home_url !== $request->getRequestEscapedParameter('homeUrl')) {
+                $patchRequest = new Patch();
+                $patchRequest->op = Patch::OP_REPLACE;
+                $patchRequest->value = $request->getRequestEscapedParameter('homeUrl');
+                $patchRequest->path = '/home_url';
+                $cs->updateProduct($productId, [$patchRequest]);
+            }
+
         } else {
             $productRequest = [];
-            $productRequest['name'] = $request->getRequestParameter('title');
-            $productRequest['description'] = $request->getRequestParameter('description');
+            $productRequest['name'] = utf8_encode($request->getRequestParameter('title'));
+            $productRequest['description'] = utf8_encode($request->getRequestParameter('description'));
             $productRequest['type'] = $request->getRequestParameter('productType');
             $productRequest['category'] = $request->getRequestParameter('category');
             $productRequest['image_url'] = $request->getRequestParameter('imageUrl');
@@ -220,16 +295,43 @@ class PaypalSubscribeController extends AdminController
             /** @var Product $response */
             $response = $cs->createProduct($productRequestPost);
 
-            $sql = 'INSERT INTO oxps_paypal_subscription_product (';
-            $sql .= 'OXPS_PAYPAL_SUBSCRIPTION_PRODUCT_ID, OXPS_PAYPAL_OXSHOPID, OXPS_PAYPAL_OXARTICLE_ID, ';
-            $sql .= 'OXPS_PAYPAL_PRODUCT_ID) VALUES(?,?,?,?)';
-
-            DatabaseProvider::getDb()->execute($sql, [
-                UtilsObject::getInstance()->generateUId(),
-                $this->getConfig()->getShopId(),
-                $this->getEditObject()->oxarticles__oxid->value,
-                $response->id
-            ]);
+            $this->saveLinkedProduct($response);
         }
+    }
+
+    /**
+     * @param $oxid
+     * @throws \OxidEsales\Eshop\Core\Exception\DatabaseConnectionException
+     * @throws \OxidEsales\Eshop\Core\Exception\DatabaseErrorException
+     */
+    private function getLinkedProductByOxid($oxid): void
+    {
+        if (!empty($this->linkedObject)) {
+            return;
+        }
+
+        $this->linkedProduct = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getAll(
+            'SELECT * FROM oxps_paypal_subscription_product WHERE OXPS_PAYPAL_OXARTICLE_ID = ?',
+            [$oxid]
+        );
+    }
+
+    /**
+     * @param Product $response
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     */
+    private function saveLinkedProduct(Product $response): void
+    {
+        $sql = 'INSERT INTO oxps_paypal_subscription_product (';
+        $sql .= 'OXPS_PAYPAL_SUBSCRIPTION_PRODUCT_ID, OXPS_PAYPAL_OXSHOPID, OXPS_PAYPAL_OXARTICLE_ID, ';
+        $sql .= 'OXPS_PAYPAL_PRODUCT_ID) VALUES(?,?,?,?)';
+
+        DatabaseProvider::getDb()->execute($sql, [
+            UtilsObject::getInstance()->generateUId(),
+            $this->getConfig()->getShopId(),
+            $this->getEditObject()->oxarticles__oxid->value,
+            $response->id
+        ]);
     }
 }
