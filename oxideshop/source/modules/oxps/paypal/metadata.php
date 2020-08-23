@@ -22,6 +22,7 @@
 
 use OxidEsales\Eshop\Core\ViewConfig;
 use OxidEsales\Eshop\Application\Model\Basket;
+use OxidEsales\Eshop\Application\Model\Order;
 use OxidEsales\Eshop\Application\Model\PaymentGateway;
 use OxidProfessionalServices\PayPal\Controller\Admin\OnboardingController;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalConfigController;
@@ -54,6 +55,7 @@ $aModule = [
         ViewConfig::class => \OxidProfessionalServices\PayPal\Core\ViewConfig::class,
         // Model
         Basket::class => \OxidProfessionalServices\PayPal\Model\Basket::class,
+        Order::class => \OxidProfessionalServices\PayPal\Model\Order::class,
         PaymentGateway::class => \OxidProfessionalServices\PayPal\Model\PaymentGateway::class
     ],
     'controllers' => [

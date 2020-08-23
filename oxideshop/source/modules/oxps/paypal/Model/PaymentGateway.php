@@ -92,9 +92,8 @@ class PaymentGateway extends PaymentGateway_parent
                     }
                     $success = true;
 
-
                     $sql = 'INSERT INTO oxps_paypal_order (';
-                    $sql .= 'OXPS_PAYPAL_ORDERID, OXPS_PAYPAL_OXSHOPID, OXPS_PAYPAL_OXORDERID, ';
+                    $sql .= 'OXID, OXPS_PAYPAL_OXSHOPID, OXPS_PAYPAL_OXORDERID, ';
                     $sql .= 'OXPS_PAYPAL_PAYPALORDERID) VALUES(?,?,?,?)';
 
                     DatabaseProvider::getDb()->execute($sql, [

@@ -173,7 +173,7 @@ class Events
     {
         $sql = sprintf(
             'CREATE TABLE IF NOT EXISTS %s (
-                        `OXPS_PAYPAL_ORDERID`
+                        `OXID`
                             char(32)
                             character set latin1
                             collate latin1_general_ci
@@ -203,7 +203,9 @@ class Events
                             default CURRENT_TIMESTAMP
                             on update CURRENT_TIMESTAMP
                             COMMENT \'Timestamp\',
-                        PRIMARY KEY (`OXPS_PAYPAL_ORDERID`))
+                        PRIMARY KEY (`OXID`),
+                        KEY `OXPS_PAYPAL_OXORDERID` (`OXPS_PAYPAL_OXORDERID`)
+                        )
                             ENGINE=InnoDB
                             COMMENT \'Primary key\'',
             'oxps_paypal_order'

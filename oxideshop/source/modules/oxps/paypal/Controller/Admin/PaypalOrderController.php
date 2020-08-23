@@ -31,6 +31,13 @@ use OxidEsales\Eshop\Core\Registry;
 class PaypalOrderController extends AdminDetailsController
 {
     /**
+     * Active order object
+     *
+     * @var oxorder
+     */
+    protected $_editObj = null;
+
+    /**
      * Executes parent method parent::render(), creates oxOrder object,
      * passes it's data to Smarty engine and returns
      * name of template file "paypalorder.tpl".
@@ -41,6 +48,28 @@ class PaypalOrderController extends AdminDetailsController
     {
         parent::render();
 
+        $this->_aViewData["sOxid"] = $this->getEditObjectId();
+        $this->_aViewData['oOrder'] = $this->getEditObject();
+
+        $order = $this->getEditObject();
+        var_dump($order->getPaypalOrder($this->getEditObjectId()));
+        return "";
         return "paypalorder.tpl";
+    }
+
+    /**
+     * Returns editable order object
+     *
+     * @return \OxidEsales\PayPalModule\Model\Order
+     */
+    public function getEditObject()
+    {
+        $soxId = $this->getEditObjectId();
+        if ($this->_editObj === null && isset($soxId) && $soxId != '-1') {
+            $this->_editObj = oxNew(\OxidEsales\Eshop\Application\Model\Order::class);
+            $this->_editObj->load($soxId);
+        }
+
+        return $this->_editObj;
     }
 }

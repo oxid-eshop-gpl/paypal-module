@@ -58,7 +58,7 @@ $aLang = [
     'HELP_OXPS_PAYPAL_SANDBOX_CLIENT_ID'     => 'Client ID des Sandbox-Account für Sandbox-Modus',
     'HELP_OXPS_PAYPAL_SANDBOX_CLIENT_SECRET' => 'Secret des Sandbox-Account für Sandbox-Modus',
     'HELP_OXPS_PAYPAL_OPMODE'        => 'Verwenden Sie Sandbox (Test), um PayPal zu konfigurieren und zu testen. Wenn Sie bereit sind,
-        echte Transaktionen zu empfangen, wechseln Sie zu Produktion (live).'
+        echte Transaktionen zu empfangen, wechseln Sie zu Produktion (live).',
     // Paypal ORDER
     'OEPAYPAL_AMOUNT'                      => 'Betrag',
     'OEPAYPAL_SHOP_PAYMENT_STATUS'         => 'Shop-Zahlungsstatus',
