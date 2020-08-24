@@ -26,6 +26,7 @@ use OxidEsales\Eshop\Application\Controller\Admin\AdminDetailsController;
 use OxidEsales\Eshop\Application\Model\Order;
 use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidEsales\Eshop\Core\Registry;
+use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\Order as PayPalOrder;
 use OxidProfessionalServices\PayPal\Api\Model\Payments\Capture;
 use OxidProfessionalServices\PayPal\Api\Model\Payments\RefundRequest;
@@ -97,14 +98,14 @@ class PaypalOrderController extends AdminDetailsController
      * Get PayPal order object for the active order
      *
      * @return PayPalOrder
-     * @throws StandardException
+     * @throws StandardException|ApiException
      */
     protected function getPayPalOrder(): PayPalOrder
     {
         if (!$this->payPalOrder) {
             $order = $this->getOrder();
             if (!$order->paidWithPayPal()) {
-                throw new StandardException("Order not paid using PayPal");
+                throw new StandardException('Order not paid using PayPal');
             }
             /** @var Orders $orderService */
             $orderService = Registry::get(ServiceFactory::class)->getOrderService();
@@ -138,7 +139,7 @@ class PaypalOrderController extends AdminDetailsController
      * Get order payment capture id
      *
      * @return Capture
-     * @throws StandardException
+     * @throws StandardException|ApiException
      */
     protected function getOrderPaymentCapture(): Capture
     {
