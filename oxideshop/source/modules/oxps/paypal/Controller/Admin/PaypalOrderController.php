@@ -59,8 +59,9 @@ class PaypalOrderController extends AdminDetailsController
     {
         parent::render();
 
-        $this->_aViewData['sOxid'] = $this->getEditObjectId();
-        $this->_aViewData['oOrder'] = $this->getOrder();
+        $this->_aViewData['oxid'] = $this->getEditObjectId();
+        $this->_aViewData['order'] = $order = $this->getOrder();
+        $this->_aViewData['payPalOrder'] = $order->paidWithPayPal() ? $this->getPayPalOrder() : null;
 
         return "paypalorder.tpl";
     }
