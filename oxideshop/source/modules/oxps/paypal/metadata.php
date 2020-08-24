@@ -82,7 +82,16 @@ $aModule = [
             'template' => 'article_list.tpl',
             'block' => 'admin_article_list_item',
             'file' => 'views/admin/tpl/article_list_extended.tpl'
-//            oxideshop/source/Application/views/admin/tpl/article_list.tpl
+        ],
+        [
+            'template' => 'article_list.tpl',
+            'block' => 'admin_article_list_colgroup',
+            'file' => 'views/admin/tpl/article_list_colgroup_extended.tpl'
+        ],
+        [
+            'template' => 'article_list.tpl',
+            'block' => 'admin_article_list_sorting',
+            'file' => 'views/admin/tpl/article_list_sorting_extended.tpl'
         ],
         [
             'template' => 'headitem.tpl',
