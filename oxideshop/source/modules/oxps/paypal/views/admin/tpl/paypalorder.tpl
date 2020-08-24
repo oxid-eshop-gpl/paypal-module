@@ -83,6 +83,26 @@
     }
 </style>
 
+<form action="[{$oViewConf->getSelfLink()}]" method="post">
+    [{$oViewConf->getHiddenSid()}]
+    <input type="hidden" name="fnc" value="refund">
+    <input type="hidden" name="cl" value="PaypalOrderController">
+
+    <label for="refundAmount">[{oxmultilang ident="OXPS_PAYPAL_REFUND_AMOUNT"}]</label>
+    <input type="number" id="refundAmount" name="refundAmount">
+
+    <label for="invoiceId">[{oxmultilang ident="OXPS_PAYPAL_INVOICE_ID"}]</label>
+    <input type="text" id="invoiceId" name="invoiceId" maxlength="127">
+
+    <label for="noteToBuyer">[{oxmultilang ident="OXPS_PAYPAL_NOTE_TO_BUYER"}]</label>
+    <textarea id="noteToBuyer" name="noteToBuyer" maxlength="255"></textarea>
+
+    <label for="refundAll">[{oxmultilang ident="OXPS_PAYPAL_REFUND_ALL"}]</label>
+    <input type="checkbox" id="refundAll" name="refundAll">
+</form>
+
+[{*
+
 <form name="transfer" id="transfer" action="[{$oViewConf->getSelfLink()}]" method="post">
     [{$oViewConf->getHiddenSid()}]
     <input type="hidden" name="oxid" value="[{$oxid}]">
@@ -456,6 +476,8 @@
     [{else}]
     <div class="messagebox">[{$sMessage}]</div>
     [{/if}]
+
+*}]
 
 [{include file="bottomnaviitem.tpl"}]
 [{include file="bottomitem.tpl"}]

@@ -100,4 +100,8 @@ $aLang = [
     'OEPAYPAL_AUTHORIZATIONID'             => 'Authorization ID',
     'OEPAYPAL_TRANSACTIONID'               => 'Transaction ID',
     'OEPAYPAL_CORRELATIONID'               => 'Correlation ID',
+    'OXPS_PAYPAL_REFUND_AMOUNT'            => 'Refund amount',
+    'OXPS_PAYPAL_INVOICE_ID'               => 'Invoice ID',
+    'OXPS_PAYPAL_NOTE_TO_BUYER'            => 'Note to buyer',
+    'OXPS_PAYPAL_REFUND_ALL'               => 'Refund all',
 ];

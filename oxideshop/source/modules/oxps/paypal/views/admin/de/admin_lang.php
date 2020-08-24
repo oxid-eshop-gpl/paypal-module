@@ -100,5 +100,8 @@ $aLang = [
     'OEPAYPAL_AUTHORIZATIONID'             => 'Autorisierungs-ID',
     'OEPAYPAL_TRANSACTIONID'               => 'Transaktions-ID',
     'OEPAYPAL_CORRELATIONID'               => 'Korrelations-ID',
-
+    'OXPS_PAYPAL_REFUND_AMOUNT'            => 'Rückerstattungsbetrag',
+    'OXPS_PAYPAL_INVOICE_ID'               => 'Rechnungs-ID',
+    'OXPS_PAYPAL_NOTE_TO_BUYER'            => 'Hinweis für Käufer',
+    'OXPS_PAYPAL_REFUND_ALL'               => 'Alle erstatten',
 ];
