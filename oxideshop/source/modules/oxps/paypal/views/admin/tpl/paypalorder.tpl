@@ -99,6 +99,8 @@
 
     <label for="refundAll">[{oxmultilang ident="OXPS_PAYPAL_REFUND_ALL"}]</label>
     <input type="checkbox" id="refundAll" name="refundAll">
+
+    <input type="submit">
 </form>
 
 [{*
