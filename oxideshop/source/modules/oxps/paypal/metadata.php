@@ -25,6 +25,7 @@ use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Core\ViewConfig;
 use OxidEsales\Eshop\Application\Model\Basket;
 use OxidProfessionalServices\PayPal\Controller\Admin\ArticleListController;
+use OxidEsales\Eshop\Application\Model\PaymentGateway;
 use OxidProfessionalServices\PayPal\Controller\Admin\OnboardingController;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalConfigController;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalSubscribeController;
@@ -55,10 +56,13 @@ $aModule = [
     'url' => '',
     'email' => '',
     'extend' => [
+        // Core
         ViewConfig::class => PaypalViewConfig::class,
+        // Model
         Basket::class => PaypalBasket::class,
         Article::class => PayPalArticle::class,
-        ArticleList::class => ArticleListController::class
+        ArticleList::class => ArticleListController::class,
+        PaymentGateway::class => \OxidProfessionalServices\PayPal\Model\PaymentGateway::class
     ],
     'controllers' => [
         'PaypalConfigController' => PaypalConfigController::class,
@@ -72,6 +76,8 @@ $aModule = [
         'paypalconfig.tpl' => 'oxps/paypal/views/admin/tpl/paypalconfig.tpl',
         'subscribe.tpl'    => 'oxps/paypal/views/admin/tpl/subscribe.tpl',
         'paypal_smart_payment_buttons.tpl' => 'oxps/paypal/views/includes/paypal_smart_payment_buttons.tpl',
+        'flow/paypal_payment_option.tpl' => 'oxps/paypal/views/theme/flow/paypal_payment_option.tpl',
+        'wave/paypal_payment_option.tpl' => 'oxps/paypal/views/theme/wave/paypal_payment_option.tpl'
     ],
     'events' => [
         'onActivate' => '\OxidProfessionalServices\PayPal\Core\Events::onActivate',
@@ -126,14 +132,14 @@ $aModule = [
             'theme' => 'flow',
             'template' => 'page/checkout/basket.tpl',
             'block' => 'basket_btn_next_bottom',
-            'file' => '/views/blocks/flow/page/checkout/basket_btn_next_bottom.tpl',
+            'file' => '/views/blocks/shared/page/checkout/basket_btn_next_bottom.tpl',
             'position' => '5'
         ],
         [
             'theme' => 'wave',
             'template' => 'page/checkout/basket.tpl',
             'block' => 'basket_btn_next_bottom',
-            'file' => '/views/blocks/wave/page/checkout/basket_btn_next_bottom.tpl',
+            'file' => '/views/blocks/shared/page/checkout/basket_btn_next_bottom.tpl',
             'position' => '5'
         ],
         [
@@ -148,6 +154,48 @@ $aModule = [
             'template' => 'page/checkout/order.tpl',
             'block' => 'checkout_order_address',
             'file' => '/views/blocks/wave/page/checkout/checkout_order_address.tpl',
+            'position' => '5'
+        ],
+        [
+            'theme' => 'flow',
+            'template' => 'page/checkout/payment.tpl',
+            'block' => 'select_payment',
+            'file' => '/views/blocks/shared/page/checkout/select_payment.tpl',
+            'position' => '5'
+        ],
+        [
+            'theme' => 'wave',
+            'template' => 'page/checkout/payment.tpl',
+            'block' => 'select_payment',
+            'file' => '/views/blocks/shared/page/checkout/select_payment.tpl',
+            'position' => '5'
+        ],
+        [
+            'theme' => 'flow',
+            'template' => 'page/checkout/payment.tpl',
+            'block' => 'change_payment',
+            'file' => '/views/blocks/flow/page/checkout/change_payment.tpl',
+            'position' => '5'
+        ],
+        [
+            'theme' => 'wave',
+            'template' => 'page/checkout/payment.tpl',
+            'block' => 'change_payment',
+            'file' => '/views/blocks/wave/page/checkout/change_payment.tpl',
+            'position' => '5'
+        ],
+        [
+            'theme' => 'flow',
+            'template' => 'page/checkout/user.tpl',
+            'block' => 'checkout_user_main',
+            'file' => '/views/blocks/flow/page/checkout/checkout_user_main.tpl',
+            'position' => '5'
+        ],
+        [
+            'theme' => 'wave',
+            'template' => 'page/checkout/user.tpl',
+            'block' => 'checkout_user_main',
+            'file' => '/views/blocks/wave/page/checkout/checkout_user_main.tpl',
             'position' => '5'
         ],
         [
@@ -222,34 +270,6 @@ $aModule = [
         ],
         [
             'theme' => 'flow',
-            'template' => 'page/checkout/order.tpl',
-            'block' => 'checkout_order_btn_submit_bottom',
-            'file' => '/views/blocks/flow/page/checkout/checkout_order_btn_submit_bottom.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'wave',
-            'template' => 'page/checkout/order.tpl',
-            'block'    => 'checkout_order_btn_submit_bottom',
-            'file'     => '/views/blocks/wave/page/checkout/checkout_order_btn_submit_bottom.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'flow',
-            'template' => 'page/checkout/user.tpl',
-            'block' => 'checkout_user_main',
-            'file' => '/views/blocks/flow/page/checkout/checkout_user_main.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'wave',
-            'template' => 'page/checkout/user.tpl',
-            'block' => 'checkout_user_main',
-            'file' => '/views/blocks/wave/page/checkout/checkout_user_main.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'flow',
             'template' => 'widget/minibasket/minibasket.tpl',
             'block' => 'dd_layout_page_header_icon_menu_minibasket_functions',
             'file' =>
@@ -262,48 +282,6 @@ $aModule = [
             'block' => 'dd_layout_page_header_icon_menu_minibasket_functions',
             'file' =>
                 '/views/blocks/wave/widget/minibasket/dd_layout_page_header_icon_menu_minibasket_functions.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'flow',
-            'template' => 'page/checkout/payment.tpl',
-            'block' => 'checkout_payment_nextstep',
-            'file' => '/views/blocks/flow/page/checkout/checkout_payment_next_step.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'wave',
-            'template' => 'page/checkout/payment.tpl',
-            'block' => 'checkout_payment_nextstep',
-            'file' => '/views/blocks/wave/page/checkout/checkout_payment_next_step.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'flow',
-            'template' => 'page/checkout/payment.tpl',
-            'block' => 'select_payment',
-            'file' => '/views/blocks/flow/page/checkout/select_payment.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'wave',
-            'template' => 'page/checkout/payment.tpl',
-            'block' => 'select_payment',
-            'file' => '/views/blocks/wave/page/checkout/select_payment.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'flow',
-            'template' => 'page/checkout/payment.tpl',
-            'block' => 'change_payment',
-            'file' => '/views/blocks/flow/page/checkout/change_payment.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'wave',
-            'template' => 'page/checkout/payment.tpl',
-            'block' => 'change_payment',
-            'file' => '/views/blocks/wave/page/checkout/change_payment.tpl',
             'position' => '5'
         ],
         [
