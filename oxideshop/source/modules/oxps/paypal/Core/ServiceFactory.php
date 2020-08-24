@@ -24,6 +24,7 @@ namespace OxidProfessionalServices\PayPal\Core;
 
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Client;
+use OxidProfessionalServices\PayPal\Api\Service\Catalog;
 use OxidProfessionalServices\PayPal\Api\Service\Orders;
 
 /**
@@ -45,6 +46,14 @@ class ServiceFactory
         return oxNew(Orders::class, $this->getClient());
     }
 
+    /**
+     * @return Catalog
+     */
+    public function getCatalogService(): Catalog
+    {
+        return new Catalog($this->getClient());
+    }
+
     private function getClient(): Client
     {
         if ($this->client === null) {
@@ -62,6 +71,8 @@ class ServiceFactory
                 //so not ask for it on the configuration page
                 false
             );
+            //fixme: auth needs to be injected to avoid slow authentification
+            //the token value should be stored in the db/oxconfig and it is valid for 8 hours
 
             $this->client = $client;
         }

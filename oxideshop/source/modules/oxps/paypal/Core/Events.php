@@ -38,6 +38,7 @@ class Events
         self::createLogTable();
         self::addPaymentMethod();
         self::enablePaymentMethod();
+        self::createSubscriptionProductTable();
     }
 
     /**
@@ -138,11 +139,11 @@ class Events
                         `OXPS_PAYPAL_RESPONSE_MSG` 
                             TEXT 
                             NOT NULL 
-                            COMMENT \'Response from Amazon SDK\',
+                            COMMENT \'Response from Paypal SDK\',
                         `OXPS_PAYPAL_STATUS_CODE` 
                             VARCHAR(100) 
                             NOT NULL 
-                            COMMENT \'Status code from Amazon SDK\',
+                            COMMENT \'Status code from Paypal SDK\',
                         `OXPS_PAYPAL_REQUEST_TYPE` 
                             VARCHAR(100) 
                             NOT NULL 
@@ -158,11 +159,54 @@ class Events
                             character set latin1
                             collate latin1_general_ci
                             NOT NULL
-                            COMMENT \'Amazon index to search by\',    
+                            COMMENT \'Paypal index to search by\',    
                         PRIMARY KEY (`OXPS_PAYPAL_PAYLOGID`)) 
                             ENGINE=InnoDB 
-                            COMMENT \'Amazon Payment transaction log\'',
+                            COMMENT \'Paypal Payment transaction log\'',
             LogRepository::TABLE_NAME
+        );
+
+        DatabaseProvider::getDb()->execute($sql);
+    }
+
+    protected static function createSubscriptionProductTable(): void
+    {
+        $sql = sprintf(
+            'CREATE TABLE IF NOT EXISTS %s (
+                        `OXPS_PAYPAL_SUBSCRIPTION_PRODUCT_ID` 
+                            char(32) 
+                            character set latin1 
+                            collate latin1_general_ci 
+                            NOT NULL
+                            COMMENT \'Record id\',
+                        `OXPS_PAYPAL_OXSHOPID` 
+                            char(32) 
+                            character set latin1 
+                            collate latin1_general_ci 
+                            NOT NULL 
+                            COMMENT \'Shop id (oxshops)\',
+                        `OXPS_PAYPAL_OXARTICLE_ID` 
+                            char(32) 
+                            character set latin1 
+                            collate latin1_general_ci 
+                            NOT NULL 
+                            COMMENT \'OXID product ID\',
+                        `OXPS_PAYPAL_PRODUCT_ID` 
+                            char(32) 
+                            character set latin1 
+                            collate latin1_general_ci 
+                            NOT NULL 
+                            COMMENT \'Paypal product ID\',
+                        `OXTIMESTAMP` 
+                            timestamp 
+                            NOT NULL 
+                            default CURRENT_TIMESTAMP 
+                            on update CURRENT_TIMESTAMP 
+                            COMMENT \'Timestamp\',
+                        PRIMARY KEY (`OXPS_PAYPAL_SUBSCRIPTION_PRODUCT_ID`)) 
+                            ENGINE=InnoDB 
+                            COMMENT \'Primary key\'',
+            'oxps_paypal_subscription_product'
         );
 
         DatabaseProvider::getDb()->execute($sql);
