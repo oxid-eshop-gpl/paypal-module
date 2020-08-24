@@ -13,7 +13,7 @@ class ArticleListController extends ArticleListController_Parent
      * @param $oxid
      * @return bool
      */
-    public function IsSubscriptionProduct($oxid)
+    public function isSubscriptionProduct($oxid)
     {
         return $this->hasLinkedObject($oxid);
     }
@@ -42,7 +42,7 @@ class ArticleListController extends ArticleListController_Parent
         }
 
         if (!empty($linkedProduct[0]['OXPS_PAYPAL_PRODUCT_ID'])) {
-           return true;
+            return true;
         }
 
         return false;
