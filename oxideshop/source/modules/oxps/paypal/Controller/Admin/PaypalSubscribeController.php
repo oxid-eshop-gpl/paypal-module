@@ -346,37 +346,4 @@ class PaypalSubscribeController extends AdminController
 
         $this->linkedProduct = $this->repository->getLinkedProductByOxid($oxid);
     }
-
-//    /**
-//     * @param Product $response
-//     * @throws DatabaseConnectionException
-//     * @throws DatabaseErrorException
-//     */
-//    private function saveLinkedProduct(Product $response): void
-//    {
-//        $sql = 'INSERT INTO oxps_paypal_subscription_product (';
-//        $sql .= 'OXPS_PAYPAL_SUBSCRIPTION_PRODUCT_ID, OXPS_PAYPAL_OXSHOPID, OXPS_PAYPAL_OXARTICLE_ID, ';
-//        $sql .= 'OXPS_PAYPAL_PRODUCT_ID) VALUES(?,?,?,?)';
-//
-//        DatabaseProvider::getDb()->execute($sql, [
-//            UtilsObject::getInstance()->generateUId(),
-//            $this->getConfig()->getShopId(),
-//            $this->getEditObject()->oxarticles__oxid->value,
-//            $response->id
-//        ]);
-//    }
-//
-//    /**
-//     * @param string $paypalProductId
-//     * @throws DatabaseConnectionException
-//     * @throws DatabaseErrorException
-//     */
-//    private function deleteLinkedProduct($paypalProductId): void
-//    {
-//        $sql = 'DELETE FROM oxps_paypal_subscription_product WHERE OXPS_PAYPAL_PRODUCT_ID = ?';
-//
-//        DatabaseProvider::getDb()->execute($sql, [
-//            $paypalProductId
-//        ]);
-//    }
 }
