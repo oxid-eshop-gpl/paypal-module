@@ -65,11 +65,17 @@ class PaypalSubscribeController extends AdminController
         $this->repository = new SubscriptionRepository();
     }
 
+    /**
+     * @return bool
+     */
     public function isPayPalProductLinked()
     {
         return false;
     }
 
+    /**
+     * @return bool
+     */
     public function isPayPalProductLinkedByParentOnly()
     {
         return false;
@@ -83,6 +89,9 @@ class PaypalSubscribeController extends AdminController
         return $this->repository->getEditObject(Registry::getRequest()->getRequestParameter('oxid'));
     }
 
+    /**
+     * @return bool
+     */
     public function hasLinkedObject()
     {
         $this->setLinkedObject();
@@ -93,12 +102,18 @@ class PaypalSubscribeController extends AdminController
         return false;
     }
 
+    /**
+     * @return Product
+     */
     public function getLinkedObject()
     {
         $this->setLinkedObject();
         return $this->linkedObject;
     }
 
+    /**
+     * @throws \OxidProfessionalServices\PayPal\Api\Exception\ApiException
+     */
     public function setLinkedObject()
     {
         if (!empty($this->linkedObject)) {
@@ -124,11 +139,16 @@ class PaypalSubscribeController extends AdminController
         $this->linkedObject = $this->getPaypalProductDetail($this->linkedProduct[0]['OXPS_PAYPAL_PRODUCT_ID']);
     }
 
+    /**
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     * @throws \OxidProfessionalServices\PayPal\Api\Exception\ApiException
+     */
     public function unlink()
     {
         $this->setLinkedObject();
 
-        if(empty($this->linkedObject)) {
+        if (empty($this->linkedObject)) {
             return;
         }
 
@@ -311,7 +331,6 @@ class PaypalSubscribeController extends AdminController
                 $patchRequest->path = '/home_url';
                 $cs->updateProduct($productId, [$patchRequest]);
             }
-
         } else {
             $productRequest = [];
             $productRequest['name'] = utf8_encode($request->getRequestParameter('title'));
