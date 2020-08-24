@@ -49,7 +49,8 @@ class ServiceFactory
     /**
      * @return Catalog
      */
-    public function getCatalogService(): Catalog {
+    public function getCatalogService(): Catalog
+    {
         return new Catalog($this->getClient());
     }
 
