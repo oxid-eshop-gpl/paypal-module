@@ -9,11 +9,19 @@ use OxidProfessionalServices\PayPal\Repository\SubscriptionRepository;
 
 class ArticleListController extends ArticleListController_Parent
 {
+    /**
+     * @param $oxid
+     * @return bool
+     */
     public function IsSubscriptionProduct($oxid)
     {
         return $this->hasLinkedObject($oxid);
     }
 
+    /**
+     * @param $oxid
+     * @return bool
+     */
     private function hasLinkedObject($oxid)
     {
         $article = oxNew(Article::class);
@@ -39,5 +47,4 @@ class ArticleListController extends ArticleListController_Parent
 
         return false;
     }
-
 }
