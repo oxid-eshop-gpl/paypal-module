@@ -108,12 +108,15 @@ class ProxyController extends FrontendController
                     // no active customer? We create a guest!
                     if (!$basket->getUser()) {
                         try {
-
                             $country = oxNew(Country::class);
-                            $oxCountryId = $country->getIdByCode($response->purchase_units[0]->shipping->address->country_code);
+                            $oxCountryId = $country->getIdByCode(
+                                $response->purchase_units[0]->shipping->address->country_code
+                            );
 
                             try {
-                                $addressData = AddressSplitter::splitAddress($response->purchase_units[0]->shipping->address->address_line_1);
+                                $addressData = AddressSplitter::splitAddress(
+                                    $response->purchase_units[0]->shipping->address->address_line_1
+                                );
                             } catch (SplittingException $e) {
                                 Registry::getLogger()->error($e->getMessage(), ['status' => $e->getCode()]);
                             }
@@ -125,19 +128,25 @@ class ProxyController extends FrontendController
                             $user->oxuser__oxlname = new Field($response->payer->name->surname, Field::T_RAW);
                             $user->oxuser__oxstreet = new Field($addressData['streetName'], Field::T_RAW);
                             $user->oxuser__oxstreetnr = new Field($addressData['houseNumber'], Field::T_RAW);
-                            $user->oxuser__oxcity = new Field($response->purchase_units[0]->shipping->address->admin_area_2, Field::T_RAW);
+                            $user->oxuser__oxcity = new Field(
+                                $response->purchase_units[0]->shipping->address->admin_area_2,
+                                Field::T_RAW
+                            );
                             $user->oxuser__oxcountryid = $oxCountryId;
-                            $user->oxuser__oxzip = new Field($response->purchase_units[0]->shipping->address->postal_code, Field::T_RAW);
-
+                            $user->oxuser__oxzip = new Field(
+                                $response->purchase_units[0]->shipping->address->postal_code,
+                                Field::T_RAW
+                            );
                             $user->createUser();
                             $session->setVariable('usr', $user->getId());
                             $basket->setBasketUser($user);
-
                         } catch (Exception $exception) {
-                            Registry::getLogger()->error("Error on creation a guest-account with paypal-informations.", [$exception]);
+                            Registry::getLogger()->error(
+                                'Error on creation a guest-account with paypal-informations.',
+                                [$exception]
+                            );
                         }
                     }
-
                 }
             } catch (Exception $exception) {
                 Registry::getLogger()->error("Error on order capture call.", [$exception]);
