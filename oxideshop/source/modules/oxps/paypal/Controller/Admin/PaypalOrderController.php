@@ -55,6 +55,8 @@ class PaypalOrderController extends AdminDetailsController
      * name of template file "paypalorder.tpl".
      *
      * @return string
+     * @throws ApiException
+     * @throws StandardException
      */
     public function render()
     {
@@ -67,6 +69,8 @@ class PaypalOrderController extends AdminDetailsController
         if ($order->paidWithPayPal()) {
             $this->addTplParam('payPalOrder', $this->getPayPalOrder());
             $this->addTplParam('capture', $this->getOrderPaymentCapture());
+        } else {
+            $this->addTplParam('payPalOrder', null);
         }
 
         return "paypalorder.tpl";
@@ -77,6 +81,10 @@ class PaypalOrderController extends AdminDetailsController
      */
     public function refund(): void
     {
+        if (!Registry::getSession()->checkSessionChallenge()) {
+            return;
+        }
+
         $request = Registry::getRequest();
         $refundAmount = $request->getRequestEscapedParameter('refundAmount');
         $invoiceId = $request->getRequestEscapedParameter('invoiceId');
