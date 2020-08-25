@@ -37,6 +37,9 @@ use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 use OxidProfessionalServices\PayPal\Core\PaypalSession;
 use VIISON\AddressSplitter\AddressSplitter;
 use VIISON\AddressSplitter\Exceptions\SplittingException;
+use OxidEsales\Eshop\Core\Exception\OutOfStockException;
+use OxidEsales\Eshop\Core\Exception\ArticleInputException;
+use OxidEsales\Eshop\Core\Exception\NoArticleException;
 
 
 /**
@@ -47,8 +50,24 @@ class ProxyController extends FrontendController
     public function createOrder()
     {
         $context = (string) Registry::getRequest()->getRequestEscapedParameter('context', 'continue');
+        $session = Registry::getSession();
+        $basket = $session->getBasket();
 
-        $basket = Registry::getSession()->getBasket();
+        // we put something to the basket
+        if ($aid = (string) Registry::getRequest()->getRequestEscapedParameter('aid')) {
+            try {
+                $basket->addToBasket(
+                    $aid,
+                    1
+                );
+            } catch (OutOfStockException $exception) {
+                Registry::getUtilsView()->addErrorToDisplay($exception, false, (bool) $errorDestination, $errorDestination);
+            } catch (ArticleInputException $exception) {
+                Registry::getUtilsView()->addErrorToDisplay($exception, false, (bool) $errorDestination, $errorDestination);
+            } catch (NoArticleException $exception) {
+            }
+            $basket->calculateBasket(false);
+        }
 
         /** @var ServiceFactory $serviceFactory */
         $serviceFactory = Registry::get(ServiceFactory::class);
@@ -70,6 +89,7 @@ class ProxyController extends FrontendController
             Registry::getLogger()->error("Error on order create call.", [$exception]);
         }
 
+        $session->setVariable('paymentid', 'oxidpaypal');
         $basket->setPayment('oxidpaypal');
 
         if ($response->id) {
@@ -126,7 +146,7 @@ class ProxyController extends FrontendController
                             $user->oxuser__oxstreet = new Field($addressData['streetName'], Field::T_RAW);
                             $user->oxuser__oxstreetnr = new Field($addressData['houseNumber'], Field::T_RAW);
                             $user->oxuser__oxcity = new Field($response->purchase_units[0]->shipping->address->admin_area_2, Field::T_RAW);
-                            $user->oxuser__oxcountryid = $oxCountryId;
+                            $user->oxuser__oxcountryid = new Field($oxCountryId, Field::T_RAW);
                             $user->oxuser__oxzip = new Field($response->purchase_units[0]->shipping->address->postal_code, Field::T_RAW);
 
                             $user->createUser();

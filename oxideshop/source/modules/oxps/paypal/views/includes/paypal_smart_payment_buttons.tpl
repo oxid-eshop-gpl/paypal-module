@@ -1,13 +1,15 @@
 [{capture name="paypal_init"}]
-
 [{if !$paymentStrategy}]
     [{assign var="paymentStrategy" value="continue"}]
 [{/if}]
-
+[{if !$aid}]
+    [{assign var="aid" value=""}]
+[{/if}]
+[{assign var="sSelfLink" value=$oViewConf->getSelfLink()|replace:"&amp;":"&"}]
 [{literal}]
 paypal.Buttons({
     createOrder: function(data, actions) {
-        return fetch('[{/literal}][{$oViewConf->getSelfLink()|cat:"cl=PayPalProxyController&fnc=createOrder&context="|cat:$paymentStrategy}][{literal}]', {
+        return fetch('[{/literal}][{$sSelfLink|cat:"cl=PayPalProxyController&fnc=createOrder&context="|cat:$paymentStrategy|cat:"&aid="|cat:$aid}][{literal}]', {
             method: 'post',
             headers: {
                 'content-type': 'application/json'
@@ -29,7 +31,7 @@ paypal.Buttons({
     onApprove: function(data, actions) {
         captureData = new FormData();
         captureData.append('orderID', data.orderID);
-        return fetch('[{/literal}][{$oViewConf->getSelfLink()|cat:"cl=PayPalProxyController&fnc=captureOrder&context="|cat:$paymentStrategy}][{literal}]', {
+        return fetch('[{/literal}][{$sSelfLink|cat:"cl=PayPalProxyController&fnc=captureOrder&context="|cat:$paymentStrategy|cat:"&aid="|cat:$aid}][{literal}]', {
             method: 'post',
             body: captureData
         }).then(function(res) {
@@ -37,7 +39,8 @@ paypal.Buttons({
         }).then(function(data) {
             [{/literal}]
             [{if $oViewConf->getTopActiveClassName()=="details" && $paymentStrategy=="continue"}]
-                location.reload();
+                //location.reload();
+                location.replace('[{$sSelfLink|cat:"cl=basket"}]');
             [{/if}]
             [{literal}]
         })

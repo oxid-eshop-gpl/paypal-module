@@ -1,5 +1,5 @@
 [{include file="headitem.tpl" title="paypal"}]
-[{assign var="isSandBox" value=$config->isSandbox()}];
+[{assign var="isSandBox" value=$config->isSandbox()}]
 <script>
     window.isSandBox = '[{$isSandBox}]';
     window.selfLink = '[{$oViewConf->getSelfLink()|replace:"&amp;":"&"}]';
