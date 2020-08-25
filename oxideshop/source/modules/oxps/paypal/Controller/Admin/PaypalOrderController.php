@@ -109,7 +109,7 @@ class PaypalOrderController extends AdminDetailsController
             }
             /** @var Orders $orderService */
             $orderService = Registry::get(ServiceFactory::class)->getOrderService();
-            $this->payPalOrder = $orderService->showOrderDetails($order->getPayPalOrderId());
+            $this->payPalOrder = $orderService->showOrderDetails($order->getPaypalOrderIdForOxOrderId());
         }
 
         return $this->payPalOrder;

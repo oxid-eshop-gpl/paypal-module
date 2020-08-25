@@ -80,6 +80,7 @@ class Order extends Order_parent
     {
         if (is_null($this->payPalOrderId)) {
             $this->payPalOrderId = '';
+            $oxId = is_null($oxId) ? $this->getId() : $oxId;
             $table = 'oxps_paypal_order';
             $shopId = $this->getShopId();
             $params = [$table . '.oxps_paypal_oxorderid' => $oxId, $table . '.oxps_paypal_oxshopid' => $shopId];
@@ -103,17 +104,6 @@ class Order extends Order_parent
      */
     public function paidWithPayPal(): bool
     {
-        return true;
-    }
-
-    /**
-     * Get order ID used by PayPal
-     *
-     * @TODO
-     * @return string
-     */
-    public function getPayPalOrderId(): string
-    {
-        return '123';
+        return $this->payPalOrderId ? true : false;
     }
 }
