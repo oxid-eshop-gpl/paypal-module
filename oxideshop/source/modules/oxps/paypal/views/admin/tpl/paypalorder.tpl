@@ -87,6 +87,8 @@
     [{$oViewConf->getHiddenSid()}]
     <input type="hidden" name="fnc" value="refund">
     <input type="hidden" name="cl" value="PaypalOrderController">
+    <input type="hidden" name="oxid" value="[{$oxid}]">
+    <input type="hidden" name="language" value="[{$actlang}]">
 
     <label for="refundAmount">[{oxmultilang ident="OXPS_PAYPAL_REFUND_AMOUNT"}]</label>
     <input type="number" id="refundAmount" name="refundAmount">

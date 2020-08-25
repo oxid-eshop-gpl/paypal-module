@@ -50,10 +50,6 @@ class PaypalOrderController extends AdminDetailsController
     protected $payPalOrder;
 
     /**
-     * Executes parent method parent::render(), creates oxOrder object,
-     * passes it's data to Smarty engine and returns
-     * name of template file "paypalorder.tpl".
-     *
      * @return string
      * @throws ApiException
      * @throws StandardException
@@ -81,10 +77,6 @@ class PaypalOrderController extends AdminDetailsController
      */
     public function refund(): void
     {
-        if (!Registry::getSession()->checkSessionChallenge()) {
-            return;
-        }
-
         try {
             $request = Registry::getRequest();
             $refundAmount = $request->getRequestEscapedParameter('refundAmount');
@@ -94,27 +86,29 @@ class PaypalOrderController extends AdminDetailsController
 
             $capture = $this->getOrderPaymentCapture();
             if (!$capture) {
-                return;
+                throw new StandardException('Order not captured');
             }
 
             $request = new RefundRequest();
-
+            $request->note_to_payer = $noteToPayer;
+            $request->invoice_id = $invoiceId;
             if (!$refundAll) {
                 $request->initAmount();
                 $request->amount->currency_code = $capture->amount->currency_code;
                 $request->amount->value = $refundAmount;
-                $request->invoice_id = $invoiceId;
-                $request->note_to_payer = $noteToPayer;
             }
 
             /** @var Payments $paymentService */
             $paymentService = Registry::get(ServiceFactory::class)->getPaymentService();
-            $paymentService->refundCapturedPayment($capture->id, $refundAll, '');
+            $paymentService->refundCapturedPayment($capture->id, $request, '');
 
             //Reset so that new information would be fetched
             $this->payPalOrder = null;
         } catch (ApiException $exception) {
-            //TODO catch and display errors
+            //TODO display errors
+            Registry::getLogger()->error($exception);
+        } catch (StandardException $exception) {
+            Registry::getLogger()->error($exception);
         }
     }
 

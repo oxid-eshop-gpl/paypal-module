@@ -99,11 +99,10 @@ class Order extends Order_parent
     /**
      * Checks if the order was paid using PayPal
      *
-     * @TODO
      * @return bool
      */
     public function paidWithPayPal(): bool
     {
-        return $this->payPalOrderId ? true : false;
+        return (bool) $this->getPaypalOrderIdForOxOrderId();
     }
 }
