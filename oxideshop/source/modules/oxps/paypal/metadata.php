@@ -295,6 +295,7 @@ $aModule = [
         ['name' => 'sPayPalClientId', 'type' => 'str', 'value' => '', 'group' => null],
         ['name' => 'sPayPalClientSecret', 'type' => 'str', 'value' => '', 'group' => null],
         ['name' => 'sPayPalSandboxClientId', 'type' => 'str', 'value' => '', 'group' => null],
+        ['name' => 'sPayPalWebhookId', 'type' => 'str', 'value' => '', 'group' => null],
         ['name' => 'sPayPalSandboxClientSecret', 'type' => 'str', 'value' => '', 'group' => null],
         ['name' => 'blPayPalShowProductDetailsButton', 'type' => 'bool', 'value' => true, 'group' => null],
         ['name' => 'blPayPalShowMiniBasketButton', 'type' => 'bool', 'value' => true, 'group' => null],

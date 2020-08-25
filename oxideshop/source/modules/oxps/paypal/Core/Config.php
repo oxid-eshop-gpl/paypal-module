@@ -47,7 +47,7 @@ class Config
                 $this->isSandbox() &&
                 !$this->getSandboxClientId() &&
                 !$this->getSandboxClientSecret()
-            )
+            ) || $this->getWebhookId()
         ) {
             throw oxNew(
                 StandardException::class
@@ -258,12 +258,20 @@ class Config
     }
 
     /**
-     * return string
+     * @return string
      */
     public function getTechnicalClientSecret()
     {
         return $this->isSandbox() ?
             $this->getSandboxOxidSecret()
             : $this->getLiveOxidSecret();
+    }
+
+    /**
+     * @return string
+     */
+    public function getWebhookId()
+    {
+        return Registry::getConfig()->getConfigParam('sPayPalWebhookId');
     }
 }

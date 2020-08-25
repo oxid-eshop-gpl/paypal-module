@@ -24,12 +24,15 @@ namespace OxidProfessionalServices\PayPal\Core;
 
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Client;
+use OxidProfessionalServices\PayPal\Api\Service\GenericService;
 use OxidProfessionalServices\PayPal\Api\Service\Catalog;
 use OxidProfessionalServices\PayPal\Api\Service\Orders;
 
 /**
  * Class ServiceFactory
  * @package OxidProfessionalServices\PayPal\Core
+ *
+ * Responsible for creation of PayPal service objects
  */
 class ServiceFactory
 {
@@ -54,6 +57,23 @@ class ServiceFactory
         return new Catalog($this->getClient());
     }
 
+    /**
+     * @return GenericService
+     */
+    public function getNotificationService(): GenericService
+    {
+        return oxNew(
+            GenericService::class,
+            $this->getClient(),
+            '/v1/notifications/verify-webhook-signature'
+        );
+    }
+
+    /**
+     * Get PayPal client object
+     *
+     * @return Client
+     */
     private function getClient(): Client
     {
         if ($this->client === null) {

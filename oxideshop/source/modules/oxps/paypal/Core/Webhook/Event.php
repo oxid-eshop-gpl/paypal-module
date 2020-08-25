@@ -44,7 +44,7 @@ class Event
      *
      * @return array
      */
-    public function getData()
+    public function getData(): array
     {
         return $this->data;
     }
@@ -54,6 +54,6 @@ class Event
      */
     public function getEventType(): string
     {
-        return (string) $this->data['event_type'];
+        return $this->data['event_type'];
     }
 }
