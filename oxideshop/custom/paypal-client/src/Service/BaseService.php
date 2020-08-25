@@ -2,7 +2,6 @@
 
 namespace OxidProfessionalServices\PayPal\Api\Service;
 
-use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\GuzzleException;
 use OxidProfessionalServices\PayPal\Api\Client;
 use OxidProfessionalServices\PayPal\Api\Exception\ApiException;

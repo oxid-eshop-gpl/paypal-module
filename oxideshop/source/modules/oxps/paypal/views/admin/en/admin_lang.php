@@ -28,6 +28,7 @@ $aLang = [
     'OXPS_PAYPAL_SUBSCRIBE'          => 'PayPal Subscriptions',
     'PAYPAL_SUBSCRIBE_MAIN'          => 'PayPal Subscriptions',
     'OXPS_PAYPAL_GENERAL'            => 'General',
+    'OXPS_PAYPAL_WEBHOOK_ID'         => 'Webhook ID',
     'OXPS_PAYPAL_OPMODE'             => 'Operation Mode',
     'OXPS_PAYPAL_OPMODE_LIVE'        => 'Live',
     'OXPS_PAYPAL_OPMODE_SANDBOX'     => 'Sandbox',
@@ -59,4 +60,5 @@ $aLang = [
     'HELP_OXPS_PAYPAL_SANDBOX_CLIENT_SECRET' => 'Secret for sandbox mode.',
     'HELP_OXPS_PAYPAL_OPMODE'        => 'To configure and test PayPal, use Sandbox (test). When you\'re ready
         to receive real transactions, switch to Production (live).',
+    'OXPS_PAYPAL_WEBHOOK_ID_HELP'    => 'The ID of the webhook as configured in your Developer Portal account',
 ];
