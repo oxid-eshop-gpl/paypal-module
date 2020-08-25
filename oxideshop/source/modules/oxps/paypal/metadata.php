@@ -20,13 +20,20 @@
  * @copyright (C) OXID eSales AG 2003-2020
  */
 
+use OxidEsales\Eshop\Application\Controller\Admin\ArticleList;
+use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Core\ViewConfig;
 use OxidEsales\Eshop\Application\Model\Basket;
+use OxidProfessionalServices\PayPal\Controller\Admin\ArticleListController;
 use OxidEsales\Eshop\Application\Model\PaymentGateway;
 use OxidProfessionalServices\PayPal\Controller\Admin\OnboardingController;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalConfigController;
+use OxidProfessionalServices\PayPal\Controller\Admin\PaypalSubscribeController;
 use OxidProfessionalServices\PayPal\Controller\ProxyController;
 use OxidProfessionalServices\PayPal\Controller\WebhookController;
+use OxidProfessionalServices\PayPal\Core\ViewConfig as PaypalViewConfig;
+use OxidProfessionalServices\PayPal\Model\Basket as PaypalBasket;
+use OxidProfessionalServices\PayPal\Model\PayPalArticle;
 
 $sMetadataVersion = '2.1';
 
@@ -50,19 +57,24 @@ $aModule = [
     'email' => '',
     'extend' => [
         // Core
-        ViewConfig::class => \OxidProfessionalServices\PayPal\Core\ViewConfig::class,
+        ViewConfig::class => PaypalViewConfig::class,
         // Model
-        Basket::class => \OxidProfessionalServices\PayPal\Model\Basket::class,
+        Basket::class => PaypalBasket::class,
+        Article::class => PayPalArticle::class,
+        ArticleList::class => ArticleListController::class,
         PaymentGateway::class => \OxidProfessionalServices\PayPal\Model\PaymentGateway::class
     ],
     'controllers' => [
         'PaypalConfigController' => PaypalConfigController::class,
         'PayPalWebhookController' => WebhookController::class,
         'PayPalProxyController' => ProxyController::class,
-        'OnboardingController' => OnboardingController::class
+        'OnboardingController' => OnboardingController::class,
+        'PaypalSubscribeController' => PaypalSubscribeController::class,
+        'PaypalAdminArticleListController' => ArticleListController::class
     ],
     'templates' => [
         'paypalconfig.tpl' => 'oxps/paypal/views/admin/tpl/paypalconfig.tpl',
+        'subscribe.tpl'    => 'oxps/paypal/views/admin/tpl/subscribe.tpl',
         'paypal_smart_payment_buttons.tpl' => 'oxps/paypal/views/includes/paypal_smart_payment_buttons.tpl',
         'flow/paypal_payment_option.tpl' => 'oxps/paypal/views/theme/flow/paypal_payment_option.tpl',
         'wave/paypal_payment_option.tpl' => 'oxps/paypal/views/theme/wave/paypal_payment_option.tpl'
@@ -72,6 +84,21 @@ $aModule = [
         'onDeactivate' => '\OxidProfessionalServices\PayPal\Core\Events::onDeactivate'
     ],
     'blocks' => [
+        [
+            'template' => 'article_list.tpl',
+            'block' => 'admin_article_list_item',
+            'file' => 'views/admin/tpl/article_list_extended.tpl'
+        ],
+        [
+            'template' => 'article_list.tpl',
+            'block' => 'admin_article_list_colgroup',
+            'file' => 'views/admin/tpl/article_list_colgroup_extended.tpl'
+        ],
+        [
+            'template' => 'article_list.tpl',
+            'block' => 'admin_article_list_sorting',
+            'file' => 'views/admin/tpl/article_list_sorting_extended.tpl'
+        ],
         [
             'template' => 'headitem.tpl',
             'block' => 'admin_headitem_inccss',
