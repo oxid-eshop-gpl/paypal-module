@@ -1,14 +1,8 @@
 [{include file="headitem.tpl" title="GENERAL_ADMIN_TITLE"|oxmultilangassign}]
 
-[{oxscript include="js/libs/jquery.min.js"}]
-[{oxscript include=$oViewConf->getModuleUrl('oepaypal','out/admin/src/js/paypal_order.js')}]
-[{oxscript add="jQuery.noConflict();" priority=10}]
-
-<script type="text/javascript">
-    window.onload = function () {
-        top.oxid.admin.updateList('[{$sOxid}]')
-    };
-</script>
+[{*oxscript include="js/libs/jquery.min.js"*}]
+[{*oxscript include=$oViewConf->getModuleUrl('oepaypal','out/admin/src/js/paypal_order.js')*}]
+[{*oxscript add="jQuery.noConflict();" priority=10*}]
 
 <style>
     .paypalActionsTable {
@@ -83,47 +77,22 @@
     }
 </style>
 
-<form action="[{$oViewConf->getSelfLink()}]" method="post">
-    [{$oViewConf->getHiddenSid()}]
-    <input type="hidden" name="fnc" value="refund">
-    <input type="hidden" name="cl" value="PaypalOrderController">
-
-    <label for="refundAmount">[{oxmultilang ident="OXPS_PAYPAL_REFUND_AMOUNT"}]</label>
-    <input type="number" id="refundAmount" name="refundAmount">
-
-    <label for="invoiceId">[{oxmultilang ident="OXPS_PAYPAL_INVOICE_ID"}]</label>
-    <input type="text" id="invoiceId" name="invoiceId" maxlength="127">
-
-    <label for="noteToBuyer">[{oxmultilang ident="OXPS_PAYPAL_NOTE_TO_BUYER"}]</label>
-    <textarea id="noteToBuyer" name="noteToBuyer" maxlength="255"></textarea>
-
-    <label for="refundAll">[{oxmultilang ident="OXPS_PAYPAL_REFUND_ALL"}]</label>
-    <input type="checkbox" id="refundAll" name="refundAll">
-
-    <input type="submit">
-</form>
-
-[{*
-
 <form name="transfer" id="transfer" action="[{$oViewConf->getSelfLink()}]" method="post">
     [{$oViewConf->getHiddenSid()}]
     <input type="hidden" name="oxid" value="[{$oxid}]">
-    <input type="hidden" name="oxidCopy" value="[{$oxid}]">
-    <input type="hidden" name="cl" value="delivery_main">
-    <input type="hidden" name="language" value="[{$actlang}]">
+    <input type="hidden" name="cl" value="PaypalOrderController">
 </form>
 
-[{if $oOrder}]
+[{if $order && $payPalOrder}]
 
+    [{assign var="currency" value=$oView->getPaypalCurrency()}]
 
-    [{assign var="payPalOrder" value=$oOrder->getPayPalOrder()}]
+[{*
     [{assign var="orderActionManager" value=$oView->getOrderActionManager()}]
     [{assign var="orderPaymentActionManager" value=$oView->getOrderPaymentActionManager()}]
     [{assign var="orderPaymentStatusCalculator" value=$oView->getOrderPaymentStatusCalculator()}]
     [{assign var="orderPaymentStatusList" value=$oView->getOrderPaymentStatusList()}]
-
-    [{assign var="currency" value=$payPalOrder->getCurrency()}]
-
+*}]
     <table width="98%" cellspacing="0" cellpadding="0" border="0">
     <tbody>
     <tr>
@@ -139,45 +108,49 @@
             <tr>
                 <td class="edittext">[{oxmultilang ident="OEPAYPAL_SHOP_PAYMENT_STATUS"}]:</td>
                 <td class="edittext">
-                    <b>[{oxmultilang ident='OEPAYPAL_STATUS_'|cat:$payPalOrder->getPaymentStatus()}]</b>
+                    <b>[{oxmultilang ident='OEPAYPAL_STATUS_'|cat:$oView->getPaypalPaymentStatus()}]</b>
                 </td>
             </tr>
             <tr>
                 <td class="edittext">[{oxmultilang ident="OEPAYPAL_ORDER_PRICE"}]:</td>
                 <td class="edittext">
-                    <b>[{$oView->formatPrice($payPalOrder->getTotalOrderSum())}] [{$currency}]</b>
+                    <b>[{$oView->formatPrice($oView->getPaypalTotalOrderSum())}] [{$currency}]</b>
                 </td>
             </tr>
             <tr>
                 <td class="edittext">[{oxmultilang ident="OEPAYPAL_CAPTURED_AMOUNT"}]:</td>
                 <td class="edittext">
-                    <b>[{$oView->formatPrice($payPalOrder->getCapturedAmount())}] [{$currency}]</b>
+                    <b>[{$oView->formatPrice($oView->getPaypalCapturedAmount())}] [{$currency}]</b>
                 </td>
             </tr>
             <tr>
                 <td class="edittext">[{oxmultilang ident="OEPAYPAL_REFUNDED_AMOUNT"}]:</td>
                 <td class="edittext">
-                    <b>[{$oView->formatPrice($payPalOrder->getRefundedAmount())}] [{$currency}]</b>
+                    <b>[{$oView->formatPrice($oView->getPaypalRefundedAmount())}] [{$currency}]</b>
                 </td>
             </tr>
             <tr>
                 <td class="edittext">[{oxmultilang ident="OEPAYPAL_CAPTURED_NET"}]:</td>
                 <td class="edittext">
-                    <b>[{$oView->formatPrice($payPalOrder->getRemainingRefundAmount())}] [{$currency}]</b>
+                    <b>[{$oView->formatPrice($oView->getPaypalRemainingRefundAmount())}] [{$currency}]</b>
                 </td>
             </tr>
             <tr>
                 <td class="edittext">[{oxmultilang ident="OEPAYPAL_VOIDED_AMOUNT"}]:</td>
                 <td class="edittext">
-                    <b>[{$oView->formatPrice($payPalOrder->getVoidedAmount())}] [{$currency}]</b>
+                    <b>[{$oView->formatPrice($oView->getPaypalVoidedAmount())}] [{$currency}]</b>
                 </td>
             </tr>
+
+
             <tr>
                 <td class="edittext">[{oxmultilang ident="OEPAYPAL_AUTHORIZATIONID"}]:</td>
                 <td class="edittext">
-                    <b>[{$oOrder->getAuthorizationId()}]</b>
+                    <b>[{$oView->getPaypalAuthorizationId()}]</b>
                 </td>
             </tr>
+
+[{*
             [{if $orderActionManager->isActionAvailable('capture')}]
             <tr>
                 <td class="edittext">[{oxmultilang ident="OEPAYPAL_MONEY_CAPTURE"}]:</td>
@@ -209,7 +182,9 @@
                 </td>
             </tr>
             [{/if}]
+*}]
         </table>
+
         </br>
         <b>[{oxmultilang ident="OEPAYPAL_PAYMENT_HISTORY"}]: </b>
         <table id="historyTable">
@@ -230,7 +205,7 @@
                 </td>
                 <td class="listheader">[{oxmultilang ident="OEPAYPAL_HISTORY_ACTIONS"}]</td>
             </tr>
-            [{foreach from=$payPalOrder->getPaymentList() item=listitem name=paypalHistory}]
+            [{foreach from=$oView->getPaypalPaymentList() item=listitem name=paypalHistory}]
             [{cycle values='listitem,listitem2' assign='class'}]
             <tr>
                 <td valign="top" class="[{$class}]">[{$listitem->getDate()}]</td>
@@ -316,7 +291,7 @@
                 <td class="listheader first">[{oxmultilang ident="GENERAL_SUM"}]</td>
                 <td class="listheader" height="15">&nbsp;&nbsp;&nbsp;[{oxmultilang ident="GENERAL_ITEMNR"}]</td>
                 <td class="listheader">&nbsp;&nbsp;&nbsp;[{oxmultilang ident="GENERAL_TITLE"}]</td>
-                [{if $oOrder->isNettoMode()}]
+                [{if $order->isNettoMode()}]
                 <td class="listheader">[{oxmultilang ident="ORDER_ARTICLE_ENETTO"}]</td>
                 [{else}]
                 <td class="listheader">[{oxmultilang ident="ORDER_ARTICLE_EBRUTTO"}]</td>
@@ -325,7 +300,7 @@
                 <td class="listheader" colspan="3">[{oxmultilang ident="ORDER_ARTICLE_MWST"}]</td>
             </tr>
             [{assign var="blWhite" value=""}]
-            [{foreach from=$oOrder->getOrderArticles() item=listitem name=orderArticles}]
+            [{foreach from=$order->getOrderArticles() item=listitem name=orderArticles}]
             [{if $listitem->oxorderarticles__oxstorno->value == 1}]
             [{assign var="listclass" value=listitem3}]
             [{else}]
@@ -337,19 +312,19 @@
                 </td>
                 <td valign="top" class="[{$listclass}]">[{$listitem->oxorderarticles__oxtitle->value|oxtruncate:20:""|strip_tags}]
                 </td>
-                [{if $oOrder->isNettoMode()}]
+                [{if $order->isNettoMode()}]
                 <td valign="top" class="[{$listclass}]">[{$listitem->getNetPriceFormated()}]
-                    <small>[{$oOrder->oxorder__oxcurrency->value}]</small>
+                    <small>[{$order->oxorder__oxcurrency->value}]</small>
                 </td>
                 <td valign="top" class="[{$listclass}]">[{$listitem->getTotalNetPriceFormated()}]
-                    <small>[{$oOrder->oxorder__oxcurrency->value}]</small>
+                    <small>[{$order->oxorder__oxcurrency->value}]</small>
                 </td>
                 [{else}]
                 <td valign="top" class="[{$listclass}]">[{$listitem->getBrutPriceFormated()}]
-                    <small>[{$oOrder->oxorder__oxcurrency->value}]</small>
+                    <small>[{$order->oxorder__oxcurrency->value}]</small>
                 </td>
                 <td valign="top" class="[{$listclass}]">[{$listitem->getTotalBrutPriceFormated()}]
-                    <small>[{$oOrder->oxorder__oxcurrency->value}]</small>
+                    <small>[{$order->oxorder__oxcurrency->value}]</small>
                 </td>
                 [{/if}]
                 <td valign="top" class="[{$listclass}]">[{$listitem->oxorderarticles__oxvat->value}]</td>
@@ -365,7 +340,7 @@
     </tr>
     </tbody>
     </table>
-
+[{*
     <div id="paypalOverlay"></div>
 
     <div id="paypalActions" class="paypalPopUp">
@@ -475,11 +450,30 @@
             [{/foreach}]
         </div>
     </div>
+*}]
     [{else}]
-    <div class="messagebox">[{$sMessage}]</div>
+        <div class="messagebox">[{$sMessage}]</div>
     [{/if}]
 
-*}]
+<form action="[{$oViewConf->getSelfLink()}]" method="post">
+    [{$oViewConf->getHiddenSid()}]
+    <input type="hidden" name="fnc" value="refund">
+    <input type="hidden" name="cl" value="PaypalOrderController">
+
+    <label for="refundAmount">[{oxmultilang ident="OXPS_PAYPAL_REFUND_AMOUNT"}]</label>
+    <input type="number" id="refundAmount" name="refundAmount">
+
+    <label for="invoiceId">[{oxmultilang ident="OXPS_PAYPAL_INVOICE_ID"}]</label>
+    <input type="text" id="invoiceId" name="invoiceId" maxlength="127">
+
+    <label for="noteToBuyer">[{oxmultilang ident="OXPS_PAYPAL_NOTE_TO_BUYER"}]</label>
+    <textarea id="noteToBuyer" name="noteToBuyer" maxlength="255"></textarea>
+
+    <label for="refundAll">[{oxmultilang ident="OXPS_PAYPAL_REFUND_ALL"}]</label>
+    <input type="checkbox" id="refundAll" name="refundAll">
+
+    <input type="submit">
+</form>
 
 [{include file="bottomnaviitem.tpl"}]
 [{include file="bottomitem.tpl"}]

@@ -104,6 +104,6 @@ class Order extends Order_parent
      */
     public function paidWithPayPal(): bool
     {
-        return $this->payPalOrderId ? true : false;
+        return $this->getPaypalOrderIdForOxOrderId() ? true : false;
     }
 }

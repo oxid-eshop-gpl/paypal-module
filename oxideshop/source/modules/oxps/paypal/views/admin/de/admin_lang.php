@@ -93,6 +93,15 @@ $aLang = [
     'OEPAYPAL_STATUS_completed'            => 'Abgeschlossen',
     'OEPAYPAL_STATUS_failed'               => 'Fehlgeschlagen',
     'OEPAYPAL_STATUS_canceled'             => 'Abgebrochen',
+
+    'OEPAYPAL_STATUS_CREATED'              => 'erstellt',
+    'OEPAYPAL_STATUS_SAVED'                => 'gespeichert',
+    'OEPAYPAL_STATUS_APPROVED'             => 'genehmigt',
+    'OEPAYPAL_STATUS_VOIDED'               => 'Ungültig',
+    'OEPAYPAL_STATUS_COMPLETED'            => 'abgeschlossen',
+    'OEPAYPAL_STATUS_PAYER_ACTION_REQUIRED'=> 'Käufer Aktion erforderlich',
+    'OEPAYPAL_STATUS_PARTIALLY_COMPLETED'  => 'teilweise abgeschlossen',
+
     'OEPAYPAL_PAYMENT_METHOD'              => 'Zahlungsart',
     'OEPAYPAL_CLOSE'                       => 'Schließen',
     'OEPAYPAL_COMMENT'                     => 'Kommentar',
