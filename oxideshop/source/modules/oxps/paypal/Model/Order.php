@@ -21,7 +21,12 @@
 
 namespace OxidProfessionalServices\PayPal\Model;
 
+use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidEsales\Eshop\Core\Registry;
+use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
+use OxidProfessionalServices\PayPal\Api\Model\Orders\Order as PayPalOrder;
+use OxidProfessionalServices\PayPal\Api\Model\Payments\Capture;
+use OxidProfessionalServices\PayPal\Api\Service\Orders;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 use OxidEsales\Eshop\Core\DatabaseProvider;
 use OxidEsales\Eshop\Core\Model\BaseModel;
@@ -36,36 +41,34 @@ class Order extends Order_parent
     /**
      * PayPal order information
      *
-     * @var paypalOrderService
+     * @var PayPalOrder
      */
-    protected $payPalOrder = null;
+    protected $payPalOrder;
 
     /**
      * PayPal order Id
      *
      * @var string
      */
-    protected $payPalOrderId = null;
+    protected $payPalOrderId;
 
     /**
-     * Returns PayPal order object.
+     * Get PayPal order object for given oxid ID or for the current active order object
      *
-     * @param string $oxId
+     * @param string|null $id
      *
-     * @return paypalOrderService
+     * @return PayPalOrder
+     * @throws ApiException
      */
-    public function getPayPalOrder($oxId = null)
+    public function getPayPalOrder(string $id = null): PayPalOrder
     {
-        if (is_null($this->payPalOrder)) {
-            $this->payPalOrder = false;
-            $oxId = is_null($oxId) ? $this->getId() : $oxId;
-            if ($orderId = $this->getPaypalOrderIdForOxOrderId($oxId)) {
-                $serviceFactory = Registry::get(ServiceFactory::class);
-                $service = $serviceFactory->getOrderService();
-                $response = $service->showOrderDetails($orderId);
-                $this->payPalOrder = $response;
-            }
+        if (!$this->payPalOrder) {
+            $id = $id ?? $this->getId();
+            /** @var Orders $orderService */
+            $orderService = Registry::get(ServiceFactory::class)->getOrderService();
+            $this->payPalOrder = $orderService->showOrderDetails($id);
         }
+
         return $this->payPalOrder;
     }
 
@@ -104,5 +107,16 @@ class Order extends Order_parent
     public function paidWithPayPal(): bool
     {
         return (bool) $this->getPaypalOrderIdForOxOrderId();
+    }
+
+    /**
+     * Get order payment capture or null if not captured
+     *
+     * @return Capture|null
+     * @throws ApiException
+     */
+    public function getOrderPaymentCapture(): ?Capture
+    {
+        return $this->getPayPalOrder()->purchase_units[0]->payments->captures[0] ?? null;
     }
 }

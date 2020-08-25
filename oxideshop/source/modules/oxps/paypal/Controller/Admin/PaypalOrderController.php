@@ -27,10 +27,7 @@ use OxidEsales\Eshop\Application\Model\Order;
 use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
-use OxidProfessionalServices\PayPal\Api\Model\Orders\Order as PayPalOrder;
-use OxidProfessionalServices\PayPal\Api\Model\Payments\Capture;
 use OxidProfessionalServices\PayPal\Api\Model\Payments\RefundRequest;
-use OxidProfessionalServices\PayPal\Api\Service\Orders;
 use OxidProfessionalServices\PayPal\Api\Service\Payments;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 
@@ -43,11 +40,6 @@ class PaypalOrderController extends AdminDetailsController
      * @var Order
      */
     protected $order;
-
-    /**
-     * @var PayPalOrder
-     */
-    protected $payPalOrder;
 
     /**
      * @return string
@@ -63,7 +55,7 @@ class PaypalOrderController extends AdminDetailsController
         $this->addTplParam('order', $order);
 
         if ($order->paidWithPayPal()) {
-            $this->addTplParam('payPalOrder', $this->getPayPalOrder());
+            $this->addTplParam('payPalOrder', $order->getPayPalOrder());
             $this->addTplParam('capture', $this->getOrderPaymentCapture());
         } else {
             $this->addTplParam('payPalOrder', null);
@@ -113,24 +105,6 @@ class PaypalOrderController extends AdminDetailsController
     }
 
     /**
-     * Get PayPal order object for the active order
-     *
-     * @return PayPalOrder
-     * @throws ApiException|StandardException
-     */
-    protected function getPayPalOrder(): PayPalOrder
-    {
-        if (!$this->payPalOrder) {
-            $order = $this->getOrder();
-            /** @var Orders $orderService */
-            $orderService = Registry::get(ServiceFactory::class)->getOrderService();
-            $this->payPalOrder = $orderService->showOrderDetails($order->getPaypalOrderIdForOxOrderId());
-        }
-
-        return $this->payPalOrder;
-    }
-
-    /**
      * Get active order
      *
      * @return Order
@@ -148,16 +122,5 @@ class PaypalOrderController extends AdminDetailsController
         }
 
         return $this->order;
-    }
-
-    /**
-     * Get order payment capture or null if not captured
-     *
-     * @return Capture|null
-     * @throws StandardException|ApiException
-     */
-    protected function getOrderPaymentCapture(): ?Capture
-    {
-        return $this->getPayPalOrder()->purchase_units[0]->payments->captures[0] ?? null;
     }
 }
