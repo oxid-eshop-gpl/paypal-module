@@ -112,56 +112,56 @@ class Events
     {
         $sql = sprintf(
             'CREATE TABLE IF NOT EXISTS %s (
-                        `OXPS_PAYPAL_PAYLOGID` 
-                            char(32) 
-                            character set latin1 
-                            collate latin1_general_ci 
-                            NOT NULL 
+                        `OXPS_PAYPAL_PAYLOGID`
+                            char(32)
+                            character set latin1
+                            collate latin1_general_ci
+                            NOT NULL
                             COMMENT \'Record id\',
-                        `OXPS_PAYPAL_OXSHOPID` 
-                            char(32) 
-                            character set latin1 
-                            collate latin1_general_ci 
-                            NOT NULL 
+                        `OXPS_PAYPAL_OXSHOPID`
+                            char(32)
+                            character set latin1
+                            collate latin1_general_ci
+                            NOT NULL
                             COMMENT \'Shop id (oxshops)\',
-                        `OXPS_PAYPAL_OXUSERID` 
-                            char(32) 
-                            character set latin1 
-                            collate latin1_general_ci 
-                            NOT NULL 
+                        `OXPS_PAYPAL_OXUSERID`
+                            char(32)
+                            character set latin1
+                            collate latin1_general_ci
+                            NOT NULL
                             COMMENT \'User id (oxuser)\',
-                        `OXPS_PAYPAL_OXORDERID` 
-                            char(32) 
-                            character set latin1 
-                            collate latin1_general_ci 
-                            NOT NULL 
+                        `OXPS_PAYPAL_OXORDERID`
+                            char(32)
+                            character set latin1
+                            collate latin1_general_ci
+                            NOT NULL
                             COMMENT \'Order id (oxorder)\',
-                        `OXPS_PAYPAL_RESPONSE_MSG` 
-                            TEXT 
-                            NOT NULL 
-                            COMMENT \'Response from Paypal SDK\',
-                        `OXPS_PAYPAL_STATUS_CODE` 
-                            VARCHAR(100) 
-                            NOT NULL 
-                            COMMENT \'Status code from Paypal SDK\',
-                        `OXPS_PAYPAL_REQUEST_TYPE` 
-                            VARCHAR(100) 
-                            NOT NULL 
-                            COMMENT \'Request type\',        
-                        `OXTIMESTAMP` 
-                            timestamp 
-                            NOT NULL 
-                            default CURRENT_TIMESTAMP 
-                            on update CURRENT_TIMESTAMP 
+                        `OXPS_PAYPAL_RESPONSE_MSG`
+                            TEXT
+                            NOT NULL
+                            COMMENT \'Response from Paypal API\',
+                        `OXPS_PAYPAL_STATUS_CODE`
+                            VARCHAR(100)
+                            NOT NULL
+                            COMMENT \'Status code from Paypal API\',
+                        `OXPS_PAYPAL_REQUEST_TYPE`
+                            VARCHAR(100)
+                            NOT NULL
+                            COMMENT \'Request type\',
+                        `OXTIMESTAMP`
+                            timestamp
+                            NOT NULL
+                            default CURRENT_TIMESTAMP
+                            on update CURRENT_TIMESTAMP
                             COMMENT \'Timestamp\',
                         `OXPS_PAYPAL_IDENTIFIER`
                             char(32)
                             character set latin1
                             collate latin1_general_ci
                             NOT NULL
-                            COMMENT \'Paypal index to search by\',    
-                        PRIMARY KEY (`OXPS_PAYPAL_PAYLOGID`)) 
-                            ENGINE=InnoDB 
+                            COMMENT \'Paypal index to search by\',
+                        PRIMARY KEY (`OXPS_PAYPAL_PAYLOGID`))
+                            ENGINE=InnoDB
                             COMMENT \'Paypal Payment transaction log\'',
             LogRepository::TABLE_NAME
         );

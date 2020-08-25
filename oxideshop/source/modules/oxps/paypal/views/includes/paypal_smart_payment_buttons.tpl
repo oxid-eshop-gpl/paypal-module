@@ -1,8 +1,13 @@
 [{capture name="paypal_init"}]
+
+[{if !$paymentStrategy}]
+    [{assign var="paymentStrategy" value="continue"}]
+[{/if}]
+
 [{literal}]
 paypal.Buttons({
     createOrder: function(data, actions) {
-        return fetch('[{/literal}][{$oViewConf->getSelfLink()|cat:"cl=PayPalProxyController&fnc=createOrder"}][{literal}]', {
+        return fetch('[{/literal}][{$oViewConf->getSelfLink()|cat:"cl=PayPalProxyController&fnc=createOrder&context="|cat:$paymentStrategy}][{literal}]', {
             method: 'post',
             headers: {
                 'content-type': 'application/json'
@@ -11,7 +16,7 @@ paypal.Buttons({
             return res.json();
         }).then(function(data) {
             [{/literal}]
-            [{if $oViewConf->getTopActiveClassName()=="payment" && !$buttonCommit}]
+            [{if $oViewConf->getTopActiveClassName()=="payment" && $paymentStrategy=="continue"}]
                 if (data.id && data.status == "CREATED") {
                     $("#payment_oxidpaypal").prop( "checked", true);
                     $('#paymentNextStepBottom').trigger("click");
@@ -24,18 +29,22 @@ paypal.Buttons({
     onApprove: function(data, actions) {
         captureData = new FormData();
         captureData.append('orderID', data.orderID);
-        return fetch('[{/literal}][{$oViewConf->getSelfLink()|cat:"=PayPalProxyController&fnc=captureOrder"}][{literal}]', {
+        return fetch('[{/literal}][{$oViewConf->getSelfLink()|cat:"cl=PayPalProxyController&fnc=captureOrder&context="|cat:$paymentStrategy}][{literal}]', {
             method: 'post',
             body: captureData
         }).then(function(res) {
             return res.json();
-        }).then(function(details) {
-            alert('Transaction funds captured from ' + details.payer.name.given_name);
+        }).then(function(data) {
+            [{/literal}]
+            [{if $oViewConf->getTopActiveClassName()=="details" && $paymentStrategy=="continue"}]
+                location.reload();
+            [{/if}]
+            [{literal}]
         })
     },
     onCancel: function(data, actions) {
     },
-    onError: function () {
+    onError: function (data) {
     }
 }).render('#paypal-button-container');
 [{/literal}]
@@ -43,5 +52,5 @@ paypal.Buttons({
 
 <div id="paypal-button-container" class="[{$buttonClass}]"></div>
 
-[{oxscript include=$oViewConf->getPayPalJsSdkUrl($buttonCommit)}]
+[{oxscript include=$oViewConf->getPayPalJsSdkUrl($paymentStrategy)}]
 [{oxscript add=$smarty.capture.paypal_init}]

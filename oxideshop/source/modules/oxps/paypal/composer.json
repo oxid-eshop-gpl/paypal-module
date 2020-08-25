@@ -6,6 +6,7 @@
   "license": "proprietary",
   "version": "0.0.1",
   "require": {
+    "viison/address-splitter": "^0.3.4",
     "ext-json": "*"
   },
   "archive": {

@@ -98,8 +98,9 @@ class OrderRequestFactory
         if ($user = $basket->getUser()) {
             $request->payer = $this->getPayer();
         }
+
         $request->purchase_units = $this->getPurchaseUnits($transactionId, $invoiceId);
-        $request->payer = $this->getPayer();
+
         $request->application_context = $this->getApplicationContext($userAction);
 
         return $request;
@@ -116,7 +117,7 @@ class OrderRequestFactory
     {
         $context = new OrderApplicationContext();
         $context->brand_name = Registry::getConfig()->getActiveShop()->getFieldData('oxname');
-        $context->shipping_preference = 'SET_PROVIDED_ADDRESS';
+        $context->shipping_preference = 'GET_FROM_FILE';
         $context->landing_page = 'LOGIN';
         $context->user_action = $userAction;
 
