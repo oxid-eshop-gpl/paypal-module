@@ -85,30 +85,37 @@ class PaypalOrderController extends AdminDetailsController
             return;
         }
 
-        $request = Registry::getRequest();
-        $refundAmount = $request->getRequestEscapedParameter('refundAmount');
-        $invoiceId = $request->getRequestEscapedParameter('invoiceId');
-        $refundAll = $request->getRequestEscapedParameter('refundAll');
-        $noteToPayer = $request->getRequestParameter('noteToPayer');
+        try {
+            $request = Registry::getRequest();
+            $refundAmount = $request->getRequestEscapedParameter('refundAmount');
+            $invoiceId = $request->getRequestEscapedParameter('invoiceId');
+            $refundAll = $request->getRequestEscapedParameter('refundAll');
+            $noteToPayer = $request->getRequestParameter('noteToPayer');
 
-        $capture = $this->getOrderPaymentCapture();
+            $capture = $this->getOrderPaymentCapture();
+            if (!$capture) {
+                return;
+            }
 
-        $request = new RefundRequest();
+            $request = new RefundRequest();
 
-        if (!$refundAll) {
-            $request->initAmount();
-            $request->amount->currency_code = $capture->amount->currency_code;
-            $request->amount->value = $refundAmount;
-            $request->invoice_id = $invoiceId;
-            $request->note_to_payer = $noteToPayer;
+            if (!$refundAll) {
+                $request->initAmount();
+                $request->amount->currency_code = $capture->amount->currency_code;
+                $request->amount->value = $refundAmount;
+                $request->invoice_id = $invoiceId;
+                $request->note_to_payer = $noteToPayer;
+            }
+
+            /** @var Payments $paymentService */
+            $paymentService = Registry::get(ServiceFactory::class)->getPaymentService();
+            $paymentService->refundCapturedPayment($capture->id, $refundAll, '');
+
+            //Reset so that new information would be fetched
+            $this->payPalOrder = null;
+        } catch (ApiException $exception) {
+            //TODO catch and display errors
         }
-
-        /** @var Payments $paymentService */
-        $paymentService = Registry::get(ServiceFactory::class)->getPaymentService();
-        $paymentService->refundCapturedPayment($capture->id, $refundAll, '');
-
-        //Reset so that new information would be fetched
-        $this->payPalOrder = null;
     }
 
     /**
