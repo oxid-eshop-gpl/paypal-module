@@ -31,59 +31,7 @@ GeneralShopSettings:
         - ''
         - ''
     aModules:
-        OxidEsales\B2BModule\ApprovalProcedure\Controller\DetailsController:
-            - OxidEsales\B2BModule\BulkOrders\Controller\ApprovalProcedureDetailsController
-            - OxidEsales\B2BModule\ScheduledOrders\Controller\ApprovalDetailsController
-        OxidEsales\B2BModule\Basket\Service\EditService:
-            - OxidEsales\B2BModule\ApprovalProcedure\Service\BasketService
-            - OxidEsales\B2BModule\ServiceProducts\Service\EditService
-        OxidEsales\Eshop\Application\Controller\Admin\NavigationController:
-            - OxidEsales\B2BModule\Services\Controller\Admin\NavigationController
-            - OxidCommunity\ModuleInternals\Controller\Admin\NavigationController
-        OxidEsales\Eshop\Application\Controller\BasketController:
-            - OxidEsales\B2BModule\ApprovalProcedure\Controller\CheckoutBasketController
-            - OxidEsales\B2BModule\BuyingAgent\Controller\BasketController
-        OxidEsales\Eshop\Application\Controller\OrderController:
-            - OxidEsales\B2BModule\ApprovalProcedure\Controller\OrderController
-            - OxidEsales\B2BModule\Budget\Controller\OrderController
-        OxidEsales\Eshop\Application\Controller\PaymentController:
-            - OxidEsales\B2BModule\ApprovalProcedure\Controller\PaymentController
-            - OxidEsales\B2BModule\BuyingAgent\Controller\PaymentController
-        OxidEsales\Eshop\Application\Controller\UserController:
-            - OxidEsales\B2BModule\ApprovalProcedure\Controller\UserController
-            - OxidEsales\B2BModule\BulkOrders\Controller\UserController
-            - OxidEsales\B2BModule\BuyingAgent\Controller\UserController
-        OxidEsales\Eshop\Application\Model\Article:
-            - OxidEsales\B2BModule\CustomPrices\Model\Article
-            - OxidEsales\B2BModule\ServiceProducts\Model\Article
-        OxidEsales\Eshop\Application\Model\Basket:
-            - OxidEsales\B2BModule\ApprovalProcedure\Model\Basket
-            - OxidEsales\B2BModule\Basket\Model\Basket
-            - OxidEsales\B2BModule\BulkOrders\Model\Basket
-            - OxidEsales\B2BModule\ScheduledOrders\Model\Basket
-            - OxidEsales\B2BModule\ServiceProducts\Model\Basket
-            - OxidProfessionalServices\PayPal\Model\Basket
-        OxidEsales\Eshop\Application\Model\Order:
-            - OxidEsales\B2BModule\ApprovalProcedure\Model\Order
-            - OxidEsales\B2BModule\Budget\Model\Order
-            - OxidEsales\B2BModule\BulkOrders\Model\Order
-            - OxidEsales\B2BModule\ServiceProducts\Model\Order
-        OxidEsales\Eshop\Application\Model\User:
-            - OxidEsales\B2BModule\ApprovalProcedure\Model\User
-            - OxidEsales\B2BModule\Basket\Model\User
-            - OxidEsales\B2BModule\BuyingAgent\Model\User
-        OxidEsales\Eshop\Core\Email:
-            - OxidEsales\B2BModule\BuyingAgent\Core\Email
-            - OxidEsales\B2BModule\Offers\Core\Email
-            - OxidEsales\B2BModule\ScheduledOrders\Model\Email
-        OxidEsales\Eshop\Core\ViewConfig:
-            - OxidEsales\B2BModule\ApprovalProcedure\Core\ViewConfig
-            - OxidEsales\B2BModule\Basket\Core\ViewConfig
-            - OxidEsales\B2BModule\Budget\Core\ViewConfig
-            - OxidEsales\B2BModule\BuyingAgent\Core\ViewConfig
-            - OxidEsales\B2BModule\Services\Core\ViewConfig
-            - OxidEsales\VisualCmsModule\Core\ViewConfig
-            - OxidProfessionalServices\PayPal\Core\ViewConfig
+        aarr: {  }
     aModuleVersions:
         moduleinternals: '3.0'
         oxps/modulesconfig: 6.1.0
@@ -183,8 +131,8 @@ module:
         iGridsterSize: '6'
     oxps/paypal:
         blPayPalSandboxMode: '1'
-        sPayPalSandboxClientId: AQV4lDIA7ABznFNC0DmBTHYtNJ3N3Ew5KAVMQD78XKmjTV4_t2qmAKEKBR6xPoVJihJ97rpQcvroFTSV
-        sPayPalSandboxClientSecret: EO1PoMhHjRJArZbwlenECYlyLzc6w_XvVPsUsUM2YOtPLDyLf9JItqTCcUR1El3IzxjQ2z7PFiDSfmIY
+        sPayPalSandboxClientId: AS8_-FoXMPAI16-OHGcNl9jw5oUBfyD6YHlUVoSH5PRP-K7W9cnHaPzSjCJ252NR5wTgO6NJrTPW8SWj
+        sPayPalSandboxClientSecret: ELsJLZpyMCbaV4RzmV3Gf6oTonYN5hUbYzUbviNFz0nt2CI7LMt7T94etzdJZEBfciCF2NOA5D0lTD27
 theme: {  }
 oxshops:
     OXPARENTID: '0'
