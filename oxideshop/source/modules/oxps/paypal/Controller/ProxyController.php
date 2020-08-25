@@ -38,7 +38,6 @@ use OxidProfessionalServices\PayPal\Core\PaypalSession;
 use VIISON\AddressSplitter\AddressSplitter;
 use VIISON\AddressSplitter\Exceptions\SplittingException;
 
-
 /**
  * Server side interface for PayPal smart buttons.
  */
