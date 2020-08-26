@@ -61,7 +61,7 @@
                             id="transactionTypeFilter"
                             name="where[transactions][transactionType]">
                         <option value=""></option>
-                        [{foreach from=$oView->getEventCodes() item="eventCodeGroup" key="codeGroupId"}]
+                        [{foreach from=$eventCodes item="eventCodeGroup" key="codeGroupId"}]
                         <option value="[{$codeGroupId}]" disabled>
                             [{$codeGroupId}] - [{oxmultilang ident="OXPS_PAYPAL_TRANSACTION_TYPE_GROUP_"|cat:$codeGroupId}]
                         </option>

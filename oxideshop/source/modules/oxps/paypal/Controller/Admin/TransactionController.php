@@ -57,24 +57,9 @@ class TransactionController extends AdminListController
     {
         $this->requestTransactions();
 
+        $this->addTplParam('eventCodes', TransactionEventCodes::EVENT_CODES);
+
         return parent::render();
-    }
-
-    /**
-     * Gets transaction information with applied filters.
-     *
-     * @return TransactionDetail[]|null
-     */
-    public function getTransactions(): array
-    {
-        $transactions = [];
-        $response = $this->response;
-
-        if ($response && is_array($response->transaction_details)) {
-                $transactions = $response->transaction_details;
-        }
-
-        return $transactions;
     }
 
     /**
@@ -87,24 +72,24 @@ class TransactionController extends AdminListController
         /** @var ServiceFactory $serviceFactory */
         $serviceFactory = Registry::get(ServiceFactory::class);
         $transactionService = $serviceFactory->getTransactionSearchService();
-        extract($this->buildPayPalFilterParameters());
+        $filters = $this->buildPayPalFilterParameters();
 
         try {
             $this->response = $transactionService->listTransactions(
-                $transactionId,
-                $transactionType,
-                $transactionStatus,
-                $transactionAmount,
-                $transactionCurrency,
-                $transactionDate,
-                $startDate,
-                $endDate,
-                $paymentInstrumentType,
-                $storeId,
-                $terminalId,
+                $filters['transactionId'],
+                $filters['transactionType'],
+                $filters['transactionStatus'],
+                $filters['transactionAmount'],
+                $filters['transactionCurrency'],
+                $filters['transactionDate'],
+                $filters['startDate'],
+                $filters['endDate'],
+                $filters['paymentInstrumentType'],
+                $filters['storeId'],
+                $filters['terminalId'],
                 $this->getActivePage(),
                 $this->getViewListSize(),
-                $balanceAffectingRecordsOnly
+                $filters['balanceAffectingRecordsOnly']
             );
         } catch (ApiException $exception) {
             $this->response = null;
@@ -113,65 +98,8 @@ class TransactionController extends AdminListController
     }
 
     /**
-     * Gets filter parameters
+     * Builds PayPal filter values
      *
-     * @return array
-     */
-    public function getFilterValues(): array
-    {
-        $filters = $this->getListFilter();
-
-        //Text input filters
-        $textFilterKeys = [
-            'transactionId',
-            'transactionType',
-            'transactionStatus',
-            'transactionCurrency',
-            'paymentInstrumentType',
-            'balanceAffectingRecordsOnly',
-            'terminalId',
-            'storeId',
-            'fromPrice',
-            'toPrice'
-        ];
-
-        $textFilterValues = array_map(function ($filterKey) use ($filters) {
-            if ($filterValue = (string) $filters['transactions'][$filterKey]) {
-                return trim($filterValue);
-            }
-            return null;
-        }, $textFilterKeys);
-
-        $textFilters = array_combine($textFilterKeys, $textFilterValues);
-
-        //Date input filters
-        $dateFilterKeys = [
-            'transactionDate',
-            'startDate',
-            'endDate',
-        ];
-
-        $dateFilterValues = array_map(function ($filterKey) use ($filters) {
-            if ($filterValue = (string) $filters['transactions'][$filterKey]) {
-                try {
-                    $date = new DateTime($filterValue);
-                    return $date->format(DATE_ISO8601);
-                } catch (Exception $exception) {
-                    return null;
-                }
-            }
-            return null;
-        }, $dateFilterKeys);
-
-        return $this->setDefaultFilterValues(
-            array_merge(
-                $textFilters,
-                array_combine($dateFilterKeys, $dateFilterValues)
-            )
-        );
-    }
-
-    /**
      * @param array $filters
      *
      * @return array
@@ -205,13 +133,68 @@ class TransactionController extends AdminListController
     }
 
     /**
-     * Get PayPal event codes
+     * Gets filter parameters
      *
-     * @return \string[][]
+     * @return array
      */
-    public function getEventCodes()
+    public function getFilterValues(): array
     {
-        return TransactionEventCodes::EVENT_CODES;
+        $filters = $this->getListFilter();
+
+        //Text input filters
+        $textFilterKeys = [
+            'transactionId',
+            'transactionType',
+            'transactionStatus',
+            'transactionCurrency',
+            'paymentInstrumentType',
+            'balanceAffectingRecordsOnly',
+            'terminalId',
+            'storeId',
+            'fromPrice',
+            'toPrice'
+        ];
+
+        $textFilterValues = array_map(
+            function ($filterKey) use ($filters) {
+                if ($filterValue = (string)$filters['transactions'][$filterKey]) {
+                    return trim($filterValue);
+                }
+                return null;
+            },
+            $textFilterKeys
+        );
+
+        $textFilters = array_combine($textFilterKeys, $textFilterValues);
+
+        //Date input filters
+        $dateFilterKeys = [
+            'transactionDate',
+            'startDate',
+            'endDate',
+        ];
+
+        $dateFilterValues = array_map(
+            function ($filterKey) use ($filters) {
+                if ($filterValue = (string)$filters['transactions'][$filterKey]) {
+                    try {
+                        $date = new DateTime($filterValue);
+                        return $date->format(DATE_ISO8601);
+                    } catch (Exception $exception) {
+                        return null;
+                    }
+                }
+                return null;
+            },
+            $dateFilterKeys
+        );
+
+        return $this->setDefaultFilterValues(
+            array_merge(
+                $textFilters,
+                array_combine($dateFilterKeys, $dateFilterValues)
+            )
+        );
     }
 
     /**
@@ -245,6 +228,35 @@ class TransactionController extends AdminListController
     }
 
     /**
+     * Get active page number
+     *
+     * @return int
+     */
+    protected function getActivePage(): int
+    {
+        $page = (int)Registry::getRequest()->getRequestEscapedParameter('jumppage');
+
+        return $page > 0 ? $page : 1;
+    }
+
+    /**
+     * Gets transaction information with applied filters.
+     *
+     * @return TransactionDetail[]|null
+     */
+    public function getTransactions(): array
+    {
+        $transactions = [];
+        $response = $this->response;
+
+        if ($response && is_array($response->transaction_details)) {
+            $transactions = $response->transaction_details;
+        }
+
+        return $transactions;
+    }
+
+    /**
      * Set parameters needed for list navigation
      */
     protected function _setListNavigationParams()
@@ -255,18 +267,6 @@ class TransactionController extends AdminListController
         }
 
         parent::_setListNavigationParams();
-    }
-
-    /**
-     * Get active page number
-     *
-     * @return int
-     */
-    protected function getActivePage(): int
-    {
-        $page = (int) Registry::getRequest()->getRequestEscapedParameter('jumppage');
-
-        return $page > 0 ? $page : 1;
     }
 
     /**

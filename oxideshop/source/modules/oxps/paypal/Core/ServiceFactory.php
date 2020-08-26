@@ -51,14 +51,6 @@ class ServiceFactory
     }
 
     /**
-     * @return TransactionSearch
-     */
-    public function getTransactionSearchService(): TransactionSearch
-    {
-        return oxNew(TransactionSearch::class, $this->getClient());
-    }
-
-    /**
      * @return Catalog
      */
     public function getCatalogService(): Catalog
@@ -76,6 +68,14 @@ class ServiceFactory
             $this->getClient(),
             '/v1/notifications/verify-webhook-signature'
         );
+    }
+
+    /**
+     * @return TransactionSearch
+     */
+    public function getTransactionSearchService(): TransactionSearch
+    {
+        return oxNew(TransactionSearch::class, $this->getClient());
     }
 
     /**
