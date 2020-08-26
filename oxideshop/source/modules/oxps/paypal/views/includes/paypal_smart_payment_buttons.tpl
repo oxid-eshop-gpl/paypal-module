@@ -7,7 +7,7 @@
 [{literal}]
 paypal.Buttons({
     createOrder: function(data, actions) {
-        return fetch('[{/literal}][{$oViewConf->getSelfLink()|cat:"cl=PayPalProxyController&fnc=createOrder&context="|cat:$paymentStrategy}][{literal}]', {
+        return fetch('[{/literal}][{$oViewConf->getSelfLink()|cat:"cl=PayPalProxyController&fnc=createOrder&context="|cat:$paymentStrategy|replace:"&amp;":"&"}][{literal}]', {
             method: 'post',
             headers: {
                 'content-type': 'application/json'
@@ -29,7 +29,7 @@ paypal.Buttons({
     onApprove: function(data, actions) {
         captureData = new FormData();
         captureData.append('orderID', data.orderID);
-        return fetch('[{/literal}][{$oViewConf->getSelfLink()|cat:"cl=PayPalProxyController&fnc=captureOrder&context="|cat:$paymentStrategy}][{literal}]', {
+        return fetch('[{/literal}][{$oViewConf->getSelfLink()|cat:"cl=PayPalProxyController&fnc=captureOrder&context="|cat:$paymentStrategy|replace:"&amp;":"&"}][{literal}]', {
             method: 'post',
             body: captureData
         }).then(function(res) {
