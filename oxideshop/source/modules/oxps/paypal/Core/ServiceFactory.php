@@ -27,6 +27,7 @@ use OxidProfessionalServices\PayPal\Api\Client;
 use OxidProfessionalServices\PayPal\Api\Service\GenericService;
 use OxidProfessionalServices\PayPal\Api\Service\Catalog;
 use OxidProfessionalServices\PayPal\Api\Service\Orders;
+use OxidProfessionalServices\PayPal\Api\Service\TransactionSearch;
 
 /**
  * Class ServiceFactory
@@ -47,6 +48,14 @@ class ServiceFactory
     public function getOrderService(): Orders
     {
         return oxNew(Orders::class, $this->getClient());
+    }
+
+    /**
+     * @return TransactionSearch
+     */
+    public function getTransactionSearchService(): TransactionSearch
+    {
+        return oxNew(TransactionSearch::class, $this->getClient());
     }
 
     /**

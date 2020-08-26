@@ -28,9 +28,11 @@ use OxidProfessionalServices\PayPal\Controller\Admin\ArticleListController;
 use OxidEsales\Eshop\Application\Model\PaymentGateway;
 use OxidProfessionalServices\PayPal\Controller\Admin\OnboardingController;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalConfigController;
+use OxidProfessionalServices\PayPal\Controller\Admin\TransactionController;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalSubscribeController;
 use OxidProfessionalServices\PayPal\Controller\ProxyController;
 use OxidProfessionalServices\PayPal\Controller\WebhookController;
+use OxidProfessionalServices\PayPal\Controller\Admin\BalanceController;
 use OxidProfessionalServices\PayPal\Core\ViewConfig as PaypalViewConfig;
 use OxidProfessionalServices\PayPal\Model\Basket as PaypalBasket;
 use OxidProfessionalServices\PayPal\Model\PayPalArticle;
@@ -66,14 +68,21 @@ $aModule = [
     ],
     'controllers' => [
         'PaypalConfigController' => PaypalConfigController::class,
+        'PayPalBalanceController' => BalanceController::class,
         'PayPalWebhookController' => WebhookController::class,
         'PayPalProxyController' => ProxyController::class,
+        'PayPalTransactionController' => TransactionController::class,
         'OnboardingController' => OnboardingController::class,
         'PaypalSubscribeController' => PaypalSubscribeController::class,
         'PaypalAdminArticleListController' => ArticleListController::class
     ],
     'templates' => [
         'paypalconfig.tpl' => 'oxps/paypal/views/admin/tpl/paypalconfig.tpl',
+        'paypal_list_pagination.tpl' => 'oxps/paypal/views/admin/tpl/inc/list_pagination.tpl',
+        'paypal_transactions.tpl' => 'oxps/paypal/views/admin/tpl/paypal_transactions.tpl',
+        'paypal_balances.tpl' => 'oxps/paypal/views/admin/tpl/paypal_balances.tpl',
+        'paypal_transactions_list.tpl' => 'oxps/paypal/views/admin/tpl/paypal_transactions_list.tpl',
+        'paypal_transactions_main.tpl' => 'oxps/paypal/views/admin/tpl/paypal_transactions_main.tpl',
         'subscribe.tpl'    => 'oxps/paypal/views/admin/tpl/subscribe.tpl',
         'paypal_smart_payment_buttons.tpl' => 'oxps/paypal/views/includes/paypal_smart_payment_buttons.tpl',
         'flow/paypal_payment_option.tpl' => 'oxps/paypal/views/theme/flow/paypal_payment_option.tpl',
