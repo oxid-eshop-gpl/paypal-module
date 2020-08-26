@@ -79,7 +79,6 @@ class PaypalOrderController extends AdminDetailsController
             $request = new OrderCaptureRequest();
 
             $service->capturePaymentForOrder('', $orderId, $request, '');
-
         } catch (ApiException $exception) {
             Registry::getLogger()->error($exception);
         } catch (StandardException $exception) {
