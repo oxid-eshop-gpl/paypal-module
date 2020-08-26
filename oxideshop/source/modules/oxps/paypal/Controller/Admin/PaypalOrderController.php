@@ -27,8 +27,11 @@ use OxidEsales\Eshop\Application\Model\Order;
 use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
+use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderCaptureRequest;
+use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderRequest;
 use OxidProfessionalServices\PayPal\Api\Model\Payments\RefundRequest;
 use OxidProfessionalServices\PayPal\Api\Service\Payments;
+use OxidProfessionalServices\PayPal\Core\OrderRequestFactory;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 
 /**
@@ -65,7 +68,19 @@ class PaypalOrderController extends AdminDetailsController
     }
 
     /**
-     * Refund order payment action
+     * Capture payment action
+     */
+    public function capture(): void
+    {
+        try {
+
+        } catch (ApiException $exception) {
+            Registry::getLogger()->error($exception);
+        }
+    }
+
+    /**
+     * Refund payment action
      */
     public function refund(): void
     {
