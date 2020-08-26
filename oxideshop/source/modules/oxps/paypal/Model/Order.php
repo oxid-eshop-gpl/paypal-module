@@ -21,7 +21,6 @@
 
 namespace OxidProfessionalServices\PayPal\Model;
 
-use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\Order as PayPalOrder;
@@ -75,11 +74,11 @@ class Order extends Order_parent
     /**
      * Returns PayPal order id.
      *
-     * @param string $oxId
+     * @param string|null $oxId
      *
      * @return string
      */
-    public function getPaypalOrderIdForOxOrderId($oxId = null)
+    public function getPaypalOrderIdForOxOrderId(string $oxId = null)
     {
         if (is_null($this->payPalOrderId)) {
             $this->payPalOrderId = '';
