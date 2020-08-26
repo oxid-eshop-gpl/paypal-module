@@ -4,6 +4,8 @@ namespace OxidProfessionalServices\PayPal\Api\Model\TransactionSearch;
 
 use JsonSerializable;
 use OxidProfessionalServices\PayPal\Api\Model\BaseModel;
+use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Money;
+use stdClass;
 use Webmozart\Assert\Assert;
 
 /**
@@ -46,24 +48,24 @@ class BalanceDetail implements JsonSerializable
         }
 
         if (isset($data['total_balance'])) {
-            $stdClass = new \stdClass();
-            $stdClass->currency_code = $data['total_balance']['currency_code'];
-            $stdClass->value = $data['total_balance']['value'];
-            $this->total_balance = $stdClass;
+            $money = new Money();
+            $money->currency_code = $data['total_balance']['currency_code'];
+            $money->value = $data['total_balance']['value'];
+            $this->total_balance = $money;
         }
 
         if (isset($data['available_balance'])) {
-            $stdClass = new \stdClass();
-            $stdClass->currency_code = $data['available_balance']['currency_code'];
-            $stdClass->value = $data['available_balance']['value'];
-            $this->available_balance = $stdClass;
+            $money = new Money();
+            $money->currency_code = $data['available_balance']['currency_code'];
+            $money->value = $data['available_balance']['value'];
+            $this->available_balance = $money;
         }
 
         if (isset($data['withheld_balance'])) {
-            $stdClass = new \stdClass();
-            $stdClass->currency_code = $data['withheld_balance']['currency_code'];
-            $stdClass->value = $data['withheld_balance']['value'];
-            $this->withheld_balance = $stdClass;
+            $money = new Money();
+            $money->currency_code = $data['withheld_balance']['currency_code'];
+            $money->value = $data['withheld_balance']['value'];
+            $this->withheld_balance = $money;
         }
     }
 

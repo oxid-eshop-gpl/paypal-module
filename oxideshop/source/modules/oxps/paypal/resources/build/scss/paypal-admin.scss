@@ -37,6 +37,14 @@
     }
 }
 
+#filters, #balances {
+    margin-top: 20px;
+}
+
+.transaction-details td {
+    padding: 5px;
+}
+
 [type=radio] {
     position: absolute;
     opacity: 0;
