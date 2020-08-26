@@ -56,7 +56,7 @@ class PaypalOrderController extends AdminDetailsController
 
         if ($order->paidWithPayPal()) {
             $this->addTplParam('payPalOrder', $order->getPayPalOrder());
-            $this->addTplParam('capture', $this->getOrderPaymentCapture());
+            $this->addTplParam('capture', $order->getOrderPaymentCapture());
         } else {
             $this->addTplParam('payPalOrder', null);
         }
@@ -76,14 +76,14 @@ class PaypalOrderController extends AdminDetailsController
             $refundAll = $request->getRequestEscapedParameter('refundAll');
             $noteToPayer = $request->getRequestParameter('noteToPayer');
 
-            $capture = $this->getOrderPaymentCapture();
+            $capture = $this->getOrder()->getOrderPaymentCapture();
             if (!$capture) {
                 throw new StandardException('Order not captured');
             }
 
             $request = new RefundRequest();
             $request->note_to_payer = $noteToPayer;
-            $request->invoice_id = $invoiceId;
+            $request->invoice_id = !empty($invoiceId) ? $invoiceId : null;
             if (!$refundAll) {
                 $request->initAmount();
                 $request->amount->currency_code = $capture->amount->currency_code;
@@ -97,7 +97,6 @@ class PaypalOrderController extends AdminDetailsController
             //Reset so that new information would be fetched
             $this->payPalOrder = null;
         } catch (ApiException $exception) {
-            //TODO display errors
             Registry::getLogger()->error($exception);
         } catch (StandardException $exception) {
             Registry::getLogger()->error($exception);

@@ -24,7 +24,7 @@ namespace OxidProfessionalServices\PayPal\Model;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\Order as PayPalOrder;
-use OxidProfessionalServices\PayPal\Api\Model\Payments\Capture;
+use OxidProfessionalServices\PayPal\Api\Model\Orders\Capture;
 use OxidProfessionalServices\PayPal\Api\Service\Orders;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 use OxidEsales\Eshop\Core\DatabaseProvider;
@@ -52,21 +52,18 @@ class Order extends Order_parent
     protected $payPalOrderId;
 
     /**
-     * Get PayPal order object for given oxid ID or for the current active order object
+     * Get PayPal order object for the current active order object
      * Result is cached and returned on subsequent calls
-     *
-     * @param string|null $id
      *
      * @return PayPalOrder
      * @throws ApiException
      */
-    public function getPayPalOrder(string $id = null): PayPalOrder
+    public function getPayPalOrder(): PayPalOrder
     {
         if (!$this->payPalOrder) {
-            $id = $id ?? $this->getId();
             /** @var Orders $orderService */
             $orderService = Registry::get(ServiceFactory::class)->getOrderService();
-            $this->payPalOrder = $orderService->showOrderDetails($id);
+            $this->payPalOrder = $orderService->showOrderDetails($this->getPaypalOrderIdForOxOrderId());
         }
 
         return $this->payPalOrder;
