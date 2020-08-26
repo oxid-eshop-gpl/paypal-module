@@ -53,6 +53,7 @@ class Order extends Order_parent
 
     /**
      * Get PayPal order object for given oxid ID or for the current active order object
+     * Result is cached and returned on subsequent calls
      *
      * @param string|null $id
      *
