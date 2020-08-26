@@ -51,15 +51,21 @@ class PaypalOrderController extends AdminDetailsController
     {
         parent::render();
 
-        $order = $this->getOrder();
-        $this->addTplParam('oxid', $this->getEditObjectId());
-        $this->addTplParam('order', $order);
+        try {
+            $order = $this->getOrder();
+            $this->addTplParam('oxid', $this->getEditObjectId());
+            $this->addTplParam('order', $order);
 
-        if ($order->paidWithPayPal()) {
-            $this->addTplParam('payPalOrder', $order->getPayPalOrder());
-            $this->addTplParam('capture', $order->getOrderPaymentCapture());
-        } else {
-            $this->addTplParam('payPalOrder', null);
+            if ($order->paidWithPayPal()) {
+                $this->addTplParam('payPalOrder', $order->getPayPalOrder());
+                $this->addTplParam('capture', $order->getOrderPaymentCapture());
+            } else {
+                $this->addTplParam('payPalOrder', null);
+            }
+        } catch (ApiException $exception) {
+            Registry::getLogger()->error($exception);
+        } catch (StandardException $exception) {
+            Registry::getLogger()->error($exception);
         }
 
         return "paypalorder.tpl";

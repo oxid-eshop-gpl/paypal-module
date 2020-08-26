@@ -105,6 +105,16 @@
     <input type="submit">
 </form>
 
+<form action="[{$oViewConf->getSelfLink()}]" method="post">
+    [{$oViewConf->getHiddenSid()}]
+    <input type="hidden" name="fnc" value="capture">
+    <input type="hidden" name="cl" value="PaypalOrderController">
+    <input type="hidden" name="oxid" value="[{$oxid}]">
+    <input type="hidden" name="language" value="[{$actlang}]">
+
+    <input type="submit" value="Capture">
+</form>
+
 [{*
 
 <form name="transfer" id="transfer" action="[{$oViewConf->getSelfLink()}]" method="post">
