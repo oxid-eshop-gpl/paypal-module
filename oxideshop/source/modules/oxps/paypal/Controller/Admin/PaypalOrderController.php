@@ -28,10 +28,8 @@ use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderCaptureRequest;
-use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderRequest;
 use OxidProfessionalServices\PayPal\Api\Model\Payments\RefundRequest;
 use OxidProfessionalServices\PayPal\Api\Service\Payments;
-use OxidProfessionalServices\PayPal\Core\OrderRequestFactory;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 
 /**
@@ -73,8 +71,18 @@ class PaypalOrderController extends AdminDetailsController
     public function capture(): void
     {
         try {
+            $orderId = $this->getOrder()->getPayPalOrder()->id;
+
+            /** @var ServiceFactory $serviceFactory */
+            $serviceFactory = Registry::get(ServiceFactory::class);
+            $service = $serviceFactory->getOrderService();
+            $request = new OrderCaptureRequest();
+
+            $service->capturePaymentForOrder('', $orderId, $request, '');
 
         } catch (ApiException $exception) {
+            Registry::getLogger()->error($exception);
+        } catch (StandardException $exception) {
             Registry::getLogger()->error($exception);
         }
     }
@@ -108,9 +116,6 @@ class PaypalOrderController extends AdminDetailsController
             /** @var Payments $paymentService */
             $paymentService = Registry::get(ServiceFactory::class)->getPaymentService();
             $paymentService->refundCapturedPayment($capture->id, $request, '');
-
-            //Reset so that new information would be fetched
-            $this->payPalOrder = null;
         } catch (ApiException $exception) {
             Registry::getLogger()->error($exception);
         } catch (StandardException $exception) {
