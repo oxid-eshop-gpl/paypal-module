@@ -38,7 +38,6 @@ use OxidProfessionalServices\PayPal\Core\PaypalSession;
 use VIISON\AddressSplitter\AddressSplitter;
 use VIISON\AddressSplitter\Exceptions\SplittingException;
 
-
 /**
  * Server side interface for PayPal smart buttons.
  */
@@ -108,7 +107,6 @@ class ProxyController extends FrontendController
                     // no active customer? We create a guest!
                     if (!$basket->getUser()) {
                         try {
-
                             $country = oxNew(Country::class);
                             $oxCountryId = $country->getIdByCode($response->purchase_units[0]->shipping->address->country_code);
 
@@ -132,12 +130,10 @@ class ProxyController extends FrontendController
                             $user->createUser();
                             $session->setVariable('usr', $user->getId());
                             $basket->setBasketUser($user);
-
                         } catch (Exception $exception) {
                             Registry::getLogger()->error("Error on creation a guest-account with paypal-informations.", [$exception]);
                         }
                     }
-
                 }
             } catch (Exception $exception) {
                 Registry::getLogger()->error("Error on order capture call.", [$exception]);
