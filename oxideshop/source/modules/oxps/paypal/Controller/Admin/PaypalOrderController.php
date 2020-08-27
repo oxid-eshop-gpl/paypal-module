@@ -168,7 +168,7 @@ class PaypalOrderController extends AdminDetailsController
      */
     public function getPaypalCapturedAmount()
     {
-        return 'toBeDone';
+        return $this->getPayPalOrder()->purchase_units[0]->payments->captures[0]->amount->value;
     }
 
     /**

@@ -28,6 +28,7 @@ use OxidEsales\Eshop\Core\DatabaseProvider;
 use OxidEsales\Eshop\Core\UtilsObject;
 use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderCaptureRequest;
+use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderAuthorizeRequest;
 use OxidProfessionalServices\PayPal\Core\PaypalSession;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 
@@ -83,6 +84,16 @@ class PaymentGateway extends PaymentGateway_parent
                     $serviceFactory = Registry::get(ServiceFactory::class);
                     $service = $serviceFactory->getOrderService();
 
+                    // Authorize Order
+                    $request = new OrderAuthorizeRequest();
+
+                    try {
+                        $response = $service->authorizePaymentForOrder('', $checkoutOrderId, $request, '');
+                    } catch (Exception $exception) {
+                        Registry::getLogger()->error("Error on order authorize call.", [$exception]);
+                    }
+
+                    // Capture Order
                     $request = new OrderCaptureRequest();
 
                     try {
@@ -90,6 +101,7 @@ class PaymentGateway extends PaymentGateway_parent
                     } catch (Exception $exception) {
                         Registry::getLogger()->error("Error on order capture call.", [$exception]);
                     }
+
                     $success = true;
 
                     $sql = 'INSERT INTO oxps_paypal_order (';
