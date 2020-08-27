@@ -28,6 +28,7 @@ use OxidEsales\Eshop\Core\ViewConfig;
 use OxidEsales\Eshop\Application\Model\PaymentGateway;
 use OxidProfessionalServices\PayPal\Controller\Admin\OnboardingController;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalConfigController;
+use OxidProfessionalServices\PayPal\Controller\Admin\PaypalOrderController;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalOrderDetailsControllerPayPal;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalSubscribeController;
 use OxidProfessionalServices\PayPal\Controller\Admin\TransactionController;
@@ -80,7 +81,7 @@ $aModule = [
         'PayPalTransactionController' => TransactionController::class,
         'PaypalSubscribeController' => PaypalSubscribeController::class,
         'OnboardingController' => OnboardingController::class,
-        'PaypalOrderController' => PaypalOrderDetailsControllerPayPal::class
+        'PaypalOrderController' => PaypalOrderController::class
     ],
     'templates' => [
         'paypalconfig.tpl' => 'oxps/paypal/views/admin/tpl/paypalconfig.tpl',
