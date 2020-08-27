@@ -27,6 +27,7 @@ use OxidEsales\Eshop\Application\Model\Order;
 use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
+use OxidProfessionalServices\PayPal\Api\Model\Orders\Capture;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\Order as OrderResponse;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderCaptureRequest;
 use OxidProfessionalServices\PayPal\Api\Model\Payments\RefundRequest;
@@ -44,29 +45,36 @@ class PaypalOrderController extends AdminDetailsController
     protected $order;
 
     /**
+     * @inheritDoc
+     */
+    public function executeFunction($functionName)
+    {
+        try {
+            parent::executeFunction($functionName);
+        } catch (ApiException $exception) {
+            Registry::getUtilsView()->addErrorToDisplay('Error on paypal side');
+            Registry::getLogger()->error($exception);
+        }
+    }
+
+    /**
      * @return string
      * @throws StandardException
+     * @throws ApiException
      */
     public function render()
     {
         parent::render();
 
-        try {
-            $order = $this->getOrder();
-            $this->addTplParam('oxid', $this->getEditObjectId());
-            $this->addTplParam('order', $order);
+        $order = $this->getOrder();
+        $this->addTplParam('oxid', $this->getEditObjectId());
+        $this->addTplParam('order', $order);
 
-            if ($order->paidWithPayPal()) {
-                $this->addTplParam('payPalOrder', $order->getPayPalOrder());
-                $this->addTplParam('capture', $order->getOrderPaymentCapture());
-            } else {
-                $this->addTplParam('payPalOrder', null);
-            }
-        } catch (ApiException $exception) {
-            Registry::getUtilsView()->addErrorToDisplay('Error on paypal side');
-            Registry::getLogger()->error($exception);
-        } catch (StandardException $exception) {
-            Registry::getLogger()->error($exception);
+        if ($order->paidWithPayPal()) {
+            $this->addTplParam('payPalOrder', $order->getPayPalOrder());
+            $this->addTplParam('capture', $order->getOrderPaymentCapture());
+        } else {
+            $this->addTplParam('payPalOrder', null);
         }
 
         return "paypalorder.tpl";
@@ -74,64 +82,57 @@ class PaypalOrderController extends AdminDetailsController
 
     /**
      * Capture payment action
+     *
+     * @throws ApiException
+     * @throws StandardException
      */
     public function capture(): void
     {
-        try {
-            $order = $this->getOrder();
-            $orderId = $order->getPayPalOrder()->id;
+        $order = $this->getOrder();
+        $orderId = $order->getPayPalOrder()->id;
 
-            /** @var ServiceFactory $serviceFactory */
-            $serviceFactory = Registry::get(ServiceFactory::class);
-            $service = $serviceFactory->getOrderService();
-            $request = new OrderCaptureRequest();
-            $response = $service->capturePaymentForOrder('', $orderId, $request, '');
-            if ($response->status == OrderResponse::STATUS_COMPLETED) {
-                $order->markOrderPaid();
-            }
-        } catch (ApiException $exception) {
-            Registry::getUtilsView()->addErrorToDisplay('Error on paypal side');
-            Registry::getLogger()->error($exception);
-        } catch (StandardException $exception) {
-            Registry::getLogger()->error($exception);
+        /** @var ServiceFactory $serviceFactory */
+        $serviceFactory = Registry::get(ServiceFactory::class);
+        $service = $serviceFactory->getOrderService();
+        $request = new OrderCaptureRequest();
+        $response = $service->capturePaymentForOrder('', $orderId, $request, '');
+
+        if (
+            $response->status == OrderResponse::STATUS_COMPLETED &&
+            $response->purchase_units[0]->payments->captures[0]->status == Capture::STATUS_COMPLETED
+        ) {
+            $order->markOrderPaid();
         }
     }
 
     /**
      * Refund payment action
+     *
+     * @throws ApiException
+     * @throws StandardException
      */
     public function refund(): void
     {
-        try {
-            $request = Registry::getRequest();
-            $refundAmount = $request->getRequestEscapedParameter('refundAmount');
-            $invoiceId = $request->getRequestEscapedParameter('invoiceId');
-            $refundAll = $request->getRequestEscapedParameter('refundAll');
-            $noteToPayer = $request->getRequestParameter('noteToPayer');
+        $request = Registry::getRequest();
+        $refundAmount = $request->getRequestEscapedParameter('refundAmount');
+        $invoiceId = $request->getRequestEscapedParameter('invoiceId');
+        $refundAll = $request->getRequestEscapedParameter('refundAll');
+        $noteToPayer = $request->getRequestParameter('noteToPayer');
 
-            $capture = $this->getOrder()->getOrderPaymentCapture();
-            if (!$capture) {
-                throw new StandardException('Order not captured');
-            }
+        $capture = $this->getOrder()->getOrderPaymentCapture();
 
-            $request = new RefundRequest();
-            $request->note_to_payer = $noteToPayer;
-            $request->invoice_id = !empty($invoiceId) ? $invoiceId : null;
-            if (!$refundAll) {
-                $request->initAmount();
-                $request->amount->currency_code = $capture->amount->currency_code;
-                $request->amount->value = $refundAmount;
-            }
-
-            /** @var Payments $paymentService */
-            $paymentService = Registry::get(ServiceFactory::class)->getPaymentService();
-            $paymentService->refundCapturedPayment($capture->id, $request, '');
-        } catch (ApiException $exception) {
-            Registry::getUtilsView()->addErrorToDisplay('Error on paypal side');
-            Registry::getLogger()->error($exception);
-        } catch (StandardException $exception) {
-            Registry::getLogger()->error($exception);
+        $request = new RefundRequest();
+        $request->note_to_payer = $noteToPayer;
+        $request->invoice_id = !empty($invoiceId) ? $invoiceId : null;
+        if (!$refundAll) {
+            $request->initAmount();
+            $request->amount->currency_code = $capture->amount->currency_code;
+            $request->amount->value = $refundAmount;
         }
+
+        /** @var Payments $paymentService */
+        $paymentService = Registry::get(ServiceFactory::class)->getPaymentService();
+        $paymentService->refundCapturedPayment($capture->id, $request, '');
     }
 
     /**
