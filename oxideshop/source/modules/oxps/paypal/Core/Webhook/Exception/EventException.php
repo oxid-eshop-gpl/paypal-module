@@ -20,22 +20,10 @@
  * @copyright (C) OXID eSales AG 2003-2020
  */
 
-namespace OxidProfessionalServices\PayPal\Core\Webhook\Handler;
+namespace OxidProfessionalServices\PayPal\Core\Webhook\Exception;
 
-use OxidProfessionalServices\PayPal\Core\Webhook\Event;
-use OxidProfessionalServices\PayPal\Core\Webhook\Exception\EventException;
+use Exception;
 
-/**
- * Interface HandlerInterface
- *
- * @package OxidProfessionalServices\PayPal\Core\Webhook
- */
-interface HandlerInterface
+class EventException extends Exception
 {
-    /**
-     * @param Event $event
-     *
-     * @throws EventException
-     */
-    public function handle(Event $event): void;
 }

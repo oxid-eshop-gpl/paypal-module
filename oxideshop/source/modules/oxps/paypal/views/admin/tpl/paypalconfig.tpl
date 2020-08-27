@@ -1,5 +1,5 @@
 [{include file="headitem.tpl" title="paypal"}]
-[{assign var="isSandBox" value=$config->isSandbox()}];
+[{assign var="isSandBox" value=$config->isSandbox()}]
 <script>
     window.isSandBox = '[{$isSandBox}]';
     window.selfLink = '[{$oViewConf->getSelfLink()|replace:"&amp;":"&"}]';
@@ -107,6 +107,16 @@
 
 
         <h3>[{oxmultilang ident="OXPS_PAYPAL_WEBHOOK_TITLE"}]</h3>
+
+        <div class="form-group">
+            <label for="webhook-id">[{oxmultilang ident="OXPS_PAYPAL_WEBHOOK_ID"}]</label>
+            <div class="controls">
+                <div>
+                    <input type="text" class="form-control" id="webhook-id" name="conf[sPayPalWebhookId]" value="[{$config->getWebhookId()}]" />
+                </div>
+                <span class="help-block">[{oxmultilang ident="OXPS_PAYPAL_WEBHOOK_ID_HELP"}]</span>
+            </div>
+        </div>
 
         <div class="form-group">
             <label for="webhook-url">[{oxmultilang ident="OXPS_PAYPAL_WEBHOOK_URL"}]</label>

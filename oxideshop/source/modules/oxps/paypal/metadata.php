@@ -20,15 +20,26 @@
  * @copyright (C) OXID eSales AG 2003-2020
  */
 
-use OxidEsales\Eshop\Core\ViewConfig;
+use OxidEsales\Eshop\Application\Controller\Admin\ArticleList;
+use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Application\Model\Basket;
 use OxidEsales\Eshop\Application\Model\Order;
+use OxidEsales\Eshop\Core\ViewConfig;
 use OxidEsales\Eshop\Application\Model\PaymentGateway;
 use OxidProfessionalServices\PayPal\Controller\Admin\OnboardingController;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalConfigController;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalOrderDetailsControllerPayPal;
+use OxidProfessionalServices\PayPal\Controller\Admin\PaypalSubscribeController;
+use OxidProfessionalServices\PayPal\Controller\Admin\TransactionController;
+use OxidProfessionalServices\PayPal\Controller\Admin\ArticleListController;
 use OxidProfessionalServices\PayPal\Controller\ProxyController;
 use OxidProfessionalServices\PayPal\Controller\WebhookController;
+use OxidProfessionalServices\PayPal\Controller\Admin\BalanceController;
+use OxidProfessionalServices\PayPal\Core\ViewConfig as PaypalViewConfig;
+use OxidProfessionalServices\PayPal\Model\Basket as PaypalBasket;
+use OxidProfessionalServices\PayPal\Model\Order as PaypalOrder;
+use OxidProfessionalServices\PayPal\Model\PaymentGateway as PaypalPaymentGateway;
+use OxidProfessionalServices\PayPal\Model\PayPalArticle;
 
 $sMetadataVersion = '2.1';
 
@@ -52,22 +63,32 @@ $aModule = [
     'email' => '',
     'extend' => [
         // Core
-        ViewConfig::class => \OxidProfessionalServices\PayPal\Core\ViewConfig::class,
+        ViewConfig::class => PaypalViewConfig::class,
         // Model
-        Basket::class => \OxidProfessionalServices\PayPal\Model\Basket::class,
-        Order::class => \OxidProfessionalServices\PayPal\Model\Order::class,
-        PaymentGateway::class => \OxidProfessionalServices\PayPal\Model\PaymentGateway::class
+        Order::class => PaypalOrder::class,
+        Basket::class => PaypalBasket::class,
+        Article::class => PayPalArticle::class,
+        PaymentGateway::class => PaypalPaymentGateway::class,
+        // Controller
+        ArticleList::class => ArticleListController::class,
     ],
     'controllers' => [
         'PaypalConfigController' => PaypalConfigController::class,
+        'PayPalBalanceController' => BalanceController::class,
         'PayPalWebhookController' => WebhookController::class,
         'PayPalProxyController' => ProxyController::class,
+        'PayPalTransactionController' => TransactionController::class,
+        'PaypalSubscribeController' => PaypalSubscribeController::class,
         'OnboardingController' => OnboardingController::class,
         'PaypalOrderController' => PaypalOrderDetailsControllerPayPal::class
     ],
     'templates' => [
         'paypalconfig.tpl' => 'oxps/paypal/views/admin/tpl/paypalconfig.tpl',
         'paypalorder.tpl' => 'oxps/paypal/views/admin/tpl/paypalorder.tpl',
+        'paypal_list_pagination.tpl' => 'oxps/paypal/views/admin/tpl/inc/list_pagination.tpl',
+        'paypal_transactions.tpl' => 'oxps/paypal/views/admin/tpl/paypal_transactions.tpl',
+        'paypal_balances.tpl' => 'oxps/paypal/views/admin/tpl/paypal_balances.tpl',
+        'subscribe.tpl'    => 'oxps/paypal/views/admin/tpl/subscribe.tpl',
         'paypal_smart_payment_buttons.tpl' => 'oxps/paypal/views/includes/paypal_smart_payment_buttons.tpl',
         'flow/paypal_payment_option.tpl' => 'oxps/paypal/views/theme/flow/paypal_payment_option.tpl',
         'wave/paypal_payment_option.tpl' => 'oxps/paypal/views/theme/wave/paypal_payment_option.tpl'
@@ -77,6 +98,21 @@ $aModule = [
         'onDeactivate' => '\OxidProfessionalServices\PayPal\Core\Events::onDeactivate'
     ],
     'blocks' => [
+        [
+            'template' => 'article_list.tpl',
+            'block' => 'admin_article_list_item',
+            'file' => 'views/admin/tpl/article_list_extended.tpl'
+        ],
+        [
+            'template' => 'article_list.tpl',
+            'block' => 'admin_article_list_colgroup',
+            'file' => 'views/admin/tpl/article_list_colgroup_extended.tpl'
+        ],
+        [
+            'template' => 'article_list.tpl',
+            'block' => 'admin_article_list_sorting',
+            'file' => 'views/admin/tpl/article_list_sorting_extended.tpl'
+        ],
         [
             'template' => 'headitem.tpl',
             'block' => 'admin_headitem_inccss',
@@ -122,20 +158,6 @@ $aModule = [
         ],
         [
             'theme' => 'flow',
-            'template' => 'page/checkout/order.tpl',
-            'block' => 'checkout_order_address',
-            'file' => '/views/blocks/flow/page/checkout/checkout_order_address.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'wave',
-            'template' => 'page/checkout/order.tpl',
-            'block' => 'checkout_order_address',
-            'file' => '/views/blocks/wave/page/checkout/checkout_order_address.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'flow',
             'template' => 'page/checkout/payment.tpl',
             'block' => 'select_payment',
             'file' => '/views/blocks/shared/page/checkout/select_payment.tpl',
@@ -160,76 +182,6 @@ $aModule = [
             'template' => 'page/checkout/payment.tpl',
             'block' => 'change_payment',
             'file' => '/views/blocks/wave/page/checkout/change_payment.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'flow',
-            'template' => 'page/checkout/user.tpl',
-            'block' => 'checkout_user_main',
-            'file' => '/views/blocks/flow/page/checkout/checkout_user_main.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'wave',
-            'template' => 'page/checkout/user.tpl',
-            'block' => 'checkout_user_main',
-            'file' => '/views/blocks/wave/page/checkout/checkout_user_main.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'flow',
-            'template' => 'form/user_checkout_change.tpl',
-            'block' => 'user_checkout_shipping_form',
-            'file' => '/views/blocks/flow/form/checkout_shipping_form.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'wave',
-            'template' => 'form/user_checkout_change.tpl',
-            'block' => 'user_checkout_shipping_form',
-            'file' => '/views/blocks/wave/form/checkout_shipping_form.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'flow',
-            'template' => 'form/user_checkout_change.tpl',
-            'block' => 'user_checkout_shipping_change',
-            'file' => '/views/blocks/flow/form/checkout_shipping_change.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'wave',
-            'template' => 'form/user_checkout_change.tpl',
-            'block' => 'user_checkout_shipping_change',
-            'file' => '/views/blocks/wave/form/checkout_shipping_change.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'flow',
-            'template' => 'form/user_checkout_change.tpl',
-            'block' => 'user_checkout_shipping_head',
-            'file' => '/views/blocks/flow/form/user_checkout_shipping_head.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'wave',
-            'template' => 'form/user_checkout_change.tpl',
-            'block' => 'user_checkout_shipping_head',
-            'file' => '/views/blocks/wave/form/user_checkout_shipping_head.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'flow',
-            'template' => 'form/user_checkout_change.tpl',
-            'block' => 'user_checkout_billing_feedback',
-            'file' => '/views/blocks/flow/form/checkout_billing_feedback.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'wave',
-            'template' => 'form/user_checkout_change.tpl',
-            'block' => 'user_checkout_billing_feedback',
-            'file' => '/views/blocks/wave/form/checkout_billing_feedback.tpl',
             'position' => '5'
         ],
         [
@@ -273,6 +225,7 @@ $aModule = [
         ['name' => 'sPayPalClientId', 'type' => 'str', 'value' => '', 'group' => null],
         ['name' => 'sPayPalClientSecret', 'type' => 'str', 'value' => '', 'group' => null],
         ['name' => 'sPayPalSandboxClientId', 'type' => 'str', 'value' => '', 'group' => null],
+        ['name' => 'sPayPalWebhookId', 'type' => 'str', 'value' => '', 'group' => null],
         ['name' => 'sPayPalSandboxClientSecret', 'type' => 'str', 'value' => '', 'group' => null],
         ['name' => 'blPayPalShowProductDetailsButton', 'type' => 'bool', 'value' => true, 'group' => null],
         ['name' => 'blPayPalShowMiniBasketButton', 'type' => 'bool', 'value' => true, 'group' => null],

@@ -140,4 +140,99 @@ class PaypalOrderController extends PayPalAdminDetailsController
 
         return $this->order;
     }
+
+    /**
+     * Get order payment capture id
+     *
+     * @return Capture
+     * @throws StandardException|ApiException
+     */
+    protected function getOrderPaymentCapture(): Capture
+    {
+        return $this->getPayPalOrder()->purchase_units[0]->payments->captures[0];
+    }
+
+    /**
+     * Template getter getPaypalPaymentStatus
+     */
+    public function getPaypalPaymentStatus()
+    {
+        return $this->getPayPalOrder()->status;
+    }
+
+    /**
+     * Template getter getPaypalTotalOrderSum
+     */
+    public function getPaypalTotalOrderSum()
+    {
+        return $this->getPayPalOrder()->purchase_units[0]->amount->breakdown->item_total->value;
+    }
+
+    /**
+     * Template getter getPaypalCapturedAmount
+     */
+    public function getPaypalCapturedAmount()
+    {
+        return $this->getPayPalOrder()->purchase_units[0]->payments->captures[0]->amount->value;
+    }
+
+    /**
+     * Template getter getPaypalRefundedAmount
+     */
+    public function getPaypalRefundedAmount()
+    {
+        return 'toBeDone';
+    }
+
+    /**
+     * Template getter getPaypalRemainingRefundAmount
+     */
+    public function getPaypalRemainingRefundAmount()
+    {
+        return 'toBeDone';
+    }
+
+    /**
+     * Template getter getPaypalVoidedAmount
+     */
+    public function getPaypalVoidedAmount()
+    {
+        return 'toBeDone';
+    }
+
+    /**
+     * Template getter getPaypalAuthorizationId
+     */
+    public function getPaypalAuthorizationId()
+    {
+        return $this->getPayPalOrder()->purchase_units[0]->payments->authorizations[0]->id->value;
+    }
+
+    /**
+     * Template getter getPaypalCurrency
+     */
+    public function getPaypalCurrency()
+    {
+        return $this->getPayPalOrder()->purchase_units[0]->amount->breakdown->item_total->currency_code;
+    }
+
+    /**
+     * Template getter getPaypalPaymentList
+     */
+    public function getPaypalPaymentList()
+    {
+        return null;
+    }
+
+    /**
+     * Template getter for price formatting
+     *
+     * @param double $price price
+     *
+     * @return string
+     */
+    public function formatPrice($price)
+    {
+        return Registry::getLang()->formatCurrency($price);
+    }
 }

@@ -33,4 +33,14 @@ class Request
     {
         return file_get_contents('php://input');
     }
+
+    /**
+     * Retrieves request headers
+     *
+     * @return array
+     */
+    public function getHeaders(): array
+    {
+        return getallheaders();
+    }
 }

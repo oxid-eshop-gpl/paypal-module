@@ -25,6 +25,7 @@ namespace OxidProfessionalServices\PayPal\Core\Webhook;
 use OxidProfessionalServices\PayPal\Core\Webhook\Handler\BillingSubscriptionCancelledHandler;
 use OxidProfessionalServices\PayPal\Core\Webhook\Handler\BillingSubscriptionExpiredHandler;
 use OxidProfessionalServices\PayPal\Core\Webhook\Handler\BillingSubscriptionPaymentFailedHandler;
+use OxidProfessionalServices\PayPal\Core\Webhook\Handler\CheckoutOrderCompletedHandler;
 use OxidProfessionalServices\PayPal\Core\Webhook\Handler\MerchantOnboardingCompleteHandler;
 use OxidProfessionalServices\PayPal\Core\Webhook\Handler\MerchantPartnerConsentRevokedHandler;
 use OxidProfessionalServices\PayPal\Core\Webhook\Handler\PaymentCaptureCompletedHandler;
@@ -37,6 +38,7 @@ use OxidProfessionalServices\PayPal\Core\Webhook\Handler\PaymentSaleReversedHand
 class EventHandlerMapping
 {
     public const MAPPING = [
+        'CHECKOUT.ORDER.COMPLETED' => CheckoutOrderCompletedHandler::class,
         'MERCHANT.ONBOARDING.COMPLETED' => MerchantOnboardingCompleteHandler::class,
         'MERCHANT.PARTNER-CONSENT.REVOKED' => MerchantPartnerConsentRevokedHandler::class,
         'PAYMENT.CAPTURE.COMPLETED' => PaymentCaptureCompletedHandler::class,

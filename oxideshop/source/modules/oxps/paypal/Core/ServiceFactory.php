@@ -26,10 +26,14 @@ use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Client;
 use OxidProfessionalServices\PayPal\Api\Service\Orders;
 use OxidProfessionalServices\PayPal\Api\Service\Payments;
+use OxidProfessionalServices\PayPal\Api\Service\GenericService;
+use OxidProfessionalServices\PayPal\Api\Service\Catalog;
 
 /**
  * Class ServiceFactory
  * @package OxidProfessionalServices\PayPal\Core
+ *
+ * Responsible for creation of PayPal service objects
  */
 class ServiceFactory
 {
@@ -55,6 +59,39 @@ class ServiceFactory
         return oxNew(Orders::class, $this->getClient());
     }
 
+    /**
+     * @return Catalog
+     */
+    public function getCatalogService(): Catalog
+    {
+        return new Catalog($this->getClient());
+    }
+
+    /**
+     * @return GenericService
+     */
+    public function getNotificationService(): GenericService
+    {
+        return oxNew(
+            GenericService::class,
+            $this->getClient(),
+            '/v1/notifications/verify-webhook-signature'
+        );
+    }
+
+    /**
+     * @return TransactionSearch
+     */
+    public function getTransactionSearchService(): TransactionSearch
+    {
+        return oxNew(TransactionSearch::class, $this->getClient());
+    }
+
+    /**
+     * Get PayPal client object
+     *
+     * @return Client
+     */
     private function getClient(): Client
     {
         if ($this->client === null) {
@@ -72,6 +109,8 @@ class ServiceFactory
                 //so not ask for it on the configuration page
                 false
             );
+            //fixme: auth needs to be injected to avoid slow authentification
+            //the token value should be stored in the db/oxconfig and it is valid for 8 hours
 
             $this->client = $client;
         }

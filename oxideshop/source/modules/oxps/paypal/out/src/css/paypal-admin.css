@@ -22,3 +22,9 @@
     width: 100%; }
   .paypal-config .bottom-space {
     margin-bottom: 2.5rem; }
+
+#filters, #balances {
+  margin-top: 20px; }
+
+.transaction-details td {
+  padding: 5px; }
