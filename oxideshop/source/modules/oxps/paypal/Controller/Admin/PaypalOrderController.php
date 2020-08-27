@@ -64,6 +64,17 @@ class PaypalOrderController extends AdminDetailsController
         $this->_aViewData['order'] = $order = $this->getOrder();
         $this->_aViewData['payPalOrder'] = $order->paidWithPayPal() ? $this->getPayPalOrder() : null;
 
+        $lang = Registry::getLang();
+
+        $sMessage = "";
+        if (!$order->paidWithPayPal()) {
+            $sMessage = $lang->translateString('OXPS_PAYPAL_NOT_PAID_WITH_PAYPAL');
+        }
+        elseif (!$this->getPayPalOrder()) {
+            $sMessage = $lang->translateString('OXPS_PAYPAL_INVALID_RESOURCE_ID');
+        }
+        $this->_aViewData['sMessage'] = $sMessage;
+
         return "paypalorder.tpl";
     }
 
@@ -100,7 +111,7 @@ class PaypalOrderController extends AdminDetailsController
      * @return PayPalOrder
      * @throws StandardException|ApiException
      */
-    protected function getPayPalOrder(): PayPalOrder
+    protected function getPayPalOrder(): ?PayPalOrder
     {
         if (!$this->payPalOrder) {
             $order = $this->getOrder();
@@ -108,9 +119,13 @@ class PaypalOrderController extends AdminDetailsController
                 throw new StandardException('Order not paid using PayPal');
             }
 
-            /** @var Orders $orderService */
-            $orderService = Registry::get(ServiceFactory::class)->getOrderService();
-            $this->payPalOrder = $orderService->showOrderDetails($order->getPaypalOrderIdForOxOrderId());
+            try {
+                /** @var Orders $orderService */
+                $orderService = Registry::get(ServiceFactory::class)->getOrderService();
+                $this->payPalOrder = $orderService->showOrderDetails($order->getPaypalOrderIdForOxOrderId());
+            } catch (ApiException $exception) {
+                Registry::getLogger()->error('Specified resource ID does not exist', [$exception]);
+            };
         }
 
         return $this->payPalOrder;
