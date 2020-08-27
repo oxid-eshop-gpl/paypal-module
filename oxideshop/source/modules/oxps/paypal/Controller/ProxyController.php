@@ -61,9 +61,19 @@ class ProxyController extends FrontendController
                     1
                 );
             } catch (OutOfStockException $exception) {
-                Registry::getUtilsView()->addErrorToDisplay($exception, false, (bool) $errorDestination, $errorDestination);
+                Registry::getUtilsView()->addErrorToDisplay(
+                    $exception,
+                    false,
+                    (bool) $errorDestination,
+                    $errorDestination
+                );
             } catch (ArticleInputException $exception) {
-                Registry::getUtilsView()->addErrorToDisplay($exception, false, (bool) $errorDestination, $errorDestination);
+                Registry::getUtilsView()->addErrorToDisplay(
+                    $exception,
+                    false,
+                    (bool) $errorDestination,
+                    $errorDestination
+                );
             } catch (NoArticleException $exception) {
             }
             $basket->calculateBasket(false);
@@ -153,7 +163,7 @@ class ProxyController extends FrontendController
                             );
                             $user->oxuser__oxcountryid = $oxCountryId;
                             $user->oxuser__oxzip = new Field(
-                            $user->oxuser__oxcountryid = new Field($oxCountryId, Field::T_RAW);
+                                $user->oxuser__oxcountryid = new Field($oxCountryId, Field::T_RAW);
                                 Field::T_RAW
                             );
                             $user->createUser();
