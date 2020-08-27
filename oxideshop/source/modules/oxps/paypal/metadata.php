@@ -22,15 +22,24 @@
 
 use OxidEsales\Eshop\Application\Controller\Admin\ArticleList;
 use OxidEsales\Eshop\Application\Model\Article;
+use OxidEsales\Eshop\Application\Model\Basket;
+use OxidEsales\Eshop\Application\Model\Order;
+
 use OxidEsales\Eshop\Core\ViewConfig;
 use OxidEsales\Eshop\Application\Model\PaymentGateway;
 use OxidProfessionalServices\PayPal\Controller\Admin\OnboardingController;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalConfigController;
+use OxidProfessionalServices\PayPal\Controller\Admin\PaypalOrderController;
+use OxidProfessionalServices\PayPal\Controller\Admin\PaypalSubscribeController;
+use OxidProfessionalServices\PayPal\Controller\Admin\TransactionController;
+use OxidProfessionalServices\PayPal\Controller\Admin\ArticleListController;
 use OxidProfessionalServices\PayPal\Controller\ProxyController;
 use OxidProfessionalServices\PayPal\Controller\WebhookController;
 use OxidProfessionalServices\PayPal\Controller\Admin\BalanceController;
 use OxidProfessionalServices\PayPal\Core\ViewConfig as PaypalViewConfig;
 use OxidProfessionalServices\PayPal\Model\Basket as PaypalBasket;
+use OxidProfessionalServices\PayPal\Model\Order as PaypalOrder;
+use OxidProfessionalServices\PayPal\Model\PaymentGateway as PaypalPaymentGateway;
 use OxidProfessionalServices\PayPal\Model\PayPalArticle;
 
 $sMetadataVersion = '2.1';
@@ -57,12 +66,12 @@ $aModule = [
         // Core
         ViewConfig::class => PaypalViewConfig::class,
         // Model
-        Basket::class => \OxidProfessionalServices\PayPal\Model\Basket::class,
-        Order::class => \OxidProfessionalServices\PayPal\Model\Order::class,
+        Order::class => PaypalOrder::class,
         Basket::class => PaypalBasket::class,
         Article::class => PayPalArticle::class,
+        PaymentGateway::class => PaypalPaymentGateway::class,
+        // Controller
         ArticleList::class => ArticleListController::class,
-        PaymentGateway::class => \OxidProfessionalServices\PayPal\Model\PaymentGateway::class
     ],
     'controllers' => [
         'PaypalConfigController' => PaypalConfigController::class,
@@ -70,9 +79,7 @@ $aModule = [
         'PayPalWebhookController' => WebhookController::class,
         'PayPalProxyController' => ProxyController::class,
         'PayPalTransactionController' => TransactionController::class,
-        'OnboardingController' => OnboardingController::class,
         'PaypalSubscribeController' => PaypalSubscribeController::class,
-        'PaypalAdminArticleListController' => ArticleListController::class
         'OnboardingController' => OnboardingController::class,
         'PaypalOrderController' => PaypalOrderController::class
     ],
