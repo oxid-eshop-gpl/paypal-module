@@ -22,6 +22,7 @@
 
 namespace OxidProfessionalServices\PayPal\Model;
 
+use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\Order as PayPalOrder;
@@ -68,6 +69,24 @@ class Order extends Order_parent
         }
 
         return $this->payPalOrder;
+    }
+
+    /**
+     * Update order oxpaid to current time.
+     */
+    public function markOrderPaid()
+    {
+        parent::_setOrderStatus('OK');
+
+        $db = DatabaseProvider::getDb();
+        $utilsDate = Registry::getUtilsDate();
+        $date = date('Y-m-d H:i:s', $utilsDate->getTime());
+
+        $query = 'update oxorder set oxpaid=? where oxid=?';
+        $db->execute($query, array($date, $this->getId()));
+
+        //updating order object
+        $this->oxorder__oxpaid = new Field($date);
     }
 
     /**

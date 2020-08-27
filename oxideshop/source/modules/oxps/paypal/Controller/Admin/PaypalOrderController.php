@@ -27,6 +27,7 @@ use OxidEsales\Eshop\Application\Model\Order;
 use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
+use OxidProfessionalServices\PayPal\Api\Model\Orders\Order as OrderResponse;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderCaptureRequest;
 use OxidProfessionalServices\PayPal\Api\Model\Payments\RefundRequest;
 use OxidProfessionalServices\PayPal\Api\Service\Payments;
@@ -44,7 +45,6 @@ class PaypalOrderController extends AdminDetailsController
 
     /**
      * @return string
-     * @throws ApiException
      * @throws StandardException
      */
     public function render()
@@ -63,6 +63,7 @@ class PaypalOrderController extends AdminDetailsController
                 $this->addTplParam('payPalOrder', null);
             }
         } catch (ApiException $exception) {
+            Registry::getUtilsView()->addErrorToDisplay('Error on paypal side');
             Registry::getLogger()->error($exception);
         } catch (StandardException $exception) {
             Registry::getLogger()->error($exception);
@@ -77,15 +78,19 @@ class PaypalOrderController extends AdminDetailsController
     public function capture(): void
     {
         try {
-            $orderId = $this->getOrder()->getPayPalOrder()->id;
+            $order = $this->getOrder();
+            $orderId = $order->getPayPalOrder()->id;
 
             /** @var ServiceFactory $serviceFactory */
             $serviceFactory = Registry::get(ServiceFactory::class);
             $service = $serviceFactory->getOrderService();
             $request = new OrderCaptureRequest();
-
-            $service->capturePaymentForOrder('', $orderId, $request, '');
+            $response = $service->capturePaymentForOrder('', $orderId, $request, '');
+            if ($response->status == OrderResponse::STATUS_COMPLETED) {
+                $order->markOrderPaid();
+            }
         } catch (ApiException $exception) {
+            Registry::getUtilsView()->addErrorToDisplay('Error on paypal side');
             Registry::getLogger()->error($exception);
         } catch (StandardException $exception) {
             Registry::getLogger()->error($exception);
@@ -122,6 +127,7 @@ class PaypalOrderController extends AdminDetailsController
             $paymentService = Registry::get(ServiceFactory::class)->getPaymentService();
             $paymentService->refundCapturedPayment($capture->id, $request, '');
         } catch (ApiException $exception) {
+            Registry::getUtilsView()->addErrorToDisplay('Error on paypal side');
             Registry::getLogger()->error($exception);
         } catch (StandardException $exception) {
             Registry::getLogger()->error($exception);
