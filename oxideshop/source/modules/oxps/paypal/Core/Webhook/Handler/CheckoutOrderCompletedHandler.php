@@ -25,6 +25,8 @@ namespace OxidProfessionalServices\PayPal\Core\Webhook\Handler;
 use OxidEsales\Eshop\Application\Model\Order as OxOrder;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
+use OxidProfessionalServices\PayPal\Api\Model\Orders\Capture;
+use OxidProfessionalServices\PayPal\Api\Model\Orders\Order as OrderResponse;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderCaptureRequest;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 use OxidProfessionalServices\PayPal\Core\Webhook\Event;
@@ -53,7 +55,14 @@ class CheckoutOrderCompletedHandler implements HandlerInterface
             throw new EventException(sprintf('Oxid order %s not found', $oxidOrderId));
         }
 
-        $this->capturePayment($payPalOrderId);
+        $response = $this->capturePayment($payPalOrderId);
+
+        if (
+            $response->status == OrderResponse::STATUS_COMPLETED &&
+            $response->purchase_units[0]->payments->captures[0]->status == Capture::STATUS_COMPLETED
+        ) {
+            $order->markOrderPaid();
+        }
     }
 
     /**
