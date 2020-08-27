@@ -190,7 +190,7 @@ class PaypalOrderController extends AdminDetailsController
      */
     public function getPaypalRefundedAmount()
     {
-        return 'toBeDone';
+        return $this->getPayPalOrder()->purchase_units[0]->payments->refunds[0]->amount->value;
     }
 
     /**
@@ -198,7 +198,7 @@ class PaypalOrderController extends AdminDetailsController
      */
     public function getPaypalRemainingRefundAmount()
     {
-        return 'toBeDone';
+        return $this->getPaypalCapturedAmount() - $this->getPaypalRefundedAmount();
     }
 
     /**
