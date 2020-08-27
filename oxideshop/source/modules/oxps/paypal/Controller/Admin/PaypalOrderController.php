@@ -69,8 +69,7 @@ class PaypalOrderController extends AdminDetailsController
         $sMessage = "";
         if (!$order->paidWithPayPal()) {
             $sMessage = $lang->translateString('OXPS_PAYPAL_NOT_PAID_WITH_PAYPAL');
-        }
-        elseif (!$this->getPayPalOrder()) {
+        } elseif (!$this->getPayPalOrder()) {
             $sMessage = $lang->translateString('OXPS_PAYPAL_INVALID_RESOURCE_ID');
         }
         $this->_aViewData['sMessage'] = $sMessage;
