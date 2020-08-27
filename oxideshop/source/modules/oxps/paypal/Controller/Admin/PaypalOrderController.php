@@ -22,7 +22,6 @@
 
 namespace OxidProfessionalServices\PayPal\Controller\Admin;
 
-use OxidEsales\Eshop\Application\Controller\Admin\AdminDetailsController;
 use OxidEsales\Eshop\Application\Model\Order;
 use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidEsales\Eshop\Core\Registry;
@@ -37,25 +36,12 @@ use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 /**
  * Order class wrapper for PayPal module
  */
-class PaypalOrderController extends AdminDetailsController
+class PaypalOrderController extends PayPalAdminDetailsController
 {
     /**
      * @var Order
      */
     protected $order;
-
-    /**
-     * @inheritDoc
-     */
-    public function executeFunction($functionName)
-    {
-        try {
-            parent::executeFunction($functionName);
-        } catch (ApiException $exception) {
-            Registry::getUtilsView()->addErrorToDisplay('Error on paypal side');
-            Registry::getLogger()->error($exception);
-        }
-    }
 
     /**
      * @return string

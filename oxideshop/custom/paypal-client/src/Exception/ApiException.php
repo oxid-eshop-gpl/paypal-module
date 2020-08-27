@@ -41,4 +41,24 @@ class ApiException extends \Exception
         }
         parent::__construct($message, $code);
     }
+
+    /**
+     * Checks whether the user should see the exception
+     *
+     * @return bool
+     */
+    public function isUserVisible(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get description for user display
+     *
+     * @return string
+     */
+    public function getUserDescription(): string
+    {
+        return 'test';
+    }
 }
