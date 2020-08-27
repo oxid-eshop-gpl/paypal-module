@@ -163,7 +163,7 @@ class ProxyController extends FrontendController
                             );
                             $user->oxuser__oxcountryid = $oxCountryId;
                             $user->oxuser__oxzip = new Field(
-                                $user->oxuser__oxcountryid = new Field($oxCountryId, Field::T_RAW);
+                                $user->oxuser__oxcountryid = new Field($oxCountryId, Field::T_RAW),
                                 Field::T_RAW
                             );
                             $user->createUser();
