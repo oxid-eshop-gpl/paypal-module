@@ -122,20 +122,6 @@ $aModule = [
         ],
         [
             'theme' => 'flow',
-            'template' => 'page/checkout/order.tpl',
-            'block' => 'checkout_order_address',
-            'file' => '/views/blocks/flow/page/checkout/checkout_order_address.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'wave',
-            'template' => 'page/checkout/order.tpl',
-            'block' => 'checkout_order_address',
-            'file' => '/views/blocks/wave/page/checkout/checkout_order_address.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'flow',
             'template' => 'page/checkout/payment.tpl',
             'block' => 'select_payment',
             'file' => '/views/blocks/shared/page/checkout/select_payment.tpl',
@@ -160,76 +146,6 @@ $aModule = [
             'template' => 'page/checkout/payment.tpl',
             'block' => 'change_payment',
             'file' => '/views/blocks/wave/page/checkout/change_payment.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'flow',
-            'template' => 'page/checkout/user.tpl',
-            'block' => 'checkout_user_main',
-            'file' => '/views/blocks/flow/page/checkout/checkout_user_main.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'wave',
-            'template' => 'page/checkout/user.tpl',
-            'block' => 'checkout_user_main',
-            'file' => '/views/blocks/wave/page/checkout/checkout_user_main.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'flow',
-            'template' => 'form/user_checkout_change.tpl',
-            'block' => 'user_checkout_shipping_form',
-            'file' => '/views/blocks/flow/form/checkout_shipping_form.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'wave',
-            'template' => 'form/user_checkout_change.tpl',
-            'block' => 'user_checkout_shipping_form',
-            'file' => '/views/blocks/wave/form/checkout_shipping_form.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'flow',
-            'template' => 'form/user_checkout_change.tpl',
-            'block' => 'user_checkout_shipping_change',
-            'file' => '/views/blocks/flow/form/checkout_shipping_change.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'wave',
-            'template' => 'form/user_checkout_change.tpl',
-            'block' => 'user_checkout_shipping_change',
-            'file' => '/views/blocks/wave/form/checkout_shipping_change.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'flow',
-            'template' => 'form/user_checkout_change.tpl',
-            'block' => 'user_checkout_shipping_head',
-            'file' => '/views/blocks/flow/form/user_checkout_shipping_head.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'wave',
-            'template' => 'form/user_checkout_change.tpl',
-            'block' => 'user_checkout_shipping_head',
-            'file' => '/views/blocks/wave/form/user_checkout_shipping_head.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'flow',
-            'template' => 'form/user_checkout_change.tpl',
-            'block' => 'user_checkout_billing_feedback',
-            'file' => '/views/blocks/flow/form/checkout_billing_feedback.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'wave',
-            'template' => 'form/user_checkout_change.tpl',
-            'block' => 'user_checkout_billing_feedback',
-            'file' => '/views/blocks/wave/form/checkout_billing_feedback.tpl',
             'position' => '5'
         ],
         [
