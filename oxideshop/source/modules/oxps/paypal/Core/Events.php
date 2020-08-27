@@ -38,6 +38,7 @@ class Events
         self::createLogTable();
         self::addPaymentMethod();
         self::enablePaymentMethod();
+        self::createPaypalOrderTable();
         self::createSubscriptionProductTable();
     }
 
@@ -207,6 +208,51 @@ class Events
                             ENGINE=InnoDB 
                             COMMENT \'Primary key\'',
             'oxps_paypal_subscription_product'
+        );
+
+        DatabaseProvider::getDb()->execute($sql);
+    }
+
+    protected static function createPaypalOrderTable(): void
+    {
+        $sql = sprintf(
+            'CREATE TABLE IF NOT EXISTS %s (
+                        `OXID`
+                            char(32)
+                            character set latin1
+                            collate latin1_general_ci
+                            NOT NULL
+                            COMMENT \'Record id\',
+                        `OXPS_PAYPAL_OXSHOPID`
+                            char(32)
+                            character set latin1
+                            collate latin1_general_ci
+                            NOT NULL
+                            COMMENT \'Shop id (oxshops)\',
+                        `OXPS_PAYPAL_OXORDERID`
+                            char(32)
+                            character set latin1
+                            collate latin1_general_ci
+                            NOT NULL
+                            COMMENT \'oxorder OXID\',
+                        `OXPS_PAYPAL_PAYPALORDERID`
+                            char(32)
+                            character set latin1
+                            collate latin1_general_ci
+                            NOT NULL
+                            COMMENT \'Paypal Order ID\',
+                        `OXTIMESTAMP`
+                            timestamp
+                            NOT NULL
+                            default CURRENT_TIMESTAMP
+                            on update CURRENT_TIMESTAMP
+                            COMMENT \'Timestamp\',
+                        PRIMARY KEY (`OXID`),
+                        KEY `OXPS_PAYPAL_OXORDERID` (`OXPS_PAYPAL_OXORDERID`)
+                        )
+                            ENGINE=InnoDB
+                            COMMENT \'Primary key\'',
+            'oxps_paypal_order'
         );
 
         DatabaseProvider::getDb()->execute($sql);
