@@ -41,4 +41,31 @@ class ApiException extends \Exception
         }
         parent::__construct($message, $code);
     }
+
+    /**
+     * Checks if the exception information should be visible to end user
+     *
+     * @return bool
+     */
+    public function shouldDisplay(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Gets error message
+     *
+     * @return string
+     */
+    public function getErrorMessage(): string
+    {
+        $message = '';
+
+        if ($error = json_decode($this->response->getBody(), true)) {
+            $description = $error['details'][0]->desctiption;
+            $issue = $error['details'][0]->issue;
+        }
+
+        return $message;
+    }
 }

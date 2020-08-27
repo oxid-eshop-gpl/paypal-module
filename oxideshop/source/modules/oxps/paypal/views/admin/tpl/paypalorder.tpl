@@ -77,38 +77,6 @@
     }
 </style>
 
-<form action="[{$oViewConf->getSelfLink()}]" method="post">
-    [{$oViewConf->getHiddenSid()}]
-    <input type="hidden" name="fnc" value="refund">
-    <input type="hidden" name="cl" value="PaypalOrderController">
-    <input type="hidden" name="oxid" value="[{$oxid}]">
-    <input type="hidden" name="language" value="[{$actlang}]">
-
-    <label for="refundAmount">[{oxmultilang ident="OXPS_PAYPAL_REFUND_AMOUNT"}]</label>
-    <input type="number" id="refundAmount" name="refundAmount">
-
-    <label for="invoiceId">[{oxmultilang ident="OXPS_PAYPAL_INVOICE_ID"}]</label>
-    <input type="text" id="invoiceId" name="invoiceId" maxlength="127">
-
-    <label for="noteToBuyer">[{oxmultilang ident="OXPS_PAYPAL_NOTE_TO_BUYER"}]</label>
-    <textarea id="noteToBuyer" name="noteToBuyer" maxlength="255"></textarea>
-
-    <label for="refundAll">[{oxmultilang ident="OXPS_PAYPAL_REFUND_ALL"}]</label>
-    <input type="checkbox" id="refundAll" name="refundAll">
-
-    <input type="submit">
-</form>
-
-<form action="[{$oViewConf->getSelfLink()}]" method="post">
-    [{$oViewConf->getHiddenSid()}]
-    <input type="hidden" name="fnc" value="capture">
-    <input type="hidden" name="cl" value="PaypalOrderController">
-    <input type="hidden" name="oxid" value="[{$oxid}]">
-    <input type="hidden" name="language" value="[{$actlang}]">
-
-    <input type="submit" value="Capture">
-</form>
-
 <form name="transfer" id="transfer" action="[{$oViewConf->getSelfLink()}]" method="post">
     [{$oViewConf->getHiddenSid()}]
     <input type="hidden" name="oxid" value="[{$oxid}]">
@@ -372,6 +340,58 @@
     </tr>
     </tbody>
     </table>
+
+    [{oxmultilang ident="OXPS_PAYPAL_ACTIONS"}]:
+
+    [{oxmultilang ident="OXPS_PAYPAL_CAPTURE_PAYMENT"}]
+    <form action="[{$oViewConf->getSelfLink()}]" method="post">
+        [{$oViewConf->getHiddenSid()}]
+        <input type="hidden" name="fnc" value="capture">
+        <input type="hidden" name="cl" value="PaypalOrderController">
+        <input type="hidden" name="oxid" value="[{$oxid}]">
+        <input type="hidden" name="language" value="[{$actlang}]">
+
+        <input type="submit" value="[{oxmultilang ident="OXPS_PAYPAL_CAPTURE"}]">
+    </form>
+
+    [{oxmultilang ident="OXPS_PAYPAL_ISSUE_REFUND"}]
+    <form action="[{$oViewConf->getSelfLink()}]" method="post">
+        [{$oViewConf->getHiddenSid()}]
+        <input type="hidden" name="fnc" value="refund">
+        <input type="hidden" name="cl" value="PaypalOrderController">
+        <input type="hidden" name="oxid" value="[{$oxid}]">
+        <input type="hidden" name="language" value="[{$actlang}]">
+
+        <table>
+            <tr>
+                <td>
+                    <label for="refundAmount">[{oxmultilang ident="OXPS_PAYPAL_REFUND_AMOUNT"}]</label>
+                    <input type="number" id="refundAmount" name="refundAmount">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="invoiceId">[{oxmultilang ident="OXPS_PAYPAL_INVOICE_ID"}]</label>
+                    <input type="text" id="invoiceId" name="invoiceId" maxlength="127">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="noteToBuyer">[{oxmultilang ident="OXPS_PAYPAL_NOTE_TO_BUYER"}]</label>
+                    <textarea id="noteToBuyer" name="noteToBuyer" maxlength="255"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="refundAll">[{oxmultilang ident="OXPS_PAYPAL_REFUND_ALL"}]</label>
+                    <input type="checkbox" id="refundAll" name="refundAll">
+                </td>
+            </tr>
+        </table>
+
+        <input type="submit" value="[{oxmultilang ident="OXPS_PAYPAL_REFUND"}]">
+    </form>
+
 [{*
     <div id="paypalOverlay"></div>
 
@@ -486,26 +506,6 @@
     [{else}]
         <div class="messagebox">[{$sMessage}]</div>
     [{/if}]
-
-<form action="[{$oViewConf->getSelfLink()}]" method="post">
-    [{$oViewConf->getHiddenSid()}]
-    <input type="hidden" name="fnc" value="refund">
-    <input type="hidden" name="cl" value="PaypalOrderController">
-
-    <label for="refundAmount">[{oxmultilang ident="OXPS_PAYPAL_REFUND_AMOUNT"}]</label>
-    <input type="number" id="refundAmount" name="refundAmount">
-
-    <label for="invoiceId">[{oxmultilang ident="OXPS_PAYPAL_INVOICE_ID"}]</label>
-    <input type="text" id="invoiceId" name="invoiceId" maxlength="127">
-
-    <label for="noteToBuyer">[{oxmultilang ident="OXPS_PAYPAL_NOTE_TO_BUYER"}]</label>
-    <textarea id="noteToBuyer" name="noteToBuyer" maxlength="255"></textarea>
-
-    <label for="refundAll">[{oxmultilang ident="OXPS_PAYPAL_REFUND_ALL"}]</label>
-    <input type="checkbox" id="refundAll" name="refundAll">
-
-    <input type="submit">
-</form>
 
 [{include file="bottomnaviitem.tpl"}]
 [{include file="bottomitem.tpl"}]
