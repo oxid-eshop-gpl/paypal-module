@@ -23,12 +23,18 @@
 namespace OxidProfessionalServices\PayPal\Controller;
 
 use OxidEsales\Eshop\Application\Controller\FrontendController;
-use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidEsales\Eshop\Core\Registry;
+use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
 use OxidProfessionalServices\PayPal\Core\Request;
 use OxidProfessionalServices\PayPal\Core\Webhook\Event;
 use OxidProfessionalServices\PayPal\Core\Webhook\EventDispatcher;
+use OxidProfessionalServices\PayPal\Core\Webhook\EventVerifier;
+use OxidProfessionalServices\PayPal\Core\Webhook\Exception\EventException;
 
+/**
+ * Class WebhookController
+ * @package OxidProfessionalServices\PayPal\Controller
+ */
 class WebhookController extends FrontendController
 {
     /**
@@ -39,17 +45,23 @@ class WebhookController extends FrontendController
         parent::init();
 
         try {
+            /** @var Request $request */
             $request = Registry::get(Request::class);
-            $data = json_decode($request->getRawPost(), true);
+            $data = $request->getRawPost();
 
+            $verifier = oxNew(EventVerifier::class);
+            $verifier->verify($request->getHeaders(), $data);
+
+            $data = json_decode($data, true);
             if ($data !== null) {
                 $dispatcher = Registry::get(EventDispatcher::class);
                 $dispatcher->dispatch(new Event($data));
             } else {
-                throw new StandardException(json_last_error_msg());
+                throw new EventException(json_last_error_msg());
             }
-        } catch (\Exception $exception) {
+        } catch (EventException | ApiException $exception) {
             Registry::getLogger()->error($exception->getMessage(), [$exception]);
+            Registry::getUtils()->redirect(Registry::getConfig()->getShopUrl());
         }
 
         Registry::getUtils()->showMessageAndExit('');

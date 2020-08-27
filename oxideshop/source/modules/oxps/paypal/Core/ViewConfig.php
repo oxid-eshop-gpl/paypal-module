@@ -64,6 +64,14 @@ class ViewConfig extends ViewConfig_parent
     }
 
     /**
+     * @return array
+     */
+    public function getPayPalCurrencyCodes(): array
+    {
+        return Currency::getCurrencyCodes();
+    }
+
+    /**
      * @return null or string
      */
     public function getcheckoutOrderId(): ?string
