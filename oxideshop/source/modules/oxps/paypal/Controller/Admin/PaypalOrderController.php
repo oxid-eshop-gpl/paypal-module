@@ -200,7 +200,7 @@ class PaypalOrderController extends AdminDetailsController
      */
     public function getPaypalAuthorizationId()
     {
-        return 'toBeDone';
+        return $this->getPayPalOrder()->purchase_units[0]->payments->authorizations[0]->id->value;
     }
 
     /**
