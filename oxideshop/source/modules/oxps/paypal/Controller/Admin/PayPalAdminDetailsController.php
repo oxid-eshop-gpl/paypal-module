@@ -36,9 +36,6 @@ class PayPalAdminDetailsController extends AdminDetailsController
         try {
             parent::executeFunction($functionName);
         } catch (ApiException $exception) {
-            if ($exception->isUserVisible()) {
-                Registry::getUtilsView()->addErrorToDisplay($exception->getUserDescription());
-            }
             Registry::getLogger()->error($exception);
         }
     }
