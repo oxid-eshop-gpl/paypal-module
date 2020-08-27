@@ -28,7 +28,7 @@ use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\Capture;
-use OxidProfessionalServices\PayPal\Api\Model\Orders\Order as OrderResponse;
+use OxidProfessionalServices\PayPal\Api\Model\Orders\Order as PayPalOrder;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderCaptureRequest;
 use OxidProfessionalServices\PayPal\Api\Model\Payments\RefundRequest;
 use OxidProfessionalServices\PayPal\Api\Service\Payments;
@@ -85,7 +85,7 @@ class PaypalOrderController extends AdminDetailsController
         $response = $service->capturePaymentForOrder('', $orderId, $request, '');
 
         if (
-            $response->status == OrderResponse::STATUS_COMPLETED &&
+            $response->status == PayPalOrder::STATUS_COMPLETED &&
             $response->purchase_units[0]->payments->captures[0]->status == Capture::STATUS_COMPLETED
         ) {
             $order->markOrderPaid();
@@ -120,6 +120,16 @@ class PaypalOrderController extends AdminDetailsController
         /** @var Payments $paymentService */
         $paymentService = Registry::get(ServiceFactory::class)->getPaymentService();
         $paymentService->refundCapturedPayment($capture->id, $request, '');
+    }
+
+    /**
+     * @return PayPalOrder
+     * @throws StandardException
+     * @throws ApiException
+     */
+    protected function getPayPalOrder(): PayPalOrder
+    {
+        return $this->getOrder()->getPayPalOrder();
     }
 
     /**
