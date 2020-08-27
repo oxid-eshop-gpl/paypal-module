@@ -18,12 +18,6 @@ paypal.Buttons({
             return res.json();
         }).then(function(data) {
             [{/literal}]
-            [{if $oViewConf->getTopActiveClassName()=="payment" && $paymentStrategy=="continue"}]
-                if (data.id && data.status == "CREATED") {
-                    $("#payment_oxidpaypal").prop( "checked", true);
-                    $('#paymentNextStepBottom').trigger("click");
-                }
-            [{/if}]
             [{literal}]
             return data.id;
         })
@@ -41,6 +35,11 @@ paypal.Buttons({
             [{if $oViewConf->getTopActiveClassName()=="details" && $paymentStrategy=="continue"}]
                 //location.reload();
                 location.replace('[{$sSelfLink|cat:"cl=basket"}]');
+            [{elseif $oViewConf->getTopActiveClassName()=="payment" && $paymentStrategy=="continue"}]
+                if (data.id && data.status == "APPROVED") {
+                    $("#payment_oxidpaypal").prop( "checked", true);
+                    $('#paymentNextStepBottom').trigger("click");
+                }
             [{/if}]
             [{literal}]
         })
