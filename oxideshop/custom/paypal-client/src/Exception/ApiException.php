@@ -53,11 +53,11 @@ class ApiException extends \Exception
     }
 
     /**
-     * Gets error message
+     * Gets error description message
      *
      * @return string
      */
-    public function getErrorMessage(): string
+    public function getErrorDescription(): string
     {
         $message = '';
 
