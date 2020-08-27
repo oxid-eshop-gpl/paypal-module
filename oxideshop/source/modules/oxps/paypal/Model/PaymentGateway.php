@@ -73,8 +73,6 @@ class PaymentGateway extends PaymentGateway_parent
      */
     public function doAuthorizePayment(&$order)
     {
-        $success = false;
-
         try {
             // updating order state
             if ($order) {
@@ -87,22 +85,12 @@ class PaymentGateway extends PaymentGateway_parent
                     // Authorize Order
                     $request = new OrderAuthorizeRequest();
 
-                    try {
-                        $response = $service->authorizePaymentForOrder('', $checkoutOrderId, $request, '');
-                    } catch (Exception $exception) {
-                        Registry::getLogger()->error("Error on order authorize call.", [$exception]);
-                    }
+                    $response = $service->authorizePaymentForOrder('', $checkoutOrderId, $request, '');
 
                     // Capture Order
                     $request = new OrderCaptureRequest();
 
-                    try {
-                        $response = $service->capturePaymentForOrder('', $checkoutOrderId, $request, '');
-                    } catch (Exception $exception) {
-                        Registry::getLogger()->error("Error on order capture call.", [$exception]);
-                    }
-
-                    $success = true;
+                    $response = $service->capturePaymentForOrder('', $checkoutOrderId, $request, '');
 
                     $sql = 'INSERT INTO oxps_paypal_order (';
                     $sql .= 'OXID, OXPS_PAYPAL_OXSHOPID, OXPS_PAYPAL_OXORDERID, ';
@@ -124,10 +112,13 @@ class PaymentGateway extends PaymentGateway_parent
             }
         } catch (Exception $exception) {
             $this->_iLastErrorNo = \OxidEsales\Eshop\Application\Model\Order::ORDER_STATE_PAYMENTERROR;
-
             Registry::getLogger()->error("Error on doAuthorizePayment call.", [$exception]);
+
+            //Registry::getUtilsView()->addErrorToDisplay($exception, false, true, 'order');
+
+            return false;
         }
 
-        return $success;
+        return true;
     }
 }
