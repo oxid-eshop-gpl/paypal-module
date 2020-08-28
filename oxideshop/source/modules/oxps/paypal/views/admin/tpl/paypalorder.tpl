@@ -1,8 +1,8 @@
 [{include file="headitem.tpl" title="GENERAL_ADMIN_TITLE"|oxmultilangassign}]
 
-[{*oxscript include="js/libs/jquery.min.js"*}]
-[{*oxscript include=$oViewConf->getModuleUrl('oepaypal','out/admin/src/js/paypal_order.js')*}]
-[{*oxscript add="jQuery.noConflict();" priority=10*}]
+[{oxscript include="js/libs/jquery.min.js"}]
+[{oxscript include=$oViewConf->getModuleUrl('oxps/paypal','out/src/js/paypal_order.js')}]
+[{oxscript add="jQuery.noConflict();" priority=10}]
 
 <style>
     .paypalActionsTable {
@@ -66,10 +66,6 @@
         border-spacing: 0;
         border-collapse: collapse;
         width: 98%;
-    }
-
-    .paypalHistoryComments p {
-        margin-top: 0;
     }
 
     a.popUpLink, a.actionLink {
@@ -203,80 +199,54 @@
                     [{oxmultilang ident="OXPS_PAYPAL_HISTORY_PAYPAL_STATUS"}]
                     [{oxinputhelp ident="OXPS_PAYPAL_HISTORY_PAYPAL_STATUS_HELP"}]
                 </td>
+                <td class="listheader">[{oxmultilang ident="OXPS_PAYPAL_TRANSACTIONID"}]</td>
                 <td class="listheader">[{oxmultilang ident="OXPS_PAYPAL_HISTORY_ACTIONS"}]</td>
             </tr>
-            [{foreach from=$oView->getPaypalPaymentList() item=listitem name=paypalHistory}]
+            [{foreach from=$oView->getPaypalHistory() item=listitem name=paypalHistory}]
             [{cycle values='listitem,listitem2' assign='class'}]
             <tr>
-                <td valign="top" class="[{$class}]">[{$listitem->getDate()}]</td>
-                <td valign="top" class="[{$class}]">[{$listitem->getAction()}]</td>
+                <td valign="top" class="[{$class}]">[{$listitem.date}]</td>
+                <td valign="top" class="[{$class}]">[{oxmultilang ident='OXPS_PAYPAL_'|cat:$listitem.action}]</td>
                 <td valign="top" class="[{$class}]">
-                    [{$listitem->getAmount()}]
+                    [{$oView->formatPrice($listitem.amount)}]
                     <small>[{$currency}]</small>
                 </td>
-                <td valign="top" class="[{$class}]">[{$listitem->getStatus()}]</td>
+                <td valign="top" class="[{$class}]">[{oxmultilang ident='OXPS_PAYPAL_STATUS_'|cat:$listitem.status}]</td>
+                <td valign="top" class="[{$class}]">[{$listitem.transactionid}]</td>
                 <td valign="top" class="[{$class}]">
                     <a class="popUpLink" href="#"
                        data-block="historyDetailsBlock[{$smarty.foreach.paypalHistory.index}]"><img
-                                src="[{$oViewConf->getModuleUrl('oepaypal','out/admin/src/bg/ico-details.png')}]"
+                                src="[{$oViewConf->getModuleUrl('oxps/paypal','out/img/ico-details.png')}]"
                                 title="[{oxmultilang ident="OXPS_PAYPAL_DETAILS"}]"/></a>
 
                     <div id="historyDetailsBlock[{$smarty.foreach.paypalHistory.index}]" class="paypalPopUp">
-                        <h3>[{oxmultilang ident="OXPS_PAYPAL_DETAILS"}] ([{$listitem->getDate()}])</h3>
+                        <h3>[{oxmultilang ident="OXPS_PAYPAL_DETAILS"}] ([{$listitem.date}])</h3>
 
                         <p>
-                            [{oxmultilang ident="OXPS_PAYPAL_HISTORY_ACTION"}]: <b>[{$listitem->getAction()}]</b><br/>
-                            [{oxmultilang ident="OXPS_PAYPAL_HISTORY_PAYPAL_STATUS"}]: <b>[{$listitem->getStatus()}]</b><br/>
-                        </p>
-
-                        <p>
-                            [{if $listitem->getRefundedAmount() > 0}]
-                            [{oxmultilang ident="OXPS_PAYPAL_CAPTURED"}]: </label><b>[{$listitem->getAmount()}]
-                            <small>[{$currency}]</small>
-                        </b><br/>
-                            [{oxmultilang ident="OXPS_PAYPAL_REFUNDED"}]: <b>[{$listitem->getRefundedAmount()}]
-                            <small>[{$currency}]</small>
-                        </b><br/>
-                            [{oxmultilang ident="OXPS_PAYPAL_CAPTURED_NET"}]: <b>[{$listitem->getRemainingRefundAmount()}]
-                            <small>[{$currency}]</small>
-                        </b><br/>
-                            [{else}]
-                            [{oxmultilang ident="OXPS_PAYPAL_AMOUNT"}]: </label><b>[{$listitem->getAmount()}]
-                            <small>[{$currency}]</small>
-                        </b><br/>
-                            [{/if}]
+                            [{oxmultilang ident="OXPS_PAYPAL_HISTORY_PAYPAL_STATUS"}]: <b>[{oxmultilang ident='OXPS_PAYPAL_STATUS_'|cat:$listitem.status}]</b><br/>
                         </p>
                         <p>
-                            <label>[{oxmultilang ident="OXPS_PAYPAL_TRANSACTIONID"}]: </label><b>[{$listitem->getTransactionId()}]</b><br/>
-                            <label>[{oxmultilang ident="OXPS_PAYPAL_CORRELATIONID"}]: </label><b>[{$listitem->getCorrelationId()}]</b><br/>
+                            <label>[{oxmultilang ident="OXPS_PAYPAL_TRANSACTIONID"}]: </label><b>[{$listitem.transactionid}]</b><br/>
                         </p>
-                        [{assign var="comments" value=$listitem->getCommentList()}]
-                        [{if $comments->getArray()}]
-                        <div class="paypalHistoryComments">
-                            <span>[{oxmultilang ident="OXPS_PAYPAL_COMMENT"}]: </span>
-                            [{foreach from=$comments item=comment}]
-                            <p>
-                                <small>[{$comment->getDate()}]</small>
-                                </br>
-                                [{$comment->getComment()}]
-                            </p>
-                            [{/foreach}]
-                        </div>
-                        [{/if}]
+                        <p>
+                            <label>[{oxmultilang ident="OXPS_PAYPAL_COMMENT"}]: </label><b>[{$listitem.comment}]</b><br/>
+                        </p>
                     </div>
+[{*
                     [{if $orderPaymentActionManager->isActionAvailable('refund', $listitem)}]
                     <a id="refundButton[{$smarty.foreach.paypalHistory.index}]" class="actionLink"
                        data-action="refund"
                        data-type="[{if $listitem->getRefundedAmount() > 0}]Partial[{else}]Full[{/if}]"
                        data-amount="[{$listitem->getRemainingRefundAmount()}]"
-                       data-transid="[{$listitem->getTransactionId()}]"
+                       data-transid="[{$listitem.transactionid}]"
                        data-statuslist='[{$orderPaymentStatusList->getAvailableStatuses('refund')|@json_encode}]'
                        data-activestatus="[{$orderPaymentStatusCalculator->getSuggestStatus('refund')}]"
                        href="#">
-                        <img src="[{$oViewConf->getModuleUrl('oepaypal','out/admin/src/bg/ico-refund.png')}]"
+                        <img src="[{$oViewConf->getModuleUrl('oxps/paypal','out/img/ico-refund.png')}]"
                              title="[{oxmultilang ident="OXPS_PAYPAL_REFUND"}]"/>
                     </a>
                     [{/if}]
+*}]
                 </td>
             </tr>
             [{/foreach}]
