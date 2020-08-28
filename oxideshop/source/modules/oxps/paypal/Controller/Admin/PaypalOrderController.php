@@ -58,6 +58,11 @@ class PaypalOrderController extends AdminDetailsController
     }
 
     /**
+     * @var PayPalOrder
+     */
+    protected $payPalOrderHistory;
+
+    /**
      * @return string
      * @throws StandardException
      */
@@ -75,9 +80,21 @@ class PaypalOrderController extends AdminDetailsController
                 $this->addTplParam('payPalOrder', $order->getPayPalOrder());
                 $this->addTplParam('capture', $order->getOrderPaymentCapture());
             }
+
+
         } catch (ApiException $exception) {
             $this->addTplParam('error', $exception->getErrorDescription());
             Registry::getLogger()->error($exception);
+
+            $lang = Registry::getLang();
+
+            $error = "";
+            if (!$order->paidWithPayPal()) {
+                $error = $lang->translateString('OXPS_PAYPAL_NOT_PAID_WITH_PAYPAL');
+            } elseif (!$this->getPayPalOrder()) {
+                $error = $lang->translateString('OXPS_PAYPAL_INVALID_RESOURCE_ID');
+            }
+            $this->addTplParam('error', $error);
         }
 
         return "paypalorder.tpl";
@@ -143,9 +160,10 @@ class PaypalOrderController extends AdminDetailsController
      * @throws StandardException
      * @throws ApiException
      */
-    protected function getPayPalOrder(): PayPalOrder
+    protected function getPayPalOrder(): ?PayPalOrder
     {
         return $this->getOrder()->getPayPalOrder();
+        return $this->payPalOrder;
     }
 
     /**
@@ -208,7 +226,7 @@ class PaypalOrderController extends AdminDetailsController
      */
     public function getPaypalRefundedAmount()
     {
-        return 'toBeDone';
+        return $this->getPayPalOrder()->purchase_units[0]->payments->refunds[0]->amount->value;
     }
 
     /**
@@ -216,7 +234,7 @@ class PaypalOrderController extends AdminDetailsController
      */
     public function getPaypalRemainingRefundAmount()
     {
-        return 'toBeDone';
+        return $this->getPaypalCapturedAmount() - $this->getPaypalRefundedAmount();
     }
 
     /**
@@ -261,5 +279,67 @@ class PaypalOrderController extends AdminDetailsController
     public function formatPrice($price)
     {
         return Registry::getLang()->formatCurrency($price);
+    }
+
+    /**
+     * Returns formatted date
+     *
+     * @return string
+     */
+    public function formatDate($date, $forSort = false)
+    {
+        $timestamp = strtotime($date);
+        return date(
+            $forSort ? 'YmdHis' : 'd.m.Y H:i:s',
+            $timestamp
+        );
+    }
+
+    /**
+     * Template getter for order History
+     *
+     * @return PayPalTransactions
+     * @throws StandardException|ApiException
+     */
+    public function getPaypalHistory()
+    {
+        if (!$this->payPalOrderHistory) {
+            $this->payPalOrderHistory = [];
+            foreach ($this->getPayPalOrder()->purchase_units[0]->payments->captures as $capture) {
+                $this->payPalOrderHistory[$this->formatDate($capture->create_time, true)] = [
+                    'action'        => 'CAPTURED',
+                    'amount'        => $capture->amount->value,
+                    'date'          => $this->formatDate($capture->create_time),
+                    'status'        => $capture->status,
+                    'transactionid' => $capture->id,
+                    'comment'       => '',
+                    'invoiceid'     => $capture->invoice_id
+                ];
+            }
+            foreach ($this->getPayPalOrder()->purchase_units[0]->payments->refunds as $refund) {
+                $this->payPalOrderHistory[$this->formatDate($refund->create_time, true)] = [
+                    'action'        => 'REFUNDED',
+                    'amount'        => $refund->amount->value,
+                    'date'          => $this->formatDate($refund->create_time),
+                    'status'        => $refund->status,
+                    'transactionid' => $refund->id,
+                    'comment'       => $refund->note_to_payer,
+                    'invoiceid'     => $refund->invoice_id
+                ];
+            }
+            foreach ($this->getPayPalOrder()->purchase_units[0]->payments->authorizations as $authorization) {
+                $this->payPalOrderHistory[$this->formatDate($authorization->create_time, true)] = [
+                    'action'        => 'AUTHORIZATION',
+                    'amount'        => $authorization->amount->value,
+                    'date'          => $this->formatDate($authorization->create_time),
+                    'status'        => $authorization->status,
+                    'transactionid' => $authorization->id,
+                    'comment'       => '',
+                    'invoiceid'     => $authorization->invoice_id
+                ];
+            }
+            ksort($this->payPalOrderHistory);
+        }
+        return $this->payPalOrderHistory;
     }
 }
