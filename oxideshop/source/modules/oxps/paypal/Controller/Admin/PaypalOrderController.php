@@ -27,10 +27,10 @@ use OxidEsales\Eshop\Application\Model\Order;
 use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
+use OxidProfessionalServices\PayPal\Api\Model\Orders\Capture;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\Order as PayPalOrder;
-use OxidProfessionalServices\PayPal\Api\Model\Payments\Capture;
+use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderCaptureRequest;
 use OxidProfessionalServices\PayPal\Api\Model\Payments\RefundRequest;
-use OxidProfessionalServices\PayPal\Api\Service\Orders;
 use OxidProfessionalServices\PayPal\Api\Service\Payments;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 
@@ -45,9 +45,17 @@ class PaypalOrderController extends AdminDetailsController
     protected $order;
 
     /**
-     * @var PayPalOrder
+     * @inheritDoc
      */
-    protected $payPalOrder;
+    public function executeFunction($functionName)
+    {
+        try {
+            parent::executeFunction($functionName);
+        } catch (ApiException $exception) {
+            $this->addTplParam('error', $exception->getErrorDescription());
+            Registry::getLogger()->error($exception);
+        }
+    }
 
     /**
      * @var PayPalOrder
@@ -55,35 +63,71 @@ class PaypalOrderController extends AdminDetailsController
     protected $payPalOrderHistory;
 
     /**
-     * Executes parent method parent::render(), creates oxOrder object,
-     * passes it's data to Smarty engine and returns
-     * name of template file "paypalorder.tpl".
-     *
      * @return string
+     * @throws StandardException
      */
     public function render()
     {
         parent::render();
 
-        $this->_aViewData['oxid'] = $this->getEditObjectId();
-        $this->_aViewData['order'] = $order = $this->getOrder();
-        $this->_aViewData['payPalOrder'] = $order->paidWithPayPal() ? $this->getPayPalOrder() : null;
+        try {
+            $order = $this->getOrder();
+            $this->addTplParam('oxid', $this->getEditObjectId());
+            $this->addTplParam('order', $order);
+            $this->addTplParam('payPalOrder', null);
 
-        $lang = Registry::getLang();
+            if ($order->paidWithPayPal()) {
+                $this->addTplParam('payPalOrder', $order->getPayPalOrder());
+                $this->addTplParam('capture', $order->getOrderPaymentCapture());
+            }
+        } catch (ApiException $exception) {
+            $this->addTplParam('error', $exception->getErrorDescription());
+            Registry::getLogger()->error($exception);
 
-        $sMessage = "";
-        if (!$order->paidWithPayPal()) {
-            $sMessage = $lang->translateString('OXPS_PAYPAL_NOT_PAID_WITH_PAYPAL');
-        } elseif (!$this->getPayPalOrder()) {
-            $sMessage = $lang->translateString('OXPS_PAYPAL_INVALID_RESOURCE_ID');
+            $lang = Registry::getLang();
+
+            $error = "";
+            if (!$order->paidWithPayPal()) {
+                $error = $lang->translateString('OXPS_PAYPAL_NOT_PAID_WITH_PAYPAL');
+            } elseif (!$this->getPayPalOrder()) {
+                $error = $lang->translateString('OXPS_PAYPAL_INVALID_RESOURCE_ID');
+            }
+            $this->addTplParam('error', $error);
         }
-        $this->_aViewData['sMessage'] = $sMessage;
 
         return "paypalorder.tpl";
     }
 
     /**
-     * Refunds order payment
+     * Capture payment action
+     *
+     * @throws ApiException
+     * @throws StandardException
+     */
+    public function capture(): void
+    {
+        $order = $this->getOrder();
+        $orderId = $order->getPayPalOrder()->id;
+
+        /** @var ServiceFactory $serviceFactory */
+        $serviceFactory = Registry::get(ServiceFactory::class);
+        $service = $serviceFactory->getOrderService();
+        $request = new OrderCaptureRequest();
+        $response = $service->capturePaymentForOrder('', $orderId, $request, '');
+
+        if (
+            $response->status == PayPalOrder::STATUS_COMPLETED &&
+            $response->purchase_units[0]->payments->captures[0]->status == Capture::STATUS_COMPLETED
+        ) {
+            $order->markOrderPaid();
+        }
+    }
+
+    /**
+     * Refund payment action
+     *
+     * @throws ApiException
+     * @throws StandardException
      */
     public function refund(): void
     {
@@ -93,45 +137,30 @@ class PaypalOrderController extends AdminDetailsController
         $refundAll = $request->getRequestEscapedParameter('refundAll');
         $noteToPayer = $request->getRequestParameter('noteToPayer');
 
-        $capture = $this->getOrderPaymentCapture();
-        $request = new RefundRequest();
+        $capture = $this->getOrder()->getOrderPaymentCapture();
 
+        $request = new RefundRequest();
+        $request->note_to_payer = $noteToPayer;
+        $request->invoice_id = !empty($invoiceId) ? $invoiceId : null;
         if (!$refundAll) {
             $request->initAmount();
             $request->amount->currency_code = $capture->amount->currency_code;
             $request->amount->value = $refundAmount;
-            $request->invoice_id = $invoiceId;
-            $request->note_to_payer = $noteToPayer;
         }
 
         /** @var Payments $paymentService */
         $paymentService = Registry::get(ServiceFactory::class)->getPaymentService();
-        $response = $paymentService->refundCapturedPayment($capture->id, $refundAll, '');
+        $paymentService->refundCapturedPayment($capture->id, $request, '');
     }
 
     /**
-     * Get PayPal order object for the active order
-     *
      * @return PayPalOrder
-     * @throws StandardException|ApiException
+     * @throws StandardException
+     * @throws ApiException
      */
     protected function getPayPalOrder(): ?PayPalOrder
     {
-        if (!$this->payPalOrder) {
-            $order = $this->getOrder();
-            if (!$order->paidWithPayPal()) {
-                throw new StandardException('Order not paid using PayPal');
-            }
-
-            try {
-                /** @var Orders $orderService */
-                $orderService = Registry::get(ServiceFactory::class)->getOrderService();
-                $this->payPalOrder = $orderService->showOrderDetails($order->getPaypalOrderIdForOxOrderId());
-            } catch (ApiException $exception) {
-                Registry::getLogger()->error('Specified resource ID does not exist', [$exception]);
-            }
-        }
-
+        return $this->getOrder()->getPayPalOrder();
         return $this->payPalOrder;
     }
 

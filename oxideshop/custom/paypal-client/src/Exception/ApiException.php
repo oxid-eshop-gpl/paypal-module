@@ -3,10 +3,19 @@
 namespace OxidProfessionalServices\PayPal\Api\Exception;
 
 use GuzzleHttp\Exception\GuzzleException;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class ApiException extends \Exception
 {
+    /**
+     * @var RequestInterface
+     */
     private $request;
+
+    /**
+     * @var ResponseInterface
+     */
     private $response;
 
     public function __construct(GuzzleException $e)
@@ -40,5 +49,36 @@ class ApiException extends \Exception
             $message .= " -d " . $this->request->getBody();
         }
         parent::__construct($message, $code);
+    }
+
+    /**
+     * Checks if the exception information should be visible to end user
+     *
+     * @return bool
+     */
+    public function shouldDisplay()
+    {
+        return true;
+    }
+
+    /**
+     * Gets error description
+     *
+     * @return string
+     */
+    public function getErrorDescription()
+    {
+        if ($error = json_decode($this->response->getBody(), true)) {
+            $details = $error['details'][0];
+            $description = $details['description'];
+            if (!$description) {
+                $description = $details['issue'];
+            }
+            if (!$description) {
+                $description = $error['message'];
+            }
+        }
+
+        return $description;
     }
 }

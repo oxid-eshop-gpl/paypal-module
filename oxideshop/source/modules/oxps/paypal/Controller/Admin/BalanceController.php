@@ -55,23 +55,37 @@ class BalanceController extends AdminListController
     }
 
     /**
-     * @return BalancesResponse|null
+     * @inheritDoc
      */
-    public function getBalances()
+    public function render()
+    {
+        try {
+            $this->addTplParam('balances', $this->getBalances());
+        } catch (ApiException $exception) {
+            if ($exception->shouldDisplay()) {
+                $this->addTplParam('error', $exception->getErrorDescription());
+            }
+            Registry::getLogger()->error($exception);
+        }
+
+        return parent::render();
+    }
+
+    /**
+     * Get balance information
+     *
+     * @return BalancesResponse
+     * @throws ApiException
+     */
+    protected function getBalances(): BalancesResponse
     {
         /** @var ServiceFactory $serviceFactory */
         $serviceFactory = Registry::get(ServiceFactory::class);
         $transactionService = $serviceFactory->getTransactionSearchService();
 
-        try {
-            $response = $transactionService->listAllBalances(
-                (new DateTime($this->getAsOfTime()))->format(DateTime::ISO8601),
-                $this->getCurrencyCode()
-            );
-        } catch (ApiException $exception) {
-            Registry::getLogger()->error('Error when fetching balance data', [$exception]);
-        }
-
-        return $response;
+        return $transactionService->listAllBalances(
+            (new DateTime($this->getAsOfTime()))->format(DateTime::ISO8601),
+            $this->getCurrencyCode()
+        );
     }
 }

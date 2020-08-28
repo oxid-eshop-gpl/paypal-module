@@ -6,28 +6,19 @@
     <input type="hidden" name="cl" value="PaypalOrderController">
 </form>
 
+[{if $error}]
+    <div class="errorbox">[{$error}]</div>
+[{/if}]
+
 [{if $order && $payPalOrder}]
 
     [{assign var="currency" value=$oView->getPaypalCurrency()}]
 
-[{*
-    [{assign var="orderActionManager" value=$oView->getOrderActionManager()}]
-    [{assign var="orderPaymentActionManager" value=$oView->getOrderPaymentActionManager()}]
-    [{assign var="orderPaymentStatusCalculator" value=$oView->getOrderPaymentStatusCalculator()}]
-    [{assign var="orderPaymentStatusList" value=$oView->getOrderPaymentStatusList()}]
-*}]
     <table width="98%" cellspacing="0" cellpadding="0" border="0">
     <tbody>
     <tr>
     <td class="edittext" valign="top">
         <table class="paypalActionsTable" width="98%">
-            [{if $error}]
-            <tr>
-                <td colspan="2">
-                    <div class="errorbox">[{$error}]</div>
-                </td>
-            </tr>
-            [{/if}]
             <tr>
                 <td class="edittext">[{oxmultilang ident="OXPS_PAYPAL_SHOP_PAYMENT_STATUS"}]:</td>
                 <td class="edittext">
@@ -72,40 +63,6 @@
                     <b>[{$oView->getPaypalAuthorizationId()}]</b>
                 </td>
             </tr>
-
-[{*
-            [{if $orderActionManager->isActionAvailable('capture')}]
-            <tr>
-                <td class="edittext">[{oxmultilang ident="OXPS_PAYPAL_MONEY_CAPTURE"}]:</td>
-                <td class="edittext">
-                    <button id="captureButton" class="actionLink"
-                            data-action="capture"
-                            data-type="Complete"
-                            data-amount="[{$payPalOrder->getRemainingOrderSum()}]"
-                            data-statuslist='[{$orderPaymentStatusList->getAvailableStatuses('capture')|@json_encode}]'
-                            data-activestatus="[{$orderPaymentStatusCalculator->getSuggestStatus('capture')}]"
-                            href="#">
-                        [{oxmultilang ident="OXPS_PAYPAL_CAPTURE"}]
-                    </button>
-                </td>
-            </tr>
-            </tr>
-            [{/if}]
-            [{if $orderActionManager->isActionAvailable('void')}]
-            <tr>
-                <td class="edittext">[{oxmultilang ident="OXPS_PAYPAL_AUTHORIZATION"}]:</td>
-                <td class="edittext">
-                    <button id="voidButton" class="actionLink"
-                            data-action="void"
-                            data-statuslist='[{$orderPaymentStatusList->getAvailableStatuses('void')|@json_encode}]'
-                            data-activestatus="[{$orderPaymentStatusCalculator->getSuggestStatus('void')}]"
-                            href="#">
-                        [{oxmultilang ident="OXPS_PAYPAL_CANCEL_AUTHORIZATION"}]
-                    </button>
-                </td>
-            </tr>
-            [{/if}]
-*}]
         </table>
 
         </br>
@@ -127,8 +84,8 @@
                     [{oxinputhelp ident="OXPS_PAYPAL_HISTORY_PAYPAL_STATUS_HELP"}]
                 </td>
                 <td class="listheader">[{oxmultilang ident="OXPS_PAYPAL_TRANSACTIONID"}]</td>
+                <td class="listheader">[{oxmultilang ident="OXPS_PAYPAL_INVOICE_ID"}]</td>
                 <td class="listheader">[{oxmultilang ident="OXPS_PAYPAL_COMMENT"}]</td>
-                <td class="listheader">[{oxmultilang ident="OXPS_PAYPAL_HISTORY_ACTIONS"}]</td>
             </tr>
             [{foreach from=$oView->getPaypalHistory() item=listitem name=paypalHistory}]
             [{cycle values='listitem,listitem2' assign='class'}]
@@ -141,24 +98,8 @@
                 </td>
                 <td valign="top" class="[{$class}]">[{oxmultilang ident='OXPS_PAYPAL_STATUS_'|cat:$listitem.status}]</td>
                 <td valign="top" class="[{$class}]">[{$listitem.transactionid}]</td>
+                <td valign="top" class="[{$class}]">[{$listitem.invoiceid}]</td>
                 <td valign="top" class="[{$class}]">[{$listitem.comment}]</td>
-                <td valign="top" class="[{$class}]">
-[{*
-                    [{if $orderPaymentActionManager->isActionAvailable('refund', $listitem)}]
-                    <a id="refundButton[{$smarty.foreach.paypalHistory.index}]" class="actionLink"
-                       data-action="refund"
-                       data-type="[{if $listitem->getRefundedAmount() > 0}]Partial[{else}]Full[{/if}]"
-                       data-amount="[{$listitem->getRemainingRefundAmount()}]"
-                       data-transid="[{$listitem.transactionid}]"
-                       data-statuslist='[{$orderPaymentStatusList->getAvailableStatuses('refund')|@json_encode}]'
-                       data-activestatus="[{$orderPaymentStatusCalculator->getSuggestStatus('refund')}]"
-                       href="#">
-                        <img src="[{$oViewConf->getModuleUrl('oxps/paypal','out/img/ico-refund.png')}]"
-                             title="[{oxmultilang ident="OXPS_PAYPAL_REFUND"}]"/>
-                    </a>
-                    [{/if}]
-*}]
-                </td>
             </tr>
             [{/foreach}]
         </table>
@@ -221,140 +162,48 @@
     </tr>
     </tbody>
     </table>
-[{*
-    <div id="paypalOverlay"></div>
 
-    <div id="paypalActions" class="paypalPopUp">
-        <form name="myedit" action="[{$oViewConf->getSelfLink()}]" method="post">
+    [{oxmultilang ident="OXPS_PAYPAL_ACTIONS"}]: <br>
+    <form action="[{$oViewConf->getSelfLink()}]" method="post">
+        [{$oViewConf->getHiddenSid()}]
+        <input type="hidden" name="fnc" value="capture">
+        <input type="hidden" name="cl" value="PaypalOrderController">
+        <input type="hidden" name="oxid" value="[{$oxid}]">
+        <input type="hidden" name="language" value="[{$actlang}]">
+        <input type="submit" value="[{oxmultilang ident="OXPS_PAYPAL_CAPTURE"}]">
+    </form>
+
+    <div style="margin-top: 10px">
+        [{oxmultilang ident="OXPS_PAYPAL_ISSUE_REFUND"}]
+        <form action="[{$oViewConf->getSelfLink()}]" method="post">
             [{$oViewConf->getHiddenSid()}]
-            <input type="hidden" name="cl" value="oepaypalorder_paypal">
-            <input type="hidden" name="fnc" value="processAction">
+            <input type="hidden" name="fnc" value="refund">
+            <input type="hidden" name="cl" value="PaypalOrderController">
             <input type="hidden" name="oxid" value="[{$oxid}]">
-            <input type="hidden" name="editval[category__oxid]" value="[{$oxid}]">
-            <input type="hidden" name="action" value="">
-            <input type="hidden" name="transaction_id" value="">
-            <input type="hidden" name="full_amount" value="">
-
-            <div id="paypalActionsContent"></div>
+            <input type="hidden" name="language" value="[{$actlang}]">
+            <table class="paypalActionsTable">
+                <tr>
+                    <td><label for="refundAmount">[{oxmultilang ident="OXPS_PAYPAL_REFUND_AMOUNT"}]</label></td>
+                    <td><input type="number" id="refundAmount" name="refundAmount"></td>
+                </tr>
+                <tr>
+                    <td><label for="invoiceId">[{oxmultilang ident="OXPS_PAYPAL_INVOICE_ID"}]</label></td>
+                    <td><input type="text" id="invoiceId" name="invoiceId" maxlength="127"></td>
+                </tr>
+                <tr>
+                    <td><label for="noteToBuyer">[{oxmultilang ident="OXPS_PAYPAL_NOTE_TO_BUYER"}]</label></td>
+                    <td><textarea id="noteToBuyer" name="noteToBuyer" maxlength="255"></textarea></td>
+                </tr>
+                <tr>
+                    <td><label for="refundAll">[{oxmultilang ident="OXPS_PAYPAL_REFUND_ALL"}]</label></td>
+                    <td><input type="checkbox" id="refundAll" name="refundAll"></td>
+                </tr>
+                <tr>
+                    <td><input type="submit" value="[{oxmultilang ident="OXPS_PAYPAL_REFUND"}]"></td>
+                </tr>
+            </table>
         </form>
     </div>
-    <div id="paypalActionsBlocks">
-        <div id="captureBlock" class="paypalActionsBlock">
-            <h3>[{oxmultilang ident="OXPS_PAYPAL_MONEY_CAPTURE"}]</h3>
-
-            <p class="paypalActionsBlockOptions">
-                <label for="captureAmountInput">[{oxmultilang ident="OXPS_PAYPAL_AMOUNT"}]</label>:
-                <select class="amountSelect" name="capture_type" data-input="captureAmountInput">
-                    <option value="Complete"
-                            data-disabled="1"
-                            data-statuslist='[{$orderPaymentStatusList->getAvailableStatuses('capture')|@json_encode}]'
-                            data-activestatus="[{$orderPaymentStatusCalculator->getSuggestStatus('capture')}]">
-                        [{oxmultilang ident="OXPS_PAYPAL_MONEY_ACTION_FULL"}]
-                    </option>
-                    <option value="NotComplete"
-                            data-disabled="0"
-                            data-statuslist='[{$orderPaymentStatusList->getAvailableStatuses('capture_partial')|@json_encode}]'
-                            data-activestatus="[{$orderPaymentStatusCalculator->getSuggestStatus('capture_partial')}]">
-                        [{oxmultilang ident="OXPS_PAYPAL_MONEY_ACTION_PARTIAL"}]
-                    </option>
-                </select>
-                <input id="captureAmountInput" type="text" class="editinput" name="capture_amount" size="10" value=""
-                       disabled="disabled"> [{$currency}]
-            </p>
-            <div class="paypalStatusListPlaceholder"></div>
-            <p class="paypalActionsBlockNotice">
-                <label>[{oxmultilang ident="OXPS_PAYPAL_COMMENT"}]</label></br>
-                <textarea name="action_comment"></textarea>
-            </p>
-
-            <p class="paypalActionsButtons">
-                <input id="captureSubmit" type="submit" class="edittext" name="action_submit"
-                       value="[{oxmultilang ident="OXPS_PAYPAL_CAPTURE"}]">
-            </p>
-        </div>
-
-        <div id="voidBlock" class="paypalActionsBlock">
-            <h3>[{oxmultilang ident="OXPS_PAYPAL_AUTHORIZATION"}]</h3>
-
-            <div class="paypalStatusListPlaceholder"></div>
-            <p class="paypalActionsBlockNotice">
-                <label>[{oxmultilang ident="OXPS_PAYPAL_COMMENT"}]</label></br>
-                <textarea name="action_comment"></textarea>
-            </p>
-
-            <p class="paypalActionsButtons">
-                <input id="voidSubmit" type="submit" class="edittext" name="action_submit"
-                       value="[{oxmultilang ident="OXPS_PAYPAL_CANCEL_AUTHORIZATION"}]">
-            </p>
-        </div>
-
-        <div id="refundBlock" class="paypalActionsBlock">
-            <h3>[{oxmultilang ident="OXPS_PAYPAL_MONEY_REFUND"}]:</h3>
-
-            <p class="paypalActionsBlockOptions">
-                <select class="amountSelect" name="refund_type" data-input="refundAmountInput">
-                    <option value="Full"
-                            data-disabled="1"
-                            data-statuslist='[{$orderPaymentStatusList->getAvailableStatuses('refund')|@json_encode}]'
-                            data-activestatus="[{$orderPaymentStatusCalculator->getSuggestStatus('refund')}]">
-                        [{oxmultilang ident="OXPS_PAYPAL_MONEY_ACTION_FULL"}]
-                    </option>
-                    <option value="Partial"
-                            data-disabled="0"
-                            data-statuslist='[{$orderPaymentStatusList->getAvailableStatuses('refund_partial')|@json_encode}]'
-                            data-activestatus="[{$orderPaymentStatusCalculator->getSuggestStatus('refund_partial')}]">
-                        [{oxmultilang ident="OXPS_PAYPAL_MONEY_ACTION_PARTIAL"}]
-                    </option>
-                </select>
-                <input id="refundAmountInput" type="text" class="editinput" name="refund_amount" size="10" value=""
-                       disabled="disabled"> [{$currency}]
-            </p>
-            <div class="paypalStatusListPlaceholder"></div>
-            <p class="paypalActionsBlockNotice">
-                <label>[{oxmultilang ident="OXPS_PAYPAL_COMMENT"}]</label></br>
-                <textarea name="action_comment"></textarea>
-            </p>
-
-            <p class="paypalActionsButtons">
-                <input id="refundSubmit" type="submit" class="edittext" name="action_submit"
-                       value="[{oxmultilang ident="OXPS_PAYPAL_REFUND"}]">
-            </p>
-        </div>
-
-        <div id="paypalStatusList">
-            [{oxmultilang ident="OXPS_PAYPAL_SHOP_PAYMENT_STATUS"}]
-            [{foreach from=$orderPaymentStatusList item=status}]
-                <span id="[{$status}]Status">
-                    <input id="[{$status}]StatusCheckbox" type="radio" name="order_status" value="[{$status}]">
-                    <label for="[{$status}]StatusCheckbox">[{oxmultilang ident='OXPS_PAYPAL_STATUS_'|cat:$status}]</label>
-                </span>
-            [{/foreach}]
-        </div>
-    </div>
-*}]
-<form action="[{$oViewConf->getSelfLink()}]" method="post">
-    [{$oViewConf->getHiddenSid()}]
-    <input type="hidden" name="fnc" value="refund">
-    <input type="hidden" name="cl" value="PaypalOrderController">
-
-    <label for="refundAmount">[{oxmultilang ident="OXPS_PAYPAL_REFUND_AMOUNT"}]</label>
-    <input type="number" id="refundAmount" name="refundAmount">
-
-    <label for="invoiceId">[{oxmultilang ident="OXPS_PAYPAL_INVOICE_ID"}]</label>
-    <input type="text" id="invoiceId" name="invoiceId" maxlength="127">
-
-    <label for="noteToBuyer">[{oxmultilang ident="OXPS_PAYPAL_NOTE_TO_BUYER"}]</label>
-    <textarea id="noteToBuyer" name="noteToBuyer" maxlength="255"></textarea>
-
-    <label for="refundAll">[{oxmultilang ident="OXPS_PAYPAL_REFUND_ALL"}]</label>
-    <input type="checkbox" id="refundAll" name="refundAll">
-
-    <input type="submit">
-</form>
-
-    [{else}]
-        <div class="messagebox">[{$sMessage}]</div>
-    [{/if}]
-
+[{/if}]
 [{include file="bottomnaviitem.tpl"}]
 [{include file="bottomitem.tpl"}]
