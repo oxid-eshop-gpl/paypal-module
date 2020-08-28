@@ -80,8 +80,6 @@ class PaypalOrderController extends AdminDetailsController
                 $this->addTplParam('payPalOrder', $order->getPayPalOrder());
                 $this->addTplParam('capture', $order->getOrderPaymentCapture());
             }
-
-
         } catch (ApiException $exception) {
             $this->addTplParam('error', $exception->getErrorDescription());
             Registry::getLogger()->error($exception);
