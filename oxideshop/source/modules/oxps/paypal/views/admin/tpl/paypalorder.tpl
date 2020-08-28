@@ -494,9 +494,7 @@
         </div>
     </div>
 *}]
-    [{else}]
-        <div class="messagebox">[{$sMessage}]</div>
-    [{/if}]
+[{/if}]
 
 [{include file="bottomnaviitem.tpl"}]
 [{include file="bottomitem.tpl"}]
