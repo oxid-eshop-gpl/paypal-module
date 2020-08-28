@@ -6,6 +6,10 @@
     <input type="hidden" name="cl" value="PaypalOrderController">
 </form>
 
+[{if $error}]
+    <div class="errorbox">[{$error}]</div>
+[{/if}]
+
 [{if $order && $payPalOrder}]
 
     [{assign var="currency" value=$oView->getPaypalCurrency()}]
@@ -15,13 +19,6 @@
     <tr>
     <td class="edittext" valign="top">
         <table class="paypalActionsTable" width="98%">
-            [{if $error}]
-                <tr>
-                    <td colspan="2">
-                        <div class="errorbox">[{$error}]</div>
-                    </td>
-                </tr>
-            [{/if}]
             <tr>
                 <td class="edittext">[{oxmultilang ident="OXPS_PAYPAL_SHOP_PAYMENT_STATUS"}]:</td>
                 <td class="edittext">
@@ -87,8 +84,8 @@
                     [{oxinputhelp ident="OXPS_PAYPAL_HISTORY_PAYPAL_STATUS_HELP"}]
                 </td>
                 <td class="listheader">[{oxmultilang ident="OXPS_PAYPAL_TRANSACTIONID"}]</td>
+                <td class="listheader">[{oxmultilang ident="OXPS_PAYPAL_INVOICE_ID"}]</td>
                 <td class="listheader">[{oxmultilang ident="OXPS_PAYPAL_COMMENT"}]</td>
-                <td class="listheader">[{oxmultilang ident="OXPS_PAYPAL_HISTORY_ACTIONS"}]</td>
             </tr>
             [{foreach from=$oView->getPaypalHistory() item=listitem name=paypalHistory}]
             [{cycle values='listitem,listitem2' assign='class'}]
@@ -101,6 +98,7 @@
                 </td>
                 <td valign="top" class="[{$class}]">[{oxmultilang ident='OXPS_PAYPAL_STATUS_'|cat:$listitem.status}]</td>
                 <td valign="top" class="[{$class}]">[{$listitem.transactionid}]</td>
+                <td valign="top" class="[{$class}]">[{$listitem.invoiceid}]</td>
                 <td valign="top" class="[{$class}]">[{$listitem.comment}]</td>
             </tr>
             [{/foreach}]
@@ -206,5 +204,6 @@
             </table>
         </form>
     </div>
+[{/if}]
 [{include file="bottomnaviitem.tpl"}]
 [{include file="bottomitem.tpl"}]

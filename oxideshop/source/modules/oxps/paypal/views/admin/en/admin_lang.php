@@ -161,8 +161,8 @@ $aLang = [
     'OXPS_PAYPAL_RESPONSE_FROM_PAYPAL'        => 'Error message from PayPal: ',
     'OXPS_PAYPAL_AUTHORIZATIONID'             => 'Authorization ID',
     'OXPS_PAYPAL_TRANSACTIONID'               => 'Transaction ID',
-    'OXPS_PAYPAL_REFUND_AMOUNT'            => 'Refund amount',
-    'OXPS_PAYPAL_INVOICE_ID'               => 'Invoice ID',
-    'OXPS_PAYPAL_NOTE_TO_BUYER'            => 'Note to buyer',
-    'OXPS_PAYPAL_REFUND_ALL'               => 'Refund all',
+    'OXPS_PAYPAL_REFUND_AMOUNT'               => 'Refund amount',
+    'OXPS_PAYPAL_INVOICE_ID'                  => 'Invoice No',
+    'OXPS_PAYPAL_NOTE_TO_BUYER'               => 'Note to buyer',
+    'OXPS_PAYPAL_REFUND_ALL'                  => 'Refund all',
 ];
