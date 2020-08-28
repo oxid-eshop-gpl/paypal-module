@@ -1,78 +1,5 @@
 [{include file="headitem.tpl" title="GENERAL_ADMIN_TITLE"|oxmultilangassign}]
 
-[{oxscript include="js/libs/jquery.min.js"}]
-[{oxscript include=$oViewConf->getModuleUrl('oxps/paypal','out/src/js/paypal_order.js')}]
-[{oxscript add="jQuery.noConflict();" priority=10}]
-
-<style>
-    .paypalActionsTable {
-        border: 1px #A9A9A9;
-        border-style: solid solid solid solid;
-        padding: 5px;
-    }
-
-    #paypalOverlay {
-        position: fixed;
-        width: 100%;
-        height: 2000px;
-        opacity: 0.5;
-        background: #ccc;
-        top: 0;
-        left: 0;
-        display: none;
-    }
-
-    .paypalPopUp {
-        position: fixed;
-        background: #fff;
-        left: 0;
-        top: 100px;
-        padding: 10px;
-        min-width: 350px;
-        max-width: 550px;
-        z-index: 91;
-        display: none;
-        white-space: normal;
-    }
-
-    .paypalPopUp .paypalPopUpClose {
-        position: absolute;
-        top: 0;
-        right: 0;
-        border: 1px solid #000;
-        padding: 3px 6px;
-    }
-
-    .paypalActionsButtons {
-        text-align: right;
-        margin-bottom: 0;
-    }
-
-    .paypalActionsBlockNotice textarea {
-        width: 100%;
-        height: 80px;
-        margin: 0;
-    }
-
-    #paypalStatusList {
-        display: none;
-    }
-
-    #paypalActionsBlocks {
-        display: none;
-    }
-
-    #historyTable {
-        border-spacing: 0;
-        border-collapse: collapse;
-        width: 98%;
-    }
-
-    a.popUpLink, a.actionLink {
-        text-decoration: underline;
-    }
-</style>
-
 <form name="transfer" id="transfer" action="[{$oViewConf->getSelfLink()}]" method="post">
     [{$oViewConf->getHiddenSid()}]
     <input type="hidden" name="oxid" value="[{$oxid}]">
@@ -200,6 +127,7 @@
                     [{oxinputhelp ident="OXPS_PAYPAL_HISTORY_PAYPAL_STATUS_HELP"}]
                 </td>
                 <td class="listheader">[{oxmultilang ident="OXPS_PAYPAL_TRANSACTIONID"}]</td>
+                <td class="listheader">[{oxmultilang ident="OXPS_PAYPAL_COMMENT"}]</td>
                 <td class="listheader">[{oxmultilang ident="OXPS_PAYPAL_HISTORY_ACTIONS"}]</td>
             </tr>
             [{foreach from=$oView->getPaypalHistory() item=listitem name=paypalHistory}]
@@ -213,25 +141,8 @@
                 </td>
                 <td valign="top" class="[{$class}]">[{oxmultilang ident='OXPS_PAYPAL_STATUS_'|cat:$listitem.status}]</td>
                 <td valign="top" class="[{$class}]">[{$listitem.transactionid}]</td>
+                <td valign="top" class="[{$class}]">[{$listitem.comment}]</td>
                 <td valign="top" class="[{$class}]">
-                    <a class="popUpLink" href="#"
-                       data-block="historyDetailsBlock[{$smarty.foreach.paypalHistory.index}]"><img
-                                src="[{$oViewConf->getModuleUrl('oxps/paypal','out/img/ico-details.png')}]"
-                                title="[{oxmultilang ident="OXPS_PAYPAL_DETAILS"}]"/></a>
-
-                    <div id="historyDetailsBlock[{$smarty.foreach.paypalHistory.index}]" class="paypalPopUp">
-                        <h3>[{oxmultilang ident="OXPS_PAYPAL_DETAILS"}] ([{$listitem.date}])</h3>
-
-                        <p>
-                            [{oxmultilang ident="OXPS_PAYPAL_HISTORY_PAYPAL_STATUS"}]: <b>[{oxmultilang ident='OXPS_PAYPAL_STATUS_'|cat:$listitem.status}]</b><br/>
-                        </p>
-                        <p>
-                            <label>[{oxmultilang ident="OXPS_PAYPAL_TRANSACTIONID"}]: </label><b>[{$listitem.transactionid}]</b><br/>
-                        </p>
-                        <p>
-                            <label>[{oxmultilang ident="OXPS_PAYPAL_COMMENT"}]: </label><b>[{$listitem.comment}]</b><br/>
-                        </p>
-                    </div>
 [{*
                     [{if $orderPaymentActionManager->isActionAvailable('refund', $listitem)}]
                     <a id="refundButton[{$smarty.foreach.paypalHistory.index}]" class="actionLink"
