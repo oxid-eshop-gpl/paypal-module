@@ -2,47 +2,48 @@
 
 <div class="container-fluid">
     <form method="post" action="[{$oViewConf->getSelfLink()}]">
-        <div id="filters" class="row">
-            [{if isset($error)}]
-            <div class="alert alert-primary" role="alert">
+        <div id="filters">
+            [{if !empty($error)}]
+            <div class="alert alert-danger" role="alert">
                 [{$error}]
             </div>
             [{/if}]
-            [{include file="_formparams.tpl" cl="PayPalBalanceController" lstrt=$lstrt actedit=$actedit oxid=$oxid fnc="" language=$actlang editlanguage=$actlang}]
-            <div class="col-sm-4 col-md-3">
-                <div class="form-group">
-                    <label for="asOfTimeFilter">[{oxmultilang ident="OXPS_PAYPAL_AS_OF_TIME"}]</label>
-                    <input type="datetime-local"
-                           class="form-control"
-                           id="asOfTimeFilter"
-                           name="asOfTime"
-                           value="[{if $oView->getAsOfTime()}][{$oView->getAsOfTime()}][{/if}]">
+            <div class="row">
+                [{include file="_formparams.tpl" cl="PayPalBalanceController" lstrt=$lstrt actedit=$actedit oxid=$oxid fnc="" language=$actlang editlanguage=$actlang}]
+                <div class="col-sm-4 col-md-3">
+                    <div class="form-group">
+                        <label for="asOfTimeFilter">[{oxmultilang ident="OXPS_PAYPAL_AS_OF_TIME"}]</label>
+                        <input type="datetime-local"
+                               class="form-control"
+                               id="asOfTimeFilter"
+                               name="asOfTime"
+                               value="[{if $oView->getAsOfTime()}][{$oView->getAsOfTime()}][{/if}]">
+                    </div>
                 </div>
-            </div>
-            <div class="col-sm-2">
-                <div class="form-group">
-                    <label for="currencyCodeFilter">[{oxmultilang ident="OXPS_PAYPAL_CURRENCY_CODE"}]</label>
-                    <select class="form-control"
-                            id="currencyCodeFilter"
-                            name="currencyCode">
-                        <option value=""></option>
-                        [{assign var="selectedCurrencyCode" value=$oView->getCurrencyCode()}]
-                        [{foreach from=$oViewConf->getPayPalCurrencyCodes() item="currencyCode"}]
-                        <option value="[{$currencyCode}]" [{if $currencyCode == $selectedCurrencyCode}]selected[{/if}]>
-                            [{$currencyCode}]
-                        </option>
-                        [{/foreach}]
-                    </select>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label for="currencyCodeFilter">[{oxmultilang ident="OXPS_PAYPAL_CURRENCY_CODE"}]</label>
+                        <select class="form-control"
+                                id="currencyCodeFilter"
+                                name="currencyCode">
+                            <option value=""></option>
+                            [{assign var="selectedCurrencyCode" value=$oView->getCurrencyCode()}]
+                            [{foreach from=$oViewConf->getPayPalCurrencyCodes() item="currencyCode"}]
+                            <option value="[{$currencyCode}]" [{if $currencyCode == $selectedCurrencyCode}]selected[{/if}]>
+                                [{$currencyCode}]
+                            </option>
+                            [{/foreach}]
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="col-sm-12">
-                <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_APPLY"}]</button>
+                <div class="col-sm-12">
+                    <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_APPLY"}]</button>
+                </div>
             </div>
         </div>
     </form>
 
-    [{assign var="balances" value=$oView->getBalances()}]
-    [{if $balances}]
+    [{if isset($balances)}]
     <div id="balances">
         <div class="row">
             <div class="col-sm-5">

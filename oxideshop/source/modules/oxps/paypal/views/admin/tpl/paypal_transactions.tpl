@@ -5,7 +5,7 @@
 <form method="post" id="transaction-filters" action="[{$oViewConf->getSelfLink()}]">
     [{include file="_formparams.tpl" cl="PayPalTransactionController" lstrt=$lstrt actedit=$actedit oxid=$oxid fnc="" language=$actlang editlanguage=$actlang}]
     <div id="filters">
-        [{if isset($error)}]
+        [{if !empty($error)}]
         <div class="alert alert-danger" role="alert">
             [{$error}]
         </div>
