@@ -28,6 +28,7 @@ use OxidProfessionalServices\PayPal\Api\Service\Orders;
 use OxidProfessionalServices\PayPal\Api\Service\Payments;
 use OxidProfessionalServices\PayPal\Api\Service\GenericService;
 use OxidProfessionalServices\PayPal\Api\Service\Catalog;
+use OxidProfessionalServices\PayPal\Api\Service\TransactionSearch;
 
 /**
  * Class ServiceFactory
