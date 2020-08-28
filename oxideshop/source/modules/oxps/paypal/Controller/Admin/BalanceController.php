@@ -69,7 +69,10 @@ class BalanceController extends AdminListController
                 $this->getCurrencyCode()
             );
         } catch (ApiException $exception) {
-            Registry::getLogger()->error('Error when fetching balance data', [$exception]);
+            if ($exception->shouldDisplay()) {
+                $this->addTplParam('error', $exception->getErrorDescription());
+            }
+            Registry::getLogger()->error($exception);
         }
 
         return $response;

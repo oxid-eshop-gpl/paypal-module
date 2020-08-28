@@ -56,7 +56,7 @@ class ApiException extends \Exception
      *
      * @return bool
      */
-    public function shouldDisplay(): bool
+    public function shouldDisplay()
     {
         return true;
     }
@@ -66,10 +66,18 @@ class ApiException extends \Exception
      *
      * @return string
      */
-    public function getErrorDescription(): string
+    public function getErrorDescription()
     {
         $error = json_decode($this->response->getBody(), true);
+        $details = $error['details'][0];
+        $description = $details['description'];
+        if (!$description) {
+            $description = $details['issue'];
+        }
+        if (!$description) {
+            $description = $error['message'];
+        }
 
-        return $description = $error['details'][0]['description'];
+        return $description;
     }
 }

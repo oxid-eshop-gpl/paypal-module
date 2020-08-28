@@ -55,17 +55,21 @@ class TransactionController extends AdminListController
      */
     public function render()
     {
-        $this->requestTransactions();
-
-        $this->addTplParam('eventCodes', TransactionEventCodes::EVENT_CODES);
+        try {
+            $this->requestTransactions();
+            $this->addTplParam('eventCodes', TransactionEventCodes::EVENT_CODES);
+        } catch (ApiException $exception) {
+            if ($exception->shouldDisplay()) {
+                $this->addTplParam('error', $exception->getErrorDescription());
+            }
+            Registry::getLogger()->error($exception);
+        }
 
         return parent::render();
     }
 
     /**
      * Fetches filtered transaction data
-     *
-     * @noinspection PhpUndefinedVariableInspection
      */
     protected function requestTransactions()
     {
@@ -74,33 +78,26 @@ class TransactionController extends AdminListController
         $transactionService = $serviceFactory->getTransactionSearchService();
         $filters = $this->buildPayPalFilterParameters();
 
-        try {
-            $this->response = $transactionService->listTransactions(
-                $filters['transactionId'],
-                $filters['transactionType'],
-                $filters['transactionStatus'],
-                $filters['transactionAmount'],
-                $filters['transactionCurrency'],
-                $filters['transactionDate'],
-                $filters['startDate'],
-                $filters['endDate'],
-                $filters['paymentInstrumentType'],
-                $filters['storeId'],
-                $filters['terminalId'],
-                $this->getActivePage(),
-                $this->getViewListSize(),
-                $filters['balanceAffectingRecordsOnly']
-            );
-        } catch (ApiException $exception) {
-            $this->response = null;
-            Registry::getLogger()->error('Error when fetching transaction data', [$exception]);
-        }
+        $this->response = $transactionService->listTransactions(
+            $filters['transactionId'],
+            $filters['transactionType'],
+            $filters['transactionStatus'],
+            $filters['transactionAmount'],
+            $filters['transactionCurrency'],
+            $filters['transactionDate'],
+            $filters['startDate'],
+            $filters['endDate'],
+            $filters['paymentInstrumentType'],
+            $filters['storeId'],
+            $filters['terminalId'],
+            $this->getActivePage(),
+            $this->getViewListSize(),
+            $filters['balanceAffectingRecordsOnly']
+        );
     }
 
     /**
      * Builds PayPal filter values
-     *
-     * @param array $filters
      *
      * @return array
      */

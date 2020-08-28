@@ -3,6 +3,11 @@
 <div class="container-fluid">
     <form method="post" action="[{$oViewConf->getSelfLink()}]">
         <div id="filters" class="row">
+            [{if isset($error)}]
+            <div class="alert alert-primary" role="alert">
+                [{$error}]
+            </div>
+            [{/if}]
             [{include file="_formparams.tpl" cl="PayPalBalanceController" lstrt=$lstrt actedit=$actedit oxid=$oxid fnc="" language=$actlang editlanguage=$actlang}]
             <div class="col-sm-4 col-md-3">
                 <div class="form-group">
