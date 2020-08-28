@@ -341,56 +341,47 @@
     </tbody>
     </table>
 
-    [{oxmultilang ident="OXPS_PAYPAL_ACTIONS"}]:
-
-    [{oxmultilang ident="OXPS_PAYPAL_CAPTURE_PAYMENT"}]
+    [{oxmultilang ident="OXPS_PAYPAL_ACTIONS"}]: <br>
     <form action="[{$oViewConf->getSelfLink()}]" method="post">
         [{$oViewConf->getHiddenSid()}]
         <input type="hidden" name="fnc" value="capture">
         <input type="hidden" name="cl" value="PaypalOrderController">
         <input type="hidden" name="oxid" value="[{$oxid}]">
         <input type="hidden" name="language" value="[{$actlang}]">
-
         <input type="submit" value="[{oxmultilang ident="OXPS_PAYPAL_CAPTURE"}]">
     </form>
 
-    [{oxmultilang ident="OXPS_PAYPAL_ISSUE_REFUND"}]
-    <form action="[{$oViewConf->getSelfLink()}]" method="post">
+    <div style="margin-top: 10px">
+    <table class="paypalActionsTable">
+        [{oxmultilang ident="OXPS_PAYPAL_ISSUE_REFUND"}]
+        <form action="[{$oViewConf->getSelfLink()}]" method="post">
         [{$oViewConf->getHiddenSid()}]
         <input type="hidden" name="fnc" value="refund">
         <input type="hidden" name="cl" value="PaypalOrderController">
         <input type="hidden" name="oxid" value="[{$oxid}]">
         <input type="hidden" name="language" value="[{$actlang}]">
-
-        <table>
             <tr>
-                <td>
-                    <label for="refundAmount">[{oxmultilang ident="OXPS_PAYPAL_REFUND_AMOUNT"}]</label>
-                    <input type="number" id="refundAmount" name="refundAmount">
-                </td>
+                <td><label for="refundAmount">[{oxmultilang ident="OXPS_PAYPAL_REFUND_AMOUNT"}]</label></td>
+                <td><input type="number" id="refundAmount" name="refundAmount"></td>
             </tr>
             <tr>
-                <td>
-                    <label for="invoiceId">[{oxmultilang ident="OXPS_PAYPAL_INVOICE_ID"}]</label>
-                    <input type="text" id="invoiceId" name="invoiceId" maxlength="127">
-                </td>
+                <td><label for="invoiceId">[{oxmultilang ident="OXPS_PAYPAL_INVOICE_ID"}]</label></td>
+                <td><input type="text" id="invoiceId" name="invoiceId" maxlength="127"></td>
             </tr>
             <tr>
-                <td>
-                    <label for="noteToBuyer">[{oxmultilang ident="OXPS_PAYPAL_NOTE_TO_BUYER"}]</label>
-                    <textarea id="noteToBuyer" name="noteToBuyer" maxlength="255"></textarea>
-                </td>
+                <td><label for="noteToBuyer">[{oxmultilang ident="OXPS_PAYPAL_NOTE_TO_BUYER"}]</label></td>
+                <td><textarea id="noteToBuyer" name="noteToBuyer" maxlength="255"></textarea></td>
             </tr>
             <tr>
-                <td>
-                    <label for="refundAll">[{oxmultilang ident="OXPS_PAYPAL_REFUND_ALL"}]</label>
-                    <input type="checkbox" id="refundAll" name="refundAll">
-                </td>
+                <td><label for="refundAll">[{oxmultilang ident="OXPS_PAYPAL_REFUND_ALL"}]</label></td>
+                <td><input type="checkbox" id="refundAll" name="refundAll"></td>
             </tr>
-        </table>
-
-        <input type="submit" value="[{oxmultilang ident="OXPS_PAYPAL_REFUND"}]">
+        <tr>
+            <td><input type="submit" value="[{oxmultilang ident="OXPS_PAYPAL_REFUND"}]"></td>
+        </tr>
     </form>
+    </table>
+    </div>
 
 [{*
     <div id="paypalOverlay"></div>

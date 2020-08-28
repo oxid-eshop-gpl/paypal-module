@@ -53,7 +53,7 @@ class ApiException extends \Exception
     }
 
     /**
-     * Gets error description message
+     * Gets error description
      *
      * @return string
      */
