@@ -40,6 +40,7 @@ use VIISON\AddressSplitter\Exceptions\SplittingException;
 use OxidEsales\Eshop\Core\Exception\OutOfStockException;
 use OxidEsales\Eshop\Core\Exception\ArticleInputException;
 use OxidEsales\Eshop\Core\Exception\NoArticleException;
+
 /**
  * Server side interface for PayPal smart buttons.
  */
