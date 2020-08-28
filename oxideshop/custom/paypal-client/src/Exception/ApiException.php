@@ -3,10 +3,19 @@
 namespace OxidProfessionalServices\PayPal\Api\Exception;
 
 use GuzzleHttp\Exception\GuzzleException;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class ApiException extends \Exception
 {
+    /**
+     * @var RequestInterface
+     */
     private $request;
+
+    /**
+     * @var ResponseInterface
+     */
     private $response;
 
     public function __construct(GuzzleException $e)
@@ -59,13 +68,8 @@ class ApiException extends \Exception
      */
     public function getErrorDescription(): string
     {
-        $message = '';
+        $error = json_decode($this->response->getBody(), true);
 
-        if ($error = json_decode($this->response->getBody(), true)) {
-            $description = $error['details'][0]->desctiption;
-            $issue = $error['details'][0]->issue;
-        }
-
-        return $message;
+        return $description = $error['details'][0]['description'];
     }
 }

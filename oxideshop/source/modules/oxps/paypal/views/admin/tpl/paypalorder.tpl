@@ -93,18 +93,18 @@
     [{assign var="orderPaymentStatusCalculator" value=$oView->getOrderPaymentStatusCalculator()}]
     [{assign var="orderPaymentStatusList" value=$oView->getOrderPaymentStatusList()}]
 *}]
+    [{if $error}]
+    <tr>
+        <td colspan="2">
+            <div class="errorbox">[{$error}]</div>
+        </td>
+    </tr>
+    [{/if}]
     <table width="98%" cellspacing="0" cellpadding="0" border="0">
     <tbody>
     <tr>
     <td class="edittext" valign="top">
         <table class="paypalActionsTable" width="98%">
-            [{if $error}]
-            <tr>
-                <td colspan="2">
-                    <div class="errorbox">[{$error}]</div>
-                </td>
-            </tr>
-            [{/if}]
             <tr>
                 <td class="edittext">[{oxmultilang ident="OEPAYPAL_SHOP_PAYMENT_STATUS"}]:</td>
                 <td class="edittext">
