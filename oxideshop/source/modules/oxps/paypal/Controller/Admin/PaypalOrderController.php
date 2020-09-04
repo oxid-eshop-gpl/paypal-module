@@ -70,6 +70,8 @@ class PaypalOrderController extends AdminDetailsController
     {
         parent::render();
 
+        $lang = Registry::getLang();
+
         try {
             $order = $this->getOrder();
             $this->addTplParam('oxid', $this->getEditObjectId());
@@ -81,18 +83,12 @@ class PaypalOrderController extends AdminDetailsController
                 $this->addTplParam('capture', $order->getOrderPaymentCapture());
             }
         } catch (ApiException $exception) {
-            $this->addTplParam('error', $exception->getErrorDescription());
+            $this->addTplParam('error', $lang->translateString('OXPS_PAYPAL_ERROR_' . $exception->getErrorIssue()));
             Registry::getLogger()->error($exception);
+        }
 
-            $lang = Registry::getLang();
-
-            $error = "";
-            if (!$order->paidWithPayPal()) {
-                $error = $lang->translateString('OXPS_PAYPAL_NOT_PAID_WITH_PAYPAL');
-            } elseif (!$this->getPayPalOrder()) {
-                $error = $lang->translateString('OXPS_PAYPAL_INVALID_RESOURCE_ID');
-            }
-            $this->addTplParam('error', $error);
+        if (!$order->paidWithPayPal()) {
+            $this->addTplParam('error', $lang->translateString('OXPS_PAYPAL_ERROR_NOT_PAID_WITH_PAYPAL'));
         }
 
         return "paypalorder.tpl";

@@ -63,7 +63,8 @@ class BalanceController extends AdminListController
             $this->addTplParam('balances', $this->getBalances());
         } catch (ApiException $exception) {
             if ($exception->shouldDisplay()) {
-                $this->addTplParam('error', $exception->getErrorDescription());
+                $this->addTplParam('error', Registry::getLang()->translateString('OXPS_PAYPAL_ERROR_' .
+                    $exception->getErrorIssue()));
             }
             Registry::getLogger()->error($exception);
         }

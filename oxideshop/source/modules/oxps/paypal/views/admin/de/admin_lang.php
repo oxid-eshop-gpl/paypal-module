@@ -123,8 +123,6 @@ $aLang = [
         echte Transaktionen zu empfangen, wechseln Sie zu Produktion (live).',
     'OXPS_PAYPAL_WEBHOOK_ID_HELP'    => 'Die ID des Webhooks, wie in Ihrem Developer Portal-Konto konfiguriert',
     // Paypal ORDER
-    'OXPS_PAYPAL_NOT_PAID_WITH_PAYPAL'        => 'Diese Bestellung wurde nicht mit Paypal bezahlt',
-    'OXPS_PAYPAL_INVALID_RESOURCE_ID'         => 'Die Bestellung konnte nicht in Ihrem Paypal-Account gefunden werden',
     'OXPS_PAYPAL_AMOUNT'                      => 'Betrag',
     'OXPS_PAYPAL_SHOP_PAYMENT_STATUS'         => 'Shop-Zahlungsstatus',
     'OXPS_PAYPAL_ORDER_PRICE'                 => 'Bestellpreis gesamt',
@@ -168,4 +166,8 @@ $aLang = [
     'OXPS_PAYPAL_INVOICE_ID'                  => 'Rechnungs-Nr',
     'OXPS_PAYPAL_NOTE_TO_BUYER'               => 'Hinweis für Käufer',
     'OXPS_PAYPAL_REFUND_ALL'                  => 'Alle erstatten',
+    // Errors
+    'OXPS_PAYPAL_ERROR_NOT_PAID_WITH_PAYPAL'  => 'Diese Bestellung wurde nicht mit Paypal bezahlt',
+    'OXPS_PAYPAL_ERROR_INVALID_RESOURCE_ID'   => 'Die Bestellung konnte nicht in Ihrem Paypal-Account gefunden werden.',
+    'OXPS_PAYPAL_ERROR_DUPLICATE_INVOICE_ID'  => 'Die Rechnungsnummer ist bereits vergeben, bitte wählen Sie eine Andere.',
 ];
