@@ -123,8 +123,6 @@ $aLang = [
         to receive real transactions, switch to Production (live).',
     'OXPS_PAYPAL_WEBHOOK_ID_HELP'    => 'The ID of the webhook as configured in your Developer Portal account',
     // Paypal ORDER
-    'OXPS_PAYPAL_NOT_PAID_WITH_PAYPAL'        => 'Order not paid using PayPal',
-    'OXPS_PAYPAL_INVALID_RESOURCE_ID'         => 'The order could not be found in your PayPal account',
     'OXPS_PAYPAL_AMOUNT'                      => 'Amount',
     'OXPS_PAYPAL_SHOP_PAYMENT_STATUS'         => 'Shop payment status',
     'OXPS_PAYPAL_ORDER_PRICE'                 => 'Full order price',
@@ -168,4 +166,8 @@ $aLang = [
     'OXPS_PAYPAL_INVOICE_ID'                  => 'Invoice No',
     'OXPS_PAYPAL_NOTE_TO_BUYER'               => 'Note to buyer',
     'OXPS_PAYPAL_REFUND_ALL'                  => 'Refund all',
+    // Errors
+    'OXPS_PAYPAL_ERROR_NOT_PAID_WITH_PAYPAL'  => 'Order not paid using PayPal',
+    'OXPS_PAYPAL_ERROR_INVALID_RESOURCE_ID'   => 'Specified resource ID does not exist.',
+    'OXPS_PAYPAL_ERROR_DUPLICATE_INVOICE_ID'  => 'Duplicate Invoice ID detected.',
 ];

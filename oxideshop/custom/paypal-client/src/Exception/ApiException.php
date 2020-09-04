@@ -68,17 +68,33 @@ class ApiException extends \Exception
      */
     public function getErrorDescription()
     {
+        $description = '';
+
         if ($error = json_decode($this->response->getBody(), true)) {
             $details = $error['details'][0];
             $description = $details['description'];
-            if (!$description) {
-                $description = $details['issue'];
-            }
             if (!$description) {
                 $description = $error['message'];
             }
         }
 
         return $description;
+    }
+
+    /**
+     * Gets error issue (better for translation ...)
+     *
+     * @return string
+     */
+    public function getErrorIssue()
+    {
+        $issue = '';
+
+        if ($error = json_decode($this->response->getBody(), true)) {
+            $details = $error['details'][0];
+            $issue = $details['issue'];
+        }
+
+        return $issue;
     }
 }
