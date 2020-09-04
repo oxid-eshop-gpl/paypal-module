@@ -82,6 +82,9 @@ $aLang = [
     // Paypal Config
     'OXPS_PAYPAL_CONFIG'             => 'Konfiguration',
     'OXPS_PAYPAL_SUBSCRIBE'          => 'PayPal Abos',
+    'OXPS_PAYPAL_BILLING_PLAN'       => 'PayPal Abrechnungsplan',
+    'OXPS_PAYPAL_BILLING_PLAN_MAIN'       => 'Billing Cycle',
+    'OXPS_PAYPAL_BILLING_PLAN_NAME'  => 'Abrechnungsplan Name',
     'PAYPAL_SUBSCRIBE_MAIN'          => 'PayPal Abos',
     'OXPS_PAYPAL_TRANSACTIONS'       => 'Transaktionen',
     'OXPS_PAYPAL_BALANCES'           => 'Guthaben',

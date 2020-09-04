@@ -30,6 +30,9 @@ class CaptureStatus implements JsonSerializable
     /** An amount greater than or equal to this captured payment's amount was refunded to the payer. */
     public const STATUS_REFUNDED = 'REFUNDED';
 
+    /** There was an error while capturing payment. */
+    public const STATUS_FAILED = 'FAILED';
+
     /**
      * The status of the captured payment.
      *
@@ -39,6 +42,7 @@ class CaptureStatus implements JsonSerializable
      * @see STATUS_PARTIALLY_REFUNDED
      * @see STATUS_PENDING
      * @see STATUS_REFUNDED
+     * @see STATUS_FAILED
      * @var string | null
      */
     public $status;

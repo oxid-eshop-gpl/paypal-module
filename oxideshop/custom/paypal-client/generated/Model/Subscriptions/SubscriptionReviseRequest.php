@@ -68,6 +68,13 @@ class SubscriptionReviseRequest implements JsonSerializable
      */
     public $application_context;
 
+    /**
+     * The plan details to override at subscription level.
+     *
+     * @var PlanOverride | null
+     */
+    public $plan;
+
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
@@ -119,6 +126,12 @@ class SubscriptionReviseRequest implements JsonSerializable
             "application_context in SubscriptionReviseRequest must be instance of ApplicationContext2 $within"
         );
         !isset($this->application_context) ||  $this->application_context->validate(SubscriptionReviseRequest::class);
+        !isset($this->plan) || Assert::isInstanceOf(
+            $this->plan,
+            PlanOverride::class,
+            "plan in SubscriptionReviseRequest must be instance of PlanOverride $within"
+        );
+        !isset($this->plan) ||  $this->plan->validate(SubscriptionReviseRequest::class);
     }
 
     private function map(array $data)
@@ -140,6 +153,9 @@ class SubscriptionReviseRequest implements JsonSerializable
         }
         if (isset($data['application_context'])) {
             $this->application_context = new ApplicationContext2($data['application_context']);
+        }
+        if (isset($data['plan'])) {
+            $this->plan = new PlanOverride($data['plan']);
         }
     }
 
@@ -163,5 +179,10 @@ class SubscriptionReviseRequest implements JsonSerializable
     public function initApplicationContext(): ApplicationContext2
     {
         return $this->application_context = new ApplicationContext2();
+    }
+
+    public function initPlan(): PlanOverride
+    {
+        return $this->plan = new PlanOverride();
     }
 }

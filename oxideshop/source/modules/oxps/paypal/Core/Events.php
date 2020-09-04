@@ -198,6 +198,12 @@ class Events
                             collate latin1_general_ci 
                             NOT NULL 
                             COMMENT \'Paypal product ID\',
+                        `OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID` 
+                            char(32) 
+                            character set latin1 
+                            collate latin1_general_ci 
+                            NOT NULL 
+                            COMMENT \'Paypal PLan ID\',
                         `OXTIMESTAMP` 
                             timestamp 
                             NOT NULL 

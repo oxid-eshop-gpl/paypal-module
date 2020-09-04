@@ -27,6 +27,22 @@ class SubscriptionRepository
     }
 
     /**
+     * @param string $productId
+     * @return array
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     */
+    public function getSubscriptionIdPlanByProductId($productId)
+    {
+        return DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getAll(
+            'SELECT OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID 
+                FROM oxps_paypal_subscription_product 
+                WHERE OXPS_PAYPAL_PRODUCT_ID = ?',
+            [$productId]
+        );
+    }
+
+    /**
      * @param Product $response
      * @throws DatabaseConnectionException
      * @throws DatabaseErrorException
@@ -42,6 +58,24 @@ class SubscriptionRepository
             Registry::getConfig()->getShopId(),
             $oxid,
             $response->id
+        ]);
+    }
+
+    /**
+     * @param string $subscriptionPlanId
+     * @param string $productId
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     */
+    public function saveSubscriptionPlan($subscriptionPlanId, $productId): void
+    {
+        $sql = 'UPDATE oxps_paypal_subscription_product SET ';
+        $sql .= 'OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID = ? ';
+        $sql .= 'WHERE OXPS_PAYPAL_PRODUCT_ID = ?';
+
+        DatabaseProvider::getDb()->execute($sql, [
+            $subscriptionPlanId,
+            $productId,
         ]);
     }
 
