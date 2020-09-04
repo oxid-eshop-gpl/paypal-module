@@ -44,11 +44,13 @@ class TransactionController extends AdminListController
     protected $response;
 
     /**
-     * Current class template name.
-     *
-     * @var string
+     * @inheritDoc
      */
-    protected $_sThisTemplate = 'paypal_transactions.tpl';
+    public function __construct()
+    {
+        parent::__construct();
+        $this->setTemplateName('paypal_transactions.tpl');
+    }
 
     /**
      * @inheritDoc
