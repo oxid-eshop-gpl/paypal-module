@@ -11,7 +11,7 @@ use Webmozart\Assert\Assert;
  *
  * generated from: last_payment_details.json
  */
-class LastPaymentDetails implements JsonSerializable
+class LastPaymentDetails extends CaptureStatus2 implements JsonSerializable
 {
     use BaseModel;
 
@@ -32,6 +32,24 @@ class LastPaymentDetails implements JsonSerializable
      * maxLength: 64
      */
     public $time;
+
+    /**
+     * The sender side PayPal-generated transaction ID.
+     *
+     * @var string | null
+     * minLength: 3
+     * maxLength: 50
+     */
+    public $sender_transaction_id;
+
+    /**
+     * The receiver side PayPal-generated transaction ID.
+     *
+     * @var string | null
+     * minLength: 3
+     * maxLength: 50
+     */
+    public $receiver_transaction_id;
 
     public function validate($from = null)
     {
@@ -54,6 +72,26 @@ class LastPaymentDetails implements JsonSerializable
             64,
             "time in LastPaymentDetails must have maxlength of 64 $within"
         );
+        !isset($this->sender_transaction_id) || Assert::minLength(
+            $this->sender_transaction_id,
+            3,
+            "sender_transaction_id in LastPaymentDetails must have minlength of 3 $within"
+        );
+        !isset($this->sender_transaction_id) || Assert::maxLength(
+            $this->sender_transaction_id,
+            50,
+            "sender_transaction_id in LastPaymentDetails must have maxlength of 50 $within"
+        );
+        !isset($this->receiver_transaction_id) || Assert::minLength(
+            $this->receiver_transaction_id,
+            3,
+            "receiver_transaction_id in LastPaymentDetails must have minlength of 3 $within"
+        );
+        !isset($this->receiver_transaction_id) || Assert::maxLength(
+            $this->receiver_transaction_id,
+            50,
+            "receiver_transaction_id in LastPaymentDetails must have maxlength of 50 $within"
+        );
     }
 
     private function map(array $data)
@@ -64,10 +102,17 @@ class LastPaymentDetails implements JsonSerializable
         if (isset($data['time'])) {
             $this->time = $data['time'];
         }
+        if (isset($data['sender_transaction_id'])) {
+            $this->sender_transaction_id = $data['sender_transaction_id'];
+        }
+        if (isset($data['receiver_transaction_id'])) {
+            $this->receiver_transaction_id = $data['receiver_transaction_id'];
+        }
     }
 
     public function __construct(array $data = null)
     {
+        parent::__construct($data);
         $this->amount = new Money();
         if (isset($data)) {
             $this->map($data);

@@ -27,9 +27,13 @@ use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Core\Exception\DatabaseConnectionException;
 use OxidEsales\Eshop\Core\Exception\DatabaseErrorException;
 use OxidEsales\Eshop\Core\Registry;
-use OxidProfessionalServices\PayPal\Api\Model\Catalog\Patch;
+use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
 use OxidProfessionalServices\PayPal\Api\Model\Catalog\Product;
-use OxidProfessionalServices\PayPal\Api\Model\Catalog\ProductRequestPOST;
+use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Frequency;
+use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Plan;
+use OxidProfessionalServices\PayPal\Controller\Admin\Service\CatalogService;
+use OxidProfessionalServices\PayPal\Controller\Admin\Service\SubscriptionService;
+use OxidProfessionalServices\PayPal\Core\Currency;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 use OxidProfessionalServices\PayPal\Model\Category;
 use OxidProfessionalServices\PayPal\Repository\SubscriptionRepository;
@@ -52,6 +56,13 @@ class PaypalSubscribeController extends AdminController
      * @var array
      */
     private $linkedProduct;
+
+
+    /**
+     * The lined subscription plan called from Paypal API
+     * @var Plan
+     */
+    private $subscriptionPlan;
 
     /**
      * @var SubscriptionRepository
@@ -90,7 +101,115 @@ class PaypalSubscribeController extends AdminController
     }
 
     /**
+     * @return array
+     */
+    public function getIntervalDefaults()
+    {
+        return [
+            Frequency::INTERVAL_UNIT_DAY,
+            Frequency::INTERVAL_UNIT_WEEK,
+            Frequency::INTERVAL_UNIT_SEMI_MONTH,
+            Frequency::INTERVAL_UNIT_MONTH,
+            Frequency::INTERVAL_UNIT_YEAR
+        ];
+    }
+
+    /**
+     * @return array|string[]
+     */
+    public function getCurrencyCodes()
+    {
+        return Currency::getCurrencyCodes();
+    }
+
+    /**
+     * @return array
+     */
+    public function getTenureTypeDefaults()
+    {
+        return [
+            'REGULAR',
+            'TRIAL'
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getSequenceDefaults()
+    {
+        $array = [];
+
+        for ($i = 1; $i < 100; $i++) {
+            $array[] = $i;
+        }
+
+        return $array;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTotalCycleDefaults()
+    {
+        $array = [];
+
+        for ($i = 0; $i < 1000; $i++) {
+            $array[] = $i;
+        }
+
+        return $array;
+    }
+
+    /**
      * @return bool
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     * @throws ApiException
+     */
+    public function hasSubscriptionPlan()
+    {
+        $this->setSubscriptionPlan();
+        if (!empty($this->subscriptionPlan)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @return bool|Plan
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     * @throws ApiException
+     */
+    public function setSubscriptionPlan()
+    {
+        if (!empty($this->subscriptionPlan)) {
+            return $this->subscriptionPlan;
+        }
+
+        $result = $this->repository->getSubscriptionIdPlanByProductId($this->linkedObject->id);
+        $subscriptionPlanId = $result[0]['OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID'];
+
+        if (empty($subscriptionPlanId)) {
+            return false;
+        }
+
+        /** @var ServiceFactory $sf */
+        $sf = Registry::get(ServiceFactory::class);
+        $subscriptionPlan = $sf->getSubscriptionService()->showPlanDetails('string', $subscriptionPlanId, 1);
+
+        if ($subscriptionPlan !== null) {
+            $this->subscriptionPlan = $subscriptionPlan;
+        }
+
+        return $this->subscriptionPlan;
+    }
+
+    /**
+     * @return bool
+     * @throws ApiException
      */
     public function hasLinkedObject()
     {
@@ -104,6 +223,7 @@ class PaypalSubscribeController extends AdminController
 
     /**
      * @return Product
+     * @throws ApiException
      */
     public function getLinkedObject()
     {
@@ -112,7 +232,19 @@ class PaypalSubscribeController extends AdminController
     }
 
     /**
-     * @throws \OxidProfessionalServices\PayPal\Api\Exception\ApiException
+     * @return Plan
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     * @throws ApiException
+     */
+    public function getSubscriptionPlan()
+    {
+        $this->setSubscriptionPlan();
+        return $this->subscriptionPlan;
+    }
+
+    /**
+     * @throws ApiException
      */
     public function setLinkedObject()
     {
@@ -142,7 +274,7 @@ class PaypalSubscribeController extends AdminController
     /**
      * @throws DatabaseConnectionException
      * @throws DatabaseErrorException
-     * @throws \OxidProfessionalServices\PayPal\Api\Exception\ApiException
+     * @throws ApiException
      */
     public function unlink()
     {
@@ -158,7 +290,7 @@ class PaypalSubscribeController extends AdminController
     /**
      * @param $id
      * @return Product
-     * @throws \OxidProfessionalServices\PayPal\Api\Exception\ApiException
+     * @throws ApiException
      */
     public function getPaypalProductDetail($id): Product
     {
@@ -172,7 +304,7 @@ class PaypalSubscribeController extends AdminController
     }
 
     /**
-     * @throws \OxidProfessionalServices\PayPal\Api\Exception\ApiException
+     * @throws ApiException
      */
     public function getCatalogEntries()
     {
@@ -207,7 +339,6 @@ class PaypalSubscribeController extends AdminController
 
         return $categoryArray;
     }
-
 
     /**
      * @return array
@@ -287,68 +418,43 @@ class PaypalSubscribeController extends AdminController
         return str_replace(':/out', '/out', $url) . 'master/product/' . $num . '/' . $file;
     }
 
+    /**
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     * @throws ApiException
+     */
     public function save()
     {
-        /**
-         * @var ServiceFactory $sf
-         */
-        $sf = Registry::get(ServiceFactory::class);
-        $cs = $sf->getCatalogService();
-        $request = Registry::getRequest();
-        $productId = $request->getRequestEscapedParameter('paypalProductId', "");
+        $subscriptionService = new SubscriptionService();
+        $catalogService = new CatalogService($this->linkedObject);
+        $productId = Registry::getRequest()->getRequestEscapedParameter('paypalProductId', "");
 
         if ($this->hasLinkedObject()) {
-             $this->setLinkedObject();
-
-            if ($this->linkedObject->description !== $request->getRequestEscapedParameter('description')) {
-                $patchRequest = new Patch();
-                $patchRequest->op = Patch::OP_REPLACE;
-                $patchRequest->value = $request->getRequestEscapedParameter('description');
-                $patchRequest->path = '/description';
-                $cs->updateProduct($productId, [$patchRequest]);
-            }
-
-            if ($this->linkedObject->category !== $request->getRequestEscapedParameter('category')) {
-                $patchRequest = new Patch();
-                $patchRequest->op = Patch::OP_REPLACE;
-                $patchRequest->value = $request->getRequestEscapedParameter('category');
-                $patchRequest->path = '/category';
-                $cs->updateProduct($productId, [$patchRequest]);
-            }
-
-            if ($this->linkedObject->image_url !== $request->getRequestEscapedParameter('imageUrl')) {
-                $patchRequest = new Patch();
-                $patchRequest->op = Patch::OP_REPLACE;
-                $patchRequest->value = $request->getRequestEscapedParameter('imageUrl');
-                $patchRequest->path = '/image_url';
-                $cs->updateProduct($productId, [$patchRequest]);
-            }
-
-            if ($this->linkedObject->home_url !== $request->getRequestEscapedParameter('homeUrl')) {
-                $patchRequest = new Patch();
-                $patchRequest->op = Patch::OP_REPLACE;
-                $patchRequest->value = $request->getRequestEscapedParameter('homeUrl');
-                $patchRequest->path = '/home_url';
-                $cs->updateProduct($productId, [$patchRequest]);
-            }
+            $this->setLinkedObject();
+            $catalogService->updateProduct($productId);
+            $subscriptionService->saveNewSubscriptionPlan($productId);
         } else {
-            $productRequest = [];
-            $productRequest['name'] = utf8_encode($request->getRequestParameter('title'));
-            $productRequest['description'] = utf8_encode($request->getRequestParameter('description'));
-            $productRequest['type'] = $request->getRequestParameter('productType');
-            $productRequest['category'] = $request->getRequestParameter('category');
-            $productRequest['image_url'] = $request->getRequestParameter('imageUrl');
-            $productRequest['home_url'] = $request->getRequestParameter('homeUrl');
+            $catalogService->createProduct();
+        }
+    }
 
-            $productRequestPost = new ProductRequestPOST($productRequest);
+    /**
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     * @throws ApiException
+     */
+    public function patch()
+    {
+        $subscriptionService = new SubscriptionService();
+        $catalogService = new CatalogService($this->linkedObject);
+        $productId = Registry::getRequest()->getRequestEscapedParameter('paypalProductId', "");
+        $this->setLinkedObject();
+        $catalogService->updateProduct($productId);
 
-            /** @var Product $response */
-            $response = $cs->createProduct($productRequestPost);
-
-            $this->repository->saveLinkedProduct(
-                $response,
-                Registry::getRequest()->getRequestParameter('oxid')
-            );
+        if ($this->hasSubscriptionPlan()) {
+            $subscriptionService->update($this->subscriptionPlan);
+        } else {
+            $subscriptionService->saveNewSubscriptionPlan($productId);
         }
     }
 
