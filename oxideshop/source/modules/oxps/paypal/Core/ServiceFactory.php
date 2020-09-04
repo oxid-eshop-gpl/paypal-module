@@ -28,6 +28,7 @@ use OxidProfessionalServices\PayPal\Api\Service\Orders;
 use OxidProfessionalServices\PayPal\Api\Service\Payments;
 use OxidProfessionalServices\PayPal\Api\Service\GenericService;
 use OxidProfessionalServices\PayPal\Api\Service\Catalog;
+use OxidProfessionalServices\PayPal\Api\Service\Subscriptions;
 use OxidProfessionalServices\PayPal\Api\Service\TransactionSearch;
 use OxidProfessionalServices\PayPal\Api\Service\Subscriptions;
 
@@ -44,6 +45,10 @@ class ServiceFactory
      */
     private $client;
 
+    public function getSubscriptionService(): Subscriptions
+    {
+        return oxNew(Subscriptions::class, $this->getClient());
+    }
 
     /**
      * @return Payments

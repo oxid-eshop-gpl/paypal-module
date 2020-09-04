@@ -10,6 +10,9 @@
                      cl="PayPalBalanceController">
             </SUBMENU>
             <SUBMENU id="OXPS_PAYPAL_BILLING_PLAN" cl="PaypalBillingPlansController" />
+            <SUBMENU id="OXPS_PAYPAL_SUBSCRIPTIONS"
+                     cl="PaypalSubscriptionController">
+            </SUBMENU>
         </MAINMENU>
         <MAINMENU id="mxmanageprod">
             <SUBMENU id="mxarticles" cl="article" list="article_list">

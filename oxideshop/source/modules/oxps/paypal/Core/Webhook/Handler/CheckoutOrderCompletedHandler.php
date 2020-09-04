@@ -41,7 +41,7 @@ class CheckoutOrderCompletedHandler implements HandlerInterface
      */
     public function handle(Event $event): void
     {
-        $data = $event->getData();
+        $data = $event->getData()['resource'];
 
         $payPalOrderId = $data['id'] ?? '';
         $oxidOrderId = $data->purchase_units[0]->custom_id ?? '';
