@@ -40,6 +40,29 @@ class Events
         self::enablePaymentMethod();
         self::createPaypalOrderTable();
         self::createSubscriptionProductTable();
+        self::createSubscriptionTable();
+    }
+
+    /**
+     * Add PayPal subscription table
+     */
+    public static function createSubscriptionTable()
+    {
+        DatabaseProvider::getDb()->execute(
+            'CREATE TABLE IF NOT EXISTS `oxps_paypal_subscription` (
+          `OXID` char(32) NOT NULL,
+          `OXPSPAYPALID` varchar(45) DEFAULT NULL,
+          `OXPSPAYPALEMAIL` varchar(45) DEFAULT NULL,
+          `OXPSPAYPALSTATUS` varchar(45) DEFAULT NULL,
+          `OXPSPAYPALPLANID` varchar(45) DEFAULT NULL,
+          `OXPSCREATETIME` datetime DEFAULT NULL,
+          `OXPSUPDATETIME` datetime DEFAULT NULL,
+          `OXPSSTARTTIME` datetime DEFAULT NULL,
+          `OXPSSTATUSUPDATETIME` datetime DEFAULT NULL,
+          `OXTIMESTAMP` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+          PRIMARY KEY (`OXID`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=latin1'
+        );
     }
 
     /**
