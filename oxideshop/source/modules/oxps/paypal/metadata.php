@@ -32,6 +32,8 @@ use OxidProfessionalServices\PayPal\Controller\Admin\PaypalOrderController;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalOrderDetailsControllerPayPal;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalSubscribeController;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalBillingPlansController;
+use OxidProfessionalServices\PayPal\Controller\Admin\SubscriptionController;
+use OxidProfessionalServices\PayPal\Controller\Admin\SubscriptionDetailsController;
 use OxidProfessionalServices\PayPal\Controller\Admin\TransactionController;
 use OxidProfessionalServices\PayPal\Controller\Admin\ArticleListController;
 use OxidProfessionalServices\PayPal\Controller\ProxyController;
