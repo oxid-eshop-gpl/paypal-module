@@ -22,6 +22,12 @@
     [{assign var="linkedSubscriptionPlan" value=$oView->getSubscriptionPlan()}]
 [{/if}]
 
+[{if !empty($error)}]
+    <div class="alert alert-danger" role="alert">
+        [{$error}]
+    </div>
+[{/if}]
+
 <form name="transfer" id="transfer" action="[{$oViewConf->getSelfLink()}]" method="post">
     [{$oViewConf->getHiddenSid()}]
     <input type="hidden" name="oxid" value="[{$oxid}]">

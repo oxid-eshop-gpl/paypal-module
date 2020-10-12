@@ -429,12 +429,16 @@ class PaypalSubscribeController extends AdminController
         $catalogService = new CatalogService($this->linkedObject);
         $productId = Registry::getRequest()->getRequestEscapedParameter('paypalProductId', "");
 
-        if ($this->hasLinkedObject()) {
-            $this->setLinkedObject();
-            $catalogService->updateProduct($productId);
-            $subscriptionService->saveNewSubscriptionPlan($productId);
-        } else {
-            $catalogService->createProduct();
+        try {
+            if ($this->hasLinkedObject()) {
+                $this->setLinkedObject();
+                $catalogService->updateProduct($productId);
+                $subscriptionService->saveNewSubscriptionPlan($productId);
+            } else {
+                $catalogService->createProduct();
+            }
+        } catch (ApiException $e) {
+            $this->addTplParam('error', $e->getErrorDescription());
         }
     }
 
@@ -445,16 +449,21 @@ class PaypalSubscribeController extends AdminController
      */
     public function patch()
     {
+        $productId = Registry::getRequest()->getRequestEscapedParameter('paypalProductId', "");
         $subscriptionService = new SubscriptionService();
         $catalogService = new CatalogService($this->linkedObject);
-        $productId = Registry::getRequest()->getRequestEscapedParameter('paypalProductId', "");
-        $this->setLinkedObject();
-        $catalogService->updateProduct($productId);
 
-        if ($this->hasSubscriptionPlan()) {
-            $subscriptionService->update($this->subscriptionPlan);
-        } else {
-            $subscriptionService->saveNewSubscriptionPlan($productId);
+        try {
+            if ($this->hasSubscriptionPlan()) {
+                $subscriptionService->update($this->subscriptionPlan);
+            } else {
+                $subscriptionService->saveNewSubscriptionPlan($productId);
+                $this->setLinkedObject();
+                $catalogService->updateProduct($productId);
+            }
+        }
+        catch (ApiException $e) {
+            $this->addTplParam('error', $e->getErrorDescription());
         }
     }
 
