@@ -30,7 +30,6 @@ use OxidProfessionalServices\PayPal\Api\Service\GenericService;
 use OxidProfessionalServices\PayPal\Api\Service\Catalog;
 use OxidProfessionalServices\PayPal\Api\Service\Subscriptions;
 use OxidProfessionalServices\PayPal\Api\Service\TransactionSearch;
-use OxidProfessionalServices\PayPal\Api\Service\Subscriptions;
 
 /**
  * Class ServiceFactory
@@ -99,14 +98,6 @@ class ServiceFactory
      *
      * @return Client
      */
-    /**
-     * @return Subscriptions
-     */
-    public function getSubscriptionService(): Subscriptions
-    {
-        return new Subscriptions($this->getClient());
-    }
-
     private function getClient(): Client
     {
         if ($this->client === null) {
