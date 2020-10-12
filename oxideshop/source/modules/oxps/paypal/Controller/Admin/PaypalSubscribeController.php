@@ -461,8 +461,7 @@ class PaypalSubscribeController extends AdminController
                 $this->setLinkedObject();
                 $catalogService->updateProduct($productId);
             }
-        }
-        catch (ApiException $e) {
+        } catch (ApiException $e) {
             $this->addTplParam('error', $e->getErrorDescription());
         }
     }
