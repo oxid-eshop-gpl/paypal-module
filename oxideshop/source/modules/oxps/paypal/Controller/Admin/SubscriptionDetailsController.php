@@ -113,8 +113,6 @@ class SubscriptionDetailsController extends AdminController
             ]);
         }
 
-
-
         if ($statusChangeNote) {
             $patches[] = new Patch([
                 'op' => Patch::OP_REPLACE,
