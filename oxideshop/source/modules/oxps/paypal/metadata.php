@@ -34,6 +34,7 @@ use OxidProfessionalServices\PayPal\Controller\Admin\PaypalSubscribeController;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalBillingPlansController;
 use OxidProfessionalServices\PayPal\Controller\Admin\SubscriptionController;
 use OxidProfessionalServices\PayPal\Controller\Admin\SubscriptionDetailsController;
+use OxidProfessionalServices\PayPal\Controller\Admin\SubscriptionTransactionController;
 use OxidProfessionalServices\PayPal\Controller\Admin\TransactionController;
 use OxidProfessionalServices\PayPal\Controller\Admin\ArticleListController;
 use OxidProfessionalServices\PayPal\Controller\ProxyController;
@@ -82,6 +83,7 @@ $aModule = [
         'PayPalWebhookController' => WebhookController::class,
         'PayPalProxyController' => ProxyController::class,
         'PayPalTransactionController' => TransactionController::class,
+        'PayPalSubscriptionTransactionController' => SubscriptionTransactionController::class,
         'PaypalSubscribeController' => PaypalSubscribeController::class,
         'OnboardingController' => OnboardingController::class,
         'PaypalOrderController' => PaypalOrderController::class,
@@ -98,6 +100,7 @@ $aModule = [
         'paypal_subscriptions.tpl' => 'oxps/paypal/views/admin/tpl/subscriptions.tpl',
         'paypal_transactions.tpl' => 'oxps/paypal/views/admin/tpl/transactions.tpl',
         'paypal_balances.tpl' => 'oxps/paypal/views/admin/tpl/balances.tpl',
+        'paypal_subscription_transactions.tpl' => 'oxps/paypal/views/admin/tpl/subscription_transactions.tpl',
         'paypal_subscription_details.tpl' => 'oxps/paypal/views/admin/tpl/subscription_details.tpl',
         'subscribe.tpl'    => 'oxps/paypal/views/admin/tpl/subscribe.tpl',
         'paypal_smart_payment_buttons.tpl' => 'oxps/paypal/views/includes/smart_payment_buttons.tpl',

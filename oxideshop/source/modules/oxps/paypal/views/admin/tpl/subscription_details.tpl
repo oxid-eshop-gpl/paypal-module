@@ -6,6 +6,9 @@
         [{$error}]
     </div>
     [{/if}]
+
+    <a href="[{$oViewConf->getSelfLink()}]&cl=PayPalSubscriptionController">Back</a>
+
     <form method="post" action="[{$oViewConf->getSelfLink()}]">
         [{$oViewConf->getHiddenSid()}]
         <input type="hidden" name="oxid" value="[{$oxid}]">
@@ -14,15 +17,14 @@
         <div class="row">
             <div class="col-sm-4">
                 <table class="table table-sm">
-                    <tr>
+                    [{*<tr>
                         <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION"}]</td>
                         <td>
-                            <a href="#"
-                               onclick="jQuery('#subscriptionStatusInput').show()">
+                            <a href="#" onclick="jQuery('#subscriptionStatusEdit').show()">
                                 [{oxmultilang ident="OXPS_PAYPAL_EDIT"}]
                             </a>
                         </td>
-                    </tr>
+                    </tr>*}]
                     <tr>
                         <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_ID"}]</td>
                         <td>[{$payPalSubscription->id}]</td>
@@ -81,19 +83,19 @@
                     </tr>
                 </table>
 
-                <div id="subscriptionStatusInput" hidden>
-                    [{assign var="SubStatus" value=$payPalSubscription->status}]
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <label class="custom-control-label" for="statusCreated" >[{oxmultilang ident="OXPS_PAYPAL_STATUS_CREATED"}]</label>
-                        <input type="radio" class="custom-control-input" id="statusCreated" name="status" value="CREATED" [{if $SubStatus == "CREATED"}]selected[{/if}]>
+                <div id="subscriptionStatusEdit" hidden>
+                    [{assign var="subscriptionStatus" value=$payPalSubscription->status}]
+                    <div class="radio">
+                        <label for="statusCreated" >[{oxmultilang ident="OXPS_PAYPAL_STATUS_CREATED"}]</label>
+                        <input type="radio" id="statusCreated" name="status" value="CREATED" [{if $subscriptionStatus == "CREATED"}]selected[{/if}]>
                     </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <label class="custom-control-label" for="statusInactive">[{oxmultilang ident="OXPS_PAYPAL_STATUS_INACTIVE"}]</label>
-                        <input type="radio" class="custom-control-input" id="statusInactive" name="status" value="INACTIVE" [{if $SubStatus == "INACTIVE"}]selected[{/if}]>
+                    <div class="radio">
+                        <label for="statusActive">[{oxmultilang ident="OXPS_PAYPAL_STATUS_ACTIVE"}]</label>
+                        <input type="radio" id="statusActive" name="status" value="ACTIVE" [{if $subscriptionStatus == "ACTIVE"}]selected[{/if}]>
                     </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <label class="custom-control-label" for="statusActive">[{oxmultilang ident="OXPS_PAYPAL_STATUS_ACTIVE"}]</label>
-                        <input type="radio" class="custom-control-input" id="statusActive" name="status" value="ACTIVE" [{if $SubStatus == "ACTIVE"}]selected[{/if}]>
+                    <div class="radio">
+                        <label for="statusInactive">[{oxmultilang ident="OXPS_PAYPAL_STATUS_INACTIVE"}]</label>
+                        <input type="radio" id="statusInactive" name="status" value="INACTIVE" [{if $subscriptionStatus == "INACTIVE"}]selected[{/if}]>
                     </div>
 
                     <textarea name="statusChangeNote" aria-label="[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_CHANGE_NOTE"}]"></textarea>
@@ -105,7 +107,7 @@
                         <td>[{oxmultilang ident="OXPS_PAYPAL_SHIPPING"}]</td>
                         <td>
                             <a href="#"
-                               onclick="jQuery('#subscriptionShipping input').each(function(){ this.prop('disabled', false) })">
+                               onclick="jQuery('#subscriptionShipping input').each(function(){ this.disabled = false })">
                                 [{oxmultilang ident="OXPS_PAYPAL_EDIT"}]
                             </a>
                         </td>
@@ -113,7 +115,7 @@
                     [{assign var="shippingDetails" value=$subscriber->shipping_address}]
                     [{assign var="shippingAddress" value=$shippingDetails->address}]
                     <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_FIRST_NAME"}]</td>
+                        <td>[{oxmultilang ident="OXPS_PAYPAL_FULL_NAME"}]</td>
                         <td>
                             <input type="text"
                                    class="form-control"
@@ -210,10 +212,12 @@
             </div>
             <div class="col-sm-4">
                 <table class="table table-sm">
+                    [{*
                     <tr>
                         <td>[{oxmultilang ident="OXPS_PAYPAL_BILLING"}]</td>
                         <td><a href="#">[{oxmultilang ident="OXPS_PAYPAL_EDIT"}]</a></td>
                     </tr>
+                    *}]
                     [{assign var="billingInfo" value=$payPalSubscription->billing_info}]
                     <tr>
                         <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_OUTSTANDING_BALANCE"}]</td>
@@ -283,8 +287,14 @@
                     </table>
                 </table>
             </div>
-            <input type="submit">
+        </div>
+        <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_APPLY"}]</button>
     </form>
+    <div class="row">
+        <div class="col-sm-12">
+            <iframe src="[{$oViewConf->getSelfLink()}]&cl=PayPalSubscriptionTransactionController&subscriptionId=[{$payPalSubscription->id}]" width="1280" height="600"></iframe>
+        </div>
+    </div>
 </div>
 </body>
 </html>
