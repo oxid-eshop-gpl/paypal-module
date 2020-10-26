@@ -25,6 +25,7 @@ namespace OxidProfessionalServices\PayPal\Core;
 use OxidEsales\Eshop\Application\Model\Payment;
 use OxidEsales\Eshop\Core\DatabaseProvider;
 use OxidEsales\Eshop\Core\Field;
+use OxidEsales\Eshop\Core\Model\BaseModel;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Repository\LogRepository;
 
@@ -41,6 +42,7 @@ class Events
         self::createPaypalOrderTable();
         self::createSubscriptionProductTable();
         self::createSubscriptionTable();
+        self::configureShippingMethods();
     }
 
     /**
@@ -285,5 +287,28 @@ class Events
         );
 
         DatabaseProvider::getDb()->execute($sql);
+    }
+
+    /**
+     * Assigns PayPal to all available shipping methods
+     */
+    protected static function configureShippingMethods()
+    {
+        $db = DatabaseProvider::getDb();
+        $allShippingIds = $db->getCol("SELECT oxid FROM oxdeliveryset");
+        $assignedShippingIds = $db->getCol(
+            "SELECT oxobjectid FROM oxobject2payment WHERE oxpaymentid='oxidpaypal' AND oxtype='oxdelset'"
+        );
+        foreach (array_diff($allShippingIds, $assignedShippingIds) as $shippingId) {
+            /** @var BaseModel $o2d */
+            $o2d = oxNew(BaseModel::class);
+            $o2d->init('oxobject2payment');
+            $o2d->assign([
+                'oxpaymentid' => 'oxidpaypal',
+                'oxtype' => 'oxdelset',
+                'oxobjectid' => $shippingId
+            ]);
+            $o2d->save();
+        }
     }
 }
