@@ -22,11 +22,7 @@
 
 namespace OxidProfessionalServices\PayPal\Core\Webhook;
 
-use OxidProfessionalServices\PayPal\Core\Webhook\Handler\BillingSubscriptionCancelledHandler;
-use OxidProfessionalServices\PayPal\Core\Webhook\Handler\BillingSubscriptionCreatedHandler;
-use OxidProfessionalServices\PayPal\Core\Webhook\Handler\BillingSubscriptionExpiredHandler;
-use OxidProfessionalServices\PayPal\Core\Webhook\Handler\BillingSubscriptionPaymentFailedHandler;
-use OxidProfessionalServices\PayPal\Core\Webhook\Handler\BillingSubscriptionUpdatedHandler;
+use OxidProfessionalServices\PayPal\Core\Webhook\Handler\BillingSubscriptionUpdateHandler;
 use OxidProfessionalServices\PayPal\Core\Webhook\Handler\CheckoutOrderCompletedHandler;
 use OxidProfessionalServices\PayPal\Core\Webhook\Handler\MerchantOnboardingCompleteHandler;
 use OxidProfessionalServices\PayPal\Core\Webhook\Handler\MerchantPartnerConsentRevokedHandler;
@@ -47,11 +43,15 @@ class EventHandlerMapping
         'PAYMENT.CAPTURE.DENIED' => PaymentCaptureDeniedHandler::class,
         'PAYMENT.CAPTURE.REFUNDED' => PaymentCaptureRefundedHandler::class,
         'PAYMENT.CAPTURE.PENDING' => PaymentCapturePendingHandler::class,
-        'BILLING.SUBSCRIPTION.CREATED' => BillingSubscriptionCreatedHandler::class,
-        'BILLING.SUBSCRIPTION.CANCELLED' => BillingSubscriptionCancelledHandler::class,
-        'BILLING.SUBSCRIPTION.EXPIRED' => BillingSubscriptionExpiredHandler::class,
-        'BILLING.SUBSCRIPTION.PAYMENT.FAILED' => BillingSubscriptionPaymentFailedHandler::class,
-        'BILLING.SUBSCRIPTION.UPDATED' => BillingSubscriptionUpdatedHandler::class,
+
+        'BILLING.SUBSCRIPTION.ACTIVATED' => BillingSubscriptionUpdateHandler::class,
+        'BILLING.SUBSCRIPTION.RENEWED' => BillingSubscriptionUpdateHandler::class,
+        'BILLING.SUBSCRIPTION.SUSPENDED' => BillingSubscriptionUpdateHandler::class,
+        'BILLING.SUBSCRIPTION.CREATED' => BillingSubscriptionUpdateHandler::class,
+        'BILLING.SUBSCRIPTION.CANCELLED' => BillingSubscriptionUpdateHandler::class,
+        'BILLING.SUBSCRIPTION.EXPIRED' => BillingSubscriptionUpdateHandler::class,
+        'BILLING.SUBSCRIPTION.PAYMENT.FAILED' => BillingSubscriptionUpdateHandler::class,
+        'BILLING.SUBSCRIPTION.UPDATED' => BillingSubscriptionUpdateHandler::class,
         'PAYMENT.SALE.REFUNDED' => PaymentSaleRefundedHandler::class,
         'PAYMENT.SALE.REVERSED' => PaymentSaleReversedHandler::class,
     ];

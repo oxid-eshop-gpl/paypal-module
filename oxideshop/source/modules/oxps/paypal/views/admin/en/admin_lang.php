@@ -229,6 +229,9 @@ $aLang = [
     'OXPS_PAYPAL_SUBSCRIPTION_TRANSACTION_DATE' => 'Date',
     'OXPS_PAYPAL_FROM'                        => 'From',
     'OXPS_PAYPAL_TO'                          => 'To',
+    'OXPS_PAYPAL_BACK'                        => 'Back',
+    'OXPS_PAYPAL_NOTE'                        => 'Note',
+    'OXPS_PAYPAL_CAPTURE_OUTSTANDING_FEES'    => 'Capture outstanding fees',
     // Errors
     'OXPS_PAYPAL_ERROR_NOT_PAID_WITH_PAYPAL'  => 'Order not paid using PayPal',
     'OXPS_PAYPAL_ERROR_INVALID_RESOURCE_ID'   => 'Specified resource ID does not exist.',
