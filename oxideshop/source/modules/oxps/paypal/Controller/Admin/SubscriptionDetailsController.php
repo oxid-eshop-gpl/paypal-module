@@ -29,6 +29,10 @@ use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Money;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Patch;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\ShippingDetail;
+use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\SubscriptionActivateRequest;
+use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\SubscriptionCancelRequest;
+use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\SubscriptionCaptureRequest;
+use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\SubscriptionSuspendRequest;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Subscription as PayPalSubscription;
 use OxidProfessionalServices\PayPal\Model\Subscription;
@@ -91,16 +95,22 @@ class SubscriptionDetailsController extends AdminController
     public function update()
     {
         $request = Registry::getRequest();
+        $subscriptionId = $this->getPayPalSubscription()->id;
+
+        /** @var ServiceFactory $serviceFactory */
+        $serviceFactory = Registry::get(ServiceFactory::class);
+        $subscriptionService = $serviceFactory->getSubscriptionService();
+
         $shippingAddress = $request->getRequestEscapedParameter('shippingAddress');
         $shippingAmount = $request->getRequestEscapedParameter('shippingAmount');
-        $statusChangeNote = $request->getRequestEscapedParameter('statusChangeNote');
+        $billingInfo = $request->getRequestEscapedParameter('billingInfo');
 
         $patches = [];
 
         if ($shippingAddress) {
             $patches[] = new Patch([
                 'op' => Patch::OP_REPLACE,
-                'path' => '/subscriber/shipping_address/address',
+                'path' => '/subscriber/shipping_address',
                 'value' => new ShippingDetail($shippingAddress),
             ]);
         }
@@ -113,19 +123,96 @@ class SubscriptionDetailsController extends AdminController
             ]);
         }
 
-        if ($statusChangeNote) {
+        $outstandingBalance = $billingInfo['outstanding-balance'] ?? null;
+
+        if ($outstandingBalance) {
             $patches[] = new Patch([
-                'op' => Patch::OP_REPLACE,
-                'path' => '/status_change_note',
-                'value' => $statusChangeNote,
+               'op' => Patch::OP_REPLACE,
+               'path' => '/billing_info/outstanding_balance',
+               'value' => new Money($outstandingBalance),
             ]);
         }
+
+        $subscriptionService->updateSubscription($subscriptionId, $patches);
+    }
+
+    /**
+     * Updates subscription status
+     */
+    public function updateStatus()
+    {
+        $request = Registry::getRequest();
+        $subscriptionId = $this->getPayPalSubscription()->id;
 
         /** @var ServiceFactory $serviceFactory */
         $serviceFactory = Registry::get(ServiceFactory::class);
         $subscriptionService = $serviceFactory->getSubscriptionService();
 
-        $subscriptionService->updateSubscription($this->getPayPalSubscription()->id, $patches);
+        if ($status = $request->getRequestEscapedParameter('status')) {
+            $statusNote = $request->getRequestEscapedParameter('statusNote');
+            switch ($status) {
+                case 'ACTIVE':
+                    $subscriptionService->activateSubscription(
+                        $subscriptionId,
+                        new SubscriptionActivateRequest(['reason' => $statusNote])
+                    );
+                    break;
+                case 'SUSPENDED':
+                    $subscriptionService->suspendSubscription(
+                        $subscriptionId,
+                        new SubscriptionSuspendRequest(['reason' => $statusNote])
+                    );
+                    break;
+                case 'CANCELED':
+                    $subscriptionService->cancelSubscription(
+                        $subscriptionId,
+                        new SubscriptionCancelRequest(['reason' => $statusNote])
+                    );
+                    break;
+            }
+        }
+    }
+
+    /**
+     * Captures outstanding subscription fee
+     */
+    public function captureOutstandingFee()
+    {
+        $request = Registry::getRequest();
+        $subscriptionId = $this->getPayPalSubscription()->id;
+
+        /** @var ServiceFactory $serviceFactory */
+        $serviceFactory = Registry::get(ServiceFactory::class);
+        $subscriptionService = $serviceFactory->getSubscriptionService();
+
+        $params = [
+            'note' => $request->getRequestEscapedParameter('captureNote'),
+            'capture_type' => SubscriptionCaptureRequest::CAPTURE_TYPE_OUTSTANDING_BALANCE,
+            'amount' => $request->getRequestEscapedParameter('outstandingFee')
+        ];
+
+        $subscriptionService->captureAuthorizedPaymentOnSubscription(
+            $subscriptionId,
+            new SubscriptionCaptureRequest($params)
+        );
+    }
+
+    /**
+     * @return string
+     */
+    public function getListLink()
+    {
+        $viewConfig = $this->getViewConfig();
+        $request = Registry::getRequest();
+
+        $params = [
+            'cl' => 'PaypalSubscriptionController',
+            'jumppage' => $request->getRequestEscapedParameter('jumppage'),
+            'filters' => $request->getRequestEscapedParameter('filters') ?
+                json_decode($request->getRequestEscapedParameter('filters')) : null,
+        ];
+
+        return $viewConfig->getSelfLink() . http_build_query(array_filter($params));
     }
 
     /**

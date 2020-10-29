@@ -7,7 +7,7 @@
     </div>
     [{/if}]
 
-    <a href="[{$oViewConf->getSelfLink()}]&cl=PayPalSubscriptionController">Back</a>
+    <a href="[{$oView->getListLink()}]">[{oxmultilang ident="OXPS_PAYPAL_BACK"}]</a>
 
     <form method="post" action="[{$oViewConf->getSelfLink()}]">
         [{$oViewConf->getHiddenSid()}]
@@ -17,14 +17,9 @@
         <div class="row">
             <div class="col-sm-4">
                 <table class="table table-sm">
-                    [{*<tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION"}]</td>
-                        <td>
-                            <a href="#" onclick="jQuery('#subscriptionStatusEdit').show()">
-                                [{oxmultilang ident="OXPS_PAYPAL_EDIT"}]
-                            </a>
-                        </td>
-                    </tr>*}]
+                    <tr>
+                        <td colspan="2">[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION"}]</td>
+                    </tr>
                     <tr>
                         <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_ID"}]</td>
                         <td>[{$payPalSubscription->id}]</td>
@@ -35,7 +30,7 @@
                     </tr>
                     <tr>
                         <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_START_TIME"}]</td>
-                        <td>[{$payPalSubscription->start_time}]</td>
+                        <td>[{$payPalSubscription->start_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
                     </tr>
                     <tr>
                         <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_QUANTITY"}]</td>
@@ -43,23 +38,26 @@
                     </tr>
                     <tr>
                         <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS"}]</td>
-                        <td>[{$payPalSubscription->status}]</td>
+                        <td>
+                            [{assign var="subscriptionStatus" value=$payPalSubscription->status}]
+                            [{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_"|cat:$subscriptionStatus}]
+                        </td>
                     </tr>
                     <tr>
                         <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_CHANGE_NOTE"}]</td>
-                        <td>[{$shippingDetails->status_change_note}]</td>
+                        <td>[{$payPalSubscription->status_change_note}]</td>
                     </tr>
                     <tr>
                         <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_UPDATE_TIME"}]</td>
-                        <td>[{$payPalSubscription->status_update_time}]</td>
+                        <td>[{$payPalSubscription->status_update_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
                     </tr>
                     <tr>
                         <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_CREATE_TIME"}]</td>
-                        <td>[{$payPalSubscription->create_time}]</td>
+                        <td>[{$payPalSubscription->create_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
                     </tr>
                     <tr>
                         <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_UPDATE_TIME"}]</td>
-                        <td>[{$payPalSubscription->update_time}]</td>
+                        <td>[{$payPalSubscription->update_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
                     </tr>
                     <tr>
                         <td colspan="2">[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIBER"}]</td>
@@ -82,24 +80,6 @@
                         <td>[{$subscriber->email_address}]</td>
                     </tr>
                 </table>
-
-                <div id="subscriptionStatusEdit" hidden>
-                    [{assign var="subscriptionStatus" value=$payPalSubscription->status}]
-                    <div class="radio">
-                        <label for="statusCreated" >[{oxmultilang ident="OXPS_PAYPAL_STATUS_CREATED"}]</label>
-                        <input type="radio" id="statusCreated" name="status" value="CREATED" [{if $subscriptionStatus == "CREATED"}]selected[{/if}]>
-                    </div>
-                    <div class="radio">
-                        <label for="statusActive">[{oxmultilang ident="OXPS_PAYPAL_STATUS_ACTIVE"}]</label>
-                        <input type="radio" id="statusActive" name="status" value="ACTIVE" [{if $subscriptionStatus == "ACTIVE"}]selected[{/if}]>
-                    </div>
-                    <div class="radio">
-                        <label for="statusInactive">[{oxmultilang ident="OXPS_PAYPAL_STATUS_INACTIVE"}]</label>
-                        <input type="radio" id="statusInactive" name="status" value="INACTIVE" [{if $subscriptionStatus == "INACTIVE"}]selected[{/if}]>
-                    </div>
-
-                    <textarea name="statusChangeNote" aria-label="[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_CHANGE_NOTE"}]"></textarea>
-                </div>
             </div>
             <div id="subscriptionShipping" class="col-sm-4">
                 <table class="table table-sm">
@@ -115,114 +95,149 @@
                     [{assign var="shippingDetails" value=$subscriber->shipping_address}]
                     [{assign var="shippingAddress" value=$shippingDetails->address}]
                     <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_FULL_NAME"}]</td>
+                        <td>
+                            <label for="shippingAddressFullName">[{oxmultilang ident="OXPS_PAYPAL_FULL_NAME"}]</label>
+                        </td>
                         <td>
                             <input type="text"
                                    class="form-control"
+                                   id="shippingAddressFullName"
                                    name="shippingAddress[name][full_name]"
                                    value="[{$shippingDetails->name->full_name}]"
-                                   disabled
-                                   aria-label="[{oxmultilang ident="OXPS_PAYPAL_FULL_NAME"}]">
+                                   disabled>
                         </td>
                     </tr>
                     <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_ADDRESS_LINE_1"}]</td>
+                        <td>
+                            <label for="shippingAddressLine1">[{oxmultilang ident="OXPS_PAYPAL_ADDRESS_LINE_1"}]</label>
+                        </td>
                         <td>
                             <input type="text"
                                    class="form-control"
+                                   id="shippingAddressLine1"
                                    name="shippingAddress[address][address_line_1]"
                                    value="[{$shippingDetails->address->address_line_1}]"
-                                   disabled
-                                   aria-label="[{oxmultilang ident="OXPS_PAYPAL_ADDRESS_LINE_1"}]">
+                                   disabled>
                         </td>
                     </tr>
                     <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_ADDRESS_LINE_2"}]</td>
+                        <td>
+                            <label for="shippingAddressLine2">[{oxmultilang ident="OXPS_PAYPAL_ADDRESS_LINE_2"}]</label>
+                        </td>
                         <td>
                             <input type="text"
                                    class="form-control"
+                                   id="shippingAddressLine2"
                                    name="shippingAddress[address][address_line_2]"
                                    value="[{$shippingDetails->address->address_line_2}]"
-                                   disabled
-                                   aria-label="[{oxmultilang ident="OXPS_PAYPAL_ADDRESS_LINE_2"}]">
+                                   disabled>
                         </td>
                     </tr>
                     <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_ADMIN_AREA_1"}]</td>
+                        <td>
+                            <label for="shippingAddressAdminArea1">[{oxmultilang ident="OXPS_PAYPAL_ADMIN_AREA_1"}]</label>
+                        </td>
                         <td>
                             <input type="text"
                                    class="form-control"
+                                   id="shippingAddressAdminArea1"
                                    name="shippingAddress[address][admin_area_1]"
                                    value="[{$shippingDetails->address->admin_area_1}]"
-                                   disabled
-                                   aria-label="[{oxmultilang ident="OXPS_PAYPAL_ADMIN_AREA_1"}]">
+                                   disabled>
                         </td>
                     </tr>
                     <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_ADMIN_AREA_2"}]</td>
+                        <td>
+                            <label for="shippingAddressLine2">[{oxmultilang ident="OXPS_PAYPAL_ADMIN_AREA_2"}]</label>
+                        </td>
                         <td>
                             <input type="text"
                                    class="form-control"
+                                   id="shippingAddressAdminArea2"
                                    name="shippingAddress[address][admin_area_2]"
                                    value="[{$shippingDetails->address->admin_area_2}]"
-                                   disabled
-                                   aria-label="[{oxmultilang ident="OXPS_PAYPAL_ADMIN_AREA_2"}]">
+                                   disabled>
                         </td>
                     </tr>
                     <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_POSTAL_CODE"}]</td>
+                        <td>
+                            <label for="shippingAddressPostalCode">[{oxmultilang ident="OXPS_PAYPAL_POSTAL_CODE"}]</label></td>
                         <td>
                             <input type="text"
                                    class="form-control"
+                                   id="shippingAddressPostalCode"
                                    name="shippingAddress[address][postal_code]"
                                    value="[{$shippingDetails->address->postal_code}]"
-                                   disabled
-                                   aria-label="[{oxmultilang ident="OXPS_PAYPAL_POSTAL_CODE"}]">
+                                   disabled>
                         </td>
                     </tr>
                     <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_COUNTRY_CODE"}]</td>
+                        <td><label for="shippingAddressCountryCode">[{oxmultilang ident="OXPS_PAYPAL_COUNTRY_CODE"}]</label></td>
                         <td>
                             <input type="text"
                                    class="form-control"
+                                   id="shippingAddressCountryCode"
                                    name="shippingAddress[address][country_code]"
                                    value="[{$shippingDetails->address->country_code}]"
-                                   disabled
-                                   aria-label="[{oxmultilang ident="OXPS_PAYPAL_COUNTRY_CODE"}]">
+                                   disabled>
                         </td>
                     </tr>
                     <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_AMOUNT"}]</td>
+                        <td><label for="shippingAmountValue">[{oxmultilang ident="OXPS_PAYPAL_AMOUNT"}]</label></td>
                         <td>
-                            <input type="text"
-                                   class="form-control"
-                                   name="shippingAmount[currency_code]"
-                                   value="[{$shippingDetails->shipping_amount->currency_code}]"
-                                   disabled
-                                   aria-label="[{oxmultilang ident="OXPS_PAYPAL_CURRENCY_CODE"}]">
-                            <input type="text"
-                                   class="form-control"
-                                   name="shippingAmount[value]"
-                                   value="[{$shippingDetails->shipping_amount->value}]"
-                                   disabled
-                                   aria-label="[{oxmultilang ident="OXPS_PAYPAL_VALUE"}]">
+                            <div class="input-group">
+                                <input type="number"
+                                       step="0.01"
+                                       min="0"
+                                       class="form-control"
+                                       id="shippingAmountValue"
+                                       name="shippingAmount[value]"
+                                       value="[{$payPalSubscription->shipping_amount->value}]"
+                                       disabled>
+                                <div class="input-group-addon">
+                                    <span class="input-group-text">[{$payPalSubscription->shipping_amount->currency_code}]</span>
+                                </div>
+                            </div>
+                            <input type="hidden" name="shippingAmount[currency_code]"
+                                   value="[{$payPalSubscription->shipping_amount->currency_code}]" disabled>
                         </td>
                     </tr>
                 </table>
             </div>
             <div class="col-sm-4">
-                <table class="table table-sm">
+                <table class="table table-sm" id="subscriptionBilling">
                     [{*
                     <tr>
                         <td>[{oxmultilang ident="OXPS_PAYPAL_BILLING"}]</td>
-                        <td><a href="#">[{oxmultilang ident="OXPS_PAYPAL_EDIT"}]</a></td>
+                        <td>
+                            <a href="#" onclick="jQuery('#subscriptionBilling input').each(function(){ this.disabled = false })">
+                                [{oxmultilang ident="OXPS_PAYPAL_EDIT"}]
+                            </a>
+                        </td>
                     </tr>
                     *}]
                     [{assign var="billingInfo" value=$payPalSubscription->billing_info}]
                     <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_OUTSTANDING_BALANCE"}]</td>
-                        <td>[{$billingInfo->outstanding_balance->value}]
-                            [{$billingInfo->outstanding_balance->currency_code}]
+                        <td>
+                            <label for="outstandingBalanceValue">
+                                [{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_OUTSTANDING_BALANCE"}]
+                            </label>
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <input type="number"
+                                       step="0.01"
+                                       min="0"
+                                       id="outstandingBalanceValue"
+                                       class="form-control"
+                                       name="billingInfo[outstanding_balance][value]"
+                                       value="[{$billingInfo->outstanding_balance->value}]"
+                                       disabled>
+                                <div class="input-group-addon">
+                                    <span class="input-group-text">[{$billingInfo->outstanding_balance->currency_code}]</span>
+                                </div>
+                            </div>
+                            <input type="hidden" name="billingInfo[outstanding_balance][currency_code]" value="[{$billingInfo->outstanding_balance->currency_code}]" disabled>
                         </td>
                     </tr>
                     <tr>
@@ -233,15 +248,15 @@
                     </tr>
                     <tr>
                         <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_LAST_PAYMENT_TIME"}]</td>
-                        <td>[{$billingInfo->last_payment->time}]</td>
+                        <td>[{$billingInfo->last_payment->time|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
                     </tr>
                     <tr>
                         <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_NEXT_BILLING_TIME"}]</td>
-                        <td>[{$billingInfo->next_billing_time}]</td>
+                        <td>[{$billingInfo->next_billing_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
                     </tr>
                     <tr>
                         <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_FINAL_PAYMENT"}]</td>
-                        <td>[{$billingInfo->final_payment_time}]</td>
+                        <td>[{$billingInfo->final_payment_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
                     </tr>
                     <tr>
                         <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_FAILED_PAYMENT_COUNT"}]</td>
@@ -290,6 +305,67 @@
         </div>
         <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_APPLY"}]</button>
     </form>
+    <div class="row">
+        [{if !($subscriptionStatus == "APPROVAL_PENDING" or
+            $subscriptionStatus == "CANCELLED" or
+            $subscriptionStatus == "EXPIRED")
+        }]
+        <div class="col-sm-4">
+            <form method="post" action="[{$oViewConf->getSelfLink()}]">
+                [{$oViewConf->getHiddenSid()}]
+                <input type="hidden" name="oxid" value="[{$oxid}]">
+                <input type="hidden" name="cl" value="PaypalSubscriptionDetailsController">
+                <input type="hidden" name="fnc" value="updateStatus">
+                <div class="form-group">
+                    <label for="subscriptionStatusEdit">[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS"}]</label>
+                    <select class="form-control" id="subscriptionStatusEdit" name="status">
+                        <option [{if $subscriptionStatus == "ACTIVE"}]value="" selected[{else}]value="ACTIVE"[{/if}]>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_ACTIVE"}]</option>
+                        <option [{if $subscriptionStatus == "SUSPENDED"}]value="" selected[{else}]value="SUSPENDED"[{/if}]>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_SUSPENDED"}]</option>
+                        <option [{if $subscriptionStatus == "CANCELED"}]value="" selected[{else}]value="CANCELED"[{/if}]>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_CANCELLED"}]</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="statusNote">[{oxmultilang ident="OXPS_PAYPAL_NOTE"}]</label>
+                    <textarea name="statusNote" class="form-control" maxlength="128"></textarea>
+                </div>
+                <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_APPLY"}]</button>
+            </form>
+        </div>
+        [{/if}]
+        <div class="col-sm-4">
+            <form method="post" action="[{$oViewConf->getSelfLink()}]">
+                [{$oViewConf->getHiddenSid()}]
+                <input type="hidden" name="oxid" value="[{$oxid}]">
+                <input type="hidden" name="cl" value="PaypalSubscriptionDetailsController">
+                <input type="hidden" name="fnc" value="captureOutstandingFees">
+                [{oxmultilang ident="OXPS_PAYPAL_CAPTURE_OUTSTANDING_FEES"}]
+                <div class="form-group">
+                    <label for="outstandingFeeAmount">[{oxmultilang ident="OXPS_PAYPAL_AMOUNT"}]</label>
+                    <div class="input-group">
+                        <input type="number"
+                               step="0.01"
+                               min="0"
+                               max="[{$billingInfo->outstanding_balance->value}]"
+                               class="form-control"
+                               id="outstandingFeeAmount"
+                               name="outstandingFee[amount]">
+                        <div class="input-group-addon">
+                            <span class="input-group-text">[{$billingInfo->outstanding_balance->currency_code}]</span>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="outstandingFee[currency_code]">
+                <div class="form-group">
+                    <label for="outstandingFeeCaptureNote">
+                        [{oxmultilang ident="OXPS_PAYPAL_NOTE"}]
+                    </label>
+                    <textarea name="captureNote" id="outstandingFeeCaptureNote" class="form-control" maxlength="128"></textarea>
+                </div>
+                <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_APPLY"}]</button>
+            </form>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-sm-12">
             <iframe src="[{$oViewConf->getSelfLink()}]&cl=PayPalSubscriptionTransactionController&subscriptionId=[{$payPalSubscription->id}]" width="1280" height="600"></iframe>

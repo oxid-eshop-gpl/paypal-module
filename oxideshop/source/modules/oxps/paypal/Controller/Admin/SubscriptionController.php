@@ -45,27 +45,35 @@ class SubscriptionController extends AdminListController
     public function render()
     {
         $this->addTplParam('subscriptions', $this->getItemList());
-        $this->addTplParam('detailsLink', $this->getBaseDetailsLink());
+        $this->addTplParam('detailsLink', $this->getDetailsLink());
 
         return parent::render();
     }
 
     /**
-     * Get base link for subscription details page
+     * Get link for subscription details page
      *
      * @return string
      */
-    private function getBaseDetailsLink(): string
+    private function getDetailsLink(): string
     {
         $viewConfig = $this->getViewConfig();
         $request = Registry::getRequest();
 
         $params = [
             'cl' => 'PaypalSubscriptionDetailsController',
-            //'jumppage' => $request->getRequestEscapedParameter('jumppage'),
-            //'filters' => json_encode($this->getListFilter()),A
+            'jumppage' => $request->getRequestEscapedParameter('jumppage'),
+            'filters' => $this->getListFilter() ? json_encode($this->getListFilter()) : null,
         ];
 
-        return $viewConfig->getSelfLink() . http_build_query($params);
+        return $viewConfig->getSelfLink() . http_build_query(array_filter($params));
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getListFilter()
+    {
+        return Registry::getRequest()->getRequestEscapedParameter('filters') ?? parent::getListFilter();
     }
 }

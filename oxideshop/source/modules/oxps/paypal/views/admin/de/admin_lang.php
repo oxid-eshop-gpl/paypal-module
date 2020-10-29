@@ -229,6 +229,9 @@ $aLang = [
     'OXPS_PAYPAL_SUBSCRIPTION_TRANSACTION_DATE' => 'Datum',
     'OXPS_PAYPAL_FROM'                        => 'Von',
     'OXPS_PAYPAL_TO'                          => 'To',
+    'OXPS_PAYPAL_BACK'                        => 'Zurück',
+    'OXPS_PAYPAL_NOTE'                        => 'Bemerkung',
+    'OXPS_PAYPAL_CAPTURE_OUTSTANDING_FEES'    => 'Erfassen Sie ausstehende Gebühren',
 
     // Errors
     'OXPS_PAYPAL_ERROR_NOT_PAID_WITH_PAYPAL'  => 'Diese Bestellung wurde nicht mit Paypal bezahlt',
