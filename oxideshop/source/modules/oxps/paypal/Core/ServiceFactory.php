@@ -30,6 +30,7 @@ use OxidProfessionalServices\PayPal\Api\Service\GenericService;
 use OxidProfessionalServices\PayPal\Api\Service\Catalog;
 use OxidProfessionalServices\PayPal\Api\Service\Subscriptions;
 use OxidProfessionalServices\PayPal\Api\Service\TransactionSearch;
+use OxidProfessionalServices\PayPal\Service\DisputeService;
 
 /**
  * Class ServiceFactory
@@ -91,6 +92,14 @@ class ServiceFactory
     public function getTransactionSearchService(): TransactionSearch
     {
         return oxNew(TransactionSearch::class, $this->getClient());
+    }
+
+    /**
+     * @return DisputeService
+     */
+    public function getDisputeService(): DisputeService
+    {
+        return oxNew(DisputeService::class, $this->getClient());
     }
 
     /**

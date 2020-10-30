@@ -206,17 +206,18 @@
             </div>
             <div class="col-sm-4">
                 <table class="table table-sm" id="subscriptionBilling">
-                    [{*
+                    [{assign var="billingInfo" value=$payPalSubscription->billing_info}]
                     <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_BILLING"}]</td>
                         <td>
-                            <a href="#" onclick="jQuery('#subscriptionBilling input').each(function(){ this.disabled = false })">
+                            [{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_BILLING"}]
+                        </td>
+                        <td>
+                            <a href="#"
+                               onclick="jQuery('#subscriptionBilling input').each(function(){ this.disabled = false })">
                                 [{oxmultilang ident="OXPS_PAYPAL_EDIT"}]
                             </a>
                         </td>
                     </tr>
-                    *}]
-                    [{assign var="billingInfo" value=$payPalSubscription->billing_info}]
                     <tr>
                         <td>
                             <label for="outstandingBalanceValue">
