@@ -26,6 +26,8 @@ use OxidEsales\Eshop\Application\Model\Basket;
 use OxidEsales\Eshop\Application\Model\Order;
 use OxidEsales\Eshop\Core\ViewConfig;
 use OxidEsales\Eshop\Application\Model\PaymentGateway;
+use OxidProfessionalServices\PayPal\Controller\Admin\DisputeController;
+use OxidProfessionalServices\PayPal\Controller\Admin\DisputeDetailsController;
 use OxidProfessionalServices\PayPal\Controller\Admin\OnboardingController;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalConfigController;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalOrderController;
@@ -90,11 +92,15 @@ $aModule = [
         'PaypalSubscriptionDetailsController' => SubscriptionDetailsController::class,
         'PaypalSubscriptionController' => SubscriptionController::class,
         'PaypalAdminArticleListController' => ArticleListController::class,
-        'PaypalBillingPlansController' => PaypalBillingPlansController::class
+        'PaypalBillingPlansController' => PaypalBillingPlansController::class,
+        'PaypalDisputeController' => DisputeController::class,
+        'PaypalDisputeDetailsController' => DisputeDetailsController::class
     ],
     'templates' => [
         'paypalconfig.tpl' => 'oxps/paypal/views/admin/tpl/paypalconfig.tpl',
         'paypalbillingplanstemplate.tpl' => 'oxps/paypal/views/admin/tpl/paypalbillingplanstemplate.tpl',
+        'paypal_dispute_details.tpl' => 'oxps/paypal/views/admin/tpl/dispute_details.tpl',
+        'paypal_disputes.tpl' => 'oxps/paypal/views/admin/tpl/disputes.tpl',
         'paypalorder.tpl' => 'oxps/paypal/views/admin/tpl/paypalorder.tpl',
         'paypal_list_pagination.tpl' => 'oxps/paypal/views/admin/tpl/inc/list_pagination.tpl',
         'paypal_subscriptions.tpl' => 'oxps/paypal/views/admin/tpl/subscriptions.tpl',
