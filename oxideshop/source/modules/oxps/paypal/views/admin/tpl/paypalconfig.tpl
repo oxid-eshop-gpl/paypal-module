@@ -105,7 +105,6 @@
             </div>
         </div>
 
-
         <h3>[{oxmultilang ident="OXPS_PAYPAL_WEBHOOK_TITLE"}]</h3>
 
         <div class="form-group">

@@ -20,7 +20,10 @@
  * @copyright (C) OXID eSales AG 2003-2020
  */
 
+use OxidEsales\Eshop\Application\Component\Widget\ArticleDetails;
 use OxidEsales\Eshop\Application\Controller\Admin\ArticleList;
+use OxidEsales\Eshop\Application\Controller\ArticleDetailsController;
+use OxidEsales\Eshop\Application\Controller\BasketController;
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Application\Model\Basket;
 use OxidEsales\Eshop\Application\Model\Order;
@@ -28,17 +31,18 @@ use OxidEsales\Eshop\Core\ViewConfig;
 use OxidEsales\Eshop\Application\Model\PaymentGateway;
 use OxidProfessionalServices\PayPal\Controller\Admin\DisputeController;
 use OxidProfessionalServices\PayPal\Controller\Admin\DisputeDetailsController;
+use OxidProfessionalServices\PayPal\Component\Widget\ArticleDetails as ArticleDetailsAlias;
 use OxidProfessionalServices\PayPal\Controller\Admin\OnboardingController;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalConfigController;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalOrderController;
-use OxidProfessionalServices\PayPal\Controller\Admin\PaypalOrderDetailsControllerPayPal;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalSubscribeController;
-use OxidProfessionalServices\PayPal\Controller\Admin\PaypalBillingPlansController;
 use OxidProfessionalServices\PayPal\Controller\Admin\SubscriptionController;
 use OxidProfessionalServices\PayPal\Controller\Admin\SubscriptionDetailsController;
 use OxidProfessionalServices\PayPal\Controller\Admin\SubscriptionTransactionController;
 use OxidProfessionalServices\PayPal\Controller\Admin\TransactionController;
 use OxidProfessionalServices\PayPal\Controller\Admin\ArticleListController;
+use OxidProfessionalServices\PayPal\Controller\ArticleDetailsController as PayPalArticleDetailsController;
+use OxidProfessionalServices\PayPal\Controller\BasketController as PayPalBasketController;
 use OxidProfessionalServices\PayPal\Controller\ProxyController;
 use OxidProfessionalServices\PayPal\Controller\WebhookController;
 use OxidProfessionalServices\PayPal\Controller\Admin\BalanceController;
@@ -69,15 +73,15 @@ $aModule = [
     'url' => '',
     'email' => '',
     'extend' => [
-        // Core
         ViewConfig::class => PaypalViewConfig::class,
-        // Model
         Order::class => PaypalOrder::class,
         Basket::class => PaypalBasket::class,
         Article::class => PayPalArticle::class,
         PaymentGateway::class => PaypalPaymentGateway::class,
-        // Controller
         ArticleList::class => ArticleListController::class,
+        ArticleDetailsController::class => PayPalArticleDetailsController::class,
+        BasketController::class => PayPalBasketController::class,
+        ArticleDetails::class => ArticleDetailsAlias::class
     ],
     'controllers' => [
         'PaypalConfigController' => PaypalConfigController::class,
@@ -92,7 +96,6 @@ $aModule = [
         'PaypalSubscriptionDetailsController' => SubscriptionDetailsController::class,
         'PaypalSubscriptionController' => SubscriptionController::class,
         'PaypalAdminArticleListController' => ArticleListController::class,
-        'PaypalBillingPlansController' => PaypalBillingPlansController::class,
         'PaypalDisputeController' => DisputeController::class,
         'PaypalDisputeDetailsController' => DisputeDetailsController::class
     ],
@@ -102,6 +105,9 @@ $aModule = [
         'paypal_dispute_details.tpl' => 'oxps/paypal/views/admin/tpl/dispute_details.tpl',
         'paypal_disputes.tpl' => 'oxps/paypal/views/admin/tpl/disputes.tpl',
         'paypalorder.tpl' => 'oxps/paypal/views/admin/tpl/paypalorder.tpl',
+        'billing_plan.tpl' => 'oxps/paypal/views/admin/tpl/inc/billing_plan.tpl',
+        'subscription_form.tpl' => 'oxps/paypal/views/admin/tpl/inc/subscription_form.tpl',
+        'billing_plan_data.tpl' => 'oxps/paypal/views/admin/tpl/inc/billing_plan_data.tpl',
         'paypal_list_pagination.tpl' => 'oxps/paypal/views/admin/tpl/inc/list_pagination.tpl',
         'paypal_subscriptions.tpl' => 'oxps/paypal/views/admin/tpl/subscriptions.tpl',
         'paypal_transactions.tpl' => 'oxps/paypal/views/admin/tpl/transactions.tpl',
@@ -161,6 +167,20 @@ $aModule = [
             'template' => 'layout/base.tpl',
             'block' => 'base_style',
             'file' => 'views/blocks/shared/layout/base_style.tpl'
+        ],
+        [
+            'theme' => 'wave',
+            'template' => 'page/checkout/inc/basketcontents_list.tpl',
+            'block' => 'checkout_basketcontents_basketitem_unitprice',
+            'file' => '/views/blocks/shared/page/checkout/checkout_basketcontents_basketitem_unitprice.tpl',
+            'position' => '5'
+        ],
+        [
+            'theme' => 'flow',
+            'template' => 'page/checkout/inc/basketcontents_list.tpl',
+            'block' => 'checkout_basketcontents_basketitem_unitprice',
+            'file' => '/views/blocks/shared/page/checkout/checkout_basketcontents_basketitem_unitprice.tpl',
+            'position' => '5'
         ],
         [
             'theme' => 'flow',
@@ -304,6 +324,20 @@ $aModule = [
         ],
         [
             'theme' => 'flow',
+            'template' => 'page/details/inc/productmain.tpl',
+            'block' => 'details_productmain_price',
+            'file' => '/views/blocks/shared/page/details/inc/details_productmain_price.tpl',
+            'position' => '5'
+        ],
+        [
+            'theme' => 'wave',
+            'template' => 'page/details/inc/productmain.tpl',
+            'block' => 'details_productmain_price',
+            'file' => '/views/blocks/shared/page/details/inc/details_productmain_price.tpl',
+            'position' => '5'
+        ],
+        [
+            'theme' => 'flow',
             'template' => 'widget/minibasket/minibasket.tpl',
             'block' => 'dd_layout_page_header_icon_menu_minibasket_functions',
             'file' =>
@@ -313,6 +347,14 @@ $aModule = [
         [
             'theme' => 'wave',
             'template' => 'widget/minibasket/minibasket.tpl',
+            'block' => 'dd_layout_page_header_icon_menu_minibasket_functions',
+            'file' =>
+                '/views/blocks/wave/widget/minibasket/dd_layout_page_header_icon_menu_minibasket_functions.tpl',
+            'position' => '5'
+        ],
+        [
+            'theme' => 'wave',
+            'template' => 'page/checkout/inc/basketcontents_list.tpl',
             'block' => 'dd_layout_page_header_icon_menu_minibasket_functions',
             'file' =>
                 '/views/blocks/wave/widget/minibasket/dd_layout_page_header_icon_menu_minibasket_functions.tpl',

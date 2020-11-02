@@ -9,7 +9,6 @@
             <SUBMENU id="OXPS_PAYPAL_BALANCES"
                      cl="PayPalBalanceController">
             </SUBMENU>
-            <SUBMENU id="OXPS_PAYPAL_BILLING_PLAN" cl="PaypalBillingPlansController" />
             <SUBMENU id="OXPS_PAYPAL_SUBSCRIPTIONS"
                      cl="PaypalSubscriptionController">
             </SUBMENU>
