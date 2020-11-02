@@ -197,7 +197,7 @@ class SubscriptionService
      * @throws DatabaseConnectionException
      * @throws DatabaseErrorException
      */
-    public function saveNewSubscriptionPlan($productId)
+    public function saveNewSubscriptionPlan($productId, $articleId)
     {
         $fixed_price = $this->request->getRequestEscapedParameter('fixed_price', "");
         $interval = $this->request->getRequestEscapedParameter('interval', "");
@@ -209,20 +209,13 @@ class SubscriptionService
             $count = count($total_cycles);
             $cycles = [];
 
-            $intervals = [
-                'DAY' => 365,
-                'WEEK' => 52,
-                'MONTH' => 12,
-                'YEAR' => 1
-            ];
-
             for ($i = 0; $i < $count; $i++) {
                 $cycle = new BillingCycle();
                 $cycle->total_cycles = $total_cycles[$i];
                 $cycle->sequence = $sequence[$i];
                 $cycle->tenure_type = $tenure[$i];
                 $cycle->frequency = new Frequency();
-                $cycle->frequency->interval_count = $intervals[$interval[$i]];
+                $cycle->frequency->interval_count = $total_cycles[$i];
                 $cycle->frequency->interval_unit = $interval[$i];
                 $cycle->pricing_scheme = new PricingScheme();
                 $cycle->pricing_scheme->fixed_price = new Money();
@@ -271,8 +264,26 @@ class SubscriptionService
             if ($response->id) {
                 $subscriptionPlanId = $response->id;
                 $repository = new SubscriptionRepository();
-                $repository->saveSubscriptionPlan($subscriptionPlanId, $productId);
+                $repository->saveSubscriptionPlan($subscriptionPlanId, $productId, $articleId);
             }
+
+            return $cycles;
         }
+    }
+
+    public function listPlans($paypalProductId, $planIds)
+    {
+        return $this->subscriptionService->listPlans(
+            'string',
+            $paypalProductId,
+            implode(
+                ',',
+                $planIds
+            ),
+            true,
+            1,
+            10,
+            'return=representation'
+        );
     }
 }
