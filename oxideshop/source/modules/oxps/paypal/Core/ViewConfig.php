@@ -104,4 +104,22 @@ class ViewConfig extends ViewConfig_parent
 
         return Constants::PAYPAL_JS_SDK_URL . '?' . http_build_query($params);
     }
+
+    public function getPayPalJsSdkSubscribeUrl(): string
+    {
+        $payPalConfig = $this->getPayPalConfig();
+        $config = Registry::getConfig();
+
+        $params = [];
+
+        $params['client-id'] = $payPalConfig->getClientId();
+        $params['merchant-id'] = $payPalConfig->getSandboxOxidPartnerId();
+        $params['vault'] = 'true';
+
+        if ($currency = $config->getActShopCurrencyObject()) {
+            $params['cy'] = strtoupper($currency->name);
+        }
+
+        return Constants::PAYPAL_JS_SDK_URL . '?' . http_build_query($params);
+    }
 }

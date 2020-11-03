@@ -1,3 +1,32 @@
+[{if $aVariantSelections.blPerfectFit}]
+[{capture name="paypal_init"}]
+[{literal}]
+paypal.Buttons({
+    style: {
+        color: 'gold',
+        shape: 'rect',
+        label: 'subscribe',
+        height: 55
+        },
+        onInit: function() {
+            console.log("PayPal JS SDK was initialized. No action required.");
+        },
+        createSubscription: function(data, actions) {
+            const subscriptionId = "[{/literal}][{$subscriptionPlan->id}][{literal}]";
+            return subscriptionId;
+        },
+        onApprove: function(data, actions) {
+            console.log(data);
+            console.log(actions);
+    },
+    onCancel: function(data, actions) {
+        console.log('Consumer cancelled the PayPal Subscription Flow. No action required.');
+    }
+}).render('#paypal-button-container');
+[{/literal}]
+[{/capture}]
+[{oxscript include=$oViewConf->getPayPalJsSdkSubscribeUrl()}]
+[{else}]
 [{capture name="paypal_init"}]
 [{if !$paymentStrategy}]
     [{assign var="paymentStrategy" value="continue"}]
@@ -7,6 +36,7 @@
 [{/if}]
 [{assign var="sSelfLink" value=$oViewConf->getSelfLink()|replace:"&amp;":"&"}]
 [{literal}]
+
 paypal.Buttons({
     createOrder: function(data, actions) {
         return fetch('[{/literal}][{$sSelfLink|cat:"cl=PayPalProxyController&fnc=createOrder&context="|cat:$paymentStrategy|cat:"&aid="|cat:$aid}][{literal}]', {
@@ -51,8 +81,7 @@ paypal.Buttons({
 }).render('#paypal-button-container');
 [{/literal}]
 [{/capture}]
-
-<div id="paypal-button-container" class="[{$buttonClass}]"></div>
-
 [{oxscript include=$oViewConf->getPayPalJsSdkUrl($paymentStrategy)}]
+[{/if}]
+<div id="paypal-button-container" class="[{$buttonClass}]"></div>
 [{oxscript add=$smarty.capture.paypal_init}]
