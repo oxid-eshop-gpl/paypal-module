@@ -13,7 +13,6 @@ GeneralShopSettings:
         - b2bservices
         - ddoevisualcms
         - psr_logger
-        - oxps/paypal
     aHomeCountry:
         - 8f241f11096877ac0.98748826
     aLanguageParams:
@@ -32,7 +31,65 @@ GeneralShopSettings:
         - ''
         - ''
     aModules:
-        aarr: {  }
+        OxidEsales\B2BModule\ApprovalProcedure\Controller\DetailsController:
+            - OxidEsales\B2BModule\ScheduledOrders\Controller\ApprovalDetailsController
+            - OxidEsales\B2BModule\BulkOrders\Controller\ApprovalProcedureDetailsController
+        OxidEsales\B2BModule\Basket\Service\EditService:
+            - OxidEsales\B2BModule\ApprovalProcedure\Service\BasketService
+            - OxidEsales\B2BModule\ServiceProducts\Service\EditService
+        OxidEsales\Eshop\Application\Controller\Admin\NavigationController:
+            - OxidEsales\B2BModule\Services\Controller\Admin\NavigationController
+            - OxidCommunity\ModuleInternals\Controller\Admin\NavigationController
+        OxidEsales\Eshop\Application\Controller\ArticleDetailsController:
+            - OxidEsales\B2BModule\Offers\Controller\ArticleDetailsController
+            - OxidProfessionalServices\PayPal\Controller\ArticleDetailsController
+        OxidEsales\Eshop\Application\Controller\BasketController:
+            - OxidEsales\B2BModule\ApprovalProcedure\Controller\CheckoutBasketController
+            - OxidProfessionalServices\PayPal\Controller\BasketController
+            - OxidEsales\B2BModule\BuyingAgent\Controller\BasketController
+        OxidEsales\Eshop\Application\Controller\OrderController:
+            - OxidEsales\B2BModule\ApprovalProcedure\Controller\OrderController
+            - OxidEsales\B2BModule\Budget\Controller\OrderController
+        OxidEsales\Eshop\Application\Controller\PaymentController:
+            - OxidEsales\B2BModule\ApprovalProcedure\Controller\PaymentController
+            - OxidEsales\B2BModule\BuyingAgent\Controller\PaymentController
+        OxidEsales\Eshop\Application\Controller\UserController:
+            - OxidEsales\B2BModule\ApprovalProcedure\Controller\UserController
+            - OxidEsales\B2BModule\BulkOrders\Controller\UserController
+            - OxidEsales\B2BModule\BuyingAgent\Controller\UserController
+        OxidEsales\Eshop\Application\Model\Article:
+            - OxidEsales\B2BModule\CustomPrices\Model\Article
+            - OxidProfessionalServices\PayPal\Model\PayPalArticle
+            - OxidEsales\B2BModule\ServiceProducts\Model\Article
+        OxidEsales\Eshop\Application\Model\Basket:
+            - OxidEsales\B2BModule\Basket\Model\Basket
+            - OxidProfessionalServices\PayPal\Model\Basket
+            - OxidEsales\B2BModule\ApprovalProcedure\Model\Basket
+            - OxidEsales\B2BModule\BulkOrders\Model\Basket
+            - OxidEsales\B2BModule\ScheduledOrders\Model\Basket
+            - OxidEsales\B2BModule\ServiceProducts\Model\Basket
+        OxidEsales\Eshop\Application\Model\Order:
+            - OxidEsales\B2BModule\ApprovalProcedure\Model\Order
+            - OxidProfessionalServices\PayPal\Model\Order
+            - OxidEsales\B2BModule\Budget\Model\Order
+            - OxidEsales\B2BModule\BulkOrders\Model\Order
+            - OxidEsales\B2BModule\ServiceProducts\Model\Order
+        OxidEsales\Eshop\Application\Model\User:
+            - OxidEsales\B2BModule\Basket\Model\User
+            - OxidEsales\B2BModule\ApprovalProcedure\Model\User
+            - OxidEsales\B2BModule\BuyingAgent\Model\User
+        OxidEsales\Eshop\Core\Email:
+            - OxidEsales\B2BModule\BuyingAgent\Core\Email
+            - OxidEsales\B2BModule\Offers\Core\Email
+            - OxidEsales\B2BModule\ScheduledOrders\Model\Email
+        OxidEsales\Eshop\Core\ViewConfig:
+            - OxidEsales\B2BModule\Services\Core\ViewConfig
+            - OxidProfessionalServices\PayPal\Core\ViewConfig
+            - OxidEsales\B2BModule\ApprovalProcedure\Core\ViewConfig
+            - OxidEsales\B2BModule\Basket\Core\ViewConfig
+            - OxidEsales\B2BModule\Budget\Core\ViewConfig
+            - OxidEsales\B2BModule\BuyingAgent\Core\ViewConfig
+            - OxidEsales\VisualCmsModule\Core\ViewConfig
     aModuleVersions:
         moduleinternals: '3.0'
         oxps/modulesconfig: 6.1.0
@@ -99,6 +156,7 @@ GeneralShopSettings:
     blShopStopped: false
     blShowBirthdayFields: true
     blShowListDisplayType: true
+    blVariantParentBuyable: true
     bl_perfLoadSelectLists: true
     bl_perfParseLongDescinSmarty: true
     bl_perfShowActionCatArticleCnt: true
