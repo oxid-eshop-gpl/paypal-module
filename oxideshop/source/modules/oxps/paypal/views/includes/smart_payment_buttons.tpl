@@ -11,7 +11,6 @@ $(document).ready(function() {
     });
 });
 
-
 paypal.Buttons({
     style: {
         color: 'gold',
@@ -23,6 +22,8 @@ paypal.Buttons({
             console.log("PayPal JS SDK was initialized. No action required.");
         },
         createSubscription: function(data, actions) {
+            console.log(data);
+            console.log(actions);
             const subscriptionId = "[{/literal}][{$subscriptionPlan->id}][{literal}]";
             return subscriptionId;
         },

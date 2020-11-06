@@ -99,7 +99,7 @@ class ViewConfig extends ViewConfig_parent
 
         if ($subscribe) {
             $params['vault'] = 'true';
-            $params['intent'] = 'subscription';
+//            $params['intent'] = 'subscription';
             $params['locale'] = 'de_DE';
         } else {
             $params['integration-date'] = Constants::PAYPAL_INTEGRATION_DATE;
