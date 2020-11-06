@@ -3,38 +3,37 @@
 [{capture name="paypal_init"}]
 [{literal}]
 
-$(document).ready(function() {
-    $("#variants .dropdown-menu li a").click(function(e) {
-        e.preventDefault();
-        var href = $(this).attr('href');
-        window.location=href;
-    });
-});
-
 paypal.Buttons({
     style: {
         color: 'gold',
         shape: 'rect',
         label: 'subscribe',
         height: 55
-        },
-        onInit: function() {
-            console.log("PayPal JS SDK was initialized. No action required.");
-        },
-        createSubscription: function(data, actions) {
-            console.log(data);
-            console.log(actions);
-            const subscriptionId = "[{/literal}][{$subscriptionPlan->id}][{literal}]";
-            return subscriptionId;
-        },
-        onApprove: function(data, actions) {
-            console.log(data);
-            console.log(actions);
+    },
+    onInit: function() {
+        console.log("PayPal JS SDK was initialized. No action required.");
+    },
+    createSubscription: function(data, actions) {
+        return actions.subscription.create({"plan_id":"[{/literal}][{$subscriptionPlan->id}][{literal}]"});
+    },
+    onApprove: function(data, actions) {
+        console.log(data);
+        console.log(actions);
     },
     onCancel: function(data, actions) {
         console.log('Consumer cancelled the PayPal Subscription Flow. No action required.');
     }
 }).render('#paypal-button-container');
+
+$(document).ready(function() {
+    $('#variants .dropdown-menu li a').off('click');
+    $('#variants .dropdown-menu li a').click(function (e) {
+        e.preventDefault();
+        var href = $(this).attr('href');
+        window.location.href=href;
+    });
+});
+
 [{/literal}]
 [{/capture}]
 
@@ -91,17 +90,11 @@ paypal.Buttons({
     onError: function (data) {
     }
 }).render('#paypal-button-container');
-$(document).ready(function() {
-    $("#variants .dropdown-menu li a").click(function(e) {
-        e.preventDefault();
-        var href = $(this).attr('href');
-        window.location=href;
-    });
-});
 
 [{/literal}]
 [{/capture}]
 [{oxscript include=$oViewConf->getPayPalJsSdkUrl($paymentStrategy, false)}]
 [{/if}]
+
 <div id="paypal-button-container" class="[{$buttonClass}]"></div>
 [{oxscript add=$smarty.capture.paypal_init}]

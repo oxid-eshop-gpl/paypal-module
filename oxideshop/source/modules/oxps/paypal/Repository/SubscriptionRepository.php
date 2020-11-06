@@ -151,8 +151,6 @@ class SubscriptionRepository
      */
     public function isSubscribableProduct($articleId)
     {
-        $articleId = $this->getSubscriptionArticleId($articleId);
-
         $select = 'SELECT OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID ';
         $select .= 'FROM oxps_paypal_subscription_product WHERE OXPS_PAYPAL_OXARTICLE_ID = ?';
         $result = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getRow($select, [$articleId]);
@@ -165,24 +163,11 @@ class SubscriptionRepository
     }
 
     /**
-     * @param $articleId
-     * @return string
-     */
-    public function getSubscriptionArticleId($articleId): string
-    {
-        $article = oxNew(Article::class);
-        $article->load($articleId);
-
-        if ($article->isVariant()) {
-            $articleId = $article->getParentId();
-        }
-        return $articleId;
-    }
-
-    /**
      * @param string $variantId
      * @param string|null $articleId
-     * @param Plan $plan
+     * @param float $setupFee
+     * @param float $price
+     * @param string $planName
      * @param int $sort
      * @throws DatabaseConnectionException
      * @throws DatabaseErrorException
@@ -190,9 +175,9 @@ class SubscriptionRepository
     public function saveVariantProduct(
         string $variantId,
         ?string $articleId,
-        $setupFee,
-        $price,
-        $planName,
+        float $setupFee,
+        float $price,
+        string $planName,
         int $sort = 1
     ): void {
         $sql = "INSERT INTO oxarticles(
