@@ -41,14 +41,10 @@ class ArticleDetails extends ArticleDetails_parent
         $subscriptionRepository = new SubscriptionRepository();
 
         $articleId = Registry::getRequest()->getRequestEscapedParameter('anid');
-        $varselid = Registry::getRequest()->getRequestEscapedParameter('varselid');
 
         /** @var Article $article */
         $article = oxNew(Article::class);
         $article->load($articleId);
-
-        $variantsCount = $article->getVariantsCount();
-        $variantSelections = $this->getVariantSelections();
 
         $paypalSubscriptionPlanId = $subscriptionRepository->isSubscribableProduct($articleId);
         $this->addTplParam('isSubscribableProduct', $paypalSubscriptionPlanId ? true : false);
@@ -63,8 +59,6 @@ class ArticleDetails extends ArticleDetails_parent
 
             Registry::getSession()->setVariable('currentSubscriptionView', json_encode($subscriptionPlan));
         }
-
-        $p = $this->getProduct();
 
         return $return;
     }

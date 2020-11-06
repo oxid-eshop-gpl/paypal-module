@@ -10,6 +10,7 @@ use OxidEsales\Eshop\Core\UtilsObject;
 use OxidProfessionalServices\PayPal\Api\Model\Catalog\Product;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\BillingCycle;
+use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Plan;
 
 class SubscriptionRepository
 {
@@ -181,7 +182,7 @@ class SubscriptionRepository
     /**
      * @param string $variantId
      * @param string|null $articleId
-     * @param BillingCycle $cycle
+     * @param Plan $plan
      * @param int $sort
      * @throws DatabaseConnectionException
      * @throws DatabaseErrorException
@@ -189,7 +190,9 @@ class SubscriptionRepository
     public function saveVariantProduct(
         string $variantId,
         ?string $articleId,
-        BillingCycle $cycle,
+        $setupFee,
+        $price,
+        $planName,
         int $sort = 1
     ): void {
         $sql = "INSERT INTO oxarticles(
@@ -197,7 +200,7 @@ class SubscriptionRepository
                        oxshopid,
                        oxparentid,
                        oxactive,
-                       oxprice, 
+                       oxprice,
                        oxissearch, 
                        oxvarselect,
                        oxsubclass,
@@ -212,12 +215,9 @@ class SubscriptionRepository
             Registry::getConfig()->getShopId(),
             $articleId,
             1,
-            $cycle->pricing_scheme->fixed_price->value,
+            $setupFee + $price,
             1,
-            $cycle->total_cycles . ' ' . $cycle->frequency->interval_unit . ' @ ' .
-            $cycle->pricing_scheme->fixed_price->value . ' ' . $cycle->pricing_scheme->fixed_price->currency_code .
-            '/' . $cycle->frequency->interval_unit . ($cycle->tenure_type == BillingCycle::TENURE_TYPE_TRIAL
-                ? ' (TRIAL)' : ''),
+            $planName,
             'oxarticle',
             1,
             1,

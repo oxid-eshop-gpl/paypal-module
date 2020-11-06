@@ -257,7 +257,8 @@ class SubscriptionService
             $subscriptionPlanRequest->billing_cycles = $cycles;
             $subscriptionPlanRequest->payment_preferences = $payment_preferences;
             $subscriptionPlanRequest->taxes = $tax;
-            $subscriptionPlanRequest->description = $productId . ' Payment Plan';
+            $subscriptionPlanRequest->description = $this->request
+                ->getRequestEscapedParameter('billingPlanDescription');
 
             $response = $this->subscriptionService->createPlan($subscriptionPlanRequest);
 
@@ -267,7 +268,9 @@ class SubscriptionService
                 $repository->saveSubscriptionPlan($subscriptionPlanId, $productId, $articleId);
             }
 
-            return $cycles;
+            $response->billing_cycles = $cycles;
+
+            return $response;
         }
     }
 

@@ -33,7 +33,9 @@ use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
 use OxidProfessionalServices\PayPal\Api\Model\Catalog\Product;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\BillingCycle;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Frequency;
+use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Money;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Plan;
+use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\PricingScheme;
 use OxidProfessionalServices\PayPal\Controller\Admin\Service\CatalogService;
 use OxidProfessionalServices\PayPal\Controller\Admin\Service\SubscriptionService;
 use OxidProfessionalServices\PayPal\Core\Currency;
@@ -487,13 +489,14 @@ class PaypalSubscribeController extends AdminController
         $subscriptionService = new SubscriptionService();
         $productId = Registry::getRequest()->getRequestEscapedParameter('paypalProductId', "");
         try {
-            $cycles = $subscriptionService->saveNewSubscriptionPlan($productId, $this->getEditObjectId());
             $this->setLinkedObject();
-            $this->saveVariants($cycles);
+            $variantId = $this->saveVariants();
+            /** @var Plan $subscription */
+            $subscriptionService->saveNewSubscriptionPlan($productId, $variantId);
         } catch (DatabaseConnectionException $e) {
-            $this->addTplParam('error', $e->getErrorDescription());
+            $this->addTplParam('error', $e->getMessage());
         } catch (DatabaseErrorException $e) {
-            $this->addTplParam('error', $e->getErrorDescription());
+            $this->addTplParam('error', $e->getMessage());
         } catch (ApiException $e) {
             $this->addTplParam('error', $e->getErrorDescription());
         }
@@ -544,38 +547,36 @@ class PaypalSubscribeController extends AdminController
     }
 
     /**
-     * @param array $cycles
+     * @return string
      * @throws DatabaseConnectionException
      * @throws DatabaseErrorException
      */
-    protected function saveVariants(array $cycles): void
+    protected function saveVariants(): string
     {
+        $fixed_price = Registry::getRequest()->getRequestEscapedParameter('fixed_price', "");
+        $setupFee = floatVal(Registry::getRequest()->getRequestEscapedParameter('setup_fee', 0));
+        $planName = Registry::getRequest()->getRequestEscapedParameter('billing_plan_name', '');
+        $price = floatVal($fixed_price[0]);
+
         $oxid = Registry::getRequest()->getRequestParameter('oxid');
-
         $childProducts = $this->getChildProducts($oxid);
-
         $sort = 1;
+        $variantOxid = UtilsObject::getInstance()->generateUId();
 
         if (empty($childProducts)) {
             /** @var BillingCycle $cycle */
-            foreach ($cycles as $cycle) {
-                $variantOxid = UtilsObject::getInstance()->generateUId();
-                $this->repository->saveVariantProduct($variantOxid, $oxid, $cycle, $sort);
+            $this->repository->saveVariantProduct($variantOxid, $oxid, $setupFee, $price, $planName, $sort);
+            $this->saveMapId($this->getMapIdFromVariant($variantOxid));
+            $this->saveSelectName($oxid);
+        } else {
+//            foreach ($childProducts as $childProduct) {
+                $this->repository->saveVariantProduct($variantOxid, $oxid, $setupFee, $price, $planName, $sort);
                 $this->saveMapId($this->getMapIdFromVariant($variantOxid));
                 $this->saveSelectName($oxid);
-                $sort++;
-            }
-        } else {
-            foreach ($childProducts as $childProduct) {
-                foreach ($cycles as $cycle) {
-                    $variantOxid = UtilsObject::getInstance()->generateUId();
-                    $this->repository->saveVariantProduct($variantOxid, $oxid, $cycle, $sort);
-                    $this->saveMapId($this->getMapIdFromVariant($variantOxid));
-                    $this->saveSelectName($oxid);
-                    $sort++;
-                }
-            }
+//            }
         }
+
+        return $variantOxid;
     }
 
     /**

@@ -1,6 +1,17 @@
 [{if $aVariantSelections.blPerfectFit}]
+[{oxscript include=$oViewConf->getPayPalJsSdkUrl($paymentStrategy, true)}]
 [{capture name="paypal_init"}]
 [{literal}]
+
+$(document).ready(function() {
+    $("#variants .dropdown-menu li a").click(function(e) {
+        e.preventDefault();
+        var href = $(this).attr('href');
+        window.location=href;
+    });
+});
+
+
 paypal.Buttons({
     style: {
         color: 'gold',
@@ -25,7 +36,7 @@ paypal.Buttons({
 }).render('#paypal-button-container');
 [{/literal}]
 [{/capture}]
-[{oxscript include=$oViewConf->getPayPalJsSdkSubscribeUrl()}]
+
 [{else}]
 [{capture name="paypal_init"}]
 [{if !$paymentStrategy}]
@@ -79,9 +90,17 @@ paypal.Buttons({
     onError: function (data) {
     }
 }).render('#paypal-button-container');
+$(document).ready(function() {
+    $("#variants .dropdown-menu li a").click(function(e) {
+        e.preventDefault();
+        var href = $(this).attr('href');
+        window.location=href;
+    });
+});
+
 [{/literal}]
 [{/capture}]
-[{oxscript include=$oViewConf->getPayPalJsSdkUrl($paymentStrategy)}]
+[{oxscript include=$oViewConf->getPayPalJsSdkUrl($paymentStrategy, false)}]
 [{/if}]
 <div id="paypal-button-container" class="[{$buttonClass}]"></div>
 [{oxscript add=$smarty.capture.paypal_init}]
