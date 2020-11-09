@@ -38,8 +38,6 @@ class BasketController extends BasketController_parent
         if (!empty($selectedBillingCycle)) {
             $selectedBillingCycle = json_decode($selectedBillingCycle, true);
             $this->addTplParam('selectedBillingCycle', $selectedBillingCycle);
-            $basket = Registry::getSession()->getBasket();
-            $k = 1;
         }
         return parent::render();
     }

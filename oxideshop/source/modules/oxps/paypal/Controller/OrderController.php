@@ -22,6 +22,9 @@
 
 namespace OxidProfessionalServices\PayPal\Controller;
 
+use OxidEsales\Eshop\Application\Model\User;
+use OxidEsales\Eshop\Core\Registry;
+
 /**
  * Class OrderController
  * @package OxidProfessionalServices\PayPal\Controller
@@ -30,4 +33,27 @@ namespace OxidProfessionalServices\PayPal\Controller;
  */
 class OrderController extends OrderController_parent
 {
+    public function init()
+    {
+        $isSubscribe = Registry::getRequest()->getRequestEscapedParameter('subscribe', 0);
+
+        if ($isSubscribe) {
+            $this->setPayPalAsPaymentMethod();
+        }
+
+        parent::init();
+    }
+
+    public function execute()
+    {
+        return parent::execute();
+    }
+
+    private function setPayPalAsPaymentMethod()
+    {
+        $payment = $this->getBasket()->getPaymentId();
+        if (($payment !== 'oxidpaypal')) {
+            $this->getBasket()->setPayment('oxidpaypal');
+        }
+    }
 }

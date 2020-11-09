@@ -18,7 +18,7 @@
                     [{if $oView->isVatIncluded()}]
                         <span class="price-markup">*</span>
                     [{/if}]
-                [{if $aVariantSelections.blPerfectFit}]
+                [{if $aVariantSelections.blPerfectFit && $subscriptionPlan}]
                 <span>
                     <br />
                     <br />
