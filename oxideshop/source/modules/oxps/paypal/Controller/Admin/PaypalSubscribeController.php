@@ -294,6 +294,16 @@ class PaypalSubscribeController extends AdminController
         $childArticle = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)
             ->getOne("SELECT OXID FROM oxarticles WHERE OXPARENTID = ?", [$oxid]);
 
+        if (!$childArticle) {
+            $this->linkedProduct = $this->repository->getLinkedProductByOxid($oxid);
+
+            if ($this->linkedProduct) {
+                $this->linkedObject = $this->getPaypalProductDetail($this->linkedProduct[0]['OXPS_PAYPAL_PRODUCT_ID']);
+            }
+
+            return;
+        }
+
         try {
             $this->getLinkedProductByOxid($childArticle);
         } catch (DatabaseConnectionException $e) {
@@ -481,7 +491,7 @@ class PaypalSubscribeController extends AdminController
                 $catalogService->createProduct();
             }
 
-            $this->addTplParam('updatelist', 1);
+//            $this->addTplParam('updatelist', 1);
         } catch (ApiException $e) {
             $this->addTplParam('error', $e->getErrorDescription());
         }
@@ -634,8 +644,8 @@ class PaypalSubscribeController extends AdminController
     protected function saveSelectName(?string $oxid): void
     {
         DatabaseProvider::getDb()->execute(
-            'UPDATE oxarticles SET OXVARNAME = ? WHERE OXID = ?',
-            ['subscribe', $oxid]
+            'UPDATE oxarticles SET OXVARNAME = ? WHERE OXID = ? OR OXPARENTID = ?',
+            ['subscribe', $oxid, $oxid]
         );
     }
 
