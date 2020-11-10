@@ -192,12 +192,14 @@ class SubscriptionService
     }
 
     /**
-     * @param $productId
+     * @param string $productId
+     * @param string $articleId
+     * @return Plan
      * @throws ApiException
      * @throws DatabaseConnectionException
      * @throws DatabaseErrorException
      */
-    public function saveNewSubscriptionPlan($productId, $articleId)
+    public function saveNewSubscriptionPlan(string $productId, string $articleId)
     {
         $fixed_price = $this->request->getRequestEscapedParameter('fixed_price', "");
         $interval = $this->request->getRequestEscapedParameter('interval', "");

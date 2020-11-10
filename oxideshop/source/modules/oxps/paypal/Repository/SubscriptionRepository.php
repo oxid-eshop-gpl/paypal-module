@@ -98,11 +98,13 @@ class SubscriptionRepository
 
         if (count($existingProduct) == 1  && empty($existingProduct[0]['OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID'])) {
             $sql = 'UPDATE oxps_paypal_subscription_product SET ';
-            $sql .= 'OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID = ? ';
+            $sql .= 'OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID = ?,';
+            $sql .= 'OXPS_PAYPAL_OXARTICLE_ID = ? ';
             $sql .= 'WHERE OXPS_PAYPAL_PRODUCT_ID = ?';
 
             DatabaseProvider::getDb()->execute($sql, [
                 $subscriptionPlanId,
+                $articleId,
                 $productId,
             ]);
         } else {

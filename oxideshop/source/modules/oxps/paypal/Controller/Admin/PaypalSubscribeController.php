@@ -291,8 +291,11 @@ class PaypalSubscribeController extends AdminController
         $oxid = Registry::getRequest()->getRequestParameter('oxid');
         $article->load($oxid);
 
+        $childArticle = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)
+            ->getOne("SELECT OXID FROM oxarticles WHERE OXPARENTID = ?", [$oxid]);
+
         try {
-            $this->getLinkedProductByOxid($oxid);
+            $this->getLinkedProductByOxid($childArticle);
         } catch (DatabaseConnectionException $e) {
             return;
         } catch (DatabaseErrorException $e) {
