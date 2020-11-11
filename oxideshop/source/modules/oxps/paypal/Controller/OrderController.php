@@ -22,7 +22,6 @@
 
 namespace OxidProfessionalServices\PayPal\Controller;
 
-use OxidEsales\Eshop\Application\Model\User;
 use OxidEsales\Eshop\Core\Registry;
 
 /**
@@ -49,15 +48,6 @@ class OrderController extends OrderController_parent
         }
 
         parent::init();
-    }
-
-    public function execute()
-    {
-
-
-
-
-        return parent::execute();
     }
 
     private function setPayPalAsPaymentMethod()

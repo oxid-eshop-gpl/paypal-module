@@ -53,6 +53,7 @@ class PaymentGateway extends PaymentGateway_parent
         $session = $this->getSession();
 
         if ($session->getVariable('isSubscriptionCheckout')) {
+            $this->getSession()->deleteVariable('isSubscriptionCheckout');
             return true;
         }
 
@@ -69,7 +70,7 @@ class PaymentGateway extends PaymentGateway_parent
     /**
      * Executes Authorize to PayPal
      *
-     * @param \OxidEsales\PayPalModule\Model\Order $order  User ordering object
+     * @param Order $order  User ordering object
      *
      * @return bool
      */
