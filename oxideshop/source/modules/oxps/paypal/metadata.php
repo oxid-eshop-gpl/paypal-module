@@ -24,6 +24,7 @@ use OxidEsales\Eshop\Application\Component\Widget\ArticleDetails;
 use OxidEsales\Eshop\Application\Controller\Admin\ArticleList;
 use OxidEsales\Eshop\Application\Controller\ArticleDetailsController;
 use OxidEsales\Eshop\Application\Controller\BasketController;
+use OxidEsales\Eshop\Application\Controller\OrderController;
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Application\Model\Basket;
 use OxidEsales\Eshop\Application\Model\Order;
@@ -90,7 +91,8 @@ $aModule = [
         ArticleDetails::class => ArticleDetailsAlias::class,
         SelectionCore::class => PaypalSelectionModel::class,
         VariantHandlerCore::class => PaypalVariantHandler::class,
-        VariantSelectListCore::class => PayPalVariantSelectList::class
+        VariantSelectListCore::class => PayPalVariantSelectList::class,
+        OrderController::class => \OxidProfessionalServices\PayPal\Controller\OrderController::class
     ],
     'controllers' => [
         'PaypalConfigController' => PaypalConfigController::class,

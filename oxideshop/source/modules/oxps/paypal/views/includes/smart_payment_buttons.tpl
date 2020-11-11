@@ -15,7 +15,7 @@
             console.log("PayPal JS SDK was initialized. No action required.");
         },
         createSubscription: function(data, actions) {
-            return fetch('[{/literal}][{$sSelfLink|cat:"cl=PayPalProxyController&fnc=createOrder&context="|cat:$paymentStrategy|cat:"&aid="|cat:$aid}][{literal}]', {
+            return fetch('[{/literal}][{$sSelfLink|cat:"cl=PayPalProxyController&fnc=createSubscriptionOrder&aid="|cat:$aid|cat:"&stoken="|cat:$oViewConf->getSessionChallengeToken()}][{literal}]', {
             method: 'post',
             headers: {
             'content-type': 'application/json'
@@ -25,11 +25,10 @@
             })
         },
         onApprove: function(data, actions) {
-            console.log(data);
-            console.log(actions);
-            window.location.href="[{/literal}][{$sSelfLink|cat:"cl=order"}][{literal}]"
+            window.location.href="[{/literal}][{$sSelfLink|cat:"cl=order&func=doOrder&subscribe=1"|cat:"&stoken="|cat:$oViewConf->getSessionChallengeToken()}][{literal}]"
         },
         onCancel: function(data, actions) {
+            window.location.href="[{/literal}][{$sSelfLink}][{literal}]"
             console.log('Consumer cancelled the PayPal Subscription Flow. No action required.');
         }
     }).render('#paypal-button-container');
@@ -84,7 +83,7 @@
         [{/literal}]
         [{if $oViewConf->getTopActiveClassName()=="details" && $paymentStrategy=="continue"}]
         //location.reload();
-        location.replace('[{$sSelfLink|cat:"cl=basket&subscribe=1"}]');
+        location.replace('[{$sSelfLink|cat:"cl=basket"}]');
         [{elseif $oViewConf->getTopActiveClassName()=="payment" && $paymentStrategy=="continue"}]
         if (data.id && data.status == "APPROVED") {
         $("#payment_oxidpaypal").prop( "checked", true);

@@ -38,6 +38,13 @@ class OrderController extends OrderController_parent
         $isSubscribe = Registry::getRequest()->getRequestEscapedParameter('subscribe', 0);
 
         if ($isSubscribe) {
+            $func = Registry::getRequest()->getRequestEscapedParameter('func');
+
+            if ($func === 'doOrder') {
+                $this->addTplParam('submitCart', 1);
+                $session = $this->getSession();
+                $session->setVariable('isSubscriptionCheckout', true);
+            }
             $this->setPayPalAsPaymentMethod();
         }
 
@@ -46,6 +53,10 @@ class OrderController extends OrderController_parent
 
     public function execute()
     {
+
+
+
+
         return parent::execute();
     }
 
@@ -56,4 +67,6 @@ class OrderController extends OrderController_parent
             $this->getBasket()->setPayment('oxidpaypal');
         }
     }
+
+
 }
