@@ -57,6 +57,4 @@ class OrderController extends OrderController_parent
             $this->getBasket()->setPayment('oxidpaypal');
         }
     }
-
-
 }

@@ -296,7 +296,6 @@ class PaypalSubscribeController extends AdminController
 
         if (!$childArticle) {
             $this->linkedProduct = $this->repository->getLinkedProductByOxid($oxid);
-
             if ($this->linkedProduct) {
                 $this->linkedObject = $this->getPaypalProductDetail($this->linkedProduct[0]['OXPS_PAYPAL_PRODUCT_ID']);
             }
@@ -333,7 +332,6 @@ class PaypalSubscribeController extends AdminController
         }
 
         $this->repository->deleteLinkedProduct($this->linkedObject->id);
-
         $this->addTplParam('updatelist', 1);
     }
 
@@ -344,12 +342,7 @@ class PaypalSubscribeController extends AdminController
      */
     public function getPaypalProductDetail($id): Product
     {
-        /**
-         * @var ServiceFactory $sf
-         */
-        $cs = Registry::get(ServiceFactory::class)->getCatalogService();
-
-        return $cs->showProductDetails($id);
+        return Registry::get(ServiceFactory::class)->getCatalogService()->showProductDetails($id);
     }
 
     /**
@@ -357,12 +350,7 @@ class PaypalSubscribeController extends AdminController
      */
     public function getCatalogEntries()
     {
-        /**
-         * @var ServiceFactory $sf
-         */
-        $cs = Registry::get(ServiceFactory::class)->getCatalogService();
-
-        $products = $cs->listProducts();
+        $products = Registry::get(ServiceFactory::class)->getCatalogService()->listProducts();
 
         $filteredProducts = [];
         foreach ($products as $product) {
@@ -490,8 +478,7 @@ class PaypalSubscribeController extends AdminController
             } else {
                 $catalogService->createProduct();
             }
-
-//            $this->addTplParam('updatelist', 1);
+            $this->addTplParam('updatelist', 1);
         } catch (ApiException $e) {
             $this->addTplParam('error', $e->getErrorDescription());
         }
@@ -582,11 +569,9 @@ class PaypalSubscribeController extends AdminController
             $this->saveMapId($this->getMapIdFromVariant($variantOxid));
             $this->saveSelectName($oxid);
         } else {
-//            foreach ($childProducts as $childProduct) {
-                $this->repository->saveVariantProduct($variantOxid, $oxid, $setupFee, $price, $planName, $sort);
-                $this->saveMapId($this->getMapIdFromVariant($variantOxid));
-                $this->saveSelectName($oxid);
-//            }
+            $this->repository->saveVariantProduct($variantOxid, $oxid, $setupFee, $price, $planName, $sort);
+            $this->saveMapId($this->getMapIdFromVariant($variantOxid));
+            $this->saveSelectName($oxid);
         }
 
         return $variantOxid;
