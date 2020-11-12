@@ -1,3 +1,4 @@
+
 [{if $aVariantSelections.blPerfectFit}]
     [{oxscript include=$oViewConf->getPayPalJsSdkUrl($paymentStrategy, true)}]
     [{capture name="paypal_init"}]
@@ -98,6 +99,15 @@
     onError: function (data) {
     }
     }).render('#paypal-button-container');
+
+    $(document).ready(function() {
+        $('#variants .dropdown-menu li a').off('click');
+        $('#variants .dropdown-menu li a').click(function (e) {
+            e.preventDefault();
+            var href = $(this).attr('href');
+            window.location.href=href;
+        });
+    });
 
     [{/literal}]
     [{/capture}]

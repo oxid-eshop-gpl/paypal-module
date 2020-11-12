@@ -35,7 +35,7 @@ use OxidEsales\Eshop\Core\ViewConfig;
 use OxidEsales\Eshop\Application\Model\PaymentGateway;
 use OxidProfessionalServices\PayPal\Controller\Admin\DisputeController;
 use OxidProfessionalServices\PayPal\Controller\Admin\DisputeDetailsController;
-use OxidProfessionalServices\PayPal\Component\Widget\ArticleDetails as ArticleDetailsAlias;
+use OxidProfessionalServices\PayPal\Component\Widget\ArticleDetails as ArticleDetailsComponent;
 use OxidProfessionalServices\PayPal\Controller\Admin\OnboardingController;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalConfigController;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalOrderController;
@@ -88,7 +88,7 @@ $aModule = [
         ArticleList::class => ArticleListController::class,
         ArticleDetailsController::class => PayPalArticleDetailsController::class,
         BasketController::class => PayPalBasketController::class,
-        ArticleDetails::class => ArticleDetailsAlias::class,
+        ArticleDetails::class => ArticleDetailsComponent::class,
         SelectionCore::class => PaypalSelectionModel::class,
         VariantHandlerCore::class => PaypalVariantHandler::class,
         VariantSelectListCore::class => PayPalVariantSelectList::class,
