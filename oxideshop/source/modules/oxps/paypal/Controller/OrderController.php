@@ -46,8 +46,18 @@ class OrderController extends OrderController_parent
             }
             $this->setPayPalAsPaymentMethod();
         }
-
         parent::init();
+    }
+
+    public function execute()
+    {
+        $ret = parent::execute();
+
+        if (strpos($ret, 'thankyou') === false) {
+            return $ret;
+        }
+
+        return $ret;
     }
 
     private function setPayPalAsPaymentMethod()
