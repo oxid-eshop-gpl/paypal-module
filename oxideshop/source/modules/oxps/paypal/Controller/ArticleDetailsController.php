@@ -22,52 +22,22 @@
 
 namespace OxidProfessionalServices\PayPal\Controller;
 
-use OxidEsales\Eshop\Application\Model\Article;
-use OxidEsales\Eshop\Core\DatabaseProvider;
-use OxidEsales\Eshop\Core\Registry;
-use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Plan;
-use OxidProfessionalServices\PayPal\Core\ServiceFactory;
-use OxidProfessionalServices\PayPal\Repository\SubscriptionRepository;
-
 /**
  * Class ArticleDetailsController
  * @mixin \OxidEsales\Eshop\Application\Controller\ArticleDetailsController
  */
 class ArticleDetailsController extends ArticleDetailsController_parent
 {
+    use ArticleDetailsTrait;
+
     public function render()
     {
         $return = parent::render();
 
-        $subscriptionRepository = new SubscriptionRepository();
-
-        $articleId = Registry::getRequest()->getRequestEscapedParameter('anid');
-
-        $childArticle = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)
-            ->getOne("SELECT OXID FROM oxarticles WHERE OXPARENTID = ?", [$articleId]);
-
-        if ($childArticle) {
-            $articleId = $childArticle;
-        }
-
-        /** @var Article $article */
-        $article = oxNew(Article::class);
-        $article->load($articleId);
-
-        $paypalSubscriptionPlanId = $subscriptionRepository->isSubscribableProduct($articleId);
-        $this->addTplParam('isSubscribableProduct', $paypalSubscriptionPlanId ? true : false);
-
-        if ($paypalSubscriptionPlanId) {
-            $sf = Registry::get(ServiceFactory::class);
-            /** @var Plan $subscriptionPlan */
-            $subscriptionPlan = $sf->getSubscriptionService()->showPlanDetails('string', $paypalSubscriptionPlanId, 1);
-            $this->addTplParam('subscriptionPlan', $subscriptionPlan);
-            $this->addTplParam('billingCycles', $subscriptionPlan->billing_cycles);
-            $this->addTplParam('setupFee', $subscriptionPlan->payment_preferences->setup_fee);
-
-            Registry::getSession()->setVariable('currentSubscriptionView', json_encode($subscriptionPlan));
-        }
+        $this->LoadTemplateSubscriptionData();
 
         return $return;
     }
+
+
 }
