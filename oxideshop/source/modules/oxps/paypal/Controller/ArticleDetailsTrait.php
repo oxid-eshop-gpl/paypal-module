@@ -35,7 +35,7 @@ use OxidProfessionalServices\PayPal\Repository\SubscriptionRepository;
  */
 trait ArticleDetailsTrait
 {
-    protected function LoadTemplateSubscriptionData(): void
+    protected function loadTemplateSubscriptionData(): void
     {
         $subscriptionRepository = new SubscriptionRepository();
 

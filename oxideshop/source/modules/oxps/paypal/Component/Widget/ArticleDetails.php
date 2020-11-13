@@ -36,7 +36,7 @@ class ArticleDetails extends ArticleDetails_parent
     {
         $return = parent::render();
 
-        $this->LoadTemplateSubscriptionData();
+        $this->loadTemplateSubscriptionData();
 
         return $return;
     }

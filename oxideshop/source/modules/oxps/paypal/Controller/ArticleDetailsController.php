@@ -34,10 +34,8 @@ class ArticleDetailsController extends ArticleDetailsController_parent
     {
         $return = parent::render();
 
-        $this->LoadTemplateSubscriptionData();
+        $this->loadTemplateSubscriptionData();
 
         return $return;
     }
-
-
 }
