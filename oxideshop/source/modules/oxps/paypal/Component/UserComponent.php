@@ -47,7 +47,7 @@ class UserComponent extends UserComponent_parent
     {
         $return = parent::login_noredirect();
         $redirect = $this->getSession()->getVariable('paypalRedirect');
-        if($redirect) {
+        if ($redirect) {
             $this->getSession()->deleteVariable('paypalRedirect');
             Registry::getUtils()->redirect($redirect, true, 302);
         }

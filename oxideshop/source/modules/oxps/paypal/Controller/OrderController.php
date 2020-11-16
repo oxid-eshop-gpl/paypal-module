@@ -52,11 +52,9 @@ class OrderController extends OrderController_parent
     public function execute()
     {
         $ret = parent::execute();
-
         if (strpos($ret, 'thankyou') === false) {
             return $ret;
         }
-//**
         return $ret;
     }
 
