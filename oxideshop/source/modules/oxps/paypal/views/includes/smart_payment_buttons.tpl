@@ -26,7 +26,14 @@
             })
         },
         onApprove: function(data, actions) {
-            window.location.href="[{/literal}][{$sSelfLink|cat:"cl=order&func=doOrder&subscribe=1"|cat:"&stoken="|cat:$oViewConf->getSessionChallengeToken()}][{literal}]"
+            fetch('[{/literal}][{$sSelfLink|cat:"cl=PayPalProxyController&fnc=saveSubscriptionOrder&subscriptionPlanId="|cat:$subscriptionPlan->id|cat:"&aid="|cat:$aid|cat:"&stoken="|cat:$oViewConf->getSessionChallengeToken()}][{literal}]', {
+            method: 'post',
+            headers: {
+                'content-type': 'application/json'
+            }
+            }).then(function(data) {
+                window.location.href="[{/literal}][{$sSelfLink|cat:"cl=order&func=doOrder&subscribe=1"|cat:"&stoken="|cat:$oViewConf->getSessionChallengeToken()}][{literal}]"
+            })
         },
         onCancel: function(data, actions) {
             window.location.href="[{/literal}][{$sSelfLink}][{literal}]"

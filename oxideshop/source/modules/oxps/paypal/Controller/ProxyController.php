@@ -31,10 +31,12 @@ use OxidEsales\Eshop\Core\Field;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\Order;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderCaptureRequest;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderRequest;
+use OxidProfessionalServices\PayPal\Controller\Admin\Service\SubscriptionService;
 use OxidProfessionalServices\PayPal\Core\OrderManager;
 use OxidProfessionalServices\PayPal\Core\OrderRequestFactory;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 use OxidProfessionalServices\PayPal\Core\PaypalSession;
+use OxidProfessionalServices\PayPal\Model\Subscription;
 use VIISON\AddressSplitter\AddressSplitter;
 use VIISON\AddressSplitter\Exceptions\SplittingException;
 use OxidEsales\Eshop\Core\Exception\OutOfStockException;
@@ -164,6 +166,29 @@ class ProxyController extends FrontendController
         $this->addToBasket();
         $this->setPaypalPaymentMethod();
         $this->outputJson([true]);
+    }
+
+    public function saveSubscriptionOrder()
+    {
+        $subscriptionPlanId = Registry::getRequest()->getRequestEscapedParameter('subscriptionPlanId');
+        $articleId = Registry::getRequest()->getRequestEscapedParameter('aid');
+
+        $subscriptionService = new SubscriptionService();
+        $subscription = $subscriptionService->subscriptionService->showPlanDetails('string', $subscriptionPlanId, 1);
+
+        $time =date('Y-m-d H:i:s');
+
+        $data = [];
+        $data['plan_id'] = $subscriptionPlanId;
+        $data['email_address'] = Registry::getSession()->getUser()->getFieldData('OXUSERNAME');
+        $data['status'] = $subscription->status;
+        $data['create_time'] = $time;
+        $data['update_time'] = $time;
+        $data['start_time'] = $time;
+        $data['status_update_time'] = $time;
+
+        $model = new Subscription();
+        $model->saveSubscription($data);
     }
 
     public function cancelPaypalPayment()

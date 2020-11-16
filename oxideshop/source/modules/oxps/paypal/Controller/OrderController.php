@@ -56,7 +56,7 @@ class OrderController extends OrderController_parent
         if (strpos($ret, 'thankyou') === false) {
             return $ret;
         }
-
+//**
         return $ret;
     }
 
