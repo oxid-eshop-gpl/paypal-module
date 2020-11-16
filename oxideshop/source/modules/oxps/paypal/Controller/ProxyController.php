@@ -171,12 +171,11 @@ class ProxyController extends FrontendController
     public function saveSubscriptionOrder()
     {
         $subscriptionPlanId = Registry::getRequest()->getRequestEscapedParameter('subscriptionPlanId');
-        $articleId = Registry::getRequest()->getRequestEscapedParameter('aid');
 
         $subscriptionService = new SubscriptionService();
         $subscription = $subscriptionService->subscriptionService->showPlanDetails('string', $subscriptionPlanId, 1);
 
-        $time =date('Y-m-d H:i:s');
+        $time = date('Y-m-d H:i:s');
 
         $data = [];
         $data['plan_id'] = $subscriptionPlanId;
