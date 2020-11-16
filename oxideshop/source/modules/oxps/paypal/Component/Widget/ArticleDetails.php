@@ -31,13 +31,4 @@ use OxidProfessionalServices\PayPal\Controller\ArticleDetailsTrait;
 class ArticleDetails extends ArticleDetails_parent
 {
     use ArticleDetailsTrait;
-
-    public function render()
-    {
-        $return = parent::render();
-
-        $this->loadTemplateSubscriptionData();
-
-        return $return;
-    }
 }

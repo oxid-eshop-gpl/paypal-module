@@ -20,6 +20,7 @@
  * @copyright (C) OXID eSales AG 2003-2020
  */
 
+use OxidEsales\Eshop\Application\Component\UserComponent;
 use OxidEsales\Eshop\Application\Component\Widget\ArticleDetails;
 use OxidEsales\Eshop\Application\Controller\Admin\ArticleList;
 use OxidEsales\Eshop\Application\Controller\ArticleDetailsController;
@@ -33,6 +34,7 @@ use OxidEsales\Eshop\Application\Model\VariantHandler as VariantHandlerCore;
 use OxidEsales\Eshop\Application\Model\VariantSelectList as VariantSelectListCore;
 use OxidEsales\Eshop\Core\ViewConfig;
 use OxidEsales\Eshop\Application\Model\PaymentGateway;
+use OxidProfessionalServices\PayPal\Component\UserComponent as PayPalUserComponent;
 use OxidProfessionalServices\PayPal\Controller\Admin\DisputeController;
 use OxidProfessionalServices\PayPal\Controller\Admin\DisputeDetailsController;
 use OxidProfessionalServices\PayPal\Component\Widget\ArticleDetails as ArticleDetailsComponent;
@@ -47,6 +49,7 @@ use OxidProfessionalServices\PayPal\Controller\Admin\TransactionController;
 use OxidProfessionalServices\PayPal\Controller\Admin\ArticleListController;
 use OxidProfessionalServices\PayPal\Controller\ArticleDetailsController as PayPalArticleDetailsController;
 use OxidProfessionalServices\PayPal\Controller\BasketController as PayPalBasketController;
+use OxidProfessionalServices\PayPal\Controller\OrderController as PaypalFrontEndOrderController;
 use OxidProfessionalServices\PayPal\Controller\ProxyController;
 use OxidProfessionalServices\PayPal\Controller\WebhookController;
 use OxidProfessionalServices\PayPal\Controller\Admin\BalanceController;
@@ -92,7 +95,8 @@ $aModule = [
         SelectionCore::class => PaypalSelectionModel::class,
         VariantHandlerCore::class => PaypalVariantHandler::class,
         VariantSelectListCore::class => PayPalVariantSelectList::class,
-        OrderController::class => \OxidProfessionalServices\PayPal\Controller\OrderController::class
+        OrderController::class => PaypalFrontEndOrderController::class,
+        UserComponent::class => PayPalUserComponent::class
     ],
     'controllers' => [
         'PaypalConfigController' => PaypalConfigController::class,
@@ -127,6 +131,8 @@ $aModule = [
         'paypal_subscription_details.tpl' => 'oxps/paypal/views/admin/tpl/subscription_details.tpl',
         'subscribe.tpl'    => 'oxps/paypal/views/admin/tpl/subscribe.tpl',
         'paypal_smart_payment_buttons.tpl' => 'oxps/paypal/views/includes/smart_payment_buttons.tpl',
+        'payment_buttons.tpl' => 'oxps/paypal/views/includes/payment_buttons.tpl',
+        'subscription_buttons.tpl' => 'oxps/paypal/views/includes/subscription_buttons.tpl',
         'flow/paypal_payment_option.tpl' => 'oxps/paypal/views/theme/flow/paypal_payment_option.tpl',
         'wave/paypal_payment_option.tpl' => 'oxps/paypal/views/theme/wave/paypal_payment_option.tpl'
     ],

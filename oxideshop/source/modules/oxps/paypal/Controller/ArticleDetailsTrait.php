@@ -66,4 +66,29 @@ trait ArticleDetailsTrait
             Registry::getSession()->setVariable('currentSubscriptionView', json_encode($subscriptionPlan));
         }
     }
+
+    public function checkLogin(): void
+    {
+        $user = $this->getSession()->getUser();
+
+        if (!$user) {
+            $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http')
+               . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+            $url = explode('?', $url)[0];
+            $this->addTplParam('currentUrl', $url);
+            $this->addTplParam('isLoggedIn', false);
+        } else {
+            $this->addTplParam('isLoggedIn', true);
+        }
+    }
+
+    public function render()
+    {
+        $return = parent::render();
+
+        $this->checkLogin();
+        $this->loadTemplateSubscriptionData();
+
+        return $return;
+    }
 }

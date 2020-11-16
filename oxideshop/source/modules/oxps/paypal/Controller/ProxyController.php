@@ -163,6 +163,9 @@ class ProxyController extends FrontendController
 
     public function createSubscriptionOrder()
     {
+        // Remove all items from the basket
+        // because subscriptions can only work with one subscription product at a time
+        Registry::getSession()->getBasket()->deleteBasket();
         $this->addToBasket();
         $this->setPaypalPaymentMethod();
         $this->outputJson([true]);

@@ -29,13 +29,4 @@ namespace OxidProfessionalServices\PayPal\Controller;
 class ArticleDetailsController extends ArticleDetailsController_parent
 {
     use ArticleDetailsTrait;
-
-    public function render()
-    {
-        $return = parent::render();
-
-        $this->loadTemplateSubscriptionData();
-
-        return $return;
-    }
 }

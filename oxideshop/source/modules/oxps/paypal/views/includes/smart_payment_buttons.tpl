@@ -1,125 +1,15 @@
-
-[{if $aVariantSelections.blPerfectFit}]
-    [{oxscript include=$oViewConf->getPayPalJsSdkUrl($paymentStrategy, true)}]
-    [{capture name="paypal_init"}]
-    [{assign var="sSelfLink" value=$oViewConf->getSelfLink()|replace:"&amp;":"&"}]
-    [{literal}]
-
-    paypal.Buttons({
-        style: {
-            color: 'gold',
-            shape: 'rect',
-            label: 'subscribe',
-            height: 55
-        },
-        onInit: function() {
-            console.log("PayPal JS SDK was initialized. No action required.");
-        },
-        createSubscription: function(data, actions) {
-            return fetch('[{/literal}][{$sSelfLink|cat:"cl=PayPalProxyController&fnc=createSubscriptionOrder&aid="|cat:$aid|cat:"&stoken="|cat:$oViewConf->getSessionChallengeToken()}][{literal}]', {
-            method: 'post',
-            headers: {
-            'content-type': 'application/json'
-            }
-            }).then(function(data) {
-                return actions.subscription.create({"plan_id":"[{/literal}][{$subscriptionPlan->id}][{literal}]"});
-            })
-        },
-        onApprove: function(data, actions) {
-            fetch('[{/literal}][{$sSelfLink|cat:"cl=PayPalProxyController&fnc=saveSubscriptionOrder&subscriptionPlanId="|cat:$subscriptionPlan->id|cat:"&aid="|cat:$aid|cat:"&stoken="|cat:$oViewConf->getSessionChallengeToken()}][{literal}]', {
-            method: 'post',
-            headers: {
-                'content-type': 'application/json'
-            }
-            }).then(function(data) {
-                window.location.href="[{/literal}][{$sSelfLink|cat:"cl=order&func=doOrder&subscribe=1"|cat:"&stoken="|cat:$oViewConf->getSessionChallengeToken()}][{literal}]"
-            })
-        },
-        onCancel: function(data, actions) {
-            window.location.href="[{/literal}][{$sSelfLink}][{literal}]"
-            console.log('Consumer cancelled the PayPal Subscription Flow. No action required.');
-        }
-    }).render('#paypal-button-container');
-
-    $(document).ready(function() {
-        $('#variants .dropdown-menu li a').off('click');
-        $('#variants .dropdown-menu li a').click(function (e) {
-            e.preventDefault();
-            var href = $(this).attr('href');
-            window.location.href=href;
-        });
-    });
-
-    [{/literal}]
-    [{/capture}]
-
+[{if !$isLoggedIn }]
+    [{if $aVariantSelections.blPerfectFit}]
+        [{include file="subscription_buttons.tpl"}]
     [{else}]
-    [{capture name="paypal_init"}]
-    [{if !$paymentStrategy}]
-    [{assign var="paymentStrategy" value="continue"}]
+        [{include file="payment_buttons.tpl"}]
     [{/if}]
-    [{if !$aid}]
-    [{assign var="aid" value=""}]
+[{else}]
+    [{if $aVariantSelections.blPerfectFit}]
+        [{include file="subscription_buttons.tpl"}]
+    [{else}]
+        [{include file="payment_buttons.tpl"}]
     [{/if}]
-    [{assign var="sSelfLink" value=$oViewConf->getSelfLink()|replace:"&amp;":"&"}]
-    [{literal}]
-
-    paypal.Buttons({
-    createOrder: function(data, actions) {
-        return fetch('[{/literal}][{$sSelfLink|cat:"cl=PayPalProxyController&fnc=createOrder&context="|cat:$paymentStrategy|cat:"&aid="|cat:$aid}][{literal}]', {
-        method: 'post',
-        headers: {
-            'content-type': 'application/json'
-        }
-        }).then(function(res) {
-            return res.json();
-        }).then(function(data) {
-            [{/literal}]
-            [{literal}]
-            return data.id;
-        })
-    },
-    onApprove: function(data, actions) {
-        captureData = new FormData();
-        captureData.append('orderID', data.orderID);
-        return fetch('[{/literal}][{$sSelfLink|cat:"cl=PayPalProxyController&fnc=captureOrder&context="|cat:$paymentStrategy|cat:"&aid="|cat:$aid}][{literal}]', {
-        method: 'post',
-        body: captureData
-    }).then(function(res) {
-        return res.json();
-    }).then(function(data) {
-        [{/literal}]
-        [{if $oViewConf->getTopActiveClassName()=="details" && $paymentStrategy=="continue"}]
-        //location.reload();
-        location.replace('[{$sSelfLink|cat:"cl=basket"}]');
-        [{elseif $oViewConf->getTopActiveClassName()=="payment" && $paymentStrategy=="continue"}]
-        if (data.id && data.status == "APPROVED") {
-        $("#payment_oxidpaypal").prop( "checked", true);
-        $('#paymentNextStepBottom').trigger("click");
-    }
-    [{/if}]
-    [{literal}]
-    })
-    },
-    onCancel: function(data, actions) {
-    },
-    onError: function (data) {
-    }
-    }).render('#paypal-button-container');
-
-    $(document).ready(function() {
-        $('#variants .dropdown-menu li a').off('click');
-        $('#variants .dropdown-menu li a').click(function (e) {
-            e.preventDefault();
-            var href = $(this).attr('href');
-            window.location.href=href;
-        });
-    });
-
-    [{/literal}]
-    [{/capture}]
-    [{oxscript include=$oViewConf->getPayPalJsSdkUrl($paymentStrategy, false)}]
-    [{/if}]
-
+[{/if}]
 <div id="paypal-button-container" class="[{$buttonClass}]"></div>
 [{oxscript add=$smarty.capture.paypal_init}]
