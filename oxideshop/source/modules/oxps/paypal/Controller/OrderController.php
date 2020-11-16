@@ -40,6 +40,7 @@ class OrderController extends OrderController_parent
             $func = Registry::getRequest()->getRequestEscapedParameter('func');
 
             if ($func === 'doOrder') {
+                $this->addTplParam('loadingScreen', true);
                 $this->addTplParam('submitCart', 1);
                 $session = $this->getSession();
                 $session->setVariable('isSubscriptionCheckout', true);
@@ -47,6 +48,25 @@ class OrderController extends OrderController_parent
             $this->setPayPalAsPaymentMethod();
         }
         parent::init();
+    }
+
+    public function render()
+    {
+        $isSubscribe = Registry::getRequest()->getRequestEscapedParameter('subscribe', 0);
+
+        if ($isSubscribe) {
+            $func = Registry::getRequest()->getRequestEscapedParameter('func');
+
+            if ($func === 'doOrder') {
+                $this->addTplParam('loadingScreen', true);
+                $this->addTplParam('submitCart', 1);
+                $session = $this->getSession();
+                $session->setVariable('isSubscriptionCheckout', true);
+            }
+            $this->setPayPalAsPaymentMethod();
+        }
+
+        return parent::render();
     }
 
     public function execute()

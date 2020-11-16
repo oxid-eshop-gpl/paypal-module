@@ -354,30 +354,6 @@ $aModule = [
             'position' => '5'
         ],
         [
-            'theme' => 'flow',
-            'template' => 'widget/minibasket/minibasket.tpl',
-            'block' => 'dd_layout_page_header_icon_menu_minibasket_functions',
-            'file' =>
-                '/views/blocks/flow/widget/minibasket/dd_layout_page_header_icon_menu_minibasket_functions.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'wave',
-            'template' => 'widget/minibasket/minibasket.tpl',
-            'block' => 'dd_layout_page_header_icon_menu_minibasket_functions',
-            'file' =>
-                '/views/blocks/wave/widget/minibasket/dd_layout_page_header_icon_menu_minibasket_functions.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'wave',
-            'template' => 'page/checkout/inc/basketcontents_list.tpl',
-            'block' => 'dd_layout_page_header_icon_menu_minibasket_functions',
-            'file' =>
-                '/views/blocks/wave/widget/minibasket/dd_layout_page_header_icon_menu_minibasket_functions.tpl',
-            'position' => '5'
-        ],
-        [
             'template' => 'headitem.tpl',
             'block' => 'admin_headitem_incjs',
             'file' => 'views/blocks/admin/admin_headitem_incjs.tpl'
