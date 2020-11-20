@@ -8,36 +8,13 @@
     [{/if}]
     <div class="row">
         <div class="col-lg-4">
-            <table class="table table-sm">
-                <tr><td>[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_ID"}]</td><td>[{$dispute->dispute_id}]</td></tr>
-                <tr><td>[{oxmultilang ident="OXPS_PAYPAL_REASON"}]</td><td>[{$dispute->reason}]</td></tr>
-                <tr><td>[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_STATUS"}]</td><td>[{$dispute->status}]</td></tr>
-                <tr><td>[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_CREATE_TIME"}]</td><td>[{$dispute->create_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td></tr>
-                <tr><td>[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_UPDATE_TIME"}]</td><td>[{$dispute->update_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td></tr>
-            </table>
-        </div>
-        <div class="col-lg-8">
-            [{foreach from=$dispute->messages item="message"}]
-            <div>
-                <div>
-                    [{$message->posted_by}]
-                    [{$message->time_posted|date_format:"%Y-%m-%d %H:%M:%S"}]
-                </div>
-                [{$message->content}]
-            </div>
-            [{/foreach}]
-            <form method="post" action="[{$oViewConf->getSelfLink()}]">
-                <input type="hidden" name="oxid" value="[{$dispute->dispute_id}]">
-                <input type="hidden" name="fnc" value="sendMessage">
-                <input type="hidden" name="cl" value="PaypalDisputeDetailsController">
-                <textarea name="message" class="form-control"></textarea>
-                <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_SEND"}]</button>
-            </form>
+            <h4>[{$dispute->dispute_id}]: [{oxmultilang ident="OXPS_PAYPAL_DISPUTE_REASON_"|cat:$dispute->reason}] <small>([{$dispute->create_time|date_format:"%Y-%m-%d %H:%M:%S"}])</small></h4>
+            <h6>[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_STATUS_"|cat:$dispute->status}] <small>([{$dispute->update_time|date_format:"%Y-%m-%d %H:%M:%S"}])</small></h6>
         </div>
     </div>
-
+    <br />
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-lg-8">
         <form method="post" action="[{$oViewConf->getSelfLink()}]">
             <input type="hidden" name="oxid" value="[{$dispute->dispute_id}]">
             <input type="hidden" name="fnc" value="makeOffer">
@@ -155,5 +132,22 @@
             </div>
         </form>
         </div>
+        <div id="ppmessages" class="col-lg-4">
+            [{foreach from=$dispute->messages|@array_reverse item="message"}]
+                <h4>[{$message->posted_by}] <small>[{$message->time_posted|date_format:"%Y-%m-%d %H:%M:%S"}]</small></h4>
+                <p>[{$message->content}]</p>
+                <hr />
+            [{/foreach}]
+            <form method="post" action="[{$oViewConf->getSelfLink()}]">
+                <input type="hidden" name="oxid" value="[{$dispute->dispute_id}]">
+                <input type="hidden" name="fnc" value="sendMessage">
+                <input type="hidden" name="cl" value="PaypalDisputeDetailsController">
+                <textarea name="message" class="form-control"></textarea>
+                <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_SEND"}]</button>
+            </form>
+        </div>
+
+
+
     </div>
 </div>

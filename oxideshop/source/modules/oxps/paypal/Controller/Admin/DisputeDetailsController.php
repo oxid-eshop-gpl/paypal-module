@@ -125,7 +125,7 @@ class DisputeDetailsController extends AdminListController
 
         $offerRequest = new RequestMakeOffer();
         $offerRequest->note = (string) $request->getRequestEscapedParameter('note');
-        $offerRequest->invoice_id = (string) $request->getRequestEscapedParameter('invoiceId');
+//        $offerRequest->invoice_id = (string) $request->getRequestEscapedParameter('invoiceId');
         $offerRequest->offer_type = (string) $request->getRequestEscapedParameter('offerType');
 
         $offerAmount = (array) $request->getRequestEscapedParameter('offerAmount');
@@ -133,10 +133,10 @@ class DisputeDetailsController extends AdminListController
             $offerRequest->offer_amount = new Money($offerAmount);
         }
 
-        $returnAddress = (array) $request->getRequestEscapedParameter('shippingAddress');
-        if ($returnAddress) {
-            $offerRequest->return_shipping_address = new AddressPortable($returnAddress);
-        }
+//        $returnAddress = (array) $request->getRequestEscapedParameter('shippingAddress');
+//        if ($returnAddress) {
+//            $offerRequest->return_shipping_address = new AddressPortable($returnAddress);
+//        }
 
         $service = $this->getDisputeService();
         $service->makeOfferToResolveDispute($disputeId, $offerRequest);
