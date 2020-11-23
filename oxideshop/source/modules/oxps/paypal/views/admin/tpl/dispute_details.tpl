@@ -14,7 +14,7 @@
     </div>
     <br />
     <ul class="nav nav-tabs">
-        <li class="active"><a href="#" id="message-tab">[{oxmultilang ident="OXPS_PAYPAL_MESSAGES"}]</a></li>
+        <li class="active"><a href="#" id="messages-tab">[{oxmultilang ident="OXPS_PAYPAL_MESSAGES"}]</a></li>
         <li><a href="#" id="offer-tab">[{oxmultilang ident="OXPS_PAYPAL_MAKE_OFFER"}]</a></li>
         <li><a href="#">[{oxmultilang ident="OXPS_PAYPAL_ESCALATE"}]</a></li>
         <li><a href="#">Menu 3</a></li>
@@ -68,7 +68,7 @@
         </div>
         <br />
         <div class="row ppmessages">
-            <div class="col-lg-3">
+            <div class="col-lg-2">
                 <div class="form-group">
                     <label for="offerType">[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_OFFER_TYPE"}]</label>
                     <select name="offerType" class="form-control" id="offerType">
@@ -79,7 +79,7 @@
                     </select>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-2">
                 <div class="form-group">
                     <label for="offerAmount">[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_OFFER_AMOUNT"}]</label>
                     <input type="number" class="form-control" id="offerAmount" name="offerAmount[value]">
@@ -89,13 +89,13 @@
         </div>
 
         <div class="row ppmessages">
-            <div class="col-lg-3">
+            <div class="col-lg-2">
                 <div class="form-group">
                     <label for="note">[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_NOTE"}]</label>
                     <input type="text" class="form-control" id="note" name="note">
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-2">
                 <div class="form-group">
                     <label for="invoiceId">[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_INVOICE_ID"}]</label>
                     <input type="text" class="form-control" id="invoiceId" name="invoiceId" maxlength="127">
@@ -103,7 +103,7 @@
             </div>
         </div>
         <div class="row ppaltmessages">
-            <div class="col-lg-3">
+            <div class="col-lg-2">
                 <div class="form-group">
                     <label for="shippingAddressLine1">[{oxmultilang ident="OXPS_PAYPAL_ADDRESS_LINE_1"}]</label>
                     <input type="text"
@@ -113,19 +113,9 @@
                            value="[{$shippingDetails->address->address_line_1}]">
                 </div>
             </div>
-            <div class="col-lg-3">
-                <div class="form-group">
-                    <label for="shippingAddressPostalCode">[{oxmultilang ident="OXPS_PAYPAL_POSTAL_CODE"}]</label>
-                    <input type="text"
-                           class="form-control"
-                           id="shippingAddressPostalCode"
-                           name="shippingAddress[address][postal_code]"
-                           value="[{$shippingDetails->address->postal_code}]">
-                </div>
-            </div>
         </div>
         <div class="row ppmessages">
-            <div class="col-lg-3">
+            <div class="col-lg-2">
                 <div class="form-group">
                     <label for="shippingAddressLine2">[{oxmultilang ident="OXPS_PAYPAL_ADDRESS_LINE_2"}]</label>
                     <input type="text"
@@ -135,19 +125,9 @@
                            value="[{$shippingDetails->address->address_line_2}]">
                 </div>
             </div>
-            <div class="col-lg-3">
-                <div class="form-group">
-                    <label for="shippingAddressCountryCode">[{oxmultilang ident="OXPS_PAYPAL_COUNTRY_CODE"}]</label>
-                    <input type="text"
-                           class="form-control"
-                           id="shippingAddressCountryCode"
-                           name="shippingAddress[address][country_code]"
-                           value="[{$shippingDetails->address->country_code}]">
-                </div>
-            </div>
         </div>
         <div class="row ppaltmessages">
-            <div class="col-lg-3">
+            <div class="col-lg-2">
                 <div class="form-group">
                     <label for="shippingAddressLine3">[{oxmultilang ident="OXPS_PAYPAL_ADDRESS_LINE_3"}]</label>
                     <input type="text"
@@ -159,7 +139,29 @@
             </div>
         </div>
         <div class="row ppmessages">
-            <div class="col-lg-3">
+            <div class="col-lg-1">
+                <div class="form-group">
+                    <label for="shippingAddressPostalCode">[{oxmultilang ident="OXPS_PAYPAL_POSTAL_CODE"}]</label>
+                    <input type="text"
+                           class="form-control"
+                           id="shippingAddressPostalCode"
+                           name="shippingAddress[address][postal_code]"
+                           value="[{$shippingDetails->address->postal_code}]">
+                </div>
+            </div>
+            <div class="col-lg-1">
+                <div class="form-group">
+                    <label for="shippingAddressCountryCode">[{oxmultilang ident="OXPS_PAYPAL_COUNTRY_CODE"}]</label>
+                    <input type="text"
+                           class="form-control"
+                           id="shippingAddressCountryCode"
+                           name="shippingAddress[address][country_code]"
+                           value="[{$shippingDetails->address->country_code}]">
+                </div>
+            </div>
+        </div>
+        <div class="row ppaltmessages">
+            <div class="col-lg-2">
                 <div class="col-sm-12">
                     <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_APPLY"}]</button>
                 </div>
@@ -172,25 +174,23 @@
 <script>
     jQuery(document).ready(function(){
 
-        jQuery(".nav-tabs li").removeClass('active');
-        jQuery(".pptab").hide();
-        jQuery("#messages").show();
-        jQuery("#message-tab").parent().addClass('active');
-
-        jQuery("#message-tab").click(function(e) {
-            e.preventDefault();
+        let showItem = function(divId) {
             jQuery(".nav-tabs li").removeClass('active');
             jQuery(".pptab").hide();
-            jQuery("#messages").show();
-            jQuery("#message-tab").parent().addClass('active');
+            jQuery("#" + divId).show();
+            jQuery("#" + divId + "-tab").parent().addClass('active');
+        };
+
+        showItem("messages");
+
+        jQuery("#messages-tab").click(function(e) {
+            e.preventDefault();
+            showItem("messages");
         });
 
         jQuery("#offer-tab").click(function(e) {
             e.preventDefault();
-            jQuery(".nav-tabs li").removeClass('active');
-            jQuery(".pptab").hide();
-            jQuery("#offer").show();
-            jQuery("#offer-tab").parent().addClass('active');
+            showItem("offer");
         });
     });
 </script>
