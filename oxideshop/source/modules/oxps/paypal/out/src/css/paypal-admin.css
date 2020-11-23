@@ -49,6 +49,13 @@
 .transaction-details td {
   padding: 5px; }
 
-#ppmessages {
-  background: #efefef;
-  padding: 20px; }
+.ppmessages, .ppaltmessages {
+  padding: 20px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid #dadada; }
+
+.ppmessages {
+  background: #fcfcfc; }
+
+.ppaltmessages {
+  background: #f4f4f4; }

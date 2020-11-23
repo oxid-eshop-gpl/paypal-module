@@ -246,6 +246,7 @@ $aLang = [
     'OXPS_PAYPAL_DISPUTE_STATUS_OPEN_INQUIRIES' => 'Öffnen',
     'OXPS_PAYPAL_DISPUTE_STATUS_APPEALABLE' => 'Appealable',
     'OXPS_PAYPAL_DISPUTE_STATUS_WAITING_FOR_BUYER_RESPONSE' => 'Warten auf Antwort des Käufers',
+    'OXPS_PAYPAL_DISPUTE_STATUS_WAITING_FOR_SELLER_RESPONSE' => 'Warten auf Antwort des Verkäufers',
     'OXPS_PAYPAL_DISPUTE_ID' => 'Dispute ID',
     'OXPS_PAYPAL_DISPUTE_STATUS' => 'Status',
     'OXPS_PAYPAL_DISPUTE_AMOUNT' => 'Betrag',
@@ -280,4 +281,8 @@ $aLang = [
     'OXPS_PAYPAL_ERROR_NOT_PAID_WITH_PAYPAL'  => 'Diese Bestellung wurde nicht mit Paypal bezahlt',
     'OXPS_PAYPAL_ERROR_INVALID_RESOURCE_ID'   => 'Die Bestellung konnte nicht in Ihrem Paypal-Account gefunden werden.',
     'OXPS_PAYPAL_ERROR_DUPLICATE_INVOICE_ID'  => 'Die Rechnungsnummer ist bereits vergeben, bitte wählen Sie eine Andere.',
+    'OXPS_PAYPAL_MESSAGES'  => 'Nachrichten',
+    'OXPS_PAYPAL_SEND_MESSAGES'  => 'Nachrichten senden',
+    'OXPS_PAYPAL_MAKE_OFFER'  => 'Angebot machen',
+    'OXPS_PAYPAL_ESCALATE'  => 'Eskalieren',
 ];

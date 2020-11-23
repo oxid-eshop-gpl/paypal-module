@@ -69,14 +69,15 @@
         </thead>
         <tbody>
         [{foreach from=$disputes->items item="dispute"}]
+            [{cycle values='ppmessages,ppaltmessages' assign=cellClass}]
             <tr>
-                <td>[{$dispute->dispute_id}]</td>
-                <td>[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_REASON_"|cat:$dispute->reason}]</td>
-                <td>[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_STATUS_"|cat:$dispute->status}]</td>
-                <td>[{$dispute->dispute_amount->value}]&nbsp;[{$dispute->dispute_amount->currency_code}]</td>
-                <td>[{$dispute->create_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
-                <td>[{$dispute->update_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
-                <td>
+                <td class="[{$cellClass}]">[{$dispute->dispute_id}]</td>
+                <td class="[{$cellClass}]">[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_REASON_"|cat:$dispute->reason}]</td>
+                <td class="[{$cellClass}]">[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_STATUS_"|cat:$dispute->status}]</td>
+                <td class="[{$cellClass}]">[{$dispute->dispute_amount->value}]&nbsp;[{$dispute->dispute_amount->currency_code}]</td>
+                <td class="[{$cellClass}]">[{$dispute->create_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
+                <td class="[{$cellClass}]">[{$dispute->update_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
+                <td class="[{$cellClass}]">
                     <a href="[{$oViewConf->getSelfLink()|cat:"cl=PaypalDisputeDetailsController&oxid="|cat:$dispute->dispute_id}]">
                         [{oxmultilang ident="OXPS_PAYPAL_MORE"}]
                     </a>
