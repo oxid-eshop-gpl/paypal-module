@@ -132,7 +132,7 @@
             </div>
         </form>
         </div>
-        <div id="ppmessages" class="col-lg-4">
+        <div id="ppmessages" class="col-lg-3">
             [{foreach from=$dispute->messages|@array_reverse item="message"}]
                 <h4>[{$message->posted_by}] <small>[{$message->time_posted|date_format:"%Y-%m-%d %H:%M:%S"}]</small></h4>
                 <p>[{$message->content}]</p>
@@ -146,8 +146,6 @@
                 <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_SEND"}]</button>
             </form>
         </div>
-
-
-
+        <div class="col-lg-1"></div>
     </div>
 </div>
