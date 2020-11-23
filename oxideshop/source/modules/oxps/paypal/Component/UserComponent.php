@@ -20,25 +20,38 @@
  * @copyright (C) OXID eSales AG 2003-2020
  */
 
-namespace OxidProfessionalServices\PayPal\Controller;
+namespace OxidProfessionalServices\PayPal\Component;
 
 use OxidEsales\Eshop\Core\Registry;
 
 /**
- * @mixin \OxidEsales\Eshop\Application\Controller\BasketController
+ * @mixin \OxidEsales\Eshop\Application\Component\UserComponent
  */
-class BasketController extends BasketController_parent
+class UserComponent extends UserComponent_parent
 {
     public function render()
     {
-        $selectedBillingCycle = Registry::getSession()->getVariable('selectedBillingCycle');
+        $return = parent::render();
 
-        $this->addTplParam('selectedBillingCycle', []);
+        $this->getSession()->deleteVariable('paypalRedirect');
 
-        if (!empty($selectedBillingCycle)) {
-            $selectedBillingCycle = json_decode($selectedBillingCycle, true);
-            $this->addTplParam('selectedBillingCycle', $selectedBillingCycle);
+        $redirect = Registry::getRequest()->getRequestEscapedParameter('return');
+        if ($redirect) {
+            $this->getSession()->setVariable('paypalRedirect', $redirect);
         }
-        return parent::render();
+
+        return $return;
+    }
+
+    public function login_noredirect()
+    {
+        $return = parent::login_noredirect();
+        $redirect = $this->getSession()->getVariable('paypalRedirect');
+        if ($redirect) {
+            $this->getSession()->deleteVariable('paypalRedirect');
+            Registry::getUtils()->redirect($redirect, true, 302);
+        }
+
+        return $return;
     }
 }

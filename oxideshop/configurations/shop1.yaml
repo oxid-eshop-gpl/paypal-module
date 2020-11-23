@@ -12,6 +12,7 @@ GeneralShopSettings:
         - b2bserviceproducts
         - b2bservices
         - ddoevisualcms
+        - oxps/paypal
         - psr_logger
     aHomeCountry:
         - 8f241f11096877ac0.98748826
@@ -50,6 +51,7 @@ GeneralShopSettings:
         OxidEsales\Eshop\Application\Controller\OrderController:
             - OxidEsales\B2BModule\ApprovalProcedure\Controller\OrderController
             - OxidEsales\B2BModule\Budget\Controller\OrderController
+            - OxidProfessionalServices\PayPal\Controller\OrderController
         OxidEsales\Eshop\Application\Controller\PaymentController:
             - OxidEsales\B2BModule\ApprovalProcedure\Controller\PaymentController
             - OxidEsales\B2BModule\BuyingAgent\Controller\PaymentController
@@ -93,7 +95,6 @@ GeneralShopSettings:
     aModuleVersions:
         moduleinternals: '3.0'
         oxps/modulesconfig: 6.1.0
-        oxps/paypal: 0.0.1
     aNrofCatArticles:
         - '10'
         - '20'
@@ -152,6 +153,7 @@ GeneralShopSettings:
     blCheckSysReq: true
     blDisableDublArtOnCopy: false
     blLoadDynContents: true
+    blReverseProxyActive: false
     blSendTechnicalInformationToOxid: false
     blShopStopped: false
     blShowBirthdayFields: true
@@ -168,6 +170,7 @@ GeneralShopSettings:
     contactFormRequiredFields:
         - ''
         - email
+    iLayoutCacheLifeTime: ''
     IMS: '19999999999999'
     includeProductReviewLinksInEmail: false
     iNewBasketItemMessage: '1'

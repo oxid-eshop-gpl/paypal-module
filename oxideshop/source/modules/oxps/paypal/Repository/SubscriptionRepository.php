@@ -10,6 +10,7 @@ use OxidEsales\Eshop\Core\UtilsObject;
 use OxidProfessionalServices\PayPal\Api\Model\Catalog\Product;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\BillingCycle;
+use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Plan;
 
 class SubscriptionRepository
 {
@@ -97,11 +98,13 @@ class SubscriptionRepository
 
         if (count($existingProduct) == 1  && empty($existingProduct[0]['OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID'])) {
             $sql = 'UPDATE oxps_paypal_subscription_product SET ';
-            $sql .= 'OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID = ? ';
+            $sql .= 'OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID = ?,';
+            $sql .= 'OXPS_PAYPAL_OXARTICLE_ID = ? ';
             $sql .= 'WHERE OXPS_PAYPAL_PRODUCT_ID = ?';
 
             DatabaseProvider::getDb()->execute($sql, [
                 $subscriptionPlanId,
+                $articleId,
                 $productId,
             ]);
         } else {
@@ -150,8 +153,6 @@ class SubscriptionRepository
      */
     public function isSubscribableProduct($articleId)
     {
-        $articleId = $this->getSubscriptionArticleId($articleId);
-
         $select = 'SELECT OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID ';
         $select .= 'FROM oxps_paypal_subscription_product WHERE OXPS_PAYPAL_OXARTICLE_ID = ?';
         $result = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getRow($select, [$articleId]);
@@ -164,24 +165,11 @@ class SubscriptionRepository
     }
 
     /**
-     * @param $articleId
-     * @return string
-     */
-    public function getSubscriptionArticleId($articleId): string
-    {
-        $article = oxNew(Article::class);
-        $article->load($articleId);
-
-        if ($article->isVariant()) {
-            $articleId = $article->getParentId();
-        }
-        return $articleId;
-    }
-
-    /**
      * @param string $variantId
      * @param string|null $articleId
-     * @param BillingCycle $cycle
+     * @param float $setupFee
+     * @param float $price
+     * @param string $planName
      * @param int $sort
      * @throws DatabaseConnectionException
      * @throws DatabaseErrorException
@@ -189,7 +177,9 @@ class SubscriptionRepository
     public function saveVariantProduct(
         string $variantId,
         ?string $articleId,
-        BillingCycle $cycle,
+        float $setupFee,
+        float $price,
+        string $planName,
         int $sort = 1
     ): void {
         $sql = "INSERT INTO oxarticles(
@@ -197,7 +187,7 @@ class SubscriptionRepository
                        oxshopid,
                        oxparentid,
                        oxactive,
-                       oxprice, 
+                       oxprice,
                        oxissearch, 
                        oxvarselect,
                        oxsubclass,
@@ -212,12 +202,9 @@ class SubscriptionRepository
             Registry::getConfig()->getShopId(),
             $articleId,
             1,
-            $cycle->pricing_scheme->fixed_price->value,
+            $setupFee + $price,
             1,
-            $cycle->total_cycles . ' ' . $cycle->frequency->interval_unit . ' @ ' .
-            $cycle->pricing_scheme->fixed_price->value . ' ' . $cycle->pricing_scheme->fixed_price->currency_code .
-            '/' . $cycle->frequency->interval_unit . ($cycle->tenure_type == BillingCycle::TENURE_TYPE_TRIAL
-                ? ' (TRIAL)' : ''),
+            $planName,
             'oxarticle',
             1,
             1,

@@ -1,6 +1,5 @@
 [{include file="headitem.tpl" title="GENERAL_ADMIN_TITLE"|oxmultilangassign box="list"}]
 [{assign var="where" value=$oView->getListFilter()}]
-
 <div class="container-fluid">
     <form method="post" action="[{$oViewConf->getSelfLink()}]">
         [{include file="_formparams.tpl" cl="PayPalDisputeController" lstrt=$lstrt actedit=$actedit oxid=$oxid fnc="" language=$actlang editlanguage=$actlang}]
@@ -35,12 +34,12 @@
                     <div class="form-group">
                         <label for="disputeStateFilter">[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_STATE"}]</label>
                         <select multiple class="form-control" id="disputeStateFilter" name="filters[disputeState][]">
-                            <option value="REQUIRED_ACTION" [{if in_array("REQUIRED_ACTION", $filters.disputeState)}]selected[{/if}]>[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_STATE_REQUIRED_ACTION"}]</option>
-                            <option value="REQUIRED_OTHER_PARTY_ACTION" [{if in_array("REQUIRED_OTHER_PARTY_ACTION", $filters.disputeState)}]selected[{/if}]>[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_STATE_REQUIRED_OTHER_PARTY_ACTION"}]</option>
-                            <option value="UNDER_PAYPAL_REVIEW" [{if in_array("UNDER_PAYPAL_REVIEW", $filters.disputeState)}]selected[{/if}]>[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_STATE_UNDER_PAYPAL_REVIEW"}]</option>
-                            <option value="RESOLVED" [{if in_array("RESOLVED", $filters.disputeState)}]selected[{/if}]>[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_STATE_RESOLVED"}]</option>
-                            <option value="OPEN_INQUIRIES" [{if in_array("OPEN_INQUIRIES", $filters.disputeState)}]selected[{/if}]>[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_STATE_OPEN_INQUIRIES"}]</option>
-                            <option value="APPEALABLE" [{if in_array("APPEALABLE", $filters.disputeState)}]selected[{/if}]>[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_STATE_APPEALABLE"}]</option>
+                            <option value="REQUIRED_ACTION" [{if in_array("REQUIRED_ACTION", $filters.disputeState)}]selected[{/if}]>[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_STATUS_REQUIRED_ACTION"}]</option>
+                            <option value="REQUIRED_OTHER_PARTY_ACTION" [{if in_array("REQUIRED_OTHER_PARTY_ACTION", $filters.disputeState)}]selected[{/if}]>[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_STATUS_REQUIRED_OTHER_PARTY_ACTION"}]</option>
+                            <option value="UNDER_PAYPAL_REVIEW" [{if in_array("UNDER_PAYPAL_REVIEW", $filters.disputeState)}]selected[{/if}]>[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_STATUS_UNDER_PAYPAL_REVIEW"}]</option>
+                            <option value="RESOLVED" [{if in_array("RESOLVED", $filters.disputeState)}]selected[{/if}]>[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_STATUS_RESOLVED"}]</option>
+                            <option value="OPEN_INQUIRIES" [{if in_array("OPEN_INQUIRIES", $filters.disputeState)}]selected[{/if}]>[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_STATUS_OPEN_INQUIRIES"}]</option>
+                            <option value="APPEALABLE" [{if in_array("APPEALABLE", $filters.disputeState)}]selected[{/if}]>[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_STATUS_APPEALABLE"}]</option>
                         </select>
                     </div>
                 </div>

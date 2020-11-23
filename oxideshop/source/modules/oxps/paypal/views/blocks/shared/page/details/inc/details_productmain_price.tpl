@@ -15,20 +15,29 @@
                     <span class="price">
                         [{oxprice price=$oPrice currency=$currency}]
                     </span>
-                    [{if $aVariantSelections.blPerfectFit}]
-                    <span>
-                        <br />
-                        <br />
-                        Paypal Subscription
-                        <br />
-                        <small>
-                        [{$aVariantSelections.oActiveVariant->oxarticles__oxvarselect->value}]
-                        </small>
-                    </span>
-                    [{/if}]
                     [{if $oView->isVatIncluded()}]
                         <span class="price-markup">*</span>
                     [{/if}]
+                [{if $aVariantSelections.blPerfectFit && $subscriptionPlan}]
+                <span>
+                    <br />
+                    <br />
+                    <b>Paypal Subscription</b>
+                    <br />
+                    <br />
+                    [{$subscriptionPlan->description}]
+                    <br />
+                    [{if $subscriptionPlan->payment_preferences->setup_fee->value != 0.0}]
+                        Setup Fee: [{$subscriptionPlan->payment_preferences->setup_fee->value}] [{$subscriptionPlan->payment_preferences->setup_fee->currency_code}]
+                        <br />
+                    [{/if}]
+                    [{foreach from=$subscriptionPlan->billing_cycles item=billing_cycle key=name}]
+                        &bull; [{$billing_cycle->pricing_scheme->fixed_price->currency_code}] [{$billing_cycle->pricing_scheme->fixed_price->value}]/[{$billing_cycle->frequency->interval_unit}] for [{$billing_cycle->frequency->interval_count}] [{$billing_cycle->frequency->interval_unit}]
+                        <br />
+                    [{/foreach}]
+                    <br />
+                </span>
+                [{/if}]
                 <span class="d-none">
                     <span itemprop="price">[{oxprice price=$oPrice currency=$currency}]</span>
                 </span>

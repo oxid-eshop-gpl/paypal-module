@@ -23,6 +23,7 @@
 namespace OxidProfessionalServices\PayPal\Core;
 
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\Eshop\Core\UtilsView;
 use OxidProfessionalServices\PayPal\Core\PaypalSession;
 
 /**
@@ -82,11 +83,12 @@ class ViewConfig extends ViewConfig_parent
     /**
      * Gets PayPal JS SDK url
      *
-     *  @param string $paymentStrategy ('continue', 'pay_now') commit the order or Show a Confirmation Page
+     * @param bool $paymentStrategy ('continue', 'pay_now') commit the order or Show a Confirmation Page
      *
+     * @param bool $subscribe
      * @return string
      */
-    public function getPayPalJsSdkUrl($paymentStrategy = true): string
+    public function getPayPalJsSdkUrl($paymentStrategy = true, $subscribe = false): string
     {
         $payPalConfig = $this->getPayPalConfig();
         $config = Registry::getConfig();
@@ -94,9 +96,16 @@ class ViewConfig extends ViewConfig_parent
         $params = [];
 
         $params['client-id'] = $payPalConfig->getClientId();
-        $params['integration-date'] = Constants::PAYPAL_INTEGRATION_DATE;
-        $params['intent'] = strtolower(Constants::PAYPAL_ORDER_INTENT_CAPTURE);
-        $params['commit'] = ($paymentStrategy == 'pay_now' ? 'true' : 'false');
+
+        if ($subscribe) {
+            $params['vault'] = 'true';
+            $params['intent'] = 'subscription';
+            $params['locale'] = 'de_DE';
+        } else {
+            $params['integration-date'] = Constants::PAYPAL_INTEGRATION_DATE;
+            $params['intent'] = strtolower(Constants::PAYPAL_ORDER_INTENT_CAPTURE);
+            $params['commit'] = ($paymentStrategy == 'pay_now' ? 'true' : 'false');
+        }
 
         if ($currency = $config->getActShopCurrencyObject()) {
             $params['currency'] = strtoupper($currency->name);

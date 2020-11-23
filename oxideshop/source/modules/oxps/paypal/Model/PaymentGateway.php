@@ -28,7 +28,6 @@ use OxidEsales\Eshop\Core\DatabaseProvider;
 use OxidEsales\Eshop\Core\UtilsObject;
 use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderCaptureRequest;
-use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderAuthorizeRequest;
 use OxidProfessionalServices\PayPal\Core\PaypalSession;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 
@@ -53,6 +52,11 @@ class PaymentGateway extends PaymentGateway_parent
         $success = parent::executePayment($amount, $order);
         $session = $this->getSession();
 
+        if ($session->getVariable('isSubscriptionCheckout')) {
+            $this->getSession()->deleteVariable('isSubscriptionCheckout');
+            return true;
+        }
+
         if (
             ($session->getVariable('paymentid') == 'oxidpaypal')
              || ($session->getBasket()->getPaymentId() == 'oxidpaypal')
@@ -63,11 +67,10 @@ class PaymentGateway extends PaymentGateway_parent
         return $success;
     }
 
-
     /**
      * Executes Authorize to PayPal
      *
-     * @param \OxidEsales\PayPalModule\Model\Order $order  User ordering object
+     * @param Order $order  User ordering object
      *
      * @return bool
      */

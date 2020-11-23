@@ -22,18 +22,11 @@
 
 namespace OxidProfessionalServices\PayPal\Controller;
 
-use OxidEsales\Eshop\Application\Model\Article;
-use OxidEsales\Eshop\Core\DatabaseProvider;
-use OxidEsales\Eshop\Core\Registry;
-use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Plan;
-use OxidProfessionalServices\PayPal\Core\ServiceFactory;
-use OxidProfessionalServices\PayPal\Repository\SubscriptionRepository;
-
 /**
  * Class ArticleDetailsController
  * @mixin \OxidEsales\Eshop\Application\Controller\ArticleDetailsController
  */
 class ArticleDetailsController extends ArticleDetailsController_parent
 {
-
+    use ArticleDetailsTrait;
 }

@@ -31,10 +31,12 @@ use OxidEsales\Eshop\Core\Field;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\Order;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderCaptureRequest;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderRequest;
+use OxidProfessionalServices\PayPal\Controller\Admin\Service\SubscriptionService;
 use OxidProfessionalServices\PayPal\Core\OrderManager;
 use OxidProfessionalServices\PayPal\Core\OrderRequestFactory;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 use OxidProfessionalServices\PayPal\Core\PaypalSession;
+use OxidProfessionalServices\PayPal\Model\Subscription;
 use VIISON\AddressSplitter\AddressSplitter;
 use VIISON\AddressSplitter\Exceptions\SplittingException;
 use OxidEsales\Eshop\Core\Exception\OutOfStockException;
@@ -48,36 +50,11 @@ class ProxyController extends FrontendController
 {
     public function createOrder()
     {
-        $context = (string) Registry::getRequest()->getRequestEscapedParameter('context', 'continue');
+        $context = (string)Registry::getRequest()->getRequestEscapedParameter('context', 'continue');
 
-        $session = Registry::getSession();
-        $basket = $session->getBasket();
-        $basket = Registry::getSession()->getBasket();
-        // we put something to the basket
-        if ($aid = (string) Registry::getRequest()->getRequestEscapedParameter('aid')) {
-            try {
-                $basket->addToBasket(
-                    $aid,
-                    1
-                );
-            } catch (OutOfStockException $exception) {
-                Registry::getUtilsView()->addErrorToDisplay(
-                    $exception,
-                    false,
-                    (bool) $errorDestination,
-                    $errorDestination
-                );
-            } catch (ArticleInputException $exception) {
-                Registry::getUtilsView()->addErrorToDisplay(
-                    $exception,
-                    false,
-                    (bool) $errorDestination,
-                    $errorDestination
-                );
-            } catch (NoArticleException $exception) {
-            }
-            $basket->calculateBasket(false);
-        }
+        $this->addToBasket();
+        $this->setPaypalPaymentMethod();
+
         /** @var ServiceFactory $serviceFactory */
         $serviceFactory = Registry::get(ServiceFactory::class);
         $service = $serviceFactory->getOrderService();
@@ -85,7 +62,7 @@ class ProxyController extends FrontendController
         /** @var OrderRequestFactory $requestFactory */
         $requestFactory = Registry::get(OrderRequestFactory::class);
         $request = $requestFactory->getRequest(
-            $basket,
+            Registry::getSession()->getBasket(),
             OrderRequest::INTENT_CAPTURE,
             $context === 'continue' ?
                 OrderRequestFactory::USER_ACTION_CONTINUE :
@@ -98,8 +75,7 @@ class ProxyController extends FrontendController
             Registry::getLogger()->error("Error on order create call.", [$exception]);
         }
 
-        $basket->setPayment('oxidpaypal');
-        $session->setVariable('paymentid', 'oxidpaypal');
+        $this->setPaypalPaymentMethod();
 
         if ($response->id) {
             PaypalSession::storePaypalOrderId($response->id);
@@ -111,9 +87,9 @@ class ProxyController extends FrontendController
     public function captureOrder()
     {
         $session = Registry::getSession();
-        $context = (string) Registry::getRequest()->getRequestEscapedParameter('context', 'continue');
+        $context = (string)Registry::getRequest()->getRequestEscapedParameter('context', 'continue');
 
-        if ($orderId = (string) Registry::getRequest()->getRequestEscapedParameter('orderID')) {
+        if ($orderId = (string)Registry::getRequest()->getRequestEscapedParameter('orderID')) {
             $orderManager = new OrderManager();
 
             /** @var ServiceFactory $serviceFactory */
@@ -185,6 +161,38 @@ class ProxyController extends FrontendController
         }
     }
 
+    public function createSubscriptionOrder()
+    {
+        // Remove all items from the basket
+        // because subscriptions can only work with one subscription product at a time
+        Registry::getSession()->getBasket()->deleteBasket();
+        $this->addToBasket();
+        $this->setPaypalPaymentMethod();
+        $this->outputJson([true]);
+    }
+
+    public function saveSubscriptionOrder()
+    {
+        $subscriptionPlanId = Registry::getRequest()->getRequestEscapedParameter('subscriptionPlanId');
+
+        $subscriptionService = new SubscriptionService();
+        $subscription = $subscriptionService->subscriptionService->showPlanDetails('string', $subscriptionPlanId, 1);
+
+        $time = date('Y-m-d H:i:s');
+
+        $data = [];
+        $data['plan_id'] = $subscriptionPlanId;
+        $data['email_address'] = Registry::getSession()->getUser()->getFieldData('OXUSERNAME');
+        $data['status'] = $subscription->status;
+        $data['create_time'] = $time;
+        $data['update_time'] = $time;
+        $data['start_time'] = $time;
+        $data['status_update_time'] = $time;
+
+        $model = new Subscription();
+        $model->saveSubscription($data);
+    }
+
     public function cancelPaypalPayment()
     {
         PaypalSession::unsetPaypalOrderId();
@@ -202,5 +210,27 @@ class ProxyController extends FrontendController
         $utils = Registry::getUtils();
         $utils->setHeader('Content-Type: application/json');
         $utils->showMessageAndExit(json_encode($response));
+    }
+
+    public function addToBasket(): void
+    {
+        if ($aid = (string)Registry::getRequest()->getRequestEscapedParameter('aid')) {
+            try {
+                Registry::getSession()->getBasket()->addToBasket($aid, 1);
+            } catch (OutOfStockException $exception) {
+                Registry::getUtilsView()->addErrorToDisplay($exception);
+            } catch (ArticleInputException $exception) {
+                Registry::getUtilsView()->addErrorToDisplay($exception);
+            } catch (NoArticleException $exception) {
+                Registry::getUtilsView()->addErrorToDisplay($exception);
+            }
+            Registry::getSession()->getBasket()->calculateBasket(false);
+        }
+    }
+
+    public function setPaypalPaymentMethod(): void
+    {
+        Registry::getSession()->getBasket()->setPayment('oxidpaypal');
+        Registry::getSession()->setVariable('paymentid', 'oxidpaypal');
     }
 }

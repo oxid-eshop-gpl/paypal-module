@@ -20,18 +20,24 @@
  * @copyright (C) OXID eSales AG 2003-2020
  */
 
+use OxidEsales\Eshop\Application\Component\UserComponent;
 use OxidEsales\Eshop\Application\Component\Widget\ArticleDetails;
 use OxidEsales\Eshop\Application\Controller\Admin\ArticleList;
 use OxidEsales\Eshop\Application\Controller\ArticleDetailsController;
 use OxidEsales\Eshop\Application\Controller\BasketController;
+use OxidEsales\Eshop\Application\Controller\OrderController;
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Application\Model\Basket;
 use OxidEsales\Eshop\Application\Model\Order;
+use OxidEsales\Eshop\Application\Model\Selection as SelectionCore;
+use OxidEsales\Eshop\Application\Model\VariantHandler as VariantHandlerCore;
+use OxidEsales\Eshop\Application\Model\VariantSelectList as VariantSelectListCore;
 use OxidEsales\Eshop\Core\ViewConfig;
 use OxidEsales\Eshop\Application\Model\PaymentGateway;
+use OxidProfessionalServices\PayPal\Component\UserComponent as PayPalUserComponent;
 use OxidProfessionalServices\PayPal\Controller\Admin\DisputeController;
 use OxidProfessionalServices\PayPal\Controller\Admin\DisputeDetailsController;
-use OxidProfessionalServices\PayPal\Component\Widget\ArticleDetails as ArticleDetailsAlias;
+use OxidProfessionalServices\PayPal\Component\Widget\ArticleDetails as ArticleDetailsComponent;
 use OxidProfessionalServices\PayPal\Controller\Admin\OnboardingController;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalConfigController;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalOrderController;
@@ -43,6 +49,7 @@ use OxidProfessionalServices\PayPal\Controller\Admin\TransactionController;
 use OxidProfessionalServices\PayPal\Controller\Admin\ArticleListController;
 use OxidProfessionalServices\PayPal\Controller\ArticleDetailsController as PayPalArticleDetailsController;
 use OxidProfessionalServices\PayPal\Controller\BasketController as PayPalBasketController;
+use OxidProfessionalServices\PayPal\Controller\OrderController as PaypalFrontEndOrderController;
 use OxidProfessionalServices\PayPal\Controller\ProxyController;
 use OxidProfessionalServices\PayPal\Controller\WebhookController;
 use OxidProfessionalServices\PayPal\Controller\Admin\BalanceController;
@@ -51,6 +58,9 @@ use OxidProfessionalServices\PayPal\Model\Basket as PaypalBasket;
 use OxidProfessionalServices\PayPal\Model\Order as PaypalOrder;
 use OxidProfessionalServices\PayPal\Model\PaymentGateway as PaypalPaymentGateway;
 use OxidProfessionalServices\PayPal\Model\PayPalArticle;
+use OxidProfessionalServices\PayPal\Model\Selection as PaypalSelectionModel;
+use OxidProfessionalServices\PayPal\Model\VariantHandler as PaypalVariantHandler;
+use OxidProfessionalServices\PayPal\Model\VariantSelectList as PayPalVariantSelectList;
 
 $sMetadataVersion = '2.1';
 
@@ -81,7 +91,12 @@ $aModule = [
         ArticleList::class => ArticleListController::class,
         ArticleDetailsController::class => PayPalArticleDetailsController::class,
         BasketController::class => PayPalBasketController::class,
-        ArticleDetails::class => ArticleDetailsAlias::class
+        ArticleDetails::class => ArticleDetailsComponent::class,
+        SelectionCore::class => PaypalSelectionModel::class,
+        VariantHandlerCore::class => PaypalVariantHandler::class,
+        VariantSelectListCore::class => PayPalVariantSelectList::class,
+        OrderController::class => PaypalFrontEndOrderController::class,
+        UserComponent::class => PayPalUserComponent::class
     ],
     'controllers' => [
         'PaypalConfigController' => PaypalConfigController::class,
@@ -116,6 +131,8 @@ $aModule = [
         'paypal_subscription_details.tpl' => 'oxps/paypal/views/admin/tpl/subscription_details.tpl',
         'subscribe.tpl'    => 'oxps/paypal/views/admin/tpl/subscribe.tpl',
         'paypal_smart_payment_buttons.tpl' => 'oxps/paypal/views/includes/smart_payment_buttons.tpl',
+        'payment_buttons.tpl' => 'oxps/paypal/views/includes/payment_buttons.tpl',
+        'subscription_buttons.tpl' => 'oxps/paypal/views/includes/subscription_buttons.tpl',
         'flow/paypal_payment_option.tpl' => 'oxps/paypal/views/theme/flow/paypal_payment_option.tpl',
         'wave/paypal_payment_option.tpl' => 'oxps/paypal/views/theme/wave/paypal_payment_option.tpl'
     ],
@@ -334,30 +351,6 @@ $aModule = [
             'template' => 'page/details/inc/productmain.tpl',
             'block' => 'details_productmain_price',
             'file' => '/views/blocks/shared/page/details/inc/details_productmain_price.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'flow',
-            'template' => 'widget/minibasket/minibasket.tpl',
-            'block' => 'dd_layout_page_header_icon_menu_minibasket_functions',
-            'file' =>
-                '/views/blocks/flow/widget/minibasket/dd_layout_page_header_icon_menu_minibasket_functions.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'wave',
-            'template' => 'widget/minibasket/minibasket.tpl',
-            'block' => 'dd_layout_page_header_icon_menu_minibasket_functions',
-            'file' =>
-                '/views/blocks/wave/widget/minibasket/dd_layout_page_header_icon_menu_minibasket_functions.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'wave',
-            'template' => 'page/checkout/inc/basketcontents_list.tpl',
-            'block' => 'dd_layout_page_header_icon_menu_minibasket_functions',
-            'file' =>
-                '/views/blocks/wave/widget/minibasket/dd_layout_page_header_icon_menu_minibasket_functions.tpl',
             'position' => '5'
         ],
         [

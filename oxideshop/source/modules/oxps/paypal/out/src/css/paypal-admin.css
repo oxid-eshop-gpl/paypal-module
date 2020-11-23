@@ -48,3 +48,7 @@
 
 .transaction-details td {
   padding: 5px; }
+
+#ppmessages {
+  background: #efefef;
+  padding: 20px; }

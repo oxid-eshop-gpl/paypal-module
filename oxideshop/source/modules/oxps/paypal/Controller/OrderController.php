@@ -22,6 +22,8 @@
 
 namespace OxidProfessionalServices\PayPal\Controller;
 
+use OxidEsales\Eshop\Core\Registry;
+
 /**
  * Class OrderController
  * @package OxidProfessionalServices\PayPal\Controller
@@ -30,4 +32,57 @@ namespace OxidProfessionalServices\PayPal\Controller;
  */
 class OrderController extends OrderController_parent
 {
+    public function init()
+    {
+        $isSubscribe = Registry::getRequest()->getRequestEscapedParameter('subscribe', 0);
+
+        if ($isSubscribe) {
+            $func = Registry::getRequest()->getRequestEscapedParameter('func');
+
+            if ($func === 'doOrder') {
+                $this->addTplParam('loadingScreen', true);
+                $this->addTplParam('submitCart', 1);
+                $session = $this->getSession();
+                $session->setVariable('isSubscriptionCheckout', true);
+            }
+            $this->setPayPalAsPaymentMethod();
+        }
+        parent::init();
+    }
+
+    public function render()
+    {
+        $isSubscribe = Registry::getRequest()->getRequestEscapedParameter('subscribe', 0);
+
+        if ($isSubscribe) {
+            $func = Registry::getRequest()->getRequestEscapedParameter('func');
+
+            if ($func === 'doOrder') {
+                $this->addTplParam('loadingScreen', true);
+                $this->addTplParam('submitCart', 1);
+                $session = $this->getSession();
+                $session->setVariable('isSubscriptionCheckout', true);
+            }
+            $this->setPayPalAsPaymentMethod();
+        }
+
+        return parent::render();
+    }
+
+    public function execute()
+    {
+        $ret = parent::execute();
+        if (strpos($ret, 'thankyou') === false) {
+            return $ret;
+        }
+        return $ret;
+    }
+
+    private function setPayPalAsPaymentMethod()
+    {
+        $payment = $this->getBasket()->getPaymentId();
+        if (($payment !== 'oxidpaypal')) {
+            $this->getBasket()->setPayment('oxidpaypal');
+        }
+    }
 }

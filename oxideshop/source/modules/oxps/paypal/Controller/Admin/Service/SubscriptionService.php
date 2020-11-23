@@ -192,12 +192,14 @@ class SubscriptionService
     }
 
     /**
-     * @param $productId
+     * @param string $productId
+     * @param string $articleId
+     * @return Plan
      * @throws ApiException
      * @throws DatabaseConnectionException
      * @throws DatabaseErrorException
      */
-    public function saveNewSubscriptionPlan($productId, $articleId)
+    public function saveNewSubscriptionPlan(string $productId, string $articleId)
     {
         $fixed_price = $this->request->getRequestEscapedParameter('fixed_price', "");
         $interval = $this->request->getRequestEscapedParameter('interval', "");
@@ -257,7 +259,8 @@ class SubscriptionService
             $subscriptionPlanRequest->billing_cycles = $cycles;
             $subscriptionPlanRequest->payment_preferences = $payment_preferences;
             $subscriptionPlanRequest->taxes = $tax;
-            $subscriptionPlanRequest->description = $productId . ' Payment Plan';
+            $subscriptionPlanRequest->description = $this->request
+                ->getRequestEscapedParameter('billingPlanDescription');
 
             $response = $this->subscriptionService->createPlan($subscriptionPlanRequest);
 
@@ -267,7 +270,9 @@ class SubscriptionService
                 $repository->saveSubscriptionPlan($subscriptionPlanId, $productId, $articleId);
             }
 
-            return $cycles;
+            $response->billing_cycles = $cycles;
+
+            return $response;
         }
     }
 

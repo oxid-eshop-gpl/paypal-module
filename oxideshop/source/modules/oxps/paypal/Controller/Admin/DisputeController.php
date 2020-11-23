@@ -79,7 +79,7 @@ class DisputeController extends AdminListController
             $this->response = $disputeService->listDisputesSummary(
                 //TODO: at this moment combination of page and page_size does not return correctly paginated result.
                 0,
-                1,
+                10,
                 $filters['transactionId'],
                 $filters['disputeState'],
                 $filters['startTime'],

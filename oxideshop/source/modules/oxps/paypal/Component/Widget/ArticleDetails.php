@@ -22,11 +22,7 @@
 
 namespace OxidProfessionalServices\PayPal\Component\Widget;
 
-use OxidEsales\Eshop\Application\Model\Article;
-use OxidEsales\Eshop\Core\Registry;
-use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Plan;
-use OxidProfessionalServices\PayPal\Core\ServiceFactory;
-use OxidProfessionalServices\PayPal\Repository\SubscriptionRepository;
+use OxidProfessionalServices\PayPal\Controller\ArticleDetailsTrait;
 
 /**
  * Class ArticleDetails
@@ -34,38 +30,5 @@ use OxidProfessionalServices\PayPal\Repository\SubscriptionRepository;
  */
 class ArticleDetails extends ArticleDetails_parent
 {
-    public function render()
-    {
-        $return = parent::render();
-
-        $subscriptionRepository = new SubscriptionRepository();
-
-        $articleId = Registry::getRequest()->getRequestEscapedParameter('anid');
-        $varselid = Registry::getRequest()->getRequestEscapedParameter('varselid');
-
-        /** @var Article $article */
-        $article = oxNew(Article::class);
-        $article->load($articleId);
-
-        $variantsCount = $article->getVariantsCount();
-        $variantSelections = $this->getVariantSelections();
-
-        $paypalSubscriptionPlanId = $subscriptionRepository->isSubscribableProduct($articleId);
-        $this->addTplParam('isSubscribableProduct', $paypalSubscriptionPlanId ? true : false);
-
-        if ($paypalSubscriptionPlanId) {
-            $sf = Registry::get(ServiceFactory::class);
-            /** @var Plan $subscriptionPlan */
-            $subscriptionPlan = $sf->getSubscriptionService()->showPlanDetails('string', $paypalSubscriptionPlanId, 1);
-            $this->addTplParam('subscriptionPlan', $subscriptionPlan);
-            $this->addTplParam('billingCycles', $subscriptionPlan->billing_cycles);
-            $this->addTplParam('setupFee', $subscriptionPlan->payment_preferences->setup_fee);
-
-            Registry::getSession()->setVariable('currentSubscriptionView', json_encode($subscriptionPlan));
-        }
-
-        $p = $this->getProduct();
-
-        return $return;
-    }
+    use ArticleDetailsTrait;
 }
