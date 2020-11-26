@@ -7,7 +7,7 @@
     </div>
     [{/if}]
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-12">
             <h2>[{$dispute->dispute_id}]: [{oxmultilang ident="OXPS_PAYPAL_DISPUTE_REASON_"|cat:$dispute->reason}] <small>([{$dispute->create_time|date_format:"%Y-%m-%d %H:%M:%S"}])</small></h2>
             <h4>[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_STATUS_"|cat:$dispute->status}] <small>([{$dispute->update_time|date_format:"%Y-%m-%d %H:%M:%S"}])</small></h4>
         </div>
@@ -25,50 +25,51 @@
                 <h3 class="ppaltmessages">[{oxmultilang ident="OXPS_PAYPAL_MESSAGES"}]</h3>
             </div>
         </div>
-        <div class="row ppmessages">
-            <div class="col-lg-12">
-                <form method="post" action="[{$oViewConf->getSelfLink()}]" class="col-lg-3">
-                    <input type="hidden" name="oxid" value="[{$dispute->dispute_id}]">
-                    <input type="hidden" name="fnc" value="sendMessage">
-                    <input type="hidden" name="cl" value="PaypalDisputeDetailsController">
-                    <textarea name="message" class="form-control" cols="80" rows="5"></textarea>
-                    <br />
-                    <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_SEND"}]</button>
-                </form>
+        <div class="row">
+            <div class="col-lg-12 ppmessages">
+                <div class="col-lg-4">
+                    <form method="post" action="[{$oViewConf->getSelfLink()}]">
+                        <input type="hidden" name="oxid" value="[{$dispute->dispute_id}]">
+                        <input type="hidden" name="fnc" value="sendMessage">
+                        <input type="hidden" name="cl" value="PaypalDisputeDetailsController">
+                        <textarea name="message" class="form-control" cols="80" rows="5"></textarea>
+                        <br />
+                        <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_SEND"}]</button>
+                    </form>
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-12">
                 [{foreach from=$dispute->messages|@array_reverse item="message"}]
                     [{if $message->posted_by == 'SELLER'}]
-                        <div class="ppaltmessages">
+                        <div class="messageRow">
                             <h4>ME <small>[{$message->time_posted|date_format:"%Y-%m-%d %H:%M:%S"}]</small></h4>
                             <p>[{$message->content}]</p>
                         </div>
                     [{else}]
-                        <div class="ppmessages">
+                        <div class="messageRow">
                             <h4>[{$message->posted_by}] <small>[{$message->time_posted|date_format:"%Y-%m-%d %H:%M:%S"}]</small></h4>
                             <p>[{$message->content}]</p>
                         </div>
                     [{/if}]
                 [{/foreach}]
             </div>
+            <hr />
         </div>
     </div>
     <div class="pptab" id="offer">
-        <form method="post" action="[{$oViewConf->getSelfLink()}]">
-        <input type="hidden" name="oxid" value="[{$dispute->dispute_id}]">
-        <input type="hidden" name="fnc" value="makeOffer">
-        <input type="hidden" name="cl" value="PaypalDisputeDetailsController">
-
         <div class="row">
             <div class="col-lg-12">
                 <h3 class="ppaltmessages">[{oxmultilang ident="OXPS_PAYPAL_MAKE_OFFER"}]</h3>
             </div>
         </div>
-        <br />
-        <div class="row ppmessages">
-            <div class="col-lg-2">
+        <form method="post" action="[{$oViewConf->getSelfLink()}]" class="ppmessages">
+        <input type="hidden" name="oxid" value="[{$dispute->dispute_id}]">
+        <input type="hidden" name="fnc" value="makeOffer">
+        <input type="hidden" name="cl" value="PaypalDisputeDetailsController">
+        <div class="row">
+            <div class="col-lg-1">
                 <div class="form-group">
                     <label for="offerType">[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_OFFER_TYPE"}]</label>
                     <select name="offerType" class="form-control" id="offerType">
@@ -79,7 +80,7 @@
                     </select>
                 </div>
             </div>
-            <div class="col-lg-2">
+            <div class="col-lg-1">
                 <div class="form-group">
                     <label for="offerAmount">[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_OFFER_AMOUNT"}]</label>
                     <input type="number" class="form-control" id="offerAmount" name="offerAmount[value]">
@@ -88,21 +89,21 @@
             </div>
         </div>
 
-        <div class="row ppmessages">
-            <div class="col-lg-2">
+        <div class="row">
+            <div class="col-lg-1">
                 <div class="form-group">
                     <label for="note">[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_NOTE"}]</label>
                     <input type="text" class="form-control" id="note" name="note">
                 </div>
             </div>
-            <div class="col-lg-2">
+            <div class="col-lg-1">
                 <div class="form-group">
                     <label for="invoiceId">[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_INVOICE_ID"}]</label>
                     <input type="text" class="form-control" id="invoiceId" name="invoiceId" maxlength="127">
                 </div>
             </div>
         </div>
-        <div class="row ppaltmessages">
+        <div class="row">
             <div class="col-lg-2">
                 <div class="form-group">
                     <label for="shippingAddressLine1">[{oxmultilang ident="OXPS_PAYPAL_ADDRESS_LINE_1"}]</label>
@@ -114,7 +115,7 @@
                 </div>
             </div>
         </div>
-        <div class="row ppmessages">
+        <div class="row">
             <div class="col-lg-2">
                 <div class="form-group">
                     <label for="shippingAddressLine2">[{oxmultilang ident="OXPS_PAYPAL_ADDRESS_LINE_2"}]</label>
@@ -126,7 +127,7 @@
                 </div>
             </div>
         </div>
-        <div class="row ppaltmessages">
+        <div class="row">
             <div class="col-lg-2">
                 <div class="form-group">
                     <label for="shippingAddressLine3">[{oxmultilang ident="OXPS_PAYPAL_ADDRESS_LINE_3"}]</label>
@@ -138,7 +139,7 @@
                 </div>
             </div>
         </div>
-        <div class="row ppmessages">
+        <div class="row">
             <div class="col-lg-1">
                 <div class="form-group">
                     <label for="shippingAddressPostalCode">[{oxmultilang ident="OXPS_PAYPAL_POSTAL_CODE"}]</label>
@@ -160,11 +161,9 @@
                 </div>
             </div>
         </div>
-        <div class="row ppaltmessages">
+        <div class="row">
             <div class="col-lg-2">
-                <div class="col-sm-12">
-                    <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_APPLY"}]</button>
-                </div>
+                <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_APPLY"}]</button>
             </div>
         </div>
         </form>
@@ -192,5 +191,7 @@
             e.preventDefault();
             showItem("offer");
         });
+
+        jQuery(".messageRow").filter(':odd').css("background-color", "#f4f4f4");
     });
 </script>

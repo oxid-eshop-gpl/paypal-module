@@ -75,9 +75,9 @@
     <div id="results">
     <nav>
         <ul class="pagination">
-            <li class="page-item ppmessages"><a class="page-link" href="[{$oViewConf->getSelfLink()}]&cl=[{$oViewConf->getActiveClassName()}]&amp;language=[{$actlang}]&amp;editlanguage=[{$actlang}]">[{oxmultilang ident="OXPS_PAYPAL_FIRST"}]</a></li>
+            <li class="page-item"><a class="page-link" href="[{$oViewConf->getSelfLink()}]&cl=[{$oViewConf->getActiveClassName()}]&amp;language=[{$actlang}]&amp;editlanguage=[{$actlang}]">[{oxmultilang ident="OXPS_PAYPAL_FIRST"}]</a></li>
             [{if $nextPageToken}]
-            <li class="page-item ppmessages"><a class="page-link" href="[{$oViewConf->getSelfLink()}]&cl=[{$oViewConf->getActiveClassName()}]&amp;language=[{$actlang}]&amp;editlanguage=[{$actlang}]&amp;pagetoken=[{$nextPageToken}]">[{oxmultilang ident="OXPS_PAYPAL_NEXT"}]</a></li>
+                <li class="page-item"><a class="page-link" href="[{$oViewConf->getSelfLink()}]&cl=[{$oViewConf->getActiveClassName()}]&amp;language=[{$actlang}]&amp;editlanguage=[{$actlang}]&amp;pagetoken=[{$nextPageToken}]">[{oxmultilang ident="OXPS_PAYPAL_NEXT"}]</a></li>
             [{/if}]
         </ul>
     </nav>
