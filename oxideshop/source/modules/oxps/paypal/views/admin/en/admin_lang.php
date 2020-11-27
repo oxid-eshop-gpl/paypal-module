@@ -284,4 +284,7 @@ $aLang = [
     'OXPS_PAYPAL_MAKE_OFFER'  => 'Make Offer',
     'OXPS_PAYPAL_ESCALATE'  => 'Escalate',
     'OXPS_PAYPAL_SEND_MESSAGES'  => 'Send Messages',
+    'OXPS_PAYPAL_HISTORY'  => 'History',
+    'OXPS_PAYPAL_RESOLVED_BUYER_FAVOUR'  => 'Resolved in favour of Buyer',
+    'OXPS_PAYPAL_RESOLVED_SELLER_FAVOUR'  => 'Resolved in favour of Seller',
 ];

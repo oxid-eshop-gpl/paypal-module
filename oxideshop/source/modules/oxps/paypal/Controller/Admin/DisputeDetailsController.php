@@ -129,7 +129,7 @@ class DisputeDetailsController extends AdminListController
         $offerRequest->offer_type = (string) $request->getRequestEscapedParameter('offerType');
 
         $offerAmount = (array) $request->getRequestEscapedParameter('offerAmount');
-        if ($offerAmount) {
+        if (!empty($offerAmount['value'])) {
             $offerRequest->offer_amount = new Money($offerAmount);
         }
 

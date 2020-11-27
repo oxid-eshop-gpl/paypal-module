@@ -1,6 +1,7 @@
 [{include file="headitem.tpl" title="GENERAL_ADMIN_TITLE"|oxmultilangassign box="list"}]
 [{assign var="where" value=$oView->getListFilter()}]
 <div class="container-fluid">
+    <br />
     <div class="row">
         <div class="col-sm-1">
             <button id="toggleFilter" class="btn btn-info col-sm-12">Filter</button>
