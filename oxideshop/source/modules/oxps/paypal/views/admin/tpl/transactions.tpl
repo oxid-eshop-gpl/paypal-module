@@ -1,7 +1,24 @@
 [{include file="headitem.tpl" title="GENERAL_ADMIN_TITLE"|oxmultilangassign box="list"}]
 
 <div class="container-fluid">
-[{assign var="filters" value=$oView->getFilterValues()}]
+    <br />
+    <div class="row">
+        <div class="col-sm-1">
+            <button id="toggleFilter" class="btn btn-info col-sm-12">Filter</button>
+        </div>
+    </div>
+    <script>
+        jQuery(document).ready(function(){
+            jQuery("#filters").hide();
+            jQuery("#toggleFilter").click(function(e) {
+                e.preventDefault();
+                jQuery("#filters").toggle();
+                jQuery("#results").toggle();
+            });
+        });
+    </script>
+
+    [{assign var="filters" value=$oView->getFilterValues()}]
 <form method="post" id="transaction-filters" action="[{$oViewConf->getSelfLink()}]">
     [{include file="_formparams.tpl" cl="PayPalTransactionController" lstrt=$lstrt actedit=$actedit oxid=$oxid fnc="" language=$actlang editlanguage=$actlang}]
     <div id="filters">
@@ -10,7 +27,7 @@
             [{$error}]
         </div>
         [{/if}]
-        <div class="row">
+        <div class="row ppaltmessages">
             <div class="col-sm-4">
                 <div class="form-group">
                     <label for="transactionIdFilter">[{oxmultilang ident="OXPS_PAYPAL_TRANSACTION_ID"}]</label>
@@ -42,7 +59,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row ppmessages">
             <div class="col-sm-4">
                 <div class="form-group">
                     <label for="transactionStatusFilter">[{oxmultilang ident="OXPS_PAYPAL_TRANSACTION_STATUS"}]</label>
@@ -118,7 +135,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row ppaltmessages">
             <div class="col-sm-4">
                 <div class="form-group">
                     <label for="transactionDateFromFilter">[{oxmultilang ident="OXPS_PAYPAL_TRANSACTION_DATE_FROM"}]</label>
@@ -167,16 +184,16 @@
                 </div>
             </div>
         </div>
+        <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_APPLY"}]</button>
+        <a style="float: right"
+           target="_blank"
+           href="https://www.paypalobjects.com/webstatic/en_US/developer/docs/pdf/PP_LRD_Gen_SettlementReport.pdf">
+            [{oxmultilang ident="OXPS_PAYPAL_REPORT_REFERENCE"}]
+        </a>
     </div>
-    <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_APPLY"}]</button>
-    <a style="float: right"
-       target="_blank"
-       href="https://www.paypalobjects.com/webstatic/en_US/developer/docs/pdf/PP_LRD_Gen_SettlementReport.pdf">
-        [{oxmultilang ident="OXPS_PAYPAL_REPORT_REFERENCE"}]
-    </a>
 </form>
 
-[{include file="paypal_list_pagination.tpl"}]
+<div id="results">
 <table class="table table-sm">
     <thead>
         <tr>
@@ -194,17 +211,18 @@
         [{assign var="transactions" value=$oView->getTransactions()}]
         [{foreach from=$transactions item="transaction" name="transactions"}]
             [{assign var="transactionInfo" value=$transaction->transaction_info}]
+            [{cycle values='ppmessages,ppaltmessages' assign=cellClass}]
             <tr>
-                <td>[{$transactionInfo->paypal_account_id}]</td>
-                <td>[{$transactionInfo->transaction_id}]</td>
-                <td>[{$transactionInfo->paypal_reference_id}]</td>
-                <td>[{$transactionInfo->paypal_reference_id_type}]</td>
-                <td>[{$transactionInfo->transaction_event_code}]</td>
-                <td>[{$transactionInfo->transaction_initiation_date|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
-                <td>[{$transactionInfo->transaction_updated_date|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
+                <td class="[{$cellClass}]">[{$transactionInfo->paypal_account_id}]</td>
+                <td class="[{$cellClass}]">[{$transactionInfo->transaction_id}]</td>
+                <td class="[{$cellClass}]">[{$transactionInfo->paypal_reference_id}]</td>
+                <td class="[{$cellClass}]">[{$transactionInfo->paypal_reference_id_type}]</td>
+                <td class="[{$cellClass}]">[{$transactionInfo->transaction_event_code}]</td>
+                <td class="[{$cellClass}]">[{$transactionInfo->transaction_initiation_date|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
+                <td class="[{$cellClass}]">[{$transactionInfo->transaction_updated_date|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
                 [{assign var="status" value=$transactionInfo->transaction_status}]
-                <td>[{oxmultilang ident="OXPS_PAYPAL_TRANSACTION_STATUS_"|cat:$status}]</td>
-                <td>
+                <td class="[{$cellClass}]">[{oxmultilang ident="OXPS_PAYPAL_TRANSACTION_STATUS_"|cat:$status}]</td>
+                <td class="[{$cellClass}]">
                     <a href="#"
                             type="button"
                             onclick="jQuery('#transactionDetailsRow[{$smarty.foreach.transactions.iteration}]').toggle(); return false;">
@@ -215,50 +233,72 @@
             <tr style="display:none" id="transactionDetailsRow[{$smarty.foreach.transactions.iteration}]">
                 <td colspan="9">
                     <table class="transaction-details">
+                        [{if $transactionInfo->protection_eligibility}]
                         <tr>
                             <td>[{oxmultilang ident="OXPS_PAYPAL_PROTECTION_ELIGIBILITY"}]</td>
                             <td>[{$transactionInfo->protection_eligibility}]</td>
                         </tr>
+                        [{/if}]
+                        [{if $transactionInfo->invoice_id}]
                         <tr>
                             <td>[{oxmultilang ident="OXPS_PAYPAL_INVOICE_ID"}]</td>
                             <td>[{$transactionInfo->invoice_id}]</td>
                         </tr>
+                        [{/if}]
+                        [{if $transactionInfo->transaction_subject}]
                         <tr>
                             <td>[{oxmultilang ident="OXPS_PAYPAL_TRANSACTION_SUBJECT"}]</td>
                             <td>[{$transactionInfo->transaction_subject}]</td>
                         </tr>
+                        [{/if}]
+                        [{if $transactionInfo->transaction_note}]
                         <tr>
                             <td>[{oxmultilang ident="OXPS_PAYPAL_TRANSACTION_NOTE"}]</td>
                             <td>[{$transactionInfo->transaction_note}]</td>
                         </tr>
+                        [{/if}]
+                        [{if $transactionInfo->payment_tracking_id}]
                         <tr>
                             <td>[{oxmultilang ident="OXPS_PAYPAL_PAYMENT_TRACKING_ID"}]</td>
                             <td>[{$transactionInfo->payment_tracking_id}]</td>
                         </tr>
+                        [{/if}]
+                        [{if $transactionInfo->bank_reference_id}]
                         <tr>
                             <td>[{oxmultilang ident="OXPS_PAYPAL_BANK_REFERENCE_ID"}]</td>
                             <td>[{$transactionInfo->bank_reference_id}]</td>
                         </tr>
+                        [{/if}]
+                        [{if $transactionInfo->custom_field}]
                         <tr>
                             <td>[{oxmultilang ident="OXPS_PAYPAL_CUSTOM_FIELD"}]</td>
                             <td>[{$transactionInfo->custom_field}]</td>
                         </tr>
+                        [{/if}]
+                        [{if $transactionInfo->credit_term}]
                         <tr>
                             <td>[{oxmultilang ident="OXPS_PAYPAL_CREDIT_TERM"}]</td>
                             <td>[{$transactionInfo->credit_term}]</td>
                         </tr>
+                        [{/if}]
+                        [{if $transactionInfo->payment_method_type}]
                         <tr>
                             <td>[{oxmultilang ident="OXPS_PAYPAL_PAYMENT_METHOD_TYPE"}]</td>
                             <td>[{$transactionInfo->payment_method_type}]</td>
                         </tr>
+                        [{/if}]
+                        [{if $transactionInfo->instrument_type}]
                         <tr>
                             <td>[{oxmultilang ident="OXPS_PAYPAL_INSTRUMENT_TYPE"}]</td>
                             <td>[{$transactionInfo->instrument_type}]</td>
                         </tr>
+                        [{/if}]
+                        [{if $transactionInfo->instrument_sub_type}]
                         <tr>
                             <td>[{oxmultilang ident="OXPS_PAYPAL_INSTRUMENT_SUB_TYPE"}]</td>
                             <td>[{$transactionInfo->instrument_sub_type}]</td>
                         </tr>
+                        [{/if}]
                     </table>
                 </td>
             </tr>
@@ -266,6 +306,7 @@
     </tbody>
 </table>
 [{include file="paypal_list_pagination.tpl"}]
+</div>
 </div>
 </body>
 </html>
