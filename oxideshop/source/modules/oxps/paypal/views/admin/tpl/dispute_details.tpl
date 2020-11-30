@@ -27,15 +27,6 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="messageRow">
-                    <h4>Created: <small>[{$dispute->create_time|date_format:"%Y-%m-%d %H:%M:%S"}]</small></h4>
-                </div>
-            </div>
-            <hr />
-        </div>
-
         [{if $dispute->dispute_outcome}]
             <div class="row">
                 <div class="col-lg-12">
@@ -61,6 +52,16 @@
             <hr />
         </div>
         [{/if}]
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="messageRow">
+                    <h4>Created: <small>[{$dispute->create_time|date_format:"%Y-%m-%d %H:%M:%S"}]</small></h4>
+                </div>
+            </div>
+            <hr />
+        </div>
+
     </div>
     <div class="pptab" id="messages">
         <div class="row">
