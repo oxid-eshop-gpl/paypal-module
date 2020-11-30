@@ -36,7 +36,7 @@ use OxidProfessionalServices\PayPal\Core\TransactionEventCodes;
 
 class TransactionController extends AdminListController
 {
-    private const DEFAULT_LIST_SIZE = 25;
+    private const DEFAULT_LIST_SIZE = 15;
 
     /**
      * @var SearchResponse|null

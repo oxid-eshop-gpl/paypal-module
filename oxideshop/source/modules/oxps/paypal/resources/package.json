@@ -20,5 +20,8 @@
         "load-grunt-config": "^3.0.1",
         "node-sass": "^4.14.1",
         "time-grunt": "^2.0.0"
+    },
+    "dependencies": {
+        "findup-sync": "^4.0.0"
     }
 }
