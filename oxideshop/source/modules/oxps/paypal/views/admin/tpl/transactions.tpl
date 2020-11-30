@@ -275,6 +275,7 @@
                             <td>[{$transactionInfo->custom_field}]</td>
                         </tr>
                         [{/if}]
+
                         [{if $transactionInfo->credit_term}]
                         <tr>
                             <td>[{oxmultilang ident="OXPS_PAYPAL_CREDIT_TERM"}]</td>
