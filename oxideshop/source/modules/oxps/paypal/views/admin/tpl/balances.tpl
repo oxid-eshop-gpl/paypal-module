@@ -52,9 +52,9 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-sm-12">
-                    <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_APPLY"}]</button>
-                </div>
+            </div>
+            <div class="row ppmessages">
+                <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_APPLY"}]</button>
             </div>
         </div>
     </form>
