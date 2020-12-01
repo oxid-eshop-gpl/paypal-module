@@ -32,7 +32,13 @@
         [{literal}]
     },
     onApprove: function(data, actions) {
-        fetch('[{/literal}][{$sSelfLink|cat:"cl=PayPalProxyController&fnc=saveSubscriptionOrder&subscriptionPlanId="|cat:$subscriptionPlan->id|cat:"&aid="|cat:$aid|cat:"&stoken="|cat:$oViewConf->getSessionChallengeToken()}][{literal}]', {
+        console.log(data);
+        let params = 'cl=PayPalProxyController&fnc=saveSubscriptionOrder&subscriptionId=' + data.subscriptionID;
+        params += '&subscriptionPlanId=[{/literal}][{$subscriptionPlan->id}][{literal}]';
+        params += '&aid=[{/literal}][{$aid}][{literal}]';
+        params += '&stoken=[{/literal}][{$oViewConf->getSessionChallengeToken()}][{literal}]';
+        console.log(params);
+        fetch('[{/literal}][{$sSelfLink}][{literal}]' + params, {
         method: 'post',
         headers: {
             'content-type': 'application/json'

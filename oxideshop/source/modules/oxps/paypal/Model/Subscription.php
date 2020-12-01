@@ -25,6 +25,7 @@ namespace OxidProfessionalServices\PayPal\Model;
 use OxidEsales\Eshop\Core\DatabaseProvider;
 use OxidEsales\Eshop\Core\Model\BaseModel;
 use OxidEsales\Eshop\Core\Registry;
+use OxidProfessionalServices\PayPal\Api\Exception\Exception;
 use OxidProfessionalServices\PayPal\Model\Mixin\DbNamingConventionsTrait;
 
 class Subscription extends BaseModel
@@ -70,12 +71,8 @@ class Subscription extends BaseModel
 
     public function saveSubscription($data)
     {
-        $data['id'] = Registry::getUtilsObject()->generateUId();
-
-        $this->loadByPayPalId($data['id']);
-
         $fieldValues = array_filter([
-            'id' => $data['id'] ?? '',
+            'id' => $data['subscription_id'] ?? '',
             'planid' => $data['plan_id'] ?? '',
             'email' => $data['email_address'] ?? '',
             'status' => $data['status'] ?? '',
