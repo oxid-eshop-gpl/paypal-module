@@ -201,9 +201,6 @@
         <tr>
             <th>[{oxmultilang ident="OXPS_PAYPAL_ACCOUNT_ID"}]</a></th>
             <th>[{oxmultilang ident="OXPS_PAYPAL_TRANSACTION_ID"}]</a></th>
-            <th>[{oxmultilang ident="OXPS_PAYPAL_REFERENCE_ID"}]</a></th>
-            <th>[{oxmultilang ident="OXPS_PAYPAL_REFERENCE_ID_TYPE"}]</a></th>
-            <th>[{oxmultilang ident="OXPS_PAYPAL_EVENT_CODE"}]</a></th>
             <th>[{oxmultilang ident="OXPS_PAYPAL_INITIATION_DATE"}]</a></th>
             <th>[{oxmultilang ident="OXPS_PAYPAL_UPDATED_DATE"}]</a></th>
             <th colspan="2">[{oxmultilang ident="OXPS_PAYPAL_TRANSACTION_STATUS"}]</a></th>
@@ -217,9 +214,6 @@
             <tr>
                 <td class="[{$cellClass}]">[{$transactionInfo->paypal_account_id}]</td>
                 <td class="[{$cellClass}]">[{$transactionInfo->transaction_id}]</td>
-                <td class="[{$cellClass}]">[{$transactionInfo->paypal_reference_id}]</td>
-                <td class="[{$cellClass}]">[{$transactionInfo->paypal_reference_id_type}]</td>
-                <td class="[{$cellClass}]">[{$transactionInfo->transaction_event_code}]</td>
                 <td class="[{$cellClass}]">[{$transactionInfo->transaction_initiation_date|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
                 <td class="[{$cellClass}]">[{$transactionInfo->transaction_updated_date|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
                 [{assign var="status" value=$transactionInfo->transaction_status}]
@@ -233,75 +227,77 @@
                 </td>
             </tr>
             <tr style="display:none" id="transactionDetailsRow[{$smarty.foreach.transactions.iteration}]">
-                <td colspan="9">
-                    <table class="transaction-details">
+                <td colspan="1000">
+                    <table class="col-lg-12">
+                        <tbody>
                         [{if $transactionInfo->protection_eligibility}]
                         <tr>
-                            <td>[{oxmultilang ident="OXPS_PAYPAL_PROTECTION_ELIGIBILITY"}]</td>
-                            <td>[{$transactionInfo->protection_eligibility}]</td>
+                            <td class="col-lg-3 ppaltmessages"><b>[{oxmultilang ident="OXPS_PAYPAL_PROTECTION_ELIGIBILITY"}]</b></td>
+                            <td class="ppmessages">[{$transactionInfo->protection_eligibility}]</td>
                         </tr>
                         [{/if}]
                         [{if $transactionInfo->invoice_id}]
                         <tr>
-                            <td>[{oxmultilang ident="OXPS_PAYPAL_INVOICE_ID"}]</td>
-                            <td>[{$transactionInfo->invoice_id}]</td>
+                            <td class="ppaltmessages"><b>[{oxmultilang ident="OXPS_PAYPAL_INVOICE_ID"}]</b></td>
+                            <td class="ppmessages">[{$transactionInfo->invoice_id}]</td>
                         </tr>
                         [{/if}]
                         [{if $transactionInfo->transaction_subject}]
                         <tr>
-                            <td>[{oxmultilang ident="OXPS_PAYPAL_TRANSACTION_SUBJECT"}]</td>
-                            <td>[{$transactionInfo->transaction_subject}]</td>
+                            <td class="ppaltmessages"><b>[{oxmultilang ident="OXPS_PAYPAL_TRANSACTION_SUBJECT"}]</b></td>
+                            <td class="ppmessages">[{$transactionInfo->transaction_subject}]</td>
                         </tr>
                         [{/if}]
                         [{if $transactionInfo->transaction_note}]
                         <tr>
-                            <td>[{oxmultilang ident="OXPS_PAYPAL_TRANSACTION_NOTE"}]</td>
-                            <td>[{$transactionInfo->transaction_note}]</td>
+                            <td class="ppaltmessages"><b>[{oxmultilang ident="OXPS_PAYPAL_TRANSACTION_NOTE"}]</b></td>
+                            <td class="ppmessages">[{$transactionInfo->transaction_note}]</td>
                         </tr>
                         [{/if}]
                         [{if $transactionInfo->payment_tracking_id}]
                         <tr>
-                            <td>[{oxmultilang ident="OXPS_PAYPAL_PAYMENT_TRACKING_ID"}]</td>
-                            <td>[{$transactionInfo->payment_tracking_id}]</td>
+                            <td class="ppaltmessages"><b>[{oxmultilang ident="OXPS_PAYPAL_PAYMENT_TRACKING_ID"}]</b></td>
+                            <td class="ppmessages">[{$transactionInfo->payment_tracking_id}]</td>
                         </tr>
                         [{/if}]
                         [{if $transactionInfo->bank_reference_id}]
                         <tr>
-                            <td>[{oxmultilang ident="OXPS_PAYPAL_BANK_REFERENCE_ID"}]</td>
-                            <td>[{$transactionInfo->bank_reference_id}]</td>
+                            <td class="ppaltmessages"><b>[{oxmultilang ident="OXPS_PAYPAL_BANK_REFERENCE_ID"}]</b></td>
+                            <td class="ppmessages">[{$transactionInfo->bank_reference_id}]</td>
                         </tr>
                         [{/if}]
                         [{if $transactionInfo->custom_field}]
                         <tr>
-                            <td>[{oxmultilang ident="OXPS_PAYPAL_CUSTOM_FIELD"}]</td>
-                            <td>[{$transactionInfo->custom_field}]</td>
+                            <td class="ppaltmessages"><b>[{oxmultilang ident="OXPS_PAYPAL_CUSTOM_FIELD"}]</b></td>
+                            <td class="ppmessages">[{$transactionInfo->custom_field}]</td>
                         </tr>
                         [{/if}]
 
                         [{if $transactionInfo->credit_term}]
                         <tr>
-                            <td>[{oxmultilang ident="OXPS_PAYPAL_CREDIT_TERM"}]</td>
-                            <td>[{$transactionInfo->credit_term}]</td>
+                            <td class="ppaltmessages">[{oxmultilang ident="OXPS_PAYPAL_CREDIT_TERM"}]</td>
+                            <td class="ppmessages">[{$transactionInfo->credit_term}]</td>
                         </tr>
                         [{/if}]
                         [{if $transactionInfo->payment_method_type}]
                         <tr>
-                            <td>[{oxmultilang ident="OXPS_PAYPAL_PAYMENT_METHOD_TYPE"}]</td>
-                            <td>[{$transactionInfo->payment_method_type}]</td>
+                            <td class="ppaltmessages">[{oxmultilang ident="OXPS_PAYPAL_PAYMENT_METHOD_TYPE"}]</td>
+                            <td class="ppmessages">[{$transactionInfo->payment_method_type}]</td>
                         </tr>
                         [{/if}]
                         [{if $transactionInfo->instrument_type}]
                         <tr>
-                            <td>[{oxmultilang ident="OXPS_PAYPAL_INSTRUMENT_TYPE"}]</td>
-                            <td>[{$transactionInfo->instrument_type}]</td>
+                            <td class="ppaltmessages">[{oxmultilang ident="OXPS_PAYPAL_INSTRUMENT_TYPE"}]</td>
+                            <td class="ppmessages">[{$transactionInfo->instrument_type}]</td>
                         </tr>
                         [{/if}]
                         [{if $transactionInfo->instrument_sub_type}]
                         <tr>
-                            <td>[{oxmultilang ident="OXPS_PAYPAL_INSTRUMENT_SUB_TYPE"}]</td>
-                            <td>[{$transactionInfo->instrument_sub_type}]</td>
+                            <td class="ppaltmessages">[{oxmultilang ident="OXPS_PAYPAL_INSTRUMENT_SUB_TYPE"}]</td>
+                            <td class="ppmessages">[{$transactionInfo->instrument_sub_type}]</td>
                         </tr>
                         [{/if}]
+                        </tbody>
                     </table>
                 </td>
             </tr>
