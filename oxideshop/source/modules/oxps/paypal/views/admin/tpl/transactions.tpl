@@ -184,7 +184,9 @@
                 </div>
             </div>
         </div>
+        <div class="row ppmessages">
         <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_APPLY"}]</button>
+        </div>
         <a style="float: right"
            target="_blank"
            href="https://www.paypalobjects.com/webstatic/en_US/developer/docs/pdf/PP_LRD_Gen_SettlementReport.pdf">
