@@ -32,12 +32,10 @@
         [{literal}]
     },
     onApprove: function(data, actions) {
-        console.log(data);
         let params = 'cl=PayPalProxyController&fnc=saveSubscriptionOrder&subscriptionId=' + data.subscriptionID;
         params += '&subscriptionPlanId=[{/literal}][{$subscriptionPlan->id}][{literal}]';
         params += '&aid=[{/literal}][{$aid}][{literal}]';
         params += '&stoken=[{/literal}][{$oViewConf->getSessionChallengeToken()}][{literal}]';
-        console.log(params);
         fetch('[{/literal}][{$sSelfLink}][{literal}]' + params, {
         method: 'post',
         headers: {
