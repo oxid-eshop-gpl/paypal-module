@@ -6,99 +6,101 @@
         [{$error}]
     </div>
     [{/if}]
-
-    <a href="[{$oView->getListLink()}]">[{oxmultilang ident="OXPS_PAYPAL_BACK"}]</a>
+    <br />
+    <ul class="nav nav nav-tabs">
+        <li class="active"><a href="#" id="subscription-tab">[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION"}]</a></li>
+        <li><a href="#" id="subscriber-tab">[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIBER"}]</a></li>
+        <li><a href="#" id="shipping-tab">[{oxmultilang ident="OXPS_PAYPAL_SHIPPING"}]</a></li>
+        <li><a href="#" id="billing-tab">[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_BILLING"}]</a></li>
+        <li><a href="#" id="transaction-tab">[{oxmultilang ident="OXPS_PAYPAL_TRANSACTIONS"}]</a></li>
+    </ul>
 
     <form method="post" action="[{$oViewConf->getSelfLink()}]">
         [{$oViewConf->getHiddenSid()}]
         <input type="hidden" name="oxid" value="[{$oxid}]">
         <input type="hidden" name="cl" value="PaypalSubscriptionDetailsController">
         <input type="hidden" name="fnc" value="update">
-        <div class="row">
-            <div class="col-sm-4">
+
+        <div id="subscription" class="row pptab">
+            <div class="col-sm-12">
                 <table class="table table-sm">
-                    <tr>
-                        <td colspan="2">[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION"}]</td>
-                    </tr>
-                    <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_ID"}]</td>
+                    <tr class="ppmessages">
+                        <td class="col-sm-2"><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_ID"}]</b></td>
                         <td>[{$payPalSubscription->id}]</td>
                     </tr>
-                    <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID"}]</td>
+                    <tr class="ppaltmessages">
+                        <td><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID"}]</b></td>
                         <td>[{$payPalSubscription->plan_id}]</td>
                     </tr>
-                    <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_START_TIME"}]</td>
+                    <tr class="ppmessages">
+                        <td><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_START_TIME"}]</b></td>
                         <td>[{$payPalSubscription->start_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
                     </tr>
-                    <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_QUANTITY"}]</td>
+                    <tr class="ppaltmessages">
+                        <td><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_QUANTITY"}]</b></td>
                         <td>[{$payPalSubscription->quantity}]</td>
                     </tr>
-                    <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS"}]</td>
+                    <tr class="ppmessages">
+                        <td><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS"}]</b></td>
                         <td>
                             [{assign var="subscriptionStatus" value=$payPalSubscription->status}]
                             [{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_"|cat:$subscriptionStatus}]
                         </td>
                     </tr>
-                    <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_CHANGE_NOTE"}]</td>
+                    <tr class="ppaltmessages">
+                        <td><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_CHANGE_NOTE"}]</b></td>
                         <td>[{$payPalSubscription->status_change_note}]</td>
                     </tr>
-                    <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_UPDATE_TIME"}]</td>
+                    <tr class="ppmessages">
+                        <td><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_UPDATE_TIME"}]</b></td>
                         <td>[{$payPalSubscription->status_update_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
                     </tr>
-                    <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_CREATE_TIME"}]</td>
+                    <tr class="ppaltmessages">
+                        <td><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_CREATE_TIME"}]</b></td>
                         <td>[{$payPalSubscription->create_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
                     </tr>
-                    <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_UPDATE_TIME"}]</td>
+                    <tr class="ppmessages">
+                        <td><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_UPDATE_TIME"}]</b></td>
                         <td>[{$payPalSubscription->update_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
                     </tr>
-                    <tr>
-                        <td colspan="2">[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIBER"}]</td>
-                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div id="subscriber" class="row pptab">
+            <div class="col-sm-12">
+                <table class="table table-sm">
                     [{assign var="subscriber" value=$payPalSubscription->subscriber}]
-                    <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIBER_PAYER_ID"}]</td>
+                    <tr class="ppmessages">
+                        <td class="col-sm-2"><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIBER_PAYER_ID"}]</b></td>
                         <td>[{$subscriber->payer_id}]</td>
                     </tr>
-                    <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_FIRST_NAME"}]</td>
+                    <tr class="ppaltmessages">
+                        <td><b>[{oxmultilang ident="OXPS_PAYPAL_FIRST_NAME"}]</b></td>
                         <td>[{$subscriber->name->given_name}]</td>
                     </tr>
-                    <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_LAST_NAME"}]</td>
+                    <tr class="ppmessages">
+                        <td><b>[{oxmultilang ident="OXPS_PAYPAL_LAST_NAME"}]</b></td>
                         <td>[{$subscriber->name->surname}]</td>
                     </tr>
-                    <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_EMAIL"}]</td>
+                    <tr class="ppaltmessages">
+                        <td><b>[{oxmultilang ident="OXPS_PAYPAL_EMAIL"}]</b></td>
                         <td>[{$subscriber->email_address}]</td>
                     </tr>
                 </table>
             </div>
-            <div id="subscriptionShipping" class="col-sm-4">
+        </div>
+
+        <div id="shipping" class="row pptab">
+            <div id="subscriptionShipping" class="col-sm-6">
                 <table class="table table-sm">
-                    <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_SHIPPING"}]</td>
-                        <td>
-                            <a href="#"
-                               onclick="jQuery('#subscriptionShipping input').each(function(){ this.disabled = false })">
-                                [{oxmultilang ident="OXPS_PAYPAL_EDIT"}]
-                            </a>
-                        </td>
-                    </tr>
                     [{assign var="shippingDetails" value=$subscriber->shipping_address}]
                     [{assign var="shippingAddress" value=$shippingDetails->address}]
-                    <tr>
-                        <td>
+                    <tr class="ppmessages">
+                        <td class="col-sm-2">
                             <label for="shippingAddressFullName">[{oxmultilang ident="OXPS_PAYPAL_FULL_NAME"}]</label>
                         </td>
-                        <td>
+                        <td class="col-sm-2">
                             <input type="text"
                                    class="form-control"
                                    id="shippingAddressFullName"
@@ -107,7 +109,7 @@
                                    disabled>
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="ppaltmessages">
                         <td>
                             <label for="shippingAddressLine1">[{oxmultilang ident="OXPS_PAYPAL_ADDRESS_LINE_1"}]</label>
                         </td>
@@ -120,7 +122,7 @@
                                    disabled>
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="ppmessages">
                         <td>
                             <label for="shippingAddressLine2">[{oxmultilang ident="OXPS_PAYPAL_ADDRESS_LINE_2"}]</label>
                         </td>
@@ -133,7 +135,7 @@
                                    disabled>
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="ppaltmessages">
                         <td>
                             <label for="shippingAddressAdminArea1">[{oxmultilang ident="OXPS_PAYPAL_ADMIN_AREA_1"}]</label>
                         </td>
@@ -146,7 +148,7 @@
                                    disabled>
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="ppmessages">
                         <td>
                             <label for="shippingAddressLine2">[{oxmultilang ident="OXPS_PAYPAL_ADMIN_AREA_2"}]</label>
                         </td>
@@ -159,7 +161,7 @@
                                    disabled>
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="ppaltmessages">
                         <td>
                             <label for="shippingAddressPostalCode">[{oxmultilang ident="OXPS_PAYPAL_POSTAL_CODE"}]</label></td>
                         <td>
@@ -171,7 +173,7 @@
                                    disabled>
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="ppmessages">
                         <td><label for="shippingAddressCountryCode">[{oxmultilang ident="OXPS_PAYPAL_COUNTRY_CODE"}]</label></td>
                         <td>
                             <input type="text"
@@ -182,7 +184,7 @@
                                    disabled>
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="ppaltmessages">
                         <td><label for="shippingAmountValue">[{oxmultilang ident="OXPS_PAYPAL_AMOUNT"}]</label></td>
                         <td>
                             <div class="input-group">
@@ -202,9 +204,20 @@
                                    value="[{$payPalSubscription->shipping_amount->currency_code}]" disabled>
                         </td>
                     </tr>
+                    <tr class="ppmessages">
+                        <td colspan="2">
+                            <button class="btn btn-info btn-sm" onclick="jQuery('#subscriptionShipping input').each(function(){ this.disabled==false?this.disabled=true:this.disabled=false; })">
+                                [{oxmultilang ident="OXPS_PAYPAL_EDIT"}]
+                            </button>
+                        </td>
+                    </tr>
+                    <tr class="ppaltmessages">
+                        <td colspan="2"><button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_APPLY"}]</button></td>
+                    </tr>
                 </table>
             </div>
-            <div class="col-sm-4">
+        </div>
+            <div id="billing" class="row pptab">
                 <table class="table table-sm" id="subscriptionBilling">
                     [{assign var="billingInfo" value=$payPalSubscription->billing_info}]
                     <tr>
@@ -303,10 +316,9 @@
                     </table>
                 </table>
             </div>
-        </div>
-        <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_APPLY"}]</button>
+
     </form>
-    <div class="row">
+    <div id="transaction" class="row pptab">
         [{if !($subscriptionStatus == "APPROVAL_PENDING" or
             $subscriptionStatus == "CANCELLED" or
             $subscriptionStatus == "EXPIRED")
@@ -365,13 +377,37 @@
                 <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_APPLY"}]</button>
             </form>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-12">
-            <iframe src="[{$oViewConf->getSelfLink()}]&cl=PayPalSubscriptionTransactionController&subscriptionId=[{$payPalSubscription->id}]" width="1280" height="600"></iframe>
+        <div class="row">
+            <div class="col-sm-12">
+                <iframe src="[{$oViewConf->getSelfLink()}]&cl=PayPalSubscriptionTransactionController&subscriptionId=[{$payPalSubscription->id}]" width="1280" height="600"></iframe>
+            </div>
         </div>
     </div>
+
+
 </div>
-</body>
-</html>
+<script>
+    jQuery(document).ready(function(){
+        let showItem = function(divId) {
+            jQuery(".nav-tabs li").removeClass('active');
+            jQuery(".pptab").hide();
+            jQuery("#" + divId).show();
+            jQuery("#" + divId + "-tab").parent().addClass('active');
+        };
+
+        let listenToTab = function(divId) {
+            jQuery("#" + divId + "-tab").click(function(e) {
+                e.preventDefault();
+                showItem(divId);
+            });
+        }
+
+        showItem("subscription");
+        listenToTab("subscription");
+        listenToTab("subscriber");
+        listenToTab("shipping");
+        listenToTab("billing");
+        listenToTab("transaction");
+    });
+</script>
+
