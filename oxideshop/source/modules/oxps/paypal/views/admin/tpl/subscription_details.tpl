@@ -14,6 +14,7 @@
         <li><a href="#" id="billing-tab">[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_BILLING"}]</a></li>
         <li><a href="#" id="transaction-tab">[{oxmultilang ident="OXPS_PAYPAL_TRANSACTIONS"}]</a></li>
     </ul>
+    <br />
 
     <form method="post" action="[{$oViewConf->getSelfLink()}]">
         [{$oViewConf->getHiddenSid()}]
@@ -217,106 +218,109 @@
                 </table>
             </div>
         </div>
-            <div id="billing" class="row pptab">
-                <table class="table table-sm" id="subscriptionBilling">
-                    [{assign var="billingInfo" value=$payPalSubscription->billing_info}]
-                    <tr>
-                        <td>
-                            [{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_BILLING"}]
-                        </td>
-                        <td>
-                            <a href="#"
-                               onclick="jQuery('#subscriptionBilling input').each(function(){ this.disabled = false })">
-                                [{oxmultilang ident="OXPS_PAYPAL_EDIT"}]
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="outstandingBalanceValue">
-                                [{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_OUTSTANDING_BALANCE"}]
-                            </label>
-                        </td>
-                        <td>
-                            <div class="input-group">
-                                <input type="number"
-                                       step="0.01"
-                                       min="0"
-                                       id="outstandingBalanceValue"
-                                       class="form-control"
-                                       name="billingInfo[outstanding_balance][value]"
-                                       value="[{$billingInfo->outstanding_balance->value}]"
-                                       disabled>
-                                <div class="input-group-addon">
-                                    <span class="input-group-text">[{$billingInfo->outstanding_balance->currency_code}]</span>
-                                </div>
+        <div id="billing" class="row pptab">
+            <div class="col-sm-12">
+            <table class="table table-sm" id="subscriptionBilling">
+                [{assign var="billingInfo" value=$payPalSubscription->billing_info}]
+                <tr class="ppmessages">
+                    <td class="col-sm-2">
+                        <label for="outstandingBalanceValue">
+                            [{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_OUTSTANDING_BALANCE"}]
+                        </label>
+                    </td>
+                    <td>
+                        <div class="input-group col-sm-4">
+                            <input type="number"
+                                   step="0.01"
+                                   min="0"
+                                   id="outstandingBalanceValue"
+                                   class="form-control"
+                                   name="billingInfo[outstanding_balance][value]"
+                                   value="[{$billingInfo->outstanding_balance->value}]"
+                                   disabled>
+                            <div class="input-group-addon">
+                                <span class="input-group-text">[{$billingInfo->outstanding_balance->currency_code}]</span>
                             </div>
-                            <input type="hidden" name="billingInfo[outstanding_balance][currency_code]" value="[{$billingInfo->outstanding_balance->currency_code}]" disabled>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_LAST_PAYMENT"}]</td>
-                        <td>[{$billingInfo->last_payment->amount->value}]
-                            [{$billingInfo->last_payment->amount->currency_code}]
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_LAST_PAYMENT_TIME"}]</td>
-                        <td>[{$billingInfo->last_payment->time|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
-                    </tr>
-                    <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_NEXT_BILLING_TIME"}]</td>
-                        <td>[{$billingInfo->next_billing_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
-                    </tr>
-                    <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_FINAL_PAYMENT"}]</td>
-                        <td>[{$billingInfo->final_payment_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
-                    </tr>
-                    <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_FAILED_PAYMENT_COUNT"}]</td>
-                        <td>[{$billingInfo->failed_payments_count}]</td>
-                    </tr>
-                    <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_AMOUNT"}]</td>
-                        <td>[{$billingInfo->last_failed_payment->amount->value}]
-                            [{$billingInfo->last_failed_payment->amount->curency_code}]
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_TIME"}]</td>
-                        <td>[{$billingInfo->last_failed_payment->time}]</td>
-                    </tr>
-                    <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_FAILED_PAYMENT_REASON"}]</td>
-                        <td>[{$billingInfo->last_failed_payment->reason_code}]</td>
-                    </tr>
-                    <tr>
-                        <td>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_FAILED_PAYMENT_RETRY_TIME"}]</td>
-                        <td>[{$billingInfo->last_failed_payment->next_payment_retry_time}]</td>
-                    </tr>
-                    <table class="table table-sm">
-                        [{foreach from=$billingInfo->cycle_executions item="cycleExecution"}]
-                        <tr>
-                            <th>[{oxmultilang ident="OXPS_PAYPAL_TENURE_TYPE"}]</th>
-                            <th>[{oxmultilang ident="OXPS_PAYPAL_SEQUENCE"}]</th>
-                            <th>[{oxmultilang ident="OXPS_PAYPAL_CYCLES_COMPLETED"}]</th>
-                            <th>[{oxmultilang ident="OXPS_PAYPAL_CYCLES_REMAINING"}]</th>
-                            <th>[{oxmultilang ident="OXPS_PAYPAL_CURRENT_PRICING_SCHEME_VERSION"}]</th>
-                            <th>[{oxmultilang ident="OXPS_PAYPAL_TOTAL_CYCLES"}]</th>
-                        </tr>
-                        <tr>
-                            <td>[{$cycleExecution->tenure_type}]</td>
-                            <td>[{$cycleExecution->sequence}]</td>
-                            <td>[{$cycleExecution->cycles_completed}]</td>
-                            <td>[{$cycleExecution->cycles_remaining}]</td>
-                            <td>[{$cycleExecution->current_pricing_scheme_version}]</td>
-                            <td>[{$cycleExecution->total_cycles}]</td>
-                        </tr>
-                        [{/foreach}]
-                    </table>
-                </table>
+                        </div>
+                        <input type="hidden" name="billingInfo[outstanding_balance][currency_code]" value="[{$billingInfo->outstanding_balance->currency_code}]" disabled>
+                    </td>
+                </tr>
+                <tr class="ppaltmessages">
+                    <td><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_LAST_PAYMENT"}]</b></td>
+                    <td>[{$billingInfo->last_payment->amount->value}]
+                        [{$billingInfo->last_payment->amount->currency_code}]
+                    </td>
+                </tr>
+                <tr class="ppmessages">
+                    <td><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_LAST_PAYMENT_TIME"}]</b></td>
+                    <td>[{$billingInfo->last_payment->time|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
+                </tr>
+                <tr class="ppaltmessages">
+                    <td><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_NEXT_BILLING_TIME"}]</b></td>
+                    <td>[{$billingInfo->next_billing_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
+                </tr>
+                <tr class="ppmessages">
+                    <td><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_FINAL_PAYMENT"}]</b></td>
+                    <td>[{$billingInfo->final_payment_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
+                </tr>
+                <tr class="ppaltmessages">
+                    <td><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_FAILED_PAYMENT_COUNT"}]</b></td>
+                    <td>[{$billingInfo->failed_payments_count}]</td>
+                </tr>
+                <tr class="ppmessages">
+                    <td><b>[{oxmultilang ident="OXPS_PAYPAL_AMOUNT"}]</b></td>
+                    <td>[{$billingInfo->last_failed_payment->amount->value}]
+                        [{$billingInfo->last_failed_payment->amount->curency_code}]
+                    </td>
+                </tr>
+                <tr class="ppaltmessages">
+                    <td><b>[{oxmultilang ident="OXPS_PAYPAL_TIME"}]</b></td>
+                    <td>[{$billingInfo->last_failed_payment->time}]</td>
+                </tr>
+                <tr class="ppmessages">
+                    <td><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_FAILED_PAYMENT_REASON"}]</b></td>
+                    <td>[{$billingInfo->last_failed_payment->reason_code}]</td>
+                </tr>
+                <tr class="ppaltmessages">
+                    <td><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_FAILED_PAYMENT_RETRY_TIME"}]</b></td>
+                    <td>[{$billingInfo->last_failed_payment->next_payment_retry_time}]</td>
+                </tr>
+                <tr class="ppmessages">
+                    <td colspan="2">
+                        <button class="btn btn-info btn-sm" onclick="jQuery('#subscriptionBilling input').each(function(){ this.disabled==false?this.disabled=true:this.disabled=false; })">
+                            [{oxmultilang ident="OXPS_PAYPAL_EDIT"}]
+                        </button>
+                    </td>
+                </tr>
+                <tr class="ppaltmessages">
+                    <td colspan="2"><button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_APPLY"}]</button></td>
+                </tr>
+            </table>
+            <br />
+            <table class="table table-sm">
+                <tr><td colspan="100"><h4>Billing Cycles</h4></td></tr>
+                <tr class="ppaltmessages">
+                    <th>[{oxmultilang ident="OXPS_PAYPAL_TENURE_TYPE"}]</th>
+                    <th>[{oxmultilang ident="OXPS_PAYPAL_SEQUENCE"}]</th>
+                    <th>[{oxmultilang ident="OXPS_PAYPAL_CYCLES_COMPLETED"}]</th>
+                    <th>[{oxmultilang ident="OXPS_PAYPAL_CYCLES_REMAINING"}]</th>
+                    <th>[{oxmultilang ident="OXPS_PAYPAL_CURRENT_PRICING_SCHEME_VERSION"}]</th>
+                    <th>[{oxmultilang ident="OXPS_PAYPAL_TOTAL_CYCLES"}]</th>
+                </tr>
+                [{foreach from=$billingInfo->cycle_executions item="cycleExecution"}]
+                [{cycle values='ppmessages,ppaltmessages' assign=cellClass}]
+                <tr class="[{$cellClass}]">
+                    <td>[{$cycleExecution->tenure_type}]</td>
+                    <td>[{$cycleExecution->sequence}]</td>
+                    <td>[{$cycleExecution->cycles_completed}]</td>
+                    <td>[{$cycleExecution->cycles_remaining}]</td>
+                    <td>[{$cycleExecution->current_pricing_scheme_version}]</td>
+                    <td>[{$cycleExecution->total_cycles}]</td>
+                </tr>
+                [{/foreach}]
+            </table>
             </div>
-
+        </div>
     </form>
     <div id="transaction" class="row pptab">
         [{if !($subscriptionStatus == "APPROVAL_PENDING" or
