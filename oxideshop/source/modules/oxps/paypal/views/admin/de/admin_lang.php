@@ -33,6 +33,7 @@ $aLang = [
     'OXPS_PAYPAL_TRANSACTION_TO_PRICE' => 'Preis bis',
     'OXPS_PAYPAL_TRANSACTION_FROM_PRICE' => 'Preis von',
     'OXPS_PAYPAL_AVAILABLE_BALANCE'  => 'Verfügbar',
+    'OXPS_PAYPAL_PRODUCTS'           => 'Produkt',
     'OXPS_PAYPAL_WITHHELD_BALANCE'   => 'Zurückgehalten',
     'OXPS_PAYPAL_TOTAL_BALANCE'      => 'Gesamt',
     'OXPS_PAYPAL_PRIMARY'            => 'Primär',
@@ -288,4 +289,9 @@ $aLang = [
     'OXPS_PAYPAL_HISTORY'  => 'Geschichte',
     'OXPS_PAYPAL_RESOLVED_BUYER_FAVOUR'  => 'Beschlossen zu Gunsten des Käufers',
     'OXPS_PAYPAL_RESOLVED_SELLER_FAVOUR'  => 'Beschlossen zu Gunsten des Verkäufers',
+    'OXPS_PAYPAL_PRODUCT_NAME' => 'Produktname',
+    'OXPS_PAYPAL_PRODUCT_DESCRIPTION' => 'Beschreibung',
+    'OXPS_PAYPAL_PRODUCT_TYPE_CATEGORY' => 'Typ:Kategorie',
+    'OXPS_PAYPAL_PRODUCT_URL' => 'URL',
+    'OXPS_PAYPAL_PRODUCT_IMAGE' => 'Bild',
 ];

@@ -193,7 +193,7 @@ class ProxyController extends FrontendController
 
         $model = new Subscription();
         $model->saveSubscription($data);
-        $model->saveSubscriptionProductOrder($subscriptionPlanId);
+        $model->saveSubscriptionProductOrder($subscriptionPlanId, $subscriptionId);
     }
 
     public function cancelPaypalPayment()

@@ -71,6 +71,10 @@ class Subscription extends BaseModel
         return $this->_isLoaded = $this->assignRecord($query);
     }
 
+    /**
+     * @param $data
+     * @throws \Exception
+     */
     public function saveSubscription($data)
     {
         $subscriptionPlanId = $data['plan_id'];
@@ -97,7 +101,7 @@ class Subscription extends BaseModel
      * @throws \OxidEsales\Eshop\Core\Exception\DatabaseConnectionException
      * @throws \OxidEsales\Eshop\Core\Exception\DatabaseErrorException
      */
-    public function findSubscriptionProductId(?string $articleId, $subscriptionPlanId): array
+    public function findSubscriptionProductId(?string $articleId, $subscriptionPlanId): string
     {
         $subscriptionProductSQL = "SELECT OXPS_PAYPAL_PRODUCT_ID FROM oxps_paypal_subscription_product ";
         $subscriptionProductSQL .= "WHERE OXPS_PAYPAL_OXARTICLE_ID = ?";
@@ -114,10 +118,11 @@ class Subscription extends BaseModel
 
     /**
      * @param string $subscriptionPlanId
+     * @param string $subscriptionId
      * @throws DatabaseConnectionException
      * @throws DatabaseErrorException
      */
-    public function saveSubscriptionProductOrder(string $subscriptionPlanId): void
+    public function saveSubscriptionProductOrder(string $subscriptionPlanId, string $subscriptionId): void
     {
         $id = Registry::getUtilsObject()->generateUId();
         $articleId = Registry::getRequest()->getRequestEscapedParameter('aid');
@@ -141,7 +146,7 @@ class Subscription extends BaseModel
             $articleId,
             $subscriptionProductId,
             $subscriptionPlanId,
-            $id
+            $subscriptionId
         ]);
     }
 }

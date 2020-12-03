@@ -23,9 +23,11 @@
 namespace OxidProfessionalServices\PayPal\Controller\Admin;
 
 use OxidEsales\Eshop\Application\Controller\Admin\AdminController;
+use OxidEsales\Eshop\Core\DatabaseProvider;
 use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
+use OxidProfessionalServices\PayPal\Api\Model\Catalog\Product;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Money;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Patch;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\ShippingDetail;
@@ -74,8 +76,11 @@ class SubscriptionDetailsController extends AdminController
     public function render()
     {
         try {
+            $paypalSubscription = $this->getPayPalSubscription();
+            $product = $this->getSubscriptionProduct($paypalSubscription->id);
             $this->addTplParam('subscription', $this->getSubscription());
-            $this->addTplParam('payPalSubscription', $this->getPayPalSubscription());
+            $this->addTplParam('payPalSubscription', $paypalSubscription);
+            $this->addTplParam('subscriptionProduct', $product);
         } catch (ApiException $exception) {
             if ($exception->shouldDisplay()) {
                 $this->addTplParam('error', $exception->getErrorDescription());
@@ -84,6 +89,23 @@ class SubscriptionDetailsController extends AdminController
         }
 
         return parent::render();
+    }
+
+    private function getSubscriptionProduct(string $paypalSubscriptionId)
+    {
+        $sql = 'SELECT OXPS_PAYPAL_PRODUCT_ID, 
+                       OXPS_PAYPAL_OXARTICLE_ID
+                  FROM oxps_paypal_subscription_product_order 
+                 WHERE OXPS_PAYPAL_SESSION_ID = ?';
+
+        $subscriptionProductId = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)
+            ->getOne(
+                $sql, [
+                    $paypalSubscriptionId
+                ]
+            );
+
+        return Registry::get(ServiceFactory::class)->getCatalogService()->showProductDetails($subscriptionProductId);
     }
 
     /**

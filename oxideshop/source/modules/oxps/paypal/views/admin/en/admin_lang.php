@@ -125,6 +125,7 @@ $aLang = [
     'OXPS_PAYPAL_SHOP_PAYMENT_STATUS'         => 'Shop payment status',
     'OXPS_PAYPAL_ORDER_PRICE'                 => 'Full order price',
     'OXPS_PAYPAL_ORDER_PRODUCTS'              => 'Ordered products',
+    'OXPS_PAYPAL_PRODUCTS'                    => 'Product',
     'OXPS_PAYPAL_CAPTURED'                    => 'Captured',
     'OXPS_PAYPAL_REFUNDED'                    => 'Refunded',
     'OXPS_PAYPAL_CAPTURED_NET'                => 'Resulting payment amount',
@@ -287,4 +288,9 @@ $aLang = [
     'OXPS_PAYPAL_HISTORY'  => 'History',
     'OXPS_PAYPAL_RESOLVED_BUYER_FAVOUR'  => 'Resolved in favour of Buyer',
     'OXPS_PAYPAL_RESOLVED_SELLER_FAVOUR'  => 'Resolved in favour of Seller',
+    'OXPS_PAYPAL_PRODUCT_NAME' => 'Product Name',
+    'OXPS_PAYPAL_PRODUCT_DESCRIPTION' => 'Description',
+    'OXPS_PAYPAL_PRODUCT_TYPE_CATEGORY' => 'Type:Category',
+    'OXPS_PAYPAL_PRODUCT_URL' => 'URL',
+    'OXPS_PAYPAL_PRODUCT_IMAGE' => 'Image',
 ];
