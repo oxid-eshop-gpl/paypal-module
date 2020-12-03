@@ -355,67 +355,72 @@
         </div>
     </form>
     <div id="transaction" class="row pptab">
+        <div class="row ppaltmessages hidden">
         [{if !($subscriptionStatus == "APPROVAL_PENDING" or
             $subscriptionStatus == "CANCELLED" or
             $subscriptionStatus == "EXPIRED")
         }]
-        <div class="col-sm-4">
-            <form method="post" action="[{$oViewConf->getSelfLink()}]">
-                [{$oViewConf->getHiddenSid()}]
-                <input type="hidden" name="oxid" value="[{$oxid}]">
-                <input type="hidden" name="cl" value="PaypalSubscriptionDetailsController">
-                <input type="hidden" name="fnc" value="updateStatus">
-                <div class="form-group">
-                    <label for="subscriptionStatusEdit">[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS"}]</label>
-                    <select class="form-control" id="subscriptionStatusEdit" name="status">
-                        <option [{if $subscriptionStatus == "ACTIVE"}]value="" selected[{else}]value="ACTIVE"[{/if}]>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_ACTIVE"}]</option>
-                        <option [{if $subscriptionStatus == "SUSPENDED"}]value="" selected[{else}]value="SUSPENDED"[{/if}]>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_SUSPENDED"}]</option>
-                        <option [{if $subscriptionStatus == "CANCELED"}]value="" selected[{else}]value="CANCELED"[{/if}]>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_CANCELLED"}]</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="statusNote">[{oxmultilang ident="OXPS_PAYPAL_NOTE"}]</label>
-                    <textarea name="statusNote" class="form-control" maxlength="128"></textarea>
-                </div>
-                <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_APPLY"}]</button>
-            </form>
-        </div>
+            <div class="col-sm-2">
+                <form method="post" action="[{$oViewConf->getSelfLink()}]">
+                    [{$oViewConf->getHiddenSid()}]
+                    <input type="hidden" name="oxid" value="[{$oxid}]">
+                    <input type="hidden" name="cl" value="PaypalSubscriptionDetailsController">
+                    <input type="hidden" name="fnc" value="updateStatus">
+                    <h4>[{oxmultilang ident="OXPS_PAYPAL_TRANSACTION_STATUS"}]</h4>
+                    <div class="form-group">
+                        <label for="subscriptionStatusEdit">[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS"}]</label>
+                        <select class="form-control" id="subscriptionStatusEdit" name="status">
+                            <option [{if $subscriptionStatus == "ACTIVE"}]value="" selected[{else}]value="ACTIVE"[{/if}]>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_ACTIVE"}]</option>
+                            <option [{if $subscriptionStatus == "SUSPENDED"}]value="" selected[{else}]value="SUSPENDED"[{/if}]>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_SUSPENDED"}]</option>
+                            <option [{if $subscriptionStatus == "CANCELED"}]value="" selected[{else}]value="CANCELED"[{/if}]>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_CANCELLED"}]</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="statusNote">[{oxmultilang ident="OXPS_PAYPAL_NOTE"}]</label>
+                        <textarea name="statusNote" class="form-control" maxlength="128"></textarea>
+                    </div>
+                    <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_APPLY"}]</button>
+                </form>
+            </div>
+            <div class="col-sm-1"></div>
         [{/if}]
-        <div class="col-sm-4">
-            <form method="post" action="[{$oViewConf->getSelfLink()}]">
-                [{$oViewConf->getHiddenSid()}]
-                <input type="hidden" name="oxid" value="[{$oxid}]">
-                <input type="hidden" name="cl" value="PaypalSubscriptionDetailsController">
-                <input type="hidden" name="fnc" value="captureOutstandingFees">
-                [{oxmultilang ident="OXPS_PAYPAL_CAPTURE_OUTSTANDING_FEES"}]
-                <div class="form-group">
-                    <label for="outstandingFeeAmount">[{oxmultilang ident="OXPS_PAYPAL_AMOUNT"}]</label>
-                    <div class="input-group">
-                        <input type="number"
-                               step="0.01"
-                               min="0"
-                               max="[{$billingInfo->outstanding_balance->value}]"
-                               class="form-control"
-                               id="outstandingFeeAmount"
-                               name="outstandingFee[amount]">
-                        <div class="input-group-addon">
-                            <span class="input-group-text">[{$billingInfo->outstanding_balance->currency_code}]</span>
+
+            <div class="col-sm-2">
+                <form method="post" action="[{$oViewConf->getSelfLink()}]">
+                    [{$oViewConf->getHiddenSid()}]
+                    <input type="hidden" name="oxid" value="[{$oxid}]">
+                    <input type="hidden" name="cl" value="PaypalSubscriptionDetailsController">
+                    <input type="hidden" name="fnc" value="captureOutstandingFees">
+                    <h4>[{oxmultilang ident="OXPS_PAYPAL_CAPTURE_OUTSTANDING_FEES"}]</h4>
+                    <div class="form-group">
+                        <label for="outstandingFeeAmount">[{oxmultilang ident="OXPS_PAYPAL_AMOUNT"}]</label>
+                        <div class="input-group">
+                            <input type="number"
+                                   step="0.01"
+                                   min="0"
+                                   max="[{$billingInfo->outstanding_balance->value}]"
+                                   class="form-control"
+                                   id="outstandingFeeAmount"
+                                   name="outstandingFee[amount]">
+                            <div class="input-group-addon">
+                                <span class="input-group-text">[{$billingInfo->outstanding_balance->currency_code}]</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <input type="hidden" name="outstandingFee[currency_code]">
-                <div class="form-group">
-                    <label for="outstandingFeeCaptureNote">
-                        [{oxmultilang ident="OXPS_PAYPAL_NOTE"}]
-                    </label>
-                    <textarea name="captureNote" id="outstandingFeeCaptureNote" class="form-control" maxlength="128"></textarea>
-                </div>
-                <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_APPLY"}]</button>
-            </form>
+                    <input type="hidden" name="outstandingFee[currency_code]">
+                    <div class="form-group">
+                        <label for="outstandingFeeCaptureNote">
+                            [{oxmultilang ident="OXPS_PAYPAL_NOTE"}]
+                        </label>
+                        <textarea name="captureNote" id="outstandingFeeCaptureNote" class="form-control" maxlength="128"></textarea>
+                    </div>
+                    <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_APPLY"}]</button>
+                </form>
+            </div>
         </div>
         <div class="row">
             <div class="col-sm-12">
-                <iframe src="[{$oViewConf->getSelfLink()}]&cl=PayPalSubscriptionTransactionController&subscriptionId=[{$payPalSubscription->id}]" width="1280" height="600"></iframe>
+                <iframe frameborder="0" src="[{$oViewConf->getSelfLink()}]&cl=PayPalSubscriptionTransactionController&subscriptionId=[{$payPalSubscription->id}]"  class="col-sm-12" height="600"></iframe>
             </div>
         </div>
     </div>
