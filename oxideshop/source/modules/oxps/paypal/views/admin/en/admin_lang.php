@@ -366,7 +366,7 @@ $aLang = [
     'OXPS_PAYPAL_EVIDENCE_TYPE_LOST_CARD_DETAILS' => 'Lost Card Details',
     'OXPS_PAYPAL_EVIDENCE_TYPE_LAST_VALID_TRANSACTION_DETAILS' => 'Last Valid Transaction Details',
     'OXPS_PAYPAL_EVIDENCE_TYPE_OTHER' => 'Other',
-
-
+    'OXPS_PAYPAL_EVIDENCE_TYPE' => 'Evidence Type',
+    'OXPS_PAYPAL_EVIDENCE_DOCUMENT' => 'Document',
 ];
 

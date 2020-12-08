@@ -253,56 +253,37 @@
             <input type="hidden" name="cl" value="PaypalDisputeDetailsController">
 
             <div class="row ppmessages">
-                <div class="col-lg-12">
-                    <h3 class="ppaltmessages">[{oxmultilang ident="OXPS_PAYPAL_PROVIDE_EVIDENCE"}]</h3>
-                </div>
-            </div>
-            <div class="row ppaltmessages">
-                <div class="col-lg-3">
-                    <div class="form-group">
-                        <label for="note">[{oxmultilang ident="OXPS_PAYPAL_UPLOAD_FILE"}] 1</label>
-                        <input type="file" name="evidenceFile1" id="evidenceFile1">
-                    </div>
-                </div>
-            </div>
-            <div class="row ppmessages">
-                <div class="col-lg-3">
-                    <div class="form-group">
-                        <label for="note">[{oxmultilang ident="OXPS_PAYPAL_UPLOAD_FILE"}] 2</label>
-                        <input type="file" name="evidenceFile2" id="evidenceFile2">
-                    </div>
-                </div>
-            </div>
-            <div class="row ppaltmessages">
-                <div class="col-lg-3">
-                    <div class="form-group">
-                        <label for="note">[{oxmultilang ident="OXPS_PAYPAL_UPLOAD_FILE"}] 3</label>
-                        <input type="file" name="evidenceFile3" id="evidenceFile3">
-                    </div>
-                </div>
-            </div>
-            <div class="row ppmessages">
-                <div class="col-lg-3">
-                    <div class="form-group">
-                        <label for="note">[{oxmultilang ident="OXPS_PAYPAL_UPLOAD_FILE"}] 4</label>
-                        <input type="file" name="evidenceFile4" id="evidenceFile4">
-                    </div>
-                </div>
-            </div>
-            <div class="row ppaltmessages">
-                <div class="col-lg-3">
-                    <div class="form-group">
-                        <label for="note">[{oxmultilang ident="OXPS_PAYPAL_UPLOAD_FILE"}] 5</label>
-                        <input type="file" name="evidenceFile5" id="evidenceFile5">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h3 class="ppaltmessages">[{oxmultilang ident="OXPS_PAYPAL_PROVIDE_EVIDENCE"}]</h3>
                     </div>
                 </div>
             </div>
 
+            [{foreach from=$loops item=l}]
             <div class="row ppmessages">
+                [{oxmultilang ident="OXPS_PAYPAL_EVIDENCE_DOCUMENT"}] [{$l}]
+            </div>
+            <div class="row ppaltmessages">
                 <div class="col-lg-2">
-                    <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_UPLOAD_FILE"}]</button>
+                    <div class="form-group">
+                        <label for="evidenceType[{$l}]">[{oxmultilang ident="OXPS_PAYPAL_EVIDENCE_TYPE"}]]</label>
+                        <select name="evidenceType[{$l}]" class="form-control" id="evidenceType[{$l}]">
+                            [{foreach from=$evidenceTypes item=i key=k}]
+                            <option value="[{$k}]">[{oxmultilang ident="OXPS_PAYPAL_"|cat:$k}]</option>
+                            [{/foreach}]
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="note">[{oxmultilang ident="OXPS_PAYPAL_UPLOAD_FILE"}]]</label>
+                        <input type="file" name="evidenceFile[{$l}]" id="evidenceFile[{$l}]">
+                    </div>
                 </div>
             </div>
+            [{/foreach}]
+
         </form>
     </div>
 </div>

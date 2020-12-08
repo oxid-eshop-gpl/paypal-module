@@ -59,8 +59,7 @@ class DisputeDetailsController extends AdminListController
         try {
             $this->addTplParam('dispute', $this->getDispute());
             $this->addTplParam('evidenceTypes', $this->getEvidenceTypes());
-
-
+            $this->addTplParam('loops', [1,2,3,4,5]);
         } catch (ApiException $exception) {
             if ($exception->shouldDisplay()) {
                 $this->addTplParam(
@@ -89,6 +88,9 @@ class DisputeDetailsController extends AdminListController
         }
     }
 
+    /**
+     * @return array
+     */
     public function getEvidenceTypes()
     {
         $oClass = new \ReflectionClass(ResponseEvidence::class);
@@ -102,7 +104,7 @@ class DisputeDetailsController extends AdminListController
             }
         }
 
-        $k = $evidenceTypes;
+        return $evidenceTypes;
     }
 
     /**
