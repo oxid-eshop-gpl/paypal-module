@@ -25,7 +25,6 @@ namespace OxidProfessionalServices\PayPal\Controller\Admin;
 use OxidEsales\Eshop\Application\Controller\Admin\AdminListController;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\AddressPortable;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\Money;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\RequestEscalate;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\RequestMakeOffer;
