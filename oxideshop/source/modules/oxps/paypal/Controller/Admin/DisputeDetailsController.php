@@ -30,6 +30,8 @@ use OxidProfessionalServices\PayPal\Api\Model\Disputes\RequestEscalate;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\RequestMakeOffer;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\RequestSendMessage;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\ResponseDispute;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\ResponseEvidence;
+use OxidProfessionalServices\PayPal\Controller\Admin\Service\DisputeService as FileAwareDisputeService;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 use OxidProfessionalServices\PayPal\Service\DisputeService;
 
@@ -56,6 +58,9 @@ class DisputeDetailsController extends AdminListController
     {
         try {
             $this->addTplParam('dispute', $this->getDispute());
+            $this->addTplParam('evidenceTypes', $this->getEvidenceTypes());
+
+
         } catch (ApiException $exception) {
             if ($exception->shouldDisplay()) {
                 $this->addTplParam(
@@ -82,6 +87,22 @@ class DisputeDetailsController extends AdminListController
             $this->addTplParam('error', $exception->getErrorDescription());
             Registry::getLogger()->error($exception);
         }
+    }
+
+    public function getEvidenceTypes()
+    {
+        $oClass = new \ReflectionClass(ResponseEvidence::class);
+        $constants = $oClass->getConstants();
+
+        $evidenceTypes = [];
+
+        foreach ($constants as $constant => $value) {
+            if (substr( $constant, 0, 14) === "EVIDENCE_TYPE_") {
+                $evidenceTypes[$constant] = $constant;
+            }
+        }
+
+        $k = $evidenceTypes;
     }
 
     /**
@@ -148,11 +169,40 @@ class DisputeDetailsController extends AdminListController
         $this->getDisputeService()->escalateDisputeToClaim($disputeId, $request);
     }
 
+    public function provideEvidence()
+    {
+        $disputeId = $this->getEditObjectId();
+        $disputeService = $this->getFileAwareDisputeService();
+
+        $fileArray = [];
+
+        if (!empty($_FILES)) {
+            for ($i = 1; $i < 6; $i++) {
+                if (!empty($_FILES['evidenceFile' . $i])) {
+                    $fileArray[] = $_FILES['evidenceFile' . $i];
+
+
+
+                }
+            }
+        }
+
+        $disputeService->provideEvidence($disputeId, $fileArray);
+    }
+
     /**
      * @return DisputeService
      */
     protected function getDisputeService(): DisputeService
     {
         return Registry::get(ServiceFactory::class)->getDisputeService();
+    }
+
+    /**
+     * @return FileAwareDisputeService
+     */
+    protected function getFileAwareDisputeService(): FileAwareDisputeService
+    {
+        return Registry::get(ServiceFactory::class)->getFileAwaredisputeService();
     }
 }

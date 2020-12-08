@@ -18,6 +18,7 @@
         <li class="active"><a href="#" id="messages-tab">[{oxmultilang ident="OXPS_PAYPAL_MESSAGES"}]</a></li>
         <li><a href="#" id="offer-tab">[{oxmultilang ident="OXPS_PAYPAL_MAKE_OFFER"}]</a></li>
         <li><a href="#" id="escalate-tab">[{oxmultilang ident="OXPS_PAYPAL_ESCALATE"}]</a></li>
+        <li><a href="#" id="evidence-tab">[{oxmultilang ident="OXPS_PAYPAL_PROVIDE_EVIDENCE"}]</a></li>
         [{/if}]
     </ul>
 
@@ -216,7 +217,7 @@
         </form>
     </div>
     <div class="pptab" id="escalate">
-        <form method="post" action="[{$oViewConf->getSelfLink()}]" class="ppmessages">
+        <form method="post" action="[{$oViewConf->getSelfLink()}]">
             <input type="hidden" name="oxid" value="[{$dispute->dispute_id}]">
             <input type="hidden" name="fnc" value="escalate">
             <input type="hidden" name="cl" value="PaypalDisputeDetailsController">
@@ -232,24 +233,6 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="form-group">
-                        <label for="escalateReason">[{oxmultilang ident="OXPS_PAYPAL_REASON"}]</label>
-                        <select name="escalateReason" class="form-control" id="escalateReason">
-                            <option value="BUYER_ESCALATION_REASON_SHIPMENT_NOT_ARRIVED">[{oxmultilang ident="OXPS_PAYPAL_BUYER_ESCALATION_REASON_SHIPMENT_NOT_ARRIVED"}]</option>
-                            <option value="BUYER_ESCALATION_REASON_FRAUDULENT_SELLER">[{oxmultilang ident="OXPS_PAYPAL_BUYER_ESCALATION_REASON_FRAUDULENT_SELLER"}]</option>
-                            <option value="BUYER_ESCALATION_REASON_FAILED_NEGOTIATION">[{oxmultilang ident="OXPS_PAYPAL_BUYER_ESCALATION_REASON_FAILED_NEGOTIATION"}]</option>
-                            <option value="BUYER_ESCALATION_REASON_INCONCLUSIVE_NEGOTIATION">[{oxmultilang ident="OXPS_PAYPAL_BUYER_ESCALATION_REASON_INCONCLUSIVE_NEGOTIATION"}]</option>
-                            <option value="BUYER_ESCALATION_REASON_REFUND_NOT_RECEIVED">[{oxmultilang ident="OXPS_PAYPAL_BUYER_ESCALATION_REASON_REFUND_NOT_RECEIVED"}]</option>
-                            <option value="BUYER_ESCALATION_REASON_REFUND_AMOUNT_IS_DIFFERENT">[{oxmultilang ident="OXPS_PAYPAL_BUYER_ESCALATION_REASON_REFUND_AMOUNT_IS_DIFFERENT"}]</option>
-                            <option value="BUYER_ESCALATION_REASON_TRACKING_ID_INVALID">[{oxmultilang ident="OXPS_PAYPAL_BUYER_ESCALATION_REASON_TRACKING_ID_INVALID"}]</option>
-                            <option value="BUYER_ESCALATION_REASON_OTHER">[{oxmultilang ident="OXPS_PAYPAL_BUYER_ESCALATION_REASON_OTHER"}]</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="form-group">
                         <label for="note">[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_NOTE"}]</label>
                         <textarea name="note" class="form-control" cols="80" rows="5"></textarea>
                     </div>
@@ -259,6 +242,65 @@
             <div class="row">
                 <div class="col-lg-2">
                     <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_ESCALATE"}]</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="pptab" id="evidence">
+        <form method="post" action="[{$oViewConf->getSelfLink()}]" enctype="multipart/form-data">
+            <input type="hidden" name="oxid" value="[{$dispute->dispute_id}]">
+            <input type="hidden" name="fnc" value="provideEvidence">
+            <input type="hidden" name="cl" value="PaypalDisputeDetailsController">
+
+            <div class="row ppmessages">
+                <div class="col-lg-12">
+                    <h3 class="ppaltmessages">[{oxmultilang ident="OXPS_PAYPAL_PROVIDE_EVIDENCE"}]</h3>
+                </div>
+            </div>
+            <div class="row ppaltmessages">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label for="note">[{oxmultilang ident="OXPS_PAYPAL_UPLOAD_FILE"}] 1</label>
+                        <input type="file" name="evidenceFile1" id="evidenceFile1">
+                    </div>
+                </div>
+            </div>
+            <div class="row ppmessages">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label for="note">[{oxmultilang ident="OXPS_PAYPAL_UPLOAD_FILE"}] 2</label>
+                        <input type="file" name="evidenceFile2" id="evidenceFile2">
+                    </div>
+                </div>
+            </div>
+            <div class="row ppaltmessages">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label for="note">[{oxmultilang ident="OXPS_PAYPAL_UPLOAD_FILE"}] 3</label>
+                        <input type="file" name="evidenceFile3" id="evidenceFile3">
+                    </div>
+                </div>
+            </div>
+            <div class="row ppmessages">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label for="note">[{oxmultilang ident="OXPS_PAYPAL_UPLOAD_FILE"}] 4</label>
+                        <input type="file" name="evidenceFile4" id="evidenceFile4">
+                    </div>
+                </div>
+            </div>
+            <div class="row ppaltmessages">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label for="note">[{oxmultilang ident="OXPS_PAYPAL_UPLOAD_FILE"}] 5</label>
+                        <input type="file" name="evidenceFile5" id="evidenceFile5">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row ppmessages">
+                <div class="col-lg-2">
+                    <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_UPLOAD_FILE"}]</button>
                 </div>
             </div>
         </form>
@@ -287,6 +329,7 @@
         listenToTab("messages");
         listenToTab("offer");
         listenToTab("escalate");
+        listenToTab("evidence");
 
         jQuery(".messageRow").filter(':odd').css("background-color", "#f4f4f4");
     });
