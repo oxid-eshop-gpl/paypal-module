@@ -17,6 +17,7 @@
         [{if $dispute->status !== 'RESOLVED'}]
         <li class="active"><a href="#" id="messages-tab">[{oxmultilang ident="OXPS_PAYPAL_MESSAGES"}]</a></li>
         <li><a href="#" id="offer-tab">[{oxmultilang ident="OXPS_PAYPAL_MAKE_OFFER"}]</a></li>
+        <li><a href="#" id="escalate-tab">[{oxmultilang ident="OXPS_PAYPAL_ESCALATE"}]</a></li>
         [{/if}]
     </ul>
 
@@ -215,11 +216,52 @@
         </form>
     </div>
     <div class="pptab" id="escalate">
-        <div class="row">
-            <div class="col-lg-12">
-                <h3 class="ppaltmessages">[{oxmultilang ident="OXPS_PAYPAL_ESCALATE"}]</h3>
+        <form method="post" action="[{$oViewConf->getSelfLink()}]" class="ppmessages">
+            <input type="hidden" name="oxid" value="[{$dispute->dispute_id}]">
+            <input type="hidden" name="fnc" value="escalate">
+            <input type="hidden" name="cl" value="PaypalDisputeDetailsController">
+            <input type="hidden" name="requestedAmount" value="[{$dispute->dispute_amount->value}]">
+            <input type="hidden" name="requestedAmountCurrency" value="[{$dispute->dispute_amount->currency_code}]">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 class="ppaltmessages">[{oxmultilang ident="OXPS_PAYPAL_ESCALATE"}]</h3>
+                </div>
             </div>
-        </div>
+
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label for="escalateReason">[{oxmultilang ident="OXPS_PAYPAL_REASON"}]</label>
+                        <select name="escalateReason" class="form-control" id="escalateReason">
+                            <option value="BUYER_ESCALATION_REASON_SHIPMENT_NOT_ARRIVED">[{oxmultilang ident="OXPS_PAYPAL_BUYER_ESCALATION_REASON_SHIPMENT_NOT_ARRIVED"}]</option>
+                            <option value="BUYER_ESCALATION_REASON_FRAUDULENT_SELLER">[{oxmultilang ident="OXPS_PAYPAL_BUYER_ESCALATION_REASON_FRAUDULENT_SELLER"}]</option>
+                            <option value="BUYER_ESCALATION_REASON_FAILED_NEGOTIATION">[{oxmultilang ident="OXPS_PAYPAL_BUYER_ESCALATION_REASON_FAILED_NEGOTIATION"}]</option>
+                            <option value="BUYER_ESCALATION_REASON_INCONCLUSIVE_NEGOTIATION">[{oxmultilang ident="OXPS_PAYPAL_BUYER_ESCALATION_REASON_INCONCLUSIVE_NEGOTIATION"}]</option>
+                            <option value="BUYER_ESCALATION_REASON_REFUND_NOT_RECEIVED">[{oxmultilang ident="OXPS_PAYPAL_BUYER_ESCALATION_REASON_REFUND_NOT_RECEIVED"}]</option>
+                            <option value="BUYER_ESCALATION_REASON_REFUND_AMOUNT_IS_DIFFERENT">[{oxmultilang ident="OXPS_PAYPAL_BUYER_ESCALATION_REASON_REFUND_AMOUNT_IS_DIFFERENT"}]</option>
+                            <option value="BUYER_ESCALATION_REASON_TRACKING_ID_INVALID">[{oxmultilang ident="OXPS_PAYPAL_BUYER_ESCALATION_REASON_TRACKING_ID_INVALID"}]</option>
+                            <option value="BUYER_ESCALATION_REASON_OTHER">[{oxmultilang ident="OXPS_PAYPAL_BUYER_ESCALATION_REASON_OTHER"}]</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label for="note">[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_NOTE"}]</label>
+                        <textarea name="note" class="form-control" cols="80" rows="5"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-2">
+                    <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_ESCALATE"}]</button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -244,6 +286,7 @@
         listenToTab("history");
         listenToTab("messages");
         listenToTab("offer");
+        listenToTab("escalate");
 
         jQuery(".messageRow").filter(':odd').css("background-color", "#f4f4f4");
     });

@@ -27,6 +27,7 @@ use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\AddressPortable;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\Money;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\RequestEscalate;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\RequestMakeOffer;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\RequestSendMessage;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\ResponseDispute;
@@ -125,7 +126,6 @@ class DisputeDetailsController extends AdminListController
 
         $offerRequest = new RequestMakeOffer();
         $offerRequest->note = (string) $request->getRequestEscapedParameter('note');
-//        $offerRequest->invoice_id = (string) $request->getRequestEscapedParameter('invoiceId');
         $offerRequest->offer_type = (string) $request->getRequestEscapedParameter('offerType');
 
         $offerAmount = (array) $request->getRequestEscapedParameter('offerAmount');
@@ -133,13 +133,20 @@ class DisputeDetailsController extends AdminListController
             $offerRequest->offer_amount = new Money($offerAmount);
         }
 
-//        $returnAddress = (array) $request->getRequestEscapedParameter('shippingAddress');
-//        if ($returnAddress) {
-//            $offerRequest->return_shipping_address = new AddressPortable($returnAddress);
-//        }
+        $this->getDisputeService()->makeOfferToResolveDispute($disputeId, $offerRequest);
+    }
 
-        $service = $this->getDisputeService();
-        $service->makeOfferToResolveDispute($disputeId, $offerRequest);
+    /**
+     * Action for making offers to resolve disputes
+     *
+     * @throws ApiException
+     */
+    public function escalate(): void
+    {
+        $disputeId = $this->getEditObjectId();
+        $request = new RequestEscalate(['note' => Registry::getRequest()->getRequestEscapedParameter('note')]);
+
+        $this->getDisputeService()->escalateDisputeToClaim($disputeId, $request);
     }
 
     /**
