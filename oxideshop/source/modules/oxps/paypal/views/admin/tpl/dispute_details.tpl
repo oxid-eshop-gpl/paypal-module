@@ -252,7 +252,7 @@
             <input type="hidden" name="fnc" value="provideEvidence">
             <input type="hidden" name="cl" value="PaypalDisputeDetailsController">
 
-            <div class="row ppmessages">
+            <div class="row">
                 <div class="row">
                     <div class="col-lg-12">
                         <h3 class="ppaltmessages">[{oxmultilang ident="OXPS_PAYPAL_PROVIDE_EVIDENCE"}]</h3>
@@ -261,13 +261,13 @@
             </div>
 
             [{foreach from=$loops item=l}]
-            <div class="row ppmessages">
-                [{oxmultilang ident="OXPS_PAYPAL_EVIDENCE_DOCUMENT"}] [{$l}]
+            <div class="row ppmessages show[{$l}]">
+                <h4>[{oxmultilang ident="OXPS_PAYPAL_EVIDENCE_DOCUMENT"}] [{$l}]</h4>
             </div>
-            <div class="row ppaltmessages">
+            <div class="row ppaltmessages show[{$l}]">
                 <div class="col-lg-2">
                     <div class="form-group">
-                        <label for="evidenceType[{$l}]">[{oxmultilang ident="OXPS_PAYPAL_EVIDENCE_TYPE"}]]</label>
+                        <label for="evidenceType[{$l}]">[{oxmultilang ident="OXPS_PAYPAL_EVIDENCE_TYPE"}]</label>
                         <select name="evidenceType[{$l}]" class="form-control" id="evidenceType[{$l}]">
                             [{foreach from=$evidenceTypes item=i key=k}]
                             <option value="[{$k}]">[{oxmultilang ident="OXPS_PAYPAL_"|cat:$k}]</option>
@@ -277,19 +277,43 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
-                        <label for="note">[{oxmultilang ident="OXPS_PAYPAL_UPLOAD_FILE"}]]</label>
+                        <label for="note">[{oxmultilang ident="OXPS_PAYPAL_UPLOAD_FILE"}]</label>
                         <input type="file" name="evidenceFile[{$l}]" id="evidenceFile[{$l}]">
                     </div>
                 </div>
             </div>
+            [{if $l < 5}]
+            <div class="row ppmessages show[{$l}] addMoreButton[{$l}]">
+                <div class="col-lg-2">
+                    <button class="btn btn-primary" onCLick="javascript:addFile([{$l}]);" type="button">[{oxmultilang ident="OXPS_PAYPAL_MORE"}]</button>
+                </div>
+            </div>
+            [{/if}]
             [{/foreach}]
+
+            <div class="row ppaltmessages">
+                <div class="col-lg-2">
+                    <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_UPLOAD_FILE"}]</button>
+                </div>
+            </div>
+
 
         </form>
     </div>
 </div>
 
 <script>
+    function addFile(fileNum) {
+        jQuery('.show' + (fileNum+1)).show();
+        jQuery('.addMoreButton' + (fileNum)).hide();
+    }
+
     jQuery(document).ready(function(){
+
+        jQuery('.show2').hide();
+        jQuery('.show3').hide();
+        jQuery('.show4').hide();
+        jQuery('.show5').hide();
 
         let showItem = function(divId) {
             jQuery(".nav-tabs li").removeClass('active');
