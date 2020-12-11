@@ -128,7 +128,7 @@ class Basket extends Basket_parent
 
         return $amount;
     }
-    
+
     /**
      * Collects all basket discounts (basket, payment and vouchers)
      * and returns sum of collected discounts.

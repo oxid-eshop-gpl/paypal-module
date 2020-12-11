@@ -2,15 +2,34 @@
 [{assign var="where" value=$oView->getListFilter()}]
 
 <div class="container-fluid">
-<form method="post" action="[{$oViewConf->getSelfLink()}]">
-    [{include file="_formparams.tpl" cl="PayPalSubscriptionController" lstrt=$lstrt actedit=$actedit oxid=$oxid fnc="" language=$actlang editlanguage=$actlang}]
+    <br />
+    <div class="row">
+        <div class="col-sm-1">
+            <button id="toggleFilter" class="btn btn-info col-sm-12">Filter</button>
+        </div>
+    </div>
+    <script>
+        jQuery(document).ready(function(){
+            jQuery("#filters").hide();
+            jQuery("#results").show();
+            jQuery("#toggleFilter").click(function(e) {
+                e.preventDefault();
+                jQuery("#filters").toggle();
+                jQuery("#results").toggle();
+            });
+        });
+    </script>
+    <br />
     <div id="filters">
-        [{if !empty($error)}]
+        <form method="post" action="[{$oViewConf->getSelfLink()}]">
+            [{include file="_formparams.tpl" cl="PayPalSubscriptionController" lstrt=$lstrt actedit=$actedit oxid=$oxid fnc="" language=$actlang editlanguage=$actlang}]
+
+            [{if !empty($error)}]
         <div class="alert alert-danger" role="alert">
             [{$error}]
         </div>
         [{/if}]
-        <div class="row">
+        <div class="row ppaltmessages">
             <div class="col-sm-4">
                 <div class="form-group">
                     <label for="subscriptionIdFilter">[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_ID"}]</label>
@@ -41,6 +60,8 @@
                            value="[{if $where.oxps_paypal_subscription.oxpspaypalemail}][{$where.oxps_paypal_subscription.oxpspaypalemail}][{/if}]">
                 </div>
             </div>
+        </div>
+        <div class="row ppmessages">
             <div class="col-sm-4">
                 <div class="form-group">
                     <label for="subscriptionStatusFilterFilter">[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS"}]</label>
@@ -89,6 +110,8 @@
                            value="[{if $where.oxps_paypal_subscription.oxpspaypalstarttime}][{$where.oxps_paypal_subscription.oxpspaypalstarttime}][{/if}]">
                 </div>
             </div>
+        </div>
+            <div class="row ppaltmessages">
             <div class="col-sm-4">
                 <div class="form-group">
                     <label for="subscriptionUpdatedFilter">[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_UPDATED"}]</label>
@@ -110,14 +133,17 @@
                 </div>
             </div>
         </div>
+            <div class="row ppmessages">
+            <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_APPLY"}]</button>
+            </div>
+        </form>
     </div>
-    <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_APPLY"}]</button>
-</form>
 
 [{include file="paypal_list_pagination.tpl"}]
+    <div id="results">
 <table class="table table-sm">
     <thead>
-        <tr>
+        <tr class="ppaltmessages">
             <th>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_ID"}]</a></th>
             <th>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID"}]</a></th>
             <th>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_EMAIL"}]</a></th>
@@ -130,7 +156,8 @@
     </thead>
     <tbody>
         [{foreach from=$subscriptions item="subscription" name="subscriptions"}]
-            <tr>
+            [{cycle values='ppmessages,ppaltmessages' assign=cellClass}]
+            <tr class="[{$cellClass}]">
                 <td>[{$subscription->oxps_paypal_subscription__oxpspaypalid}]</td>
                 <td>[{$subscription->oxps_paypal_subscription__oxpspaypalplanid}]</td>
                 <td>[{$subscription->oxps_paypal_subscription__oxpspaypalemail}]</td>
@@ -149,6 +176,7 @@
         [{/foreach}]
     </tbody>
 </table>
+    </div>
 [{include file="paypal_list_pagination.tpl"}]
 </div>
 </body>

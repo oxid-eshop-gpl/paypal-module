@@ -398,9 +398,6 @@ class PaypalSubscribeController extends AdminController
     public function getProductUrl()
     {
         $url = $this->getEditObject()->getBaseStdLink($this->_iEditLang);
-        //@todo Localhost hack, remove this!
-        $url = str_replace('localhost', 'server.com', $url);
-        //@todo end
         return $url;
     }
 
@@ -428,9 +425,6 @@ class PaypalSubscribeController extends AdminController
             );
 
             if ($this->imgexists($img)) {
-                //@todo Localhost hack, remove this!
-                $img = str_replace('localhost', 'server.com', $img);
-                //@todo end
                 $images[] = $img;
             }
         }

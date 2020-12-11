@@ -30,6 +30,7 @@ use OxidProfessionalServices\PayPal\Api\Service\GenericService;
 use OxidProfessionalServices\PayPal\Api\Service\Catalog;
 use OxidProfessionalServices\PayPal\Api\Service\Subscriptions;
 use OxidProfessionalServices\PayPal\Api\Service\TransactionSearch;
+use OxidProfessionalServices\PayPal\Controller\Admin\Service\DisputeService as FileAwareDisputeService;
 use OxidProfessionalServices\PayPal\Service\DisputeService;
 
 /**
@@ -100,6 +101,14 @@ class ServiceFactory
     public function getDisputeService(): DisputeService
     {
         return oxNew(DisputeService::class, $this->getClient());
+    }
+
+    /**
+     * @return DisputeService
+     */
+    public function getFileAwareDisputeService(): FileAwareDisputeService
+    {
+        return oxNew(FileAwareDisputeService::class, $this->getClient());
     }
 
     /**

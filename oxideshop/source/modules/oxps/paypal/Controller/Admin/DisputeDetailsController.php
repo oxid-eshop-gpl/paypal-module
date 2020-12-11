@@ -25,11 +25,16 @@ namespace OxidProfessionalServices\PayPal\Controller\Admin;
 use OxidEsales\Eshop\Application\Controller\Admin\AdminListController;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
-use OxidProfessionalServices\PayPal\Api\Model\Disputes\AddressPortable;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\Money;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\RequestEscalate;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\RequestMakeOffer;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\RequestSendMessage;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\ResponseDispute;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\ResponseEvidence;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\ResponseEvidenceInfo;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\ResponseTrackingInfo;
+use OxidProfessionalServices\PayPal\Api\Model\Partner\Document;
+use OxidProfessionalServices\PayPal\Controller\Admin\Service\DisputeService as FileAwareDisputeService;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 use OxidProfessionalServices\PayPal\Service\DisputeService;
 
@@ -56,6 +61,8 @@ class DisputeDetailsController extends AdminListController
     {
         try {
             $this->addTplParam('dispute', $this->getDispute());
+            $this->addTplParam('evidenceTypes', $this->getEvidenceTypes());
+            $this->addTplParam('loops', [1,2,3,4,5]);
         } catch (ApiException $exception) {
             if ($exception->shouldDisplay()) {
                 $this->addTplParam(
@@ -82,6 +89,27 @@ class DisputeDetailsController extends AdminListController
             $this->addTplParam('error', $exception->getErrorDescription());
             Registry::getLogger()->error($exception);
         }
+    }
+
+    /**
+     * @return array
+     */
+    public function getEvidenceTypes()
+    {
+        $oClass = new \ReflectionClass(ResponseEvidence::class);
+        $constants = $oClass->getConstants();
+        $lang = Registry::getLang();
+
+        $evidenceTypes = [];
+
+        foreach ($constants as $constant => $value) {
+            if (substr($constant, 0, 14) === "EVIDENCE_TYPE_") {
+                $evidenceTypes[str_replace('OXPS_PAYPAL_EVIDENCE_TYPE_', '', $constant)]
+                    = $lang->translateString($constant);
+            }
+        }
+
+        return $evidenceTypes;
     }
 
     /**
@@ -125,21 +153,66 @@ class DisputeDetailsController extends AdminListController
 
         $offerRequest = new RequestMakeOffer();
         $offerRequest->note = (string) $request->getRequestEscapedParameter('note');
-//        $offerRequest->invoice_id = (string) $request->getRequestEscapedParameter('invoiceId');
         $offerRequest->offer_type = (string) $request->getRequestEscapedParameter('offerType');
 
         $offerAmount = (array) $request->getRequestEscapedParameter('offerAmount');
-        if ($offerAmount) {
+        if (!empty($offerAmount['value'])) {
             $offerRequest->offer_amount = new Money($offerAmount);
         }
 
-//        $returnAddress = (array) $request->getRequestEscapedParameter('shippingAddress');
-//        if ($returnAddress) {
-//            $offerRequest->return_shipping_address = new AddressPortable($returnAddress);
-//        }
+        $this->getDisputeService()->makeOfferToResolveDispute($disputeId, $offerRequest);
+    }
 
-        $service = $this->getDisputeService();
-        $service->makeOfferToResolveDispute($disputeId, $offerRequest);
+    /**
+     * Action for making offers to resolve disputes
+     *
+     * @throws ApiException
+     */
+    public function escalate(): void
+    {
+        $disputeId = $this->getEditObjectId();
+        $request = new RequestEscalate(['note' => Registry::getRequest()->getRequestEscapedParameter('note')]);
+
+        $this->getDisputeService()->escalateDisputeToClaim($disputeId, $request);
+    }
+
+    public function provideEvidence()
+    {
+        $disputeId = $this->getEditObjectId();
+        $disputeService = $this->getFileAwareDisputeService();
+
+        $fileArray = [];
+        $evidenceArray = [];
+        $lang = Registry::getLang();
+
+        if (!empty($_FILES)) {
+            for ($i = 1; $i < 6; $i++) {
+                $file = $_FILES['evidenceFile' . $i];
+                if (!empty($file['name'])) {
+                    $fileArray[] = $file;
+                    $evidence = new ResponseEvidence();
+                    $evidence->evidence_type = $lang->translateString(
+                        Registry::getRequest()->getRequestEscapedParameter('evidenceType' . $i)
+                    );
+
+
+                    $evidenceInfo = new ResponseEvidenceInfo();
+
+                    $trackingInfo = new ResponseTrackingInfo();
+                    $trackingInfo->carrier_name = 'FEDEX';
+                    $trackingInfo->tracking_number = '122533485';
+
+                    $evidenceInfo->tracking_info = [];
+                    $evidenceInfo->tracking_info[] = $trackingInfo;
+
+                    $evidence->evidence_info = $evidenceInfo;
+                    $evidence->notes = 'test';
+                    $evidenceArray[] = $evidence;
+                }
+            }
+        }
+
+        $disputeService->provideEvidence($disputeId, $evidenceArray, $fileArray);
     }
 
     /**
@@ -148,5 +221,13 @@ class DisputeDetailsController extends AdminListController
     protected function getDisputeService(): DisputeService
     {
         return Registry::get(ServiceFactory::class)->getDisputeService();
+    }
+
+    /**
+     * @return FileAwareDisputeService
+     */
+    protected function getFileAwareDisputeService(): FileAwareDisputeService
+    {
+        return Registry::get(ServiceFactory::class)->getFileAwaredisputeService();
     }
 }

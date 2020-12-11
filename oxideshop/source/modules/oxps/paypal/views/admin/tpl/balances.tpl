@@ -1,6 +1,22 @@
 [{include file="headitem.tpl" title="GENERAL_ADMIN_TITLE"|oxmultilangassign box="list"}]
 
 <div class="container-fluid">
+    <br />
+    <div class="row">
+        <div class="col-sm-1">
+            <button id="toggleFilter" class="btn btn-info col-sm-12">Filter</button>
+        </div>
+    </div>
+    <script>
+        jQuery(document).ready(function(){
+            jQuery("#filters").hide();
+            jQuery("#toggleFilter").click(function(e) {
+                e.preventDefault();
+                jQuery("#filters").toggle();
+                jQuery("#balances").toggle();
+            });
+        });
+    </script>
     <form method="post" action="[{$oViewConf->getSelfLink()}]">
         <div id="filters">
             [{if !empty($error)}]
@@ -8,7 +24,7 @@
                 [{$error}]
             </div>
             [{/if}]
-            <div class="row">
+            <div class="row ppaltmessages">
                 [{include file="_formparams.tpl" cl="PayPalBalanceController" lstrt=$lstrt actedit=$actedit oxid=$oxid fnc="" language=$actlang editlanguage=$actlang}]
                 <div class="col-sm-4 col-md-3">
                     <div class="form-group">
@@ -36,9 +52,9 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-sm-12">
-                    <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_APPLY"}]</button>
-                </div>
+            </div>
+            <div class="row ppmessages">
+                <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_APPLY"}]</button>
             </div>
         </div>
     </form>
@@ -46,22 +62,22 @@
     [{if isset($balances)}]
     <div id="balances">
         <div class="row">
-            <div class="col-sm-5">
+            <div class="col-sm-8">
                 <table class="table">
                     <tbody>
-                    <tr><td>[{oxmultilang ident="OXPS_PAYPAL_ACCOUNT_ID"}]</td><td>[{$balances->account_id}]</td></tr>
-                    <tr><td>[{oxmultilang ident="OXPS_PAYPAL_AS_OF_TIME"}]</td><td>[{$balances->as_of_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td></tr>
-                    <tr><td>[{oxmultilang ident="OXPS_PAYPAL_LAST_REFRESH_TIME"}]</td><td>[{$balances->last_refresh_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td></tr>
+                    <tr class="ppaltmessages"><td class="col-sm-2"><b>[{oxmultilang ident="OXPS_PAYPAL_ACCOUNT_ID"}]</b></td><td>[{$balances->account_id}]</td></tr>
+                    <tr class="ppmessages"><td><b>[{oxmultilang ident="OXPS_PAYPAL_AS_OF_TIME"}]</b></td><td>[{$balances->as_of_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td></tr>
+                    <tr class="ppaltmessages"><td><b>[{oxmultilang ident="OXPS_PAYPAL_LAST_REFRESH_TIME"}]</b></td><td>[{$balances->last_refresh_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-sm-7">
+            <div class="col-sm-8">
                 <table class="table">
                     <thead>
-                        <tr>
+                        <tr class="ppaltmessages">
                             <th>[{oxmultilang ident="OXPS_PAYPAL_CURRENCY_CODE"}]</th>
                             <th>[{oxmultilang ident="OXPS_PAYPAL_AVAILABLE_BALANCE"}]</th>
                             <th>[{oxmultilang ident="OXPS_PAYPAL_WITHHELD_BALANCE"}]</th>
@@ -70,7 +86,8 @@
                     </thead>
                     <tbody>
                     [{foreach from=$balances->balances item=balanceDetails}]
-                        <tr>
+                        [{cycle values='ppmessages,ppaltmessages' assign=cellClass}]
+                        <tr class="[{$cellClass}]">
                             <td>[{$balanceDetails->currency}][{if $balanceDetails->primary}] <small>([{oxmultilang ident="OXPS_PAYPAL_PRIMARY"}])</small>[{/if}]</td>
                             <td>[{$balanceDetails->available_balance->value}]</td>
                             <td>[{$balanceDetails->withheld_balance->value}]</td>
