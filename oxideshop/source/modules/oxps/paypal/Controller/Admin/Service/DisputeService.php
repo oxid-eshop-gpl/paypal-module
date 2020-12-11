@@ -22,17 +22,10 @@
 
 namespace OxidProfessionalServices\PayPal\Controller\Admin\Service;
 
-use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\ResponseSubsequentAction;
 use OxidProfessionalServices\PayPal\Api\Service\Disputes;
-use OxidProfessionalServices\PayPal\Core\Config;
-use OxidProfessionalServices\PayPal\Core\ServiceFactory;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
-use function GuzzleHttp\Psr7\build_query;
 
 class DisputeService extends Disputes
 {
