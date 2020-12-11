@@ -31,6 +31,9 @@ use OxidProfessionalServices\PayPal\Api\Model\Disputes\RequestMakeOffer;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\RequestSendMessage;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\ResponseDispute;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\ResponseEvidence;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\ResponseEvidenceInfo;
+use OxidProfessionalServices\PayPal\Api\Model\Disputes\ResponseTrackingInfo;
+use OxidProfessionalServices\PayPal\Api\Model\Partner\Document;
 use OxidProfessionalServices\PayPal\Controller\Admin\Service\DisputeService as FileAwareDisputeService;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 use OxidProfessionalServices\PayPal\Service\DisputeService;
@@ -95,12 +98,13 @@ class DisputeDetailsController extends AdminListController
     {
         $oClass = new \ReflectionClass(ResponseEvidence::class);
         $constants = $oClass->getConstants();
+        $lang = Registry::getLang();
 
         $evidenceTypes = [];
 
         foreach ($constants as $constant => $value) {
             if (substr( $constant, 0, 14) === "EVIDENCE_TYPE_") {
-                $evidenceTypes[$constant] = $constant;
+                $evidenceTypes[str_replace('OXPS_PAYPAL_EVIDENCE_TYPE_', '', $constant)] = $lang->translateString($constant);
             }
         }
 
@@ -177,19 +181,37 @@ class DisputeDetailsController extends AdminListController
         $disputeService = $this->getFileAwareDisputeService();
 
         $fileArray = [];
+        $evidenceArray = [];
+        $lang = Registry::getLang();
 
         if (!empty($_FILES)) {
             for ($i = 1; $i < 6; $i++) {
-                if (!empty($_FILES['evidenceFile' . $i])) {
-                    $fileArray[] = $_FILES['evidenceFile' . $i];
+                $file = $_FILES['evidenceFile' . $i];
+                if (!empty($file['name'])) {
+                    $fileArray[] = $file;
+                    $evidence = new ResponseEvidence();
+                    $evidence->evidence_type = $lang->translateString(
+                        Registry::getRequest()->getRequestEscapedParameter('evidenceType' . $i)
+                    );
 
 
+                    $evidenceInfo = new ResponseEvidenceInfo();
 
+                    $trackingInfo = new ResponseTrackingInfo();
+                    $trackingInfo->carrier_name = 'FEDEX';
+                    $trackingInfo->tracking_number = '122533485';
+
+                    $evidenceInfo->tracking_info = [];
+                    $evidenceInfo->tracking_info[] = $trackingInfo;
+
+                    $evidence->evidence_info = $evidenceInfo;
+                    $evidence->notes = 'test';
+                    $evidenceArray[] = $evidence;
                 }
             }
         }
 
-        $disputeService->provideEvidence($disputeId, $fileArray);
+        $disputeService->provideEvidence($disputeId, $evidenceArray, $fileArray);
     }
 
     /**

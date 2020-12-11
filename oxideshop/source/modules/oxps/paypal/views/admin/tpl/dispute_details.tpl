@@ -14,7 +14,7 @@
     <br />
     <ul class="nav nav-tabs">
         <li class="active"><a href="#" id="history-tab">[{oxmultilang ident="OXPS_PAYPAL_HISTORY"}]</a></li>
-        [{if $dispute->status !== 'RESOLVED'}]
+        [{if $dispute->status !== 'RESOLVED' && $dispute->status !== 'UNDER_REVIEW'}]
         <li class="active"><a href="#" id="messages-tab">[{oxmultilang ident="OXPS_PAYPAL_MESSAGES"}]</a></li>
         <li><a href="#" id="offer-tab">[{oxmultilang ident="OXPS_PAYPAL_MAKE_OFFER"}]</a></li>
         <li><a href="#" id="escalate-tab">[{oxmultilang ident="OXPS_PAYPAL_ESCALATE"}]</a></li>
@@ -270,7 +270,7 @@
                         <label for="evidenceType[{$l}]">[{oxmultilang ident="OXPS_PAYPAL_EVIDENCE_TYPE"}]</label>
                         <select name="evidenceType[{$l}]" class="form-control" id="evidenceType[{$l}]">
                             [{foreach from=$evidenceTypes item=i key=k}]
-                            <option value="[{$k}]">[{oxmultilang ident="OXPS_PAYPAL_"|cat:$k}]</option>
+                            <option value="[{$i|replace:'EVIDENCE_TYPE_':''}]">[{oxmultilang ident="OXPS_PAYPAL_"|cat:$k}]</option>
                             [{/foreach}]
                         </select>
                     </div>
