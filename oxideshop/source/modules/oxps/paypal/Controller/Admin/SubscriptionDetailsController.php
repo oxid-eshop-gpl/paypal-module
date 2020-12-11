@@ -100,7 +100,8 @@ class SubscriptionDetailsController extends AdminController
 
         $subscriptionProductId = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)
             ->getOne(
-                $sql, [
+                $sql,
+                [
                     $paypalSubscriptionId
                 ]
             );

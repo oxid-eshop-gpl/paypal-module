@@ -103,8 +103,9 @@ class DisputeDetailsController extends AdminListController
         $evidenceTypes = [];
 
         foreach ($constants as $constant => $value) {
-            if (substr( $constant, 0, 14) === "EVIDENCE_TYPE_") {
-                $evidenceTypes[str_replace('OXPS_PAYPAL_EVIDENCE_TYPE_', '', $constant)] = $lang->translateString($constant);
+            if (substr($constant, 0, 14) === "EVIDENCE_TYPE_") {
+                $evidenceTypes[str_replace('OXPS_PAYPAL_EVIDENCE_TYPE_', '', $constant)]
+                    = $lang->translateString($constant);
             }
         }
 

@@ -119,108 +119,6 @@ class DisputeService extends Disputes
         return $response;
     }
 
-    protected function sendFiles($method, $path, $params = [], $headers = [], $body = null)
-    {
-        if (!$this->client->isAuthenticated()) {
-            $this->client->auth();
-        }
-
-        $params = array_filter($params);
-        if ($params) {
-            $q = build_query($params);
-            $path = "$path?$q";
-        }
-        $fullPath = $this->basePath . $path;
-
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_URL, $this->client->getEndpoint() . $fullPath);
-
-        $verbose = fopen('php://temp', 'rw+');
-
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_VERBOSE , 1);
-        curl_setopt($ch, CURLOPT_STDERR, $verbose);
-
-        curl_setopt($ch, CURLOPT_POST, 1);
-        $post = array(
-            'input' => json_encode($body) . ';type=application/json',
-            'file1' => '@' .realpath($this->files[0]['tmp_name'])
-        );
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
-
-        $headers = array();
-        $headers[] = 'Content-Type: multipart/related; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW';
-        $headers[] = 'Authorization: Bearer ' .  $this->client->getTokenResponse()['access_token'];
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-        $response = curl_exec($ch);
-
-        $info = "Verbose information:\n" . !rewind($verbose) . stream_get_contents($verbose) . "\n";
-
-        $curlinfo = curl_getinfo($ch);
-
-        if (curl_errno($ch)) {
-            echo 'Error:' . curl_error($ch);
-        }
-        curl_close($ch);
-
-        return $response;
-    }
-
-//    protected function sendWithFiles($method, $path, $params = [], $headers = [], $body = null)
-//    {5
-//        $params = array_filter($params);
-//        if ($params) {
-//            $q = build_query($params);
-//            $path = "$path?$q";
-//        }
-//        $fullPath = $this->basePath . $path;
-//
-//
-//        $ch = curl_init();
-//
-//        curl_setopt($ch, CURLOPT_URL, $this->client->getEndpoint() . $fullPath);
-//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-//        curl_setopt($ch, CURLOPT_POST, 1);
-//
-//        $input = [];
-//        $input['input'][] = $body;
-//
-//
-//        $post = array(
-//            'input' => '{
-//  "evidences": [
-//    {
-//      "evidence_type": "PROOF_OF_FULFILLMENT",
-//      "evidence_info": {
-//        "tracking_info": [
-//          {
-//            "carrier_name": "FEDEX",
-//            "tracking_number": "122533485"
-//          }
-//        ]
-//      },
-//      "notes": "Test"
-//    }
-//  ]};type=application/json',
-//            'file1' => '@' .realpath($this->files[0]['tmp_name'])
-//        );
-//        curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
-//
-////        $headers = array_merge($this->getAuthHeaders(), $headers);
-//
-//        curl_setopt($ch, CURLOPT_HTTPHEADER, $this->getAuthHeaders());
-//
-//        $result = curl_exec($ch);
-//        if (curl_errno($ch)) {
-//            echo 'Error:' . curl_error($ch);
-//        }
-//        curl_close($ch);
-//
-//        return $result;
-//    }
-
     /**
      * @return array
      */
@@ -236,5 +134,4 @@ class DisputeService extends Disputes
 
         return $headers;
     }
-
 }
