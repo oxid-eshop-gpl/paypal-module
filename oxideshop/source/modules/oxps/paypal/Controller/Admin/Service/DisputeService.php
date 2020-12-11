@@ -29,9 +29,6 @@ use OxidProfessionalServices\PayPal\Api\Service\Disputes;
 
 class DisputeService extends Disputes
 {
-    private $files = [];
-    private $disputeId;
-
     /**
      * Provides evidence for a dispute, by ID. A merchant can provide evidence for disputes with the
      * <code>WAITING_FOR_SELLER_RESPONSE</code> status while customers can provide evidence for disputes with the
@@ -58,8 +55,6 @@ class DisputeService extends Disputes
         if (!$this->client->isAuthenticated()) {
             $this->client->auth();
         }
-
-        $this->disputeId = $disputeId;
 
         $path = "/disputes/{$disputeId}/provide-evidence";
 
