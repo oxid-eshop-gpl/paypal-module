@@ -26,7 +26,7 @@
 [{assign var="defaultTotalCycles" value=$oView->getTotalCycleDefaults()}]
 [{assign var="currencyCodes" value=$oView->getCurrencyCodes()}]
 [{assign var="existingVariants" value=$oView->getVariantProducts()}]
-[{assign var="subscriptionPlansList" value=$oView->getSubscriptionPlans}]
+[{assign var="subscriptionPlansList" value=$oView->getSubscriptionPlans()}]
 
 [{if $hasLinkedObject }]
     [{assign var="linkedObject" value=$oView->getLinkedObject()}]

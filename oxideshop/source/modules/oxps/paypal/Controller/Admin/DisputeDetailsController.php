@@ -33,7 +33,6 @@ use OxidProfessionalServices\PayPal\Api\Model\Disputes\ResponseDispute;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\ResponseEvidence;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\ResponseEvidenceInfo;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\ResponseTrackingInfo;
-use OxidProfessionalServices\PayPal\Api\Model\Partner\Document;
 use OxidProfessionalServices\PayPal\Controller\Admin\Service\DisputeService as FileAwareDisputeService;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 use OxidProfessionalServices\PayPal\Service\DisputeService;

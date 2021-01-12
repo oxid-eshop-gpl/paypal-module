@@ -33,9 +33,7 @@ use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
 use OxidProfessionalServices\PayPal\Api\Model\Catalog\Product;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\BillingCycle;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Frequency;
-use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Money;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Plan;
-use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\PricingScheme;
 use OxidProfessionalServices\PayPal\Controller\Admin\Service\CatalogService;
 use OxidProfessionalServices\PayPal\Controller\Admin\Service\SubscriptionService;
 use OxidProfessionalServices\PayPal\Core\Currency;
@@ -472,7 +470,6 @@ class PaypalSubscribeController extends AdminController
             } else {
                 $catalogService->createProduct();
             }
-            $this->addTplParam('updatelist', 1);
         } catch (ApiException $e) {
             $this->addTplParam('error', $e->getErrorDescription());
         }
