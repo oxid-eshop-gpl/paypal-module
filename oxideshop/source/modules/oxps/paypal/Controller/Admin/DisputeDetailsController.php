@@ -22,6 +22,8 @@
 
 namespace OxidProfessionalServices\PayPal\Controller\Admin;
 
+ini_set('upload_max_filesize ', '50M');
+
 use OxidEsales\Eshop\Application\Controller\Admin\AdminListController;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
@@ -33,7 +35,6 @@ use OxidProfessionalServices\PayPal\Api\Model\Disputes\ResponseDispute;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\ResponseEvidence;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\ResponseEvidenceInfo;
 use OxidProfessionalServices\PayPal\Api\Model\Disputes\ResponseTrackingInfo;
-use OxidProfessionalServices\PayPal\Api\Model\Partner\Document;
 use OxidProfessionalServices\PayPal\Controller\Admin\Service\DisputeService as FileAwareDisputeService;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 use OxidProfessionalServices\PayPal\Service\DisputeService;

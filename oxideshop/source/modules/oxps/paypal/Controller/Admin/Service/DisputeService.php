@@ -66,7 +66,7 @@ class DisputeService extends Disputes
         foreach ($files as $file) {
             $fileArray[] = [
                 'name' => $file['name'],
-                'contents' => fopen($file['tmp_name'], 'r')
+                'contents' => file_get_contents($file['tmp_name'])
             ];
         }
 
@@ -94,10 +94,8 @@ class DisputeService extends Disputes
 
     protected function sendFileData($method, $path, $options = [])
     {
-
         $fullPath = $this->basePath . $path;
-
-        $options['stream'] = false;
+        $options['stream'] = true;
 
         try {
             $response = $this->client->request($method, $fullPath, $options);

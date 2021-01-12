@@ -24,24 +24,24 @@ namespace OxidProfessionalServices\PayPal\Controller;
 
 use Exception;
 use OxidEsales\Eshop\Application\Controller\FrontendController;
-use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Application\Model\Country;
 use OxidEsales\Eshop\Application\Model\User;
+use OxidEsales\Eshop\Core\Exception\ArticleInputException;
+use OxidEsales\Eshop\Core\Exception\NoArticleException;
+use OxidEsales\Eshop\Core\Exception\OutOfStockException;
 use OxidEsales\Eshop\Core\Field;
+use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\Order;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderCaptureRequest;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderRequest;
 use OxidProfessionalServices\PayPal\Controller\Admin\Service\SubscriptionService;
 use OxidProfessionalServices\PayPal\Core\OrderManager;
 use OxidProfessionalServices\PayPal\Core\OrderRequestFactory;
-use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 use OxidProfessionalServices\PayPal\Core\PaypalSession;
+use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 use OxidProfessionalServices\PayPal\Model\Subscription;
 use VIISON\AddressSplitter\AddressSplitter;
 use VIISON\AddressSplitter\Exceptions\SplittingException;
-use OxidEsales\Eshop\Core\Exception\OutOfStockException;
-use OxidEsales\Eshop\Core\Exception\ArticleInputException;
-use OxidEsales\Eshop\Core\Exception\NoArticleException;
 
 /**
  * Server side interface for PayPal smart buttons.
@@ -215,11 +215,11 @@ class ProxyController extends FrontendController
         $utils->showMessageAndExit(json_encode($response));
     }
 
-    public function addToBasket(): void
+    public function addToBasket($qty = 1): void
     {
         if ($aid = (string)Registry::getRequest()->getRequestEscapedParameter('aid')) {
             try {
-                Registry::getSession()->getBasket()->addToBasket($aid, 1);
+                Registry::getSession()->getBasket()->addToBasket($aid, $qty);
             } catch (OutOfStockException $exception) {
                 Registry::getUtilsView()->addErrorToDisplay($exception);
             } catch (ArticleInputException $exception) {
