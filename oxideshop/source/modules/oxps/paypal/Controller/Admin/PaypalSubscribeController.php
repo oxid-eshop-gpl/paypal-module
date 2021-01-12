@@ -470,7 +470,6 @@ class PaypalSubscribeController extends AdminController
             } else {
                 $catalogService->createProduct();
             }
-//            $this->addTplParam('updatelist', 1);
         } catch (ApiException $e) {
             $this->addTplParam('error', $e->getErrorDescription());
         }
