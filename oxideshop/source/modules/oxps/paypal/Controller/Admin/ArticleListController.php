@@ -36,7 +36,9 @@ class ArticleListController extends ArticleListController_Parent
         if (!$childArticle) {
             $linkedProduct = $repository->getLinkedProductByOxid($oxid);
             if ($linkedProduct) {
-                $linkedObject = Registry::get(ServiceFactory::class)->getCatalogService()->showProductDetails($linkedProduct[0]['OXPS_PAYPAL_PRODUCT_ID']);
+                $linkedObject = Registry::get(ServiceFactory::class)
+                    ->getCatalogService()
+                    ->showProductDetails($linkedProduct[0]['OXPS_PAYPAL_PRODUCT_ID']);
             }
 
             if ($linkedObject) {
