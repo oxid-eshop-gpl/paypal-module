@@ -1,4 +1,5 @@
 [{oxhasrights ident="SHOWARTICLEPRICE"}]
+    <div id="overlay"><div class="loader"></div></div>
     [{block name="details_productmain_price_value"}]
         [{if $oDetailsProduct->getFPrice()}]
             <label id="productPrice" class="price-label">

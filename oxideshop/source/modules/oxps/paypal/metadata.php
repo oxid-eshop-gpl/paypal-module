@@ -29,15 +29,17 @@ use OxidEsales\Eshop\Application\Controller\OrderController;
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Application\Model\Basket;
 use OxidEsales\Eshop\Application\Model\Order;
+use OxidEsales\Eshop\Application\Model\PaymentGateway;
 use OxidEsales\Eshop\Application\Model\Selection as SelectionCore;
 use OxidEsales\Eshop\Application\Model\VariantHandler as VariantHandlerCore;
 use OxidEsales\Eshop\Application\Model\VariantSelectList as VariantSelectListCore;
 use OxidEsales\Eshop\Core\ViewConfig;
-use OxidEsales\Eshop\Application\Model\PaymentGateway;
 use OxidProfessionalServices\PayPal\Component\UserComponent as PayPalUserComponent;
+use OxidProfessionalServices\PayPal\Component\Widget\ArticleDetails as ArticleDetailsComponent;
+use OxidProfessionalServices\PayPal\Controller\Admin\ArticleListController;
+use OxidProfessionalServices\PayPal\Controller\Admin\BalanceController;
 use OxidProfessionalServices\PayPal\Controller\Admin\DisputeController;
 use OxidProfessionalServices\PayPal\Controller\Admin\DisputeDetailsController;
-use OxidProfessionalServices\PayPal\Component\Widget\ArticleDetails as ArticleDetailsComponent;
 use OxidProfessionalServices\PayPal\Controller\Admin\OnboardingController;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalConfigController;
 use OxidProfessionalServices\PayPal\Controller\Admin\PaypalOrderController;
@@ -46,13 +48,11 @@ use OxidProfessionalServices\PayPal\Controller\Admin\SubscriptionController;
 use OxidProfessionalServices\PayPal\Controller\Admin\SubscriptionDetailsController;
 use OxidProfessionalServices\PayPal\Controller\Admin\SubscriptionTransactionController;
 use OxidProfessionalServices\PayPal\Controller\Admin\TransactionController;
-use OxidProfessionalServices\PayPal\Controller\Admin\ArticleListController;
 use OxidProfessionalServices\PayPal\Controller\ArticleDetailsController as PayPalArticleDetailsController;
 use OxidProfessionalServices\PayPal\Controller\BasketController as PayPalBasketController;
 use OxidProfessionalServices\PayPal\Controller\OrderController as PaypalFrontEndOrderController;
 use OxidProfessionalServices\PayPal\Controller\ProxyController;
 use OxidProfessionalServices\PayPal\Controller\WebhookController;
-use OxidProfessionalServices\PayPal\Controller\Admin\BalanceController;
 use OxidProfessionalServices\PayPal\Core\ViewConfig as PaypalViewConfig;
 use OxidProfessionalServices\PayPal\Model\Basket as PaypalBasket;
 use OxidProfessionalServices\PayPal\Model\Order as PaypalOrder;
@@ -225,6 +225,20 @@ $aModule = [
             'template' => 'page/checkout/order.tpl',
             'block' => 'checkout_order_address',
             'file' => '/views/blocks/wave/page/checkout/checkout_order_address.tpl',
+            'position' => '5'
+        ],
+        [
+            'theme' => 'flow',
+            'template' => 'page/checkout/inc/steps.tpl',
+            'block' => 'checkout_steps_main',
+            'file' => '/views/blocks/flow/page/checkout/steps.tpl',
+            'position' => '5'
+        ],
+        [
+            'theme' => 'wave',
+            'template' => 'page/checkout/inc/steps.tpl',
+            'block' => 'checkout_steps_main',
+            'file' => '/views/blocks/wave/page/checkout/steps.tpl',
             'position' => '5'
         ],
         [

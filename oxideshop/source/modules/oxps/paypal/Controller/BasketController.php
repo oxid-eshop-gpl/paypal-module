@@ -23,6 +23,7 @@
 namespace OxidProfessionalServices\PayPal\Controller;
 
 use OxidEsales\Eshop\Core\Registry;
+use OxidProfessionalServices\PayPal\Core\PaypalSession;
 
 /**
  * @mixin \OxidEsales\Eshop\Application\Controller\BasketController
@@ -34,6 +35,11 @@ class BasketController extends BasketController_parent
         $selectedBillingCycle = Registry::getSession()->getVariable('selectedBillingCycle');
 
         $this->addTplParam('selectedBillingCycle', []);
+
+        if (PaypalSession::isSubscriptionProcessing()) {
+//            PaypalSession::subscriptionIsDoneProcessing();
+            $this->addTplParam('loadingScreen', true);
+        }
 
         if (!empty($selectedBillingCycle)) {
             $selectedBillingCycle = json_decode($selectedBillingCycle, true);

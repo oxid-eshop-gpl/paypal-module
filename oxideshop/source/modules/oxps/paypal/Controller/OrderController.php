@@ -23,6 +23,7 @@
 namespace OxidProfessionalServices\PayPal\Controller;
 
 use OxidEsales\Eshop\Core\Registry;
+use OxidProfessionalServices\PayPal\Core\PaypalSession;
 
 /**
  * Class OrderController
@@ -35,12 +36,16 @@ class OrderController extends OrderController_parent
     public function init()
     {
         $isSubscribe = Registry::getRequest()->getRequestEscapedParameter('subscribe', 0);
+        $showOverlay = Registry::getRequest()->getRequestEscapedParameter('showOverlay', 0);
+
+        if ($showOverlay) {
+            $this->addTplParam('loadingScreen', 'true');
+        }
 
         if ($isSubscribe) {
             $func = Registry::getRequest()->getRequestEscapedParameter('func');
 
             if ($func === 'doOrder') {
-                $this->addTplParam('loadingScreen', true);
                 $this->addTplParam('submitCart', 1);
                 $session = $this->getSession();
                 $session->setVariable('isSubscriptionCheckout', true);
@@ -53,12 +58,16 @@ class OrderController extends OrderController_parent
     public function render()
     {
         $isSubscribe = Registry::getRequest()->getRequestEscapedParameter('subscribe', 0);
+        $showOverlay = Registry::getRequest()->getRequestEscapedParameter('showOverlay', 0);
+
+        if ($showOverlay) {
+            $this->addTplParam('loadingScreen', 'true');
+        }
 
         if ($isSubscribe) {
             $func = Registry::getRequest()->getRequestEscapedParameter('func');
 
             if ($func === 'doOrder') {
-                $this->addTplParam('loadingScreen', true);
                 $this->addTplParam('submitCart', 1);
                 $session = $this->getSession();
                 $session->setVariable('isSubscriptionCheckout', true);
@@ -72,9 +81,13 @@ class OrderController extends OrderController_parent
     public function execute()
     {
         $ret = parent::execute();
+
         if (strpos($ret, 'thankyou') === false) {
             return $ret;
         }
+
+        PaypalSession::subscriptionIsDoneProcessing();
+
         return $ret;
     }
 

@@ -23,8 +23,6 @@
 namespace OxidProfessionalServices\PayPal\Core;
 
 use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\Eshop\Core\UtilsView;
-use OxidProfessionalServices\PayPal\Core\PaypalSession;
 
 /**
  * @mixin \OxidEsales\Eshop\Core\ViewConfig
@@ -48,21 +46,21 @@ class ViewConfig extends ViewConfig_parent
     }
 
     /**
-     * TODO: get the exclude-function from amazon
-     * @return bool
-     */
-    public function isPaypalExclude(): bool
-    {
-        return false;
-    }
-
-    /**
      * @return Config
      */
     public function getPayPalConfig(): Config
     {
         return oxNew(Config::class);
     }
+
+    /**
+     * @return Bool
+     */
+    public function showOverlay(): bool
+    {
+        return PaypalSession::isSubscriptionProcessing();
+    }
+
 
     /**
      * @return array
