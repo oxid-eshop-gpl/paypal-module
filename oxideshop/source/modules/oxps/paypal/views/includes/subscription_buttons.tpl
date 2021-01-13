@@ -32,9 +32,11 @@
         [{literal}]
     },
     onApprove: function(data, actions) {
+        document.getElementById("overlay").style.display = "block";
         let params = 'cl=PayPalProxyController&fnc=saveSubscriptionOrder&subscriptionId=' + data.subscriptionID;
         params += '&subscriptionPlanId=[{/literal}][{$subscriptionPlan->id}][{literal}]';
         params += '&aid=[{/literal}][{$aid}][{literal}]';
+        params += '&showOverlay=1';
         params += '&stoken=[{/literal}][{$oViewConf->getSessionChallengeToken()}][{literal}]';
         fetch('[{/literal}][{$sSelfLink}][{literal}]' + params, {
         method: 'post',
@@ -42,7 +44,8 @@
             'content-type': 'application/json'
         }
     }).then(function(data) {
-        window.location.href="[{/literal}][{$sSelfLink|cat:"cl=order&func=doOrder&subscribe=1"|cat:"&stoken="|cat:$oViewConf->getSessionChallengeToken()}][{literal}]"
+        document.getElementById("overlay").style.display = "block";
+        window.location.href="[{/literal}][{$sSelfLink|cat:"cl=order&func=doOrder&subscribe=1&showOverlay=1"|cat:"&stoken="|cat:$oViewConf->getSessionChallengeToken()}][{literal}]"
     })
     },
     onCancel: function(data, actions) {

@@ -173,11 +173,7 @@ class PaypalSubscribeController extends AdminController
         $oxid = Registry::getRequest()->getRequestParameter('oxid');
         $childProducts = $this->getChildProducts($oxid);
 
-        if (!empty($childProducts)) {
-            return $childProducts;
-        }
-
-        return false;
+        return (!empty($childProducts)) ? $childProducts : false;
     }
 
     /**
@@ -198,11 +194,8 @@ class PaypalSubscribeController extends AdminController
     public function hasSubscriptionPlan()
     {
         $this->setSubscriptionPlan();
-        if (!empty($this->subscriptionPlan)) {
-            return true;
-        }
 
-        return false;
+        return !empty($this->subscriptionPlan);
     }
 
     public function getPaypalProductId()
@@ -247,11 +240,7 @@ class PaypalSubscribeController extends AdminController
     public function hasLinkedObject()
     {
         $this->setLinkedObject();
-        if (!empty($this->linkedObject)) {
-            return true;
-        }
-
-        return false;
+        return !empty($this->linkedObject);
     }
 
     /**
@@ -395,8 +384,7 @@ class PaypalSubscribeController extends AdminController
      */
     public function getProductUrl()
     {
-        $url = $this->getEditObject()->getBaseStdLink($this->_iEditLang);
-        return $url;
+        return $this->getEditObject()->getBaseStdLink($this->_iEditLang);
     }
 
     /**
@@ -530,7 +518,7 @@ class PaypalSubscribeController extends AdminController
                 $cycles = $subscriptionService->saveNewSubscriptionPlan($productId, $this->getEditObjectId());
                 $this->setLinkedObject();
                 $catalogService->updateProduct($productId);
-                $this->saveVariants($cycles);
+                $this->saveVariants();
             }
         } catch (ApiException $e) {
             $this->addTplParam('error', $e->getErrorDescription());
@@ -550,20 +538,12 @@ class PaypalSubscribeController extends AdminController
         $price = floatVal($fixed_price[0]);
 
         $oxid = Registry::getRequest()->getRequestParameter('oxid');
-        $childProducts = $this->getChildProducts($oxid);
         $sort = 1;
         $variantOxid = UtilsObject::getInstance()->generateUId();
 
-        if (empty($childProducts)) {
-            /** @var BillingCycle $cycle */
-            $this->repository->saveVariantProduct($variantOxid, $oxid, $setupFee, $price, $planName, $sort);
-            $this->saveMapId($this->getMapIdFromVariant($variantOxid));
-            $this->saveSelectName($oxid);
-        } else {
-            $this->repository->saveVariantProduct($variantOxid, $oxid, $setupFee, $price, $planName, $sort);
-            $this->saveMapId($this->getMapIdFromVariant($variantOxid));
-            $this->saveSelectName($oxid);
-        }
+        $this->repository->saveVariantProduct($variantOxid, $oxid, $setupFee, $price, $planName, $sort);
+        $this->saveMapId($this->getMapIdFromVariant($variantOxid));
+        $this->saveSelectName($oxid);
 
         return $variantOxid;
     }
@@ -596,6 +576,7 @@ class PaypalSubscribeController extends AdminController
             'SELECT OXMAPID FROM oxarticles WHERE OXID = ?',
             [$variantOxid]
         );
+
         return $query['OXMAPID'];
     }
 

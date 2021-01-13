@@ -173,6 +173,8 @@ class ProxyController extends FrontendController
 
     public function saveSubscriptionOrder()
     {
+        PaypalSession::subscriptionIsProcessing();
+
         $subscriptionPlanId = Registry::getRequest()->getRequestEscapedParameter('subscriptionPlanId');
         $subscriptionId = Registry::getRequest()->getRequestEscapedParameter('subscriptionId');
 
