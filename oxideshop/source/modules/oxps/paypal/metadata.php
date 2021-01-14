@@ -215,20 +215,6 @@ $aModule = [
         ],
         [
             'theme' => 'flow',
-            'template' => 'page/checkout/order.tpl',
-            'block' => 'checkout_order_address',
-            'file' => '/views/blocks/flow/page/checkout/checkout_order_address.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'wave',
-            'template' => 'page/checkout/order.tpl',
-            'block' => 'checkout_order_address',
-            'file' => '/views/blocks/wave/page/checkout/checkout_order_address.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'flow',
             'template' => 'page/checkout/inc/steps.tpl',
             'block' => 'checkout_steps_main',
             'file' => '/views/blocks/flow/page/checkout/steps.tpl',

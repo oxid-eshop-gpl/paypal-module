@@ -24,24 +24,18 @@ namespace OxidProfessionalServices\PayPal\Controller;
 
 use Exception;
 use OxidEsales\Eshop\Application\Controller\FrontendController;
-use OxidEsales\Eshop\Application\Model\Country;
-use OxidEsales\Eshop\Application\Model\User;
 use OxidEsales\Eshop\Core\Exception\ArticleInputException;
 use OxidEsales\Eshop\Core\Exception\NoArticleException;
 use OxidEsales\Eshop\Core\Exception\OutOfStockException;
-use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\Order;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderCaptureRequest;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderRequest;
 use OxidProfessionalServices\PayPal\Controller\Admin\Service\SubscriptionService;
-use OxidProfessionalServices\PayPal\Core\OrderManager;
 use OxidProfessionalServices\PayPal\Core\OrderRequestFactory;
 use OxidProfessionalServices\PayPal\Core\PaypalSession;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 use OxidProfessionalServices\PayPal\Model\Subscription;
-use VIISON\AddressSplitter\AddressSplitter;
-use VIISON\AddressSplitter\Exceptions\SplittingException;
 
 /**
  * Server side interface for PayPal smart buttons.
@@ -86,12 +80,9 @@ class ProxyController extends FrontendController
 
     public function captureOrder()
     {
-        $session = Registry::getSession();
         $context = (string)Registry::getRequest()->getRequestEscapedParameter('context', 'continue');
 
         if ($orderId = (string)Registry::getRequest()->getRequestEscapedParameter('orderID')) {
-            $orderManager = new OrderManager();
-
             /** @var ServiceFactory $serviceFactory */
             $serviceFactory = Registry::get(ServiceFactory::class);
             $service = $serviceFactory->getOrderService();
@@ -101,57 +92,8 @@ class ProxyController extends FrontendController
                 /** @var Order $response */
                 if ($context === 'pay_now') {
                     $response = $service->capturePaymentForOrder('', $orderId, $request, '');
-                    $orderManager->prepareOrderForPayNowFromCaptureOrderResponse($response);
                 } else {
-                    // if we start the payment-process from the detailspage without having a customer
-                    // we collect the customer-information from the created paypal-order
                     $response = $service->showOrderDetails($orderId);
-                    $orderManager->prepareOrderForContinue($orderId);
-
-                    $basket = $session->getBasket();
-
-                    // no active customer? We create a guest!
-                    if (!$basket->getUser()) {
-                        try {
-                            $country = oxNew(Country::class);
-                            $oxCountryId = $country->getIdByCode(
-                                $response->purchase_units[0]->shipping->address->country_code
-                            );
-
-                            try {
-                                $addressData = AddressSplitter::splitAddress(
-                                    $response->purchase_units[0]->shipping->address->address_line_1
-                                );
-                            } catch (SplittingException $e) {
-                                Registry::getLogger()->error($e->getMessage(), ['status' => $e->getCode()]);
-                            }
-
-                            /** @var \OxidEsales\Eshop\Application\Model\User $oUser */
-                            $user = oxNew(User::class);
-                            $user->oxuser__oxusername = new Field($response->payer->email_address, Field::T_RAW);
-                            $user->oxuser__oxfname = new Field($response->payer->name->given_name, Field::T_RAW);
-                            $user->oxuser__oxlname = new Field($response->payer->name->surname, Field::T_RAW);
-                            $user->oxuser__oxstreet = new Field($addressData['streetName'], Field::T_RAW);
-                            $user->oxuser__oxstreetnr = new Field($addressData['houseNumber'], Field::T_RAW);
-                            $user->oxuser__oxcity = new Field(
-                                $response->purchase_units[0]->shipping->address->admin_area_2,
-                                Field::T_RAW
-                            );
-                            $user->oxuser__oxcountryid = $oxCountryId;
-                            $user->oxuser__oxzip = new Field(
-                                $user->oxuser__oxcountryid = new Field($oxCountryId, Field::T_RAW),
-                                Field::T_RAW
-                            );
-                            $user->createUser();
-                            $session->setVariable('usr', $user->getId());
-                            $basket->setBasketUser($user);
-                        } catch (Exception $exception) {
-                            Registry::getLogger()->error(
-                                'Error on creation a guest-account with paypal-informations.',
-                                [$exception]
-                            );
-                        }
-                    }
                 }
             } catch (Exception $exception) {
                 Registry::getLogger()->error("Error on order capture call.", [$exception]);
