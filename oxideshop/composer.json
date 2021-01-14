@@ -15,10 +15,6 @@
     },
     {
       "type": "path",
-      "url": "source/modules/payp/*"
-    },
-    {
-      "type": "path",
       "url": "custom/*"
     },
     {
