@@ -1,4 +1,2 @@
-[{if !$oViewConf->isPaypalExclude()}]
-    [{include file="flow/paypal_payment_option.tpl"}]
-[{/if}]
+[{include file="flow/paypal_payment_option.tpl"}]
 [{$smarty.block.parent}]

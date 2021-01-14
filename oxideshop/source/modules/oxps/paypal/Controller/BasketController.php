@@ -37,7 +37,6 @@ class BasketController extends BasketController_parent
         $this->addTplParam('selectedBillingCycle', []);
 
         if (PaypalSession::isSubscriptionProcessing()) {
-//            PaypalSession::subscriptionIsDoneProcessing();
             $this->addTplParam('loadingScreen', true);
         }
 
