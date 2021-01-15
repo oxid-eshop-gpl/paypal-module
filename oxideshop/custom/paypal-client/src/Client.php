@@ -143,7 +143,6 @@ class Client
     public function request($method, $uri = '', $options = [])
     {
         $res = $this->httpClient->request($method, $this->endpoint . $uri, $options);
-//        $res = $this->httpClient->request($method, 'http://batwolf.ddns.net/catch.php', $options);
         return $res;
     }
 

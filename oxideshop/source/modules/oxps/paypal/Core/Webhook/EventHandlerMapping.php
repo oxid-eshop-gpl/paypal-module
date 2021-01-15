@@ -43,7 +43,6 @@ class EventHandlerMapping
         'PAYMENT.CAPTURE.DENIED' => PaymentCaptureDeniedHandler::class,
         'PAYMENT.CAPTURE.REFUNDED' => PaymentCaptureRefundedHandler::class,
         'PAYMENT.CAPTURE.PENDING' => PaymentCapturePendingHandler::class,
-
         'BILLING.SUBSCRIPTION.ACTIVATED' => BillingSubscriptionUpdateHandler::class,
         'BILLING.SUBSCRIPTION.RENEWED' => BillingSubscriptionUpdateHandler::class,
         'BILLING.SUBSCRIPTION.SUSPENDED' => BillingSubscriptionUpdateHandler::class,
