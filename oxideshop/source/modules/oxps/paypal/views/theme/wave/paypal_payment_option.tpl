@@ -4,13 +4,13 @@
             <h3 class="card-title">[{oxmultilang ident="OXPS_PAYPAL_PAY"}]</h3>
         </div>
         <div class="card-body oxEqualized">
-            [{if !$oViewConf->isPaypalSessionActive()}]
+            [{if !$oViewConf->isPayPalSessionActive()}]
                 <div class="text-left">
                     [{include file="paypal_smart_payment_buttons.tpl" buttonId="PayPalButtonPaymentPage" buttonClass="col-md-4 col-12" paymentStrategy="continue"}]
                 </div>
             [{else}]
                 <div class="text-left">
-                    [{oxmultilang ident="OXPS_PAYPAL_PAY_PROCESSED" args=$oViewConf->getSelfLink()|cat:"cl=PayPalProxyController&fnc=cancelPaypalPayment"}]
+                    [{oxmultilang ident="OXPS_PAYPAL_PAY_PROCESSED" args=$oViewConf->getSelfLink()|cat:"cl=PayPalProxyController&fnc=cancelPayPalPayment"}]
                 </div>
                 [{capture name="hide_payment"}]
                     [{literal}]

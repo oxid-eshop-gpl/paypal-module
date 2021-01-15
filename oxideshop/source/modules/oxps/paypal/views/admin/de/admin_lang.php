@@ -1,20 +1,20 @@
 <?php
 
 /**
- * This file is part of OXID eSales Paypal module.
+ * This file is part of OXID eSales PayPal module.
  *
- * OXID eSales Paypal module is free software: you can redistribute it and/or modify
+ * OXID eSales PayPal module is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * OXID eSales Paypal module is distributed in the hope that it will be useful,
+ * OXID eSales PayPal module is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with OXID eSales Paypal module.  If not, see <http://www.gnu.org/licenses/>.
+ * along with OXID eSales PayPal module.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @link      http://www.oxid-esales.com
  * @copyright (C) OXID eSales AG 2003-2020
@@ -79,7 +79,7 @@ $aLang = [
     'OXPS_PAYPAL_TRANSACTION_SUBJECT' => 'Betreff',
     'OXPS_PAYPAL_PROTECTION_ELIGIBILITY' => 'Schutzberechtigung',
     'tbclorder_paypal'               => 'PayPal',
-    // Paypal Config
+    // PayPal Config
     'OXPS_PAYPAL_CONFIG'             => 'Konfiguration',
     'OXPS_PAYPAL_SUBSCRIBE'          => 'PayPal Abos',
     'OXPS_PAYPAL_BILLING_PLAN'       => 'PayPal Abrechnungsplan',
@@ -98,11 +98,11 @@ $aLang = [
     'OXPS_PAYPAL_CREDENTIALS'        => 'API Anmeldeinformationen',
     'OXPS_PAYPAL_WEBHOOK_TITLE'      => 'Webhooks',
     'OXPS_PAYPAL_WEBHOOK_URL'        => 'Oxid Webhook URL',
-    'HELP_OXPS_PAYPAL_WEBHOOK_URL'   => 'Tragen Sie diese URL für den Webhook im Paypal Portal ein.',
+    'HELP_OXPS_PAYPAL_WEBHOOK_URL'   => 'Tragen Sie diese URL für den Webhook im PayPal Portal ein.',
     'OXPS_PAYPAL_LIVE_CREDENTIALS'   => 'Live API Anmeldeinformationen',
     'OXPS_PAYPAL_SANDBOX_CREDENTIALS'        => 'Sandbox API Anmeldeinformationen',
-    'OXPS_PAYPAL_LIVE_BUTTON_CREDENTIALS'    => 'Anmeldung Händler Paypal-Integration (Live)',
-    'OXPS_PAYPAL_SANDBOX_BUTTON_CREDENTIALS' => 'Anmeldung Händler Paypal-Integration (Sandbox)',
+    'OXPS_PAYPAL_LIVE_BUTTON_CREDENTIALS'    => 'Anmeldung Händler PayPal-Integration (Live)',
+    'OXPS_PAYPAL_SANDBOX_BUTTON_CREDENTIALS' => 'Anmeldung Händler PayPal-Integration (Sandbox)',
     'OXPS_PAYPAL_ERR_CONF_INVALID'   =>
         'Ein oder mehrere Konfigurationswerte sind entweder nicht festgelegt oder falsch. Bitte überprüfen Sie sie noch einmal.<br>
         <b>Modul inaktiv.</b>',
@@ -122,7 +122,7 @@ $aLang = [
     'HELP_OXPS_PAYPAL_OPMODE'        => 'Verwenden Sie Sandbox (Test), um PayPal zu konfigurieren und zu testen. Wenn Sie bereit sind,
         echte Transaktionen zu empfangen, wechseln Sie zu Produktion (live).',
     'OXPS_PAYPAL_WEBHOOK_ID_HELP'    => 'Die ID des Webhooks, wie in Ihrem Developer Portal-Konto konfiguriert',
-    // Paypal ORDER
+    // PayPal ORDER
     'OXPS_PAYPAL_AMOUNT'                      => 'Betrag',
     'OXPS_PAYPAL_SHOP_PAYMENT_STATUS'         => 'Shop-Zahlungsstatus',
     'OXPS_PAYPAL_ORDER_PRICE'                 => 'Bestellpreis gesamt',
@@ -280,8 +280,8 @@ $aLang = [
     'OXPS_PAYPAL_DISPUTE_REFUND_WITH_REPLACEMENT' => 'Rückerstattung mit Ersatz',
     'OXPS_PAYPAL_DISPUTE_REPLACEMENT_WITHOUT_REFUND' => 'Ersatz ohne Rückerstattung',
     // Errors
-    'OXPS_PAYPAL_ERROR_NOT_PAID_WITH_PAYPAL'  => 'Diese Bestellung wurde nicht mit Paypal bezahlt',
-    'OXPS_PAYPAL_ERROR_INVALID_RESOURCE_ID'   => 'Die Bestellung konnte nicht in Ihrem Paypal-Account gefunden werden.',
+    'OXPS_PAYPAL_ERROR_NOT_PAID_WITH_PAYPAL'  => 'Diese Bestellung wurde nicht mit PayPal bezahlt',
+    'OXPS_PAYPAL_ERROR_INVALID_RESOURCE_ID'   => 'Die Bestellung konnte nicht in Ihrem PayPal-Account gefunden werden.',
     'OXPS_PAYPAL_ERROR_DUPLICATE_INVOICE_ID'  => 'Die Rechnungsnummer ist bereits vergeben, bitte wählen Sie eine Andere.',
     'OXPS_PAYPAL_MESSAGES'  => 'Nachrichten',
     'OXPS_PAYPAL_SEND_MESSAGES'  => 'Nachrichten senden',
@@ -328,7 +328,7 @@ $aLang = [
     'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_RETURN' => 'Nachweis der Rückkehr',
     'OXPS_PAYPAL_EVIDENCE_TYPE_CREATE' => 'erstellen',
     'OXPS_PAYPAL_EVIDENCE_TYPE_CHANGE_REASON' => 'Grund der Änderung',
-    'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_REFUND_OUTSIDE_PAYPAL' => 'Nachweis der Rückerstattung außerhalb von Paypal',
+    'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_REFUND_OUTSIDE_PAYPAL' => 'Nachweis der Rückerstattung außerhalb von PayPal',
     'OXPS_PAYPAL_EVIDENCE_TYPE_RECEIPT_OF_MERCHANDISE' => 'Empfang von Waren',
     'OXPS_PAYPAL_EVIDENCE_TYPE_CUSTOMS_DOCUMENT' => 'Zolldokument',
     'OXPS_PAYPAL_EVIDENCE_TYPE_CUSTOMS_FEE_RECEIPT' => 'Quittung der Zollgebühren',

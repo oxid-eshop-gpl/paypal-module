@@ -104,7 +104,7 @@
                 <td class="[{$cellClass}]">[{$dispute->create_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
                 <td class="[{$cellClass}]">[{$dispute->update_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
                 <td class="[{$cellClass}]">
-                    <a href="[{$oViewConf->getSelfLink()|cat:"cl=PaypalDisputeDetailsController&oxid="|cat:$dispute->dispute_id}]">
+                    <a href="[{$oViewConf->getSelfLink()|cat:"cl=PayPalDisputeDetailsController&oxid="|cat:$dispute->dispute_id}]">
                         [{oxmultilang ident="OXPS_PAYPAL_MORE"}]
                     </a>
                 </td>

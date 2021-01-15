@@ -3,7 +3,6 @@
 namespace OxidProfessionalServices\PayPal\Model;
 
 use OxidEsales\Eshop\Application\Model\Article;
-use OxidEsales\Eshop\Core\Price;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\BillingCycle;
 
 /**
@@ -18,7 +17,7 @@ class PayPalArticle extends PayPalArticle_parent
      */
     public function isPayPalProductLinked()
     {
-        return $this->getPaypalProductId() !== "";
+        return $this->getPayPalProductId() !== "";
     }
 
     /**
@@ -26,15 +25,15 @@ class PayPalArticle extends PayPalArticle_parent
      */
     public function isThisOrParentPayPalProductLinked()
     {
-        return $this->isPayPalProductLinked() || $this->getPaypalParentArticle()->isPayPalProductLinked();
+        return $this->isPayPalProductLinked() || $this->getPayPalParentArticle()->isPayPalProductLinked();
     }
 
     /**
      * @return string
      */
-    public function getPaypalProductId(): string
+    public function getPayPalProductId(): string
     {
-        return (string) $this->getFieldData("PaypalProductId");
+        return (string) $this->getFieldData("PayPalProductId");
     }
 
     /**
@@ -42,14 +41,14 @@ class PayPalArticle extends PayPalArticle_parent
      */
     public function isPayPalProductLinkedByParentOnly()
     {
-        $parent = $this->getPaypalParentArticle();
+        $parent = $this->getPayPalParentArticle();
         return (!$this->isPayPalProductLinked()) && $parent->isPayPalProductLinked();
     }
 
     /**
      * @return $this
      */
-    public function getPaypalParentArticle()
+    public function getPayPalParentArticle()
     {
         $parent = $this->getParentArticle();
         assert($parent instanceof self);

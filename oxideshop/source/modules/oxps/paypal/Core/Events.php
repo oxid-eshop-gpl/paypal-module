@@ -1,20 +1,20 @@
 <?php
 
 /**
- * This file is part of OXID eSales Paypal module.
+ * This file is part of OXID eSales PayPal module.
  *
- * OXID eSales Paypal module is free software: you can redistribute it and/or modify
+ * OXID eSales PayPal module is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * OXID eSales Paypal module is distributed in the hope that it will be useful,
+ * OXID eSales PayPal module is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with OXID eSales Paypal module.  If not, see <http://www.gnu.org/licenses/>.
+ * along with OXID eSales PayPal module.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @link      http://www.oxid-esales.com
  * @copyright (C) OXID eSales AG 2003-2020
@@ -39,7 +39,7 @@ class Events
         self::createLogTable();
         self::addPaymentMethod();
         self::enablePaymentMethod();
-        self::createPaypalOrderTable();
+        self::createPayPalOrderTable();
         self::createSubscriptionProductTable();
         self::createSubscriptionTable();
         self::createSubscriptionProductOrderTable();
@@ -166,11 +166,11 @@ class Events
                         `OXPS_PAYPAL_RESPONSE_MSG`
                             TEXT
                             NOT NULL
-                            COMMENT \'Response from Paypal API\',
+                            COMMENT \'Response from PayPal API\',
                         `OXPS_PAYPAL_STATUS_CODE`
                             VARCHAR(100)
                             NOT NULL
-                            COMMENT \'Status code from Paypal API\',
+                            COMMENT \'Status code from PayPal API\',
                         `OXPS_PAYPAL_REQUEST_TYPE`
                             VARCHAR(100)
                             NOT NULL
@@ -186,10 +186,10 @@ class Events
                             character set latin1
                             collate latin1_general_ci
                             NOT NULL
-                            COMMENT \'Paypal index to search by\',
+                            COMMENT \'PayPal index to search by\',
                         PRIMARY KEY (`OXPS_PAYPAL_PAYLOGID`))
                             ENGINE=InnoDB
-                            COMMENT \'Paypal Payment transaction log\'',
+                            COMMENT \'PayPal Payment transaction log\'',
             LogRepository::TABLE_NAME
         );
 
@@ -223,13 +223,13 @@ class Events
                             character set latin1 
                             collate latin1_general_ci 
                             NOT NULL 
-                            COMMENT \'Paypal product ID\',
+                            COMMENT \'PayPal product ID\',
                         `OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID` 
                             char(32) 
                             character set latin1 
                             collate latin1_general_ci 
                             NOT NULL 
-                            COMMENT \'Paypal PLan ID\',
+                            COMMENT \'PayPal PLan ID\',
                         `OXTIMESTAMP` 
                             timestamp 
                             NOT NULL 
@@ -272,13 +272,13 @@ class Events
                             character set latin1 
                             collate latin1_general_ci 
                             NOT NULL 
-                            COMMENT \'Paypal product ID\',
+                            COMMENT \'PayPal product ID\',
                         `OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID` 
                             char(32) 
                             character set latin1 
                             collate latin1_general_ci 
                             NOT NULL 
-                            COMMENT \'Paypal Plan ID\',
+                            COMMENT \'PayPal Plan ID\',
                         `OXPS_PAYPAL_SESSION_ID` 
                             char(32) 
                             character set latin1 
@@ -300,7 +300,7 @@ class Events
         DatabaseProvider::getDb()->execute($sql);
     }
 
-    protected static function createPaypalOrderTable(): void
+    protected static function createPayPalOrderTable(): void
     {
         $sql = sprintf(
             'CREATE TABLE IF NOT EXISTS %s (
@@ -327,7 +327,7 @@ class Events
                     character set latin1
                     collate latin1_general_ci
                     NOT NULL
-                    COMMENT \'Paypal Order ID\',
+                    COMMENT \'PayPal Order ID\',
                 `OXTIMESTAMP`
                     timestamp
                     NOT NULL

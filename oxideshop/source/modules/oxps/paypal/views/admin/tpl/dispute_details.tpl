@@ -77,7 +77,7 @@
                     <form method="post" action="[{$oViewConf->getSelfLink()}]">
                         <input type="hidden" name="oxid" value="[{$dispute->dispute_id}]">
                         <input type="hidden" name="fnc" value="sendMessage">
-                        <input type="hidden" name="cl" value="PaypalDisputeDetailsController">
+                        <input type="hidden" name="cl" value="PayPalDisputeDetailsController">
                         <textarea name="message" class="form-control" cols="80" rows="5"></textarea>
                         <br />
                         <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_SEND"}]</button>
@@ -115,7 +115,7 @@
         <form method="post" action="[{$oViewConf->getSelfLink()}]" class="ppmessages">
         <input type="hidden" name="oxid" value="[{$dispute->dispute_id}]">
         <input type="hidden" name="fnc" value="makeOffer">
-        <input type="hidden" name="cl" value="PaypalDisputeDetailsController">
+        <input type="hidden" name="cl" value="PayPalDisputeDetailsController">
         <div class="row">
             <div class="col-lg-1">
                 <div class="form-group">
@@ -220,7 +220,7 @@
         <form method="post" action="[{$oViewConf->getSelfLink()}]">
             <input type="hidden" name="oxid" value="[{$dispute->dispute_id}]">
             <input type="hidden" name="fnc" value="escalate">
-            <input type="hidden" name="cl" value="PaypalDisputeDetailsController">
+            <input type="hidden" name="cl" value="PayPalDisputeDetailsController">
             <input type="hidden" name="requestedAmount" value="[{$dispute->dispute_amount->value}]">
             <input type="hidden" name="requestedAmountCurrency" value="[{$dispute->dispute_amount->currency_code}]">
 
@@ -250,7 +250,7 @@
         <form method="post" action="[{$oViewConf->getSelfLink()}]" enctype="multipart/form-data">
             <input type="hidden" name="oxid" value="[{$dispute->dispute_id}]">
             <input type="hidden" name="fnc" value="provideEvidence">
-            <input type="hidden" name="cl" value="PaypalDisputeDetailsController">
+            <input type="hidden" name="cl" value="PayPalDisputeDetailsController">
 
             <div class="row">
                 <div class="row">

@@ -68,7 +68,7 @@
 <form name="transfer" id="transfer" action="[{$oViewConf->getSelfLink()}]" method="post">
     [{$oViewConf->getHiddenSid()}]
     <input type="hidden" name="oxid" value="[{$oxid}]">
-    <input type="hidden" name="cl" value="PaypalSubscribeController">
+    <input type="hidden" name="cl" value="PayPalSubscribeController">
     <input type="hidden" name="editlanguage" value="[{$editlanguage}]">
 </form>
 
