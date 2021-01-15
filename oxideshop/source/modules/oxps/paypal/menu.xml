@@ -10,18 +10,18 @@
                      cl="PayPalBalanceController">
             </SUBMENU>
             <SUBMENU id="OXPS_PAYPAL_SUBSCRIPTIONS"
-                     cl="PaypalSubscriptionController">
+                     cl="PayPalSubscriptionController">
             </SUBMENU>
-            <SUBMENU id="OXPS_PAYPAL_DISPUTES" cl="PaypalDisputeController"/>
+            <SUBMENU id="OXPS_PAYPAL_DISPUTES" cl="PayPalDisputeController"/>
         </MAINMENU>
         <MAINMENU id="mxmanageprod">
             <SUBMENU id="mxarticles" cl="article" list="article_list">
-                <TAB id="OXPS_PAYPAL_SUBSCRIBE" cl="PaypalSubscribeController" />
+                <TAB id="OXPS_PAYPAL_SUBSCRIBE" cl="PayPalSubscribeController" />
             </SUBMENU>
         </MAINMENU>
         <MAINMENU id="mxorders">
             <SUBMENU id="mxdisplayorders" cl="admin_order" list="order_list">
-                <TAB id="tbclorder_paypal" cl="PaypalOrderController"/>
+                <TAB id="tbclorder_paypal" cl="PayPalOrderController"/>
             </SUBMENU>
         </MAINMENU>
     </OXMENU>

@@ -1,20 +1,20 @@
 <?php
 
 /**
- * This file is part of OXID eSales Paypal module.
+ * This file is part of OXID eSales PayPal module.
  *
- * OXID eSales Paypal module is free software: you can redistribute it and/or modify
+ * OXID eSales PayPal module is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * OXID eSales Paypal module is distributed in the hope that it will be useful,
+ * OXID eSales PayPal module is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with OXID eSales Paypal module.  If not, see <http://www.gnu.org/licenses/>.
+ * along with OXID eSales PayPal module.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @link      http://www.oxid-esales.com
  * @copyright (C) OXID eSales AG 2003-2020
@@ -41,25 +41,25 @@ use OxidProfessionalServices\PayPal\Controller\Admin\BalanceController;
 use OxidProfessionalServices\PayPal\Controller\Admin\DisputeController;
 use OxidProfessionalServices\PayPal\Controller\Admin\DisputeDetailsController;
 use OxidProfessionalServices\PayPal\Controller\Admin\OnboardingController;
-use OxidProfessionalServices\PayPal\Controller\Admin\PaypalConfigController;
-use OxidProfessionalServices\PayPal\Controller\Admin\PaypalOrderController;
-use OxidProfessionalServices\PayPal\Controller\Admin\PaypalSubscribeController;
+use OxidProfessionalServices\PayPal\Controller\Admin\PayPalConfigController;
+use OxidProfessionalServices\PayPal\Controller\Admin\PayPalOrderController;
+use OxidProfessionalServices\PayPal\Controller\Admin\PayPalSubscribeController;
 use OxidProfessionalServices\PayPal\Controller\Admin\SubscriptionController;
 use OxidProfessionalServices\PayPal\Controller\Admin\SubscriptionDetailsController;
 use OxidProfessionalServices\PayPal\Controller\Admin\SubscriptionTransactionController;
 use OxidProfessionalServices\PayPal\Controller\Admin\TransactionController;
 use OxidProfessionalServices\PayPal\Controller\ArticleDetailsController as PayPalArticleDetailsController;
 use OxidProfessionalServices\PayPal\Controller\BasketController as PayPalBasketController;
-use OxidProfessionalServices\PayPal\Controller\OrderController as PaypalFrontEndOrderController;
+use OxidProfessionalServices\PayPal\Controller\OrderController as PayPalFrontEndOrderController;
 use OxidProfessionalServices\PayPal\Controller\ProxyController;
 use OxidProfessionalServices\PayPal\Controller\WebhookController;
-use OxidProfessionalServices\PayPal\Core\ViewConfig as PaypalViewConfig;
-use OxidProfessionalServices\PayPal\Model\Basket as PaypalBasket;
-use OxidProfessionalServices\PayPal\Model\Order as PaypalOrder;
-use OxidProfessionalServices\PayPal\Model\PaymentGateway as PaypalPaymentGateway;
+use OxidProfessionalServices\PayPal\Core\ViewConfig as PayPalViewConfig;
+use OxidProfessionalServices\PayPal\Model\Basket as PayPalBasket;
+use OxidProfessionalServices\PayPal\Model\Order as PayPalOrder;
+use OxidProfessionalServices\PayPal\Model\PaymentGateway as PayPalPaymentGateway;
 use OxidProfessionalServices\PayPal\Model\PayPalArticle;
-use OxidProfessionalServices\PayPal\Model\Selection as PaypalSelectionModel;
-use OxidProfessionalServices\PayPal\Model\VariantHandler as PaypalVariantHandler;
+use OxidProfessionalServices\PayPal\Model\Selection as PayPalSelectionModel;
+use OxidProfessionalServices\PayPal\Model\VariantHandler as PayPalVariantHandler;
 use OxidProfessionalServices\PayPal\Model\VariantSelectList as PayPalVariantSelectList;
 
 $sMetadataVersion = '2.1';
@@ -83,36 +83,36 @@ $aModule = [
     'url' => '',
     'email' => '',
     'extend' => [
-        ViewConfig::class => PaypalViewConfig::class,
-        Order::class => PaypalOrder::class,
-        Basket::class => PaypalBasket::class,
+        ViewConfig::class => PayPalViewConfig::class,
+        Order::class => PayPalOrder::class,
+        Basket::class => PayPalBasket::class,
         Article::class => PayPalArticle::class,
-        PaymentGateway::class => PaypalPaymentGateway::class,
+        PaymentGateway::class => PayPalPaymentGateway::class,
         ArticleList::class => ArticleListController::class,
         ArticleDetailsController::class => PayPalArticleDetailsController::class,
         BasketController::class => PayPalBasketController::class,
         ArticleDetails::class => ArticleDetailsComponent::class,
-        SelectionCore::class => PaypalSelectionModel::class,
-        VariantHandlerCore::class => PaypalVariantHandler::class,
+        SelectionCore::class => PayPalSelectionModel::class,
+        VariantHandlerCore::class => PayPalVariantHandler::class,
         VariantSelectListCore::class => PayPalVariantSelectList::class,
-        OrderController::class => PaypalFrontEndOrderController::class,
+        OrderController::class => PayPalFrontEndOrderController::class,
         UserComponent::class => PayPalUserComponent::class
     ],
     'controllers' => [
-        'PaypalConfigController' => PaypalConfigController::class,
+        'PayPalConfigController' => PayPalConfigController::class,
         'PayPalBalanceController' => BalanceController::class,
         'PayPalWebhookController' => WebhookController::class,
         'PayPalProxyController' => ProxyController::class,
         'PayPalTransactionController' => TransactionController::class,
         'PayPalSubscriptionTransactionController' => SubscriptionTransactionController::class,
-        'PaypalSubscribeController' => PaypalSubscribeController::class,
+        'PayPalSubscribeController' => PayPalSubscribeController::class,
         'OnboardingController' => OnboardingController::class,
-        'PaypalOrderController' => PaypalOrderController::class,
-        'PaypalSubscriptionDetailsController' => SubscriptionDetailsController::class,
-        'PaypalSubscriptionController' => SubscriptionController::class,
-        'PaypalAdminArticleListController' => ArticleListController::class,
-        'PaypalDisputeController' => DisputeController::class,
-        'PaypalDisputeDetailsController' => DisputeDetailsController::class
+        'PayPalOrderController' => PayPalOrderController::class,
+        'PayPalSubscriptionDetailsController' => SubscriptionDetailsController::class,
+        'PayPalSubscriptionController' => SubscriptionController::class,
+        'PayPalAdminArticleListController' => ArticleListController::class,
+        'PayPalDisputeController' => DisputeController::class,
+        'PayPalDisputeDetailsController' => DisputeDetailsController::class
     ],
     'templates' => [
         'paypalconfig.tpl' => 'oxps/paypal/views/admin/tpl/paypalconfig.tpl',

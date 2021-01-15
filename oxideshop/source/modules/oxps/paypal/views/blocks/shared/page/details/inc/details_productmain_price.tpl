@@ -23,7 +23,7 @@
                 <span>
                     <br />
                     <br />
-                    <b>Paypal Subscription</b>
+                    <b>PayPal Subscription</b>
                     <br />
                     <br />
                     [{$subscriptionPlan->description}]

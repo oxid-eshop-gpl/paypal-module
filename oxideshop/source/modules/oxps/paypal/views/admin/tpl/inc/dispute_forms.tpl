@@ -2,7 +2,7 @@
 <form method="post" action="[{$oViewConf->getSelfLink()}]">
     <input type="hidden" name="oxid" value="[{$dispute->dispute_id}]">
     <input type="hidden" name="fnc" value="makeOffer">
-    <input type="hidden" name="cl" value="PaypalDisputeDetailsController">
+    <input type="hidden" name="cl" value="PayPalDisputeDetailsController">
 
     <div class="form-group">
         <label for="offerType">[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_OFFER_TYPE"}]</label>

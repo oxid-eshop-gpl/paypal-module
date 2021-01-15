@@ -30,10 +30,10 @@
 [{/if}]
 <form name="subscriptionForm" id="subscriptionForm" action="[{ $oViewConf->getSelfLink() }]" method="post">
     [{ $oViewConf->getHiddenSid() }]
-    <input type="hidden" name="cl" value="PaypalSubscribeController">
+    <input type="hidden" name="cl" value="PayPalSubscribeController">
     <input type="hidden" name="fnc" value="">
     <input type="hidden" name="oxid" value="[{ $oxid }]">
-    <input type="hidden" name="paypalProductId" value="[{ $oView->getPaypalProductId() }]">
+    <input type="hidden" name="paypalProductId" value="[{ $oView->getPayPalProductId() }]">
 
 <table cellspacing="0" cellpadding="0" border="0" width="98%" style="border: 1px solid #cccccc; padding: 10px; margin: 10px; border-radius: 10px;">
     <tbody>

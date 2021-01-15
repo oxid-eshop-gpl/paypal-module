@@ -20,7 +20,7 @@
     <form method="post" action="[{$oViewConf->getSelfLink()}]">
         [{$oViewConf->getHiddenSid()}]
         <input type="hidden" name="oxid" value="[{$oxid}]">
-        <input type="hidden" name="cl" value="PaypalSubscriptionDetailsController">
+        <input type="hidden" name="cl" value="PayPalSubscriptionDetailsController">
         <input type="hidden" name="fnc" value="update">
 
         <div id="subscription" class="row pptab">
@@ -364,7 +364,7 @@
                 <form method="post" action="[{$oViewConf->getSelfLink()}]">
                     [{$oViewConf->getHiddenSid()}]
                     <input type="hidden" name="oxid" value="[{$oxid}]">
-                    <input type="hidden" name="cl" value="PaypalSubscriptionDetailsController">
+                    <input type="hidden" name="cl" value="PayPalSubscriptionDetailsController">
                     <input type="hidden" name="fnc" value="updateStatus">
                     <h4>[{oxmultilang ident="OXPS_PAYPAL_TRANSACTION_STATUS"}]</h4>
                     <div class="form-group">
@@ -389,7 +389,7 @@
                 <form method="post" action="[{$oViewConf->getSelfLink()}]">
                     [{$oViewConf->getHiddenSid()}]
                     <input type="hidden" name="oxid" value="[{$oxid}]">
-                    <input type="hidden" name="cl" value="PaypalSubscriptionDetailsController">
+                    <input type="hidden" name="cl" value="PayPalSubscriptionDetailsController">
                     <input type="hidden" name="fnc" value="captureOutstandingFees">
                     <h4>[{oxmultilang ident="OXPS_PAYPAL_CAPTURE_OUTSTANDING_FEES"}]</h4>
                     <div class="form-group">

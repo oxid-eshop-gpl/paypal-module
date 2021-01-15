@@ -1,20 +1,20 @@
 <?php
 
 /**
- * This file is part of OXID eSales Paypal module.
+ * This file is part of OXID eSales PayPal module.
  *
- * OXID eSales Paypal module is free software: you can redistribute it and/or modify
+ * OXID eSales PayPal module is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * OXID eSales Paypal module is distributed in the hope that it will be useful,
+ * OXID eSales PayPal module is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with OXID eSales Paypal module.  If not, see <http://www.gnu.org/licenses/>.
+ * along with OXID eSales PayPal module.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @link      http://www.oxid-esales.com
  * @copyright (C) OXID eSales AG 2003-2020
@@ -78,7 +78,7 @@ $aLang = [
     'OXPS_PAYPAL_TRANSACTION_SUBJECT' => 'Subject',
     'OXPS_PAYPAL_PROTECTION_ELIGIBILITY' => 'Protection eligibility',
     'tbclorder_paypal'               => 'PayPal',
-    // Paypal Config
+    // PayPal Config
     'OXPS_PAYPAL_CONFIG'             => 'Configuration',
     'OXPS_PAYPAL_SUBSCRIBE'          => 'PayPal Subscriptions',
     'PAYPAL_SUBSCRIBE_MAIN'          => 'PayPal Subscriptions',
@@ -121,7 +121,7 @@ $aLang = [
     'HELP_OXPS_PAYPAL_OPMODE'        => 'To configure and test PayPal, use Sandbox (test). When you\'re ready
         to receive real transactions, switch to Production (live).',
     'OXPS_PAYPAL_WEBHOOK_ID_HELP'    => 'The ID of the webhook as configured in your Developer Portal account',
-    // Paypal ORDER
+    // PayPal ORDER
     'OXPS_PAYPAL_AMOUNT'                      => 'Amount',
     'OXPS_PAYPAL_SHOP_PAYMENT_STATUS'         => 'Shop payment status',
     'OXPS_PAYPAL_ORDER_PRICE'                 => 'Full order price',
@@ -326,7 +326,7 @@ $aLang = [
     'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_RETURN' => 'Proof Of Return',
     'OXPS_PAYPAL_EVIDENCE_TYPE_CREATE' => 'Create',
     'OXPS_PAYPAL_EVIDENCE_TYPE_CHANGE_REASON' => 'Change Reason',
-    'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_REFUND_OUTSIDE_PAYPAL' => 'Proof Of Refund Outside Paypal',
+    'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_REFUND_OUTSIDE_PAYPAL' => 'Proof Of Refund Outside PayPal',
     'OXPS_PAYPAL_EVIDENCE_TYPE_RECEIPT_OF_MERCHANDISE' => 'Receipt Of Merchandise',
     'OXPS_PAYPAL_EVIDENCE_TYPE_CUSTOMS_DOCUMENT' => 'Customs Document',
     'OXPS_PAYPAL_EVIDENCE_TYPE_CUSTOMS_FEE_RECEIPT' => 'Customs Fee Receipt',

@@ -1,20 +1,20 @@
 <?php
 
 /**
- * This file is part of OXID eSales Paypal module.
+ * This file is part of OXID eSales PayPal module.
  *
- * OXID eSales Paypal module is free software: you can redistribute it and/or modify
+ * OXID eSales PayPal module is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * OXID eSales Paypal module is distributed in the hope that it will be useful,
+ * OXID eSales PayPal module is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with OXID eSales Paypal module.  If not, see <http://www.gnu.org/licenses/>.
+ * along with OXID eSales PayPal module.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @link      http://www.oxid-esales.com
  * @copyright (C) OXID eSales AG 2003-2020
@@ -37,7 +37,7 @@ use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 /**
  * Order class wrapper for PayPal module
  */
-class PaypalOrderController extends AdminDetailsController
+class PayPalOrderController extends AdminDetailsController
 {
     /**
      * @var Order
@@ -192,73 +192,73 @@ class PaypalOrderController extends AdminDetailsController
     }
 
     /**
-     * Template getter getPaypalPaymentStatus
+     * Template getter getPayPalPaymentStatus
      */
-    public function getPaypalPaymentStatus()
+    public function getPayPalPaymentStatus()
     {
         return $this->getPayPalOrder()->status;
     }
 
     /**
-     * Template getter getPaypalTotalOrderSum
+     * Template getter getPayPalTotalOrderSum
      */
-    public function getPaypalTotalOrderSum()
+    public function getPayPalTotalOrderSum()
     {
         return $this->getPayPalOrder()->purchase_units[0]->amount->breakdown->item_total->value;
     }
 
     /**
-     * Template getter getPaypalCapturedAmount
+     * Template getter getPayPalCapturedAmount
      */
-    public function getPaypalCapturedAmount()
+    public function getPayPalCapturedAmount()
     {
         return $this->getPayPalOrder()->purchase_units[0]->payments->captures[0]->amount->value;
     }
 
     /**
-     * Template getter getPaypalRefundedAmount
+     * Template getter getPayPalRefundedAmount
      */
-    public function getPaypalRefundedAmount()
+    public function getPayPalRefundedAmount()
     {
         return $this->getPayPalOrder()->purchase_units[0]->payments->refunds[0]->amount->value;
     }
 
     /**
-     * Template getter getPaypalRemainingRefundAmount
+     * Template getter getPayPalRemainingRefundAmount
      */
-    public function getPaypalRemainingRefundAmount()
+    public function getPayPalRemainingRefundAmount()
     {
-        return $this->getPaypalCapturedAmount() - $this->getPaypalRefundedAmount();
+        return $this->getPayPalCapturedAmount() - $this->getPayPalRefundedAmount();
     }
 
     /**
-     * Template getter getPaypalVoidedAmount
+     * Template getter getPayPalVoidedAmount
      */
-    public function getPaypalVoidedAmount()
+    public function getPayPalVoidedAmount()
     {
         return 'toBeDone';
     }
 
     /**
-     * Template getter getPaypalAuthorizationId
+     * Template getter getPayPalAuthorizationId
      */
-    public function getPaypalAuthorizationId()
+    public function getPayPalAuthorizationId()
     {
         return $this->getPayPalOrder()->purchase_units[0]->payments->authorizations[0]->id->value;
     }
 
     /**
-     * Template getter getPaypalCurrency
+     * Template getter getPayPalCurrency
      */
-    public function getPaypalCurrency()
+    public function getPayPalCurrency()
     {
         return $this->getPayPalOrder()->purchase_units[0]->amount->breakdown->item_total->currency_code;
     }
 
     /**
-     * Template getter getPaypalPaymentList
+     * Template getter getPayPalPaymentList
      */
-    public function getPaypalPaymentList()
+    public function getPayPalPaymentList()
     {
         return null;
     }
@@ -295,7 +295,7 @@ class PaypalOrderController extends AdminDetailsController
      * @return PayPalTransactions
      * @throws StandardException|ApiException
      */
-    public function getPaypalHistory()
+    public function getPayPalHistory()
     {
         if (!$this->payPalOrderHistory) {
             $this->payPalOrderHistory = [];
