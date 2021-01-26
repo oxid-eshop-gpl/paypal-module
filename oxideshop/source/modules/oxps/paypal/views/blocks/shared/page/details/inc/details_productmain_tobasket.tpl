@@ -1,8 +1,10 @@
-[{$smarty.block.parent}]
+[{if !$aVariantSelections.blPerfectFit}]
+    [{$smarty.block.parent}]
+    <br />
+[{/if}]
 [{assign var="config" value=$oViewConf->getPayPalConfig()}]
 [{if $config->isActive() && !$oViewConf->isPayPalSessionActive() && $config->showPayPalProductDetailsButton()}]
     <div class="details tobasket-input-group">
-    <div class="text-center paypal-button-or large">[{"OR"|oxmultilangassign|oxupper}]</div>
     [{include file="paypal_smart_payment_buttons.tpl" buttonId="PayPalButtonProductMain" paymentStrategy="continue" aid=$oDetailsProduct->oxarticles__oxid->value}]
     </div>
     <br/>

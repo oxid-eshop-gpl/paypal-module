@@ -67,6 +67,20 @@ class BillingCycle implements JsonSerializable
      */
     public $total_cycles = 1;
 
+    /**
+     * The tax details.
+     *
+     * @var Taxes | null
+     */
+    public $taxes;
+
+    /**
+     * The currency and amount for a financial transaction, such as a balance or payment due.
+     *
+     * @var Money | null
+     */
+    public $shipping_amount;
+
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
@@ -95,6 +109,18 @@ class BillingCycle implements JsonSerializable
             "tenure_type in BillingCycle must have maxlength of 24 $within"
         );
         Assert::notNull($this->sequence, "sequence in BillingCycle must not be NULL $within");
+        !isset($this->taxes) || Assert::isInstanceOf(
+            $this->taxes,
+            Taxes::class,
+            "taxes in BillingCycle must be instance of Taxes $within"
+        );
+        !isset($this->taxes) ||  $this->taxes->validate(BillingCycle::class);
+        !isset($this->shipping_amount) || Assert::isInstanceOf(
+            $this->shipping_amount,
+            Money::class,
+            "shipping_amount in BillingCycle must be instance of Money $within"
+        );
+        !isset($this->shipping_amount) ||  $this->shipping_amount->validate(BillingCycle::class);
     }
 
     private function map(array $data)
@@ -114,6 +140,12 @@ class BillingCycle implements JsonSerializable
         if (isset($data['total_cycles'])) {
             $this->total_cycles = $data['total_cycles'];
         }
+        if (isset($data['taxes'])) {
+            $this->taxes = new Taxes($data['taxes']);
+        }
+        if (isset($data['shipping_amount'])) {
+            $this->shipping_amount = new Money($data['shipping_amount']);
+        }
     }
 
     public function __construct(array $data = null)
@@ -127,5 +159,15 @@ class BillingCycle implements JsonSerializable
     public function initPricingScheme(): PricingScheme
     {
         return $this->pricing_scheme = new PricingScheme();
+    }
+
+    public function initTaxes(): Taxes
+    {
+        return $this->taxes = new Taxes();
+    }
+
+    public function initShippingAmount(): Money
+    {
+        return $this->shipping_amount = new Money();
     }
 }

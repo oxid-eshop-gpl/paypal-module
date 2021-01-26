@@ -9,6 +9,8 @@ use OxidEsales\Eshop\Core\Exception\DatabaseErrorException;
 use OxidEsales\Eshop\Core\UtilsObject;
 use OxidProfessionalServices\PayPal\Api\Model\Catalog\Product;
 use OxidEsales\Eshop\Core\Registry;
+use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\BillingCycle;
+use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Plan;
 
 class SubscriptionRepository
 {
@@ -27,12 +29,34 @@ class SubscriptionRepository
     }
 
     /**
+     * @param string $productId
+     * @return array
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     */
+    public function getSubscriptionIdPlanByProductId($productId)
+    {
+        return DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getAll(
+            'SELECT OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID 
+                FROM oxps_paypal_subscription_product 
+                WHERE OXPS_PAYPAL_PRODUCT_ID = ?',
+            [$productId]
+        );
+    }
+
+    /**
      * @param Product $response
      * @throws DatabaseConnectionException
      * @throws DatabaseErrorException
      */
     public function saveLinkedProduct(Product $response, $oxid): void
     {
+        $existingProduct = $this->getSubscriptionIdPlanByProductId($response->id);
+
+        if ($existingProduct) {
+            return;
+        }
+
         $sql = 'INSERT INTO oxps_paypal_subscription_product (';
         $sql .= 'OXPS_PAYPAL_SUBSCRIPTION_PRODUCT_ID, OXPS_PAYPAL_OXSHOPID, OXPS_PAYPAL_OXARTICLE_ID, ';
         $sql .= 'OXPS_PAYPAL_PRODUCT_ID) VALUES(?,?,?,?)';
@@ -43,6 +67,59 @@ class SubscriptionRepository
             $oxid,
             $response->id
         ]);
+    }
+
+    public function getSubscriptionIdPlanByProductIdSubscriptionPlanId($productId, $subscriptionPlanId)
+    {
+        return DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getRow(
+            'SELECT * 
+                FROM oxps_paypal_subscription_product 
+                WHERE OXPS_PAYPAL_PRODUCT_ID = ?
+                AND OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID = ?',
+            [$productId, $subscriptionPlanId]
+        );
+    }
+
+    /**
+     * @param string $subscriptionPlanId
+     * @param string $productId
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     */
+    public function saveSubscriptionPlan($subscriptionPlanId, $productId, $articleId): void
+    {
+        $existingProduct = $this->getSubscriptionIdPlanByProductIdSubscriptionPlanId($productId, $subscriptionPlanId);
+
+        if ($existingProduct) {
+            return;
+        }
+
+        $existingProduct = $this->getSubscriptionIdPlanByProductId($productId);
+
+        if (count($existingProduct) == 1  && empty($existingProduct[0]['OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID'])) {
+            $sql = 'UPDATE oxps_paypal_subscription_product SET ';
+            $sql .= 'OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID = ?,';
+            $sql .= 'OXPS_PAYPAL_OXARTICLE_ID = ? ';
+            $sql .= 'WHERE OXPS_PAYPAL_PRODUCT_ID = ?';
+
+            DatabaseProvider::getDb()->execute($sql, [
+                $subscriptionPlanId,
+                $articleId,
+                $productId,
+            ]);
+        } else {
+            $sql = 'INSERT INTO oxps_paypal_subscription_product (';
+            $sql .= 'OXPS_PAYPAL_SUBSCRIPTION_PRODUCT_ID, OXPS_PAYPAL_OXSHOPID, OXPS_PAYPAL_OXARTICLE_ID, ';
+            $sql .= 'OXPS_PAYPAL_PRODUCT_ID, OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID) VALUES(?,?,?,?,?)';
+
+            DatabaseProvider::getDb()->execute($sql, [
+                UtilsObject::getInstance()->generateUId(),
+                Registry::getConfig()->getShopId(),
+                $articleId,
+                $productId,
+                $subscriptionPlanId
+            ]);
+        }
     }
 
     /**
@@ -68,5 +145,72 @@ class SubscriptionRepository
         $article->load($oxid);
 
         return $article;
+    }
+
+    /**
+     * @return false if not a subscription product, Subscription Plan ID if a subscription product
+     * @throws \OxidEsales\Eshop\Core\Exception\DatabaseConnectionException
+     */
+    public function isSubscribableProduct($articleId)
+    {
+        $select = 'SELECT OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID ';
+        $select .= 'FROM oxps_paypal_subscription_product WHERE OXPS_PAYPAL_OXARTICLE_ID = ?';
+        $result = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getRow($select, [$articleId]);
+
+        if ($result) {
+            return $result['OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID'];
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $variantId
+     * @param string|null $articleId
+     * @param float $setupFee
+     * @param float $price
+     * @param string $planName
+     * @param int $sort
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     */
+    public function saveVariantProduct(
+        string $variantId,
+        ?string $articleId,
+        float $setupFee,
+        float $price,
+        string $planName,
+        int $sort = 1
+    ): void {
+        $sql = "INSERT INTO oxarticles(
+                       oxid,
+                       oxshopid,
+                       oxparentid,
+                       oxactive,
+                       oxprice,
+                       oxissearch, 
+                       oxvarselect,
+                       oxsubclass,
+                       oxvpe, 
+                       oxshowcustomagreement,
+                       oxstock,
+                       oxsort,        
+                       oxvarname)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+        DatabaseProvider::getDb()->execute($sql, [
+            $variantId,
+            Registry::getConfig()->getShopId(),
+            $articleId,
+            1,
+            $setupFee + $price,
+            1,
+            $planName,
+            'oxarticle',
+            1,
+            1,
+            1000,
+            $sort,
+            'subscribe'
+        ]);
     }
 }

@@ -50,7 +50,8 @@
     "oxid-professional-services/oxid-console": "^6.0@beta",
     "oxid-professional-services/oxid-modules-config": "^6.1@beta",
     "oxid-professional-services/paypal": "^0.0.1",
-    "oxid-professional-services/paypal-client": "dev-master"
+    "oxid-professional-services/paypal-client": "dev-master",
+    "ext-curl": "*"
   },
   "require-dev": {
     "alfredbez/oxid-dump-autoload": "^0.1.0",

@@ -47,5 +47,4 @@ class BaseService
         }
         return $response;
     }
-
 }
