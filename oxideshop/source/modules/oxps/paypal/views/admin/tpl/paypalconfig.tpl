@@ -130,7 +130,7 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-default bottom-space">[{oxmultilang ident="SAVE"}]</button>
+        <button type="submit" class="btn btn-default bottom-space">[{oxmultilang ident="GENERAL_SAVE"}]</button>
     </form>
 </div>
 [{include file="bottomitem.tpl"}]
