@@ -4,8 +4,5 @@
 [{/if}]
 [{assign var="config" value=$oViewConf->getPayPalConfig()}]
 [{if $config->isActive() && !$oViewConf->isPayPalSessionActive() && $config->showPayPalProductDetailsButton()}]
-    <div class="details tobasket-input-group">
-    [{include file="paypal_smart_payment_buttons.tpl" buttonId="PayPalButtonProductMain" paymentStrategy="continue" aid=$oDetailsProduct->oxarticles__oxid->value}]
-    </div>
-    <br/>
+    [{include file="paypal_smart_payment_buttons.tpl" buttonId="PayPalButtonProductMain" paymentStrategy="continue" buttonClass="paypal-button-wrapper large" aid=$oDetailsProduct->oxarticles__oxid->value}]
 [{/if}]
