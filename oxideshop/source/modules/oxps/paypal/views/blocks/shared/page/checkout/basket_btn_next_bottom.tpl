@@ -5,4 +5,11 @@
         [{"OR"|oxmultilangassign|oxupper}]
     </div>
 [{/if}]
+[{if $loadingScreen == 'true'}]
+    <div id="overlay"><div class="loader"></div></div>
+    <script>
+        alert("here");
+        document.getElementById("overlay").style.display = "block";
+    </script>
+[{/if}]
 [{$smarty.block.parent}]
