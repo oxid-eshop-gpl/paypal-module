@@ -18,13 +18,6 @@ class SubscriptionReviseResponse extends SubscriptionReviseRequest2 implements J
     use BaseModel;
 
     /**
-     * Indicates whether the subscription has overridden any plan attributes.
-     *
-     * @var boolean | null
-     */
-    public $plan_overridden;
-
-    /**
      * An array of request-related [HATEOAS links](/docs/api/reference/api-responses/#hateoas-links).
      *
      * @var array | null
@@ -42,9 +35,6 @@ class SubscriptionReviseResponse extends SubscriptionReviseRequest2 implements J
 
     private function map(array $data)
     {
-        if (isset($data['plan_overridden'])) {
-            $this->plan_overridden = $data['plan_overridden'];
-        }
         if (isset($data['links'])) {
             $this->links = [];
             foreach ($data['links'] as $item) {

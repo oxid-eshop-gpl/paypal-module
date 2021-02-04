@@ -1,20 +1,20 @@
 <?php
 
 /**
- * This file is part of OXID eSales PayPal module.
+ * This file is part of OXID eSales Paypal module.
  *
- * OXID eSales PayPal module is free software: you can redistribute it and/or modify
+ * OXID eSales Paypal module is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * OXID eSales PayPal module is distributed in the hope that it will be useful,
+ * OXID eSales Paypal module is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with OXID eSales PayPal module.  If not, see <http://www.gnu.org/licenses/>.
+ * along with OXID eSales Paypal module.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @link      http://www.oxid-esales.com
  * @copyright (C) OXID eSales AG 2003-2020
@@ -23,12 +23,13 @@
 namespace OxidProfessionalServices\PayPal\Model;
 
 use Exception;
-use OxidEsales\Eshop\Core\DatabaseProvider;
-use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\Eshop\Core\DatabaseProvider;
 use OxidEsales\Eshop\Core\UtilsObject;
+use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderCaptureRequest;
-use OxidProfessionalServices\PayPal\Core\PayPalSession;
+use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderAuthorizeRequest;
+use OxidProfessionalServices\PayPal\Core\PaypalSession;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 
 /**
@@ -52,11 +53,6 @@ class PaymentGateway extends PaymentGateway_parent
         $success = parent::executePayment($amount, $order);
         $session = $this->getSession();
 
-        if ($session->getVariable('isSubscriptionCheckout')) {
-            $this->getSession()->deleteVariable('isSubscriptionCheckout');
-            return true;
-        }
-
         if (
             ($session->getVariable('paymentid') == 'oxidpaypal')
              || ($session->getBasket()->getPaymentId() == 'oxidpaypal')
@@ -67,10 +63,11 @@ class PaymentGateway extends PaymentGateway_parent
         return $success;
     }
 
+
     /**
      * Executes Authorize to PayPal
      *
-     * @param Order $order  User ordering object
+     * @param \OxidEsales\PayPalModule\Model\Order $order  User ordering object
      *
      * @return bool
      */
@@ -81,7 +78,7 @@ class PaymentGateway extends PaymentGateway_parent
         try {
             // updating order state
             if ($order) {
-                if ($checkoutOrderId = PayPalSession::getcheckoutOrderId()) {
+                if ($checkoutOrderId = PaypalSession::getcheckoutOrderId()) {
 
                     /** @var ServiceFactory $serviceFactory */
                     $serviceFactory = Registry::get(ServiceFactory::class);
@@ -121,8 +118,8 @@ class PaymentGateway extends PaymentGateway_parent
             Registry::getUtilsView()->addErrorToDisplay($exception);
         }
 
-        // destroy PayPal-Session
-        PayPalSession::storePayPalOrderId('');
+        // destroy Paypal-Session
+        PaypalSession::storePaypalOrderId('');
 
         return $success;
     }

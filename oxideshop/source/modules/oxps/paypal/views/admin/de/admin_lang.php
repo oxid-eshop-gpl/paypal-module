@@ -1,19 +1,23 @@
 <?php
 
 /**
+ * This file is part of OXID eSales Paypal module.
  * This file is part of OXID eSales PayPal module.
  *
+ * OXID eSales Paypal module is free software: you can redistribute it and/or modify
  * OXID eSales PayPal module is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
+ * OXID eSales Paypal module is distributed in the hope that it will be useful,
  * OXID eSales PayPal module is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
+ * along with OXID eSales Paypal module.  If not, see <http://www.gnu.org/licenses/>.
  * along with OXID eSales PayPal module.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @link      http://www.oxid-esales.com
@@ -27,7 +31,9 @@ $aLang = [
     'OXPS_PAYPAL_EDIT'               => 'Edit',
     'OXPS_PAYPAL_ACTIONS'            => 'Aktionen',
     'OXPS_PAYPAL_CAPTURE_PAYMENT'    => 'Zahlung erfassen',
+    'OXPS_PAYPAL_CAPTURE'            => 'Erfassung',
     'OXPS_PAYPAL_ISSUE_REFUND'       => 'Rückerstattung ausstellen',
+    'OXPS_PAYPAL_REFUND'             => 'Rückerstattung',
     'OXPS_PAYPAL_SHOW_BALANCE_AFFECTING_RECORDS' => 'Nur das Gleichgewicht beeinflusst',
     'OXPS_PAYPAL_REPORT_REFERENCE'   => 'Referenz melden',
     'OXPS_PAYPAL_TRANSACTION_TO_PRICE' => 'Preis bis',
@@ -69,6 +75,7 @@ $aLang = [
     'OXPS_PAYPAL_UPDATED_DATE'       => 'Aktualisierungsdatum',
     'OXPS_PAYPAL_TRANSACTION_NOTE'   => 'Hinweis',
     'OXPS_PAYPAL_BANK_REFERENCE_ID'  => 'Bankreferenz-ID',
+    'OXPS_PAYPAL_INVOICE_ID'         => 'Rechnungs-ID',
     'OXPS_PAYPAL_CUSTOM_FIELD'       => 'Benutzerdefiniertes Feld',
     'OXPS_PAYPAL_CREDIT_TERM'        => 'Kreditlaufzeit',
     'OXPS_PAYPAL_INSTRUMENT_TYPE'    => 'Instrumententyp',
@@ -79,6 +86,7 @@ $aLang = [
     'OXPS_PAYPAL_TRANSACTION_SUBJECT' => 'Betreff',
     'OXPS_PAYPAL_PROTECTION_ELIGIBILITY' => 'Schutzberechtigung',
     'tbclorder_paypal'               => 'PayPal',
+    // Paypal Config
     // PayPal Config
     'OXPS_PAYPAL_CONFIG'             => 'Konfiguration',
     'OXPS_PAYPAL_SUBSCRIBE'          => 'PayPal Abos',
@@ -100,9 +108,12 @@ $aLang = [
     'OXPS_PAYPAL_CREDENTIALS'        => 'API Anmeldeinformationen',
     'OXPS_PAYPAL_WEBHOOK_TITLE'      => 'Webhooks',
     'OXPS_PAYPAL_WEBHOOK_URL'        => 'Oxid Webhook URL',
+    'HELP_OXPS_PAYPAL_WEBHOOK_URL'   => 'Tragen Sie diese URL für den Webhook im Paypal Portal ein.',
     'HELP_OXPS_PAYPAL_WEBHOOK_URL'   => 'Tragen Sie diese URL für den Webhook im PayPal Portal ein.',
     'OXPS_PAYPAL_LIVE_CREDENTIALS'   => 'Live API Anmeldeinformationen',
     'OXPS_PAYPAL_SANDBOX_CREDENTIALS'        => 'Sandbox API Anmeldeinformationen',
+    'OXPS_PAYPAL_LIVE_BUTTON_CREDENTIALS'    => 'Anmeldung Händler Paypal-Integration (Live)',
+    'OXPS_PAYPAL_SANDBOX_BUTTON_CREDENTIALS' => 'Anmeldung Händler Paypal-Integration (Sandbox)',
     'OXPS_PAYPAL_LIVE_BUTTON_CREDENTIALS'    => 'Anmeldung Händler PayPal-Integration (Live)',
     'OXPS_PAYPAL_SANDBOX_BUTTON_CREDENTIALS' => 'Anmeldung Händler PayPal-Integration (Sandbox)',
     'OXPS_PAYPAL_ERR_CONF_INVALID'   =>

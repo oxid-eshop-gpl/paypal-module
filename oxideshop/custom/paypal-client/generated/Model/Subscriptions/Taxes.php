@@ -30,23 +30,10 @@ class Taxes implements JsonSerializable
      */
     public $inclusive = true;
 
-    /**
-     * The currency and amount for a financial transaction, such as a balance or payment due.
-     *
-     * @var Money | null
-     */
-    public $amount;
-
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
         Assert::notNull($this->percentage, "percentage in Taxes must not be NULL $within");
-        !isset($this->amount) || Assert::isInstanceOf(
-            $this->amount,
-            Money::class,
-            "amount in Taxes must be instance of Money $within"
-        );
-        !isset($this->amount) ||  $this->amount->validate(Taxes::class);
     }
 
     private function map(array $data)
@@ -57,9 +44,6 @@ class Taxes implements JsonSerializable
         if (isset($data['inclusive'])) {
             $this->inclusive = $data['inclusive'];
         }
-        if (isset($data['amount'])) {
-            $this->amount = new Money($data['amount']);
-        }
     }
 
     public function __construct(array $data = null)
@@ -67,10 +51,5 @@ class Taxes implements JsonSerializable
         if (isset($data)) {
             $this->map($data);
         }
-    }
-
-    public function initAmount(): Money
-    {
-        return $this->amount = new Money();
     }
 }

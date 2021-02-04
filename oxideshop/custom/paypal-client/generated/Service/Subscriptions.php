@@ -345,8 +345,8 @@ class Subscriptions extends BaseService
      *
      * @param $id string The ID of the subscription.
      *
-     * @param $fields string List of fields that are to be returned in the response. Possible value for fields are
-     * last_failed_payment and plan.
+     * @param $fields string List of fields that are to be returned in the response. Possible value for fields is
+     * last_failed_payment.
      *
      * @throws ApiException
      * @return Subscription
@@ -357,7 +357,7 @@ class Subscriptions extends BaseService
 
 
         $params = [];
-//        $params['fields'] = $fields;
+        $params['fields'] = $fields;
 
         $body = null;
         $response = $this->send('GET', $path, $params, [], $body);
@@ -366,34 +366,7 @@ class Subscriptions extends BaseService
     }
 
     /**
-     * Updates a subscription which could be in `ACTIVE` or `SUSPENDED` status.<br /> Following are the fields
-     * eligible for patch.<table><thead><tr><th>Attribute or
-     * object</th><th>Operations</th><th>Visibility</th></tr></thead><tbody><tr><td><code>billing_info.outstanding_balance</code></td><td>replace</td><td>External</td></tr><tr><td><code>custom_id
-     * (supported only for V1
-     * subscriptions)</code></td><td>add,replace</td><td>External</td></tr><tr><td><code>plan.billing_cycles[@sequence==n].pricing_scheme.fixed_price</code></td><td>add,replace</td><td>External</td></tr><tr><td><code>plan.billing_cycles[@sequence==n].shipping_amount
-     * (not supported for V1
-     * subscriptions)</code></td><td>add,replace</td><td>Internal</td></tr><tr><td><code>plan.billing_cycles[@sequence==n].taxes.amount
-     * (not supported for V1
-     * subscriptions)</code></td><td>add,replace</td><td>Internal</td></tr><tr><td><code>plan.billing_cycles[@sequence==n].total_cycles</code></td><td>replace</td><td>External</td></tr><tr><td><code>plan.name
-     * (not supported for V1
-     * subscriptions)</code></td><td>replace</td><td>Internal</td></tr><tr><td><code>plan.payment_preferences.auto_bill_outstanding</code></td><td>replace</td><td>External</td></tr><tr><td><code>plan.payment_preferences.payment_failure_threshold</code></td><td>replace</td><td>External</td></tr><tr><td><code>plan.taxes.inclusive
-     * (supported only for V1
-     * subscriptions)</code></td><td>add,replace</td><td>External</td></tr><tr><td><code>plan.taxes.percentage
-     * (supported only for V1
-     * subscriptions)</code></td><td>add,replace</td><td>External</td></tr><tr><td><code>shipping_amount (supported
-     * only for V1 subscriptions)</code></td><td>add,replace</td><td>External</td></tr><tr><td><code>start_time (for
-     * subscription whose start time is in
-     * future)</code></td><td>replace</td><td>External</td></tr><tr><td><code>subscriber.shipping_address</code></td><td>add,replace</td><td>External</td></tr><tr><td><code>subscriber.payment_source
-     * (for subscriptions funded by card
-     * payments)</code></td><td>replace</td><td>External</td></tr><tr><td><code>subscriber.name.given_name (for
-     * unbranded
-     * subscriptions)</code></td><td>add,replace</td><td>Internal</td></tr><tr><td><code>subscriber.name.surname (for
-     * unbranded
-     * subscriptions)</code></td><td>add,replace</td><td>Internal</td></tr><tr><td><code>subscriber.email_address
-     * (for unbranded
-     * subscriptions)</code></td><td>add,replace</td><td>Internal</td></tr><tr><td><code>subscriber.phone.phone_number
-     * (for unbranded
-     * subscriptions)</code></td><td>add,replace</td><td>Internal</td></tr><tr><td><code>status_change_note</code></td><td>add,replace</td><td>Internal</td></tr></tbody></table>
+     * Updates a subscription, by ID.
      *
      * @param $id string The ID for the subscription.
      *

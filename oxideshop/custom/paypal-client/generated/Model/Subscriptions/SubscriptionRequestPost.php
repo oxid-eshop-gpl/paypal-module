@@ -73,42 +73,6 @@ class SubscriptionRequestPost implements JsonSerializable
      */
     public $application_context;
 
-    /**
-     * Client configuration that captures the product flows and specific experiences that a user completes a paypal
-     * transaction.
-     *
-     * @var ClientConfiguration | null
-     */
-    public $client_configuration;
-
-    /**
-     * Describes a JSON Web Token (JWT). The value is either an [Unsecured
-     * JWT](https://tools.ietf.org/html/rfc7519#section-6) or a Secured JWT. A secured JWT is either a [JSON Web
-     * Signature](https://tools.ietf.org/html/rfc7515) or a [JSON Web
-     * Encryption](https://tools.ietf.org/html/rfc7516).
-     *
-     * @var string | null
-     * minLength: 3
-     * maxLength: 2000
-     */
-    public $metadata;
-
-    /**
-     * The custom id for the subscription. Can be invoice id.
-     *
-     * @var string | null
-     * minLength: 1
-     * maxLength: 127
-     */
-    public $custom_id;
-
-    /**
-     * The plan details to override at subscription level.
-     *
-     * @var PlanOverride | null
-     */
-    public $plan;
-
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
@@ -161,38 +125,6 @@ class SubscriptionRequestPost implements JsonSerializable
             "application_context in SubscriptionRequestPost must be instance of ApplicationContext $within"
         );
         !isset($this->application_context) ||  $this->application_context->validate(SubscriptionRequestPost::class);
-        !isset($this->client_configuration) || Assert::isInstanceOf(
-            $this->client_configuration,
-            ClientConfiguration::class,
-            "client_configuration in SubscriptionRequestPost must be instance of ClientConfiguration $within"
-        );
-        !isset($this->client_configuration) ||  $this->client_configuration->validate(SubscriptionRequestPost::class);
-        !isset($this->metadata) || Assert::minLength(
-            $this->metadata,
-            3,
-            "metadata in SubscriptionRequestPost must have minlength of 3 $within"
-        );
-        !isset($this->metadata) || Assert::maxLength(
-            $this->metadata,
-            2000,
-            "metadata in SubscriptionRequestPost must have maxlength of 2000 $within"
-        );
-        !isset($this->custom_id) || Assert::minLength(
-            $this->custom_id,
-            1,
-            "custom_id in SubscriptionRequestPost must have minlength of 1 $within"
-        );
-        !isset($this->custom_id) || Assert::maxLength(
-            $this->custom_id,
-            127,
-            "custom_id in SubscriptionRequestPost must have maxlength of 127 $within"
-        );
-        !isset($this->plan) || Assert::isInstanceOf(
-            $this->plan,
-            PlanOverride::class,
-            "plan in SubscriptionRequestPost must be instance of PlanOverride $within"
-        );
-        !isset($this->plan) ||  $this->plan->validate(SubscriptionRequestPost::class);
     }
 
     private function map(array $data)
@@ -218,18 +150,6 @@ class SubscriptionRequestPost implements JsonSerializable
         if (isset($data['application_context'])) {
             $this->application_context = new ApplicationContext($data['application_context']);
         }
-        if (isset($data['client_configuration'])) {
-            $this->client_configuration = new ClientConfiguration($data['client_configuration']);
-        }
-        if (isset($data['metadata'])) {
-            $this->metadata = $data['metadata'];
-        }
-        if (isset($data['custom_id'])) {
-            $this->custom_id = $data['custom_id'];
-        }
-        if (isset($data['plan'])) {
-            $this->plan = new PlanOverride($data['plan']);
-        }
     }
 
     public function __construct(array $data = null)
@@ -252,15 +172,5 @@ class SubscriptionRequestPost implements JsonSerializable
     public function initApplicationContext(): ApplicationContext
     {
         return $this->application_context = new ApplicationContext();
-    }
-
-    public function initClientConfiguration(): ClientConfiguration
-    {
-        return $this->client_configuration = new ClientConfiguration();
-    }
-
-    public function initPlan(): PlanOverride
-    {
-        return $this->plan = new PlanOverride();
     }
 }

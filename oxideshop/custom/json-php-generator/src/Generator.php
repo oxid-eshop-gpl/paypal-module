@@ -46,6 +46,7 @@ class Generator
 
         shell_exec('rm -rf ../paypal-client/generated/Model/' . $subNameSpace);
 
+
         foreach ($this->definitions as $defName => $defs) {
             $this->generateModelClass($namespace, $subNameSpace, $defName, $defs);
         }
@@ -82,18 +83,8 @@ class Generator
      */
     private function getRefNameFromRefString($defName)
     {
-
-        if(strstr($defName, '#/definitions/')) {
-            $defName = str_replace('/', '-', $defName);
-            $defName = str_replace('#-definitions-', '', $defName);
-        } else {
-            if(strstr($defName, 'CommonComponentsSpecification')) {
-                $defNameArray = explode('/', $defName);
-                $defName = end($defNameArray);
-            }
-        }
-
-        return $defName;
+        $defName = str_replace('/', '-', $defName);
+        return str_replace('#-definitions-', '', $defName);
     }
 
     /**
@@ -396,6 +387,7 @@ class Generator
         $subNameSpace = $this->subNameSpace;
         $nameSpace = $this->currentNameSpace->getName();
         $baseNameSpace = substr($nameSpace, 0, strlen($subNameSpace) * -1);
+        $propType = null;
         $propType = $this->references[$ref];
         if (preg_match('/(.*)\\\\(.*)/', $propType, $matches)) {
             $refFull = $baseNameSpace . $propType;

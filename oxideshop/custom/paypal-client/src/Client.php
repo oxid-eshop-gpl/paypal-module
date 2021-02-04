@@ -13,6 +13,7 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Log\LoggerInterface;
+use Throwable;
 
 /**
  * Class Client
@@ -28,7 +29,6 @@ class Client
     public const PRODUCTION_URL         = "https://api.paypal.com";
     public const CONTENT_TYPE_JSON      = 'application/json';
     public const CONTENT_TYPE_X_WWW     = 'application/x-www-form-urlencoded';
-    public const CONTENT_TYPE_MULTIPART = 'application/x-www-form-urlencoded';
     public const PAYPAL_PARTNER_ATTR_ID = 'Oxid_Cart_6Cart_Plus, Oxid_Cart_ECS_Shortcut, OXID_Cart_ProfessionalECS';
     public const PAYPAL_PARTNER_ATTR_ID_HEADER = 'PayPal-Partner-Attribution-Id';
 
@@ -140,12 +140,6 @@ class Client
         }
     }
 
-    public function request($method, $uri = '', $options = [])
-    {
-        $res = $this->httpClient->request($method, $this->endpoint . $uri, $options);
-        return $res;
-    }
-
     /**
      * explicit auth you can use this to make the auth before sending your request.
      * This call is time consuming and should be done only once within 8 hours
@@ -242,30 +236,5 @@ class Client
         $request = $this->injectAuthHeaders($request);
         $res = $this->httpClient->send($request);
         return $res;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getMerchantPayerId(): string
-    {
-        return $this->merchantPayerId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getMerchantClientId(): string
-    {
-        return $this->merchantClientId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEndpoint(): string
-    {
-        return $this->endpoint;
     }
 }

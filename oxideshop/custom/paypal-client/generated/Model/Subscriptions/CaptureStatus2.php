@@ -10,7 +10,7 @@ use Webmozart\Assert\Assert;
  * The status of a captured payment.
  *
  * generated from:
- * customized_x_unsupported_2422_merchant.CommonComponentsSpecification-v1-schema-capture_status.json
+ * customized_x_unsupported_3053_merchant.CommonComponentsSpecification-v1-schema-capture_status.json
  */
 class CaptureStatus2 implements JsonSerializable
 {
@@ -31,9 +31,6 @@ class CaptureStatus2 implements JsonSerializable
     /** An amount greater than or equal to this captured payment's amount was refunded to the payer. */
     public const STATUS_REFUNDED = 'REFUNDED';
 
-    /** There was an error while capturing payment. */
-    public const STATUS_FAILED = 'FAILED';
-
     /**
      * The status of the captured payment.
      *
@@ -43,7 +40,6 @@ class CaptureStatus2 implements JsonSerializable
      * @see STATUS_PARTIALLY_REFUNDED
      * @see STATUS_PENDING
      * @see STATUS_REFUNDED
-     * @see STATUS_FAILED
      * @var string | null
      */
     public $status;
