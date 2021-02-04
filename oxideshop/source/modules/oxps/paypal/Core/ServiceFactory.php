@@ -1,20 +1,20 @@
 <?php
 
 /**
- * This file is part of OXID eSales PayPal module.
+ * This file is part of OXID eSales Paypal module.
  *
- * OXID eSales PayPal module is free software: you can redistribute it and/or modify
+ * OXID eSales Paypal module is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * OXID eSales PayPal module is distributed in the hope that it will be useful,
+ * OXID eSales Paypal module is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with OXID eSales PayPal module.  If not, see <http://www.gnu.org/licenses/>.
+ * along with OXID eSales Paypal module.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @link      http://www.oxid-esales.com
  * @copyright (C) OXID eSales AG 2003-2020
@@ -24,14 +24,11 @@ namespace OxidProfessionalServices\PayPal\Core;
 
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Client;
-use OxidProfessionalServices\PayPal\Api\Service\Catalog;
-use OxidProfessionalServices\PayPal\Api\Service\GenericService;
 use OxidProfessionalServices\PayPal\Api\Service\Orders;
 use OxidProfessionalServices\PayPal\Api\Service\Payments;
-use OxidProfessionalServices\PayPal\Api\Service\Subscriptions;
+use OxidProfessionalServices\PayPal\Api\Service\GenericService;
+use OxidProfessionalServices\PayPal\Api\Service\Catalog;
 use OxidProfessionalServices\PayPal\Api\Service\TransactionSearch;
-use OxidProfessionalServices\PayPal\Controller\Admin\Service\DisputeService as FileAwareDisputeService;
-use OxidProfessionalServices\PayPal\Service\DisputeService;
 
 /**
  * Class ServiceFactory
@@ -46,10 +43,6 @@ class ServiceFactory
      */
     private $client;
 
-    public function getSubscriptionService(): Subscriptions
-    {
-        return oxNew(Subscriptions::class, $this->getClient());
-    }
 
     /**
      * @return Payments
@@ -93,22 +86,6 @@ class ServiceFactory
     public function getTransactionSearchService(): TransactionSearch
     {
         return oxNew(TransactionSearch::class, $this->getClient());
-    }
-
-    /**
-     * @return DisputeService
-     */
-    public function getDisputeService(): DisputeService
-    {
-        return oxNew(DisputeService::class, $this->getClient());
-    }
-
-    /**
-     * @return DisputeService
-     */
-    public function getFileAwareDisputeService(): FileAwareDisputeService
-    {
-        return oxNew(FileAwareDisputeService::class, $this->getClient());
     }
 
     /**

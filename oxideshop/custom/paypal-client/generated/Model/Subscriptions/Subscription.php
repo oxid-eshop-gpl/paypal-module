@@ -134,49 +134,6 @@ class Subscription extends SubscriptionStatus implements JsonSerializable
     public $preferred_funding_source;
 
     /**
-     * Client configuration that captures the product flows and specific experiences that a user completes a paypal
-     * transaction.
-     *
-     * @var ClientConfiguration | null
-     */
-    public $client_configuration;
-
-    /**
-     * Describes a JSON Web Token (JWT). The value is either an [Unsecured
-     * JWT](https://tools.ietf.org/html/rfc7519#section-6) or a Secured JWT. A secured JWT is either a [JSON Web
-     * Signature](https://tools.ietf.org/html/rfc7515) or a [JSON Web
-     * Encryption](https://tools.ietf.org/html/rfc7516).
-     *
-     * @var string | null
-     * minLength: 3
-     * maxLength: 2000
-     */
-    public $metadata;
-
-    /**
-     * The custom id for the subscription. Can be invoice id.
-     *
-     * @var string | null
-     * minLength: 1
-     * maxLength: 127
-     */
-    public $custom_id;
-
-    /**
-     * Indicates whether the subscription has overridden any plan attributes.
-     *
-     * @var boolean | null
-     */
-    public $plan_overridden;
-
-    /**
-     * The plan details.
-     *
-     * @var Plan2 | null
-     */
-    public $plan;
-
-    /**
      * An array of request-related [HATEOAS links](/docs/api/reference/api-responses/#hateoas-links).
      *
      * @var array | null
@@ -276,38 +233,6 @@ class Subscription extends SubscriptionStatus implements JsonSerializable
             "preferred_funding_source in Subscription must be instance of FundingInstrumentResponse $within"
         );
         !isset($this->preferred_funding_source) ||  $this->preferred_funding_source->validate(Subscription::class);
-        !isset($this->client_configuration) || Assert::isInstanceOf(
-            $this->client_configuration,
-            ClientConfiguration::class,
-            "client_configuration in Subscription must be instance of ClientConfiguration $within"
-        );
-        !isset($this->client_configuration) ||  $this->client_configuration->validate(Subscription::class);
-        !isset($this->metadata) || Assert::minLength(
-            $this->metadata,
-            3,
-            "metadata in Subscription must have minlength of 3 $within"
-        );
-        !isset($this->metadata) || Assert::maxLength(
-            $this->metadata,
-            2000,
-            "metadata in Subscription must have maxlength of 2000 $within"
-        );
-        !isset($this->custom_id) || Assert::minLength(
-            $this->custom_id,
-            1,
-            "custom_id in Subscription must have minlength of 1 $within"
-        );
-        !isset($this->custom_id) || Assert::maxLength(
-            $this->custom_id,
-            127,
-            "custom_id in Subscription must have maxlength of 127 $within"
-        );
-        !isset($this->plan) || Assert::isInstanceOf(
-            $this->plan,
-            Plan2::class,
-            "plan in Subscription must be instance of Plan2 $within"
-        );
-        !isset($this->plan) ||  $this->plan->validate(Subscription::class);
         !isset($this->links) || Assert::isArray(
             $this->links,
             "links in Subscription must be array $within"
@@ -355,21 +280,6 @@ class Subscription extends SubscriptionStatus implements JsonSerializable
         if (isset($data['preferred_funding_source'])) {
             $this->preferred_funding_source = new FundingInstrumentResponse($data['preferred_funding_source']);
         }
-        if (isset($data['client_configuration'])) {
-            $this->client_configuration = new ClientConfiguration($data['client_configuration']);
-        }
-        if (isset($data['metadata'])) {
-            $this->metadata = $data['metadata'];
-        }
-        if (isset($data['custom_id'])) {
-            $this->custom_id = $data['custom_id'];
-        }
-        if (isset($data['plan_overridden'])) {
-            $this->plan_overridden = $data['plan_overridden'];
-        }
-        if (isset($data['plan'])) {
-            $this->plan = new Plan2($data['plan']);
-        }
         if (isset($data['links'])) {
             $this->links = [];
             foreach ($data['links'] as $item) {
@@ -409,15 +319,5 @@ class Subscription extends SubscriptionStatus implements JsonSerializable
     public function initPreferredFundingSource(): FundingInstrumentResponse
     {
         return $this->preferred_funding_source = new FundingInstrumentResponse();
-    }
-
-    public function initClientConfiguration(): ClientConfiguration
-    {
-        return $this->client_configuration = new ClientConfiguration();
-    }
-
-    public function initPlan(): Plan2
-    {
-        return $this->plan = new Plan2();
     }
 }

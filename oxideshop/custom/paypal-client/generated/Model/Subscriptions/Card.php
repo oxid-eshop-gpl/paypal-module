@@ -155,13 +155,6 @@ class Card implements JsonSerializable
      */
     public $authentication_results;
 
-    /**
-     * Additional attributes associated with the use of this card
-     *
-     * @var CardAttributes | null
-     */
-    public $attributes;
-
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
@@ -222,12 +215,6 @@ class Card implements JsonSerializable
                 $item->validate(Card::class);
             }
         }
-        !isset($this->attributes) || Assert::isInstanceOf(
-            $this->attributes,
-            CardAttributes::class,
-            "attributes in Card must be instance of CardAttributes $within"
-        );
-        !isset($this->attributes) ||  $this->attributes->validate(Card::class);
     }
 
     private function map(array $data)
@@ -262,9 +249,6 @@ class Card implements JsonSerializable
                 $this->authentication_results[] = new ThreedsResult($item);
             }
         }
-        if (isset($data['attributes'])) {
-            $this->attributes = new CardAttributes($data['attributes']);
-        }
     }
 
     public function __construct(array $data = null)
@@ -277,10 +261,5 @@ class Card implements JsonSerializable
     public function initBillingAddress(): AddressPortable2
     {
         return $this->billing_address = new AddressPortable2();
-    }
-
-    public function initAttributes(): CardAttributes
-    {
-        return $this->attributes = new CardAttributes();
     }
 }

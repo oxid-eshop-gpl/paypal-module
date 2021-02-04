@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * The customer who approves and pays for the order. The customer is also known as the payer.
  *
- * generated from: customized_x_unsupported_979_merchant.CommonComponentsSpecification-v1-schema-payer.json
+ * generated from: customized_x_unsupported_860_merchant.CommonComponentsSpecification-v1-schema-payer.json
  */
 class Payer3 implements JsonSerializable
 {
@@ -42,13 +42,6 @@ class Payer3 implements JsonSerializable
      */
     public $payer_id;
 
-    /**
-     * The phone information.
-     *
-     * @var PhoneWithType | null
-     */
-    public $phone;
-
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
@@ -73,12 +66,6 @@ class Payer3 implements JsonSerializable
             13,
             "payer_id in Payer3 must have maxlength of 13 $within"
         );
-        !isset($this->phone) || Assert::isInstanceOf(
-            $this->phone,
-            PhoneWithType::class,
-            "phone in Payer3 must be instance of PhoneWithType $within"
-        );
-        !isset($this->phone) ||  $this->phone->validate(Payer3::class);
     }
 
     private function map(array $data)
@@ -92,9 +79,6 @@ class Payer3 implements JsonSerializable
         if (isset($data['payer_id'])) {
             $this->payer_id = $data['payer_id'];
         }
-        if (isset($data['phone'])) {
-            $this->phone = new PhoneWithType($data['phone']);
-        }
     }
 
     public function __construct(array $data = null)
@@ -107,10 +91,5 @@ class Payer3 implements JsonSerializable
     public function initName(): Name2
     {
         return $this->name = new Name2();
-    }
-
-    public function initPhone(): PhoneWithType
-    {
-        return $this->phone = new PhoneWithType();
     }
 }

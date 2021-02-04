@@ -2,13 +2,10 @@
 
 namespace OxidProfessionalServices\PayPal\Model;
 
-use OxidEsales\Eshop\Application\Model\Article;
-use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\BillingCycle;
-
 /**
  * Class PayPalArticle
  * created to manage the link between the oxid article and the paypal subscribable product
- * @mixin Article
+ * @package OxidProfessionalServices\PayPal\Model
  */
 class PayPalArticle extends PayPalArticle_parent
 {
@@ -17,7 +14,7 @@ class PayPalArticle extends PayPalArticle_parent
      */
     public function isPayPalProductLinked()
     {
-        return $this->getPayPalProductId() !== "";
+        return $this->getPaypalProductId() !== "";
     }
 
     /**
@@ -25,15 +22,15 @@ class PayPalArticle extends PayPalArticle_parent
      */
     public function isThisOrParentPayPalProductLinked()
     {
-        return $this->isPayPalProductLinked() || $this->getPayPalParentArticle()->isPayPalProductLinked();
+        return $this->isPayPalProductLinked() || $this->getPaypalParentArticle()->isPayPalProductLinked();
     }
 
     /**
      * @return string
      */
-    public function getPayPalProductId(): string
+    public function getPaypalProductId(): string
     {
-        return (string) $this->getFieldData("PayPalProductId");
+        return (string) $this->getFieldData("PaypalProductId");
     }
 
     /**
@@ -41,41 +38,17 @@ class PayPalArticle extends PayPalArticle_parent
      */
     public function isPayPalProductLinkedByParentOnly()
     {
-        $parent = $this->getPayPalParentArticle();
+        $parent = $this->getPaypalParentArticle();
         return (!$this->isPayPalProductLinked()) && $parent->isPayPalProductLinked();
     }
 
     /**
      * @return $this
      */
-    public function getPayPalParentArticle()
+    public function getPaypalParentArticle()
     {
         $parent = $this->getParentArticle();
         assert($parent instanceof self);
         return $parent;
-    }
-
-    /**
-     * @param PayPalArticle $product
-     * @param array $billingCycles
-     * @return BillingCycle|null
-     */
-    public function getVariantData(PayPalArticle $product, array $billingCycles)
-    {
-        $return = null;
-
-        /** @var BillingCycle $cycle */
-        foreach ($billingCycles as $cycle) {
-            $tenure = $cycle->frequency->interval_count . ' ' . $cycle->frequency->interval_unit .
-                ' (' . $cycle->tenure_type . ')';
-            $oxvarselect = $product->oxarticles__oxvarselect->value;
-
-            if ($tenure == $oxvarselect) {
-                $return = $cycle;
-                break;
-            }
-        }
-
-        return $return;
     }
 }

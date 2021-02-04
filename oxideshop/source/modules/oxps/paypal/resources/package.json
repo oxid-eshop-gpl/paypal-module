@@ -25,6 +25,7 @@
     "time-grunt": "^2.0.0"
   },
   "dependencies": {
+  "dependencies": {
     "findup-sync": "^4.0.0"
-  }
+}
 }

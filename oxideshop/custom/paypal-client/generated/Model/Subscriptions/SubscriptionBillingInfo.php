@@ -27,7 +27,7 @@ class SubscriptionBillingInfo implements JsonSerializable
      *
      * @var CycleExecution[]
      * maxItems: 0
-     * maxItems: 3
+     * maxItems: 2
      */
     public $cycle_executions;
 
@@ -107,8 +107,8 @@ class SubscriptionBillingInfo implements JsonSerializable
         );
         Assert::maxCount(
             $this->cycle_executions,
-            3,
-            "cycle_executions in SubscriptionBillingInfo must have max. count of 3 $within"
+            2,
+            "cycle_executions in SubscriptionBillingInfo must have max. count of 2 $within"
         );
         Assert::isArray(
             $this->cycle_executions,
