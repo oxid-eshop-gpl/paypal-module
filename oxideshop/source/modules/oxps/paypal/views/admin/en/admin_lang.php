@@ -105,6 +105,8 @@ $aLang = [
     'OXPS_PAYPAL_BILLING_PLAN_NAME'  => 'Billing Plan Name',
     'OXPS_PAYPAL_BILLING_PLAN_MAIN'       => 'Billing Cycle',
     'OXPS_PAYPAL_TRANSACTIONS'       => 'Transactions',
+    'OXPS_PAYPAL_SUBSCRIPTIONS'      => 'Subscriptions',
+    'OXPS_PAYPAL_DISPUTES'           => 'Disputes',
     'OXPS_PAYPAL_BALANCES'           => 'Balances',
     'OXPS_PAYPAL_GENERAL'            => 'General',
     'OXPS_PAYPAL_WEBHOOK_ID'         => 'Webhook ID',
@@ -140,7 +142,6 @@ $aLang = [
     'HELP_OXPS_PAYPAL_OPMODE'        => 'To configure and test PayPal, use Sandbox (test). When you\'re ready
         to receive real transactions, switch to Production (live).',
     'OXPS_PAYPAL_WEBHOOK_ID_HELP'    => 'The ID of the webhook as configured in your Developer Portal account',
-    // PayPal ORDER
     'OXPS_PAYPAL_AMOUNT'                      => 'Amount',
     'OXPS_PAYPAL_SHOP_PAYMENT_STATUS'         => 'Shop payment status',
     'OXPS_PAYPAL_ORDER_PRICE'                 => 'Full order price',
