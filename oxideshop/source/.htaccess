@@ -1,7 +1,7 @@
 <IfModule mod_rewrite.c>
     Options +FollowSymLinks
     RewriteEngine On
-    RewriteBase /paypal/
+    RewriteBase /
 
     # RewriteCond %{HTTPS} off
     # RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
@@ -43,12 +43,12 @@
 
 # disabling log file access from outside
 <FilesMatch "(EXCEPTION_LOG\.txt|\.log|\.tpl|pkg\.rev|\.ini|pkg\.info|\.pem|composer\.json|composer\.lock|test_config\.yml)$">
-   <IfModule mod_authz_core.c>
+   <IfModule mod_authz_core.c>   
        Require all denied
    </IfModule>
    <IfModule !mod_authz_core.c>
        Order allow,deny
-       Deny from all
+       Deny from all   
    </IfModule>
 </FilesMatch>
 

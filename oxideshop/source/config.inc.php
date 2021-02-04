@@ -4,17 +4,21 @@
  * See LICENSE file for license details.
  */
 
+// Database connection information
 $this->dbType = 'pdo_mysql';
-$this->dbHost = 'localhost'; // database host name
-$this->dbPort  = 3306; // tcp port to which the database is bound
-$this->dbName = 'oxid6_paypal'; // database name
-$this->dbUser = 'root'; // database user name
-$this->dbPwd  = 'sKPhHFAPxsbNCL5C'; // database user password
-$this->sShopURL     = 'http://localhost/paypal'; // eShop base url, required
-$this->sSSLShopURL  = null; // eShop SSL url, optional
-$this->sAdminSSLURL = null;            // eShop Admin SSL url, optional
-$this->sShopDir     = 'C:/workspace/paypal-dev/oxideshop/source';
-$this->sCompileDir  = 'C:/workspace/paypal-dev/oxideshop/source/tmp';
+$this->dbHost = getenv('MYSQL_HOST'); // database host name
+$this->dbPort = getenv('MYSQL_PORT'); // tcp port to which the database is bound
+$this->dbName = getenv('MYSQL_DATABASE'); // database name
+$this->dbUser = getenv('MYSQL_USER'); // database user name
+$this->dbPwd = getenv('MYSQL_PASSWORD'); // database user password
+$port = getenv('OXID_PORT') != '80' ? ':' . getenv('OXID_PORT') : '';
+$port_ssl = getenv('SSL_OXID_PORT') != '80' ? ':' . getenv('SSL_OXID_PORT') : '';
+$this->sShopURL = 'http://'.getenv('DOMAIN') . $port; // eShop base url, required
+$this->sSSLShopURL  = 'http://'.getenv('DOMAIN') . $port_ssl;            // eShop SSL url, optional
+$this->sAdminSSLURL = null;
+$this->sShopDir     = __DIR__;
+$this->sCompileDir  = __DIR__ . '/tmp';
+
 /**
  * Force shop edition. Even if enterprise or professional packages exists, shop edition can still be forced here.
  * Possible options: CE|PE|EE or left empty (will be determined automatically).
