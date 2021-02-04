@@ -142,6 +142,7 @@ $aLang = [
     'HELP_OXPS_PAYPAL_OPMODE'        => 'To configure and test PayPal, use Sandbox (test). When you\'re ready
         to receive real transactions, switch to Production (live).',
     'OXPS_PAYPAL_WEBHOOK_ID_HELP'    => 'The ID of the webhook as configured in your Developer Portal account',
+    // PayPal ORDER
     'OXPS_PAYPAL_AMOUNT'                      => 'Amount',
     'OXPS_PAYPAL_SHOP_PAYMENT_STATUS'         => 'Shop payment status',
     'OXPS_PAYPAL_ORDER_PRICE'                 => 'Full order price',
