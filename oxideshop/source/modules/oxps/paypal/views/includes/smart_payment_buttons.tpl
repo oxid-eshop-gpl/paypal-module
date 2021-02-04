@@ -3,5 +3,5 @@
 [{else}]
     [{include file="payment_buttons.tpl"}]
 [{/if}]
-<div id="paypal-button-container" class="[{$buttonClass}]"></div>
+<div id="paypal-button-container" class="paypal-button-container [{$buttonClass}]"></div>
 [{oxscript add=$smarty.capture.paypal_init}]
