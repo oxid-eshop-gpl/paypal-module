@@ -1,20 +1,20 @@
 <?php
 
 /**
- * This file is part of OXID eSales Paypal module.
+ * This file is part of OXID eSales PayPal module.
  *
- * OXID eSales Paypal module is free software: you can redistribute it and/or modify
+ * OXID eSales PayPal module is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * OXID eSales Paypal module is distributed in the hope that it will be useful,
+ * OXID eSales PayPal module is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with OXID eSales Paypal module.  If not, see <http://www.gnu.org/licenses/>.
+ * along with OXID eSales PayPal module.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @link      http://www.oxid-esales.com
  * @copyright (C) OXID eSales AG 2003-2020
@@ -25,6 +25,7 @@ namespace OxidProfessionalServices\PayPal\Core;
 use OxidEsales\Eshop\Application\Model\Payment;
 use OxidEsales\Eshop\Core\DatabaseProvider;
 use OxidEsales\Eshop\Core\Field;
+use OxidEsales\Eshop\Core\Model\BaseModel;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Repository\LogRepository;
 
@@ -38,8 +39,33 @@ class Events
         self::createLogTable();
         self::addPaymentMethod();
         self::enablePaymentMethod();
-        self::createPaypalOrderTable();
+        self::createPayPalOrderTable();
         self::createSubscriptionProductTable();
+        self::createSubscriptionTable();
+        self::createSubscriptionProductOrderTable();
+        self::configureShippingMethods();
+    }
+
+    /**
+     * Add PayPal subscription table
+     */
+    public static function createSubscriptionTable()
+    {
+        DatabaseProvider::getDb()->execute(
+            'CREATE TABLE IF NOT EXISTS `oxps_paypal_subscription` (
+          `OXID` char(32) NOT NULL,
+          `OXPSPAYPALID` varchar(45) DEFAULT NULL,
+          `OXPSPAYPALEMAIL` varchar(45) DEFAULT NULL,
+          `OXPSPAYPALSTATUS` varchar(45) DEFAULT NULL,
+          `OXPSPAYPALPLANID` varchar(45) DEFAULT NULL,
+          `OXPSPAYPALCREATETIME` datetime DEFAULT NULL,
+          `OXPSPAYPALUPDATETIME` datetime DEFAULT NULL,
+          `OXPSPAYPALSTARTTIME` datetime DEFAULT NULL,
+          `OXPSPAYPALSTATUSUPDATETIME` datetime DEFAULT NULL,
+          `OXTIMESTAMP` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+          PRIMARY KEY (`OXID`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=latin1'
+        );
     }
 
     /**
@@ -140,11 +166,11 @@ class Events
                         `OXPS_PAYPAL_RESPONSE_MSG`
                             TEXT
                             NOT NULL
-                            COMMENT \'Response from Paypal API\',
+                            COMMENT \'Response from PayPal API\',
                         `OXPS_PAYPAL_STATUS_CODE`
                             VARCHAR(100)
                             NOT NULL
-                            COMMENT \'Status code from Paypal API\',
+                            COMMENT \'Status code from PayPal API\',
                         `OXPS_PAYPAL_REQUEST_TYPE`
                             VARCHAR(100)
                             NOT NULL
@@ -160,10 +186,10 @@ class Events
                             character set latin1
                             collate latin1_general_ci
                             NOT NULL
-                            COMMENT \'Paypal index to search by\',
+                            COMMENT \'PayPal index to search by\',
                         PRIMARY KEY (`OXPS_PAYPAL_PAYLOGID`))
                             ENGINE=InnoDB
-                            COMMENT \'Paypal Payment transaction log\'',
+                            COMMENT \'PayPal Payment transaction log\'',
             LogRepository::TABLE_NAME
         );
 
@@ -197,7 +223,13 @@ class Events
                             character set latin1 
                             collate latin1_general_ci 
                             NOT NULL 
-                            COMMENT \'Paypal product ID\',
+                            COMMENT \'PayPal product ID\',
+                        `OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID` 
+                            char(32) 
+                            character set latin1 
+                            collate latin1_general_ci 
+                            NOT NULL 
+                            COMMENT \'PayPal PLan ID\',
                         `OXTIMESTAMP` 
                             timestamp 
                             NOT NULL 
@@ -213,48 +245,126 @@ class Events
         DatabaseProvider::getDb()->execute($sql);
     }
 
-    protected static function createPaypalOrderTable(): void
+    protected static function createSubscriptionProductOrderTable(): void
     {
         $sql = sprintf(
             'CREATE TABLE IF NOT EXISTS %s (
-                        `OXID`
-                            char(32)
-                            character set latin1
-                            collate latin1_general_ci
+                        `OXPS_PAYPAL_SUBSCRIPTION_PRODUCT_ORDER_ID` 
+                            char(32) 
+                            character set latin1 
+                            collate latin1_general_ci 
                             NOT NULL
                             COMMENT \'Record id\',
-                        `OXPS_PAYPAL_OXSHOPID`
-                            char(32)
-                            character set latin1
-                            collate latin1_general_ci
-                            NOT NULL
-                            COMMENT \'Shop id (oxshops)\',
-                        `OXPS_PAYPAL_OXORDERID`
-                            char(32)
-                            character set latin1
-                            collate latin1_general_ci
-                            NOT NULL
-                            COMMENT \'oxorder OXID\',
-                        `OXPS_PAYPAL_PAYPALORDERID`
-                            char(32)
-                            character set latin1
-                            collate latin1_general_ci
-                            NOT NULL
-                            COMMENT \'Paypal Order ID\',
-                        `OXTIMESTAMP`
-                            timestamp
-                            NOT NULL
-                            default CURRENT_TIMESTAMP
-                            on update CURRENT_TIMESTAMP
+                        `OXPS_PAYPAL_USER_ID` 
+                            char(32) 
+                            character set latin1 
+                            collate latin1_general_ci 
+                            NOT NULL 
+                            COMMENT \'User id (oxuser)\',
+                        `OXPS_PAYPAL_OXARTICLE_ID` 
+                            char(32) 
+                            character set latin1 
+                            collate latin1_general_ci 
+                            NOT NULL 
+                            COMMENT \'OXID product ID\',
+                        `OXPS_PAYPAL_PRODUCT_ID` 
+                            char(32) 
+                            character set latin1 
+                            collate latin1_general_ci 
+                            NOT NULL 
+                            COMMENT \'PayPal product ID\',
+                        `OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID` 
+                            char(32) 
+                            character set latin1 
+                            collate latin1_general_ci 
+                            NOT NULL 
+                            COMMENT \'PayPal Plan ID\',
+                        `OXPS_PAYPAL_SESSION_ID` 
+                            char(32) 
+                            character set latin1 
+                            collate latin1_general_ci 
+                            NOT NULL 
+                            COMMENT \'PHP Session ID\',
+                        `OXTIMESTAMP` 
+                            timestamp 
+                            NOT NULL 
+                            default CURRENT_TIMESTAMP 
+                            on update CURRENT_TIMESTAMP 
                             COMMENT \'Timestamp\',
-                        PRIMARY KEY (`OXID`),
-                        KEY `OXPS_PAYPAL_OXORDERID` (`OXPS_PAYPAL_OXORDERID`)
-                        )
-                            ENGINE=InnoDB
+                        PRIMARY KEY (`OXPS_PAYPAL_SUBSCRIPTION_PRODUCT_ORDER_ID`)) 
+                            ENGINE=InnoDB 
                             COMMENT \'Primary key\'',
+            'oxps_paypal_subscription_product_order'
+        );
+
+        DatabaseProvider::getDb()->execute($sql);
+    }
+
+    protected static function createPayPalOrderTable(): void
+    {
+        $sql = sprintf(
+            'CREATE TABLE IF NOT EXISTS %s (
+                `OXID`
+                    char(32)
+                    character set latin1
+                    collate latin1_general_ci
+                    NOT NULL
+                    COMMENT \'Record id\',
+                `OXPS_PAYPAL_OXSHOPID`
+                    char(32)
+                    character set latin1
+                    collate latin1_general_ci
+                    NOT NULL
+                    COMMENT \'Shop id (oxshops)\',
+                `OXPS_PAYPAL_OXORDERID`
+                    char(32)
+                    character set latin1
+                    collate latin1_general_ci
+                    NOT NULL
+                    COMMENT \'oxorder OXID\',
+                `OXPS_PAYPAL_PAYPALORDERID`
+                    char(32)
+                    character set latin1
+                    collate latin1_general_ci
+                    NOT NULL
+                    COMMENT \'PayPal Order ID\',
+                `OXTIMESTAMP`
+                    timestamp
+                    NOT NULL
+                    default CURRENT_TIMESTAMP
+                    on update CURRENT_TIMESTAMP
+                    COMMENT \'Timestamp\',
+                PRIMARY KEY (`OXID`),
+                KEY `OXPS_PAYPAL_OXORDERID` (`OXPS_PAYPAL_OXORDERID`)
+            )
+            ENGINE=InnoDB
+            COMMENT \'Primary key\'',
             'oxps_paypal_order'
         );
 
         DatabaseProvider::getDb()->execute($sql);
+    }
+
+    /**
+     * Assigns PayPal to all available shipping methods
+     */
+    protected static function configureShippingMethods()
+    {
+        $db = DatabaseProvider::getDb();
+        $allShippingIds = $db->getCol("SELECT oxid FROM oxdeliveryset");
+        $assignedShippingIds = $db->getCol(
+            "SELECT oxobjectid FROM oxobject2payment WHERE oxpaymentid='oxidpaypal' AND oxtype='oxdelset'"
+        );
+        foreach (array_diff($allShippingIds, $assignedShippingIds) as $shippingId) {
+            /** @var BaseModel $o2d */
+            $o2d = oxNew(BaseModel::class);
+            $o2d->init('oxobject2payment');
+            $o2d->assign([
+                'oxpaymentid' => 'oxidpaypal',
+                'oxtype' => 'oxdelset',
+                'oxobjectid' => $shippingId
+            ]);
+            $o2d->save();
+        }
     }
 }

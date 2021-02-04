@@ -11,7 +11,7 @@ use Webmozart\Assert\Assert;
  * to switch the plan and update the `shipping_amount` and `shipping_address` values for the subscription. This
  * type of update requires the buyer's consent.
  *
- * generated from: customized_x_unsupported_5875_subscription_revise_request.json
+ * generated from: customized_x_unsupported_159_subscription_revise_request.json
  */
 class SubscriptionReviseRequest2 implements JsonSerializable
 {
@@ -60,6 +60,13 @@ class SubscriptionReviseRequest2 implements JsonSerializable
      */
     public $shipping_address;
 
+    /**
+     * The plan details to override at subscription level.
+     *
+     * @var PlanOverride | null
+     */
+    public $plan;
+
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
@@ -105,6 +112,12 @@ class SubscriptionReviseRequest2 implements JsonSerializable
             "shipping_address in SubscriptionReviseRequest2 must be instance of ShippingDetail $within"
         );
         !isset($this->shipping_address) ||  $this->shipping_address->validate(SubscriptionReviseRequest2::class);
+        !isset($this->plan) || Assert::isInstanceOf(
+            $this->plan,
+            PlanOverride::class,
+            "plan in SubscriptionReviseRequest2 must be instance of PlanOverride $within"
+        );
+        !isset($this->plan) ||  $this->plan->validate(SubscriptionReviseRequest2::class);
     }
 
     private function map(array $data)
@@ -124,6 +137,9 @@ class SubscriptionReviseRequest2 implements JsonSerializable
         if (isset($data['shipping_address'])) {
             $this->shipping_address = new ShippingDetail($data['shipping_address']);
         }
+        if (isset($data['plan'])) {
+            $this->plan = new PlanOverride($data['plan']);
+        }
     }
 
     public function __construct(array $data = null)
@@ -141,5 +157,10 @@ class SubscriptionReviseRequest2 implements JsonSerializable
     public function initShippingAddress(): ShippingDetail
     {
         return $this->shipping_address = new ShippingDetail();
+    }
+
+    public function initPlan(): PlanOverride
+    {
+        return $this->plan = new PlanOverride();
     }
 }

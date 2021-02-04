@@ -22,15 +22,15 @@
 
 namespace OxidProfessionalServices\PayPal\Model;
 
+use OxidEsales\Eshop\Core\DatabaseProvider;
 use OxidEsales\Eshop\Core\Field;
+use OxidEsales\Eshop\Core\Model\BaseModel;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
-use OxidProfessionalServices\PayPal\Api\Model\Orders\Order as PayPalOrder;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\Capture;
+use OxidProfessionalServices\PayPal\Api\Model\Orders\Order as PayPalOrder;
 use OxidProfessionalServices\PayPal\Api\Service\Orders;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
-use OxidEsales\Eshop\Core\DatabaseProvider;
-use OxidEsales\Eshop\Core\Model\BaseModel;
 
 /**
  * PayPal oxOrder class
@@ -65,7 +65,7 @@ class Order extends Order_parent
         if (!$this->payPalOrder) {
             /** @var Orders $orderService */
             $orderService = Registry::get(ServiceFactory::class)->getOrderService();
-            $this->payPalOrder = $orderService->showOrderDetails($this->getPaypalOrderIdForOxOrderId());
+            $this->payPalOrder = $orderService->showOrderDetails($this->getPayPalOrderIdForOxOrderId());
         }
 
         return $this->payPalOrder;
@@ -96,7 +96,7 @@ class Order extends Order_parent
      *
      * @return string
      */
-    public function getPaypalOrderIdForOxOrderId(string $oxId = null)
+    public function getPayPalOrderIdForOxOrderId(string $oxId = null)
     {
         if (is_null($this->payPalOrderId)) {
             $this->payPalOrderId = '';
@@ -123,7 +123,7 @@ class Order extends Order_parent
      */
     public function paidWithPayPal(): bool
     {
-        return (bool) $this->getPaypalOrderIdForOxOrderId();
+        return (bool) $this->getPayPalOrderIdForOxOrderId();
     }
 
     /**

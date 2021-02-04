@@ -1,20 +1,20 @@
 <?php
 
 /**
- * This file is part of OXID eSales Paypal module.
+ * This file is part of OXID eSales PayPal module.
  *
- * OXID eSales Paypal module is free software: you can redistribute it and/or modify
+ * OXID eSales PayPal module is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * OXID eSales Paypal module is distributed in the hope that it will be useful,
+ * OXID eSales PayPal module is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with OXID eSales Paypal module.  If not, see <http://www.gnu.org/licenses/>.
+ * along with OXID eSales PayPal module.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @link      http://www.oxid-esales.com
  * @copyright (C) OXID eSales AG 2003-2020
@@ -24,23 +24,30 @@ namespace OxidProfessionalServices\PayPal\Controller\Admin;
 
 use OxidEsales\Eshop\Application\Controller\Admin\AdminController;
 use OxidEsales\Eshop\Application\Model\Article;
+use OxidEsales\Eshop\Core\DatabaseProvider;
 use OxidEsales\Eshop\Core\Exception\DatabaseConnectionException;
 use OxidEsales\Eshop\Core\Exception\DatabaseErrorException;
 use OxidEsales\Eshop\Core\Registry;
-use OxidProfessionalServices\PayPal\Api\Model\Catalog\Patch;
+use OxidEsales\Eshop\Core\UtilsObject;
+use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
 use OxidProfessionalServices\PayPal\Api\Model\Catalog\Product;
-use OxidProfessionalServices\PayPal\Api\Model\Catalog\ProductRequestPOST;
+use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\BillingCycle;
+use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Frequency;
+use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Plan;
+use OxidProfessionalServices\PayPal\Controller\Admin\Service\CatalogService;
+use OxidProfessionalServices\PayPal\Controller\Admin\Service\SubscriptionService;
+use OxidProfessionalServices\PayPal\Core\Currency;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 use OxidProfessionalServices\PayPal\Model\Category;
 use OxidProfessionalServices\PayPal\Repository\SubscriptionRepository;
 
 /**
- * Controller for admin > Paypal/Configuration page
+ * Controller for admin > PayPal/Configuration page
  */
-class PaypalSubscribeController extends AdminController
+class PayPalSubscribeController extends AdminController
 {
     /**
-     * The Product from Paypal's API
+     * The Product from PayPal's API
      * Caching the linked object to reduce calls to paypal api
      * @var Product
      */
@@ -52,6 +59,13 @@ class PaypalSubscribeController extends AdminController
      * @var array
      */
     private $linkedProduct;
+
+
+    /**
+     * The lined subscription plan called from PayPal API
+     * @var Plan
+     */
+    private $subscriptionPlan;
 
     /**
      * @var SubscriptionRepository
@@ -90,20 +104,148 @@ class PaypalSubscribeController extends AdminController
     }
 
     /**
+     * @return array
+     */
+    public function getIntervalDefaults()
+    {
+        return [
+            Frequency::INTERVAL_UNIT_DAY,
+            Frequency::INTERVAL_UNIT_WEEK,
+            Frequency::INTERVAL_UNIT_SEMI_MONTH,
+            Frequency::INTERVAL_UNIT_MONTH,
+            Frequency::INTERVAL_UNIT_YEAR
+        ];
+    }
+
+    /**
+     * @return array|string[]
+     */
+    public function getCurrencyCodes()
+    {
+        return Currency::getCurrencyCodes();
+    }
+
+    /**
+     * @return array
+     */
+    public function getTenureTypeDefaults()
+    {
+        return [
+            'REGULAR',
+            'TRIAL'
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getSequenceDefaults()
+    {
+        $array = [];
+
+        for ($i = 1; $i < 100; $i++) {
+            $array[] = $i;
+        }
+
+        return $array;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTotalCycleDefaults()
+    {
+        $array = [];
+
+        for ($i = 1; $i < 1000; $i++) {
+            $array[] = $i;
+        }
+
+        return $array;
+    }
+
+    /**
+     * @return array|false
+     * @throws DatabaseConnectionException
+     */
+    public function getVariantProducts()
+    {
+        $oxid = Registry::getRequest()->getRequestParameter('oxid');
+        $childProducts = $this->getChildProducts($oxid);
+
+        return (!empty($childProducts)) ? $childProducts : false;
+    }
+
+    /**
      * @return bool
+     * @throws DatabaseConnectionException
+     */
+    public function hasVariantProducts()
+    {
+        return (bool) $this->getVariantProducts();
+    }
+
+    /**
+     * @return bool
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     * @throws ApiException
+     */
+    public function hasSubscriptionPlan()
+    {
+        $this->setSubscriptionPlan();
+
+        return !empty($this->subscriptionPlan);
+    }
+
+    public function getPayPalProductId()
+    {
+        return $this->linkedObject->id;
+    }
+
+    /**
+     * @return bool|Plan
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     * @throws ApiException
+     */
+    public function setSubscriptionPlan()
+    {
+        if (!empty($this->subscriptionPlan)) {
+            return $this->subscriptionPlan;
+        }
+
+        $result = $this->repository->getSubscriptionIdPlanByProductId($this->linkedObject->id);
+        $subscriptionPlanId = $result[0]['OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID'];
+
+        if (empty($subscriptionPlanId)) {
+            return false;
+        }
+
+        /** @var ServiceFactory $sf */
+        $sf = Registry::get(ServiceFactory::class);
+        $subscriptionPlan = $sf->getSubscriptionService()->showPlanDetails('string', $subscriptionPlanId, 1);
+
+        if ($subscriptionPlan !== null) {
+            $this->subscriptionPlan = $subscriptionPlan;
+        }
+
+        return $this->subscriptionPlan;
+    }
+
+    /**
+     * @return bool
+     * @throws ApiException
      */
     public function hasLinkedObject()
     {
         $this->setLinkedObject();
-        if (!empty($this->linkedObject)) {
-            return true;
-        }
-
-        return false;
+        return !empty($this->linkedObject);
     }
 
     /**
      * @return Product
+     * @throws ApiException
      */
     public function getLinkedObject()
     {
@@ -112,7 +254,19 @@ class PaypalSubscribeController extends AdminController
     }
 
     /**
-     * @throws \OxidProfessionalServices\PayPal\Api\Exception\ApiException
+     * @return Plan
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     * @throws ApiException
+     */
+    public function getSubscriptionPlan()
+    {
+        $this->setSubscriptionPlan();
+        return $this->subscriptionPlan;
+    }
+
+    /**
+     * @throws ApiException
      */
     public function setLinkedObject()
     {
@@ -124,8 +278,20 @@ class PaypalSubscribeController extends AdminController
         $oxid = Registry::getRequest()->getRequestParameter('oxid');
         $article->load($oxid);
 
+        $childArticle = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)
+            ->getOne("SELECT OXID FROM oxarticles WHERE OXPARENTID = ?", [$oxid]);
+
+        if (!$childArticle) {
+            $this->linkedProduct = $this->repository->getLinkedProductByOxid($oxid);
+            if ($this->linkedProduct) {
+                $this->linkedObject = $this->getPayPalProductDetail($this->linkedProduct[0]['OXPS_PAYPAL_PRODUCT_ID']);
+            }
+
+            return;
+        }
+
         try {
-            $this->getLinkedProductByOxid($oxid);
+            $this->getLinkedProductByOxid($childArticle);
         } catch (DatabaseConnectionException $e) {
             return;
         } catch (DatabaseErrorException $e) {
@@ -136,13 +302,13 @@ class PaypalSubscribeController extends AdminController
             return;
         }
 
-        $this->linkedObject = $this->getPaypalProductDetail($this->linkedProduct[0]['OXPS_PAYPAL_PRODUCT_ID']);
+        $this->linkedObject = $this->getPayPalProductDetail($this->linkedProduct[0]['OXPS_PAYPAL_PRODUCT_ID']);
     }
 
     /**
      * @throws DatabaseConnectionException
      * @throws DatabaseErrorException
-     * @throws \OxidProfessionalServices\PayPal\Api\Exception\ApiException
+     * @throws ApiException
      */
     public function unlink()
     {
@@ -153,36 +319,25 @@ class PaypalSubscribeController extends AdminController
         }
 
         $this->repository->deleteLinkedProduct($this->linkedObject->id);
+        $this->addTplParam('updatelist', 1);
     }
 
     /**
      * @param $id
      * @return Product
-     * @throws \OxidProfessionalServices\PayPal\Api\Exception\ApiException
+     * @throws ApiException
      */
-    public function getPaypalProductDetail($id): Product
+    public function getPayPalProductDetail($id): Product
     {
-        /**
-         * @var ServiceFactory $sf
-         */
-        $sf = Registry::get(ServiceFactory::class);
-        $cs = $sf->getCatalogService();
-
-        return $cs->showProductDetails($id);
+        return Registry::get(ServiceFactory::class)->getCatalogService()->showProductDetails($id);
     }
 
     /**
-     * @throws \OxidProfessionalServices\PayPal\Api\Exception\ApiException
+     * @throws ApiException
      */
     public function getCatalogEntries()
     {
-        /**
-         * @var ServiceFactory $sf
-         */
-        $sf = Registry::get(ServiceFactory::class);
-        $cs = $sf->getCatalogService();
-
-        $products = $cs->listProducts();
+        $products = Registry::get(ServiceFactory::class)->getCatalogService()->listProducts();
 
         $filteredProducts = [];
         foreach ($products as $product) {
@@ -207,7 +362,6 @@ class PaypalSubscribeController extends AdminController
 
         return $categoryArray;
     }
-
 
     /**
      * @return array
@@ -287,75 +441,175 @@ class PaypalSubscribeController extends AdminController
         return str_replace(':/out', '/out', $url) . 'master/product/' . $num . '/' . $file;
     }
 
-    public function save()
+    /**
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     * @throws ApiException
+     */
+    public function saveProduct()
     {
-        /**
-         * @var ServiceFactory $sf
-         */
-        $sf = Registry::get(ServiceFactory::class);
-        $cs = $sf->getCatalogService();
-        $request = Registry::getRequest();
-        $productId = $request->getRequestEscapedParameter('paypalProductId', "");
+        $catalogService = new CatalogService($this->linkedObject);
+        $productId = Registry::getRequest()->getRequestEscapedParameter('paypalProductId', "");
 
-        if ($this->hasLinkedObject()) {
-             $this->setLinkedObject();
-
-            if ($this->linkedObject->description !== $request->getRequestEscapedParameter('description')) {
-                $patchRequest = new Patch();
-                $patchRequest->op = Patch::OP_REPLACE;
-                $patchRequest->value = $request->getRequestEscapedParameter('description');
-                $patchRequest->path = '/description';
-                $cs->updateProduct($productId, [$patchRequest]);
+        try {
+            if ($this->hasLinkedObject()) {
+                $this->setLinkedObject();
+                $catalogService->updateProduct($productId);
+            } else {
+                $catalogService->createProduct();
             }
+        } catch (ApiException $e) {
+            $this->addTplParam('error', $e->getErrorDescription());
+        }
+    }
 
-            if ($this->linkedObject->category !== $request->getRequestEscapedParameter('category')) {
-                $patchRequest = new Patch();
-                $patchRequest->op = Patch::OP_REPLACE;
-                $patchRequest->value = $request->getRequestEscapedParameter('category');
-                $patchRequest->path = '/category';
-                $cs->updateProduct($productId, [$patchRequest]);
+    public function saveBillingPlans()
+    {
+        $subscriptionService = new SubscriptionService();
+        $productId = Registry::getRequest()->getRequestEscapedParameter('paypalProductId', "");
+        try {
+            $this->setLinkedObject();
+            $variantId = $this->saveVariants();
+            /** @var Plan $subscription */
+            $subscriptionService->saveNewSubscriptionPlan($productId, $variantId);
+        } catch (DatabaseConnectionException $e) {
+            $this->addTplParam('error', $e->getMessage());
+        } catch (DatabaseErrorException $e) {
+            $this->addTplParam('error', $e->getMessage());
+        } catch (ApiException $e) {
+            $this->addTplParam('error', $e->getErrorDescription());
+        }
+    }
+
+    public function getSubscriptionPlans()
+    {
+        $this->setSubscriptionPlan();
+
+        if (empty($this->subscriptionPlan)) {
+            return [];
+        }
+
+        $subscriptionService = new SubscriptionService();
+        $subscriptionPlans = $subscriptionService->listPlans(
+            $this->subscriptionPlan->product_id,
+            [
+                $this->subscriptionPlan->id
+            ]
+        );
+
+        return $subscriptionPlans->plans;
+    }
+
+    /**
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     */
+    public function patch()
+    {
+        $productId = Registry::getRequest()->getRequestEscapedParameter('paypalProductId', "");
+        $subscriptionService = new SubscriptionService();
+        $catalogService = new CatalogService($this->linkedObject);
+
+        try {
+            if ($this->hasSubscriptionPlan()) {
+                $subscriptionService->update($this->subscriptionPlan);
+            } else {
+                /** @var BillingCycle[] $cycles */
+                $cycles = $subscriptionService->saveNewSubscriptionPlan($productId, $this->getEditObjectId());
+                $this->setLinkedObject();
+                $catalogService->updateProduct($productId);
+                $this->saveVariants();
             }
-
-            if ($this->linkedObject->image_url !== $request->getRequestEscapedParameter('imageUrl')) {
-                $patchRequest = new Patch();
-                $patchRequest->op = Patch::OP_REPLACE;
-                $patchRequest->value = $request->getRequestEscapedParameter('imageUrl');
-                $patchRequest->path = '/image_url';
-                $cs->updateProduct($productId, [$patchRequest]);
-            }
-
-            if ($this->linkedObject->home_url !== $request->getRequestEscapedParameter('homeUrl')) {
-                $patchRequest = new Patch();
-                $patchRequest->op = Patch::OP_REPLACE;
-                $patchRequest->value = $request->getRequestEscapedParameter('homeUrl');
-                $patchRequest->path = '/home_url';
-                $cs->updateProduct($productId, [$patchRequest]);
-            }
-        } else {
-            $productRequest = [];
-            $productRequest['name'] = utf8_encode($request->getRequestParameter('title'));
-            $productRequest['description'] = utf8_encode($request->getRequestParameter('description'));
-            $productRequest['type'] = $request->getRequestParameter('productType');
-            $productRequest['category'] = $request->getRequestParameter('category');
-            $productRequest['image_url'] = $request->getRequestParameter('imageUrl');
-            $productRequest['home_url'] = $request->getRequestParameter('homeUrl');
-
-            $productRequestPost = new ProductRequestPOST($productRequest);
-
-            /** @var Product $response */
-            $response = $cs->createProduct($productRequestPost);
-
-            $this->repository->saveLinkedProduct(
-                $response,
-                Registry::getRequest()->getRequestParameter('oxid')
-            );
+        } catch (ApiException $e) {
+            $this->addTplParam('error', $e->getErrorDescription());
         }
     }
 
     /**
+     * @return string
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     */
+    protected function saveVariants(): string
+    {
+        $fixed_price = Registry::getRequest()->getRequestEscapedParameter('fixed_price', "");
+        $setupFee = floatVal(Registry::getRequest()->getRequestEscapedParameter('setup_fee', 0));
+        $planName = Registry::getRequest()->getRequestEscapedParameter('billing_plan_name', '');
+        $price = floatVal($fixed_price[0]);
+
+        $oxid = Registry::getRequest()->getRequestParameter('oxid');
+        $sort = 1;
+        $variantOxid = UtilsObject::getInstance()->generateUId();
+
+        $this->repository->saveVariantProduct($variantOxid, $oxid, $setupFee, $price, $planName, $sort);
+        $this->saveMapId($this->getMapIdFromVariant($variantOxid));
+        $this->saveSelectName($oxid);
+
+        return $variantOxid;
+    }
+
+    /**
+     * @param string|null $oxid
+     * @return array
+     * @throws DatabaseConnectionException
+     */
+    protected function getChildProducts(?string $oxid): array
+    {
+        return DatabaseProvider::getDb(
+            DatabaseProvider::FETCH_MODE_ASSOC
+        )->getAll(
+            'SELECT * FROM oxarticles WHERE oxparentid = ?',
+            [$oxid]
+        );
+    }
+
+    /**
+     * @param string $variantOxid
+     * @return mixed
+     * @throws DatabaseConnectionException
+     */
+    protected function getMapIdFromVariant(string $variantOxid): string
+    {
+        $query = DatabaseProvider::getDb(
+            DatabaseProvider::FETCH_MODE_ASSOC
+        )->getRow(
+            'SELECT OXMAPID FROM oxarticles WHERE OXID = ?',
+            [$variantOxid]
+        );
+
+        return $query['OXMAPID'];
+    }
+
+    /**
+     * @param $mapId
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     */
+    protected function saveMapId($mapId): void
+    {
+        DatabaseProvider::getDb()->execute(
+            'INSERT INTO oxarticles2shop(OXSHOPID, OXMAPOBJECTID) VALUES(?,?)',
+            [Registry::getConfig()->getShopId(), $mapId]
+        );
+    }
+
+    /**
+     * @param string|null $oxid
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     */
+    protected function saveSelectName(?string $oxid): void
+    {
+        DatabaseProvider::getDb()->execute(
+            'UPDATE oxarticles SET OXVARNAME = ? WHERE OXID = ? OR OXPARENTID = ?',
+            ['subscribe', $oxid, $oxid]
+        );
+    }
+
+    /**
      * @param $oxid
-     * @throws \OxidEsales\Eshop\Core\Exception\DatabaseConnectionException
-     * @throws \OxidEsales\Eshop\Core\Exception\DatabaseErrorException
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
      */
     private function getLinkedProductByOxid($oxid): void
     {
