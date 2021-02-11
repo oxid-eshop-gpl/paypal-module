@@ -5,7 +5,9 @@
     $oViewConf->getTopActiveClassName()|lower=="paypalsubscriptioncontroller" ||
     $oViewConf->getTopActiveClassName()|lower=="paypalsubscriptiondetailscontroller" ||
     $oViewConf->getTopActiveClassName()|lower=="paypalsubscriptiontransactioncontroller" ||
-    $oViewConf->getTopActiveClassName()|lower=="paypalsubscriptiontransactioncontroller"
+    $oViewConf->getTopActiveClassName()|lower=="paypaldisputedetailscontroller" ||
+    $oViewConf->getTopActiveClassName()|lower=="paypaldisputecontroller" ||
+    $oViewConf->getTopActiveClassName()|lower=="paypalsubscribecontroller"
 }]
     [{assign var="sFileMTime" value=$oViewConf->getModulePath('oxps/paypal','out/src/js/paypal-admin.min.js')|filemtime}]
     [{oxscript include="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" priority=9}]

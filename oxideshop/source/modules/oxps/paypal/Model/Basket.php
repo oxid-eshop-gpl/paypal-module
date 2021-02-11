@@ -1,20 +1,20 @@
 <?php
 
 /**
- * This file is part of OXID eSales Paypal module.
+ * This file is part of OXID eSales PayPal module.
  *
- * OXID eSales Paypal module is free software: you can redistribute it and/or modify
+ * OXID eSales PayPal module is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * OXID eSales Paypal module is distributed in the hope that it will be useful,
+ * OXID eSales PayPal module is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with OXID eSales Paypal module.  If not, see <http://www.gnu.org/licenses/>.
+ * along with OXID eSales PayPal module.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @link      http://www.oxid-esales.com
  * @copyright (C) OXID eSales AG 2003-2020
@@ -23,6 +23,8 @@
 namespace OxidProfessionalServices\PayPal\Model;
 
 use OxidEsales\Eshop\Application\Model\Article as EshopArticle;
+use OxidEsales\Eshop\Core\Price;
+use OxidEsales\Eshop\Core\Registry;
 
 /**
  * PayPal basket class
@@ -126,7 +128,7 @@ class Basket extends Basket_parent
 
         return $amount;
     }
-    
+
     /**
      * Collects all basket discounts (basket, payment and vouchers)
      * and returns sum of collected discounts.
@@ -287,5 +289,62 @@ class Basket extends Basket_parent
         }
 
         return $return;
+    }
+
+    /**
+     * @param $sProductID
+     * @param $dAmount
+     * @param null $aSel
+     * @param null $aPersParam
+     * @param false $blOverride
+     * @param false $blBundle
+     * @param null $sOldBasketItemId
+     * @return mixed
+     * @throws \OxidEsales\Eshop\Core\Exception\DatabaseConnectionException
+     */
+    public function addToBasket(
+        $sProductID,
+        $dAmount,
+        $aSel = null,
+        $aPersParam = null,
+        $blOverride = false,
+        $blBundle = false,
+        $sOldBasketItemId = null
+    ) {
+        if (strpos($dAmount, '|') !== false) {
+            $dAmountArray = explode('|', $dAmount);
+            $index = $dAmountArray[0];
+            $currentSubscriptionView = json_decode(
+                Registry::getSession()->getVariable('currentSubscriptionView'),
+                true
+            );
+            $selectedBillingCycle = $currentSubscriptionView['billing_cycles'][$index];
+            $dAmount = 1;
+
+            $price = oxNew(Price::class);
+            $price->setPrice($selectedBillingCycle['pricing_scheme']['fixed_price']['value']);
+            $price->setBruttoPriceMode();
+            Registry::getSession()->setVariable('selectedBillingCycle', json_encode($selectedBillingCycle));
+
+            return $this->addToPayPalBasket(
+                $sProductID,
+                $dAmount,
+                $aSel,
+                $aPersParam,
+                $blOverride,
+                $blBundle,
+                $sOldBasketItemId
+            );
+        }
+
+        return parent::addToBasket(
+            $sProductID,
+            $dAmount,
+            $aSel,
+            $aPersParam,
+            $blOverride,
+            $blBundle,
+            $sOldBasketItemId
+        );
     }
 }

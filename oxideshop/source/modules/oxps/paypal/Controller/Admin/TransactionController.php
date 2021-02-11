@@ -1,20 +1,20 @@
 <?php
 
 /**
- * This file is part of OXID eSales Paypal module.
+ * This file is part of OXID eSales PayPal module.
  *
- * OXID eSales Paypal module is free software: you can redistribute it and/or modify
+ * OXID eSales PayPal module is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * OXID eSales Paypal module is distributed in the hope that it will be useful,
+ * OXID eSales PayPal module is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with OXID eSales Paypal module.  If not, see <http://www.gnu.org/licenses/>.
+ * along with OXID eSales PayPal module.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @link      http://www.oxid-esales.com
  * @copyright (C) OXID eSales AG 2003-2020
@@ -36,7 +36,7 @@ use OxidProfessionalServices\PayPal\Core\TransactionEventCodes;
 
 class TransactionController extends AdminListController
 {
-    private const DEFAULT_LIST_SIZE = 100;
+    private const DEFAULT_LIST_SIZE = 15;
 
     /**
      * @var SearchResponse|null
@@ -44,11 +44,13 @@ class TransactionController extends AdminListController
     protected $response;
 
     /**
-     * Current class template name.
-     *
-     * @var string
+     * @inheritDoc
      */
-    protected $_sThisTemplate = 'paypal_transactions.tpl';
+    public function __construct()
+    {
+        parent::__construct();
+        $this->setTemplateName('paypal_transactions.tpl');
+    }
 
     /**
      * @inheritDoc
@@ -60,7 +62,8 @@ class TransactionController extends AdminListController
             $this->addTplParam('eventCodes', TransactionEventCodes::EVENT_CODES);
         } catch (ApiException $exception) {
             if ($exception->shouldDisplay()) {
-                $this->addTplParam('error', $exception->getErrorDescription());
+                $this->addTplParam('error', Registry::getLang()->translateString('OXPS_PAYPAL_ERROR_' .
+                    $exception->getErrorIssue()));
             }
             Registry::getLogger()->error($exception);
         }

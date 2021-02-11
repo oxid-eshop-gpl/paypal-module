@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 /**
  * The payment card to use to fund a payment. Can be a credit or debit card.
  *
- * generated from: customized_x_unsupported_1218_merchant.CommonComponentsSpecification-v1-schema-card.json
+ * generated from: customized_x_unsupported_1754_merchant.CommonComponentsSpecification-v1-schema-card.json
  */
 class Card2 implements JsonSerializable
 {
@@ -59,6 +59,13 @@ class Card2 implements JsonSerializable
      */
     public $billing_address;
 
+    /**
+     * Additional attributes associated with the use of this card
+     *
+     * @var CardAttributes | null
+     */
+    public $attributes;
+
     public function validate($from = null)
     {
         $within = isset($from) ? "within $from" : "";
@@ -95,6 +102,12 @@ class Card2 implements JsonSerializable
             "billing_address in Card2 must be instance of AddressPortable $within"
         );
         !isset($this->billing_address) ||  $this->billing_address->validate(Card2::class);
+        !isset($this->attributes) || Assert::isInstanceOf(
+            $this->attributes,
+            CardAttributes::class,
+            "attributes in Card2 must be instance of CardAttributes $within"
+        );
+        !isset($this->attributes) ||  $this->attributes->validate(Card2::class);
     }
 
     private function map(array $data)
@@ -114,6 +127,9 @@ class Card2 implements JsonSerializable
         if (isset($data['billing_address'])) {
             $this->billing_address = new AddressPortable($data['billing_address']);
         }
+        if (isset($data['attributes'])) {
+            $this->attributes = new CardAttributes($data['attributes']);
+        }
     }
 
     public function __construct(array $data = null)
@@ -126,5 +142,10 @@ class Card2 implements JsonSerializable
     public function initBillingAddress(): AddressPortable
     {
         return $this->billing_address = new AddressPortable();
+    }
+
+    public function initAttributes(): CardAttributes
+    {
+        return $this->attributes = new CardAttributes();
     }
 }

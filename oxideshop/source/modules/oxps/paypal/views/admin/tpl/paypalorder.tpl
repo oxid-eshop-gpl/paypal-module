@@ -3,7 +3,7 @@
 <form name="transfer" id="transfer" action="[{$oViewConf->getSelfLink()}]" method="post">
     [{$oViewConf->getHiddenSid()}]
     <input type="hidden" name="oxid" value="[{$oxid}]">
-    <input type="hidden" name="cl" value="PaypalOrderController">
+    <input type="hidden" name="cl" value="PayPalOrderController">
 </form>
 
 [{if $error}]
@@ -12,7 +12,7 @@
 
 [{if $order && $payPalOrder}]
 
-    [{assign var="currency" value=$oView->getPaypalCurrency()}]
+    [{assign var="currency" value=$oView->getPayPalCurrency()}]
 
     <table width="98%" cellspacing="0" cellpadding="0" border="0">
     <tbody>
@@ -22,37 +22,37 @@
             <tr>
                 <td class="edittext">[{oxmultilang ident="OXPS_PAYPAL_SHOP_PAYMENT_STATUS"}]:</td>
                 <td class="edittext">
-                    <b>[{oxmultilang ident='OXPS_PAYPAL_STATUS_'|cat:$oView->getPaypalPaymentStatus()}]</b>
+                    <b>[{oxmultilang ident='OXPS_PAYPAL_STATUS_'|cat:$oView->getPayPalPaymentStatus()}]</b>
                 </td>
             </tr>
             <tr>
                 <td class="edittext">[{oxmultilang ident="OXPS_PAYPAL_ORDER_PRICE"}]:</td>
                 <td class="edittext">
-                    <b>[{$oView->formatPrice($oView->getPaypalTotalOrderSum())}] [{$currency}]</b>
+                    <b>[{$oView->formatPrice($oView->getPayPalTotalOrderSum())}] [{$currency}]</b>
                 </td>
             </tr>
             <tr>
                 <td class="edittext">[{oxmultilang ident="OXPS_PAYPAL_CAPTURED_AMOUNT"}]:</td>
                 <td class="edittext">
-                    <b>[{$oView->formatPrice($oView->getPaypalCapturedAmount())}] [{$currency}]</b>
+                    <b>[{$oView->formatPrice($oView->getPayPalCapturedAmount())}] [{$currency}]</b>
                 </td>
             </tr>
             <tr>
                 <td class="edittext">[{oxmultilang ident="OXPS_PAYPAL_REFUNDED_AMOUNT"}]:</td>
                 <td class="edittext">
-                    <b>[{$oView->formatPrice($oView->getPaypalRefundedAmount())}] [{$currency}]</b>
+                    <b>[{$oView->formatPrice($oView->getPayPalRefundedAmount())}] [{$currency}]</b>
                 </td>
             </tr>
             <tr>
                 <td class="edittext">[{oxmultilang ident="OXPS_PAYPAL_CAPTURED_NET"}]:</td>
                 <td class="edittext">
-                    <b>[{$oView->formatPrice($oView->getPaypalRemainingRefundAmount())}] [{$currency}]</b>
+                    <b>[{$oView->formatPrice($oView->getPayPalRemainingRefundAmount())}] [{$currency}]</b>
                 </td>
             </tr>
             <tr>
                 <td class="edittext">[{oxmultilang ident="OXPS_PAYPAL_VOIDED_AMOUNT"}]:</td>
                 <td class="edittext">
-                    <b>[{$oView->formatPrice($oView->getPaypalVoidedAmount())}] [{$currency}]</b>
+                    <b>[{$oView->formatPrice($oView->getPayPalVoidedAmount())}] [{$currency}]</b>
                 </td>
             </tr>
 
@@ -60,7 +60,7 @@
             <tr>
                 <td class="edittext">[{oxmultilang ident="OXPS_PAYPAL_AUTHORIZATIONID"}]:</td>
                 <td class="edittext">
-                    <b>[{$oView->getPaypalAuthorizationId()}]</b>
+                    <b>[{$oView->getPayPalAuthorizationId()}]</b>
                 </td>
             </tr>
         </table>
@@ -87,7 +87,7 @@
                 <td class="listheader">[{oxmultilang ident="OXPS_PAYPAL_INVOICE_ID"}]</td>
                 <td class="listheader">[{oxmultilang ident="OXPS_PAYPAL_COMMENT"}]</td>
             </tr>
-            [{foreach from=$oView->getPaypalHistory() item=listitem name=paypalHistory}]
+            [{foreach from=$oView->getPayPalHistory() item=listitem name=paypalHistory}]
             [{cycle values='listitem,listitem2' assign='class'}]
             <tr>
                 <td valign="top" class="[{$class}]">[{$listitem.date}]</td>
@@ -167,7 +167,7 @@
     <form action="[{$oViewConf->getSelfLink()}]" method="post">
         [{$oViewConf->getHiddenSid()}]
         <input type="hidden" name="fnc" value="capture">
-        <input type="hidden" name="cl" value="PaypalOrderController">
+        <input type="hidden" name="cl" value="PayPalOrderController">
         <input type="hidden" name="oxid" value="[{$oxid}]">
         <input type="hidden" name="language" value="[{$actlang}]">
         <input type="submit" value="[{oxmultilang ident="OXPS_PAYPAL_CAPTURE"}]">
@@ -178,7 +178,7 @@
         <form action="[{$oViewConf->getSelfLink()}]" method="post">
             [{$oViewConf->getHiddenSid()}]
             <input type="hidden" name="fnc" value="refund">
-            <input type="hidden" name="cl" value="PaypalOrderController">
+            <input type="hidden" name="cl" value="PayPalOrderController">
             <input type="hidden" name="oxid" value="[{$oxid}]">
             <input type="hidden" name="language" value="[{$actlang}]">
             <table class="paypalActionsTable">

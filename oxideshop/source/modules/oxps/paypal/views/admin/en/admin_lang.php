@@ -1,23 +1,19 @@
 <?php
 
 /**
- * This file is part of OXID eSales Paypal module.
  * This file is part of OXID eSales PayPal module.
  *
- * OXID eSales Paypal module is free software: you can redistribute it and/or modify
  * OXID eSales PayPal module is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * OXID eSales Paypal module is distributed in the hope that it will be useful,
  * OXID eSales PayPal module is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with OXID eSales Paypal module.  If not, see <http://www.gnu.org/licenses/>.
  * along with OXID eSales PayPal module.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @link      http://www.oxid-esales.com
@@ -31,10 +27,8 @@ $aLang = [
     'OXPS_PAYPAL_EDIT'               => 'Edit',
     'OXPS_PAYPAL_ACTIONS'            => 'Actions',
     'OXPS_PAYPAL_CAPTURE_PAYMENT'    => 'Capture payment',
-    'OXPS_PAYPAL_CAPTURE'            => 'Capture',
     'OXPS_PAYPAL_ISSUE_REFUND'       => 'Issue refund',
-    'OXPS_PAYPAL_REFUND'             => 'Refund',
-    'OXPS_PAYPAL_SHOW_BALANCE_AFFECTING_RECORDS' => 'Only Balance Affecting',
+    'OXPS_PAYPAL_SHOW_BALANCE_AFFECTING_RECORDS' => 'Only balance affecting',
     'OXPS_PAYPAL_REPORT_REFERENCE'   => 'Report reference',
     'OXPS_PAYPAL_TRANSACTION_TO_PRICE' => 'Price to',
     'OXPS_PAYPAL_TRANSACTION_FROM_PRICE' => 'Price from',
@@ -44,15 +38,11 @@ $aLang = [
     'OXPS_PAYPAL_PRIMARY'            => 'Primary',
     'OXPS_PAYPAL_MORE'               => 'More',
     'OXPS_PAYPAL_LAST_REFRESH_TIME'  => 'Last refresh',
-    'OXPS_PAYPAL_CURRENCY_CODE'      => 'Currency Code',
     'OXPS_PAYPAL_CURRENCY_CODE'      => 'Currency code',
     'OXPS_PAYPAL_AS_OF_TIME'         => 'As of time',
-    'OXPS_PAYPAL_PAYMENT_INSTRUMENT_CREDIT_CARD' => 'Credit Card',
-    'OXPS_PAYPAL_PAYMENT_INSTRUMENT_DEBIT_CARD'  => 'Debit Card',
     'OXPS_PAYPAL_PAYMENT_INSTRUMENT_CREDIT_CARD' => 'Credit card',
     'OXPS_PAYPAL_PAYMENT_INSTRUMENT_DEBIT_CARD'  => 'Debit card',
     'OXPS_PAYPAL_TRANSACTION_STATUS_P' => 'Pending',
-    'OXPS_PAYPAL_TRANSACTION_STATUS_F' => 'Partially Refunded',
     'OXPS_PAYPAL_TRANSACTION_STATUS_F' => 'Partially refunded',
     'OXPS_PAYPAL_TRANSACTION_STATUS_D' => 'Denied',
     'OXPS_PAYPAL_TRANSACTION_STATUS_S' => 'Completed',
@@ -60,17 +50,10 @@ $aLang = [
     'OXPS_PAYPAL_DISPUTE_STATUS_UNDER_REVIEW' => 'Under Review',
     'OXPS_PAYPAL_DATE_SELECT_HELP'   => 'Maximum period of 31 days is allowed!',
     'OXPS_PAYPAL_APPLY'              => 'Apply',
-    'OXPS_PAYPAL_TRANSACTION_DATE_FROM' => 'Date From',
-    'OXPS_PAYPAL_TRANSACTION_DATE_TO'   => 'Date To',
-    'OXPS_PAYPAL_TRANSACTION_TYPE'   => 'Transaction Type',
     'OXPS_PAYPAL_TRANSACTION_DATE_FROM' => 'Date from',
     'OXPS_PAYPAL_TRANSACTION_DATE_TO'   => 'Date to',
     'OXPS_PAYPAL_TRANSACTION_TYPE'   => 'Transaction type',
     'OXPS_PAYPAL_TERMINAL_ID'        => 'Terminal ID',
-    'OXPS_PAYPAL_PAYMENT_INSTRUMENT_TYPE' => 'Instrument Type',
-    'OXPS_PAYPAL_TRANSACTION_CURRENCY' => 'Transaction Currency',
-    'OXPS_PAYPAL_TRANSACTION_AMOUNT' => 'Transaction Amount',
-    'OXPS_PAYPAL_TRANSACTION_DATE'   => 'Transaction Date',
     'OXPS_PAYPAL_PAYMENT_INSTRUMENT_TYPE' => 'Instrument type',
     'OXPS_PAYPAL_TRANSACTION_CURRENCY' => 'Transaction currency',
     'OXPS_PAYPAL_TRANSACTION_AMOUNT' => 'Transaction amount',
@@ -79,24 +62,22 @@ $aLang = [
     'OXPS_PAYPAL_ACCOUNT_ID'         => 'Account ID',
     'OXPS_PAYPAL_TRANSACTION_ID'     => 'Transaction ID',
     'OXPS_PAYPAL_REFERENCE_ID'       => 'Reference ID',
-    'OXPS_PAYPAL_REFERENCE_ID_TYPE'  => 'Reference ID Type',
-    'OXPS_PAYPAL_EVENT_CODE'         => 'Event Code',
-    'OXPS_PAYPAL_INITIATION_DATE'    => 'Initiation Date',
-    'OXPS_PAYPAL_UPDATED_DATE'       => 'Updated Date',
+    'OXPS_PAYPAL_REFERENCE_ID_TYPE'  => 'Reference ID type',
+    'OXPS_PAYPAL_EVENT_CODE'         => 'Event code',
+    'OXPS_PAYPAL_INITIATION_DATE'    => 'Initiated',
+    'OXPS_PAYPAL_UPDATED_DATE'       => 'Updated',
     'OXPS_PAYPAL_TRANSACTION_NOTE'   => 'Note',
-    'OXPS_PAYPAL_BANK_REFERENCE_ID'  => 'Bank Reference ID',
-    'OXPS_PAYPAL_INVOICE_ID'         => 'Invoice ID',
-    'OXPS_PAYPAL_CUSTOM_FIELD'       => 'Custom Field',
-    'OXPS_PAYPAL_CREDIT_TERM'        => 'Credit Term',
-    'OXPS_PAYPAL_INSTRUMENT_TYPE'    => 'Instrument Type',
+    'OXPS_PAYPAL_BANK_REFERENCE_ID'  => 'Bank reference ID',
+    'OXPS_PAYPAL_CUSTOM_FIELD'       => 'Custom field',
+    'OXPS_PAYPAL_CREDIT_TERM'        => 'Credit term',
+    'OXPS_PAYPAL_INSTRUMENT_TYPE'    => 'Instrument type',
     'OXPS_PAYPAL_TRANSACTION_STATUS' => 'Status',
-    'OXPS_PAYPAL_PAYMENT_TRACKING_ID' => 'Payment Tracking ID',
-    'OXPS_PAYPAL_PAYMENT_METHOD_TYPE' => 'Payment Method Type',
-    'OXPS_PAYPAL_INSTRUMENT_SUB_TYPE' => 'Instrument Sub Type',
+    'OXPS_PAYPAL_PAYMENT_TRACKING_ID' => 'Payment tracking ID',
+    'OXPS_PAYPAL_PAYMENT_METHOD_TYPE' => 'Payment method type',
+    'OXPS_PAYPAL_INSTRUMENT_SUB_TYPE' => 'Instrument sub type',
     'OXPS_PAYPAL_TRANSACTION_SUBJECT' => 'Subject',
-    'OXPS_PAYPAL_PROTECTION_ELIGIBILITY' => 'Protection Eligibility',
+    'OXPS_PAYPAL_PROTECTION_ELIGIBILITY' => 'Protection eligibility',
     'tbclorder_paypal'               => 'PayPal',
-    // Paypal Config
     // PayPal Config
     'OXPS_PAYPAL_CONFIG'             => 'Configuration',
     'OXPS_PAYPAL_SUBSCRIBE'          => 'PayPal Subscriptions',
@@ -105,12 +86,10 @@ $aLang = [
     'OXPS_PAYPAL_BILLING_PLAN_NAME'  => 'Billing Plan Name',
     'OXPS_PAYPAL_BILLING_PLAN_MAIN'       => 'Billing Cycle',
     'OXPS_PAYPAL_TRANSACTIONS'       => 'Transactions',
-    'OXPS_PAYPAL_SUBSCRIPTIONS'      => 'Subscriptions',
-    'OXPS_PAYPAL_DISPUTES'           => 'Disputes',
     'OXPS_PAYPAL_BALANCES'           => 'Balances',
     'OXPS_PAYPAL_GENERAL'            => 'General',
     'OXPS_PAYPAL_WEBHOOK_ID'         => 'Webhook ID',
-    'OXPS_PAYPAL_OPMODE'             => 'Operation Mode',
+    'OXPS_PAYPAL_OPMODE'             => 'Operation mode',
     'OXPS_PAYPAL_OPMODE_LIVE'        => 'Live',
     'OXPS_PAYPAL_OPMODE_SANDBOX'     => 'Sandbox',
     'OXPS_PAYPAL_CLIENT_ID'          => 'Client ID',
@@ -146,8 +125,8 @@ $aLang = [
     'OXPS_PAYPAL_AMOUNT'                      => 'Amount',
     'OXPS_PAYPAL_SHOP_PAYMENT_STATUS'         => 'Shop payment status',
     'OXPS_PAYPAL_ORDER_PRICE'                 => 'Full order price',
-    'OXPS_PAYPAL_PRODUCTS'                    => 'Product',
     'OXPS_PAYPAL_ORDER_PRODUCTS'              => 'Ordered products',
+    'OXPS_PAYPAL_PRODUCTS'                    => 'Product',
     'OXPS_PAYPAL_CAPTURED'                    => 'Captured',
     'OXPS_PAYPAL_REFUNDED'                    => 'Refunded',
     'OXPS_PAYPAL_CAPTURED_NET'                => 'Resulting payment amount',
@@ -184,6 +163,7 @@ $aLang = [
     'OXPS_PAYPAL_AUTHORIZATIONID'             => 'Authorization ID',
     'OXPS_PAYPAL_TRANSACTIONID'               => 'Transaction ID',
     'OXPS_PAYPAL_REFUND_AMOUNT'               => 'Refund amount',
+    'OXPS_PAYPAL_INVOICE_ID'                  => 'Invoice No',
     'OXPS_PAYPAL_NOTE_TO_BUYER'               => 'Note to buyer',
     'OXPS_PAYPAL_REFUND_ALL'                  => 'Refund all',
     'OXPS_PAYPAL_SUBSCRIPTION'                => 'Subscription',
@@ -388,5 +368,5 @@ $aLang = [
     'OXPS_PAYPAL_EVIDENCE_TYPE_OTHER' => 'Other',
     'OXPS_PAYPAL_EVIDENCE_TYPE' => 'Evidence Type',
     'OXPS_PAYPAL_EVIDENCE_DOCUMENT' => 'Document',
-    'OXPS_PAYPAL_INVOICE_ID'                  => 'Invoice No',
 ];
+
