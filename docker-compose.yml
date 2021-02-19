@@ -26,6 +26,7 @@ services:
       MYSQL_PORT: ${MYSQL_PORT}
       DOMAIN: ${DOMAIN}
       OXID_PORT: ${OXID_PORT}
+      SSL_OXID_PORT: ${SSL_OXID_PORT}
       PHP_IDE_CONFIG: "serverName=${DOMAIN}"
       CONTAINER_UID: ${CONTAINER_UID}
       COMPOSER_CACHE_DIR: "/var/composer_cache"
