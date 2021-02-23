@@ -27,43 +27,75 @@
             <div class="col-sm-12">
                 <table class="table table-sm">
                     <tr class="ppmessages">
-                        <td class="col-sm-2"><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_ID"}]</b></td>
-                        <td>[{$payPalSubscription->id}]</td>
+                        <td class="col-sm-2">
+                            <b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_ID"}]</b>
+                        </td>
+                        <td>
+                            [{$payPalSubscription->id}]
+                        </td>
                     </tr>
                     <tr class="ppaltmessages">
-                        <td><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID"}]</b></td>
-                        <td>[{$payPalSubscription->plan_id}]</td>
+                        <td>
+                            <b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID"}]</b>
+                        </td>
+                        <td>
+                            [{$payPalSubscription->plan_id}]
+                        </td>
                     </tr>
                     <tr class="ppmessages">
-                        <td><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_START_TIME"}]</b></td>
-                        <td>[{$payPalSubscription->start_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
+                        <td>
+                            <b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_START_TIME"}]</b>
+                        </td>
+                        <td>
+                            [{$payPalSubscription->start_time|date_format:"%Y-%m-%d %H:%M:%S"}]
+                        </td>
                     </tr>
                     <tr class="ppaltmessages">
-                        <td><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_QUANTITY"}]</b></td>
+                        <td>
+                            <b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_QUANTITY"}]</b>
+                        </td>
                         <td>[{$payPalSubscription->quantity}]</td>
                     </tr>
                     <tr class="ppmessages">
-                        <td><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS"}]</b></td>
+                        <td>
+                            <b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS"}]</b>
+                        </td>
                         <td>
                             [{assign var="subscriptionStatus" value=$payPalSubscription->status}]
                             [{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_"|cat:$subscriptionStatus}]
                         </td>
                     </tr>
                     <tr class="ppaltmessages">
-                        <td><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_CHANGE_NOTE"}]</b></td>
-                        <td>[{$payPalSubscription->status_change_note}]</td>
+                        <td>
+                            <b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_CHANGE_NOTE"}]</b>
+                        </td>
+                        <td>
+                            [{$payPalSubscription->status_change_note}]
+                        </td>
                     </tr>
                     <tr class="ppmessages">
-                        <td><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_UPDATE_TIME"}]</b></td>
-                        <td>[{$payPalSubscription->status_update_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
+                        <td>
+                            <b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_UPDATE_TIME"}]</b>
+                        </td>
+                        <td>
+                            [{$payPalSubscription->status_update_time|date_format:"%Y-%m-%d %H:%M:%S"}]
+                        </td>
                     </tr>
                     <tr class="ppaltmessages">
-                        <td><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_CREATE_TIME"}]</b></td>
-                        <td>[{$payPalSubscription->create_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
+                        <td>
+                            <b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_CREATE_TIME"}]</b>
+                        </td>
+                        <td>
+                            [{$payPalSubscription->create_time|date_format:"%Y-%m-%d %H:%M:%S"}]
+                        </td>
                     </tr>
                     <tr class="ppmessages">
-                        <td><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_UPDATE_TIME"}]</b></td>
-                        <td>[{$payPalSubscription->update_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
+                        <td>
+                            <b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_UPDATE_TIME"}]</b>
+                        </td>
+                        <td>
+                            [{$payPalSubscription->update_time|date_format:"%Y-%m-%d %H:%M:%S"}]
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -74,20 +106,36 @@
                 <table class="table table-sm">
                     [{assign var="subscriber" value=$payPalSubscription->subscriber}]
                     <tr class="ppmessages">
-                        <td class="col-sm-2"><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIBER_PAYER_ID"}]</b></td>
-                        <td>[{$subscriber->payer_id}]</td>
+                        <td class="col-sm-2">
+                            <b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIBER_PAYER_ID"}]</b>
+                        </td>
+                        <td>
+                            [{$subscriber->payer_id}]
+                        </td>
                     </tr>
                     <tr class="ppaltmessages">
-                        <td><b>[{oxmultilang ident="OXPS_PAYPAL_FIRST_NAME"}]</b></td>
-                        <td>[{$subscriber->name->given_name}]</td>
+                        <td>
+                            <b>[{oxmultilang ident="OXPS_PAYPAL_FIRST_NAME"}]</b>
+                        </td>
+                        <td>
+                            [{$subscriber->name->given_name}]
+                        </td>
                     </tr>
                     <tr class="ppmessages">
-                        <td><b>[{oxmultilang ident="OXPS_PAYPAL_LAST_NAME"}]</b></td>
-                        <td>[{$subscriber->name->surname}]</td>
+                        <td>
+                            <b>[{oxmultilang ident="OXPS_PAYPAL_LAST_NAME"}]</b>
+                        </td>
+                        <td>
+                            [{$subscriber->name->surname}]
+                        </td>
                     </tr>
                     <tr class="ppaltmessages">
-                        <td><b>[{oxmultilang ident="OXPS_PAYPAL_EMAIL"}]</b></td>
-                        <td>[{$subscriber->email_address}]</td>
+                        <td>
+                            <b>[{oxmultilang ident="OXPS_PAYPAL_EMAIL"}]</b>
+                        </td>
+                        <td>
+                            [{$subscriber->email_address}]
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -97,28 +145,53 @@
             <div class="col-sm-12">
                 <table class="table table-sm">
                     <tr class="ppaltmessages">
-                        <td class="col-sm-2"><b>ID</b></td>
-                        <td>[{$subscriptionProduct->id}]</td>
+                        <td class="col-sm-2">
+                            <b>[{oxmultilang ident="OXPS_PAYPAL_PRODUCT_ID"}]</b>
+                        </td>
+                        <td>
+                            [{$subscriptionProduct->id}]
+                        </td>
                     </tr>
                     <tr class="ppmessages">
-                        <td><b>Product Name[{oxmultilang ident="OXPS_PAYPAL_PRODUCT_NAME"}]</b></td>
-                        <td>[{$subscriptionProduct->name}]</td>
+                        <td>
+                            <b>[{oxmultilang ident="OXPS_PAYPAL_PRODUCT_NAME"}]</b>
+                        </td>
+                        <td>
+                            [{$subscriptionProduct->name}]
+                        </td>
                     </tr>
                     <tr class="ppaltmessages">
-                        <td><b>[{oxmultilang ident="OXPS_PAYPAL_PRODUCT_DESCRIPTION"}]</b></td>
-                        <td>[{$subscriptionProduct->description}]</td>
+                        <td>
+                            <b>[{oxmultilang ident="OXPS_PAYPAL_PRODUCT_DESCRIPTION"}]</b>
+                        </td>
+                        <td
+                            [{$subscriptionProduct->description}]
+                        </td>
                     </tr>
                     <tr class="ppmessages">
-                        <td><b>[{oxmultilang ident="OXPS_PAYPAL_PRODUCT_TYPE_CATEGORY"}]</b></td>
-                        <td>[{$subscriptionProduct->type}]:[{$subscriptionProduct->category}]</td>
+                        <td>
+                            <b>[{oxmultilang ident="OXPS_PAYPAL_PRODUCT_TYPE_CATEGORY"}]</b>
+                        </td>
+                        <td>
+                            [{$subscriptionProduct->type}]:[{$subscriptionProduct->category}]
+                        </td>
                     </tr>
                     <tr class="ppaltmessages">
-                        <td><b>[{oxmultilang ident="OXPS_PAYPAL_PRODUCT_URL"}]</b></td>
-                        <td><a target="_blank" href="[{$subscriptionProduct->home_url}]">[{$subscriptionProduct->home_url}]</a></td>
+                        <td>
+                            <b>[{oxmultilang ident="OXPS_PAYPAL_PRODUCT_URL"}]</b>
+                        </td>
+                        <td>
+                            <a target="_blank" href="[{$subscriptionProduct->home_url}]">[{$subscriptionProduct->home_url}]</a>
+                        </td>
                     </tr>
                     <tr class="ppmessages">
-                        <td><b>[{oxmultilang ident="OXPS_PAYPAL_PRODUCT_IMAGE"}]</b></td>
-                        <td><img style="width: 100px" src="[{$subscriptionProduct->image_url}]" /><br />[{$subscriptionProduct->image_url}]</td>
+                        <td>
+                            <b>[{oxmultilang ident="OXPS_PAYPAL_PRODUCT_IMAGE"}]</b>
+                        </td>
+                        <td>
+                            <img style="width: 100px" src="[{$subscriptionProduct->image_url}]" />
+                            <br />[{$subscriptionProduct->image_url}]
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -245,7 +318,11 @@
                         </td>
                     </tr>
                     <tr class="ppaltmessages">
-                        <td colspan="2"><button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_APPLY"}]</button></td>
+                        <td colspan="2">
+                            <button class="btn btn-primary" type="submit">
+                                [{oxmultilang ident="OXPS_PAYPAL_APPLY"}]
+                            </button>
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -278,44 +355,78 @@
                     </td>
                 </tr>
                 <tr class="ppaltmessages">
-                    <td><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_LAST_PAYMENT"}]</b></td>
-                    <td>[{$billingInfo->last_payment->amount->value}]
+                    <td>
+                        <b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_LAST_PAYMENT"}]</b>
+                    </td>
+                    <td>
+                        [{$billingInfo->last_payment->amount->value}]
                         [{$billingInfo->last_payment->amount->currency_code}]
                     </td>
                 </tr>
                 <tr class="ppmessages">
-                    <td><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_LAST_PAYMENT_TIME"}]</b></td>
-                    <td>[{$billingInfo->last_payment->time|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
+                    <td>
+                        <b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_LAST_PAYMENT_TIME"}]</b>
+                    </td>
+                    <td>
+                        [{$billingInfo->last_payment->time|date_format:"%Y-%m-%d %H:%M:%S"}]
+                    </td>
                 </tr>
                 <tr class="ppaltmessages">
-                    <td><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_NEXT_BILLING_TIME"}]</b></td>
-                    <td>[{$billingInfo->next_billing_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
+                    <td>
+                        <b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_NEXT_BILLING_TIME"}]</b>
+                    </td>
+                    <td>
+                        [{$billingInfo->next_billing_time|date_format:"%Y-%m-%d %H:%M:%S"}]
+                    </td>
                 </tr>
                 <tr class="ppmessages">
-                    <td><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_FINAL_PAYMENT"}]</b></td>
-                    <td>[{$billingInfo->final_payment_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
+                    <td>
+                        <b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_FINAL_PAYMENT"}]</b>
+                    </td>
+                    <td>
+                        [{$billingInfo->final_payment_time|date_format:"%Y-%m-%d %H:%M:%S"}]
+                    </td>
                 </tr>
                 <tr class="ppaltmessages">
-                    <td><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_FAILED_PAYMENT_COUNT"}]</b></td>
-                    <td>[{$billingInfo->failed_payments_count}]</td>
+                    <td>
+                        <b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_FAILED_PAYMENT_COUNT"}]</b>
+                    </td>
+                    <td>
+                        [{$billingInfo->failed_payments_count}]
+                    </td>
                 </tr>
                 <tr class="ppmessages">
-                    <td><b>[{oxmultilang ident="OXPS_PAYPAL_AMOUNT"}]</b></td>
-                    <td>[{$billingInfo->last_failed_payment->amount->value}]
+                    <td>
+                        <b>[{oxmultilang ident="OXPS_PAYPAL_AMOUNT"}]</b>
+                    </td>
+                    <td>
+                        [{$billingInfo->last_failed_payment->amount->value}]
                         [{$billingInfo->last_failed_payment->amount->curency_code}]
                     </td>
                 </tr>
                 <tr class="ppaltmessages">
-                    <td><b>[{oxmultilang ident="OXPS_PAYPAL_TIME"}]</b></td>
-                    <td>[{$billingInfo->last_failed_payment->time}]</td>
+                    <td>
+                        <b>[{oxmultilang ident="OXPS_PAYPAL_TIME"}]</b>
+                    </td>
+                    <td>
+                        [{$billingInfo->last_failed_payment->time}]
+                    </td>
                 </tr>
                 <tr class="ppmessages">
-                    <td><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_FAILED_PAYMENT_REASON"}]</b></td>
-                    <td>[{$billingInfo->last_failed_payment->reason_code}]</td>
+                    <td>
+                        <b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_FAILED_PAYMENT_REASON"}]</b>
+                    </td>
+                    <td>
+                        [{$billingInfo->last_failed_payment->reason_code}]
+                    </td>
                 </tr>
                 <tr class="ppaltmessages">
-                    <td><b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_FAILED_PAYMENT_RETRY_TIME"}]</b></td>
-                    <td>[{$billingInfo->last_failed_payment->next_payment_retry_time}]</td>
+                    <td>
+                        <b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_FAILED_PAYMENT_RETRY_TIME"}]</b>
+                    </td>
+                    <td>
+                        [{$billingInfo->last_failed_payment->next_payment_retry_time}]
+                    </td>
                 </tr>
                 <tr class="ppmessages">
                     <td colspan="2">
@@ -325,12 +436,20 @@
                     </td>
                 </tr>
                 <tr class="ppaltmessages">
-                    <td colspan="2"><button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_APPLY"}]</button></td>
+                    <td colspan="2">
+                        <button class="btn btn-primary" type="submit">
+                            [{oxmultilang ident="OXPS_PAYPAL_APPLY"}]
+                        </button>
+                    </td>
                 </tr>
             </table>
             <br />
             <table class="table table-sm">
-                <tr><td colspan="100"><h4>Billing Cycles</h4></td></tr>
+                <tr>
+                    <td colspan="100">
+                        <h4>[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_MAIN"}]</h4>
+                    </td>
+                </tr>
                 <tr class="ppaltmessages">
                     <th>[{oxmultilang ident="OXPS_PAYPAL_TENURE_TYPE"}]</th>
                     <th>[{oxmultilang ident="OXPS_PAYPAL_SEQUENCE"}]</th>
@@ -340,15 +459,15 @@
                     <th>[{oxmultilang ident="OXPS_PAYPAL_TOTAL_CYCLES"}]</th>
                 </tr>
                 [{foreach from=$billingInfo->cycle_executions item="cycleExecution"}]
-                [{cycle values='ppmessages,ppaltmessages' assign=cellClass}]
-                <tr class="[{$cellClass}]">
-                    <td>[{$cycleExecution->tenure_type}]</td>
-                    <td>[{$cycleExecution->sequence}]</td>
-                    <td>[{$cycleExecution->cycles_completed}]</td>
-                    <td>[{$cycleExecution->cycles_remaining}]</td>
-                    <td>[{$cycleExecution->current_pricing_scheme_version}]</td>
-                    <td>[{$cycleExecution->total_cycles}]</td>
-                </tr>
+                    [{cycle values='ppmessages,ppaltmessages' assign=cellClass}]
+                    <tr class="[{$cellClass}]">
+                        <td>[{$cycleExecution->tenure_type}]</td>
+                        <td>[{$cycleExecution->sequence}]</td>
+                        <td>[{$cycleExecution->cycles_completed}]</td>
+                        <td>[{$cycleExecution->cycles_remaining}]</td>
+                        <td>[{$cycleExecution->current_pricing_scheme_version}]</td>
+                        <td>[{$cycleExecution->total_cycles}]</td>
+                    </tr>
                 [{/foreach}]
             </table>
             </div>

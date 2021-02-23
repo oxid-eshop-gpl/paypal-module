@@ -18,189 +18,188 @@
     <input type="hidden" name="fnc" value="saveBillingPlans">
     <input type="hidden" name="oxid" value="[{ $oxid }]">
     <input type="hidden" name="paypalProductId" value="[{ $oView->getPayPalProductId() }]">
-<table cellspacing="0" cellpadding="0" border="0" width="98%" style="border: 1px solid #cccccc; padding: 10px; margin: 10px; border-radius: 10px;">
-    <tbody>
-        <tr><td colspan="100"><h3>Add Billing Plan</h3></td></tr>
-        <tr>
-            <td class="edittext" style="width: 196px;">
-                Automatically Bill Outstanding:
-            </td>
-            <td class="edittext">
-                <select name="auto_bill_outstanding" id="auto_bill_outstanding" style="width: 200px" class="editinput">
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
-                </select>
-            </td>
-        </tr>
+    <table cellspacing="0" cellpadding="0" border="0" width="98%" style="border: 1px solid #cccccc; padding: 10px; margin: 10px; border-radius: 10px;">
+        <tbody>
+            <tr><td colspan="100"><h3>[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_ADD"}]</h3></td></tr>
+            <tr>
+                <td class="edittext" style="width: 196px;">
+                    [{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_AUTOMATICALLY_BILL" suffix="COLON"}]
+                </td>
+                <td class="edittext">
+                    <select name="auto_bill_outstanding" id="auto_bill_outstanding" style="width: 200px" class="editinput">
+                        <option value="true">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_YES"}]</option>
+                        <option value="false">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_NO"}]</option>
+                    </select>
+                </td>
+            </tr>
 
-        <tr>
-            <td class="edittext">
-                Setup Fee Failure Action:
-            </td>
-            <td class="edittext">
-                <select name="setup_fee_failure_action" id="setup_fee_failure_action" style="width: 200px" class="editinput">
-                    <option value="CONTINUE">Continue</option>
-                    <option value="CANCEL">Cancel</option>
-                </select>
-            </td>
-        </tr>
+            <tr>
+                <td class="edittext">
+                    [{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_FAILURE_ACTION" suffix="COLON"}]
+                </td>
+                <td class="edittext">
+                    <select name="setup_fee_failure_action" id="setup_fee_failure_action" style="width: 200px" class="editinput">
+                        <option value="CONTINUE">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_ACTION_CONTINUE"}]</option>
+                        <option value="CANCEL">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_ACTION_CANCEL"}]</option>
+                    </select>
+                </td>
+            </tr>
 
-        <tr>
-            <td class="edittext">
-                Setup Fee
-            </td>
-            <td class="edittext">
-                <input type="text" required="required" class="editinput" size="20" name="setup_fee" value="0"> EUR
-                <input type="hidden" name="setup_fee_currency" id="setup_fee_currency" value="EUR"/>
-            </td>
-        </tr>
+            <tr>
+                <td class="edittext">
+                    [{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_SETUP_FEE" suffix="COLON"}]
+                </td>
+                <td class="edittext">
+                    <input type="text" required="required" class="editinput" size="20" name="setup_fee" value="0"> EUR
+                    <input type="hidden" name="setup_fee_currency" id="setup_fee_currency" value="EUR"/>
+                </td>
+            </tr>
 
-        <tr>
-            <td class="edittext">
-                Payment Failure Threshold:
-            </td>
-            <td class="edittext">
-                <select name="payment_failure_threshold" id="payment_failure_threshold" style="width: 200px" class="editinput">
-                    [{foreach from=$defaultTotalCycles item=value key=name}]
-                    <option value="[{$value}]">[{$value}]</option>
-                    [{/foreach}]
-                </select>
-            </td>
-        </tr>
+            <tr>
+                <td class="edittext">
+                    [{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_FAILURE_THRESHOLD" suffix="COLON"}]
+                </td>
+                <td class="edittext">
+                    <select name="payment_failure_threshold" id="payment_failure_threshold" style="width: 200px" class="editinput">
+                        [{foreach from=$defaultTotalCycles item=value key=name}]
+                        <option value="[{$value}]">[{$value}]</option>
+                        [{/foreach}]
+                    </select>
+                </td>
+            </tr>
 
-        <tr>
-            <td class="edittext">
-                [{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_NAME"}]:
-            </td>
-            <td class="edittext">
-                 <input type="text" required="required" class="editinput" size="25" name="billing_plan_name" value="">
-            </td>
-        </tr>
+            <tr>
+                <td class="edittext">
+                    [{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_NAME" suffix="COLON"}]
+                </td>
+                <td class="edittext">
+                     <input type="text" required="required" class="editinput" size="25" name="billing_plan_name" value="">
+                </td>
+            </tr>
 
-        <tr>
-            <td class="edittext">
-                Description:
-            </td>
-            <td class="edittext">
-                <input type="text" required="required" class="editinput" size="25" name="billingPlanDescription" value="">
-            </td>
-        </tr>
+            <tr>
+                <td class="edittext">
+                    [{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_DESCRIPTION" suffix="COLON"}]
+                </td>
+                <td class="edittext">
+                    <input type="text" required="required" class="editinput" size="25" name="billingPlanDescription" value="">
+                </td>
+            </tr>
 
-        <tr>
-            <td colspan="100"><h3>Taxes</h3></td>
-        </tr>
+            <tr>
+                <td colspan="100"><h3>[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_TAX" suffix="COLON"}]</h3></td>
+            </tr>
 
-        <tr>
-            <td class="edittext">
-                Percentage:
-            </td>
-            <td class="edittext">
-                <input type="text" required="required" class="editinput" size="25"  name="tax_percentage" value="">
-            </td>
-        </tr>
+            <tr>
+                <td class="edittext">
+                    [{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_TAX_PERCENTAGE" suffix="COLON"}]
+                </td>
+                <td class="edittext">
+                    <input type="text" required="required" class="editinput" size="25"  name="tax_percentage" value="">
+                </td>
+            </tr>
 
-        <tr>
-            <td class="edittext">
-                Inclusive:
-            </td>
-            <td class="edittext">
-                <select name="tax_inclusive" id="tax_inclusive" style="width: 200px" class="editinput">
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
-                </select>
-                <input type="hidden" name="id" value="[{$linkedObject->id}]">
-                <input type="hidden" name="paypalProductId" value="[{$linkedObject->id}]">
-            </td>
-        </tr>
+            <tr>
+                <td class="edittext">
+                    [{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_TAX_INCLUSIVE" suffix="COLON"}]
+                </td>
+                <td class="edittext">
+                    <select name="tax_inclusive" id="tax_inclusive" style="width: 200px" class="editinput">
+                        <option value="true">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_YES"}]</option>
+                        <option value="false">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_NO"}]</option>
+                    </select>
+                    <input type="hidden" name="id" value="[{$linkedObject->id}]">
+                    <input type="hidden" name="paypalProductId" value="[{$linkedObject->id}]">
+                </td>
+            </tr>
 
-        <tr><td colspan="100"><h3>Billing Cycles [<span style="cursor: pointer; cursor: hand" id="addBillingCycleAction">+</span>]</h3></td></tr>
-        <tr>
-            <td colspan="100">
-                <table id="billingCycleList" style="width: 50%;">
-                    <tr>
-                        <th style="width: 20%; text-align: left">Price</th>
-                        <th style="width: 20%; text-align: left">Frequency</th>
-                        <th style="width: 20%; text-align: left">Tenure</th>
-                        <th style="width: 15%; text-align: left">Sequence</th>
-                        <th style="width: 15%; text-align: left">Cycles</th>
-                        <th style="width: 10%; text-align: left">Actions</th>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="100"><h3>Actions</h3></td>
-        </tr>
-        <tr>
-            <td class="edittext">
-                <input type="button" class="edittext" name="save" value='[{ oxmultilang ident="GENERAL_SAVE" }]' onClick="window.validateAddBillingPlanForm('saveBillingPlans')">&nbsp;
-            </td>
-        </tr>
+            <tr><td colspan="100"><h3>[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_CYCLES"}] [<span style="cursor: pointer; cursor: hand" id="addBillingCycleAction">+</span>]</h3></td></tr>
+            <tr>
+                <td colspan="100">
+                    <table id="billingCycleList" style="width: 50%;">
+                        <tr>
+                            <th style="width: 20%; text-align: left">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_PRICE"}]</th>
+                            <th style="width: 20%; text-align: left">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_FREQUENCY"}]</th>
+                            <th style="width: 20%; text-align: left">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_TENURE"}]</th>
+                            <th style="width: 15%; text-align: left">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_SEQUENCE"}]</th>
+                            <th style="width: 15%; text-align: left">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_CYCLES"}]</th>
+                            <th style="width: 10%; text-align: left">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_ACTIONS"}]</th>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="100"><h3>[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_ACTIONS"}]</h3></td>
+            </tr>
+            <tr>
+                <td class="edittext">
+                    <input type="button" class="edittext" name="save" value='[{ oxmultilang ident="GENERAL_SAVE" }]' onClick="window.validateAddBillingPlanForm('saveBillingPlans')">&nbsp;
+                </td>
+            </tr>
+            </tbody>
+    </table>
+    <table class="addBilling" cellspacing="0" cellpadding="0" border="0" width="98%" style="border: 1px solid #cccccc; padding: 10px; margin: 10px; border-radius: 10px;">
+            <tr class="addBilling"><td colspan="100"><h3>Add Billing Cycles</h3></td></tr>
+
+            <tr class="addBilling">
+                <td class="edittext">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_TENURE" suffix="COLON"}]</td>
+                <td class="edittext">
+                    <select name="tenure_val" id="tenure_val" style="width: 200px" class="editinput">
+                        [{foreach from=$defaultTenureTypes item=value key=name}]
+                        <option value="[{$value}]">[{$value}]</option>
+                        [{/foreach}]
+                    </select>
+                </td>
+            </tr>
+
+            <tr class="addBilling">
+                <td class="edittext">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_PRICE" suffix="COLON"}]</td>
+                <td class="edittext">
+                    <input type="text" class="editinput" size="25" name="fixed_price_val" id="fixed_price_val" value=""/>
+                </td>
+            </tr>
+
+            <tr class="addBilling">
+                <td class="edittext">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_TOTAL_CYCLES" suffix="COLON"}]</td>
+                <td class="edittext">
+                    <select name="total_cycles_val" id="total_cycles_val" style="width: 200px" class="editinput">
+                        [{foreach from=$defaultTotalCycles item=value key=name}]
+                        <option value="[{$value}]">[{$value}]</option>
+                        [{/foreach}]
+                    </select>
+                </td>
+            </tr>
+
+            <tr class="addBilling">
+                <td class="edittext">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_FREQUENCY" suffix="COLON"}]</td>
+                <td class="edittext">
+                    <select name="interval_val" id="interval_val" style="width: 200px" class="editinput">
+                        [{foreach from=$defaultIntervals item=value key=name}]
+                        <option value="[{$value}]">[{$value}]</option>
+                        [{/foreach}]
+                    </select>
+                </td>
+            </tr>
+
+            <tr class="addBilling">
+                <td class="edittext">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_SEQUENCE" suffix="COLON"}]</td>
+                <td class="edittext">
+                    <select name="sequence_val" id="sequence_val" style="width: 200px" class="editinput">
+                        [{foreach from=$defaultSequences item=value key=name}]
+                            <option value="[{$value}]">[{$value}]</option>
+                        [{/foreach}]
+                    </select>
+                </td>
+            </tr>
+
+            <tr class="addBilling">
+                <td class="edittext">
+                    <input type="button" class="edittext" name="addBillingCycle" value='[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_ADD"}]' onClick="window.addCycle()"><br>
+                </td>
+            </tr>
+
         </tbody>
-</table>
-<table class="addBilling" cellspacing="0" cellpadding="0" border="0" width="98%" style="border: 1px solid #cccccc; padding: 10px; margin: 10px; border-radius: 10px;">
-        <tr class="addBilling"><td colspan="100"><h3>Add Billing Cycles</h3></td></tr>
-
-        <tr class="addBilling">
-            <td class="edittext">Tenure:</td>
-            <td class="edittext">
-                <select name="tenure_val" id="tenure_val" style="width: 200px" class="editinput">
-                    [{foreach from=$defaultTenureTypes item=value key=name}]
-                    <option value="[{$value}]">[{$value}]</option>
-                    [{/foreach}]
-                </select>
-            </td>
-        </tr>
-
-        <tr class="addBilling">
-            <td class="edittext">Price:</td>
-            <td class="edittext">
-                <input type="text" class="editinput" size="25" name="fixed_price_val" id="fixed_price_val" value=""/>
-            </td>
-        </tr>
-
-        <tr class="addBilling">
-            <td class="edittext">Total Cycles:</td>
-            <td class="edittext">
-                <select name="total_cycles_val" id="total_cycles_val" style="width: 200px" class="editinput">
-                    [{foreach from=$defaultTotalCycles item=value key=name}]
-                    <option value="[{$value}]">[{$value}]</option>
-                    [{/foreach}]
-                </select>
-            </td>
-        </tr>
-
-        <tr class="addBilling">
-            <td class="edittext">Frequency:</td>
-            <td class="edittext">
-                <select name="interval_val" id="interval_val" style="width: 200px" class="editinput">
-                    [{foreach from=$defaultIntervals item=value key=name}]
-                    <option value="[{$value}]">[{$value}]</option>
-                    [{/foreach}]
-                </select>
-            </td>
-        </tr>
-
-        <tr class="addBilling">
-            <td class="edittext">Sequence:</td>
-            <td class="edittext">
-                <select name="sequence_val" id="sequence_val" style="width: 200px" class="editinput">
-                    [{foreach from=$defaultSequences item=value key=name}]
-                    <option value="[{$value}]">[{$value}]</option>
-                    [{/foreach}]
-                </select>
-            </td>
-        </tr>
-
-        <tr class="addBilling">
-            <td class="edittext">
-                <input type="button" class="edittext" name="addBillingCycle" value='Add' onClick="window.addCycle()"><br>
-            </td>
-        </tr>
-
-    </tbody>
-</table>
-
+    </table>
 </form>
 
 <script>

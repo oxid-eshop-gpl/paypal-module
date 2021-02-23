@@ -5,7 +5,7 @@
     <br />
     <div class="row">
         <div class="col-sm-1">
-            <button id="toggleFilter" class="btn btn-info col-sm-12">Filter</button>
+            <button id="toggleFilter" class="btn btn-info col-sm-12">[{oxmultilang ident="OXPS_PAYPAL_FILTER"}]</button>
         </div>
     </div>
     <script>
@@ -139,45 +139,45 @@
         </form>
     </div>
 
-[{include file="paypal_list_pagination.tpl"}]
+    [{include file="paypal_list_pagination.tpl"}]
     <div id="results">
-<table class="table table-sm">
-    <thead>
-        <tr class="ppaltmessages">
-            <th>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_ID"}]</a></th>
-            <th>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID"}]</a></th>
-            <th>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_EMAIL"}]</a></th>
-            <th>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS"}]</a></th>
-            <th>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_UPDATED"}]</a></th>
-            <th>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STARTS"}]</a></th>
-            <th>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_UPDATED"}]</a></th>
-            <th colspan="2">[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_CREATED"}]</a></th>
-        </tr>
-    </thead>
-    <tbody>
-        [{foreach from=$subscriptions item="subscription" name="subscriptions"}]
-            [{cycle values='ppmessages,ppaltmessages' assign=cellClass}]
-            <tr class="[{$cellClass}]">
-                <td>[{$subscription->oxps_paypal_subscription__oxpspaypalid}]</td>
-                <td>[{$subscription->oxps_paypal_subscription__oxpspaypalplanid}]</td>
-                <td>[{$subscription->oxps_paypal_subscription__oxpspaypalemail}]</td>
-                [{assign var="subscriptionStatus" value=$subscription->oxps_paypal_subscription__oxpspaypalstatus}]
-                <td>[{if $subscriptionStatus}] [{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_"|cat:$subscriptionStatus}][{/if}]</td>
-                <td>[{$subscription->oxps_paypal_subscription__oxpspaypalstatusupdatetime}]</td>
-                <td>[{$subscription->oxps_paypal_subscription__oxpspaypalstarttime}]</td>
-                <td>[{$subscription->oxps_paypal_subscription__oxpspaypalupdatetime}]</td>
-                <td>[{$subscription->oxps_paypal_subscription__oxpspaypalcreatetime}]</td>
-                <td>
-                    <a href="[{$detailsLink|cat:"&amp;oxid="|cat:$subscription->getId()}]">
-                        [{oxmultilang ident="OXPS_PAYPAL_MORE"}]
-                    </a>
-                </td>
-            </tr>
-        [{/foreach}]
-    </tbody>
-</table>
+        <table class="table table-sm">
+            <thead>
+                <tr class="ppaltmessages">
+                    <th>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_ID"}]</th>
+                    <th>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID"}]</th>
+                    <th>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_EMAIL"}]</th>
+                    <th>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS"}]</th>
+                    <th>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_UPDATED"}]</th>
+                    <th>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STARTS"}]</th>
+                    <th>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_UPDATED"}]</th>
+                    <th colspan="2">[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_CREATED"}]</th>
+                </tr>
+            </thead>
+            <tbody>
+                [{foreach from=$subscriptions item="subscription" name="subscriptions"}]
+                    [{cycle values='ppmessages,ppaltmessages' assign=cellClass}]
+                    <tr class="[{$cellClass}]">
+                        <td>[{$subscription->oxps_paypal_subscription__oxpspaypalid}]</td>
+                        <td>[{$subscription->oxps_paypal_subscription__oxpspaypalplanid}]</td>
+                        <td>[{$subscription->oxps_paypal_subscription__oxpspaypalemail}]</td>
+                        [{assign var="subscriptionStatus" value=$subscription->oxps_paypal_subscription__oxpspaypalstatus}]
+                        <td>[{if $subscriptionStatus}] [{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_"|cat:$subscriptionStatus}][{/if}]</td>
+                        <td>[{$subscription->oxps_paypal_subscription__oxpspaypalstatusupdatetime}]</td>
+                        <td>[{$subscription->oxps_paypal_subscription__oxpspaypalstarttime}]</td>
+                        <td>[{$subscription->oxps_paypal_subscription__oxpspaypalupdatetime}]</td>
+                        <td>[{$subscription->oxps_paypal_subscription__oxpspaypalcreatetime}]</td>
+                        <td>
+                            <a href="[{$detailsLink|cat:"&amp;oxid="|cat:$subscription->getId()}]">
+                                [{oxmultilang ident="OXPS_PAYPAL_MORE"}]
+                            </a>
+                        </td>
+                    </tr>
+                [{/foreach}]
+            </tbody>
+        </table>
     </div>
-[{include file="paypal_list_pagination.tpl"}]
+    [{include file="paypal_list_pagination.tpl"}]
 </div>
 </body>
 </html>

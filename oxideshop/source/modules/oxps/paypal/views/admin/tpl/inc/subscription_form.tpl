@@ -35,100 +35,100 @@
     <input type="hidden" name="oxid" value="[{ $oxid }]">
     <input type="hidden" name="paypalProductId" value="[{ $oView->getPayPalProductId() }]">
 
-<table cellspacing="0" cellpadding="0" border="0" width="98%" style="border: 1px solid #cccccc; padding: 10px; margin: 10px; border-radius: 10px;">
-    <tbody>
-    <tr>
-        <td colspan="100"><h3>Subscription Product</h3></td>
-    </tr>
-    <tr>
-        <td class="edittext" style="width: 196px;">
-            Name:
-        </td>
-        <td class="edittext">
-            <input type="text" class="editinput pform" size="26" required="required" name="title" id="title" value="[{$title}]" [{ $readonly }]>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Description:
-        </td>
-        <td class="edittext">
-            <textarea class="editinput pform" style="width: 200px" rows="10" required="required" name="description" id="description">[{$description}]</textarea>
-        </td>
-    </tr>
-    <tr>
-        <td class="edittext">
-            Product Type:
-        </td>
-        <td class="edittext">
-            <select name="productType" style="width: 200px" class="editinput pform">
-                [{foreach from=$types item=value key=name}]
-                [{if $productType == $value }]
-                <option value="[{$value}]" selected>[{$value}]</option>
-                [{else}]
-                <option value="[{$value}]">[{$value}]</option>
-                [{/if}]
-                [{/foreach}]
-            </select>
-        </td>
-    </tr>
-    <tr>
-        <td class="edittext">
-            Category:
-        </td>
-        <td class="edittext">
-            <select name="category" style="width:200px" class="editinput pform">
-                [{foreach from=$categories item=value key=name}]
-                [{if $category == $value }]
-                <option value="[{$value}]" selected>[{$value}]</option>
-                [{else}]
-                <option value="[{$value}]">[{$value}]</option>
-                [{/if}]
-                [{/foreach}]
-            </select>
-        </td>
-    </tr>
-    <tr>
-        <td class="edittext">
-            Image URL:
-        </td>
-        [{foreach from=$images item=url}]
-        <td class="edittext" style="float: left; margin-right: 10px; padding: 10px; border: 1px solid #cccccc;">
-            <label>
-                [{if $url == $imageUrl }]
-            <input type="radio" name="imageUrl" value="[{$url}]" class="pform" checked>
-                [{else}]
-            <input type="radio" name="imageUrl" value="[{$url}]" class="pform">
-                [{/if}]
-                <img style="height: 100px" src="[{$url}]">
-            </label>
-        </td>
-        [{/foreach}]
-    </tr>
-    <tr>
-        <td class="edittext">
-            Product URL:
-        </td>
-        <td class="edittext">
-            <p>[{$homeUrl}]</p>
-            <input type="hidden" name="homeUrl" value="[{$homeUrl}]">
-        </td>
-    </tr>
-    <tr>
-        <td colspan="100"><h3>Actions</h3></td>
-    </tr>
-    [{if $hasLinkedObject }]
-        <td class="edittext">
-            <input type="button" class="edittext" name="save" value='[{ oxmultilang ident="GENERAL_SAVE" }]' onClick="window.validateSubscriptionProductForm('saveProduct')">&nbsp;
-            <input type="button" class="edittext" name="unlink" value='[{ oxmultilang ident="ARTICLE_REVIEW_DELETE" }]' onClick="window.validateSubscriptionProductForm('unlink')"><br>
-        </td>
-        [{else}]
-        <td class="edittext">
-            <input type="button" class="edittext" name="save" value='[{ oxmultilang ident="GENERAL_SAVE" }]' onClick="window.validateSubscriptionProductForm('saveProduct')"><br>
-        </td>
-    [{/if}]
-    </tbody>
-</table>
+    <table cellspacing="0" cellpadding="0" border="0" width="98%" style="border: 1px solid #cccccc; padding: 10px; margin: 10px; border-radius: 10px;">
+        <tbody>
+        <tr>
+            <td colspan="100"><h3>[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_SUBSCRIPTION_PROD"}]</h3></td>
+        </tr>
+        <tr>
+            <td class="edittext" style="width: 196px;">
+                [{oxmultilang ident="OXPS_PAYPAL_PRODUCT_NAME" suffix="COLON"}]
+            </td>
+            <td class="edittext">
+                <input type="text" class="editinput pform" size="26" required="required" name="title" id="title" value="[{$title}]" [{ $readonly }]>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                [{oxmultilang ident="OXPS_PAYPAL_PRODUCT_DESCRIPTION" suffix="COLON"}]
+            </td>
+            <td class="edittext">
+                <textarea class="editinput pform" style="width: 200px" rows="10" required="required" name="description" id="description">[{$description}]</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td class="edittext">
+                [{oxmultilang ident="OXPS_PAYPAL_PRODUCT_TYPE" suffix="COLON"}]
+            </td>
+            <td class="edittext">
+                <select name="productType" style="width: 200px" class="editinput pform">
+                    [{foreach from=$types item=value key=name}]
+                    [{if $productType == $value }]
+                    <option value="[{$value}]" selected>[{$value}]</option>
+                    [{else}]
+                    <option value="[{$value}]">[{$value}]</option>
+                    [{/if}]
+                    [{/foreach}]
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="edittext">
+                [{oxmultilang ident="OXPS_PAYPAL_PRODUCT_TYPE_CATEGORY" suffix="COLON"}]
+            </td>
+            <td class="edittext">
+                <select name="category" style="width:200px" class="editinput pform">
+                    [{foreach from=$categories item=value key=name}]
+                    [{if $category == $value }]
+                    <option value="[{$value}]" selected>[{$value}]</option>
+                    [{else}]
+                    <option value="[{$value}]">[{$value}]</option>
+                    [{/if}]
+                    [{/foreach}]
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="edittext">
+                [{oxmultilang ident="OXPS_PAYPAL_PRODUCT_IMAGE" suffix="COLON"}]
+            </td>
+            [{foreach from=$images item=url}]
+                <td class="edittext" style="float: left; margin-right: 10px; padding: 10px; border: 1px solid #cccccc;">
+                    <label>
+                        [{if $url == $imageUrl }]
+                    <input type="radio" name="imageUrl" value="[{$url}]" class="pform" checked>
+                        [{else}]
+                    <input type="radio" name="imageUrl" value="[{$url}]" class="pform">
+                        [{/if}]
+                        <img style="height: 100px" src="[{$url}]">
+                    </label>
+                </td>
+            [{/foreach}]
+        </tr>
+        <tr>
+            <td class="edittext">
+                [{oxmultilang ident="OXPS_PAYPAL_PRODUCT_URL" suffix="COLON"}]
+            </td>
+            <td class="edittext">
+                <p>[{$homeUrl}]</p>
+                <input type="hidden" name="homeUrl" value="[{$homeUrl}]">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="100"><h3>[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_ACTIONS"}]</h3></td>
+        </tr>
+        [{if $hasLinkedObject }]
+            <td class="edittext">
+                <input type="button" class="edittext" name="save" value='[{ oxmultilang ident="GENERAL_SAVE" }]' onClick="window.validateSubscriptionProductForm('saveProduct')">&nbsp;
+                <input type="button" class="edittext" name="unlink" value='[{ oxmultilang ident="ARTICLE_REVIEW_DELETE" }]' onClick="window.validateSubscriptionProductForm('unlink')"><br>
+            </td>
+            [{else}]
+            <td class="edittext">
+                <input type="button" class="edittext" name="save" value='[{ oxmultilang ident="GENERAL_SAVE" }]' onClick="window.validateSubscriptionProductForm('saveProduct')"><br>
+            </td>
+        [{/if}]
+        </tbody>
+    </table>
 </form>
 <script>
     jQuery(function() {

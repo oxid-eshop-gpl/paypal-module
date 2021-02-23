@@ -4,7 +4,9 @@
     <br />
     <div class="row">
         <div class="col-sm-1">
-            <button id="toggleFilter" class="btn btn-info col-sm-12">Filter</button>
+            <button id="toggleFilter" class="btn btn-info col-sm-12">
+                [{oxmultilang ident="OXPS_PAYPAL_FILTER"}]
+            </button>
         </div>
     </div>
     <script>
@@ -23,9 +25,9 @@
         [{include file="_formparams.tpl" cl="PayPalDisputeController" lstrt=$lstrt actedit=$actedit oxid=$oxid fnc="" language=$actlang editlanguage=$actlang}]
         <div id="filters">
             [{if !empty($error)}]
-            <div class="alert alert-danger" role="alert">
-            [{$error}]
-            </div>
+                <div class="alert alert-danger" role="alert">
+                    [{$error}]
+                </div>
             [{/if}]
             <div class="row ppaltmessages">
                 <div class="col-sm-4">
@@ -76,21 +78,41 @@
     <div id="results">
     <nav>
         <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="[{$oViewConf->getSelfLink()}]&cl=[{$oViewConf->getActiveClassName()}]&amp;language=[{$actlang}]&amp;editlanguage=[{$actlang}]">[{oxmultilang ident="OXPS_PAYPAL_FIRST"}]</a></li>
+            <li class="page-item">
+                <a class="page-link" href="[{$oViewConf->getSelfLink()}]&cl=[{$oViewConf->getActiveClassName()}]&amp;language=[{$actlang}]&amp;editlanguage=[{$actlang}]">
+                    [{oxmultilang ident="OXPS_PAYPAL_FIRST"}]
+                </a>
+            </li>
             [{if $nextPageToken}]
-                <li class="page-item"><a class="page-link" href="[{$oViewConf->getSelfLink()}]&cl=[{$oViewConf->getActiveClassName()}]&amp;language=[{$actlang}]&amp;editlanguage=[{$actlang}]&amp;pagetoken=[{$nextPageToken}]">[{oxmultilang ident="OXPS_PAYPAL_NEXT"}]</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="[{$oViewConf->getSelfLink()}]&cl=[{$oViewConf->getActiveClassName()}]&amp;language=[{$actlang}]&amp;editlanguage=[{$actlang}]&amp;pagetoken=[{$nextPageToken}]">
+                        [{oxmultilang ident="OXPS_PAYPAL_NEXT"}]
+                    </a>
+                </li>
             [{/if}]
         </ul>
     </nav>
     <table class="table table-sm">
         <thead>
             <tr class="ppaltmessages">
-                <th>[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_ID"}]</a></th>
-                <th>[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_REASON"}]</a></th>
-                <th>[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_STATUS"}]</a></th>
-                <th>[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_AMOUNT"}]</a></th>
-                <th>[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_CREATE_TIME"}]</a></th>
-                <th colspan="2">[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_UPDATE_TIME"}]</a></th>
+                <th>
+                    [{oxmultilang ident="OXPS_PAYPAL_DISPUTE_ID"}]
+                </th>
+                <th>
+                    [{oxmultilang ident="OXPS_PAYPAL_DISPUTE_REASON"}]
+                </th>
+                <th>
+                    [{oxmultilang ident="OXPS_PAYPAL_DISPUTE_STATUS"}]
+                </th>
+                <th>
+                    [{oxmultilang ident="OXPS_PAYPAL_DISPUTE_AMOUNT"}]
+                </th>
+                <th>
+                    [{oxmultilang ident="OXPS_PAYPAL_DISPUTE_CREATE_TIME"}]
+                </th>
+                <th colspan="2">
+                    [{oxmultilang ident="OXPS_PAYPAL_DISPUTE_UPDATE_TIME"}]
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -104,7 +126,7 @@
                 <td class="[{$cellClass}]">[{$dispute->create_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
                 <td class="[{$cellClass}]">[{$dispute->update_time|date_format:"%Y-%m-%d %H:%M:%S"}]</td>
                 <td class="[{$cellClass}]">
-                    <a href="[{$oViewConf->getSelfLink()|cat:"cl=PayPalDisputeDetailsController&oxid="|cat:$dispute->dispute_id}]">
+                    <a href="[{$oViewConf->getSelfLink()|cat:'cl=PayPalDisputeDetailsController&amp;oxid='|cat:$dispute->dispute_id}]">
                         [{oxmultilang ident="OXPS_PAYPAL_MORE"}]
                     </a>
                 </td>
@@ -114,13 +136,20 @@
     </table>
     <nav>
         <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="[{$oViewConf->getSelfLink()}]&cl=[{$oViewConf->getActiveClassName()}]&amp;language=[{$actlang}]&amp;editlanguage=[{$actlang}]">[{oxmultilang ident="OXPS_PAYPAL_FIRST"}]</a></li>
+            <li class="page-item">
+                <a class="page-link" href="[{$oViewConf->getSelfLink()}]&cl=[{$oViewConf->getActiveClassName()}]&amp;language=[{$actlang}]&amp;editlanguage=[{$actlang}]">
+                    [{oxmultilang ident="OXPS_PAYPAL_FIRST"}]
+                </a>
+            </li>
             [{if $nextPageToken}]
-            <li class="page-item"><a class="page-link" href="[{$oViewConf->getSelfLink()}]&cl=[{$oViewConf->getActiveClassName()}]&amp;language=[{$actlang}]&amp;editlanguage=[{$actlang}]&amp;pagetoken=[{$nextPageToken}]">[{oxmultilang ident="OXPS_PAYPAL_NEXT"}]</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="[{$oViewConf->getSelfLink()}]&cl=[{$oViewConf->getActiveClassName()}]&amp;language=[{$actlang}]&amp;editlanguage=[{$actlang}]&amp;pagetoken=[{$nextPageToken}]">
+                        [{oxmultilang ident="OXPS_PAYPAL_NEXT"}]
+                    </a>
+                </li>
             [{/if}]
         </ul>
     </nav>
-</div>
 </div>
 </body>
 </html>
