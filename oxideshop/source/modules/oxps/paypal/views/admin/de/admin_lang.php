@@ -75,7 +75,7 @@ $aLang = [
     'OXPS_PAYPAL_TRANSACTION_STATUS'               => 'Status',
     'OXPS_PAYPAL_PAYMENT_TRACKING_ID'              => 'Zahlungsverfolgungs-ID',
     'OXPS_PAYPAL_PAYMENT_METHOD_TYPE'              => 'Zahlungsmethode Typ',
-    'OXPS_PAYPAL_INSTRUMENT_SUB_TYPE'              => 'Instrument Sub Type',
+    'OXPS_PAYPAL_INSTRUMENT_SUB_TYPE'              => 'Untertyp',
     'OXPS_PAYPAL_TRANSACTION_SUBJECT'              => 'Betreff',
     'OXPS_PAYPAL_PROTECTION_ELIGIBILITY'           => 'Schutzberechtigung',
     'tbclorder_paypal'                             => 'PayPal',
@@ -86,6 +86,11 @@ $aLang = [
     'OXPS_PAYPAL_BILLING_PLAN'                     => 'PayPal Abrechnungsplan',
     'OXPS_PAYPAL_BILLING_PLAN_MAIN'                => 'Abrechnungsplan',
     'OXPS_PAYPAL_BILLING_PLAN_NAME'                => 'Abrechnungsplan Name',
+    'OXPS_PAYPAL_BILLING_PLAN_TYPE'                => 'Typ',
+    'OXPS_PAYPAL_BILLING_PLAN_FIXED'               => 'Fix',
+    'OXPS_PAYPAL_BILLING_PLAN_INFINITE'            => 'Unbestimmt',
+    'OXPS_PAYPAL_BILLING_PLAN_DESCRIPTION'         => 'Beschreibung',
+    'OXPS_PAYPAL_BILLING_PLAN_DEFINITIONS'         => 'Definitionen',
     'OXPS_PAYPAL_TRANSACTIONS'                     => 'Transaktionen',
     'OXPS_PAYPAL_BALANCES'                         => 'Guthaben',
     'OXPS_PAYPAL_GENERAL'                          => 'Allgemein',
@@ -203,6 +208,7 @@ $aLang = [
     'OXPS_PAYPAL_SHIPPING'                         => 'Versand',
     'OXPS_PAYPAL_BILLING'                          => 'Abrechnung',
     'OXPS_PAYPAL_SUBSCRIPTIONS'                    => 'Abonnements',
+    'OXPS_PAYPAL_SUBSCRIPTIONS_SHORT'              => 'PP Abos',
     'OXPS_PAYPAL_SUBSCRIPTION_OUTSTANDING_BALANCE' => 'Ausstehender Saldo',
     'OXPS_PAYPAL_SUBSCRIPTION_LAST_PAYMENT'        => 'Letzter Zahlungsbetrag',
     'OXPS_PAYPAL_SUBSCRIPTION_LAST_PAYMENT_TIME'   => 'Letzte Zahlung',
@@ -293,6 +299,7 @@ $aLang = [
     'OXPS_PAYPAL_HISTORY'                          => 'Geschichte',
     'OXPS_PAYPAL_RESOLVED_BUYER_FAVOUR'            => 'Beschlossen zu Gunsten des Käufers',
     'OXPS_PAYPAL_RESOLVED_SELLER_FAVOUR'           => 'Beschlossen zu Gunsten des Verkäufers',
+    'OXPS_PAYPAL_PRODUCT_ID'                       => 'Produkt-ID',
     'OXPS_PAYPAL_PRODUCT_NAME'                     => 'Produktname',
     'OXPS_PAYPAL_PRODUCT_DESCRIPTION'              => 'Beschreibung',
     'OXPS_PAYPAL_PRODUCT_TYPE_CATEGORY'            => 'Typ:Kategorie',
@@ -373,4 +380,10 @@ $aLang = [
     'OXPS_PAYPAL_EVIDENCE_TYPE_OTHER'              => 'Andere',
     'OXPS_PAYPAL_EVIDENCE_TYPE'                    => 'Art der Beweise',
     'OXPS_PAYPAL_EVIDENCE_DOCUMENT'                => 'Dokument',
+    'OXPS_PAYPAL_FILTER'                           => 'Filter',
+    'OXPS_PAYPAL_CREATED'                          => 'erstellt',
+    'OXPS_PAYPAL_ME'                               => 'Ich',
+
+
+
 ];
