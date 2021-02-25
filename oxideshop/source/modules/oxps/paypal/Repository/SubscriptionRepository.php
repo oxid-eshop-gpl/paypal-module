@@ -37,8 +37,8 @@ class SubscriptionRepository
     public function getSubscriptionIdPlanByProductId($productId)
     {
         return DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getAll(
-            'SELECT OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID 
-                FROM oxps_paypal_subscription_product 
+            'SELECT OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID
+                FROM oxps_paypal_subscription_product
                 WHERE OXPS_PAYPAL_PRODUCT_ID = ?',
             [$productId]
         );
@@ -72,8 +72,8 @@ class SubscriptionRepository
     public function getSubscriptionIdPlanByProductIdSubscriptionPlanId($productId, $subscriptionPlanId)
     {
         return DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getRow(
-            'SELECT * 
-                FROM oxps_paypal_subscription_product 
+            'SELECT *
+                FROM oxps_paypal_subscription_product
                 WHERE OXPS_PAYPAL_PRODUCT_ID = ?
                 AND OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID = ?',
             [$productId, $subscriptionPlanId]
@@ -188,13 +188,13 @@ class SubscriptionRepository
                        oxparentid,
                        oxactive,
                        oxprice,
-                       oxissearch, 
+                       oxissearch,
                        oxvarselect,
                        oxsubclass,
-                       oxvpe, 
+                       oxvpe,
                        oxshowcustomagreement,
                        oxstock,
-                       oxsort,        
+                       oxsort,
                        oxvarname)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         DatabaseProvider::getDb()->execute($sql, [
@@ -210,7 +210,7 @@ class SubscriptionRepository
             1,
             1000,
             $sort,
-            'subscribe'
+            Registry::getLang()->translateString('OXPS_PAYPAL_SUBSCRIBE')
         ]);
     }
 }

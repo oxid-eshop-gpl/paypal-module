@@ -461,7 +461,7 @@
                 [{foreach from=$billingInfo->cycle_executions item="cycleExecution"}]
                     [{cycle values='ppmessages,ppaltmessages' assign=cellClass}]
                     <tr class="[{$cellClass}]">
-                        <td>[{$cycleExecution->tenure_type}]</td>
+                        <td>[{oxmultilang ident="OXPS_PAYPAL_TENURE_TYPE_"|cat:$cycleExecution->tenure_type}]</td>
                         <td>[{$cycleExecution->sequence}]</td>
                         <td>[{$cycleExecution->cycles_completed}]</td>
                         <td>[{$cycleExecution->cycles_remaining}]</td>

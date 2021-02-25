@@ -73,24 +73,24 @@
 </form>
 
 
-    <h3>[{ oxmultilang ident="PAYPAL_SUBSCRIBE_MAIN" }]</h3>
+<h3>[{ oxmultilang ident="PAYPAL_SUBSCRIBE_MAIN" }]</h3>
 
-    <table style="width: 100%;">
-        <tr>
-            <td style="vertical-align: top; width: 50%">
-                [{include file="subscription_form.tpl"}]
-                [{if $oView->hasLinkedObject() }]
-                    [{include file="billing_plan.tpl" title="billingplan"}]
-                [{/if}]
+<table style="width: 100%;">
+    <tr>
+        <td style="vertical-align: top; width: 50%">
+            [{include file="subscription_form.tpl"}]
+            [{if $oView->hasLinkedObject() }]
+                [{include file="billing_plan.tpl" title="billingplan"}]
+            [{/if}]
 
-            </td>
-            <td style="vertical-align: top;">
-                [{if $oView->hasLinkedObject() }]
-                    [{include file="billing_plan_data.tpl"}]
-                [{/if}]
-            </td>
-        </tr>
-    </table>
+        </td>
+        <td style="vertical-align: top;">
+            [{if $oView->hasLinkedObject() }]
+                [{include file="billing_plan_data.tpl"}]
+            [{/if}]
+        </td>
+    </tr>
+</table>
 
 
 [{include file="bottomitem.tpl"}]

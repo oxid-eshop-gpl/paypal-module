@@ -14,15 +14,21 @@
             </tr>
             <tr>
                 <td class="edittext">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_AUTOMATICALLY_BILL" suffix="COLON"}]</td>
-                <td class="edittext">[{if $value->payment_preferences->auto_bill_outstanding == true}]Yes[{else}]No[{/if}]</td>
+                <td class="edittext">
+                    [{if $value->payment_preferences->auto_bill_outstanding == true}]
+                        [{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_YES"}]
+                    [{else}]
+                        [{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_NO"}]
+                    [{/if}]
+                </td>
             </tr>
             <tr>
                 <td class="edittext">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_SETUP_FEE" suffix="COLON"}]</td>
-                <td class="edittext">[{$value->payment_preferences->setup_fee->value}]</td>
+                <td class="edittext">[{$value->payment_preferences->setup_fee->value|number_format:2}] [{$value->payment_preferences->setup_fee->currency_code}]</td>
             </tr>
             <tr>
                 <td class="edittext">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_FAILURE_ACTION" suffix="COLON"}]</td>
-                <td class="edittext">[{$value->payment_preferences->setup_fee_failure_action}]</td>
+                <td class="edittext">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_ACTION_"|cat:$value->payment_preferences->setup_fee_failure_action}]</td>
             </tr>
             <tr>
                 <td class="edittext"[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_FAILURE_THRESHOLD" suffix="COLON"}]</td>
@@ -34,7 +40,13 @@
             </tr>
             <tr>
                 <td class="edittext">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_TAX_INCLUSIVE" suffix="COLON"}]</td>
-                <td class="edittext">[{if $value->taxes->inclusive == 1}]Yes[{else}]No[{/if}]</td>
+                <td class="edittext">
+                    [{if $value->taxes->inclusive == 1}]
+                        [{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_YES"}]
+                    [{else}]
+                        [{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_NO"}]
+                    [{/if}]
+                </td>
             </tr>
             <tr>
                 <td class="edittext">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_PAYPAL_ID" suffix="COLON"}]</td>
@@ -57,9 +69,9 @@
                         </tr>
                         [{foreach from=$value->billing_cycles item=billing_cycle key=name}]
                         <tr class="cycleData">
-                            <td align="left">[{$billing_cycle->pricing_scheme->fixed_price->currency_code}] [{$billing_cycle->pricing_scheme->fixed_price->value}]</td>
-                            <td align="left">[{$billing_cycle->frequency->interval_count}] [{$billing_cycle->frequency->interval_unit}]</td>
-                            <td align="left">[{$billing_cycle->tenure_type}]</td>
+                            <td align="left">[{$billing_cycle->pricing_scheme->fixed_price->value|number_format:2}] [{$billing_cycle->pricing_scheme->fixed_price->currency_code}]</td>
+                            <td align="left">[{$billing_cycle->frequency->interval_count}] [{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_FREQUENCY_"|cat:$billing_cycle->frequency->interval_unit}]</td>
+                            <td align="left">[{oxmultilang ident="OXPS_PAYPAL_TENURE_TYPE_"|cat:$billing_cycle->tenure_type}]</td>
                             <td align="left">[{$billing_cycle->sequence}]</td>
                             <td align="left">[{$billing_cycle->total_cycles}]</td>
                         </tr>
