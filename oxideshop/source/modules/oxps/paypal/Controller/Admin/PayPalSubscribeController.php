@@ -602,7 +602,11 @@ class PayPalSubscribeController extends AdminController
     {
         DatabaseProvider::getDb()->execute(
             'UPDATE oxarticles SET OXVARNAME = ? WHERE OXID = ? OR OXPARENTID = ?',
-            ['subscribe', $oxid, $oxid]
+            [
+                Registry::getLang()->translateString('OXPS_PAYPAL_SUBSCRIBE'),
+                $oxid,
+                $oxid
+            ]
         );
     }
 
