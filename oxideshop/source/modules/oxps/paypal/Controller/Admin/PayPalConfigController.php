@@ -204,12 +204,8 @@ class PayPalConfigController extends AdminController
             $conf['blPayPalShowProductDetailsButton'] = 0;
         }
 
-        if (!isset($conf['blPayPalShowMiniBasketButton'])) {
-            $conf['blPayPalShowMiniBasketButton'] = 0;
-        }
-
-        if (!isset($conf['blPayPalShowAddToBasketModalButton'])) {
-            $conf['blPayPalShowAddToBasketModalButton'] = 0;
+        if (!isset($conf['blPayPalShowBasketButton'])) {
+            $conf['blPayPalShowBasketButton'] = 0;
         }
 
         return $conf;

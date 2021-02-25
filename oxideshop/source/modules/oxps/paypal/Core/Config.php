@@ -132,9 +132,9 @@ class Config
     /**
      * @return bool
      */
-    public function showPayPalMiniBasketButton(): bool
+    public function showPayPalBasketButton(): bool
     {
-        return (bool) Registry::getConfig()->getConfigParam('blPayPalShowMiniBasketButton', false);
+        return (bool) Registry::getConfig()->getConfigParam('blPayPalShowBasketButton', false);
     }
 
     /**
@@ -143,14 +143,6 @@ class Config
     public function showPayPalProductDetailsButton(): bool
     {
         return (bool) Registry::getConfig()->getConfigParam('blPayPalShowProductDetailsButton');
-    }
-
-    /**
-     * @return bool
-     */
-    public function showPayPalAddToBasketModalButton(): bool
-    {
-        return (bool) Registry::getConfig()->getConfigParam('blPayPalShowAddToBasketModalButton');
     }
 
     /**

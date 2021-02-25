@@ -98,8 +98,8 @@
             <div class="controls">
                 <div>
                     <div class="checkbox"><label><input type="checkbox" name="conf[blPayPalShowProductDetailsButton]" [{if $config->showPayPalProductDetailsButton()}]checked[{/if}] value="1">[{oxmultilang ident="OXPS_PAYPAL_PRODUCT_DETAILS_BUTTON_PLACEMENT"}]</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="conf[blPayPalShowMiniBasketButton]" [{if $config->showPayPalMiniBasketButton()}]checked[{/if}] value="1">[{oxmultilang ident="OXPS_PAYPAL_MINI_BASKET_BUTTON_PLACEMENT"}]</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="conf[blPayPalShowAddToBasketModalButton]" [{if $config->showPayPalAddToBasketModalButton()}]checked[{/if}] value="1">[{oxmultilang ident="OXPS_PAYPAL_ADD_TO_BASKET_MODAL_PLACEMENT"}]</label></div>
+                    <div class="checkbox"><label><input type="checkbox" name="conf[blPayPalShowBasketButton]" [{if $config->showPayPalBasketButton()}]checked[{/if}] value="1">[{oxmultilang ident="OXPS_PAYPAL_BASKET_BUTTON_PLACEMENT"}]</label></div>
+                    <div class="checkbox"><label><input type="checkbox" name="conf[blPayPalShowCheckoutButton]" [{if $config->showPayPalAddToBasketModalButton()}]checked[{/if}] value="1">[{oxmultilang ident="OXPS_PAYPAL_CHECKOUT_PLACEMENT"}]</label></div>
                 </div>
                 <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_BUTTON_PLACEMEMT"}]</span>
             </div>

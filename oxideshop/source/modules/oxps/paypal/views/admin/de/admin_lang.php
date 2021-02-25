@@ -128,7 +128,7 @@ $aLang = [
     'OXPS_PAYPAL_OPMODE_LIVE'                      => 'Live',
     'OXPS_PAYPAL_OPMODE_SANDBOX'                   => 'Sandbox',
     'OXPS_PAYPAL_CLIENT_ID'                        => 'Client ID',
-    'OXPS_PAYPAL_CLIENT_SECRET'                    => 'Passwordt',
+    'OXPS_PAYPAL_CLIENT_SECRET'                    => 'Passwort',
     'OXPS_PAYPAL_CREDENTIALS'                      => 'API Anmeldeinformationen',
     'OXPS_PAYPAL_WEBHOOK_TITLE'                    => 'Webhooks',
     'OXPS_PAYPAL_WEBHOOK_URL'                      => 'Oxid Webhook URL',
@@ -141,10 +141,10 @@ $aLang = [
         'Ein oder mehrere Konfigurationswerte sind entweder nicht festgelegt oder falsch. Bitte überprüfen Sie sie noch einmal.<br>
         <b>Modul inaktiv.</b>',
     'OXPS_PAYPAL_CONF_VALID'                       => 'Konfigurationswerte OK.<br><b>Modul ist aktiv</b>',
-    'OXPS_PAYPAL_BUTTON_PLACEMEMT_TITLE'           => 'Einstellungen für die Tastenplatzierung',
+    'OXPS_PAYPAL_BUTTON_PLACEMEMT_TITLE'           => 'Einstellungen für die Buttonplatzierung',
     'OXPS_PAYPAL_PRODUCT_DETAILS_BUTTON_PLACEMENT' => 'Produktdetailseite',
-    'OXPS_PAYPAL_ADD_TO_BASKET_MODAL_PLACEMENT'    => 'Modal in den Warenkorb legen',
-    'OXPS_PAYPAL_MINI_BASKET_BUTTON_PLACEMENT'     => 'Minikorb',
+    'OXPS_PAYPAL_BASKET_BUTTON_PLACEMENT'          => 'Warenkorb',
+    'OXPS_PAYPAL_CHECKOUT_PLACEMENT'               => 'Checkout-Seite',
     'HELP_OXPS_PAYPAL_BUTTON_PLACEMEMT'            => 'Schalten Sie die Anzeige der PayPal-Schaltflächen um',
     'HELP_OXPS_PAYPAL_CREDENTIALS'                 =>
         'Wenn Sie die API Anmeldeinformationen bereits vorleigen haben, können Sie sie direkt eingeben.<br>
