@@ -139,14 +139,18 @@
             </tbody>
     </table>
     <table class="addBilling" cellspacing="0" cellpadding="0" border="0" width="98%" style="border: 1px solid #cccccc; padding: 10px; margin: 10px; border-radius: 10px;">
-            <tr class="addBilling"><td colspan="100"><h3>Add Billing Cycles</h3></td></tr>
+            <tr class="addBilling">
+                <td colspan="100">
+                    <h3>[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_ADD_CYCLES"}]</h3>
+                </td>
+            </tr>
 
             <tr class="addBilling">
                 <td class="edittext">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_TENURE" suffix="COLON"}]</td>
                 <td class="edittext">
                     <select name="tenure_val" id="tenure_val" style="width: 200px" class="editinput">
                         [{foreach from=$defaultTenureTypes item=value key=name}]
-                        <option value="[{$value}]">[{$value}]</option>
+                            <option value="[{$value}]">[{oxmultilang ident="OXPS_PAYPAL_TENURE_TYPE_"|cat:$value}]</option>
                         [{/foreach}]
                     </select>
                 </td>
@@ -175,7 +179,7 @@
                 <td class="edittext">
                     <select name="interval_val" id="interval_val" style="width: 200px" class="editinput">
                         [{foreach from=$defaultIntervals item=value key=name}]
-                        <option value="[{$value}]">[{$value}]</option>
+                            <option value="[{$value}]">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_FREQUENCY_"|cat:$value}]</option>
                         [{/foreach}]
                     </select>
                 </td>
