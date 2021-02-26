@@ -99,7 +99,7 @@
                 <div>
                     <div class="checkbox"><label><input type="checkbox" name="conf[blPayPalShowProductDetailsButton]" [{if $config->showPayPalProductDetailsButton()}]checked[{/if}] value="1">[{oxmultilang ident="OXPS_PAYPAL_PRODUCT_DETAILS_BUTTON_PLACEMENT"}]</label></div>
                     <div class="checkbox"><label><input type="checkbox" name="conf[blPayPalShowBasketButton]" [{if $config->showPayPalBasketButton()}]checked[{/if}] value="1">[{oxmultilang ident="OXPS_PAYPAL_BASKET_BUTTON_PLACEMENT"}]</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="conf[blPayPalShowCheckoutButton]" [{if $config->showPayPalAddToBasketModalButton()}]checked[{/if}] value="1">[{oxmultilang ident="OXPS_PAYPAL_CHECKOUT_PLACEMENT"}]</label></div>
+                    <div class="checkbox"><label><input type="checkbox" name="conf[blPayPalShowCheckoutButton]" [{if $config->showPayPalBasketButton()}]checked[{/if}] value="1">[{oxmultilang ident="OXPS_PAYPAL_CHECKOUT_PLACEMENT"}]</label></div>
                 </div>
                 <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_BUTTON_PLACEMEMT"}]</span>
             </div>
@@ -123,7 +123,7 @@
                 <div class="input-group">
                     <input class="form-control" id="webhook-url" type="text" value="[{$oView->getWebhookControllerUrl()}]" readonly>
                     <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" onclick="copyToClipboard('#webhook-url')">Copy</button>
+                        <button class="btn btn-default" type="button" onclick="copyToClipboard('#webhook-url')">[{oxmultilang ident="OXPS_PAYPAL_COPY"}]</button>
                     </span>
                 </div>
                 <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_WEBHOOK_URL"}]</span>

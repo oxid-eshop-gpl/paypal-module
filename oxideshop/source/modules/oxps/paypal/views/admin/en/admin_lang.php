@@ -362,7 +362,6 @@ $aLang = [
     'OXPS_PAYPAL_EVIDENCE_TYPE_COPY_OF_CONTRACT'   => 'Copy Of Contract',
     'OXPS_PAYPAL_EVIDENCE_TYPE_TERMINAL_ATM_RECEIPT'                                  => 'Terminal Atm Receipt',
     'OXPS_PAYPAL_EVIDENCE_TYPE_PRICE_DIFFERENCE_REASON'                               => 'Price Difference Reason',
-
     'OXPS_PAYPAL_EVIDENCE_TYPE_SOURCE_CONVERSION_RATE'                                => 'Source Conversion Rate',
     'OXPS_PAYPAL_EVIDENCE_TYPE_BANK_STATEMENT'                                        => 'Bank Statement',
     'OXPS_PAYPAL_EVIDENCE_TYPE_CREDIT_DUE_REASON'  => 'Credit Due Reason',
@@ -415,5 +414,6 @@ $aLang = [
     'OXPS_PAYPAL_FILTER'                           => 'Filter',
     'OXPS_PAYPAL_CREATED'                          => 'created',
     'OXPS_PAYPAL_ME'                               => 'Me',
+    'OXPS_PAYPAL_COPY'                             => 'Copy',
 ];
 
