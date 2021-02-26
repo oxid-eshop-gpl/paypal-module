@@ -342,15 +342,15 @@ $aModule = [
         [
             'theme' => 'flow',
             'template' => 'page/details/inc/productmain.tpl',
-            'block' => 'details_productmain_price',
-            'file' => '/views/blocks/shared/page/details/inc/details_productmain_price.tpl',
+            'block' => 'details_productmain_price_value',
+            'file' => '/views/blocks/shared/page/details/inc/details_productmain_price_value.tpl',
             'position' => '5'
         ],
         [
             'theme' => 'wave',
             'template' => 'page/details/inc/productmain.tpl',
-            'block' => 'details_productmain_price',
-            'file' => '/views/blocks/shared/page/details/inc/details_productmain_price.tpl',
+            'block' => 'details_productmain_price_value',
+            'file' => '/views/blocks/shared/page/details/inc/details_productmain_price_value.tpl',
             'position' => '5'
         ],
         [
