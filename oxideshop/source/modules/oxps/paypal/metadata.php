@@ -29,6 +29,7 @@ use OxidEsales\Eshop\Application\Controller\OrderController;
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Application\Model\Basket;
 use OxidEsales\Eshop\Application\Model\Order;
+use OxidEsales\Eshop\Application\Model\User;
 use OxidEsales\Eshop\Application\Model\PaymentGateway;
 use OxidEsales\Eshop\Application\Model\Selection as SelectionCore;
 use OxidEsales\Eshop\Application\Model\VariantHandler as VariantHandlerCore;
@@ -56,6 +57,7 @@ use OxidProfessionalServices\PayPal\Controller\WebhookController;
 use OxidProfessionalServices\PayPal\Core\ViewConfig as PayPalViewConfig;
 use OxidProfessionalServices\PayPal\Model\Basket as PayPalBasket;
 use OxidProfessionalServices\PayPal\Model\Order as PayPalOrder;
+use OxidProfessionalServices\PayPal\Model\User as PayPalUser;
 use OxidProfessionalServices\PayPal\Model\PaymentGateway as PayPalPaymentGateway;
 use OxidProfessionalServices\PayPal\Model\PayPalArticle;
 use OxidProfessionalServices\PayPal\Model\Selection as PayPalSelectionModel;
@@ -85,6 +87,7 @@ $aModule = [
     'extend' => [
         ViewConfig::class => PayPalViewConfig::class,
         Order::class => PayPalOrder::class,
+        User::class => PayPalUser::class,
         Basket::class => PayPalBasket::class,
         Article::class => PayPalArticle::class,
         PaymentGateway::class => PayPalPaymentGateway::class,

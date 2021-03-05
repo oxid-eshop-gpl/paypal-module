@@ -15,4 +15,6 @@ $aLang = [
     'OXPS_PAYPAL_FREQUENCY_YEAR'              => 'Year',
     'OXPS_PAYPAL_ORDEREXECUTION_ERROR'        => 'Order execution error. Please try later or choose different payment method.',
     'OXPS_PAYPAL_FOR'                         => 'For',
+    'OXPS_PAYPAL_SUBSCRIPTION_NEEDSUSER'      => 'You can subscribe to this article if you have registered and logged in as a customer in our shop.',
+    'OXPS_PAYPAL_SUBSCRIPTION_NOTE'           => 'You have already taken out this subscription at least once.',
 ];
