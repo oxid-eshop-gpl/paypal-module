@@ -15,4 +15,6 @@ $aLang = [
     'OXPS_PAYPAL_FREQUENCY_YEAR'              => 'Jahr',
     'OXPS_PAYPAL_ORDEREXECUTION_ERROR'        => 'Fehler im Bestellvorgang. Bitte versuchen Sie es später erneut oder wählen Sie eine andere Zahlungsart.',
     'OXPS_PAYPAL_FOR'                         => 'Für',
+    'OXPS_PAYPAL_SUBSCRIPTION_NEEDSUSER'      => 'Diesen Artikel können Sie abonnieren, wenn Sie sich in unserem Shop als Kunde registriert und angemeldet haben.',
+    'OXPS_PAYPAL_SUBSCRIPTION_NOTE'           => 'Dieses Abo haben Sie bereits mindestens einmal abgeschlossen.',
 ];

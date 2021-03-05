@@ -1,6 +1,6 @@
 [{if $oDetailsProduct->getFPrice()}]
     [{if $aVariantSelections.blPerfectFit && $subscriptionPlan}]
-        [{*<div id="overlay"><div class="loader"></div></div>*}]
+        <div id="overlay"><div class="loader"></div></div>
         <div class="clearfix">
             <h4 class="paypal-subscription-headline">[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION"}]</h4>
             <div class="paypal-subscription-desc">[{$subscriptionPlan->description}]</div>
@@ -22,6 +22,9 @@
                     </li>
                 [{/foreach}]
             </ul>
+            [{if $oxcmp_user && $oxcmp_user->hasSubscribed($subscriptionPlan->id)}]
+                [{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_NOTE"}]
+            [{/if}]
         </div>
     [{/if}]
 [{/if}]
