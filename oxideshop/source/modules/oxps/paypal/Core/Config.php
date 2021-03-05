@@ -140,6 +140,14 @@ class Config
     /**
      * @return bool
      */
+    public function showPayPalCheckoutButton(): bool
+    {
+        return (bool) Registry::getConfig()->getConfigParam('blPayPalShowCheckoutButton', false);
+    }
+
+    /**
+     * @return bool
+     */
     public function showPayPalProductDetailsButton(): bool
     {
         return (bool) Registry::getConfig()->getConfigParam('blPayPalShowProductDetailsButton');
