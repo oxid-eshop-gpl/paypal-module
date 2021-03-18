@@ -144,7 +144,8 @@ $aLang = [
     'OXPS_PAYPAL_BUTTON_PLACEMEMT_TITLE'           => 'Button placement settings',
     'OXPS_PAYPAL_PRODUCT_DETAILS_BUTTON_PLACEMENT' => 'Product details page',
     'OXPS_PAYPAL_BASKET_BUTTON_PLACEMENT'          => 'Basket',
-    'OXPS_PAYPAL_CHECKOUT_PLACEMENT'               => 'Checkout-Page',
+    'OXPS_PAYPAL_CHECKOUT_PLACEMENT'               => 'Payment Page (Checkout)',
+    'HELP_OXPS_PAYPAL_CHECKOUT_PLACEMENT'          => 'when using PayPal PLUS please deactivate',
     'HELP_OXPS_PAYPAL_BUTTON_PLACEMEMT'            => 'Toggle the display of PayPal buttons',
     'HELP_OXPS_PAYPAL_CREDENTIALS'                 =>
         'If you already have the API credentials, you can enter them directly.<br>
