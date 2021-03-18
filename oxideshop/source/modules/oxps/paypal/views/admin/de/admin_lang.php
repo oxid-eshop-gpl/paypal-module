@@ -28,7 +28,7 @@ $aLang = [
     'OXPS_PAYPAL_ACTIONS'                          => 'Aktionen',
     'OXPS_PAYPAL_CAPTURE_PAYMENT'                  => 'Zahlung erfassen',
     'OXPS_PAYPAL_ISSUE_REFUND'                     => 'Rückerstattung ausstellen',
-    'OXPS_PAYPAL_SHOW_BALANCE_AFFECTING_RECORDS'   => 'Nur das Gleichgewicht beeinflusst',
+    'OXPS_PAYPAL_SHOW_BALANCE_AFFECTING_RECORDS'   => 'Nur die Einträge, die das Konto beeinflussen',
     'OXPS_PAYPAL_REPORT_REFERENCE'                 => 'Referenz melden',
     'OXPS_PAYPAL_TRANSACTION_TO_PRICE'             => 'Preis bis',
     'OXPS_PAYPAL_TRANSACTION_FROM_PRICE'           => 'Preis von',
@@ -40,7 +40,7 @@ $aLang = [
     'OXPS_PAYPAL_MORE'                             => 'Mehr',
     'OXPS_PAYPAL_LAST_REFRESH_TIME'                => 'Letzte Aktualisierung',
     'OXPS_PAYPAL_CURRENCY_CODE'                    => 'Währungscode',
-    'OXPS_PAYPAL_AS_OF_TIME'                       => 'Ab der zeit',
+    'OXPS_PAYPAL_AS_OF_TIME'                       => 'seit',
     'OXPS_PAYPAL_PAYMENT_INSTRUMENT_CREDIT_CARD'   => 'Kreditkarte',
     'OXPS_PAYPAL_PAYMENT_INSTRUMENT_DEBIT_CARD'    => 'Debitkarte',
     'OXPS_PAYPAL_TRANSACTION_STATUS_P'             => 'Ausstehend',
@@ -144,10 +144,11 @@ $aLang = [
     'OXPS_PAYPAL_BUTTON_PLACEMEMT_TITLE'           => 'Einstellungen für die Buttonplatzierung',
     'OXPS_PAYPAL_PRODUCT_DETAILS_BUTTON_PLACEMENT' => 'Produktdetailseite',
     'OXPS_PAYPAL_BASKET_BUTTON_PLACEMENT'          => 'Warenkorb',
-    'OXPS_PAYPAL_CHECKOUT_PLACEMENT'               => 'Checkout-Seite',
+    'OXPS_PAYPAL_CHECKOUT_PLACEMENT'               => 'Bezahlseite (Checkout)',
+    'HELP_OXPS_PAYPAL_CHECKOUT_PLACEMENT'          => 'bei gleichzeitiger Nutzung von PayPal PLUS bitte deaktivieren',
     'HELP_OXPS_PAYPAL_BUTTON_PLACEMEMT'            => 'Schalten Sie die Anzeige der PayPal-Schaltflächen um',
     'HELP_OXPS_PAYPAL_CREDENTIALS'                 =>
-        'Wenn Sie die API Anmeldeinformationen bereits vorleigen haben, können Sie sie direkt eingeben.<br>
+        'Wenn Sie die API Anmeldeinformationen bereits vorliegen haben, können Sie sie direkt eingeben.<br>
         Alternativ nutzen Sie einen der folgenden Links um die API Anmeldeinformationen für den Live oder den Sandbox-Modus zu erzeugen.',
     'HELP_OXPS_PAYPAL_CLIENT_ID'                   => 'Client ID des Live-Account für live-Modus',
     'HELP_OXPS_PAYPAL_CLIENT_SECRET'               => 'Secret des Live-Account für live-Modus',
