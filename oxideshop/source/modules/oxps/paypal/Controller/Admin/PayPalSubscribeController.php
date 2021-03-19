@@ -318,6 +318,9 @@ class PayPalSubscribeController extends AdminController
             return;
         }
 
+        $variantId = $this->repository->getOxIdByProductId($this->linkedObject->id);
+        $this->repository->deleteVariantProduct($variantId);
+
         $this->repository->deleteLinkedProduct($this->linkedObject->id);
         $this->addTplParam('updatelist', 1);
     }
@@ -478,6 +481,8 @@ class PayPalSubscribeController extends AdminController
             $this->addTplParam('error', $e->getMessage());
         } catch (ApiException $e) {
             $this->addTplParam('error', $e->getErrorDescription());
+            // delete broken variant, if we have a API-Error
+            $this->deleteVariants($variantId);
         }
     }
 
@@ -546,6 +551,15 @@ class PayPalSubscribeController extends AdminController
         $this->saveSelectName($oxid);
 
         return $variantOxid;
+    }
+
+    /**
+     * @param string $variantOxid
+     * @throws DatabaseConnectionException
+     */
+    protected function deleteVariants(string $variantOxid): void
+    {
+        $this->repository->deleteVariantProduct($variantOxid);
     }
 
     /**
