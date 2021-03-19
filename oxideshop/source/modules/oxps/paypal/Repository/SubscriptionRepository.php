@@ -45,6 +45,23 @@ class SubscriptionRepository
     }
 
     /**
+     * @param string $productId
+     * @return array
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     */
+    public function getOxIdByProductId($productId)
+    {
+        return DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getAll(
+            'SELECT OXPS_PAYPAL_OXARTICLE_ID
+                FROM oxps_paypal_subscription_product
+                WHERE OXPS_PAYPAL_PRODUCT_ID = ?',
+            [$productId]
+        );
+    }
+
+
+    /**
      * @param Product $response
      * @throws DatabaseConnectionException
      * @throws DatabaseErrorException
@@ -133,6 +150,20 @@ class SubscriptionRepository
 
         DatabaseProvider::getDb()->execute($sql, [
             $paypalProductId
+        ]);
+    }
+
+    /**
+     * @param string $variantOxid
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     */
+    public function deleteVariantProduct($variantOxid): void
+    {
+        $sql = 'DELETE FROM oxarticles WHERE OXID = ?';
+
+        DatabaseProvider::getDb()->execute($sql, [
+            $variantOxid
         ]);
     }
 
