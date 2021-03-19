@@ -254,6 +254,8 @@
             let price = jQuery('#fixed_price_val').val();
             let frequency = jQuery('#interval_val option:selected').text();
             let tenure = jQuery('#tenure_val option:selected').text();
+            let frequency_value = jQuery('#interval_val option:selected').val();
+            let tenure_value = jQuery('#tenure_val option:selected').val();
             let sequence = jQuery('#sequence_val option:selected').text();
             let totalCycles = jQuery('#total_cycles_val option:selected').text();
 
@@ -269,8 +271,8 @@
                 html += '<td align="left">' + totalCycles + '</td>';
                 html += '<td style="cursor:pointer; cursor: hand" align="left" onclick="window.deleteRow(\'' + intCount + '\')">[X]';
                 html += '<input type="hidden" name="fixed_price[]" value="' + price + '" />';
-                html += '<input type="hidden" name="interval[]" value="' + frequency + '" />';
-                html += '<input type="hidden" name="tenure[]" value="' + tenure + '" />';
+                html += '<input type="hidden" name="interval[]" value="' + frequency_value + '" />';
+                html += '<input type="hidden" name="tenure[]" value="' + tenure_value + '" />';
                 html += '<input type="hidden" name="sequence[]" value="' + sequence + '" />';
                 html += '<input type="hidden" name="total_cycles[]" value="' + totalCycles + '" /></td>';
                 html += '</tr>';
