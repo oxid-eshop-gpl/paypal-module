@@ -470,6 +470,9 @@ class PayPalSubscribeController extends AdminController
     {
         $subscriptionService = new SubscriptionService();
         $productId = Registry::getRequest()->getRequestEscapedParameter('paypalProductId', "");
+
+        $variantId = null;
+        $rollback = false;
         try {
             $this->setLinkedObject();
             $variantId = $this->saveVariants();
@@ -477,11 +480,17 @@ class PayPalSubscribeController extends AdminController
             $subscriptionService->saveNewSubscriptionPlan($productId, $variantId);
         } catch (DatabaseConnectionException $e) {
             $this->addTplParam('error', $e->getMessage());
+            $rollback = true;
         } catch (DatabaseErrorException $e) {
             $this->addTplParam('error', $e->getMessage());
+            $rollback = true;
         } catch (ApiException $e) {
             $this->addTplParam('error', $e->getErrorDescription());
-            // delete broken variant, if we have a API-Error
+            $rollback = true;
+        }
+
+        // delete broken variant, if we have a API-Error
+        if ($variantId &&  $rollback) {
             $this->deleteVariants($variantId);
         }
     }
@@ -547,7 +556,9 @@ class PayPalSubscribeController extends AdminController
         $variantOxid = UtilsObject::getInstance()->generateUId();
 
         $this->repository->saveVariantProduct($variantOxid, $oxid, $setupFee, $price, $planName, $sort);
-        $this->saveMapId($this->getMapIdFromVariant($variantOxid));
+        if ($this->isMultiShop()) {
+            $this->saveMapId($this->getMapIdFromVariant($variantOxid));
+        }
         $this->saveSelectName($oxid);
 
         return $variantOxid;
@@ -559,6 +570,9 @@ class PayPalSubscribeController extends AdminController
      */
     protected function deleteVariants(string $variantOxid): void
     {
+        if ($this->isMultiShop()) {
+            $this->deleteMapId($this->getMapIdFromVariant($variantOxid));
+        }
         $this->repository->deleteVariantProduct($variantOxid);
     }
 
@@ -608,6 +622,21 @@ class PayPalSubscribeController extends AdminController
     }
 
     /**
+     * @param $mapId
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     */
+    public function deleteMapId($mapId): void
+    {
+        $sql = 'DELETE FROM oxarticles2shop WHERE OXSHOPID = ? and OXMAPOBJECTID = ?';
+
+        DatabaseProvider::getDb()->execute(
+            $sql,
+            [Registry::getConfig()->getShopId(), $mapId]
+        );
+    }
+
+    /**
      * @param string|null $oxid
      * @throws DatabaseConnectionException
      * @throws DatabaseErrorException
@@ -636,5 +665,15 @@ class PayPalSubscribeController extends AdminController
         }
 
         $this->linkedProduct = $this->repository->getLinkedProductByOxid($oxid);
+    }
+
+    /**
+    * check if it is a MultiShop-System
+    *
+    * @return boolean
+    */
+    private function isMultiShop(): boolean
+    {
+        return !('CE' == Registry::getConfig()->getEdition());
     }
 }
