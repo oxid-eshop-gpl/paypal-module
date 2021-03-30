@@ -672,7 +672,7 @@ class PayPalSubscribeController extends AdminController
     *
     * @return boolean
     */
-    private function isMultiShop(): boolean
+    private function isMultiShop()
     {
         return !('CE' == Registry::getConfig()->getEdition());
     }
