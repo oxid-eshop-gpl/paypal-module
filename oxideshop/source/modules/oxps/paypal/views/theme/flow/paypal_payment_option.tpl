@@ -7,8 +7,11 @@
             </div>
             <div class="panel-body">
                 [{if $oViewConf->isPayPalSessionActive()}]
-                    <div class="text-left">
-                        [{oxmultilang ident="OXPS_PAYPAL_PAY_PROCESSED" args=$oViewConf->getSelfLink()|cat:"cl=PayPalProxyController&fnc=cancelPayPalPayment"}]
+                    <div class="pull-left">
+                        [{oxmultilang ident="OXPS_PAYPAL_PAY_PROCESSED"}]
+                    </div>
+                    <div class="pull-right">
+                        <a class="btn btn-default" href="[{$oViewConf->getCancelPayPalPaymentUrl()}]">[{oxmultilang ident="OXPS_PAYPAL_PAY_UNLINK"}]</a>
                     </div>
                     [{capture name="hide_payment"}]
                         [{literal}]

@@ -2,6 +2,7 @@
 
 namespace OxidProfessionalServices\PayPal\Model;
 
+use OxidEsales\Eshop\Core\DatabaseProvider;
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\BillingCycle;
 
@@ -21,61 +22,20 @@ class PayPalArticle extends PayPalArticle_parent
     }
 
     /**
-     * @return bool
-     */
-    public function isThisOrParentPayPalProductLinked()
-    {
-        return $this->isPayPalProductLinked() || $this->getPayPalParentArticle()->isPayPalProductLinked();
-    }
-
-    /**
      * @return string
      */
     public function getPayPalProductId(): string
     {
-        return (string) $this->getFieldData("PayPalProductId");
-    }
+        $sql = 'SELECT OXPS_PAYPAL_PRODUCT_ID
+            FROM oxps_paypal_subscription_product
+            WHERE OXPS_PAYPAL_OXARTICLE_ID = ?';
 
-    /**
-     * @return bool
-     */
-    public function isPayPalProductLinkedByParentOnly()
-    {
-        $parent = $this->getPayPalParentArticle();
-        return (!$this->isPayPalProductLinked()) && $parent->isPayPalProductLinked();
-    }
-
-    /**
-     * @return $this
-     */
-    public function getPayPalParentArticle()
-    {
-        $parent = $this->getParentArticle();
-        assert($parent instanceof self);
-        return $parent;
-    }
-
-    /**
-     * @param PayPalArticle $product
-     * @param array $billingCycles
-     * @return BillingCycle|null
-     */
-    public function getVariantData(PayPalArticle $product, array $billingCycles)
-    {
-        $return = null;
-
-        /** @var BillingCycle $cycle */
-        foreach ($billingCycles as $cycle) {
-            $tenure = $cycle->frequency->interval_count . ' ' . $cycle->frequency->interval_unit .
-                ' (' . $cycle->tenure_type . ')';
-            $oxvarselect = $product->oxarticles__oxvarselect->value;
-
-            if ($tenure == $oxvarselect) {
-                $return = $cycle;
-                break;
-            }
-        }
-
-        return $return;
+        return (string) DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)
+            ->getOne(
+                $sql,
+                [
+                    $this->getId()
+                ]
+            );
     }
 }

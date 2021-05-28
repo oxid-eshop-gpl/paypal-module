@@ -10,7 +10,7 @@ use OxidProfessionalServices\PayPal\Model\Logger\LogMessage;
 
 class LogRepository
 {
-    public const TABLE_NAME = 'paypalmodulelog';
+    public const TABLE_NAME = 'oxps_paypal_log';
 
     /**
      * @param LogMessage $logMessage
@@ -23,12 +23,12 @@ class LogRepository
 
         $sql = sprintf(
             'INSERT INTO %s (
-                `OXPS_PAYPAL_PAYLOGID`, 
-                `OXPS_PAYPAL_OXSHOPID`, 
-                `OXPS_PAYPAL_OXUSERID`, 
-                `OXPS_PAYPAL_OXORDERID`, 
-                `OXPS_PAYPAL_RESPONSE_MSG`, 
-                `OXPS_PAYPAL_STATUS_CODE`, 
+                `OXPS_PAYPAL_PAYLOGID`,
+                `OXPS_PAYPAL_OXSHOPID`,
+                `OXPS_PAYPAL_OXUSERID`,
+                `OXPS_PAYPAL_OXORDERID`,
+                `OXPS_PAYPAL_RESPONSE_MSG`,
+                `OXPS_PAYPAL_STATUS_CODE`,
                 `OXPS_PAYPAL_REQUEST_TYPE`,
                 `OXPS_PAYPAL_IDENTIFIER`
                 ) VALUES (?,?,?,?,?,?,?,?)',

@@ -1,0 +1,29 @@
+{
+  "name": "oxid-professional-services/paypallocale",
+  "description": "PayPal module for OXID - Local development environment",
+  "type": "oxideshop-module",
+  "keywords": ["oxid", "modules", "paypal", "pay"],
+  "license": "proprietary",
+  "version": "0.0.1",
+  "require": {
+    "viison/address-splitter": "^0.3.4",
+    "ext-json": "*"
+  },
+  "archive": {
+    "exclude": ["/resources"]
+  },
+  "extra": {
+    "oxideshop": {
+      "blacklist-filter": [
+        "resources/**/*",
+        "resources/**/*."
+      ],
+      "target-directory": "oxps/paypallocale"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "OxidProfessionalServices\\PayPalLocale\\": "."
+    }
+  }
+}

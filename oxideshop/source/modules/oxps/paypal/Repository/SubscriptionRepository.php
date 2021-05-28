@@ -154,20 +154,6 @@ class SubscriptionRepository
     }
 
     /**
-     * @param string $variantOxid
-     * @throws DatabaseConnectionException
-     * @throws DatabaseErrorException
-     */
-    public function deleteVariantProduct($variantOxid): void
-    {
-        $sql = 'DELETE FROM oxarticles WHERE OXID = ?';
-
-        DatabaseProvider::getDb()->execute($sql, [
-            $variantOxid
-        ]);
-    }
-
-    /**
      * @return object
      */
     public function getEditObject($oxid)
@@ -193,55 +179,5 @@ class SubscriptionRepository
         }
 
         return false;
-    }
-
-    /**
-     * @param string $variantId
-     * @param string|null $articleId
-     * @param float $setupFee
-     * @param float $price
-     * @param string $planName
-     * @param int $sort
-     * @throws DatabaseConnectionException
-     * @throws DatabaseErrorException
-     */
-    public function saveVariantProduct(
-        string $variantId,
-        ?string $articleId,
-        float $setupFee,
-        float $price,
-        string $planName,
-        int $sort = 1
-    ): void {
-        $sql = "INSERT INTO oxarticles(
-                       oxid,
-                       oxshopid,
-                       oxparentid,
-                       oxactive,
-                       oxprice,
-                       oxissearch,
-                       oxvarselect,
-                       oxsubclass,
-                       oxvpe,
-                       oxshowcustomagreement,
-                       oxstock,
-                       oxsort,
-                       oxvarname)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
-
-        DatabaseProvider::getDb()->execute($sql, [
-            $variantId,
-            Registry::getConfig()->getShopId(),
-            $articleId,
-            1,
-            $setupFee + $price,
-            1,
-            $planName,
-            'oxarticle',
-            1,
-            1,
-            1000,
-            $sort,
-            Registry::getLang()->translateString('OXPS_PAYPAL_SUBSCRIBE')
-        ]);
     }
 }

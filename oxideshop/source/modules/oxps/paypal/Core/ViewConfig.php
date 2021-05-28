@@ -79,6 +79,16 @@ class ViewConfig extends ViewConfig_parent
     }
 
     /**
+     * get CancelPayPalPayment-Url
+     *
+     * @return string
+     */
+    public function getCancelPayPalPaymentUrl(): string
+    {
+        return $this->getSelfLink() . 'cl=PayPalProxyController&fnc=cancelPayPalPayment';
+    }
+
+    /**
      * Gets PayPal JS SDK url
      *
      * @param bool $paymentStrategy ('continue', 'pay_now') commit the order or Show a Confirmation Page

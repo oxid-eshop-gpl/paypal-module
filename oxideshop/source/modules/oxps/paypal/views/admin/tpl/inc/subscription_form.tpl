@@ -10,8 +10,6 @@
 [{assign var="defaultTenureTypes" value=$oView->getTenureTypeDefaults()}]
 [{assign var="defaultSequences" value=$oView->getSequenceDefaults()}]
 [{assign var="defaultTotalCycles" value=$oView->getTotalCycleDefaults()}]
-[{assign var="currencyCodes" value=$oView->getCurrencyCodes()}]
-[{assign var="existingVariants" value=$oView->getVariantProducts()}]
 [{if $hasLinkedObject }]
     [{assign var="title" value=$linkedObject->name}]
     [{assign var="description" value=$linkedObject->description}]
@@ -92,15 +90,11 @@
             <td class="edittext">
                 [{oxmultilang ident="OXPS_PAYPAL_PRODUCT_IMAGE" suffix="COLON"}]
             </td>
-            [{foreach from=$images item=url}]
+            [{foreach from=$images item=image}]
                 <td class="edittext" style="float: left; margin-right: 10px; padding: 10px; border: 1px solid #cccccc;">
                     <label>
-                        [{if $url == $imageUrl }]
-                    <input type="radio" name="imageUrl" value="[{$url}]" class="pform" checked>
-                        [{else}]
-                    <input type="radio" name="imageUrl" value="[{$url}]" class="pform">
-                        [{/if}]
-                        <img style="height: 100px" src="[{$url}]">
+                        <input type="radio" name="imageUrl" value="[{$image.masterUrl}]" class="pform"[{if $image.masterUrl == $imageUrl }] checked[{/if}] />
+                        <img style="height: 100px" src="[{$image.imageUrl}]" />
                     </label>
                 </td>
             [{/foreach}]

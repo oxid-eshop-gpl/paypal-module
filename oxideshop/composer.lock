@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "23c03d0b87c3ba1f2eddab12d1735533",
+    "content-hash": "17cf74ab2ae1e109e8c50d71d579f3a6",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1590,6 +1590,51 @@
             "time": "2020-04-30T12:47:16+00:00"
         },
         {
+            "name": "oxid-esales/flow-theme",
+            "version": "v3.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/OXID-eSales/flow_theme.git",
+                "reference": "4032a1bcc86ec11f2532f21299623a5959179c83"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/OXID-eSales/flow_theme/zipball/4032a1bcc86ec11f2532f21299623a5959179c83",
+                "reference": "4032a1bcc86ec11f2532f21299623a5959179c83",
+                "shasum": ""
+            },
+            "type": "oxideshop-theme",
+            "extra": {
+                "oxideshop": {
+                    "target-directory": "flow",
+                    "assets-directory": "out/flow",
+                    "blacklist-filter": [
+                        "build/**/*",
+                        "grunt/**/*",
+                        ".gitattributes",
+                        ".gitignore",
+                        "CHANGELOG.md",
+                        "composer.json",
+                        "CONTRIBUTING.md",
+                        "Gruntfile.js",
+                        "package.json"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-only"
+            ],
+            "description": "This is Flow Theme for OXID eShop.",
+            "homepage": "https://www.oxid-esales.com/en/home.html",
+            "keywords": [
+                "OXID",
+                "eshop",
+                "themes"
+            ],
+            "time": "2021-03-12T07:48:48+00:00"
+        },
+        {
             "name": "oxid-esales/oxideshop-ce",
             "version": "v6.3.6",
             "source": {
@@ -2203,7 +2248,10 @@
                 "oxid",
                 "pay",
                 "paypal"
-            ]
+            ],
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "oxid-professional-services/paypal-client",
@@ -2235,6 +2283,52 @@
                         "generated"
                     ]
                 }
+            }
+        },
+        {
+            "name": "oxid-professional-services/paypallocale",
+            "version": "0.0.1",
+            "dist": {
+                "type": "path",
+                "url": "source/modules/oxps/paypallocale",
+                "reference": "1955f8794f37acc9c62b7fecace1ef8e7eec9d2e"
+            },
+            "archive": {
+                "exclude": [
+                    "/resources"
+                ]
+            },
+            "require": {
+                "ext-json": "*",
+                "viison/address-splitter": "^0.3.4"
+            },
+            "type": "oxideshop-module",
+            "extra": {
+                "oxideshop": {
+                    "blacklist-filter": [
+                        "resources/**/*",
+                        "resources/**/*."
+                    ],
+                    "target-directory": "oxps/paypallocale"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "OxidProfessionalServices\\PayPalLocale\\": "."
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "description": "PayPal module for OXID - Local development environment",
+            "keywords": [
+                "modules",
+                "oxid",
+                "pay",
+                "paypal"
+            ],
+            "transport-options": {
+                "relative": true
             }
         },
         {
@@ -3917,6 +4011,45 @@
                 }
             ],
             "time": "2020-10-24T10:57:07+00:00"
+        },
+        {
+            "name": "viison/address-splitter",
+            "version": "0.3.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pickware/address-splitter.git",
+                "reference": "ebad709276aaadce94a3a1fe2507aa38a467a94a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pickware/address-splitter/zipball/ebad709276aaadce94a3a1fe2507aa38a467a94a",
+                "reference": "ebad709276aaadce94a3a1fe2507aa38a467a94a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "VIISON\\AddressSplitter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "VIISON GmbH",
+                    "email": "contact@viison.com"
+                }
+            ],
+            "description": "Tries to split an address line into street name, house number and other additional information like building, apartment information etc.",
+            "time": "2019-10-24T09:23:47+00:00"
         },
         {
             "name": "webmozart/assert",

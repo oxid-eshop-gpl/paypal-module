@@ -10,10 +10,10 @@
     paypal.Buttons({
         createOrder: function(data, actions) {
             return fetch('[{/literal}][{$sSelfLink|cat:"cl=PayPalProxyController&fnc=createOrder&context="|cat:$paymentStrategy|cat:"&aid="|cat:$aid}][{literal}]', {
-            method: 'post',
-            headers: {
-                'content-type': 'application/json'
-            }
+                method: 'post',
+                headers: {
+                    'content-type': 'application/json'
+                }
             }).then(function(res) {
                 return res.json();
             }).then(function(data) {
@@ -40,19 +40,12 @@
             [{/if}]
             [{literal}]
             })
-        }, onCancel: function(data, actions) {
-        }, onError: function (data) {
+        },
+        onCancel: function(data, actions) {
+        },
+        onError: function (data) {
         }
-        }).render('#paypal-button-container');
-
-        $(document).ready(function() {
-            $('#variants .dropdown-menu li a').off('click');
-            $('#variants .dropdown-menu li a').click(function (e) {
-            e.preventDefault();
-            var href = $(this).attr('href');
-            window.location.href=href;
-        });
-    });
+    }).render('#paypal-button-container');
     [{/literal}]
     [{/capture}]
 [{oxscript include=$oViewConf->getPayPalJsSdkUrl($paymentStrategy, false)}]

@@ -31,9 +31,6 @@ use OxidEsales\Eshop\Application\Model\Basket;
 use OxidEsales\Eshop\Application\Model\Order;
 use OxidEsales\Eshop\Application\Model\User;
 use OxidEsales\Eshop\Application\Model\PaymentGateway;
-use OxidEsales\Eshop\Application\Model\Selection as SelectionCore;
-use OxidEsales\Eshop\Application\Model\VariantHandler as VariantHandlerCore;
-use OxidEsales\Eshop\Application\Model\VariantSelectList as VariantSelectListCore;
 use OxidEsales\Eshop\Core\ViewConfig;
 use OxidProfessionalServices\PayPal\Component\UserComponent as PayPalUserComponent;
 use OxidProfessionalServices\PayPal\Component\Widget\ArticleDetails as ArticleDetailsComponent;
@@ -60,9 +57,6 @@ use OxidProfessionalServices\PayPal\Model\Order as PayPalOrder;
 use OxidProfessionalServices\PayPal\Model\User as PayPalUser;
 use OxidProfessionalServices\PayPal\Model\PaymentGateway as PayPalPaymentGateway;
 use OxidProfessionalServices\PayPal\Model\PayPalArticle;
-use OxidProfessionalServices\PayPal\Model\Selection as PayPalSelectionModel;
-use OxidProfessionalServices\PayPal\Model\VariantHandler as PayPalVariantHandler;
-use OxidProfessionalServices\PayPal\Model\VariantSelectList as PayPalVariantSelectList;
 
 $sMetadataVersion = '2.1';
 
@@ -95,9 +89,6 @@ $aModule = [
         ArticleDetailsController::class => PayPalArticleDetailsController::class,
         BasketController::class => PayPalBasketController::class,
         ArticleDetails::class => ArticleDetailsComponent::class,
-        SelectionCore::class => PayPalSelectionModel::class,
-        VariantHandlerCore::class => PayPalVariantHandler::class,
-        VariantSelectListCore::class => PayPalVariantSelectList::class,
         OrderController::class => PayPalFrontEndOrderController::class,
         UserComponent::class => PayPalUserComponent::class
     ],

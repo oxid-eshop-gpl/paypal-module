@@ -1,16 +1,16 @@
 [{include file="headitem.tpl" title="GENERAL_ADMIN_TITLE"|oxmultilangassign}]
 <script type="text/javascript">
-    [{if !$oxparentid}]
-        window.onload = function ()
-        {
-            [{if $updatelist == 1}]
-                top.oxid.admin.updateList('[{$oxid}]');
-                location.reload();
-            [{/if}]
-            var oField = top.oxid.admin.getLockTarget();
+    window.onload = function ()
+    {
+        [{if $updatelist == 1}]
+            top.oxid.admin.updateList('[{$oxid}]');
+            location.reload();
+        [{/if}]
+        var oField = top.oxid.admin.getLockTarget();
+        if (oField) {
             oField.onchange = oField.onkeyup = oField.onmouseout = top.oxid.admin.unlockSave;
         }
-    [{/if}]
+    }
 </script>
 [{assign var="oxid" value=$oView->getEditObjectId()}]
 [{assign var="edit" value=$oView->getEditObject()}]
@@ -24,8 +24,6 @@
 [{assign var="defaultTenureTypes" value=$oView->getTenureTypeDefaults()}]
 [{assign var="defaultSequences" value=$oView->getSequenceDefaults()}]
 [{assign var="defaultTotalCycles" value=$oView->getTotalCycleDefaults()}]
-[{assign var="currencyCodes" value=$oView->getCurrencyCodes()}]
-[{assign var="existingVariants" value=$oView->getVariantProducts()}]
 [{assign var="subscriptionPlansList" value=$oView->getSubscriptionPlans()}]
 
 [{if $hasLinkedObject }]

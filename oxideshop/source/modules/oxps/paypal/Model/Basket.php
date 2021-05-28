@@ -270,28 +270,6 @@ class Basket extends Basket_parent
     }
 
     /**
-     * Check if variants of the given product are already in the basket
-     *
-     * @param EshopArticle $product
-     *
-     * @return bool
-     */
-    public function hasProductVariantInBasket(EshopArticle $product)
-    {
-        $return = false;
-
-        $variantIds = $product->getVariantIds();
-        foreach ($variantIds as $id) {
-            if ($this->getArtStockInBasket($id)) {
-                $return = true;
-                break;
-            }
-        }
-
-        return $return;
-    }
-
-    /**
      * @param $sProductID
      * @param $dAmount
      * @param null $aSel
