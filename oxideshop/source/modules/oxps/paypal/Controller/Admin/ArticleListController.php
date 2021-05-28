@@ -30,36 +30,17 @@ class ArticleListController extends ArticleListController_Parent
 
         $repository = new SubscriptionRepository();
 
-        $childArticle = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)
-            ->getOne("SELECT OXID FROM oxarticles WHERE OXPARENTID = ?", [$oxid]);
-
-        if (!$childArticle) {
-            $linkedProduct = $repository->getLinkedProductByOxid($oxid);
-            if ($linkedProduct) {
-                $linkedObject = Registry::get(ServiceFactory::class)
-                    ->getCatalogService()
-                    ->showProductDetails($linkedProduct[0]['OXPS_PAYPAL_PRODUCT_ID']);
-            }
-
-            if ($linkedObject) {
-                return true;
-            }
-
-            return false;
+        $linkedProduct = $repository->getLinkedProductByOxid($oxid);
+        if ($linkedProduct) {
+            $linkedObject = Registry::get(ServiceFactory::class)
+                ->getCatalogService()
+                ->showProductDetails($linkedProduct[0]['OXPS_PAYPAL_PRODUCT_ID']);
         }
 
-        try {
-            $linkedObject = $repository->getLinkedProductByOxid($childArticle);
-        } catch (DatabaseConnectionException $e) {
-            return false;
-        } catch (DatabaseErrorException $e) {
-            return false;
+        if ($linkedObject) {
+            return true;
         }
 
-        if (empty($linkedObject)) {
-            return false;
-        }
-
-        return true;
+        return false;
     }
 }

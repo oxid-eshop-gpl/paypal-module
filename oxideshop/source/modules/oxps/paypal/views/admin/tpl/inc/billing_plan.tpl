@@ -11,7 +11,6 @@
 [{assign var="defaultSequences" value=$oView->getSequenceDefaults()}]
 [{assign var="defaultTotalCycles" value=$oView->getTotalCycleDefaults()}]
 [{assign var="currencyCodes" value=$oView->getCurrencyCodes()}]
-[{assign var="existingVariants" value=$oView->getVariantProducts()}]
 <form name="billingPlanForm" id="billingPlanForm" action="[{ $oViewConf->getSelfLink() }]" method="post">
     [{ $oViewConf->getHiddenSid() }]
     <input type="hidden" name="cl" value="PayPalSubscribeController">

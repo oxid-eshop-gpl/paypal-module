@@ -92,9 +92,8 @@ class SubscriptionDetailsController extends AdminController
 
     private function getSubscriptionProduct(string $paypalSubscriptionId)
     {
-        $sql = 'SELECT OXPS_PAYPAL_PRODUCT_ID, 
-                       OXPS_PAYPAL_OXARTICLE_ID
-                  FROM oxps_paypal_subscription_product_order 
+        $sql = 'SELECT OXPS_PAYPAL_PRODUCT_ID
+                  FROM oxps_paypal_subscription_product_order
                  WHERE OXPS_PAYPAL_SESSION_ID = ?';
 
         $subscriptionProductId = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)

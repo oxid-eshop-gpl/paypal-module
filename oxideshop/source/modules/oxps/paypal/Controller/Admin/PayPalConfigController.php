@@ -49,7 +49,7 @@ class PayPalConfigController extends AdminController
      */
     public function getWebhookControllerUrl(): string
     {
-        return Registry::getUtilsUrl()->getActiveShopHost() . '/index.php?cl=PayPalWebhookController';
+        return Registry::getConfig()->getShopSecureHomeURL() . 'cl=PayPalWebhookController';
     }
 
     /**

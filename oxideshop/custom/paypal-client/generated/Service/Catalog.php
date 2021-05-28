@@ -33,10 +33,10 @@ class Catalog extends BaseService
         $headers['Content-Type'] = 'application/json';
         $headers['Prefer'] = $prefer;
 
-
         $body = json_encode($productRequest, true);
         $response = $this->send('POST', $path, [], $headers, $body);
         $jsonData = json_decode($response->getBody(), true);
+
         return new Product($jsonData);
     }
 

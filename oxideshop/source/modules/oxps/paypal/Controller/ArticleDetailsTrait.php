@@ -41,13 +41,6 @@ trait ArticleDetailsTrait
 
         $articleId = Registry::getRequest()->getRequestEscapedParameter('anid');
 
-        $childArticle = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)
-            ->getOne("SELECT OXID FROM oxarticles WHERE OXPARENTID = ?", [$articleId]);
-
-        if ($childArticle) {
-            $articleId = $childArticle;
-        }
-
         /** @var Article $article */
         $article = oxNew(Article::class);
         $article->load($articleId);

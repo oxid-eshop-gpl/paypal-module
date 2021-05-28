@@ -1,4 +1,4 @@
-[{if $aVariantSelections.blPerfectFit}]
+[{if $subscriptionPlan}]
     [{if $oxcmp_user}]
         [{include file="subscription_buttons.tpl"}]
     [{else}]
