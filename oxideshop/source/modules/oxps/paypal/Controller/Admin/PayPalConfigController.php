@@ -239,4 +239,18 @@ class PayPalConfigController extends AdminController
 
         return $url;
     }
+
+    /**
+     * @return array
+     */
+    public function getTotalCycleDefaults()
+    {
+        $array = [];
+
+        for ($i = 1; $i < 1000; $i++) {
+            $array[] = $i;
+        }
+
+        return $array;
+    }
 }

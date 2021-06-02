@@ -19,6 +19,7 @@
  * @link      http://www.oxid-esales.com
  * @copyright (C) OXID eSales AG 2003-2020
  */
+
 $sLangName = 'Deutsch';
 
 $aLang = [
@@ -82,6 +83,7 @@ $aLang = [
     // PayPal Config
     'OXPS_PAYPAL_CONFIG'                           => 'Konfiguration',
     'OXPS_PAYPAL_SUBSCRIBE'                        => 'PayPal Abos',
+    'OXPS_PAYPAL_SUBSCRIBE_OPTIONS'                => 'PayPal Abos Optionen',
     'PAYPAL_SUBSCRIBE_MAIN'                        => 'PayPal Abos',
     'OXPS_PAYPAL_BILLING_PLAN'                     => 'PayPal Abrechnungsplan',
     'OXPS_PAYPAL_BILLING_PLAN_MAIN'                => 'Abrechnungsplan',
@@ -92,11 +94,18 @@ $aLang = [
     'OXPS_PAYPAL_BILLING_PLAN_DESCRIPTION'         => 'Beschreibung',
     'OXPS_PAYPAL_BILLING_PLAN_DEFINITIONS'         => 'Definitionen',
     'OXPS_PAYPAL_BILLING_PLAN_AUTOMATICALLY_BILL'  => 'Ausstehende Rechnungen automatisch abrechnen',
+    'HELP_OXPS_PAYPAL_BILLING_PLAN_AUTOMATICALLY_BILL'                              =>
+        'Soll PayPal automatische Rechnungen automatisch abrechnen?',
     'OXPS_PAYPAL_BILLING_PLAN_SETUP_FEE'           => 'Einrichtungsgebühr',
-    'OXPS_PAYPAL_BILLING_PLAN_FAILURE_ACTION'      => 'Einrichtungsgebühr Fehler Aktion',
+    'OXPS_PAYPAL_BILLING_PLAN_FAILURE_ACTION'      => 'Einrichtung Fehler Aktion',
+    'HELP_OXPS_PAYPAL_BILLING_PLAN_FAILURE_ACTION' =>
+        'Sollte bei der Einrichtung des Abos ein Fehler auftreten. Soll das Abo trotzdem angelegt
+        (<b>Weiter</b>), oder der Vorgang abgebrochen (<b>Abbrechen</b>) werden?',
     'OXPS_PAYPAL_BILLING_PLAN_ACTION_CONTINUE'     => 'Weiter',
     'OXPS_PAYPAL_BILLING_PLAN_ACTION_CANCEL'       => 'Abbrechen',
-    'OXPS_PAYPAL_BILLING_PLAN_FAILURE_THRESHOLD'   => 'Zahlungsfehlerschwelle ',
+    'OXPS_PAYPAL_BILLING_PLAN_FAILURE_THRESHOLD'   => 'Wiederholungen bei Zahlungsfehler',
+    'HELP_OXPS_PAYPAL_BILLING_PLAN_FAILURE_THRESHOLD'                                =>
+        'Wie oft soll versucht eine Zahlung durchzuführen, bis sie abgebrochen wird?',
     'OXPS_PAYPAL_BILLING_PLAN_TAX'                 => 'Steuern',
     'OXPS_PAYPAL_BILLING_PLAN_TAX_PERCENTAGE'      => 'Steuer Prozentual',
     'OXPS_PAYPAL_BILLING_PLAN_TAX_INCLUSIVE'       => 'Steuer Inklusive',
@@ -106,7 +115,7 @@ $aLang = [
     'OXPS_PAYPAL_BILLING_PLAN_FREQUENCY'           => 'Serie',
     'OXPS_PAYPAL_BILLING_PLAN_FREQUENCY_DAY'       => 'täglich',
     'OXPS_PAYPAL_BILLING_PLAN_FREQUENCY_WEEK'      => 'wöchentlich',
-    'OXPS_PAYPAL_BILLING_PLAN_FREQUENCY_SEMI_MONTH'=> 'alle zwei Wochen',
+    'OXPS_PAYPAL_BILLING_PLAN_FREQUENCY_SEMI_MONTH' => 'alle zwei Wochen',
     'OXPS_PAYPAL_BILLING_PLAN_FREQUENCY_MONTH'     => 'monatlich',
     'OXPS_PAYPAL_BILLING_PLAN_FREQUENCY_YEAR'      => 'jährlich',
     'OXPS_PAYPAL_BILLING_PLAN_TENURE'              => 'Intervall',
@@ -138,7 +147,8 @@ $aLang = [
     'OXPS_PAYPAL_LIVE_BUTTON_CREDENTIALS'          => 'Anmeldung Händler PayPal-Integration (Live)',
     'OXPS_PAYPAL_SANDBOX_BUTTON_CREDENTIALS'       => 'Anmeldung Händler PayPal-Integration (Sandbox)',
     'OXPS_PAYPAL_ERR_CONF_INVALID'                 =>
-        'Ein oder mehrere Konfigurationswerte sind entweder nicht festgelegt oder falsch. Bitte überprüfen Sie sie noch einmal.<br>
+        'Ein oder mehrere Konfigurationswerte sind entweder nicht festgelegt oder falsch.
+        Bitte überprüfen Sie sie noch einmal.<br>
         <b>Modul inaktiv.</b>',
     'OXPS_PAYPAL_CONF_VALID'                       => 'Konfigurationswerte OK.<br><b>Modul ist aktiv</b>',
     'OXPS_PAYPAL_BUTTON_PLACEMEMT_TITLE'           => 'Einstellungen für die Buttonplatzierung',
@@ -149,7 +159,8 @@ $aLang = [
     'HELP_OXPS_PAYPAL_BUTTON_PLACEMEMT'            => 'Schalten Sie die Anzeige der PayPal-Schaltflächen um',
     'HELP_OXPS_PAYPAL_CREDENTIALS'                 =>
         'Wenn Sie die API Anmeldeinformationen bereits vorliegen haben, können Sie sie direkt eingeben.<br>
-        Alternativ nutzen Sie einen der folgenden Links um die API Anmeldeinformationen für den Live oder den Sandbox-Modus zu erzeugen.',
+        Alternativ nutzen Sie einen der folgenden Links um die API Anmeldeinformationen für den Live oder
+        den Sandbox-Modus zu erzeugen.',
     'HELP_OXPS_PAYPAL_CLIENT_ID'                   => 'Client ID des Live-Account für live-Modus',
     'HELP_OXPS_PAYPAL_CLIENT_SECRET'               => 'Secret des Live-Account für live-Modus',
     'HELP_OXPS_PAYPAL_SANDBOX_CLIENT_ID'           => 'Client ID des Sandbox-Account für Sandbox-Modus',
@@ -157,7 +168,8 @@ $aLang = [
     'HELP_OXPS_PAYPAL_OPMODE'                      =>
         'Verwenden Sie Sandbox (Test), um PayPal zu konfigurieren und zu testen. Wenn Sie bereit sind,
         echte Transaktionen zu empfangen, wechseln Sie zu Produktion (live).',
-    'OXPS_PAYPAL_WEBHOOK_ID_HELP'                  => 'Die ID des Webhooks, wie in Ihrem Developer Portal-Konto konfiguriert',
+    'OXPS_PAYPAL_WEBHOOK_ID_HELP'                  =>
+        'Die ID des Webhooks, wie in Ihrem Developer Portal-Konto konfiguriert',
     // PayPal ORDER
     'OXPS_PAYPAL_AMOUNT'                           => 'Betrag',
     'OXPS_PAYPAL_SHOP_PAYMENT_STATUS'              => 'Shop-Zahlungsstatus',
@@ -182,7 +194,9 @@ $aLang = [
     'OXPS_PAYPAL_HISTORY_PAYPAL_STATUS'            => 'PayPal-Status',
     'OXPS_PAYPAL_HISTORY_PAYPAL_STATUS_HELP'       =>
         'Von PayPal zurückgegebener Zahlungsstatus. Für mehr Details siehe (nur Englisch):
-        <a href="https://www.paypal.com/webapps/helpcenter/article/?articleID=94021&m=SRE" target="_blank" >PayPal Zahlungsstatus</a>',
+        <a href="https://www.paypal.com/webapps/helpcenter/article/?articleID=94021&m=SRE" target="_blank">
+            PayPal Zahlungsstatus
+        </a>',
     'OXPS_PAYPAL_HISTORY_COMMENT'                  => 'Kommentar',
     'OXPS_PAYPAL_HISTORY_NOTICE'                   => 'Hinweis',
     'OXPS_PAYPAL_HISTORY_NOTICE_TEXT'              => 'Im Fehlerfall siehe "Details" für mehr Informationen',
@@ -283,27 +297,34 @@ $aLang = [
     'OXPS_PAYPAL_DISPUTE_TRANSACTION_ID'           => 'Transaktions-ID',
     'OXPS_PAYPAL_DISPUTE_STATE'                    => 'Status',
     'OXPS_PAYPAL_DISPUTE_STATUS_REQUIRED_ACTION'   => 'Aktion erforderlich',
-    'OXPS_PAYPAL_DISPUTE_STATUS_REQUIRED_OTHER_PARTY_ACTION'                         => 'Aktion anderer Partei erforderlich',
+    'OXPS_PAYPAL_DISPUTE_STATUS_REQUIRED_OTHER_PARTY_ACTION'                         =>
+        'Aktion anderer Partei erforderlich',
     'OXPS_PAYPAL_DISPUTE_STATUS_UNDER_PAYPAL_REVIEW'                                 => 'Unter PayPal-Überprüfung',
     'OXPS_PAYPAL_DISPUTE_STATUS_RESOLVED'          => 'Gelöst',
     'OXPS_PAYPAL_DISPUTE_STATUS_OPEN_INQUIRIES'    => 'Öffnen',
     'OXPS_PAYPAL_DISPUTE_STATUS_APPEALABLE'        => 'Anfechtbar',
-    'OXPS_PAYPAL_DISPUTE_STATUS_WAITING_FOR_BUYER_RESPONSE'                          => 'Warten auf Antwort des Käufers',
-    'OXPS_PAYPAL_DISPUTE_STATUS_WAITING_FOR_SELLER_RESPONSE'                         => 'Warten auf Antwort des Verkäufers',
+    'OXPS_PAYPAL_DISPUTE_STATUS_WAITING_FOR_BUYER_RESPONSE'                          =>
+        'Warten auf Antwort des Käufers',
+    'OXPS_PAYPAL_DISPUTE_STATUS_WAITING_FOR_SELLER_RESPONSE'                         =>
+        'Warten auf Antwort des Verkäufers',
     'OXPS_PAYPAL_DISPUTE_ID'                       => 'Streitstatus ID',
     'OXPS_PAYPAL_DISPUTE_STATUS'                   => 'Status',
     'OXPS_PAYPAL_DISPUTE_AMOUNT'                   => 'Betrag',
     'OXPS_PAYPAL_DISPUTE_CREATE_TIME'              => 'Zeit erstellen',
     'OXPS_PAYPAL_DISPUTE_UPDATE_TIME'              => 'Aktualisierungszeit',
     'OXPS_PAYPAL_DISPUTE_REASON'                   => 'Grund',
-    'OXPS_PAYPAL_DISPUTE_REASON_MERCHANDISE_OR_SERVICE_NOT_RECEIVED'                 => 'Ware oder Dienstleistung nicht erhalten',
-    'OXPS_PAYPAL_DISPUTE_REASON_MERCHANDISE_OR_SERVICE_NOT_AS_DESCRIBED'             => 'Ware oder Dienstleistung nicht wie beschrieben',
+    'OXPS_PAYPAL_DISPUTE_REASON_MERCHANDISE_OR_SERVICE_NOT_RECEIVED'                 =>
+        'Ware oder Dienstleistung nicht erhalten',
+    'OXPS_PAYPAL_DISPUTE_REASON_MERCHANDISE_OR_SERVICE_NOT_AS_DESCRIBED'             =>
+        'Ware oder Dienstleistung nicht wie beschrieben',
     'OXPS_PAYPAL_DISPUTE_REASON_UNAUTHORISED'      => 'Nicht autorisiert',
     'OXPS_PAYPAL_DISPUTE_REASON_CREDIT_NOT_PROCESSED'                                => 'Gutschrift nicht verarbeitet',
-    'OXPS_PAYPAL_DISPUTE_REASON_CREDIT_DUPLICATE_TRANSACTION'                        => 'Doppelte Transaktion gutschreiben',
+    'OXPS_PAYPAL_DISPUTE_REASON_CREDIT_DUPLICATE_TRANSACTION'                        =>
+        'Doppelte Transaktion gutschreiben',
     'OXPS_PAYPAL_DISPUTE_REASON_INCORRECT_AMOUNT'                                    => 'Falscher Betrag',
     'OXPS_PAYPAL_DISPUTE_REASON_PAYMENT_BY_OTHER_MEANS'                              => 'Zahlung auf andere Weise',
-    'OXPS_PAYPAL_DISPUTE_REASON_CANCELED_RECURRING_BILLING'                          => 'Abgebrochene wiederkehrende Abrechnung abgebrochen',
+    'OXPS_PAYPAL_DISPUTE_REASON_CANCELED_RECURRING_BILLING'                          =>
+        'Abgebrochene wiederkehrende Abrechnung abgebrochen',
     'OXPS_PAYPAL_DISPUTE_REASON_PROBLEM_WITH_REMITTANCE'                             => 'Problem mit Überweisung',
     'OXPS_PAYPAL_DISPUTE_REASON_OTHER'             => 'Andere',
     'OXPS_PAYPAL_REASON'                           => 'Grund',
@@ -319,11 +340,14 @@ $aLang = [
     'OXPS_PAYPAL_DISPUTE_REFUND'                   => 'Rückerstattung',
     'OXPS_PAYPAL_DISPUTE_REFUND_WITH_RETURN'       => 'Rückerstattung mit Rückgabe',
     'OXPS_PAYPAL_DISPUTE_REFUND_WITH_REPLACEMENT'  => 'Rückerstattung mit Ersatz',
-    'OXPS_PAYPAL_DISPUTE_REPLACEMENT_WITHOUT_REFUND'                                 => 'Ersatz ohne Rückerstattung',
+    'OXPS_PAYPAL_DISPUTE_REPLACEMENT_WITHOUT_REFUND'                                 =>
+        'Ersatz ohne Rückerstattung',
     // Errors
     'OXPS_PAYPAL_ERROR_NOT_PAID_WITH_PAYPAL'       => 'Diese Bestellung wurde nicht mit PayPal bezahlt',
-    'OXPS_PAYPAL_ERROR_INVALID_RESOURCE_ID'        => 'Die Bestellung konnte nicht in Ihrem PayPal-Account gefunden werden.',
-    'OXPS_PAYPAL_ERROR_DUPLICATE_INVOICE_ID'       => 'Die Rechnungsnummer ist bereits vergeben, bitte wählen Sie eine Andere.',
+    'OXPS_PAYPAL_ERROR_INVALID_RESOURCE_ID'        =>
+        'Die Bestellung konnte nicht in Ihrem PayPal-Account gefunden werden.',
+    'OXPS_PAYPAL_ERROR_DUPLICATE_INVOICE_ID'       =>
+        'Die Rechnungsnummer ist bereits vergeben, bitte wählen Sie eine Andere.',
     'OXPS_PAYPAL_MESSAGES'                         => 'Nachrichten',
     'OXPS_PAYPAL_SEND_MESSAGES'                    => 'Nachrichten senden',
     'OXPS_PAYPAL_MAKE_OFFER'                       => 'Angebot machen',
@@ -333,17 +357,26 @@ $aLang = [
     'OXPS_PAYPAL_RESOLVED_SELLER_FAVOUR'           => 'Beschlossen zu Gunsten des Verkäufers',
     'OXPS_PAYPAL_PRODUCT_ID'                       => 'Produkt-ID',
     'OXPS_PAYPAL_PRODUCT_NAME'                     => 'Produktname',
+    'HELP_OXPS_PAYPAL_PRODUCT_NAME'                =>
+        'Der Produktname wird, für die bessere Identifizierung im PayPal-Konto, mit an PayPal übergeben.',
     'OXPS_PAYPAL_PRODUCT_DESCRIPTION'              => 'Beschreibung',
+    'HELP_OXPS_PAYPAL_PRODUCT_DESCRIPTION'         =>
+        'Die Beschreibung wird, für die bessere Identifizierung im PayPal-Konto, mit an PayPal übergeben.',
     'OXPS_PAYPAL_PRODUCT_TYPE'                     => 'Produkt-Typ',
     'OXPS_PAYPAL_PRODUCT_TYPE_CATEGORY'            => 'Typ-Kategorie',
     'OXPS_PAYPAL_PRODUCT_URL'                      => 'URL',
     'OXPS_PAYPAL_PRODUCT_IMAGE'                    => 'Bild',
-    'OXPS_PAYPAL_BUYER_ESCALATION_REASON_SHIPMENT_NOT_ARRIVED'                        => 'Die Sendung ist nicht angekommen',
+    'HELP_OXPS_PAYPAL_PRODUCT_IMAGE'               =>
+        'Dieses Bild wird, für die bessere Identifizierung im PayPal-Konto, mit an PayPal übergeben.',
+    'OXPS_PAYPAL_BUYER_ESCALATION_REASON_SHIPMENT_NOT_ARRIVED'                        =>
+        'Die Sendung ist nicht angekommen',
     'OXPS_PAYPAL_BUYER_ESCALATION_REASON_FRAUDULENT_SELLER'                           => 'Betrügerischer Verkäufer',
     'OXPS_PAYPAL_BUYER_ESCALATION_REASON_FAILED_NEGOTIATION'                          => 'Gescheiterte Verhandlung',
     'OXPS_PAYPAL_BUYER_ESCALATION_REASON_INCONCLUSIVE_NEGOTIATION'                    => 'Verhandlung ohne Ergebnis',
-    'OXPS_PAYPAL_BUYER_ESCALATION_REASON_REFUND_NOT_RECEIVED'                         => 'Rückerstattung nicht erhalten',
-    'OXPS_PAYPAL_BUYER_ESCALATION_REASON_REFUND_AMOUNT_IS_DIFFERENT'                  => 'Rückerstattungsbetrag ist unterschiedlich',
+    'OXPS_PAYPAL_BUYER_ESCALATION_REASON_REFUND_NOT_RECEIVED'                         =>
+        'Rückerstattung nicht erhalten',
+    'OXPS_PAYPAL_BUYER_ESCALATION_REASON_REFUND_AMOUNT_IS_DIFFERENT'                  =>
+        'Rückerstattungsbetrag ist unterschiedlich',
     'OXPS_PAYPAL_BUYER_ESCALATION_REASON_TRACKING_ID_INVALID'                         => 'Tracking-ID ist ungültig',
     'OXPS_PAYPAL_BUYER_ESCALATION_REASON_OTHER'    => 'Andere',
     'OXPS_PAYPAL_EVIDENCE'                         => 'Beweise',
@@ -370,35 +403,51 @@ $aLang = [
     'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_RETURN'    => 'Nachweis der Rückkehr',
     'OXPS_PAYPAL_EVIDENCE_TYPE_CREATE'             => 'erstellen',
     'OXPS_PAYPAL_EVIDENCE_TYPE_CHANGE_REASON'      => 'Grund der Änderung',
-    'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_REFUND_OUTSIDE_PAYPAL'                        => 'Nachweis der Rückerstattung außerhalb von PayPal',
+    'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_REFUND_OUTSIDE_PAYPAL'                        =>
+        'Nachweis der Rückerstattung außerhalb von PayPal',
     'OXPS_PAYPAL_EVIDENCE_TYPE_RECEIPT_OF_MERCHANDISE'                                => 'Empfang von Waren',
     'OXPS_PAYPAL_EVIDENCE_TYPE_CUSTOMS_DOCUMENT'   => 'Zolldokument',
     'OXPS_PAYPAL_EVIDENCE_TYPE_CUSTOMS_FEE_RECEIPT'                                   => 'Quittung der Zollgebühren',
     'OXPS_PAYPAL_EVIDENCE_TYPE_INFORMATION_ON_RESOLUTION'                             => 'Informationen zur Resolution',
-    'OXPS_PAYPAL_EVIDENCE_TYPE_ADDITIONAL_INFORMATION_OF_ITEM'                        => 'Zusätzliche Informationen zum Artikel',
+    'OXPS_PAYPAL_EVIDENCE_TYPE_ADDITIONAL_INFORMATION_OF_ITEM'                        =>
+        'Zusätzliche Informationen zum Artikel',
     'OXPS_PAYPAL_EVIDENCE_TYPE_DETAILS_OF_PURCHASE'                                   => 'Details zum Kauf',
-    'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_SIGNIFICANT_DIFFERENCE'                       => 'Nachweis eines signifikanten Unterschieds',
-    'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_SOFTWARE_OR_SERVICE_NOT_AS_DESCRIBED'         => 'Nachweis von Software oder Dienstleistung nicht wie beschrieben',
+    'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_SIGNIFICANT_DIFFERENCE'                       =>
+        'Nachweis eines signifikanten Unterschieds',
+    'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_SOFTWARE_OR_SERVICE_NOT_AS_DESCRIBED'         =>
+        'Nachweis von Software oder Dienstleistung nicht wie beschrieben',
     'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_CONFISCATION'                                 => 'Nachweis der Beschlagnahme',
     'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_DAMAGE'    => 'Nachweis eines Schadens',
-    'OXPS_PAYPAL_EVIDENCE_TYPE_COPY_OF_LAW_ENFORCEMENT_AGENCY_REPORT'                 => 'Kopie des Berichts der Strafverfolgungsbehörde',
+    'OXPS_PAYPAL_EVIDENCE_TYPE_COPY_OF_LAW_ENFORCEMENT_AGENCY_REPORT'                 =>
+        'Kopie des Berichts der Strafverfolgungsbehörde',
     'OXPS_PAYPAL_EVIDENCE_TYPE_ADDITIONAL_PROOF_OF_SHIPMENT'                          => 'Zusätzlicher Versandnachweis',
-    'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_DENIAL_BY_CARRIER'                            => 'Nachweis der Ablehnung durch den Beförderer',
-    'OXPS_PAYPAL_EVIDENCE_TYPE_THIRDPARTY_PROOF_FOR_DAMAGE_OR_SIGNIFICANT_DIFFERENCE' => 'Drittpartei-Beweis für Schäden oder signifikante Unterschiede',
-    'OXPS_PAYPAL_EVIDENCE_TYPE_VALID_SUPPORTING_DOCUMENT'                             => 'Gültiges unterstützendes Dokument',
+    'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_DENIAL_BY_CARRIER'                            =>
+        'Nachweis der Ablehnung durch den Beförderer',
+    'OXPS_PAYPAL_EVIDENCE_TYPE_THIRDPARTY_PROOF_FOR_DAMAGE_OR_SIGNIFICANT_DIFFERENCE' =>
+        'Drittpartei-Beweis für Schäden oder signifikante Unterschiede',
+    'OXPS_PAYPAL_EVIDENCE_TYPE_VALID_SUPPORTING_DOCUMENT'                             =>
+        'Gültiges unterstützendes Dokument',
     'OXPS_PAYPAL_EVIDENCE_TYPE_LEGIBLE_SUPPORTING_DOCUMENT'                           => 'Lesbares Begleitdokument',
-    'OXPS_PAYPAL_EVIDENCE_TYPE_RETURN_TRACKING_INFORMATION'                           => 'Informationen zur Rücklaufverfolgung',
+    'OXPS_PAYPAL_EVIDENCE_TYPE_RETURN_TRACKING_INFORMATION'                           =>
+        'Informationen zur Rücklaufverfolgung',
     'OXPS_PAYPAL_EVIDENCE_TYPE_DELIVERY_RECEIPT'   => 'Zustellschein',
-    'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_INSTORE_RECEIPT'                              => 'Nachweis des Instore-Empfangs',
-    'OXPS_PAYPAL_EVIDENCE_TYPE_ADDITIONAL_TRACKING_INFORMATION'                       => 'Zusätzliche Tracking-Informationen',
+    'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_INSTORE_RECEIPT'                              =>
+        'Nachweis des Instore-Empfangs',
+    'OXPS_PAYPAL_EVIDENCE_TYPE_ADDITIONAL_TRACKING_INFORMATION'                       =>
+        'Zusätzliche Tracking-Informationen',
     'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_SHIPMENT_POSTAGE'                             => 'Versandnachweis Porto',
-    'OXPS_PAYPAL_EVIDENCE_TYPE_ONLINE_TRACKING_INFORMATION'                           => 'Informationen zur Online-Verfolgung',
-    'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_INSTORE_REFUND'                               => 'Nachweis der Instore-Rückerstattung',
-    'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_FOR_SOFTWARE_OR_SERVICE_DELIVERED'               => 'Nachweis für gelieferte Software oder Dienstleistung',
-    'OXPS_PAYPAL_EVIDENCE_TYPE_RETURN_ADDRESS_FOR_SHIPPING'                           => 'Rücksendeadresse für den Versand',
+    'OXPS_PAYPAL_EVIDENCE_TYPE_ONLINE_TRACKING_INFORMATION'                           =>
+        'Informationen zur Online-Verfolgung',
+    'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_INSTORE_REFUND'                               =>
+        'Nachweis der Instore-Rückerstattung',
+    'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_FOR_SOFTWARE_OR_SERVICE_DELIVERED'               =>
+        'Nachweis für gelieferte Software oder Dienstleistung',
+    'OXPS_PAYPAL_EVIDENCE_TYPE_RETURN_ADDRESS_FOR_SHIPPING'                           =>
+        'Rücksendeadresse für den Versand',
     'OXPS_PAYPAL_EVIDENCE_TYPE_COPY_OF_THE_EPARCEL_MANIFEST'                          => 'Kopie des Paketmanifests',
     'OXPS_PAYPAL_EVIDENCE_TYPE_COPY_OF_SHIPPING_MANIFEST'                             => 'Kopie des Versandmanifests',
-    'OXPS_PAYPAL_EVIDENCE_TYPE_APPEAL_AFFIDAVIT'                                      => 'Berufung Eidesstattliche Erklärung',
+    'OXPS_PAYPAL_EVIDENCE_TYPE_APPEAL_AFFIDAVIT'                                      =>
+        'Berufung Eidesstattliche Erklärung',
     'OXPS_PAYPAL_EVIDENCE_TYPE_RECEIPT_OF_REPLACEMENT'                                => 'Eingang des Ersatzes',
     'OXPS_PAYPAL_EVIDENCE_TYPE_COPY_OF_DRIVERS_LICENSE'                               => 'Kopie des Führerscheins',
     'OXPS_PAYPAL_EVIDENCE_TYPE_ACCOUNT_CHANGE_INFORMATION'                            => 'Konto-Änderungsinformationen',
@@ -408,7 +457,8 @@ $aLang = [
     'OXPS_PAYPAL_EVIDENCE_TYPE_PERMISSION_DESCRIPTION'                                => 'Beschreibung der Erlaubnis',
     'OXPS_PAYPAL_EVIDENCE_TYPE_STATUS_OF_MERCHANDISE'                                 => 'Status der Ware',
     'OXPS_PAYPAL_EVIDENCE_TYPE_LOST_CARD_DETAILS'                                     => 'Details zur verlorenen Karte',
-    'OXPS_PAYPAL_EVIDENCE_TYPE_LAST_VALID_TRANSACTION_DETAILS'                        => 'Details zur letzten gültigen Transaktion',
+    'OXPS_PAYPAL_EVIDENCE_TYPE_LAST_VALID_TRANSACTION_DETAILS'                        =>
+        'Details zur letzten gültigen Transaktion',
     'OXPS_PAYPAL_EVIDENCE_TYPE_OTHER'              => 'Andere',
     'OXPS_PAYPAL_EVIDENCE_TYPE'                    => 'Art der Beweise',
     'OXPS_PAYPAL_EVIDENCE_DOCUMENT'                => 'Dokument',

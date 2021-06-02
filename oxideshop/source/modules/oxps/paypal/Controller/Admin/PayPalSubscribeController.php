@@ -139,20 +139,6 @@ class PayPalSubscribeController extends AdminController
     /**
      * @return array
      */
-    public function getSequenceDefaults()
-    {
-        $array = [];
-
-        for ($i = 1; $i < 100; $i++) {
-            $array[] = $i;
-        }
-
-        return $array;
-    }
-
-    /**
-     * @return array
-     */
     public function getTotalCycleDefaults()
     {
         $array = [];

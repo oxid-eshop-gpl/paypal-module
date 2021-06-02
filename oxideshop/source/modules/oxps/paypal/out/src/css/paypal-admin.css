@@ -21,7 +21,7 @@
     height: 150px;
     width: 100%; }
   .paypal-config .bottom-space {
-    margin-bottom: 2.5rem; }
+    margin: 1.5rem 0; }
 
 #filters, #balances {
   margin-top: 20px; }

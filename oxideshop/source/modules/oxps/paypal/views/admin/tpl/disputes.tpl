@@ -9,17 +9,20 @@
             </button>
         </div>
     </div>
-    <script>
-        jQuery(document).ready(function(){
-            jQuery("#filters").hide();
-            jQuery("#results").show();
-            jQuery("#toggleFilter").click(function(e) {
-                e.preventDefault();
-                jQuery("#filters").toggle();
-                jQuery("#results").toggle();
+    [{capture assign="sPayPalDisputsJS"}]
+        [{strip}]
+            jQuery(document).ready(function(){
+                jQuery("#filters").hide();
+                jQuery("#results").show();
+                jQuery("#toggleFilter").click(function(e) {
+                    e.preventDefault();
+                    jQuery("#filters").toggle();
+                    jQuery("#results").toggle();
+                });
             });
-        });
-    </script>
+        [{/strip}]
+    [{/capture}]
+    [{oxscript add=$sPayPalDisputsJS}]
 
     <form method="post" action="[{$oViewConf->getSelfLink()}]">
         [{include file="_formparams.tpl" cl="PayPalDisputeController" lstrt=$lstrt actedit=$actedit oxid=$oxid fnc="" language=$actlang editlanguage=$actlang}]

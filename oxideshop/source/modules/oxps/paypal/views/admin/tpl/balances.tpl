@@ -9,16 +9,19 @@
             </button>
         </div>
     </div>
-    <script>
-        jQuery(document).ready(function(){
-            jQuery("#filters").hide();
-            jQuery("#toggleFilter").click(function(e) {
-                e.preventDefault();
-                jQuery("#filters").toggle();
-                jQuery("#balances").toggle();
+    [{capture assign="sPayPalBalancesJS"}]
+        [{strip}]
+            jQuery(document).ready(function(){
+                jQuery("#filters").hide();
+                jQuery("#toggleFilter").click(function(e) {
+                    e.preventDefault();
+                    jQuery("#filters").toggle();
+                    jQuery("#balances").toggle();
+                });
             });
-        });
-    </script>
+        [{/strip}]
+    [{/capture}]
+    [{oxscript add=$sPayPalBalancesJS}]
     <form method="post" action="[{$oViewConf->getSelfLink()}]">
         <div id="filters">
             [{if !empty($error)}]

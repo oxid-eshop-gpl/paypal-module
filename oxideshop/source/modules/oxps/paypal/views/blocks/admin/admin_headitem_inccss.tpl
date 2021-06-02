@@ -10,7 +10,8 @@
     $oViewConf->getTopActiveClassName()|lower=="paypalsubscribecontroller"
 }]
     [{if $oViewConf->getTopActiveClassName()|lower!=="paypalsubscribecontroller"}]
-        [{oxstyle include="https://stackpath.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" priority=9}]
+        [{assign var="sFileMTimeBootstrap" value=$oViewConf->getModulePath('oxps/paypal','out/src/css/bootstrap.min.css')|filemtime}]
+        [{oxstyle include=$oViewConf->getModuleUrl('oxps/paypal','out/src/css/bootstrap.min.css')|cat:"?"|cat:$sFileMTimeBootstrap priority=10}]
     [{/if}]
     [{assign var="sFileMTime" value=$oViewConf->getModulePath('oxps/paypal','out/src/css/paypal-admin.min.css')|filemtime}]
     [{oxstyle include=$oViewConf->getModuleUrl('oxps/paypal','out/src/css/paypal-admin.min.css')|cat:"?"|cat:$sFileMTime priority=10}]

@@ -362,5 +362,8 @@ $aModule = [
         ['name' => 'sPayPalSandboxClientSecret', 'type' => 'str', 'value' => '', 'group' => null],
         ['name' => 'blPayPalShowProductDetailsButton', 'type' => 'bool', 'value' => true, 'group' => null],
         ['name' => 'blPayPalShowBasketButton', 'type' => 'bool', 'value' => true, 'group' => null],
+        ['name' => 'blPayPalAutoBillOutstanding', 'type' => 'bool', 'value' => true, 'group' => null],
+        ['name' => 'sPayPalSetupFeeFailureAction', 'type' => 'select', 'value' => 'CONTINUE', 'constraints' => 'CONTINUE|CANCEL', 'group' => null],
+        ['name' => 'sPayPalPaymentFailureThreshold', 'type' => 'str', 'value' => '', 'group' => null],
     ]
 ];

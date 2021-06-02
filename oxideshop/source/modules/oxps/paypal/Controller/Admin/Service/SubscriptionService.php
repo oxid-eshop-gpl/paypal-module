@@ -204,17 +204,30 @@ class SubscriptionService
         $fixed_price = $this->request->getRequestEscapedParameter('fixed_price', "");
         $interval = $this->request->getRequestEscapedParameter('interval', "");
         $tenure = $this->request->getRequestEscapedParameter('tenure', "");
-        $sequence = $this->request->getRequestEscapedParameter('sequence', "");
         $total_cycles = $this->request->getRequestEscapedParameter('total_cycles', "");
 
+        $sequenceCount = 1;
         if (count($fixed_price)) {
             $count = count($total_cycles);
+
+            // search for trial tenure
+            $bFoundTrail = false;
+            for ($i = 0; $i < $count; $i++) {
+                if ($tenure[$i] == 'TRIAL') {
+                    $bFoundTrail = true;
+                    break;
+                }
+            }
+            if ($bFoundTrail) {
+                 $sequenceCount++;
+            }
+
             $cycles = [];
 
             for ($i = 0; $i < $count; $i++) {
                 $cycle = new BillingCycle();
                 $cycle->total_cycles = $total_cycles[$i];
-                $cycle->sequence = $sequence[$i];
+                $cycle->sequence = ($tenure[$i] == 'TRIAL' ? 1 : $sequenceCount);
                 $cycle->tenure_type = $tenure[$i];
                 $cycle->frequency = new Frequency();
                 $cycle->frequency->interval_count = $total_cycles[$i];
@@ -225,6 +238,9 @@ class SubscriptionService
                 $cycle->pricing_scheme->fixed_price->currency_code = 'EUR';
                 $cycle->pricing_scheme->tiers = null;
                 $cycles[] = $cycle;
+                if ($tenure[$i] !== 'TRIAL') {
+                     $sequenceCount++;
+                }
             }
 
             $payment_preferences = new PaymentPreferences();

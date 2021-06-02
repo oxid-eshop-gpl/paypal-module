@@ -546,29 +546,31 @@
 
 
 </div>
-<script>
-    jQuery(document).ready(function(){
-        let showItem = function(divId) {
-            jQuery(".nav-tabs li").removeClass('active');
-            jQuery(".pptab").hide();
-            jQuery("#" + divId).show();
-            jQuery("#" + divId + "-tab").parent().addClass('active');
-        };
+[{capture assign="sPayPalSubscriptionDetailsJS"}]
+    [{strip}]
+        jQuery(document).ready(function(){
+            let showItem = function(divId) {
+                jQuery(".nav-tabs li").removeClass('active');
+                jQuery(".pptab").hide();
+                jQuery("#" + divId).show();
+                jQuery("#" + divId + "-tab").parent().addClass('active');
+            };
 
-        let listenToTab = function(divId) {
-            jQuery("#" + divId + "-tab").click(function(e) {
-                e.preventDefault();
-                showItem(divId);
-            });
-        }
+            let listenToTab = function(divId) {
+                jQuery("#" + divId + "-tab").click(function(e) {
+                    e.preventDefault();
+                    showItem(divId);
+                });
+            }
 
-        showItem("subscription");
-        listenToTab("subscription");
-        listenToTab("subscriber");
-        listenToTab("products");
-        listenToTab("shipping");
-        listenToTab("billing");
-        listenToTab("transaction");
-    });
-</script>
-
+            showItem("subscription");
+            listenToTab("subscription");
+            listenToTab("subscriber");
+            listenToTab("products");
+            listenToTab("shipping");
+            listenToTab("billing");
+            listenToTab("transaction");
+        });
+    [{/strip}]
+[{/capture}]
+[{oxscript add=$sPayPalSubscriptionDetailsJS}]

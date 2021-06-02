@@ -19,6 +19,7 @@
  * @link      http://www.oxid-esales.com
  * @copyright (C) OXID eSales AG 2003-2020
  */
+
 $sLangName = 'English';
 
 $aLang = [
@@ -82,6 +83,7 @@ $aLang = [
     // PayPal Config
     'OXPS_PAYPAL_CONFIG'                           => 'Configuration',
     'OXPS_PAYPAL_SUBSCRIBE'                        => 'PayPal Subscriptions',
+    'OXPS_PAYPAL_SUBSCRIBE_OPTIONS'                => 'PayPal Subscription Options',
     'PAYPAL_SUBSCRIBE_MAIN'                        => 'PayPal Subscriptions',
     'OXPS_PAYPAL_BILLING_PLAN'                     => 'Billing Plans',
     'OXPS_PAYPAL_BILLING_PLAN_MAIN'                => 'Billing Cycle',
@@ -92,11 +94,18 @@ $aLang = [
     'OXPS_PAYPAL_BILLING_PLAN_DESCRIPTION'         => 'Description',
     'OXPS_PAYPAL_BILLING_PLAN_DEFINITIONS'         => 'Definitions',
     'OXPS_PAYPAL_BILLING_PLAN_AUTOMATICALLY_BILL'  => 'Automatically Bill Outstanding',
+    'HELP_OXPS_PAYPAL_BILLING_PLAN_AUTOMATICALLY_BILL'                              =>
+        'Should PayPal automatically settle automatic invoices?',
     'OXPS_PAYPAL_BILLING_PLAN_SETUP_FEE'           => 'Setup Fee',
-    'OXPS_PAYPAL_BILLING_PLAN_FAILURE_ACTION'      => 'Setup Fee Failure Action',
+    'OXPS_PAYPAL_BILLING_PLAN_FAILURE_ACTION'      => 'Setup Failure Action',
+    'HELP_OXPS_PAYPAL_BILLING_PLAN_FAILURE_ACTION' =>
+        'Should an error occur when setting up the subscription. Should the subscription be created anyway
+        (<b>Continue</b>), or the process canceled (<b>Cancel</b>)?',
     'OXPS_PAYPAL_BILLING_PLAN_ACTION_CONTINUE'     => 'Continue',
     'OXPS_PAYPAL_BILLING_PLAN_ACTION_CANCEL'       => 'Cancel',
     'OXPS_PAYPAL_BILLING_PLAN_FAILURE_THRESHOLD'   => 'Payment Failure Threshold',
+    'HELP_OXPS_PAYPAL_BILLING_PLAN_FAILURE_THRESHOLD'                                =>
+        'How often should a payment be tried before it is canceled?',
     'OXPS_PAYPAL_BILLING_PLAN_TAX'                 => 'Tax',
     'OXPS_PAYPAL_BILLING_PLAN_TAX_PERCENTAGE'      => 'Tax Percentage',
     'OXPS_PAYPAL_BILLING_PLAN_TAX_INCLUSIVE'       => 'Tax Inclusive',
@@ -106,7 +115,7 @@ $aLang = [
     'OXPS_PAYPAL_BILLING_PLAN_FREQUENCY'           => 'Frequency',
     'OXPS_PAYPAL_BILLING_PLAN_FREQUENCY_DAY'       => 'daily',
     'OXPS_PAYPAL_BILLING_PLAN_FREQUENCY_WEEK'      => 'weekly',
-    'OXPS_PAYPAL_BILLING_PLAN_FREQUENCY_SEMI_MONTH'=> 'semi weekly',
+    'OXPS_PAYPAL_BILLING_PLAN_FREQUENCY_SEMI_MONTH' => 'semi weekly',
     'OXPS_PAYPAL_BILLING_PLAN_FREQUENCY_MONTH'     => 'monthly',
     'OXPS_PAYPAL_BILLING_PLAN_FREQUENCY_YEAR'      => 'yearly',
     'OXPS_PAYPAL_BILLING_PLAN_TENURE'              => 'Tenure',
@@ -157,7 +166,8 @@ $aLang = [
     'HELP_OXPS_PAYPAL_OPMODE'                      =>
         'To configure and test PayPal, use Sandbox (test). When you\'re ready
         to receive real transactions, switch to Production (live).',
-    'OXPS_PAYPAL_WEBHOOK_ID_HELP'                  => 'The ID of the webhook as configured in your Developer Portal account',
+    'OXPS_PAYPAL_WEBHOOK_ID_HELP'                  =>
+        'The ID of the webhook as configured in your Developer Portal account',
     // PayPal ORDER
     'OXPS_PAYPAL_AMOUNT'                           => 'Amount',
     'OXPS_PAYPAL_SHOP_PAYMENT_STATUS'              => 'Shop payment status',
@@ -182,7 +192,9 @@ $aLang = [
     'OXPS_PAYPAL_HISTORY_PAYPAL_STATUS'            => 'PayPal status',
     'OXPS_PAYPAL_HISTORY_PAYPAL_STATUS_HELP'       =>
         'Payment status returned from PayPal. For more details see:
-        <a href="https://www.paypal.com/webapps/helpcenter/article/?articleID=94021&m=SRE" target="_blank" >PayPal status</a>',
+        <a href="https://www.paypal.com/webapps/helpcenter/article/?articleID=94021&m=SRE" target="_blank">
+            PayPal status
+        </a>',
     'OXPS_PAYPAL_HISTORY_COMMENT'                  => 'Comment',
     'OXPS_PAYPAL_HISTORY_NOTICE'                   => 'Note',
     'OXPS_PAYPAL_HISTORY_NOTICE_TEXT'              => 'In case of error, please see "Details" for more information',
@@ -296,8 +308,10 @@ $aLang = [
     'OXPS_PAYPAL_DISPUTE_CREATE_TIME'              => 'Create time',
     'OXPS_PAYPAL_DISPUTE_UPDATE_TIME'              => 'Update time',
     'OXPS_PAYPAL_DISPUTE_REASON'                   => 'Reason',
-    'OXPS_PAYPAL_DISPUTE_REASON_MERCHANDISE_OR_SERVICE_NOT_RECEIVED'                 => 'Merchandise or service not received',
-    'OXPS_PAYPAL_DISPUTE_REASON_MERCHANDISE_OR_SERVICE_NOT_AS_DESCRIBED'             => 'Merchandise or service not as described',
+    'OXPS_PAYPAL_DISPUTE_REASON_MERCHANDISE_OR_SERVICE_NOT_RECEIVED'                 =>
+        'Merchandise or service not received',
+    'OXPS_PAYPAL_DISPUTE_REASON_MERCHANDISE_OR_SERVICE_NOT_AS_DESCRIBED'             =>
+        'Merchandise or service not as described',
     'OXPS_PAYPAL_DISPUTE_REASON_UNAUTHORISED'      => 'Unauthorised',
     'OXPS_PAYPAL_DISPUTE_REASON_CREDIT_NOT_PROCESSED'                                => 'Credit not processed',
     'OXPS_PAYPAL_DISPUTE_REASON_CREDIT_DUPLICATE_TRANSACTION'                        => 'Credit duplicate transaction',
@@ -333,11 +347,17 @@ $aLang = [
     'OXPS_PAYPAL_RESOLVED_SELLER_FAVOUR'           => 'Resolved in favour of Seller',
     'OXPS_PAYPAL_PRODUCT_ID'                       => 'Product-ID',
     'OXPS_PAYPAL_PRODUCT_NAME'                     => 'Product Name',
+    'HELP_OXPS_PAYPAL_PRODUCT_NAME'                =>
+        'The product name is also transferred to PayPal for better identification in the PayPal account.',
     'OXPS_PAYPAL_PRODUCT_DESCRIPTION'              => 'Description',
+    'HELP_OXPS_PAYPAL_PRODUCT_DESCRIPTION'         =>
+        'The Description is also transferred to PayPal for better identification in the PayPal account.',
     'OXPS_PAYPAL_PRODUCT_TYPE'                     => 'Product-Type',
     'OXPS_PAYPAL_PRODUCT_TYPE_CATEGORY'            => 'Type-Category',
     'OXPS_PAYPAL_PRODUCT_URL'                      => 'URL',
     'OXPS_PAYPAL_PRODUCT_IMAGE'                    => 'Image',
+    'HELP_OXPS_PAYPAL_PRODUCT_IMAGE'               =>
+        'The Image is also transferred to PayPal for better identification in the PayPal account.',
     'OXPS_PAYPAL_BUYER_ESCALATION_REASON_SHIPMENT_NOT_ARRIVED'                        => 'Shipment has not arrived',
     'OXPS_PAYPAL_BUYER_ESCALATION_REASON_FRAUDULENT_SELLER'                           => 'Fraudulent Seller',
     'OXPS_PAYPAL_BUYER_ESCALATION_REASON_FAILED_NEGOTIATION'                          => 'Failed Negotiation',
@@ -370,31 +390,39 @@ $aLang = [
     'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_RETURN'                                       => 'Proof Of Return',
     'OXPS_PAYPAL_EVIDENCE_TYPE_CREATE'             => 'Create',
     'OXPS_PAYPAL_EVIDENCE_TYPE_CHANGE_REASON'      => 'Change Reason',
-    'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_REFUND_OUTSIDE_PAYPAL'                        => 'Proof Of Refund Outside PayPal',
+    'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_REFUND_OUTSIDE_PAYPAL'                        =>
+        'Proof Of Refund Outside PayPal',
     'OXPS_PAYPAL_EVIDENCE_TYPE_RECEIPT_OF_MERCHANDISE'                                => 'Receipt Of Merchandise',
     'OXPS_PAYPAL_EVIDENCE_TYPE_CUSTOMS_DOCUMENT'   => 'Customs Document',
     'OXPS_PAYPAL_EVIDENCE_TYPE_CUSTOMS_FEE_RECEIPT'                                   => 'Customs Fee Receipt',
     'OXPS_PAYPAL_EVIDENCE_TYPE_INFORMATION_ON_RESOLUTION'                             => 'Information On Resolution',
-    'OXPS_PAYPAL_EVIDENCE_TYPE_ADDITIONAL_INFORMATION_OF_ITEM'                        => 'Additional Information Of Item',
+    'OXPS_PAYPAL_EVIDENCE_TYPE_ADDITIONAL_INFORMATION_OF_ITEM'                        =>
+        'Additional Information Of Item',
     'OXPS_PAYPAL_EVIDENCE_TYPE_DETAILS_OF_PURCHASE'                                   => 'Details Of Purchase',
-    'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_SIGNIFICANT_DIFFERENCE'                       => 'Proof Of Significant Difference',
-    'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_SOFTWARE_OR_SERVICE_NOT_AS_DESCRIBED'         => 'Proof Of Software Or Service Not As Described',
+    'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_SIGNIFICANT_DIFFERENCE'                       =>
+        'Proof Of Significant Difference',
+    'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_SOFTWARE_OR_SERVICE_NOT_AS_DESCRIBED'         =>
+        'Proof Of Software Or Service Not As Described',
     'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_CONFISCATION'                                 => 'Proof Of Confiscation',
     'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_DAMAGE'     => 'Proof Of Damage',
-    'OXPS_PAYPAL_EVIDENCE_TYPE_COPY_OF_LAW_ENFORCEMENT_AGENCY_REPORT'                 => 'Copy Of Law Enforcement Agency Report',
+    'OXPS_PAYPAL_EVIDENCE_TYPE_COPY_OF_LAW_ENFORCEMENT_AGENCY_REPORT'                 =>
+        'Copy Of Law Enforcement Agency Report',
     'OXPS_PAYPAL_EVIDENCE_TYPE_ADDITIONAL_PROOF_OF_SHIPMENT'                          => 'Additional Proof Of Shipment',
     'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_DENIAL_BY_CARRIER'                            => 'Proof Of Denial By Carrier',
-    'OXPS_PAYPAL_EVIDENCE_TYPE_THIRDPARTY_PROOF_FOR_DAMAGE_OR_SIGNIFICANT_DIFFERENCE' => 'Thirdparty Proof For Damage Or Significant Difference',
+    'OXPS_PAYPAL_EVIDENCE_TYPE_THIRDPARTY_PROOF_FOR_DAMAGE_OR_SIGNIFICANT_DIFFERENCE' =>
+        'Thirdparty Proof For Damage Or Significant Difference',
     'OXPS_PAYPAL_EVIDENCE_TYPE_VALID_SUPPORTING_DOCUMENT'                             => 'Valid Supporting Document',
     'OXPS_PAYPAL_EVIDENCE_TYPE_LEGIBLE_SUPPORTING_DOCUMENT'                           => 'Legible Supporting Document',
     'OXPS_PAYPAL_EVIDENCE_TYPE_RETURN_TRACKING_INFORMATION'                           => 'Return Tracking Information',
     'OXPS_PAYPAL_EVIDENCE_TYPE_DELIVERY_RECEIPT'    => 'Delivery Receipt',
     'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_INSTORE_RECEIPT'                              => 'Proof Of Instore Receipt',
-    'OXPS_PAYPAL_EVIDENCE_TYPE_ADDITIONAL_TRACKING_INFORMATION'                       => 'Additional Tracking Information',
+    'OXPS_PAYPAL_EVIDENCE_TYPE_ADDITIONAL_TRACKING_INFORMATION'                       =>
+        'Additional Tracking Information',
     'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_SHIPMENT_POSTAGE'                             => 'Proof Of Shipment Postage',
     'OXPS_PAYPAL_EVIDENCE_TYPE_ONLINE_TRACKING_INFORMATION'                           => 'Online Tracking Information',
     'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_OF_INSTORE_REFUND'                               => 'Proof Of Instore Refund',
-    'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_FOR_SOFTWARE_OR_SERVICE_DELIVERED'               => 'Proof For Software Or Service Delivered',
+    'OXPS_PAYPAL_EVIDENCE_TYPE_PROOF_FOR_SOFTWARE_OR_SERVICE_DELIVERED'               =>
+        'Proof For Software Or Service Delivered',
     'OXPS_PAYPAL_EVIDENCE_TYPE_RETURN_ADDRESS_FOR_SHIPPING'                           => 'Return Address For Shipping',
     'OXPS_PAYPAL_EVIDENCE_TYPE_COPY_OF_THE_EPARCEL_MANIFEST'                          => 'Copy Of The Eparcel Manifest',
     'OXPS_PAYPAL_EVIDENCE_TYPE_COPY_OF_SHIPPING_MANIFEST'                             => 'Copy Of Shipping Manifest',
@@ -408,7 +436,8 @@ $aLang = [
     'OXPS_PAYPAL_EVIDENCE_TYPE_PERMISSION_DESCRIPTION'                                => 'Permission Description',
     'OXPS_PAYPAL_EVIDENCE_TYPE_STATUS_OF_MERCHANDISE'                                 => 'Status Of Merchandise',
     'OXPS_PAYPAL_EVIDENCE_TYPE_LOST_CARD_DETAILS'                                     => 'Lost Card Details',
-    'OXPS_PAYPAL_EVIDENCE_TYPE_LAST_VALID_TRANSACTION_DETAILS'                        => 'Last Valid Transaction Details',
+    'OXPS_PAYPAL_EVIDENCE_TYPE_LAST_VALID_TRANSACTION_DETAILS'                        =>
+        'Last Valid Transaction Details',
     'OXPS_PAYPAL_EVIDENCE_TYPE_OTHER'              => 'Other',
     'OXPS_PAYPAL_EVIDENCE_TYPE'                    => 'Evidence Type',
     'OXPS_PAYPAL_EVIDENCE_DOCUMENT'                => 'Document',
@@ -417,4 +446,3 @@ $aLang = [
     'OXPS_PAYPAL_ME'                               => 'Me',
     'OXPS_PAYPAL_COPY'                             => 'Copy',
 ];
-
