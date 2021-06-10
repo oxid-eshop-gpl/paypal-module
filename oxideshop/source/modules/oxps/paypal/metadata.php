@@ -74,7 +74,7 @@ $aModule = [
         'en' => 'Use of the online payment service from PayPal'
     ],
     'thumbnail' => 'out/img/paypal.png',
-    'version' => '0.0.1',
+    'version' => '0.0.2',
     'author' => 'Oxid Professional Services',
     'url' => '',
     'email' => '',
@@ -127,8 +127,6 @@ $aModule = [
         'paypal_smart_payment_buttons.tpl' => 'oxps/paypal/views/includes/smart_payment_buttons.tpl',
         'payment_buttons.tpl' => 'oxps/paypal/views/includes/payment_buttons.tpl',
         'subscription_buttons.tpl' => 'oxps/paypal/views/includes/subscription_buttons.tpl',
-        'flow/paypal_payment_option.tpl' => 'oxps/paypal/views/theme/flow/paypal_payment_option.tpl',
-        'wave/paypal_payment_option.tpl' => 'oxps/paypal/views/theme/wave/paypal_payment_option.tpl'
     ],
     'events' => [
         'onActivate' => '\OxidProfessionalServices\PayPal\Core\Events::onActivate',

@@ -18,6 +18,39 @@
  * @copyright (C) OXID eSales AG 2003-2020
  */
 
+jQuery(document).ready(function(){
+
+    jQuery(".boardinglink").click(function() {
+        jQuery("#overlay").show();
+    });
+
+    if(window.isSandBox) {
+        displayByOpMode('sandbox');
+    } else {
+        displayByOpMode('live');
+    }
+
+    jQuery("#opmode").change(function() {
+        if(jQuery("#opmode").val() == 'sandbox') {
+            window.isSandBox = true;
+        } else {
+            window.isSandBox = false;
+        }
+
+        displayByOpMode(jQuery("#opmode").val());
+    });
+});
+
+function displayByOpMode(opmode) {
+    if(opmode === 'sandbox') {
+        jQuery(".live").hide();
+        jQuery(".sandbox").show();
+    } else {
+        jQuery(".sandbox").hide();
+        jQuery(".live").show();
+    }
+}
+
 function copyToClipboard(element)
 {
     document.querySelector(element).select();
@@ -54,6 +87,7 @@ function callOnboardingControllerAutoConfigurationFromCallback(authCode, sharedI
             }
 
             response.json().then(function (data) {
+                jQuery("#overlay").hide();
                 if (window.isSandBox) {
                     jQuery("#client-sandbox-id").val(data.client_id);
                     jQuery("#client-sandbox-secret").val(data.client_secret);

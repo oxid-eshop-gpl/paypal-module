@@ -1,7 +1,10 @@
 [{oxscript include=$oViewConf->getPayPalJsSdkUrl($paymentStrategy, true)}]
-[{capture name="paypal_init"}]
+[{capture assign="paypal_init"}]
     [{assign var="sSelfLink" value=$oViewConf->getSelfLink()|replace:"&amp;":"&"}]
     [{assign var="sCleanLink" value=$selfLink|replace:"?":""}]
+    [{if !$aid}]
+        [{assign var="aid" value=""}]
+    [{/if}]
     [{literal}]
     paypal.Buttons({
         style: {
@@ -52,6 +55,7 @@
             window.location.href="[{/literal}][{$sSelfLink}][{literal}]"
             console.log('Consumer cancelled the PayPal Subscription Flow. No action required.');
         }
-    }).render('#paypal-button-container');
+    }).render('#[{/literal}][{$buttonId}][{literal}]');
     [{/literal}]
 [{/capture}]
+[{oxscript add=$paypal_init}]

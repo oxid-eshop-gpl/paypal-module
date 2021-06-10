@@ -9,9 +9,11 @@
     $oViewConf->getTopActiveClassName()|lower=="paypaldisputecontroller" ||
     $oViewConf->getTopActiveClassName()|lower=="paypalsubscribecontroller"
 }]
-    [{assign var="sFileMTime" value=$oViewConf->getModulePath('oxps/paypal','out/src/js/paypal-admin.min.js')|filemtime}]
-    [{oxscript include=$oViewConf->getModuleUrl('oxps/paypal','out/src/js/paypal-admin.min.js')|cat:"?"|cat:$sFileMTime priority=10}]
+    [{oxscript include="js/libs/jquery.min.js" priority=1}]
     [{oxscript add="$.noConflict();" priority=10}]
+    [{if $oViewConf->getTopActiveClassName()|lower=="paypalconfigcontroller"}]
+        [{assign var="sFileMTime" value=$oViewConf->getModulePath('oxps/paypal','out/src/js/paypal-admin.min.js')|filemtime}]
+        [{oxscript include=$oViewConf->getModuleUrl('oxps/paypal','out/src/js/paypal-admin.min.js')|cat:"?"|cat:$sFileMTime priority=10}]
+    [{/if}]
 [{/if}]
 [{$smarty.block.parent}]
-

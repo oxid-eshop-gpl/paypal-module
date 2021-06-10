@@ -53,6 +53,12 @@ class OrderController extends OrderController_parent
             return $ret;
         }
 
+        $oBasket = $this->getSession()->getBasket();
+
+        if ($oBasket->getPaymentId() !== 'oxidpaypal') {
+            return $ret;
+        }
+
         PayPalSession::subscriptionIsDoneProcessing();
 
         return $ret;

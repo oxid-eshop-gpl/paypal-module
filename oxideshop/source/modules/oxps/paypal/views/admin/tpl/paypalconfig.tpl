@@ -4,34 +4,6 @@
     [{strip}]
         window.isSandBox = '[{$isSandBox}]';
         window.selfLink = '[{$oViewConf->getSelfLink()|replace:"&amp;":"&"}]';
-
-        jQuery(document).ready(function(){
-            if(window.isSandBox) {
-                displayByOpMode('sandbox');
-            } else {
-                displayByOpMode('live');
-            }
-
-            jQuery("#opmode").change(function() {
-                if(jQuery("#opmode").val() == 'sandbox') {
-                    window.isSandBox = true;
-                } else {
-                    window.isSandBox = false;
-                }
-
-                displayByOpMode(jQuery("#opmode").val());
-            });
-        });
-
-        function displayByOpMode(opmode) {
-            if(opmode === 'sandbox') {
-                jQuery(".live").hide();
-                jQuery(".sandbox").show();
-            } else {
-                jQuery(".sandbox").hide();
-                jQuery(".live").show();
-            }
-        }
     [{/strip}]
 [{/capture}]
 
@@ -46,7 +18,7 @@
             [{oxmultilang ident="OXPS_PAYPAL_CONF_VALID"}]
         [{/if}]
     </div>
-
+    <div id="overlay"><div class="loader"></div></div>
     <form name="configForm" action="[{$oViewConf->getSelfLink()}]">
         [{$oViewConf->getHiddenSid()}]
         <input type="hidden" name="cl" value="[{$oViewConf->getActiveClassName()}]">
@@ -81,6 +53,7 @@
 
                         [{assign var='liveMerchantSignUpLink' value=$oView->getLiveSignUpMerchantIntegrationLink()}]
                         <p class="live"><a target="_blank"
+                              class="boardinglink"
                               href="[{$liveMerchantSignUpLink}]"
                               data-paypal-button="PPLtBlue">
                                 [{oxmultilang ident="OXPS_PAYPAL_LIVE_BUTTON_CREDENTIALS"}]
@@ -108,6 +81,7 @@
                         [{assign var='sandboxMerchantSignUpLink' value=$oView->getSandboxSignUpMerchantIntegrationLink()}]
 
                         <p class="sandbox"><a target="_blank"
+                              class="boardinglink"
                               href="[{$sandboxMerchantSignUpLink}]"
                               data-paypal-onboard-complete="onboardedCallbackSandbox"
                               data-paypal-button="PPLtBlue">

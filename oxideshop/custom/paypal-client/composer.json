@@ -4,11 +4,9 @@
     "type": "library",
     "require": {
         "php" : ">=7.1",
-        "guzzlehttp/guzzle": "^6.5",
-        "symfony/console": "^4.4",
+        "guzzlehttp/guzzle": "~6 || ~7",
         "psr/log": "^1.1",
         "league/oauth2-client": "^2.4",
-        "ext-json": "*",
         "webmozart/assert": "^1.9"
     },
     "require-dev": {

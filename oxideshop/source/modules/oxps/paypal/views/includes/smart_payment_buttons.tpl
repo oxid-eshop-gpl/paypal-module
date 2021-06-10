@@ -1,11 +1,10 @@
 [{if $subscriptionPlan}]
     [{if $oxcmp_user}]
-        [{include file="subscription_buttons.tpl"}]
+        [{include file="subscription_buttons.tpl" buttonId=$buttonId aid=$aid}]
     [{else}]
         [{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_NEEDSUSER"}]
     [{/if}]
 [{else}]
-    [{include file="payment_buttons.tpl"}]
+    [{include file="payment_buttons.tpl" buttonId=$buttonId paymentStrategy=$paymentStrategy aid=$aid}]
 [{/if}]
-<div id="paypal-button-container" class="paypal-button-container [{$buttonClass}]"></div>
-[{oxscript add=$smarty.capture.paypal_init}]
+<div id="[{$buttonId}]" class="paypal-button-container [{$buttonClass}]"></div>

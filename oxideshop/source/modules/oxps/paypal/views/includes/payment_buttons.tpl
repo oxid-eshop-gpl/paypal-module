@@ -1,4 +1,5 @@
-[{capture name="paypal_init"}]
+[{oxscript include=$oViewConf->getPayPalJsSdkUrl($paymentStrategy, false)}]
+[{capture assign="paypal_init"}]
     [{if !$paymentStrategy}]
        [{assign var="paymentStrategy" value="continue"}]
     [{/if}]
@@ -45,7 +46,7 @@
         },
         onError: function (data) {
         }
-    }).render('#paypal-button-container');
+    }).render('#[{/literal}][{$buttonId}][{literal}]');
     [{/literal}]
-    [{/capture}]
-[{oxscript include=$oViewConf->getPayPalJsSdkUrl($paymentStrategy, false)}]
+[{/capture}]
+[{oxscript add=$paypal_init}]
