@@ -49,7 +49,7 @@ class PayPalConfigController extends AdminController
      */
     public function getWebhookControllerUrl(): string
     {
-        return Registry::getConfig()->getShopSecureHomeURL() . 'cl=PayPalWebhookController';
+        return Registry::getUtilsUrl()->getActiveShopHost() . '/index.php?cl=PayPalWebhookController';
     }
 
     /**
@@ -82,8 +82,7 @@ class PayPalConfigController extends AdminController
 
         return $this->buildSignUpLink(
             $config->getLiveOxidPartnerId(),
-            $config->getLiveOxidClientId(),
-            $this->getReturnUrl()
+            $config->getLiveOxidClientId()
         );
     }
 
@@ -98,8 +97,7 @@ class PayPalConfigController extends AdminController
 
         return $this->buildSignUpLink(
             $config->getSandboxOxidPartnerId(),
-            $config->getSandboxOxidClientId(),
-            $this->getReturnUrl()
+            $config->getSandboxOxidClientId()
         );
     }
 
@@ -108,11 +106,10 @@ class PayPalConfigController extends AdminController
      *
      * @param string $partnerId
      * @param string $clientId
-     * @param string $returnUrl
      *
      * @return string
      */
-    private function buildSignUpLink(string $partnerId, string $clientId, string $returnUrl): string
+    private function buildSignUpLink(string $partnerId, string $clientId): string
     {
         $params = [
             'sellerNonce' => $this->createNonce(),
@@ -120,7 +117,6 @@ class PayPalConfigController extends AdminController
             'product' => 'EXPRESS_CHECKOUT',
             'integrationType' => 'FO',
             'partnerClientId' => $clientId,
-            'returnToPartnerUrl' => $returnUrl,
             //'partnerLogoUrl' => '',
             'displayMode' => 'minibrowser',
             'features' => 'PAYMENT,REFUND,ADVANCED_TRANSACTIONS_SEARCH'
@@ -212,31 +208,16 @@ class PayPalConfigController extends AdminController
     }
 
     /**
-     * Returns RETURN URL
-     *
-     * @return string
+     * @return array
      */
-    protected function getReturnUrl()
+    public function getTotalCycleDefaults()
     {
-        $session = Registry::getSession();
-        $controllerKey = Registry::getControllerClassNameResolver()->getIdByClassName(get_class());
+        $array = [];
 
-        return $session->processUrl($this->getBaseUrl() . "&cl=" . $controllerKey);
-    }
+        for ($i = 1; $i < 1000; $i++) {
+            $array[] = $i;
+        }
 
-    /**
-     * Returns base url, which is used to construct Callback, Return and Cancel Urls
-     *
-     * @return string
-     */
-    protected function getBaseUrl()
-    {
-        $session = Registry::getSession();
-        $url = Registry::getConfig()->getSslShopUrl() . "index.php?lang="
-            . Registry::getLang()->getBaseLanguage()
-            . "&sid=" . $session->getId() . "&rtoken=" . $session->getRemoteAccessToken();
-        $url .= "&shp=" . Registry::getConfig()->getShopId();
-
-        return $url;
+        return $array;
     }
 }

@@ -366,41 +366,43 @@
         </form>
     </div>
 </div>
-
-<script>
-    function addFile(fileNum) {
-        jQuery('.show' + (fileNum+1)).show();
-        jQuery('.addMoreButton' + (fileNum)).hide();
-    }
-
-    jQuery(document).ready(function(){
-
-        jQuery('.show2').hide();
-        jQuery('.show3').hide();
-        jQuery('.show4').hide();
-        jQuery('.show5').hide();
-
-        let showItem = function(divId) {
-            jQuery(".nav-tabs li").removeClass('active');
-            jQuery(".pptab").hide();
-            jQuery("#" + divId).show();
-            jQuery("#" + divId + "-tab").parent().addClass('active');
-        };
-
-        let listenToTab = function(divId) {
-            jQuery("#" + divId + "-tab").click(function(e) {
-                e.preventDefault();
-                showItem(divId);
-            });
+[{capture assign="sPayPalDisputeDetailsJS"}]
+    [{strip}]
+        function addFile(fileNum) {
+            jQuery('.show' + (fileNum+1)).show();
+            jQuery('.addMoreButton' + (fileNum)).hide();
         }
 
-        showItem("history");
-        listenToTab("history");
-        listenToTab("messages");
-        listenToTab("offer");
-        listenToTab("escalate");
-        listenToTab("evidence");
+        jQuery(document).ready(function(){
 
-        jQuery(".messageRow").filter(':odd').css("background-color", "#f4f4f4");
-    });
-</script>
+            jQuery('.show2').hide();
+            jQuery('.show3').hide();
+            jQuery('.show4').hide();
+            jQuery('.show5').hide();
+
+            let showItem = function(divId) {
+                jQuery(".nav-tabs li").removeClass('active');
+                jQuery(".pptab").hide();
+                jQuery("#" + divId).show();
+                jQuery("#" + divId + "-tab").parent().addClass('active');
+            };
+
+            let listenToTab = function(divId) {
+                jQuery("#" + divId + "-tab").click(function(e) {
+                    e.preventDefault();
+                    showItem(divId);
+                });
+            }
+
+            showItem("history");
+            listenToTab("history");
+            listenToTab("messages");
+            listenToTab("offer");
+            listenToTab("escalate");
+            listenToTab("evidence");
+
+            jQuery(".messageRow").filter(':odd').css("background-color", "#f4f4f4");
+        });
+    [{/strip}]
+[{/capture}]
+[{oxscript add=$sPayPalDisputeDetailsJS}]

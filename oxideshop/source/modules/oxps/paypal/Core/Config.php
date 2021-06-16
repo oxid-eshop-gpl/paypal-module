@@ -154,6 +154,29 @@ class Config
     }
 
     /**
+     * @return bool
+     */
+    public function getAutoBillOutstanding(): bool
+    {
+        return (bool) Registry::getConfig()->getConfigParam('blPayPalAutoBillOutstanding');
+    }
+
+    /**
+     * @return string
+     */
+    public function getSetupFeeFailureAction(): string
+    {
+        return (string) Registry::getConfig()->getConfigParam('sPayPalSetupFeeFailureAction', 'CONTINUE');
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentFailureThreshold(): string
+    {
+        return (string) Registry::getConfig()->getConfigParam('sPayPalPaymentFailureThreshold', '1');
+    }
+    /**
      * This ClientId is public. The only function is to create
      * a basiclly AccessToken,  Which one is needed to generate
      * the request for the merchant ClientId.

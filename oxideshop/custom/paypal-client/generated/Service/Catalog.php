@@ -82,8 +82,6 @@ class Catalog extends BaseService
     {
         $path = "/products/{$productId}";
 
-
-
         $body = null;
         $response = $this->send('GET', $path, [], [], $body);
         $jsonData = json_decode($response->getBody(), true);

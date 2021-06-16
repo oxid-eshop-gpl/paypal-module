@@ -9,16 +9,19 @@
             </button>
         </div>
     </div>
-    <script>
-        jQuery(document).ready(function(){
-            jQuery("#filters").hide();
-            jQuery("#toggleFilter").click(function(e) {
-                e.preventDefault();
-                jQuery("#filters").toggle();
-                jQuery("#results").toggle();
+    [{capture assign="sPayPalTransActionJS"}]
+        [{strip}]
+            jQuery(document).ready(function(){
+                jQuery("#filters").hide();
+                jQuery("#toggleFilter").click(function(e) {
+                    e.preventDefault();
+                    jQuery("#filters").toggle();
+                    jQuery("#results").toggle();
+                });
             });
-        });
-    </script>
+        [{/strip}]
+    [{/capture}]
+    [{oxscript add=$sPayPalTransActionJS}]
 
     [{assign var="filters" value=$oView->getFilterValues()}]
     <form method="post" id="transaction-filters" action="[{$oViewConf->getSelfLink()}]">

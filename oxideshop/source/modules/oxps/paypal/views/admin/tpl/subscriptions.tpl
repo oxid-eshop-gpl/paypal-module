@@ -8,17 +8,20 @@
             <button id="toggleFilter" class="btn btn-info col-sm-12">[{oxmultilang ident="OXPS_PAYPAL_FILTER"}]</button>
         </div>
     </div>
-    <script>
-        jQuery(document).ready(function(){
-            jQuery("#filters").hide();
-            jQuery("#results").show();
-            jQuery("#toggleFilter").click(function(e) {
-                e.preventDefault();
-                jQuery("#filters").toggle();
-                jQuery("#results").toggle();
+    [{capture assign="sPayPalSubscriptionsJS"}]
+        [{strip}]
+            jQuery(document).ready(function(){
+                jQuery("#filters").hide();
+                jQuery("#results").show();
+                jQuery("#toggleFilter").click(function(e) {
+                    e.preventDefault();
+                    jQuery("#filters").toggle();
+                    jQuery("#results").toggle();
+                });
             });
-        });
-    </script>
+        [{/strip}]
+    [{/capture}]
+    [{oxscript add=$sPayPalSubscriptionsJS}]
     <br />
     <div id="filters">
         <form method="post" action="[{$oViewConf->getSelfLink()}]">

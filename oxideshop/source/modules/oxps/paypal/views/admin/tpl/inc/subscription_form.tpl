@@ -3,14 +3,14 @@
 [{assign var="categories" value=$oView->getCategories()}]
 [{assign var="types" value=$oView->getTypes()}]
 [{assign var="images" value=$oView->getDisplayImages()}]
+[{assign var="imagesCount" value=$images|@count}]
+[{math equation="x + y" x=$imagesCount y=1 assign="imagesCountPlus"}]
 [{assign var="productUrl" value=$oView->getProductUrl()}]
 [{assign var="hasLinkedObject" value=$oView->hasLinkedObject()}]
 [{assign var="hasSubscriptionPlan" value=$oView->hasSubscriptionPlan()}]
 [{assign var="defaultIntervals" value=$oView->getIntervalDefaults()}]
 [{assign var="defaultTenureTypes" value=$oView->getTenureTypeDefaults()}]
-[{assign var="defaultSequences" value=$oView->getSequenceDefaults()}]
-[{assign var="defaultTotalCycles" value=$oView->getTotalCycleDefaults()}]
-[{if $hasLinkedObject }]
+[{if $hasLinkedObject}]
     [{assign var="title" value=$linkedObject->name}]
     [{assign var="description" value=$linkedObject->description}]
     [{assign var="productType" value=$linkedObject->type}]
@@ -18,7 +18,7 @@
     [{assign var="imageUrl" value=$linkedObject->image_url}]
     [{assign var="homeUrl" value=$linkedObject->home_url}]
     [{assign var="id" value=$linkedObject->id}]
-    [{else}]
+[{else}]
     [{assign var="title" value=$edit->oxarticles__oxtitle->value}]
     [{assign var="description" value=$edit->oxarticles__oxshortdesc->value}]
     [{assign var="productType" value=''}]
@@ -27,153 +27,140 @@
     [{assign var="homeUrl" value=$productUrl}]
 [{/if}]
 <form name="subscriptionForm" id="subscriptionForm" action="[{ $oViewConf->getSelfLink() }]" method="post">
-    [{ $oViewConf->getHiddenSid() }]
-    <input type="hidden" name="cl" value="PayPalSubscribeController">
-    <input type="hidden" name="fnc" value="">
-    <input type="hidden" name="oxid" value="[{ $oxid }]">
-    <input type="hidden" name="paypalProductId" value="[{ $oView->getPayPalProductId() }]">
-
+    [{$oViewConf->getHiddenSid()}]
+    <input type="hidden" name="cl" value="PayPalSubscribeController" />
+    <input type="hidden" name="fnc" value="" />
+    <input type="hidden" name="oxid" value="[{$oxid}]" />
+    <input type="hidden" name="editBillingPlanId" value="[{$editBillingPlanId}]" />
+    <input type="hidden" name="deactivateBillingPlanId" value="" />
+    <input type="hidden" name="paypalProductId" value="[{$oView->getPayPalProductId()}]" />
+[{*
+    title:[{$title}]<br>
+    description:[{$description}]<br>
+    productType:[{$productType}]<br>
+    category:[{$category}]<br>
+    imageUrl:[{$imageUrl}]<br>
+    homeUrl:[{$homeUrl}]<br>
+    id:[{$id}]<br>
+*}]
     <table cellspacing="0" cellpadding="0" border="0" width="98%" style="border: 1px solid #cccccc; padding: 10px; margin: 10px; border-radius: 10px;">
         <tbody>
-        <tr>
-            <td colspan="100"><h3>[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_SUBSCRIPTION_PROD"}]</h3></td>
-        </tr>
-        <tr>
-            <td class="edittext" style="width: 196px;">
-                [{oxmultilang ident="OXPS_PAYPAL_PRODUCT_NAME" suffix="COLON"}]
-            </td>
-            <td class="edittext">
-                <input type="text" class="editinput pform" size="26" required="required" name="title" id="title" value="[{$title}]" [{ $readonly }]>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                [{oxmultilang ident="OXPS_PAYPAL_PRODUCT_DESCRIPTION" suffix="COLON"}]
-            </td>
-            <td class="edittext">
-                <textarea class="editinput pform" style="width: 200px" rows="10" required="required" name="description" id="description">[{$description}]</textarea>
-            </td>
-        </tr>
-        <tr>
-            <td class="edittext">
-                [{oxmultilang ident="OXPS_PAYPAL_PRODUCT_TYPE" suffix="COLON"}]
-            </td>
-            <td class="edittext">
-                <select name="productType" style="width: 200px" class="editinput pform">
-                    [{foreach from=$types item=value key=name}]
-                    [{if $productType == $value }]
-                    <option value="[{$value}]" selected>[{$value}]</option>
-                    [{else}]
-                    <option value="[{$value}]">[{$value}]</option>
-                    [{/if}]
-                    [{/foreach}]
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td class="edittext">
-                [{oxmultilang ident="OXPS_PAYPAL_PRODUCT_TYPE_CATEGORY" suffix="COLON"}]
-            </td>
-            <td class="edittext">
-                <select name="category" style="width:200px" class="editinput pform">
-                    [{foreach from=$categories item=value key=name}]
-                    [{if $category == $value }]
-                    <option value="[{$value}]" selected>[{$value}]</option>
-                    [{else}]
-                    <option value="[{$value}]">[{$value}]</option>
-                    [{/if}]
-                    [{/foreach}]
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td class="edittext">
-                [{oxmultilang ident="OXPS_PAYPAL_PRODUCT_IMAGE" suffix="COLON"}]
-            </td>
-            [{foreach from=$images item=image}]
-                <td class="edittext" style="float: left; margin-right: 10px; padding: 10px; border: 1px solid #cccccc;">
-                    <label>
-                        <input type="radio" name="imageUrl" value="[{$image.masterUrl}]" class="pform"[{if $image.masterUrl == $imageUrl }] checked[{/if}] />
-                        <img style="height: 100px" src="[{$image.imageUrl}]" />
-                    </label>
-                </td>
-            [{/foreach}]
-        </tr>
-        <tr>
-            <td class="edittext">
-                [{oxmultilang ident="OXPS_PAYPAL_PRODUCT_URL" suffix="COLON"}]
-            </td>
-            <td class="edittext">
-                <p>[{$homeUrl}]</p>
-                <input type="hidden" name="homeUrl" value="[{$homeUrl}]">
-            </td>
-        </tr>
-        <tr>
-            <td colspan="100"><h3>[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_ACTIONS"}]</h3></td>
-        </tr>
-        [{if $hasLinkedObject }]
             <tr>
-                <td class="edittext">
-                    <input type="button" class="edittext" name="save" value='[{ oxmultilang ident="GENERAL_SAVE" }]' onClick="window.validateSubscriptionProductForm('saveProduct')">&nbsp;
-                    <input type="button" class="edittext" name="unlink" value='[{ oxmultilang ident="ARTICLE_REVIEW_DELETE" }]' onClick="window.validateSubscriptionProductForm('unlink')"><br>
+                <td colspan="[{$imagesCountPlus}]">
+                    <h3>[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_SUBSCRIPTION_PROD"}]</h3>
                 </td>
             </tr>
-        [{else}]
             <tr>
                 <td class="edittext">
-                    <input type="button" class="edittext" name="save" value='[{ oxmultilang ident="GENERAL_SAVE" }]' onClick="window.validateSubscriptionProductForm('saveProduct')"><br>
+                    [{oxmultilang ident="OXPS_PAYPAL_PRODUCT_NAME" suffix="COLON"}]
+                </td>
+                <td class="edittext" colspan="[{$imagesCount}]">
+                    <input type="hidden" name="title" id="title" value="[{$title}]" [{$readonly}] />
+                    <b>[{$title}]</b>
+                    [{oxinputhelp ident="HELP_OXPS_PAYPAL_PRODUCT_NAME"}]
                 </td>
             </tr>
-        [{/if}]
+            <tr>
+                <td class="edittext">
+                    [{oxmultilang ident="OXPS_PAYPAL_PRODUCT_DESCRIPTION" suffix="COLON"}]
+                </td>
+                <td class="edittext" colspan="[{$imagesCount}]">
+                    <input type="hidden" name="description" id="description" value="[{$description}]" [{$readonly}] />
+                    <b>[{$description}]</b>
+                    [{oxinputhelp ident="HELP_OXPS_PAYPAL_PRODUCT_DESCRIPTION"}]
+                </td>
+            </tr>
+            <tr>
+                <td class="edittext">
+                    [{oxmultilang ident="OXPS_PAYPAL_PRODUCT_TYPE" suffix="COLON"}]
+                </td>
+                <td class="edittext" colspan="[{$imagesCount}]">
+                    <select name="productType" style="width: 200px" class="editinput pform">
+                        [{foreach from=$types item=value key=name}]
+                        [{if $productType == $value }]
+                        <option value="[{$value}]" selected>[{$value}]</option>
+                        [{else}]
+                        <option value="[{$value}]">[{$value}]</option>
+                        [{/if}]
+                        [{/foreach}]
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="edittext">
+                    [{oxmultilang ident="OXPS_PAYPAL_PRODUCT_TYPE_CATEGORY" suffix="COLON"}]
+                </td>
+                <td class="edittext" colspan="[{$imagesCount}]">
+                    <select name="category" style="width:200px" class="editinput pform">
+                        [{foreach from=$categories item=value key=name}]
+                        [{if $category == $value }]
+                        <option value="[{$value}]" selected>[{$value}]</option>
+                        [{else}]
+                        <option value="[{$value}]">[{$value}]</option>
+                        [{/if}]
+                        [{/foreach}]
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="edittext">
+                    [{oxmultilang ident="OXPS_PAYPAL_PRODUCT_IMAGE"}]
+                    [{oxinputhelp ident="HELP_OXPS_PAYPAL_PRODUCT_IMAGE"}]:
+                </td>
+                [{foreach name="productImages" from=$images item=image}]
+                    <td class="edittext" style="float: left; margin-right: 10px; padding: 10px; border: 1px solid #cccccc;">
+                        <label>
+                            <input type="radio" name="imageUrl" value="[{$image.masterUrl}]" class="pform"[{if $image.masterUrl == $imageUrl || $imagesCount == 1 || ($smarty.foreach.productImages.first && !$imageUrl)}] checked[{/if}] />
+                            <img style="height: 100px" src="[{$image.imageUrl}]" />
+                        </label>
+                    </td>
+                [{/foreach}]
+            </tr>
+            <tr>
+                <td class="edittext">
+                    [{oxmultilang ident="OXPS_PAYPAL_PRODUCT_URL" suffix="COLON"}]
+                </td>
+                <td class="edittext" colspan="[{$imagesCount}]">
+                    <p>[{$homeUrl}]</p>
+                    <input type="hidden" name="homeUrl" value="[{$homeUrl}]" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="[{$imagesCountPlus}]">
+                    <h3>[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_ACTIONS"}]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td class="edittext" colspan="[{$imagesCountPlus}]">
+                    <input type="button" class="edittext" name="save" value="[{oxmultilang ident="GENERAL_SAVE"}]" onclick="window.editSubscriptionProductForm('saveProduct')" />
+                    [{if $hasLinkedObject}]
+                        <input type="button" class="edittext" name="save" value="[{oxmultilang ident="ARTICLE_REVIEW_DELETE"}]" onClick="window.editSubscriptionProductForm('unlink')"><br />
+                    [{/if}]
+                    <br />
+                </td>
+            </tr>
         </tbody>
     </table>
 </form>
-<script>
-    jQuery(function() {
-        window.validateSubscriptionProductForm = function(saveType) {
-            let isValid = false;
-            document.subscriptionForm.fnc.value=saveType;
-            if(saveType === 'saveProduct') {
-                jQuery('#subscriptionForm *').filter(':input').each(function(){
-                    let thisElement = jQuery(this);
-                    if (thisElement.attr('required') === true) {
-                        if(thisElement.val().length < 1) {
-                            thisElement.css('border', '1px solid #ff0000');
-                            return false;
-                        } else {
-                            isValid = true;
-                            thisElement.css('border', '1px solid #cccccc');
-                        }
-                    }
-                });
-
-                if (isValid) {
-                    jQuery("#subscriptionForm").submit();
-                }
-            };
-
-            if(saveType === 'patch') {
-                jQuery('#subscriptionForm *').filter(':input').each(function(){
-                    let thisElement = jQuery(this);
-                    if (thisElement.attr('required') === true) {
-                        if(thisElement.val().length < 1) {
-                            isValid = false;
-                            thisElement.css('border', '1px solid #ff0000');
-                        } else {
-                            thisElement.css('border', '1px solid #cccccc');
-                        }
-                    }
-                });
-
-                if (isValid) {
-                    jQuery("#subscriptionForm").submit();
-                }
-            }
-
-            if(saveType === 'unlink') {
+[{capture assign="sPayPalSubscriptionFormJS"}]
+    [{strip}]
+        jQuery(document).ready(function(){
+            window.editSubscriptionProductForm = function(saveType) {
+                document.subscriptionForm.fnc.value=saveType;
                 jQuery("#subscriptionForm").submit();
-            }
-        };
-    });
+            };
+            window.editBillingPlanForm = function(billingPlan) {
+                document.subscriptionForm.fnc.value='editBillingPlan';
+                document.subscriptionForm.editBillingPlanId.value=billingPlan;
+                jQuery("#subscriptionForm").submit();
+            };
+            window.deactivateBillingPlanForm = function(billingPlan) {
+                document.subscriptionForm.fnc.value='deactivate';
+                document.subscriptionForm.deactivateBillingPlanId.value=billingPlan;
+                jQuery("#subscriptionForm").submit();
+            };
+        });
+    [{/strip}]
+[{/capture}]
 
-</script>
+[{oxscript add=$sPayPalSubscriptionFormJS}]

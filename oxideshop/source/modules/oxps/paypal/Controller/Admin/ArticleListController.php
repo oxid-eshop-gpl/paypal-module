@@ -4,6 +4,7 @@ namespace OxidProfessionalServices\PayPal\Controller\Admin;
 
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Core\DatabaseProvider;
+use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
 use OxidEsales\Eshop\Core\Exception\DatabaseConnectionException;
 use OxidEsales\Eshop\Core\Exception\DatabaseErrorException;
 use OxidEsales\Eshop\Core\Registry;
@@ -32,9 +33,18 @@ class ArticleListController extends ArticleListController_Parent
 
         $linkedProduct = $repository->getLinkedProductByOxid($oxid);
         if ($linkedProduct) {
-            $linkedObject = Registry::get(ServiceFactory::class)
-                ->getCatalogService()
-                ->showProductDetails($linkedProduct[0]['OXPS_PAYPAL_PRODUCT_ID']);
+            $linkedProduct = $linkedProduct[0]['OXPS_PAYPAL_PRODUCT_ID'];
+
+            try {
+                $linkedObject = Registry::get(ServiceFactory::class)
+                    ->getCatalogService()
+                    ->showProductDetails($linkedProduct);
+            } catch (ApiException $exception) {
+                // We have a linkedProduct, but its does not exists in PayPal-Catalogs, so we delete them
+                Registry::getLogger()->error($exception);
+                //$repository->deleteLinkedProduct($linkedProduct);
+                //$repository->deleteLinkedOrders($linkedProduct);
+            }
         }
 
         if ($linkedObject) {

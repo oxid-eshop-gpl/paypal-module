@@ -1,17 +1,20 @@
 [{include file="headitem.tpl" title="GENERAL_ADMIN_TITLE"|oxmultilangassign}]
-<script type="text/javascript">
-    window.onload = function ()
-    {
-        [{if $updatelist == 1}]
-            top.oxid.admin.updateList('[{$oxid}]');
-            location.reload();
-        [{/if}]
-        var oField = top.oxid.admin.getLockTarget();
-        if (oField) {
-            oField.onchange = oField.onkeyup = oField.onmouseout = top.oxid.admin.unlockSave;
+[{capture assign="sPayPalSubscribeJS"}]
+    [{strip}]
+        window.onload = function ()
+        {
+            [{if $updatelist == 1}]
+                top.oxid.admin.updateList('[{$oxid}]');
+                location.reload();
+            [{/if}]
+            var oField = top.oxid.admin.getLockTarget();
+            if (oField) {
+                oField.onchange = oField.onkeyup = oField.onmouseout = top.oxid.admin.unlockSave;
+            }
         }
-    }
-</script>
+    [{/strip}]
+[{/capture}]
+[{oxscript add=$sPayPalSubscribeJS}]
 [{assign var="oxid" value=$oView->getEditObjectId()}]
 [{assign var="edit" value=$oView->getEditObject()}]
 [{assign var="categories" value=$oView->getCategories()}]
@@ -22,8 +25,6 @@
 [{assign var="hasSubscriptionPlan" value=$oView->hasSubscriptionPlan()}]
 [{assign var="defaultIntervals" value=$oView->getIntervalDefaults()}]
 [{assign var="defaultTenureTypes" value=$oView->getTenureTypeDefaults()}]
-[{assign var="defaultSequences" value=$oView->getSequenceDefaults()}]
-[{assign var="defaultTotalCycles" value=$oView->getTotalCycleDefaults()}]
 [{assign var="subscriptionPlansList" value=$oView->getSubscriptionPlans()}]
 
 [{if $hasLinkedObject }]

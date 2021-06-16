@@ -32,8 +32,6 @@
             <select name="conf[blPayPalSandboxMode]" id="opmode" class="form-control">
             </select>
         </div>
-        <br />
-        <br />
         <button type="submit" class="btn btn-default bottom-space">[{oxmultilang ident="SAVE"}]</button>
     </form>
 </div>

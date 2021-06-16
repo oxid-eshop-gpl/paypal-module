@@ -45,6 +45,22 @@ class SubscriptionRepository
     }
 
     /**
+     * @param string $subscriptionPlanId
+     * @return array
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     */
+    public function getUserIdFromSubscriptedPlan($subscriptionPlanId)
+    {
+        return DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getAll(
+            'SELECT OXPS_PAYPAL_USER_ID
+                FROM oxps_paypal_subscription_product_order
+                WHERE OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID = ?',
+            [$subscriptionPlanId]
+        );
+    }
+
+    /**
      * @param string $productId
      * @return array
      * @throws DatabaseConnectionException
@@ -59,7 +75,6 @@ class SubscriptionRepository
             [$productId]
         );
     }
-
 
     /**
      * @param Product $response
@@ -147,6 +162,20 @@ class SubscriptionRepository
     public function deleteLinkedProduct($paypalProductId): void
     {
         $sql = 'DELETE FROM oxps_paypal_subscription_product WHERE OXPS_PAYPAL_PRODUCT_ID = ?';
+
+        DatabaseProvider::getDb()->execute($sql, [
+            $paypalProductId
+        ]);
+    }
+
+    /**
+     * @param string $paypalProductId
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     */
+    public function deleteLinkedOrders($paypalProductId): void
+    {
+        $sql = 'DELETE FROM oxps_paypal_subscription_product_order WHERE OXPS_PAYPAL_PRODUCT_ID = ?';
 
         DatabaseProvider::getDb()->execute($sql, [
             $paypalProductId
