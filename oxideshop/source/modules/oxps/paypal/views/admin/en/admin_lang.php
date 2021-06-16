@@ -445,4 +445,7 @@ $aLang = [
     'OXPS_PAYPAL_CREATED'                          => 'created',
     'OXPS_PAYPAL_ME'                               => 'Me',
     'OXPS_PAYPAL_COPY'                             => 'Copy',
+
+    'TOOLTIPS_OXPS_PAYPAL_EDITSUBSCRIPTION'        => 'Edit Billing-Plan',
+    'TOOLTIPS_OXPS_PAYPAL_DEACTIVATESUBSCRIPTION'  => 'Deactivate Billing-Plan',
 ];

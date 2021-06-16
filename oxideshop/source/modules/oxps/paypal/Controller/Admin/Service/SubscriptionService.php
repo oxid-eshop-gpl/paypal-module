@@ -66,7 +66,7 @@ class SubscriptionService
     {
         $this->updatePlanDescription(
             $subscriptionPlan,
-            $this->request->getRequestEscapedParameter('billingPlanDescription')
+            $this->request->getRequestEscapedParameter('billing_plan_description')
         );
 
         $this->updatePlanPaymentFailureThreshold(
@@ -90,6 +90,11 @@ class SubscriptionService
         );
 
         $this->updatePlanTaxesPercentage(
+            $subscriptionPlan,
+            $this->request->getRequestEscapedParameter('tax_percentage')
+        );
+
+        $this->updatePricingSchemes(
             $subscriptionPlan,
             $this->request->getRequestEscapedParameter('tax_percentage')
         );
@@ -192,6 +197,15 @@ class SubscriptionService
     }
 
     /**
+     * @param Plan $subscriptionPlan
+     * @throws ApiException
+     */
+    public function deactivatePlan(Plan $subscriptionPlan)
+    {
+        $this->subscriptionService->deactivatePlan($subscriptionPlan->id);
+    }
+
+    /**
      * @param string $productId
      * @param string $articleId
      * @return Plan
@@ -276,7 +290,7 @@ class SubscriptionService
             $subscriptionPlanRequest->payment_preferences = $payment_preferences;
             $subscriptionPlanRequest->taxes = $tax;
             $subscriptionPlanRequest->description = $this->request
-                ->getRequestEscapedParameter('billingPlanDescription');
+                ->getRequestEscapedParameter('billing_plan_description');
 
             $response = $this->subscriptionService->createPlan($subscriptionPlanRequest);
 

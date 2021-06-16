@@ -11,15 +11,41 @@
 [{assign var="defaultTotalCycles" value=$oView->getTotalCycleDefaults()}]
 [{assign var="currencyCodes" value=$oView->getCurrencyCodes()}]
 [{assign var="config" value=$oViewConf->getPayPalConfig()}]
+[{assign var="BillingPlanAction" value='saveBillingPlans'}]
+[{if $editBillingPlanId}]
+    [{assign var="BillingPlanAction" value='patch'}]
+[{/if}]
+
 <form name="billingPlanForm" id="billingPlanForm" action="[{ $oViewConf->getSelfLink() }]" method="post">
-    [{ $oViewConf->getHiddenSid() }]
+    [{$oViewConf->getHiddenSid()}]
     <input type="hidden" name="cl" value="PayPalSubscribeController">
-    <input type="hidden" name="fnc" value="saveBillingPlans">
-    <input type="hidden" name="oxid" value="[{ $oxid }]">
-    <input type="hidden" name="paypalProductId" value="[{ $oView->getPayPalProductId() }]">
+    <input type="hidden" name="fnc" value="[{$BillingPlanAction}]">
+    <input type="hidden" name="oxid" value="[{$oxid}]">
+    [{*
+        <input type="hidden" name="paypalProductId" value="[{$oView->getPayPalProductId()}]">
+    *}]
     <input type="hidden" name="auto_bill_outstanding" value="[{if $config->getAutoBillOutstanding()}]true[{else}]false[{/if}]">
     <input type="hidden" name="setup_fee_failure_action" value="[{$config->getSetupFeeFailureAction()}]">
     <input type="hidden" name="payment_failure_threshold" value="[{$config->getPaymentFailureThreshold()}]">
+
+    [{assign var="setupFee" value=0}]
+    [{assign var="billingPlanName" value=""}]
+    [{assign var="billingPlanDescription" value=""}]
+    [{assign var="taxPercentage" value=""}]
+    [{assign var="taxInclusive" value=0}]
+    [{assign var="editBillingPlan" value=""}]
+    [{if $editBillingPlanId && $subscriptionPlansList}]
+        [{foreach from=$subscriptionPlansList item=value key=name}]
+            [{if $editBillingPlanId == $value->id}]
+                [{assign var="editBillingPlan" value=$value}]
+                [{assign var="setupFee" value=$editBillingPlan->payment_preferences->setup_fee->value|number_format:2}]
+                [{assign var="billingPlanName" value=$editBillingPlan->name}]
+                [{assign var="billingPlanDescription" value=$editBillingPlan->description}]
+                [{assign var="taxPercentage" value=$editBillingPlan->taxes->percentage}]
+                [{assign var="taxInclusive" value=$editBillingPlan-taxes->inclusive}]
+            [{/if}]
+        [{/foreach}]
+    [{/if}]
 
     <table cellspacing="0" cellpadding="0" border="0" width="98%" style="border: 1px solid #cccccc; padding: 10px; margin: 10px; border-radius: 10px;">
         <tbody>
@@ -28,8 +54,8 @@
                     [{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_SETUP_FEE" suffix="COLON"}]
                 </td>
                 <td class="edittext">
-                    <input type="text" required="required" class="editinput" size="20" name="setup_fee" value="0"> EUR
-                    <input type="hidden" name="setup_fee_currency" id="setup_fee_currency" value="EUR"/>
+                    <input type="text" required="required" class="editinput" size="20" name="setup_fee" value="[{$setupFee}]" /> EUR
+                    <input type="hidden" name="setup_fee_currency" id="setup_fee_currency" value="EUR" />
                 </td>
             </tr>
 
@@ -38,7 +64,13 @@
                     [{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_NAME" suffix="COLON"}]
                 </td>
                 <td class="edittext">
-                     <input type="text" required="required" class="editinput" size="25" name="billing_plan_name" value="">
+                     <input type="text" required="required" class="editinput" size="25" name="billing_plan_name" value="[{$billingPlanName}]" />
+                     [{*if $editBillingPlanId}]
+                        <input type="hidden" name="billing_plan_name" value="[{$billingPlanName}]" />
+                        <b>[{$billingPlanName}]</b>
+                     [{else}]
+                        <input type="text" required="required" class="editinput" size="25" name="billing_plan_name" value="[{$billingPlanName}]" />
+                     [{/if*}]
                 </td>
             </tr>
 
@@ -47,12 +79,12 @@
                     [{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_DESCRIPTION" suffix="COLON"}]
                 </td>
                 <td class="edittext">
-                    <input type="text" required="required" class="editinput" size="25" name="billingPlanDescription" value="">
+                    <input type="text" required="required" class="editinput" size="25" name="billing_plan_description" value="[{$billingPlanDescription}]" />
                 </td>
             </tr>
 
             <tr>
-                <td colspan="100"><h3>[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_TAX" suffix="COLON"}]</h3></td>
+                <td colspan="2"><h3>[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_TAX" suffix="COLON"}]</h3></td>
             </tr>
 
             <tr>
@@ -60,7 +92,7 @@
                     [{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_TAX_PERCENTAGE" suffix="COLON"}]
                 </td>
                 <td class="edittext">
-                    <input type="text" required="required" class="editinput" size="25"  name="tax_percentage" value="">
+                    <input type="text" required="required" class="editinput" size="25"  name="tax_percentage" value="[{$taxPercentage}]" />
                 </td>
             </tr>
 
@@ -70,37 +102,63 @@
                 </td>
                 <td class="edittext">
                     <select name="tax_inclusive" id="tax_inclusive" style="width: 200px" class="editinput">
-                        <option value="true">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_YES"}]</option>
-                        <option value="false">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_NO"}]</option>
+                        <option value="true" [{if $taxInclusive}]selected[{/if}]>[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_YES"}]</option>
+                        <option value="false"[{if !$taxInclusive}]selected[{/if}]>[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_NO"}]</option>
                     </select>
-                    <input type="hidden" name="id" value="[{$linkedObject->id}]">
-                    <input type="hidden" name="paypalProductId" value="[{$linkedObject->id}]">
+                    [{*if $editBillingPlanId}]
+                        <input type="hidden" name="id" value="[{if $taxInclusive}]true[{else}]false[{/if}]" />
+                        <b>[{if $taxInclusive}][{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_YES"}][{else}][{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_NO"}][{/if}]</b>
+                    [{else}]
+                        <select name="tax_inclusive" id="tax_inclusive" style="width: 200px" class="editinput">
+                            <option value="true">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_YES"}]</option>
+                            <option value="false">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_NO"}]</option>
+                        </select>
+                    [{/if*}]
+                    <input type="hidden" name="id" value="[{$linkedObject->id}]" />
+                    <input type="hidden" name="paypalProductId" value="[{$linkedObject->id}]" />
                 </td>
             </tr>
 
-            <tr><td colspan="100"><h3>[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_CYCLES"}] [<span style="cursor: pointer; cursor: hand" id="addBillingCycleAction">+</span>]</h3></td></tr>
+            <tr><td colspan="2"><h3>[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_CYCLES"}] [<span style="cursor: pointer; cursor: hand" id="addBillingCycleAction">+</span>]</h3></td></tr>
             <tr>
-                <td colspan="100">
+                <td colspan="2">
                     <table id="billingCycleList" style="width: 50%;">
                         <tr>
-                            <th style="width: 20%; text-align: left">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_PRICE"}]</th>
-                            <th style="width: 20%; text-align: left">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_FREQUENCY"}]</th>
-                            <th style="width: 20%; text-align: left">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_TENURE"}]</th>
-                            <th style="width: 15%; text-align: left">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_CYCLES"}]</th>
-                            <th style="width: 10%; text-align: left">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_ACTIONS"}]</th>
+                            <th style="width: 20%; text-align: left">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_PRICE" suffix="COLON"}]</th>
+                            <th style="width: 20%; text-align: left">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_FREQUENCY" suffix="COLON"}]</th>
+                            <th style="width: 20%; text-align: left">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_TENURE" suffix="COLON"}]</th>
+                            <th style="width: 15%; text-align: left">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_CYCLES" suffix="COLON"}]</th>
+                            <th style="width: 10%; text-align: left">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_ACTIONS" suffix="COLON"}]</th>
                         </tr>
+                        [{if $editBillingPlan}]
+                            <input type="hidden" name="editBillingPlanId" value="[{$editBillingPlan->id}]">
+                            [{foreach name="billingPlanCycleData" from=$editBillingPlan->billing_cycles item=billing_cycle key=name}]
+                                <tr class="cycleData [{$smarty.foreach.billingPlanCycleData.iteration}]Row">
+                                    <td align="left">[{$billing_cycle->pricing_scheme->fixed_price->value|number_format:2}]</td>
+                                    <td align="left">[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_FREQUENCY_"|cat:$billing_cycle->frequency->interval_unit}]</td>
+                                    <td align="left">[{oxmultilang ident="OXPS_PAYPAL_TENURE_TYPE_"|cat:$billing_cycle->tenure_type}]</td>
+                                    <td align="left">[{$billing_cycle->total_cycles}]</td>
+                                    <td style="cursor:pointer; cursor: hand" align="left" onclick="window.deleteRow('[{$smarty.foreach.billingPlanCycleData.iteration}]')">[X]
+                                        <input type="hidden" name="fixed_price[]" value="[{$billing_cycle->pricing_scheme->fixed_price->value}]" />
+                                        <input type="hidden" name="interval[]" value="[{$billing_cycle->frequency->interval_unit}]" />
+                                        <input type="hidden" name="tenure[]" value="[{$billing_cycle->tenure_type}]" />
+                                        <input type="hidden" name="total_cycles[]" value="[{$billing_cycle->total_cycles}]" />
+                                    </td>
+                                </tr>
+                            [{/foreach}]
+                        [{/if}]
                     </table>
                 </td>
             </tr>
             <tr>
-                <td colspan="100"><h3>[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_ACTIONS"}]</h3></td>
+                <td colspan="2"><h3>[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_ACTIONS"}]</h3></td>
             </tr>
             <tr>
-                <td class="edittext">
-                    <input type="button" class="edittext" name="save" value='[{ oxmultilang ident="GENERAL_SAVE" }]' onClick="window.validateAddBillingPlanForm('saveBillingPlans')">&nbsp;
+                <td colspan="2" class="edittext">
+                    <input type="button" class="edittext" name="save" value='[{ oxmultilang ident="GENERAL_SAVE" }]' onClick="window.validateAddBillingPlanForm('[{$BillingPlanAction}]');" />
                 </td>
             </tr>
-            </tbody>
+        </tbody>
     </table>
     <table class="addBilling" cellspacing="0" cellpadding="0" border="0" width="98%" style="border: 1px solid #cccccc; padding: 10px; margin: 10px; border-radius: 10px;">
             <tr>
@@ -174,7 +232,7 @@
             window.validateAddBillingPlanForm = function(saveType) {
                 let isValid = true;
                 document.billingPlanForm.fnc.value=saveType;
-                if(saveType === 'saveBillingPlans') {
+                if(saveType === 'saveBillingPlans' || saveType === 'patch') {
                     jQuery('#billingPlanForm *').filter(':input').each(function(){
                         let thisElement = jQuery(this);
                         if (thisElement.attr('required') === true) {

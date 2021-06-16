@@ -174,14 +174,24 @@ class PayPalSubscribeController extends AdminController
      * @throws DatabaseErrorException
      * @throws ApiException
      */
-    public function setSubscriptionPlan()
+    public function setSubscriptionPlan($SelectSubscriptionPlanId = '')
     {
         if (!empty($this->subscriptionPlan)) {
             return $this->subscriptionPlan;
         }
 
-        $result = $this->repository->getSubscriptionIdPlanByProductId($this->linkedObject->id);
-        $subscriptionPlanId = $result[0]['OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID'];
+
+        if (!$SelectSubscriptionPlanId) {
+            $result = $this->repository->getSubscriptionIdPlanByProductId($this->linkedObject->id);
+            $subscriptionPlanId = $result[0]['OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID'];
+        }
+        else {
+            $result = $this->repository->getSubscriptionIdPlanByProductIdSubscriptionPlanId(
+                $this->linkedObject->id,
+                $SelectSubscriptionPlanId
+            );
+            $subscriptionPlanId = $result['OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID'];
+        }
 
         if (empty($subscriptionPlanId)) {
             return false;
@@ -245,7 +255,14 @@ class PayPalSubscribeController extends AdminController
 
         $this->linkedProduct = $this->repository->getLinkedProductByOxid($oxid);
         if ($this->linkedProduct) {
-            $this->linkedObject = $this->getPayPalProductDetail($this->linkedProduct[0]['OXPS_PAYPAL_PRODUCT_ID']);
+
+            if ($linkedObject = $this->getPayPalProductDetail($this->linkedProduct[0]['OXPS_PAYPAL_PRODUCT_ID'])) {
+                $this->linkedObject = $linkedObject;
+            } else {
+                // We have a linkedProduct, but its does not exists in PayPal-Catalogs, so we delete them
+                //$this->$repository->deleteLinkedProduct($linkedProduct);
+                //$this->$repository->deleteLinkedOrders($linkedProduct);
+            }
         }
     }
 
@@ -271,9 +288,18 @@ class PayPalSubscribeController extends AdminController
      * @return Product
      * @throws ApiException
      */
-    public function getPayPalProductDetail($id): Product
+    public function getPayPalProductDetail($id): ?Product
     {
-        return Registry::get(ServiceFactory::class)->getCatalogService()->showProductDetails($id);
+        $linkedObject = null;
+        try {
+            $linkedObject = Registry::get(ServiceFactory::class)
+                ->getCatalogService()
+                ->showProductDetails($id);
+        } catch (ApiException $exception) {
+            // We have a linkedProduct, but its does not exists in PayPal-Catalogs
+            Registry::getLogger()->error($exception);
+        }
+        return $linkedObject;
     }
 
     /**
@@ -415,24 +441,109 @@ class PayPalSubscribeController extends AdminController
         return $subscriptionPlans->plans;
     }
 
+    public function getSubscriptionPlansAreSubscripted()
+    {
+        $result = [];
+        foreach ($this->getSubscriptionPlans() as $plan) {
+            if ($existingUser = $this->repository->getUserIdFromSubscriptedPlan($plan->id)) {
+                $result[] = $plan->id;
+            }
+        }
+        return $result;
+    }
+
+    /**
+     */
+    public function editBillingPlan()
+    {
+        $editBillingPlanId = Registry::getRequest()->getRequestEscapedParameter('editBillingPlanId', "");
+        $this->addTplParam('editBillingPlanId', $editBillingPlanId);
+    }
+
     /**
      * @throws DatabaseConnectionException
      * @throws DatabaseErrorException
      */
     public function patch()
     {
+        $editBillingPlanId = Registry::getRequest()->getRequestEscapedParameter('editBillingPlanId', "");
+
+        $this->setLinkedObject();
+        $this->setSubscriptionPlan($editBillingPlanId);
+
         $productId = Registry::getRequest()->getRequestEscapedParameter('paypalProductId', "");
         $subscriptionService = new SubscriptionService();
         $catalogService = new CatalogService($this->linkedObject);
 
         try {
             if ($this->hasSubscriptionPlan()) {
-                $subscriptionService->update($this->subscriptionPlan);
-            } else {
-                /** @var BillingCycle[] $cycles */
-                $cycles = $subscriptionService->saveNewSubscriptionPlan($productId, $this->getEditObjectId());
-                $this->setLinkedObject();
-                $catalogService->updateProduct($productId);
+                $subscriptionService->deactivatePlan($this->subscriptionPlan);
+            }
+            $this->setLinkedObject();
+            $subscriptionService->saveNewSubscriptionPlan($productId, $this->getEditObjectId());
+        } catch (DatabaseConnectionException $e) {
+            $this->addTplParam('error', $e->getMessage());
+        } catch (DatabaseErrorException $e) {
+            $this->addTplParam('error', $e->getMessage());
+        } catch (ApiException $e) {
+            $this->addTplParam('error', $e->getErrorDescription());
+        }
+
+//        try {
+//            if ($this->hasSubscriptionPlan()) {
+//                $subscriptionService->update($this->subscriptionPlan);
+//            } else {
+//                /** @var BillingCycle[] $cycles */
+//               $cycles = $subscriptionService->saveNewSubscriptionPlan($productId, $this->getEditObjectId());
+//                $this->setLinkedObject();
+//                $catalogService->updateProduct($productId);
+//            }
+//        } catch (ApiException $e) {
+//            $this->addTplParam('error', $e->getErrorDescription());
+//        }
+
+    }
+
+    /**
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     */
+    public function deactivate()
+    {
+        $deactivateBillingPlanId = Registry::getRequest()->getRequestEscapedParameter('deactivateBillingPlanId', "");
+
+        $this->setLinkedObject();
+        $this->setSubscriptionPlan($deactivateBillingPlanId);
+
+        $subscriptionService = new SubscriptionService();
+        $catalogService = new CatalogService($this->linkedObject);
+
+        try {
+            if ($this->hasSubscriptionPlan()) {
+                $subscriptionService->deactivatePlan($this->subscriptionPlan);
+            }
+        } catch (ApiException $e) {
+            $this->addTplParam('error', $e->getErrorDescription());
+        }
+    }
+
+    /**
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     */
+    public function activate()
+    {
+        $activateBillingPlanId = Registry::getRequest()->getRequestEscapedParameter('activateBillingPlanId', "");
+
+        $this->setLinkedObject();
+        $this->setSubscriptionPlan($activateBillingPlanId);
+
+        $subscriptionService = new SubscriptionService();
+        $catalogService = new CatalogService($this->linkedObject);
+
+        try {
+            if ($this->hasSubscriptionPlan()) {
+                $subscriptionService->activatePlan($this->subscriptionPlan);
             }
         } catch (ApiException $e) {
             $this->addTplParam('error', $e->getErrorDescription());

@@ -466,4 +466,7 @@ $aLang = [
     'OXPS_PAYPAL_CREATED'                          => 'erstellt',
     'OXPS_PAYPAL_ME'                               => 'Ich',
     'OXPS_PAYPAL_COPY'                             => 'Kopieren',
+
+    'TOOLTIPS_OXPS_PAYPAL_EDITSUBSCRIPTION'        => 'Abrechnungsplan editieren',
+    'TOOLTIPS_OXPS_PAYPAL_DEACTIVATESUBSCRIPTION'  => 'Abrechnungsplan deaktivieren',
 ];
