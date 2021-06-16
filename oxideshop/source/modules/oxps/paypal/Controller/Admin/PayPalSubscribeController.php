@@ -184,8 +184,7 @@ class PayPalSubscribeController extends AdminController
         if (!$SelectSubscriptionPlanId) {
             $result = $this->repository->getSubscriptionIdPlanByProductId($this->linkedObject->id);
             $subscriptionPlanId = $result[0]['OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID'];
-        }
-        else {
+        } else {
             $result = $this->repository->getSubscriptionIdPlanByProductIdSubscriptionPlanId(
                 $this->linkedObject->id,
                 $SelectSubscriptionPlanId
@@ -255,7 +254,6 @@ class PayPalSubscribeController extends AdminController
 
         $this->linkedProduct = $this->repository->getLinkedProductByOxid($oxid);
         if ($this->linkedProduct) {
-
             if ($linkedObject = $this->getPayPalProductDetail($this->linkedProduct[0]['OXPS_PAYPAL_PRODUCT_ID'])) {
                 $this->linkedObject = $linkedObject;
             } else {
@@ -501,7 +499,6 @@ class PayPalSubscribeController extends AdminController
 //        } catch (ApiException $e) {
 //            $this->addTplParam('error', $e->getErrorDescription());
 //        }
-
     }
 
     /**
