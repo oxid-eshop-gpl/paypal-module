@@ -19,7 +19,7 @@
         [{/if}]
     </div>
     <div id="overlay"><div class="loader"></div></div>
-    <form name="configForm" action="[{$oViewConf->getSelfLink()}]" method="post">
+    <form id="configForm" name="configForm" action="[{$oViewConf->getSelfLink()}]" method="post">
         [{$oViewConf->getHiddenSid()}]
         <input type="hidden" name="cl" value="[{$oViewConf->getActiveClassName()}]">
         <input type="hidden" name="fnc" value="save">
@@ -51,14 +51,16 @@
 
                         <p class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_CREDENTIALS"}]</p>
 
-                        [{assign var='liveMerchantSignUpLink' value=$oView->getLiveSignUpMerchantIntegrationLink()}]
-                        <p class="live"><a target="_blank"
-                              class="boardinglink"
-                              href="[{$liveMerchantSignUpLink}]"
-                              data-paypal-button="PPLtBlue">
-                                [{oxmultilang ident="OXPS_PAYPAL_LIVE_BUTTON_CREDENTIALS"}]
-                           </a>
-                        </p>
+                        [{if !$config->getLiveClientId() && !$config->getLiveClientSecret() && !$config->getLiveWebhookId()}]
+                            [{assign var='liveMerchantSignUpLink' value=$oView->getLiveSignUpMerchantIntegrationLink()}]
+                            <p class="live"><a target="_blank"
+                                  class="boardinglink"
+                                  href="[{$liveMerchantSignUpLink}]"
+                                  data-paypal-button="PPLtBlue">
+                                    [{oxmultilang ident="OXPS_PAYPAL_LIVE_BUTTON_CREDENTIALS"}]
+                               </a>
+                            </p>
+                        [{/if}]
 
                         <h3 class="live">[{oxmultilang ident="OXPS_PAYPAL_LIVE_CREDENTIALS"}]</h3>
 
@@ -78,16 +80,25 @@
                             </div>
                         </div>
 
-                        [{assign var='sandboxMerchantSignUpLink' value=$oView->getSandboxSignUpMerchantIntegrationLink()}]
+                        <div class="form-group live">
+                            <label for="webhook-id">[{oxmultilang ident="OXPS_PAYPAL_WEBHOOK_ID"}]</label>
+                            <div class="controls">
+                                <input type="text" class="form-control" id="webhook-id" name="conf[sPayPalWebhookId]" value="[{$config->getLiveWebhookId()}]" />
+                                <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_WEBHOOK_ID"}]</span>
+                            </div>
+                        </div>
 
-                        <p class="sandbox"><a target="_blank"
-                              class="boardinglink"
-                              href="[{$sandboxMerchantSignUpLink}]"
-                              data-paypal-onboard-complete="onboardedCallbackSandbox"
-                              data-paypal-button="PPLtBlue">
-                                [{oxmultilang ident="OXPS_PAYPAL_SANDBOX_BUTTON_CREDENTIALS"}]
-                            </a>
-                        </p>
+                        [{if !$config->getSandboxClientId() && !$config->getSandboxClientSecret() && !$config->getSandboxWebhookId()}]
+                            [{assign var='sandboxMerchantSignUpLink' value=$oView->getSandboxSignUpMerchantIntegrationLink()}]
+                            <p class="sandbox"><a target="_blank"
+                                  class="boardinglink"
+                                  href="[{$sandboxMerchantSignUpLink}]"
+                                  data-paypal-onboard-complete="onboardedCallbackSandbox"
+                                  data-paypal-button="PPLtBlue">
+                                    [{oxmultilang ident="OXPS_PAYPAL_SANDBOX_BUTTON_CREDENTIALS"}]
+                                </a>
+                            </p>
+                        [{/if}]
 
                         <h3 class="sandbox">[{oxmultilang ident="OXPS_PAYPAL_SANDBOX_CREDENTIALS"}]</h3>
 
@@ -102,10 +113,16 @@
                         <div class="form-group sandbox">
                             <label for="client-sandbox-secret">[{oxmultilang ident="OXPS_PAYPAL_CLIENT_SECRET"}]</label>
                             <div class="controls">
-                                <div>
-                                    <input type="text" class="form-control" id="client-sandbox-secret" name="conf[sPayPalSandboxClientSecret]" value="[{$config->getSandboxClientSecret()}]" />
-                                </div>
+                                <input type="text" class="form-control" id="client-sandbox-secret" name="conf[sPayPalSandboxClientSecret]" value="[{$config->getSandboxClientSecret()}]" />
                                 <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_SANDBOX_CLIENT_SECRET"}]</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group sandbox">
+                            <label for="webhook-sandbox-id">[{oxmultilang ident="OXPS_PAYPAL_WEBHOOK_ID"}]</label>
+                            <div class="controls">
+                                <input type="text" class="form-control" id="webhook-sandbox-id" name="conf[sPayPalSandboxWebhookId]" value="[{$config->getSandboxWebhookId()}]" />
+                                <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_SANDBOX_WEBHOOK_ID"}]</span>
                             </div>
                         </div>
                     </div>
@@ -149,39 +166,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-header" id="heading3">
-                    <h4 class="collapsed" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
-                         [{oxmultilang ident="OXPS_PAYPAL_WEBHOOK_TITLE"}]
-                    </h4>
-                </div>
-                <div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#accordion">
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="webhook-id">[{oxmultilang ident="OXPS_PAYPAL_WEBHOOK_ID"}]</label>
-                            <div class="controls">
-                                <div>
-                                    <input type="text" class="form-control" id="webhook-id" name="conf[sPayPalWebhookId]" value="[{$config->getWebhookId()}]" />
-                                </div>
-                                <span class="help-block">[{oxmultilang ident="OXPS_PAYPAL_WEBHOOK_ID_HELP"}]</span>
-                            </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label for="webhook-url">[{oxmultilang ident="OXPS_PAYPAL_WEBHOOK_URL"}]</label>
-                            <div class="controls">
-                                <div class="input-group">
-                                    <input class="form-control" id="webhook-url" type="text" value="[{$oView->getWebhookControllerUrl()}]" readonly>
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-default" type="button" onclick="copyToClipboard('#webhook-url')">[{oxmultilang ident="OXPS_PAYPAL_COPY"}]</button>
-                                    </span>
-                                </div>
-                                <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_WEBHOOK_URL"}]</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="card">
                 <div class="card-header" id="heading4">
                     <h4 class="collapsed" data-toggle="collapse" data-target="#collapse4" aria-expanded="false" aria-controls="collapse4">

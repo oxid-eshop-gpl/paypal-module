@@ -52,7 +52,7 @@ class GenericService extends BaseService
     public function __construct(Client $client, string $path = null, array $headers = null)
     {
         $this->headers = $headers ?? [];
-        $this->headers = $path ?? null;
+        $this->path = $path ?? null;
 
         parent::__construct($client);
     }
@@ -71,12 +71,11 @@ class GenericService extends BaseService
     {
         $requestHeaders = $this->headers;
         $requestHeaders['Content-Type'] = 'application/json';
-        $requestHeaders = array_merge($this->headers, $headers);
+        $requestHeaders = array_merge($requestHeaders, $headers);
 
         $body = $body == null ?: json_encode($body);
-        $path = $path ?? $this->path;
 
-        $response = $this->send($method, $path, $params, $requestHeaders, $body);
+        $response = $this->send($method, $this->path, $params, $requestHeaders, $body);
 
         return json_decode($response->getBody(), true);
     }
