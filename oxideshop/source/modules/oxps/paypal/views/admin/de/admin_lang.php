@@ -139,9 +139,6 @@ $aLang = [
     'OXPS_PAYPAL_CLIENT_ID'                        => 'Client ID',
     'OXPS_PAYPAL_CLIENT_SECRET'                    => 'Passwort',
     'OXPS_PAYPAL_CREDENTIALS'                      => 'API Anmeldeinformationen',
-    'OXPS_PAYPAL_WEBHOOK_TITLE'                    => 'Webhooks',
-    'OXPS_PAYPAL_WEBHOOK_URL'                      => 'Oxid Webhook URL',
-    'HELP_OXPS_PAYPAL_WEBHOOK_URL'                 => 'Tragen Sie diese URL für den Webhook im PayPal Portal ein.',
     'OXPS_PAYPAL_LIVE_CREDENTIALS'                 => 'Live API Anmeldeinformationen',
     'OXPS_PAYPAL_SANDBOX_CREDENTIALS'              => 'Sandbox API Anmeldeinformationen',
     'OXPS_PAYPAL_LIVE_BUTTON_CREDENTIALS'          => 'Anmeldung Händler PayPal-Integration (Live)',
@@ -158,17 +155,19 @@ $aLang = [
     'HELP_OXPS_PAYPAL_CHECKOUT_PLACEMENT'          => 'bei gleichzeitiger Nutzung von PayPal PLUS bitte deaktivieren',
     'HELP_OXPS_PAYPAL_BUTTON_PLACEMEMT'            => 'Schalten Sie die Anzeige der PayPal-Schaltflächen um',
     'HELP_OXPS_PAYPAL_CREDENTIALS'                 =>
-        'Wenn Sie die API Anmeldeinformationen bereits vorliegen haben, können Sie sie direkt eingeben.<br>
-        Alternativ nutzen Sie einen der folgenden Links um die API Anmeldeinformationen für den Live oder
-        den Sandbox-Modus zu erzeugen.',
+        'Wenn Sie die API Anmeldeinformationen (Client ID, Client Passwort, Webhook ID) bereits vorliegen haben, können Sie sie direkt eingeben.<br>
+        Sollten Sie noch keine API-Daten haben und die Eingafelder noch leer sein, können Sie auch den eingeblendeten
+        Button für eine komfortable Verknüpfung nutzen.',
     'HELP_OXPS_PAYPAL_CLIENT_ID'                   => 'Client ID des Live-Account für live-Modus',
     'HELP_OXPS_PAYPAL_CLIENT_SECRET'               => 'Secret des Live-Account für live-Modus',
     'HELP_OXPS_PAYPAL_SANDBOX_CLIENT_ID'           => 'Client ID des Sandbox-Account für Sandbox-Modus',
     'HELP_OXPS_PAYPAL_SANDBOX_CLIENT_SECRET'       => 'Secret des Sandbox-Account für Sandbox-Modus',
+    'HELP_OXPS_PAYPAL_SANDBOX_WEBHOOK_ID'          =>
+        'Die ID des Sandboox-Webhooks, wie in Ihrem Developer Portal-Konto konfiguriert',
     'HELP_OXPS_PAYPAL_OPMODE'                      =>
         'Verwenden Sie Sandbox (Test), um PayPal zu konfigurieren und zu testen. Wenn Sie bereit sind,
         echte Transaktionen zu empfangen, wechseln Sie zu Produktion (live).',
-    'OXPS_PAYPAL_WEBHOOK_ID_HELP'                  =>
+    'HELP_OXPS_PAYPAL_WEBHOOK_ID'                  =>
         'Die ID des Webhooks, wie in Ihrem Developer Portal-Konto konfiguriert',
     // PayPal ORDER
     'OXPS_PAYPAL_AMOUNT'                           => 'Betrag',

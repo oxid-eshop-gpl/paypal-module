@@ -3,7 +3,7 @@
 <div id="content" class="paypal-config">
     <h1>[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_MAIN"}]</h1>
 
-    <form name="billingCycleForm" action="[{$oViewConf->getSelfLink()}]">
+    <form name="billingCycleForm" action="[{$oViewConf->getSelfLink()}]" method="post">
         [{$oViewConf->getHiddenSid()}]
         <input type="hidden" name="cl" value="[{$oViewConf->getActiveClassName()}]">
         <input type="hidden" name="fnc" value="save">

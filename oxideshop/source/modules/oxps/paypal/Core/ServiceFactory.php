@@ -88,6 +88,18 @@ class ServiceFactory
     }
 
     /**
+     * @return GenericService
+     */
+    public function geWebhookService(): GenericService
+    {
+        return oxNew(
+            GenericService::class,
+            $this->getClient(),
+            '/v1/notifications/webhooks'
+        );
+    }
+
+    /**
      * @return TransactionSearch
      */
     public function getTransactionSearchService(): TransactionSearch

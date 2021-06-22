@@ -51,12 +51,6 @@ function displayByOpMode(opmode) {
     }
 }
 
-function copyToClipboard(element)
-{
-    document.querySelector(element).select();
-    document.execCommand('copy');
-}
-
 function onboardedCallbackLive(authCode, sharedId)
 {
     callOnboardingControllerAutoConfigurationFromCallback(authCode, sharedId, false);
@@ -91,10 +85,13 @@ function callOnboardingControllerAutoConfigurationFromCallback(authCode, sharedI
                 if (window.isSandBox) {
                     jQuery("#client-sandbox-id").val(data.client_id);
                     jQuery("#client-sandbox-secret").val(data.client_secret);
+                    jQuery("#webhook-sandbox-id").val(data.webhook_id);
                 } else {
                     jQuery("#client-id").val(data.client_id);
                     jQuery("#client-secret").val(data.client_secret);
+                    jQuery("#webhook-id").val(data.webhook_id);
                 }
+                jQuery("#configForm").submit();
             });
         }
     )

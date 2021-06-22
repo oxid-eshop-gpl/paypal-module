@@ -41,13 +41,15 @@ class Config
             (
                 !$this->isSandbox() &&
                 !$this->getLiveClientId() &&
-                !$this->getLiveClientSecret()
+                !$this->getLiveClientSecret() &&
+                !$this->getLiveWebhookId()
             ) ||
             (
                 $this->isSandbox() &&
                 !$this->getSandboxClientId() &&
-                !$this->getSandboxClientSecret()
-            ) || $this->getWebhookId()
+                !$this->getSandboxClientSecret() &&
+                !$this->getSandboxWebhookId()
+            )
         ) {
             throw oxNew(
                 StandardException::class
@@ -84,7 +86,9 @@ class Config
      */
     public function getClientId(): string
     {
-        return $this->isSandbox() ? $this->getSandboxClientId() : $this->getLiveClientId();
+        return $this->isSandbox() ?
+            $this->getSandboxClientId() :
+            $this->getLiveClientId();
     }
 
     /**
@@ -94,7 +98,19 @@ class Config
      */
     public function getClientSecret(): string
     {
-        return $this->isSandbox() ? $this->getSandboxClientSecret() : $this->getLiveClientSecret();
+        return $this->isSandbox() ?
+            $this->getSandboxClientSecret() :
+            $this->getLiveClientSecret();
+    }
+
+    /**
+     * @return string
+     */
+    public function getWebhookId()
+    {
+        return $this->isSandbox() ?
+            $this->getSandboxWebhookId()
+            : $this->getLiveWebhookId();
     }
 
     /**
@@ -110,7 +126,15 @@ class Config
      */
     public function getLiveClientSecret(): string
     {
-        return Registry::getConfig()->getConfigParam('sPayPalClientSecret', '');
+        return (string) Registry::getConfig()->getConfigParam('sPayPalClientSecret', '');
+    }
+
+    /**
+     * @return string
+     */
+    public function getLiveWebhookId()
+    {
+        return (string) Registry::getConfig()->getConfigParam('sPayPalWebhookId', '');
     }
 
     /**
@@ -127,6 +151,14 @@ class Config
     public function getSandboxClientSecret(): string
     {
         return (string) Registry::getConfig()->getConfigParam('sPayPalSandboxClientSecret', '');
+    }
+
+    /**
+     * @return string
+     */
+    public function getSandboxWebhookId()
+    {
+        return (string) Registry::getConfig()->getConfigParam('sPayPalSandboxWebhookId', '');
     }
 
     /**
@@ -291,10 +323,14 @@ class Config
     }
 
     /**
+     * Get webhook controller url
+     *
      * @return string
      */
-    public function getWebhookId()
+    public function getWebhookControllerUrl(): string
     {
-        return Registry::getConfig()->getConfigParam('sPayPalWebhookId');
+        return html_entity_decode(
+            Registry::getConfig()->getCurrentShopUrl(false) . 'index.php?cl=PayPalWebhookController'
+        );
     }
 }

@@ -139,9 +139,6 @@ $aLang = [
     'OXPS_PAYPAL_CLIENT_ID'                        => 'Client ID',
     'OXPS_PAYPAL_CLIENT_SECRET'                    => 'Secret',
     'OXPS_PAYPAL_CREDENTIALS'                      => 'API credentials',
-    'OXPS_PAYPAL_WEBHOOK_TITLE'                    => 'Webhook settings',
-    'OXPS_PAYPAL_WEBHOOK_URL'                      => 'Webhook listener URL',
-    'HELP_OXPS_PAYPAL_WEBHOOK_URL'                 => 'Use this URL to setup webhook listener on PayPal portal.',
     'OXPS_PAYPAL_LIVE_CREDENTIALS'                 => 'Live API credentials',
     'OXPS_PAYPAL_SANDBOX_CREDENTIALS'              => 'Sandbox API credentials',
     'OXPS_PAYPAL_LIVE_BUTTON_CREDENTIALS'          => 'SignUp Merchant Integration (Live)',
@@ -158,15 +155,18 @@ $aLang = [
     'HELP_OXPS_PAYPAL_BUTTON_PLACEMEMT'            => 'Toggle the display of PayPal buttons',
     'HELP_OXPS_PAYPAL_CREDENTIALS'                 =>
         'If you already have the API credentials, you can enter them directly.<br>
-        Alternatively, use one of the following links to generate the API credentials for live or sandbox mode.',
+        If you do not yet have any API data and the input fields are still empty, you can also use the
+        displayed button for a convenient link.',
     'HELP_OXPS_PAYPAL_CLIENT_ID'                   => 'Client ID for live mode.',
     'HELP_OXPS_PAYPAL_CLIENT_SECRET'               => 'Secret for live mode.',
     'HELP_OXPS_PAYPAL_SANDBOX_CLIENT_ID'           => 'Client ID for sandbox mode.',
     'HELP_OXPS_PAYPAL_SANDBOX_CLIENT_SECRET'       => 'Secret for sandbox mode.',
+    'HELP_OXPS_PAYPAL_SANDBOX_WEBHOOK_ID'          =>
+        'The ID of the sandbox-webhook as configured in your Developer Portal account',
     'HELP_OXPS_PAYPAL_OPMODE'                      =>
         'To configure and test PayPal, use Sandbox (test). When you\'re ready
         to receive real transactions, switch to Production (live).',
-    'OXPS_PAYPAL_WEBHOOK_ID_HELP'                  =>
+    'HELP_OXPS_PAYPAL_WEBHOOK_ID'                  =>
         'The ID of the webhook as configured in your Developer Portal account',
     // PayPal ORDER
     'OXPS_PAYPAL_AMOUNT'                           => 'Amount',
