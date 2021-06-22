@@ -31,10 +31,6 @@
     [{assign var="linkedObject" value=$oView->getLinkedObject()}]
 [{/if}]
 
-[{if $hasSubscriptionPlan }]
-    [{assign var="linkedSubscriptionPlan" value=$oView->getSubscriptionPlan()}]
-[{/if}]
-
 [{if !empty($error)}]
     <div class="alert alert-danger" role="alert">
         [{$error}]

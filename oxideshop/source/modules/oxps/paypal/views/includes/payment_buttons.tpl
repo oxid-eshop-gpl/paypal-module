@@ -1,3 +1,4 @@
+<div id="[{$buttonId}]" class="paypal-button-container [{$buttonClass}]"></div>
 [{oxscript include=$oViewConf->getPayPalJsSdkUrl($paymentStrategy, false)}]
 [{capture assign="paypal_init"}]
     [{if !$paymentStrategy}]

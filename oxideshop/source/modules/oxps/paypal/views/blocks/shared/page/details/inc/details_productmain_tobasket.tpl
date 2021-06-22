@@ -1,4 +1,6 @@
-[{$smarty.block.parent}]
+[{if !$hasSubscriptionPlans}]
+    [{$smarty.block.parent}]
+[{/if}]
 [{assign var="config" value=$oViewConf->getPayPalConfig()}]
 [{if $config->isActive() && !$oViewConf->isPayPalSessionActive() && $config->showPayPalProductDetailsButton()}]
     [{*todo paymentStrategy="pay_now"*}]

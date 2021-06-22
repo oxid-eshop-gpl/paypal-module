@@ -45,19 +45,20 @@ trait ArticleDetailsTrait
         $article = oxNew(Article::class);
         $article->load($articleId);
 
-        $paypalSubscriptionPlanId = $subscriptionRepository->isSubscribableProduct($articleId);
-        $this->addTplParam('isSubscribableProduct', $paypalSubscriptionPlanId ? true : false);
+        $subscriptionPlans = [];
 
-        if ($paypalSubscriptionPlanId) {
+        if ($linkedProducts = $subscriptionRepository->getLinkedProductByOxid($articleId)) {
             $sf = Registry::get(ServiceFactory::class);
-            /** @var Plan $subscriptionPlan */
-            $subscriptionPlan = $sf->getSubscriptionService()->showPlanDetails('string', $paypalSubscriptionPlanId, 1);
-            $this->addTplParam('subscriptionPlan', $subscriptionPlan);
-            $this->addTplParam('billingCycles', $subscriptionPlan->billing_cycles);
-            $this->addTplParam('setupFee', $subscriptionPlan->payment_preferences->setup_fee);
-
-            Registry::getSession()->setVariable('currentSubscriptionView', json_encode($subscriptionPlan));
+            foreach ($linkedProducts as $linkedProduct) {
+                $subscriptionPlan = $sf->getSubscriptionService()->showPlanDetails('string', $linkedProduct['OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID'], 1);
+                if ($subscriptionPlan->status == 'ACTIVE') {
+                    $subscriptionPlans[] = $subscriptionPlan;
+                }
+            }
         }
+
+        $this->addTplParam('subscriptionPlans', $subscriptionPlans);
+        $this->addTplParam('hasSubscriptionPlans', (count($subscriptionPlans) > 0));
     }
 
     public function checkLogin(): void

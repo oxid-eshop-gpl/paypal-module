@@ -1,4 +1,5 @@
-[{if $subscriptionPlan}]
+<div id="overlay"><div class="loader"></div></div>
+[{if $subscriptionPlans}]
     [{if $oxcmp_user}]
         [{include file="subscription_buttons.tpl" buttonId=$buttonId aid=$aid}]
     [{else}]
@@ -7,4 +8,3 @@
 [{else}]
     [{include file="payment_buttons.tpl" buttonId=$buttonId paymentStrategy=$paymentStrategy aid=$aid}]
 [{/if}]
-<div id="[{$buttonId}]" class="paypal-button-container [{$buttonClass}]"></div>
