@@ -80,22 +80,6 @@ class PayPalSubscribeController extends AdminController
     }
 
     /**
-     * @return bool
-     */
-    public function isPayPalProductLinked()
-    {
-        return false;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isPayPalProductLinkedByParentOnly()
-    {
-        return false;
-    }
-
-    /**
      * @return object
      */
     public function getEditObject()
@@ -180,7 +164,6 @@ class PayPalSubscribeController extends AdminController
             return $this->subscriptionPlan;
         }
 
-
         if (!$SelectSubscriptionPlanId) {
             $result = $this->repository->getSubscriptionIdPlanByProductId($this->linkedObject->id);
             $subscriptionPlanId = $result[0]['OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID'];
@@ -225,18 +208,6 @@ class PayPalSubscribeController extends AdminController
     {
         $this->setLinkedObject();
         return $this->linkedObject;
-    }
-
-    /**
-     * @return Plan
-     * @throws DatabaseConnectionException
-     * @throws DatabaseErrorException
-     * @throws ApiException
-     */
-    public function getSubscriptionPlan()
-    {
-        $this->setSubscriptionPlan();
-        return $this->subscriptionPlan;
     }
 
     /**
@@ -428,15 +399,18 @@ class PayPalSubscribeController extends AdminController
             return [];
         }
 
-        $subscriptionService = new SubscriptionService();
-        $subscriptionPlans = $subscriptionService->listPlans(
-            $this->subscriptionPlan->product_id,
-            [
-                $this->subscriptionPlan->id
-            ]
-        );
-
-        return $subscriptionPlans->plans;
+        if ($linkedProducts = $this->repository->getLinkedProductByOxid($this->getEditObjectId())) {
+            $sf = Registry::get(ServiceFactory::class);
+            foreach ($linkedProducts as $linkedProduct) {
+                $subscriptionPlan = $sf
+                    ->getSubscriptionService()
+                    ->showPlanDetails('string', $linkedProduct['OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID'], 1);
+                if ($subscriptionPlan->status == 'ACTIVE') {
+                    $subscriptionPlans[] = $subscriptionPlan;
+                }
+            }
+        }
+        return $subscriptionPlans;
     }
 
     public function getSubscriptionPlansAreSubscripted()
@@ -476,6 +450,7 @@ class PayPalSubscribeController extends AdminController
         try {
             if ($this->hasSubscriptionPlan()) {
                 $subscriptionService->deactivatePlan($this->subscriptionPlan);
+                $this->repository->deleteLinkedPlan($editBillingPlanId);
             }
             $this->setLinkedObject();
             $subscriptionService->saveNewSubscriptionPlan($productId, $this->getEditObjectId());
@@ -486,19 +461,6 @@ class PayPalSubscribeController extends AdminController
         } catch (ApiException $e) {
             $this->addTplParam('error', $e->getErrorDescription());
         }
-
-//        try {
-//            if ($this->hasSubscriptionPlan()) {
-//                $subscriptionService->update($this->subscriptionPlan);
-//            } else {
-//                /** @var BillingCycle[] $cycles */
-//               $cycles = $subscriptionService->saveNewSubscriptionPlan($productId, $this->getEditObjectId());
-//                $this->setLinkedObject();
-//                $catalogService->updateProduct($productId);
-//            }
-//        } catch (ApiException $e) {
-//            $this->addTplParam('error', $e->getErrorDescription());
-//        }
     }
 
     /**
@@ -518,6 +480,7 @@ class PayPalSubscribeController extends AdminController
         try {
             if ($this->hasSubscriptionPlan()) {
                 $subscriptionService->deactivatePlan($this->subscriptionPlan);
+                $this->repository->deleteLinkedPlan($deactivateBillingPlanId);
             }
         } catch (ApiException $e) {
             $this->addTplParam('error', $e->getErrorDescription());

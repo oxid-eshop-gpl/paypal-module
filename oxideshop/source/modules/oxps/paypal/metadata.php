@@ -178,18 +178,40 @@ $aModule = [
             'file' => 'views/blocks/shared/layout/base_style.tpl'
         ],
         [
+            'theme' => 'flow',
+            'template' => 'widget/product/listitem_line.tpl',
+            'block' => 'widget_product_listitem_line_price',
+            'file' => 'views/blocks/shared/widget/product/widget_product_listitem_line_price.tpl'
+        ],
+        [
             'theme' => 'wave',
-            'template' => 'page/checkout/inc/basketcontents_list.tpl',
-            'block' => 'checkout_basketcontents_basketitem_unitprice',
-            'file' => '/views/blocks/shared/page/checkout/checkout_basketcontents_basketitem_unitprice.tpl',
-            'position' => '5'
+            'template' => 'widget/product/listitem_line.tpl',
+            'block' => 'widget_product_listitem_line_price',
+            'file' => 'views/blocks/shared/widget/product/widget_product_listitem_line_price.tpl'
         ],
         [
             'theme' => 'flow',
-            'template' => 'page/checkout/inc/basketcontents_list.tpl',
-            'block' => 'checkout_basketcontents_basketitem_unitprice',
-            'file' => '/views/blocks/shared/page/checkout/checkout_basketcontents_basketitem_unitprice.tpl',
-            'position' => '5'
+            'template' => 'widget/product/listitem_infogrid.tpl',
+            'block' => 'widget_product_listitem_infogrid_price',
+            'file' => 'views/blocks/shared/widget/product/widget_product_listitem_infogrid_price.tpl'
+        ],
+        [
+            'theme' => 'wave',
+            'template' => 'widget/product/listitem_infogrid.tpl',
+            'block' => 'widget_product_listitem_infogrid_price',
+            'file' => 'views/blocks/shared/widget/product/widget_product_listitem_infogrid_price.tpl'
+        ],
+        [
+            'theme' => 'flow',
+            'template' => 'widget/product/listitem_grid.tpl',
+            'block' => 'widget_product_listitem_grid_price',
+            'file' => 'views/blocks/shared/widget/product/widget_product_listitem_grid_price.tpl'
+        ],
+        [
+            'theme' => 'wave',
+            'template' => 'widget/product/listitem_grid.tpl',
+            'block' => 'widget_product_listitem_grid_price',
+            'file' => 'views/blocks/shared/widget/product/widget_product_listitem_grid_price.tpl'
         ],
         [
             'theme' => 'flow',

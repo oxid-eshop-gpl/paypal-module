@@ -169,6 +169,20 @@ class SubscriptionRepository
     }
 
     /**
+     * @param string $planId
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     */
+    public function deleteLinkedPlan($planId): void
+    {
+        $sql = 'DELETE FROM oxps_paypal_subscription_product WHERE OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID = ?';
+
+        DatabaseProvider::getDb()->execute($sql, [
+            $planId
+        ]);
+    }
+
+    /**
      * @param string $paypalProductId
      * @throws DatabaseConnectionException
      * @throws DatabaseErrorException
@@ -191,22 +205,5 @@ class SubscriptionRepository
         $article->load($oxid);
 
         return $article;
-    }
-
-    /**
-     * @return false if not a subscription product, Subscription Plan ID if a subscription product
-     * @throws \OxidEsales\Eshop\Core\Exception\DatabaseConnectionException
-     */
-    public function isSubscribableProduct($articleId)
-    {
-        $select = 'SELECT OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID ';
-        $select .= 'FROM oxps_paypal_subscription_product WHERE OXPS_PAYPAL_OXARTICLE_ID = ?';
-        $result = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getRow($select, [$articleId]);
-
-        if ($result) {
-            return $result['OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID'];
-        }
-
-        return false;
     }
 }
