@@ -19,7 +19,7 @@
         [{/if}]
     </div>
     <div id="overlay"><div class="loader"></div></div>
-    <form name="configForm" action="[{$oViewConf->getSelfLink()}]">
+    <form name="configForm" action="[{$oViewConf->getSelfLink()}]" method="post">
         [{$oViewConf->getHiddenSid()}]
         <input type="hidden" name="cl" value="[{$oViewConf->getActiveClassName()}]">
         <input type="hidden" name="fnc" value="save">
