@@ -50,7 +50,9 @@ trait ArticleDetailsTrait
         if ($linkedProducts = $subscriptionRepository->getLinkedProductByOxid($articleId)) {
             $sf = Registry::get(ServiceFactory::class);
             foreach ($linkedProducts as $linkedProduct) {
-                $subscriptionPlan = $sf->getSubscriptionService()->showPlanDetails('string', $linkedProduct['OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID'], 1);
+                $subscriptionPlan = $sf
+                    ->getSubscriptionService()
+                    ->showPlanDetails('string', $linkedProduct['OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID'], 1);
                 if ($subscriptionPlan->status == 'ACTIVE') {
                     $subscriptionPlans[] = $subscriptionPlan;
                 }
