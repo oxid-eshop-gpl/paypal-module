@@ -161,7 +161,7 @@ $aLang = [
     'HELP_OXPS_PAYPAL_CLIENT_ID'                   => 'Client ID des Live-Account für live-Modus',
     'HELP_OXPS_PAYPAL_CLIENT_SECRET'               => 'Secret des Live-Account für live-Modus',
     'HELP_OXPS_PAYPAL_SANDBOX_CLIENT_ID'           => 'Client ID des Sandbox-Account für Sandbox-Modus',
-    'HELP_OXPS_PAYPAL_SANDBOX_CLIENT_SECRET'       => 'Secret des Sandbox-Account für Sandbox-Modus',
+    'HELP_OXPS_PAYPAL_SANDBOX_CLIENT_SECRET'       => 'Secret des Sandbox-Account für Sandbox-Modus. Bitte geben Sie das Passwort zweimal ein.',
     'HELP_OXPS_PAYPAL_SANDBOX_WEBHOOK_ID'          =>
         'Die ID des Sandboox-Webhooks, wie in Ihrem Developer Portal-Konto konfiguriert',
     'HELP_OXPS_PAYPAL_OPMODE'                      =>
