@@ -52,7 +52,7 @@ class Events
     public static function createSubscriptionTable()
     {
         DatabaseProvider::getDb()->execute(
-            'CREATE TABLE IF NOT EXISTS `oxps_paypal_subscription` (
+            "CREATE TABLE IF NOT EXISTS `oxps_paypal_subscription` (
           `OXID` char(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL DEFAULT '',
           `OXPSPAYPALID` varchar(45) DEFAULT NULL,
           `OXPSPAYPALEMAIL` varchar(45) DEFAULT NULL,
@@ -64,7 +64,7 @@ class Events
           `OXPSPAYPALSTATUSUPDATETIME` datetime DEFAULT NULL,
           `OXTIMESTAMP` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
           PRIMARY KEY (`OXID`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8'
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8"
         );
     }
 
