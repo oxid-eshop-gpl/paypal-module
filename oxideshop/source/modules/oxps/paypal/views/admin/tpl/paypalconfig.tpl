@@ -19,7 +19,7 @@
         [{/if}]
     </div>
     <div id="overlay"><div class="loader"></div></div>
-    <form id="configForm" name="configForm" action="[{$oViewConf->getSelfLink()}]" method="post">
+    <form id="configForm" name="configForm" action="[{$oViewConf->getSelfLink()}]" method="post" autocomplete="off">
         [{$oViewConf->getHiddenSid()}]
         <input type="hidden" name="cl" value="[{$oViewConf->getActiveClassName()}]">
         <input type="hidden" name="fnc" value="save">
@@ -75,8 +75,8 @@
                         <div class="form-group live">
                             <label for="client-secret">[{oxmultilang ident="OXPS_PAYPAL_CLIENT_SECRET"}]</label>
                             <div class="controls">
-                                <input type="text" class="form-control" id="client-secret" name="conf[sPayPalClientSecret]" value="[{$config->getLiveClientSecret()}]" />
-                                <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_CLIENT_SECRET"}]</span>
+                                <input class="password_input form-control" type="password" name="conf[sPayPalClientSecret]" data-empty="[{if $config->getLiveClientSecret()}]false[{else}]true[{/if}]" data-errorMessage="[{oxmultilang ident="MODULE_PASSWORDS_DO_NOT_MATCH"}]" [{$readonly}] title="[{oxmultilang ident="MODULE_REPEAT_PASSWORD"}]" />
+                                <span id="client-secret" class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_CLIENT_SECRET"}]</span>
                             </div>
                         </div>
 
@@ -113,8 +113,8 @@
                         <div class="form-group sandbox">
                             <label for="client-sandbox-secret">[{oxmultilang ident="OXPS_PAYPAL_CLIENT_SECRET"}]</label>
                             <div class="controls">
-                                <input type="text" class="form-control" id="client-sandbox-secret" name="conf[sPayPalSandboxClientSecret]" value="[{$config->getSandboxClientSecret()}]" />
-                                <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_SANDBOX_CLIENT_SECRET"}]</span>
+                                <input class="password_input form-control" type="password" name="conf[sPayPalSandboxClientSecret]" data-empty="[{if $config->getSandboxClientSecret()}]false[{else}]true[{/if}]" data-errorMessage="[{oxmultilang ident="MODULE_PASSWORDS_DO_NOT_MATCH"}]" [{$readonly}] title="[{oxmultilang ident="MODULE_REPEAT_PASSWORD"}]" />
+                                <span id="client-sandbox-secret" class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_SANDBOX_CLIENT_SECRET"}]</span>
                             </div>
                         </div>
 

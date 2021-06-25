@@ -52,8 +52,8 @@ class Events
     public static function createSubscriptionTable()
     {
         DatabaseProvider::getDb()->execute(
-            'CREATE TABLE IF NOT EXISTS `oxps_paypal_subscription` (
-          `OXID` char(32) NOT NULL,
+            "CREATE TABLE IF NOT EXISTS `oxps_paypal_subscription` (
+          `OXID` char(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL DEFAULT '',
           `OXPSPAYPALID` varchar(45) DEFAULT NULL,
           `OXPSPAYPALEMAIL` varchar(45) DEFAULT NULL,
           `OXPSPAYPALSTATUS` varchar(45) DEFAULT NULL,
@@ -64,7 +64,7 @@ class Events
           `OXPSPAYPALSTATUSUPDATETIME` datetime DEFAULT NULL,
           `OXTIMESTAMP` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
           PRIMARY KEY (`OXID`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=latin1'
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8"
         );
     }
 
@@ -188,7 +188,7 @@ class Events
                             NOT NULL
                             COMMENT \'PayPal index to search by\',
                         PRIMARY KEY (`OXPS_PAYPAL_PAYLOGID`))
-                            ENGINE=InnoDB
+                            ENGINE=InnoDB DEFAULT CHARSET=utf8
                             COMMENT \'PayPal Payment transaction log\'',
             LogRepository::TABLE_NAME
         );
@@ -200,44 +200,44 @@ class Events
     {
         $sql = sprintf(
             'CREATE TABLE IF NOT EXISTS %s (
-                        `OXPS_PAYPAL_SUBSCRIPTION_PRODUCT_ID` 
-                            char(32) 
-                            character set latin1 
-                            collate latin1_general_ci 
+                        `OXPS_PAYPAL_SUBSCRIPTION_PRODUCT_ID`
+                            char(32)
+                            character set latin1
+                            collate latin1_general_ci
                             NOT NULL
                             COMMENT \'Record id\',
-                        `OXPS_PAYPAL_OXSHOPID` 
-                            char(32) 
-                            character set latin1 
-                            collate latin1_general_ci 
-                            NOT NULL 
+                        `OXPS_PAYPAL_OXSHOPID`
+                            char(32)
+                            character set latin1
+                            collate latin1_general_ci
+                            NOT NULL
                             COMMENT \'Shop id (oxshops)\',
-                        `OXPS_PAYPAL_OXARTICLE_ID` 
-                            char(32) 
-                            character set latin1 
-                            collate latin1_general_ci 
-                            NOT NULL 
+                        `OXPS_PAYPAL_OXARTICLE_ID`
+                            char(32)
+                            character set latin1
+                            collate latin1_general_ci
+                            NOT NULL
                             COMMENT \'OXID product ID\',
-                        `OXPS_PAYPAL_PRODUCT_ID` 
-                            char(32) 
-                            character set latin1 
-                            collate latin1_general_ci 
-                            NOT NULL 
+                        `OXPS_PAYPAL_PRODUCT_ID`
+                            char(32)
+                            character set latin1
+                            collate latin1_general_ci
+                            NOT NULL
                             COMMENT \'PayPal product ID\',
-                        `OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID` 
-                            char(32) 
-                            character set latin1 
-                            collate latin1_general_ci 
-                            NOT NULL 
+                        `OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID`
+                            char(32)
+                            character set latin1
+                            collate latin1_general_ci
+                            NOT NULL
                             COMMENT \'PayPal PLan ID\',
-                        `OXTIMESTAMP` 
-                            timestamp 
-                            NOT NULL 
-                            default CURRENT_TIMESTAMP 
-                            on update CURRENT_TIMESTAMP 
+                        `OXTIMESTAMP`
+                            timestamp
+                            NOT NULL
+                            default CURRENT_TIMESTAMP
+                            on update CURRENT_TIMESTAMP
                             COMMENT \'Timestamp\',
-                        PRIMARY KEY (`OXPS_PAYPAL_SUBSCRIPTION_PRODUCT_ID`)) 
-                            ENGINE=InnoDB 
+                        PRIMARY KEY (`OXPS_PAYPAL_SUBSCRIPTION_PRODUCT_ID`))
+                            ENGINE=InnoDB  DEFAULT CHARSET=utf8
                             COMMENT \'Primary key\'',
             'oxps_paypal_subscription_product'
         );
@@ -249,50 +249,50 @@ class Events
     {
         $sql = sprintf(
             'CREATE TABLE IF NOT EXISTS %s (
-                        `OXPS_PAYPAL_SUBSCRIPTION_PRODUCT_ORDER_ID` 
-                            char(32) 
-                            character set latin1 
-                            collate latin1_general_ci 
+                        `OXPS_PAYPAL_SUBSCRIPTION_PRODUCT_ORDER_ID`
+                            char(32)
+                            character set latin1
+                            collate latin1_general_ci
                             NOT NULL
                             COMMENT \'Record id\',
-                        `OXPS_PAYPAL_USER_ID` 
-                            char(32) 
-                            character set latin1 
-                            collate latin1_general_ci 
-                            NOT NULL 
+                        `OXPS_PAYPAL_USER_ID`
+                            char(32)
+                            character set latin1
+                            collate latin1_general_ci
+                            NOT NULL
                             COMMENT \'User id (oxuser)\',
-                        `OXPS_PAYPAL_OXARTICLE_ID` 
-                            char(32) 
-                            character set latin1 
-                            collate latin1_general_ci 
-                            NOT NULL 
+                        `OXPS_PAYPAL_OXARTICLE_ID`
+                            char(32)
+                            character set latin1
+                            collate latin1_general_ci
+                            NOT NULL
                             COMMENT \'OXID product ID\',
-                        `OXPS_PAYPAL_PRODUCT_ID` 
-                            char(32) 
-                            character set latin1 
-                            collate latin1_general_ci 
-                            NOT NULL 
+                        `OXPS_PAYPAL_PRODUCT_ID`
+                            char(32)
+                            character set latin1
+                            collate latin1_general_ci
+                            NOT NULL
                             COMMENT \'PayPal product ID\',
-                        `OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID` 
-                            char(32) 
-                            character set latin1 
-                            collate latin1_general_ci 
-                            NOT NULL 
+                        `OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID`
+                            char(32)
+                            character set latin1
+                            collate latin1_general_ci
+                            NOT NULL
                             COMMENT \'PayPal Plan ID\',
-                        `OXPS_PAYPAL_SESSION_ID` 
-                            char(32) 
-                            character set latin1 
-                            collate latin1_general_ci 
-                            NOT NULL 
+                        `OXPS_PAYPAL_SESSION_ID`
+                            char(32)
+                            character set latin1
+                            collate latin1_general_ci
+                            NOT NULL
                             COMMENT \'PHP Session ID\',
-                        `OXTIMESTAMP` 
-                            timestamp 
-                            NOT NULL 
-                            default CURRENT_TIMESTAMP 
-                            on update CURRENT_TIMESTAMP 
+                        `OXTIMESTAMP`
+                            timestamp
+                            NOT NULL
+                            default CURRENT_TIMESTAMP
+                            on update CURRENT_TIMESTAMP
                             COMMENT \'Timestamp\',
-                        PRIMARY KEY (`OXPS_PAYPAL_SUBSCRIPTION_PRODUCT_ORDER_ID`)) 
-                            ENGINE=InnoDB 
+                        PRIMARY KEY (`OXPS_PAYPAL_SUBSCRIPTION_PRODUCT_ORDER_ID`))
+                            ENGINE=InnoDB  DEFAULT CHARSET=utf8
                             COMMENT \'Primary key\'',
             'oxps_paypal_subscription_product_order'
         );
@@ -337,7 +337,7 @@ class Events
                 PRIMARY KEY (`OXID`),
                 KEY `OXPS_PAYPAL_OXORDERID` (`OXPS_PAYPAL_OXORDERID`)
             )
-            ENGINE=InnoDB
+            ENGINE=InnoDB DEFAULT CHARSET=utf8
             COMMENT \'Primary key\'',
             'oxps_paypal_order'
         );

@@ -160,7 +160,7 @@ $aLang = [
     'HELP_OXPS_PAYPAL_CLIENT_ID'                   => 'Client ID for live mode.',
     'HELP_OXPS_PAYPAL_CLIENT_SECRET'               => 'Secret for live mode.',
     'HELP_OXPS_PAYPAL_SANDBOX_CLIENT_ID'           => 'Client ID for sandbox mode.',
-    'HELP_OXPS_PAYPAL_SANDBOX_CLIENT_SECRET'       => 'Secret for sandbox mode.',
+    'HELP_OXPS_PAYPAL_SANDBOX_CLIENT_SECRET'       => 'Secret for sandbox mode. Please enter the password twice.',
     'HELP_OXPS_PAYPAL_SANDBOX_WEBHOOK_ID'          =>
         'The ID of the sandbox-webhook as configured in your Developer Portal account',
     'HELP_OXPS_PAYPAL_OPMODE'                      =>
