@@ -72,6 +72,7 @@ class PayPalOrderController extends AdminDetailsController
 
         $lang = Registry::getLang();
 
+        // normal paypal order
         try {
             $order = $this->getOrder();
             $this->addTplParam('oxid', $this->getEditObjectId());

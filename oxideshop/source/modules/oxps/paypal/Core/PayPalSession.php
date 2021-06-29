@@ -80,7 +80,9 @@ class PayPalSession
 
     public static function subscriptionIsDoneProcessing(): void
     {
-        Registry::getSession()->deleteVariable('SessionIsProcessing');
+        $session = Registry::getSession();
+        $session->deleteVariable('SessionIsProcessing');
+        $session->deleteVariable('subscriptionProductOrderId');
     }
 
     public static function isSubscriptionProcessing(): bool
