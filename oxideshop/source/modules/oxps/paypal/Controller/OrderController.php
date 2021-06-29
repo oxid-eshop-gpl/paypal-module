@@ -23,6 +23,7 @@
 namespace OxidProfessionalServices\PayPal\Controller;
 
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\Eshop\Core\DatabaseProvider;
 use OxidProfessionalServices\PayPal\Core\PayPalSession;
 
 /**
@@ -53,10 +54,24 @@ class OrderController extends OrderController_parent
             return $ret;
         }
 
-        $oBasket = $this->getSession()->getBasket();
+        $session = $this->getSession();
+        $oBasket =  $session->getBasket();
 
         if ($oBasket->getPaymentId() !== 'oxidpaypal') {
             return $ret;
+        }
+
+        // save order id to subscription
+        if ($subscriptionProductOrderId = $session->getVariable('subscriptionProductOrderId')) {
+            $orderId = Registry::getSession()->getVariable('sess_challenge');
+            $sql = 'UPDATE oxps_paypal_subscription_product_order SET OXPS_PAYPAL_ORDER_ID = ? WHERE OXID = ?';
+            DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->execute(
+                $sql,
+                [
+                    $orderId,
+                    $subscriptionProductOrderId
+                ]
+            );
         }
 
         PayPalSession::subscriptionIsDoneProcessing();

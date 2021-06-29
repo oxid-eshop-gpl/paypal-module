@@ -249,18 +249,30 @@ class Events
     {
         $sql = sprintf(
             'CREATE TABLE IF NOT EXISTS %s (
-                        `OXPS_PAYPAL_SUBSCRIPTION_PRODUCT_ORDER_ID`
+                        `OXID`
                             char(32)
                             character set latin1
                             collate latin1_general_ci
                             NOT NULL
                             COMMENT \'Record id\',
+                        `OXPS_PAYPAL_OXSHOPID`
+                            char(32)
+                            character set latin1
+                            collate latin1_general_ci
+                            NOT NULL
+                            COMMENT \'Shop id (oxshops)\',
                         `OXPS_PAYPAL_USER_ID`
                             char(32)
                             character set latin1
                             collate latin1_general_ci
                             NOT NULL
                             COMMENT \'User id (oxuser)\',
+                        `OXPS_PAYPAL_ORDER_ID`
+                            char(32)
+                            character set latin1
+                            collate latin1_general_ci
+                            NOT NULL
+                            COMMENT \'Order id (oxorder)\',
                         `OXPS_PAYPAL_OXARTICLE_ID`
                             char(32)
                             character set latin1
@@ -291,7 +303,7 @@ class Events
                             default CURRENT_TIMESTAMP
                             on update CURRENT_TIMESTAMP
                             COMMENT \'Timestamp\',
-                        PRIMARY KEY (`OXPS_PAYPAL_SUBSCRIPTION_PRODUCT_ORDER_ID`))
+                        PRIMARY KEY (`OXID`))
                             ENGINE=InnoDB  DEFAULT CHARSET=utf8
                             COMMENT \'Primary key\'',
             'oxps_paypal_subscription_product_order'

@@ -54,6 +54,13 @@ class Order extends Order_parent
     protected $payPalOrderId;
 
     /**
+     * PayPal subscription plan Id
+     *
+     * @var string
+     */
+    protected $payPalSubscriptionPlanId;
+
+    /**
      * Get PayPal order object for the current active order object
      * Result is cached and returned on subsequent calls
      *
@@ -117,13 +124,40 @@ class Order extends Order_parent
     }
 
     /**
+     * Returns PayPal Subscription plan id.
+     *
+     * @param string|null $oxId
+     *
+     * @return string
+     */
+    public function getPayPalSubscriptionPlanIdForOxOrderId(string $oxId = null)
+    {
+        if (is_null($this->payPalSubscriptionPlanId)) {
+            $this->payPalSubscriptionPlanId = '';
+            $oxId = is_null($oxId) ? $this->getId() : $oxId;
+            $table = 'oxps_paypal_subscription_product_order';
+            $shopId = $this->getShopId();
+            $params = [$table . '.oxps_paypal_order_id' => $oxId, $table . '.oxps_paypal_shop_id' => $shopId];
+
+            $paypalOrderObj = oxNew(BaseModel::class);
+            $paypalOrderObj->init($table);
+            $select = $paypalOrderObj->buildSelectString($params);
+
+            if ($data = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getRow($select)) {
+                $this->payPalSubscriptionPlanId = $data['oxps_paypal_subscription_plan_id'];
+            }
+        }
+        return $this->payPalSubscriptionPlanId;
+    }
+
+    /**
      * Checks if the order was paid using PayPal
      *
      * @return bool
      */
     public function paidWithPayPal(): bool
     {
-        return (bool) $this->getPayPalOrderIdForOxOrderId();
+        return (bool) ($this->getPayPalOrderIdForOxOrderId() || $this->getPayPalSubscriptionPlanIdForOxOrderId());
     }
 
     /**

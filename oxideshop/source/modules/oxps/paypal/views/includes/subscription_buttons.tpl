@@ -48,7 +48,7 @@
                 [{/literal}]
                     [{if $isLoggedIn}]
                         [{literal}]
-                            return fetch('[{/literal}][{$sSelfLink|cat:"cl=PayPalProxyController&fnc=createSubscriptionOrder&aid="|cat:$aid|cat:"&stoken="|cat:$oViewConf->getSessionChallengeToken()}][{literal}]', {
+                            return fetch('[{/literal}][{$sSelfLink|cat:"cl=PayPalProxyController&fnc=createSubscriptionOrder&aid="|cat:$aid|cat:"&subscriptionPlanId="|cat:$subscriptionPlan->id|cat:"&stoken="|cat:$oViewConf->getSessionChallengeToken()}][{literal}]', {
                                 method: 'post',
                                 headers: {
                                     'content-type': 'application/json'

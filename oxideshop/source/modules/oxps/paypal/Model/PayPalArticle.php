@@ -14,11 +14,19 @@ use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\BillingCycle;
 class PayPalArticle extends PayPalArticle_parent
 {
     /**
+     * PayPalProduct ID
+     *
+     * @var string
+     */
+    protected $_sPayPalProductId = null;
+
+
+    /**
      * @return bool
      */
     public function isPayPalProductLinked()
     {
-        return $this->getPayPalProductId() !== "";
+        return ($this->getPayPalProductId() !== "");
     }
 
     /**
@@ -26,16 +34,25 @@ class PayPalArticle extends PayPalArticle_parent
      */
     public function getPayPalProductId(): string
     {
-        $sql = 'SELECT OXPS_PAYPAL_PRODUCT_ID
-            FROM oxps_paypal_subscription_product
-            WHERE OXPS_PAYPAL_OXARTICLE_ID = ?';
+        if (is_null($this->_sPayPalProductId)) {
+            $this->_sPayPalProductId = '';
 
-        return (string) DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)
+            $sql = 'SELECT OXPS_PAYPAL_PRODUCT_ID
+                FROM oxps_paypal_subscription_product
+                WHERE OXPS_PAYPAL_OXARTICLE_ID = ?';
+
+            $sPayPalProductId = (string) DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)
             ->getOne(
                 $sql,
                 [
                     $this->getId()
                 ]
             );
+
+            if ($sPayPalProductId) {
+                $this->_sPayPalProductId = $sPayPalProductId;
+            }
+        }
+        return $this->_sPayPalProductId;
     }
 }

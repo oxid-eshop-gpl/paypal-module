@@ -102,12 +102,12 @@ class Subscription extends BaseModel
      */
     public function findSubscriptionProductId(?string $articleId, $subscriptionPlanId): string
     {
-        $subscriptionProductSQL = "SELECT OXPS_PAYPAL_PRODUCT_ID FROM oxps_paypal_subscription_product ";
-        $subscriptionProductSQL .= "WHERE OXPS_PAYPAL_OXARTICLE_ID = ?";
-        $subscriptionProductSQL .= "AND OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID = ?";
+        $sql = "SELECT OXPS_PAYPAL_PRODUCT_ID FROM oxps_paypal_subscription_product
+            WHERE OXPS_PAYPAL_OXARTICLE_ID = ?
+            AND OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID = ?";
 
         $subscriptionProduct = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)
-            ->getAll($subscriptionProductSQL, [
+            ->getAll($sql, [
                 $articleId,
                 $subscriptionPlanId
             ]);
@@ -123,29 +123,35 @@ class Subscription extends BaseModel
      */
     public function saveSubscriptionProductOrder(string $subscriptionPlanId, string $subscriptionId): void
     {
-        $id = Registry::getUtilsObject()->generateUId();
+        $session = Registry::getSession();
+        $oxid = Registry::getUtilsObject()->generateUId();
         $articleId = Registry::getRequest()->getRequestEscapedParameter('aid');
 
         $subscriptionProductId = $this->findSubscriptionProductId($articleId, $subscriptionPlanId);
 
         $sql = "INSERT INTO oxps_paypal_subscription_product_order(
-                    `OXPS_PAYPAL_SUBSCRIPTION_PRODUCT_ORDER_ID`,
+                    `OXID`,
+                    `OXPS_PAYPAL_SHOP_ID`,
                     `OXPS_PAYPAL_USER_ID`,
                     `OXPS_PAYPAL_OXARTICLE_ID`,
                     `OXPS_PAYPAL_PRODUCT_ID`,
                     `OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID`,
-                    `OXPS_PAYPAL_SESSION_ID`) 
-                    VALUES (?,?,?,?,?,?)";
+                    `OXPS_PAYPAL_SESSION_ID`)
+                    VALUES (?,?,?,?,?,?,?)";
 
-        $userId = Registry::getSession()->getUser()->getId();
+        $userId = $session->getUser()->getId();
 
         DatabaseProvider::getDb()->execute($sql, [
-            $id,
+            $oxid,
+            Registry::getConfig()->getShopId(),
             $userId,
             $articleId,
             $subscriptionProductId,
             $subscriptionPlanId,
             $subscriptionId
         ]);
+
+        // save oxid to session
+        $session->setVariable('subscriptionProductOrderId', $oxid);
     }
 }
