@@ -1,5 +1,6 @@
 [{if
     $oViewConf->getTopActiveClassName()|lower=="paypalconfigcontroller" ||
+    $oViewConf->getTopActiveClassName()|lower=="paypalordercontroller" ||
     $oViewConf->getTopActiveClassName()|lower=="paypaltransactioncontroller" ||
     $oViewConf->getTopActiveClassName()|lower=="paypalbalancecontroller" ||
     $oViewConf->getTopActiveClassName()|lower=="paypalsubscriptioncontroller" ||

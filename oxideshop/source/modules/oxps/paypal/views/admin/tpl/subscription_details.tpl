@@ -1,4 +1,43 @@
 [{include file="headitem.tpl" title="GENERAL_ADMIN_TITLE"|oxmultilangassign box="list"}]
+[{assign var="sSelfLink" value=$oViewConf->getSelfLink()|replace:"&amp;":"&"}]
+
+[{if $oViewConf->getTopActiveClassName()|lower=="paypalordercontroller"}]
+    <form name="transfer" id="transfer" action="[{$oViewConf->getSelfLink()}]" method="post">
+        [{$oViewConf->getHiddenSid()}]
+        <input type="hidden" name="oxid" value="[{$oxid}]">
+        <input type="hidden" name="cl" value="[{$oViewConf->getTopActiveClassName()}]">
+    </form>
+[{/if}]
+
+[{capture assign="sPayPalSubscriptionDetailsJS"}]
+    [{strip}]
+        jQuery(document).ready(function(){
+            let showItem = function(divId) {
+
+                jQuery(".nav-tabs li").removeClass('active');
+                jQuery(".pptab").hide();
+                jQuery("#" + divId).show();
+                jQuery("#" + divId + "-tab").parent().addClass('active');
+            };
+
+            let listenToTab = function(divId) {
+                jQuery("#" + divId + "-tab").click(function(e) {
+                    e.preventDefault();
+                    showItem(divId);
+                });
+            };
+
+            showItem("subscription");
+            listenToTab("subscription");
+            listenToTab("subscriber");
+            listenToTab("products");
+            listenToTab("shipping");
+            listenToTab("billing");
+            listenToTab("transaction");
+        });
+    [{/strip}]
+[{/capture}]
+[{oxscript add=$sPayPalSubscriptionDetailsJS}]
 
 <div class="container-fluid">
     [{if !empty($error)}]
@@ -20,7 +59,7 @@
     <form method="post" action="[{$oViewConf->getSelfLink()}]">
         [{$oViewConf->getHiddenSid()}]
         <input type="hidden" name="oxid" value="[{$oxid}]">
-        <input type="hidden" name="cl" value="PayPalSubscriptionDetailsController">
+        <input type="hidden" name="cl" value="[{$oViewConf->getTopActiveClassName()}]">
         <input type="hidden" name="fnc" value="update">
 
         <div id="subscription" class="row pptab">
@@ -164,7 +203,7 @@
                         <td>
                             <b>[{oxmultilang ident="OXPS_PAYPAL_PRODUCT_DESCRIPTION"}]</b>
                         </td>
-                        <td
+                        <td>
                             [{$subscriptionProduct->description}]
                         </td>
                     </tr>
@@ -224,7 +263,7 @@
                                    class="form-control"
                                    id="shippingAddressLine1"
                                    name="shippingAddress[address][address_line_1]"
-                                   value="[{$shippingDetails->address->address_line_1}]"
+                                   value="[{$shippingAddress->address_line_1}]"
                                    disabled>
                         </td>
                     </tr>
@@ -237,7 +276,7 @@
                                    class="form-control"
                                    id="shippingAddressLine2"
                                    name="shippingAddress[address][address_line_2]"
-                                   value="[{$shippingDetails->address->address_line_2}]"
+                                   value="[{$shippingAddress->address_line_2}]"
                                    disabled>
                         </td>
                     </tr>
@@ -250,7 +289,7 @@
                                    class="form-control"
                                    id="shippingAddressAdminArea1"
                                    name="shippingAddress[address][admin_area_1]"
-                                   value="[{$shippingDetails->address->admin_area_1}]"
+                                   value="[{$shippingAddress->admin_area_1}]"
                                    disabled>
                         </td>
                     </tr>
@@ -263,7 +302,7 @@
                                    class="form-control"
                                    id="shippingAddressAdminArea2"
                                    name="shippingAddress[address][admin_area_2]"
-                                   value="[{$shippingDetails->address->admin_area_2}]"
+                                   value="[{$shippingAddress->admin_area_2}]"
                                    disabled>
                         </td>
                     </tr>
@@ -275,7 +314,7 @@
                                    class="form-control"
                                    id="shippingAddressPostalCode"
                                    name="shippingAddress[address][postal_code]"
-                                   value="[{$shippingDetails->address->postal_code}]"
+                                   value="[{$shippingAddress->postal_code}]"
                                    disabled>
                         </td>
                     </tr>
@@ -286,7 +325,7 @@
                                    class="form-control"
                                    id="shippingAddressCountryCode"
                                    name="shippingAddress[address][country_code]"
-                                   value="[{$shippingDetails->address->country_code}]"
+                                   value="[{$shippingAddress->country_code}]"
                                    disabled>
                         </td>
                     </tr>
@@ -312,7 +351,7 @@
                     </tr>
                     <tr class="ppmessages">
                         <td colspan="2">
-                            <button class="btn btn-info btn-sm" onclick="jQuery('#subscriptionShipping input').each(function(){ this.disabled==false?this.disabled=true:this.disabled=false; })">
+                            <button class="btn btn-info btn-sm" onclick="jQuery('#subscriptionShipping input').each(function(){ this.disabled==false?this.disabled=true:this.disabled=false; }); return false;">
                                 [{oxmultilang ident="OXPS_PAYPAL_EDIT"}]
                             </button>
                         </td>
@@ -332,13 +371,13 @@
             <table class="table table-sm" id="subscriptionBilling">
                 [{assign var="billingInfo" value=$payPalSubscription->billing_info}]
                 <tr class="ppmessages">
-                    <td class="col-sm-2">
+                    <td>
                         <label for="outstandingBalanceValue">
-                            [{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_OUTSTANDING_BALANCE"}]
+                            <b>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_OUTSTANDING_BALANCE"}]</b>
                         </label>
                     </td>
                     <td>
-                        <div class="input-group col-sm-4">
+                        <div class="input-group">
                             <input type="number"
                                    step="0.01"
                                    min="0"
@@ -430,7 +469,7 @@
                 </tr>
                 <tr class="ppmessages">
                     <td colspan="2">
-                        <button class="btn btn-info btn-sm" onclick="jQuery('#subscriptionBilling input').each(function(){ this.disabled==false?this.disabled=true:this.disabled=false; })">
+                        <button class="btn btn-info btn-sm" onclick="jQuery('#subscriptionBilling input').each(function(){ this.disabled==false?this.disabled=true:this.disabled=false; }); return false;">
                             [{oxmultilang ident="OXPS_PAYPAL_EDIT"}]
                         </button>
                     </td>
@@ -483,7 +522,7 @@
                 <form method="post" action="[{$oViewConf->getSelfLink()}]">
                     [{$oViewConf->getHiddenSid()}]
                     <input type="hidden" name="oxid" value="[{$oxid}]">
-                    <input type="hidden" name="cl" value="PayPalSubscriptionDetailsController">
+                    <input type="hidden" name="cl" value="[{$oViewConf->getTopActiveClassName()}]">
                     <input type="hidden" name="fnc" value="updateStatus">
                     <h4>[{oxmultilang ident="OXPS_PAYPAL_TRANSACTION_STATUS"}]</h4>
                     <div class="form-group">
@@ -508,7 +547,7 @@
                 <form method="post" action="[{$oViewConf->getSelfLink()}]">
                     [{$oViewConf->getHiddenSid()}]
                     <input type="hidden" name="oxid" value="[{$oxid}]">
-                    <input type="hidden" name="cl" value="PayPalSubscriptionDetailsController">
+                    <input type="hidden" name="cl" value="[{$oViewConf->getTopActiveClassName()}]">
                     <input type="hidden" name="fnc" value="captureOutstandingFees">
                     <h4>[{oxmultilang ident="OXPS_PAYPAL_CAPTURE_OUTSTANDING_FEES"}]</h4>
                     <div class="form-group">
@@ -539,38 +578,10 @@
         </div>
         <div class="row">
             <div class="col-sm-12">
-                <iframe frameborder="0" src="[{$oViewConf->getSelfLink()}]&cl=PayPalSubscriptionTransactionController&subscriptionId=[{$payPalSubscription->id}]"  class="col-sm-12" height="600"></iframe>
+                <iframe frameborder="0" src="[{$sSelfLink}]&cl=PayPalSubscriptionTransactionController&subscriptionId=[{$payPalSubscription->id}]" class="col-sm-12" height="600"></iframe>
             </div>
         </div>
     </div>
-
-
 </div>
-[{capture assign="sPayPalSubscriptionDetailsJS"}]
-    [{strip}]
-        jQuery(document).ready(function(){
-            let showItem = function(divId) {
-                jQuery(".nav-tabs li").removeClass('active');
-                jQuery(".pptab").hide();
-                jQuery("#" + divId).show();
-                jQuery("#" + divId + "-tab").parent().addClass('active');
-            };
+[{include file="bottomitem.tpl"}]
 
-            let listenToTab = function(divId) {
-                jQuery("#" + divId + "-tab").click(function(e) {
-                    e.preventDefault();
-                    showItem(divId);
-                });
-            }
-
-            showItem("subscription");
-            listenToTab("subscription");
-            listenToTab("subscriber");
-            listenToTab("products");
-            listenToTab("shipping");
-            listenToTab("billing");
-            listenToTab("transaction");
-        });
-    [{/strip}]
-[{/capture}]
-[{oxscript add=$sPayPalSubscriptionDetailsJS}]

@@ -29,8 +29,11 @@ use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\Capture;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\Order as PayPalOrder;
+use OxidProfessionalServices\PayPal\Api\Model\Catalog\Product as PayPalProduct;
+use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Subscription as PayPalSubscription;
 use OxidProfessionalServices\PayPal\Api\Service\Orders;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
+use OxidProfessionalServices\PayPal\Model\Subscription;
 
 /**
  * PayPal oxOrder class
@@ -54,11 +57,25 @@ class Order extends Order_parent
     protected $payPalOrderId;
 
     /**
-     * PayPal subscription plan Id
+     * PayPal subscription Id
      *
      * @var string
      */
-    protected $payPalSubscriptionPlanId;
+    protected $payPalSubscriptionId;
+
+    /**
+     * PayPal Session Id
+     *
+     * @var string
+     */
+    protected $payPalSessionId;
+
+    /**
+     * PayPal Product Id
+     *
+     * @var string
+     */
+    protected $payPalProductId;
 
     /**
      * Get PayPal order object for the current active order object
@@ -124,16 +141,16 @@ class Order extends Order_parent
     }
 
     /**
-     * Returns PayPal Subscription plan id.
+     * Returns PayPal Session id.
      *
      * @param string|null $oxId
      *
      * @return string
      */
-    public function getPayPalSubscriptionPlanIdForOxOrderId(string $oxId = null)
+    public function getPayPalSessionIdForOxOrderId(string $oxId = null)
     {
-        if (is_null($this->payPalSubscriptionPlanId)) {
-            $this->payPalSubscriptionPlanId = '';
+        if (is_null($this->payPalSessionId)) {
+            $this->payPalSessionId = '';
             $oxId = is_null($oxId) ? $this->getId() : $oxId;
             $table = 'oxps_paypal_subscription_product_order';
             $shopId = $this->getShopId();
@@ -144,10 +161,65 @@ class Order extends Order_parent
             $select = $paypalOrderObj->buildSelectString($params);
 
             if ($data = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getRow($select)) {
-                $this->payPalSubscriptionPlanId = $data['oxps_paypal_subscription_plan_id'];
+                $this->payPalSessionId = $data['oxps_paypal_session_id'];
             }
         }
-        return $this->payPalSubscriptionPlanId;
+        return $this->payPalSessionId;
+    }
+
+    /**
+     * Returns PayPal Session id.
+     *
+     * @param string|null $oxId
+     *
+     * @return string
+     */
+    public function getPayPalProductIdForOxOrderId(string $oxId = null)
+    {
+        if (is_null($this->payPalProductId)) {
+            $this->payPalProductId = '';
+            $oxId = is_null($oxId) ? $this->getId() : $oxId;
+            $table = 'oxps_paypal_subscription_product_order';
+            $shopId = $this->getShopId();
+            $params = [$table . '.oxps_paypal_order_id' => $oxId, $table . '.oxps_paypal_shop_id' => $shopId];
+
+            $paypalOrderObj = oxNew(BaseModel::class);
+            $paypalOrderObj->init($table);
+            $select = $paypalOrderObj->buildSelectString($params);
+
+            if ($data = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getRow($select)) {
+                $this->payPalProductId = $data['oxps_paypal_session_id'];
+            }
+        }
+        return $this->payPalProductId;
+    }
+
+    /**
+     * Returns PayPal Subscription id.
+     *
+     * @param string|null $sessionId
+     *
+     * @return string
+     */
+    public function getPayPalSubscriptionIdForOxOrderId(string $sessionId = null)
+    {
+        if (is_null($this->payPalSubscriptionId)) {
+            $this->payPalSubscriptionId = '';
+
+            $sessionId = is_null($sessionId) ? $this->getPayPalSessionIdForOxOrderId($this->getId()) : $sessionId;
+
+            $table = 'oxps_paypal_subscription';
+            $params = [$table . '.oxpspaypalid' => $sessionId];
+
+            $paypalOrderObj = oxNew(BaseModel::class);
+            $paypalOrderObj->init($table);
+            $select = $paypalOrderObj->buildSelectString($params);
+
+            if ($data = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getRow($select)) {
+                $this->payPalSubscriptionId = $data['oxid'];
+            }
+        }
+        return $this->payPalSubscriptionId;
     }
 
     /**
@@ -157,7 +229,7 @@ class Order extends Order_parent
      */
     public function paidWithPayPal(): bool
     {
-        return (bool) ($this->getPayPalOrderIdForOxOrderId() || $this->getPayPalSubscriptionPlanIdForOxOrderId());
+        return (bool) ($this->getPayPalOrderIdForOxOrderId() || $this->getPayPalSubscriptionIdForOxOrderId());
     }
 
     /**
