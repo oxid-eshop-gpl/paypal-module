@@ -23,14 +23,14 @@ class LogRepository
 
         $sql = sprintf(
             'INSERT INTO %s (
-                `OXPS_PAYPAL_PAYLOGID`,
-                `OXPS_PAYPAL_OXSHOPID`,
-                `OXPS_PAYPAL_OXUSERID`,
-                `OXPS_PAYPAL_OXORDERID`,
-                `OXPS_PAYPAL_RESPONSE_MSG`,
-                `OXPS_PAYPAL_STATUS_CODE`,
-                `OXPS_PAYPAL_REQUEST_TYPE`,
-                `OXPS_PAYPAL_IDENTIFIER`
+                `OXID`,
+                `OXSHOPID`,
+                `OXUSERID`,
+                `OXORDERID`,
+                `OXPAYPALRESPONSEMSG`,
+                `OXPAYPALSTATUSCODE`,
+                `OXPAYPALREQUESTTYPE`,
+                `OXPAYPALIDENTIFIER`
                 ) VALUES (?,?,?,?,?,?,?,?)',
             self::TABLE_NAME
         );
@@ -56,7 +56,7 @@ class LogRepository
     public function findLogMessageForUserId(string $userId): array
     {
         return DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getAll(
-            sprintf('SELECT * FROM %s WHERE OXPS_PAYPAL_OXUSERID = ? ORDER BY OXTIMESTAMP', self::TABLE_NAME),
+            'SELECT * FROM ' . self::TABLE_NAME . ' WHERE OXUSERID = ? ORDER BY OXTIMESTAMP',
             [$userId]
         );
     }
@@ -70,7 +70,7 @@ class LogRepository
     public function findLogMessageForIdentifier(string $identifier): array
     {
         return DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getAll(
-            sprintf('SELECT * FROM %s WHERE OXPS_PAYPAL_IDENTIFIER = ? ORDER BY OXTIMESTAMP', self::TABLE_NAME),
+            'SELECT * FROM ' . self::TABLE_NAME . ' WHERE OXPAYPALIDENTIFIER = ? ORDER BY OXTIMESTAMP',
             [$identifier]
         );
     }
@@ -84,7 +84,7 @@ class LogRepository
     public function findLogMessageForOrderId(string $orderId): array
     {
         return DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getAll(
-            sprintf('SELECT * FROM %s WHERE OXPS_PAYPAL_OXORDERID = ? ORDER BY OXTIMESTAMP', self::TABLE_NAME),
+            'SELECT * FROM ' . self::TABLE_NAME . ' WHERE OXORDERID = ? ORDER BY OXTIMESTAMP',
             [$orderId]
         );
     }

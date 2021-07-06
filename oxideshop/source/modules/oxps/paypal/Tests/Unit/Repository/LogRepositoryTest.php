@@ -26,7 +26,7 @@ class LogRepositoryTest extends UnitTestCase
         $results = $this->logRepository->findLogMessageForOrderId($logMessage->getOrderId());
 
         $this->assertNotEmpty($results[0]);
-        $this->assertSame($results[0]['OXPS_PAYPAL_OXUSERID'], $logMessage->getUserId());
+        $this->assertSame($results[0]['OXUSERID'], $logMessage->getUserId());
     }
 
     public function testFindLogMessageForUserId(): void
@@ -37,7 +37,7 @@ class LogRepositoryTest extends UnitTestCase
         $results = $this->logRepository->findLogMessageForUserId($logMessage->getUserId());
 
         $this->assertNotEmpty($results[0]);
-        $this->assertSame($results[0]['OXPS_PAYPAL_OXUSERID'], $logMessage->getUserId());
+        $this->assertSame($results[0]['OXUSERID'], $logMessage->getUserId());
     }
 
     public function testFindLogMessageForIdentifier(): void
@@ -48,7 +48,7 @@ class LogRepositoryTest extends UnitTestCase
         $results = $this->logRepository->findLogMessageForIdentifier($logMessage->getIdentifier());
 
         $this->assertNotEmpty($results[0]);
-        $this->assertSame($results[0]['OXPS_PAYPAL_OXUSERID'], $logMessage->getUserId());
+        $this->assertSame($results[0]['OXUSERID'], $logMessage->getUserId());
     }
 
     public function testFindLogMessageForOrderId(): void
@@ -59,7 +59,7 @@ class LogRepositoryTest extends UnitTestCase
         $results = $this->logRepository->findLogMessageForOrderId($logMessage->getOrderId());
 
         $this->assertNotEmpty($results[0]);
-        $this->assertSame($results[0]['OXPS_PAYPAL_OXUSERID'], $logMessage->getUserId());
+        $this->assertSame($results[0]['OXUSERID'], $logMessage->getUserId());
     }
 
     /**
