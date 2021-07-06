@@ -3,11 +3,7 @@
 
 <div class="container-fluid">
     <br />
-    <div class="row">
-        <div class="col-sm-1">
-            <button id="toggleFilter" class="btn btn-info col-sm-12">[{oxmultilang ident="OXPS_PAYPAL_FILTER"}]</button>
-        </div>
-    </div>
+    <button id="toggleFilter" class="btn btn-info">[{oxmultilang ident="OXPS_PAYPAL_FILTER"}]</button>
     [{capture assign="sPayPalSubscriptionsJS"}]
         [{strip}]
             jQuery(document).ready(function(){
@@ -182,5 +178,4 @@
     </div>
     [{include file="paypal_list_pagination.tpl"}]
 </div>
-</body>
-</html>
+[{include file="bottomitem.tpl"}]

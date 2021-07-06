@@ -513,12 +513,11 @@
         </div>
     </form>
     <div id="transaction" class="row pptab">
-        <div class="row ppaltmessages hidden">
         [{if !($subscriptionStatus == "APPROVAL_PENDING" or
             $subscriptionStatus == "CANCELLED" or
             $subscriptionStatus == "EXPIRED")
         }]
-            <div class="col-sm-2">
+            <div class="col-sm-12 row ppaltmessages">
                 <form method="post" action="[{$oViewConf->getSelfLink()}]">
                     [{$oViewConf->getHiddenSid()}]
                     <input type="hidden" name="oxid" value="[{$oxid}]">
@@ -540,46 +539,41 @@
                     <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_APPLY"}]</button>
                 </form>
             </div>
-            <div class="col-sm-1"></div>
         [{/if}]
-
-            <div class="col-sm-2">
-                <form method="post" action="[{$oViewConf->getSelfLink()}]">
-                    [{$oViewConf->getHiddenSid()}]
-                    <input type="hidden" name="oxid" value="[{$oxid}]">
-                    <input type="hidden" name="cl" value="[{$oViewConf->getTopActiveClassName()}]">
-                    <input type="hidden" name="fnc" value="captureOutstandingFees">
-                    <h4>[{oxmultilang ident="OXPS_PAYPAL_CAPTURE_OUTSTANDING_FEES"}]</h4>
-                    <div class="form-group">
-                        <label for="outstandingFeeAmount">[{oxmultilang ident="OXPS_PAYPAL_AMOUNT"}]</label>
-                        <div class="input-group">
-                            <input type="number"
-                                   step="0.01"
-                                   min="0"
-                                   max="[{$billingInfo->outstanding_balance->value}]"
-                                   class="form-control"
-                                   id="outstandingFeeAmount"
-                                   name="outstandingFee[amount]">
-                            <div class="input-group-addon">
-                                <span class="input-group-text">[{$billingInfo->outstanding_balance->currency_code}]</span>
-                            </div>
+        <div class="col-sm-12 row ppaltmessages">
+            <form method="post" action="[{$oViewConf->getSelfLink()}]">
+                [{$oViewConf->getHiddenSid()}]
+                <input type="hidden" name="oxid" value="[{$oxid}]">
+                <input type="hidden" name="cl" value="[{$oViewConf->getTopActiveClassName()}]">
+                <input type="hidden" name="fnc" value="captureOutstandingFees">
+                <h4>[{oxmultilang ident="OXPS_PAYPAL_CAPTURE_OUTSTANDING_FEES"}]</h4>
+                <div class="form-group">
+                    <label for="outstandingFeeAmount">[{oxmultilang ident="OXPS_PAYPAL_AMOUNT"}]</label>
+                    <div class="input-group">
+                        <input type="number"
+                               step="0.01"
+                               min="0"
+                               max="[{$billingInfo->outstanding_balance->value}]"
+                               class="form-control"
+                               id="outstandingFeeAmount"
+                               name="outstandingFee[amount]">
+                        <div class="input-group-addon">
+                            <span class="input-group-text">[{$billingInfo->outstanding_balance->currency_code}]</span>
                         </div>
                     </div>
-                    <input type="hidden" name="outstandingFee[currency_code]">
-                    <div class="form-group">
-                        <label for="outstandingFeeCaptureNote">
-                            [{oxmultilang ident="OXPS_PAYPAL_NOTE"}]
-                        </label>
-                        <textarea name="captureNote" id="outstandingFeeCaptureNote" class="form-control" maxlength="128"></textarea>
-                    </div>
-                    <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_APPLY"}]</button>
-                </form>
-            </div>
+                </div>
+                <input type="hidden" name="outstandingFee[currency_code]">
+                <div class="form-group">
+                    <label for="outstandingFeeCaptureNote">
+                        [{oxmultilang ident="OXPS_PAYPAL_NOTE"}]
+                    </label>
+                    <textarea name="captureNote" id="outstandingFeeCaptureNote" class="form-control" maxlength="128"></textarea>
+                </div>
+                <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_APPLY"}]</button>
+            </form>
         </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <iframe frameborder="0" src="[{$sSelfLink}]&cl=PayPalSubscriptionTransactionController&subscriptionId=[{$payPalSubscription->id}]" class="col-sm-12" height="600"></iframe>
-            </div>
+        <div class="col-sm-12">
+            <iframe frameborder="0" src="[{$sSelfLink}]&cl=PayPalSubscriptionTransactionController&subscriptionId=[{$payPalSubscription->id}]" width="100%" height="600"></iframe>
         </div>
     </div>
 </div>

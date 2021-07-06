@@ -2,13 +2,9 @@
 
 <div class="container-fluid">
     <br />
-    <div class="row">
-        <div class="col-sm-1">
-            <button id="toggleFilter" class="btn btn-info col-sm-12">
-                [{oxmultilang ident="OXPS_PAYPAL_FILTER"}]
-            </button>
-        </div>
-    </div>
+    <button id="toggleFilter" class="btn btn-info">
+        [{oxmultilang ident="OXPS_PAYPAL_FILTER"}]
+    </button>
     [{capture assign="sPayPalTransActionJS"}]
         [{strip}]
             jQuery(document).ready(function(){
@@ -144,7 +140,7 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="transactionDateFromFilter">[{oxmultilang ident="OXPS_PAYPAL_TRANSACTION_DATE_FROM"}]</label>
-                        <input type="datetime-local"
+                        <input type="date"
                                id="transactionDateFromFilter"
                                class="form-control"
                                name="where[transactions][startDate]"
@@ -157,7 +153,7 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="transactionDateToFilter">[{oxmultilang ident="OXPS_PAYPAL_TRANSACTION_DATE_TO"}]</label>
-                        <input type="datetime-local"
+                        <input type="date"
                                id="transactionDateToFilter"
                                class="form-control"
                                name="where[transactions][endDate]"
@@ -312,5 +308,4 @@
         [{include file="paypal_list_pagination.tpl"}]
     </div>
 </div>
-</body>
-</html>
+[{include file="bottomitem.tpl"}]

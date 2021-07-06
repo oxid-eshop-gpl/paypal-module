@@ -18,7 +18,7 @@
                         <label for="startTimeFilter">[{oxmultilang ident="OXPS_PAYPAL_FROM"}]</label>
                         <input id="startTimeFilter"
                                class="form-control"
-                               type="datetime-local"
+                               type="date"
                                name="filters[startTime]"
                                value="[{if $filters.startTime}][{$filters.startTime}][{/if}]"
                                required>
@@ -29,7 +29,7 @@
                         <label for="endTimeFilter">[{oxmultilang ident="OXPS_PAYPAL_TO"}]</label>
                         <input id="endTimeFilter"
                                class="form-control"
-                               type="datetime-local"
+                               type="date"
                                name="filters[endTime]"
                                value="[{if $filters.endTime}][{$filters.endTime}][{/if}]"
                                required>

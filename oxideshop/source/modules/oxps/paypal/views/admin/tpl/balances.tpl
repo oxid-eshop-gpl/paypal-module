@@ -2,13 +2,9 @@
 
 <div class="container-fluid">
     <br />
-    <div class="row">
-        <div class="col-sm-1">
-            <button id="toggleFilter" class="btn btn-info col-sm-12">
-                [{oxmultilang ident="OXPS_PAYPAL_FILTER"}]
-            </button>
-        </div>
-    </div>
+    <button id="toggleFilter" class="btn btn-info">
+        [{oxmultilang ident="OXPS_PAYPAL_FILTER"}]
+    </button>
     [{capture assign="sPayPalBalancesJS"}]
         [{strip}]
             jQuery(document).ready(function(){
@@ -34,7 +30,7 @@
                 <div class="col-sm-4 col-md-3">
                     <div class="form-group">
                         <label for="asOfTimeFilter">[{oxmultilang ident="OXPS_PAYPAL_AS_OF_TIME"}]</label>
-                        <input type="datetime-local"
+                        <input type="date"
                                class="form-control"
                                id="asOfTimeFilter"
                                name="asOfTime"
@@ -125,5 +121,4 @@
         </div>
     [{/if}]
 </div>
-</body>
-</html>
+[{include file="bottomitem.tpl"}]
