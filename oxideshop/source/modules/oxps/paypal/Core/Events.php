@@ -27,7 +27,6 @@ use OxidEsales\Eshop\Core\DatabaseProvider;
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Model\BaseModel;
 use OxidEsales\Eshop\Core\Registry;
-use OxidProfessionalServices\PayPal\Repository\LogRepository;
 
 class Events
 {
@@ -36,7 +35,6 @@ class Events
      */
     public static function onActivate()
     {
-        self::createLogTable();
         self::addPaymentMethod();
         self::enablePaymentMethod();
         self::createPayPalOrderTable();
@@ -132,68 +130,6 @@ class Events
     public static function onDeactivate(): void
     {
         self::disablePaymentMethod();
-    }
-
-
-    protected static function createLogTable(): void
-    {
-        $sql = sprintf(
-            'CREATE TABLE IF NOT EXISTS %s (
-                        `OXID`
-                            char(32)
-                            character set latin1
-                            collate latin1_general_ci
-                            NOT NULL
-                            COMMENT \'Record id\',
-                        `OXSHOPID`
-                            char(32)
-                            character set latin1
-                            collate latin1_general_ci
-                            NOT NULL
-                            COMMENT \'Shop id (oxshops)\',
-                        `OXUSERID`
-                            char(32)
-                            character set latin1
-                            collate latin1_general_ci
-                            NOT NULL
-                            COMMENT \'User id (oxuser)\',
-                        `OXORDERID`
-                            char(32)
-                            character set latin1
-                            collate latin1_general_ci
-                            NOT NULL
-                            COMMENT \'Order id (oxorder)\',
-                        `OXPAYPALRESPONSEMSG`
-                            TEXT
-                            NOT NULL
-                            COMMENT \'Response from PayPal API\',
-                        `OXPAYPALSTATUSCODE`
-                            VARCHAR(100)
-                            NOT NULL
-                            COMMENT \'Status code from PayPal API\',
-                        `OXPAYPALREQUESTTYPE`
-                            VARCHAR(100)
-                            NOT NULL
-                            COMMENT \'Request type\',
-                        `OXTIMESTAMP`
-                            timestamp
-                            NOT NULL
-                            default CURRENT_TIMESTAMP
-                            on update CURRENT_TIMESTAMP
-                            COMMENT \'Timestamp\',
-                        `OXPAYPALIDENTIFIER`
-                            char(32)
-                            character set latin1
-                            collate latin1_general_ci
-                            NOT NULL
-                            COMMENT \'PayPal index to search by\',
-                        PRIMARY KEY (`OXID`))
-                            ENGINE=InnoDB DEFAULT CHARSET=utf8
-                            COMMENT \'PayPal Payment transaction log\'',
-            LogRepository::TABLE_NAME
-        );
-
-        DatabaseProvider::getDb()->execute($sql);
     }
 
     protected static function createSubscriptionProductTable(): void
