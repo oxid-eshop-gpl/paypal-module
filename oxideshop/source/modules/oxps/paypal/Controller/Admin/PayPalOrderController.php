@@ -41,6 +41,7 @@ use OxidProfessionalServices\PayPal\Traits\AdminOrderFunctionTrait;
 class PayPalOrderController extends AdminDetailsController
 {
     use AdminOrderFunctionTrait;
+
     /**
      * @var Order
      */
@@ -87,8 +88,7 @@ class PayPalOrderController extends AdminDetailsController
             if ($order->getPayPalOrderIdForOxOrderId()) {
                 $this->addTplParam('payPalOrder', $order->getPayPalOrder());
                 $this->addTplParam('capture', $order->getOrderPaymentCapture());
-            }
-            elseif ($subscriptionId = $order->getPayPalSubscriptionIdForOxOrderId()){
+            } elseif ($subscriptionId = $order->getPayPalSubscriptionIdForOxOrderId()) {
                 $paypalSubscription = $this->getPayPalSubscription($subscriptionId);
                 $product = $this->getSubscriptionProduct($paypalSubscription->id);
                 $this->addTplParam('subscription', $this->getSubscription($subscriptionId));
