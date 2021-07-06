@@ -139,39 +139,39 @@ class Events
     {
         $sql = sprintf(
             'CREATE TABLE IF NOT EXISTS %s (
-                        `OXPS_PAYPAL_PAYLOGID`
+                        `OXID`
                             char(32)
                             character set latin1
                             collate latin1_general_ci
                             NOT NULL
                             COMMENT \'Record id\',
-                        `OXPS_PAYPAL_OXSHOPID`
+                        `OXSHOPID`
                             char(32)
                             character set latin1
                             collate latin1_general_ci
                             NOT NULL
                             COMMENT \'Shop id (oxshops)\',
-                        `OXPS_PAYPAL_OXUSERID`
+                        `OXUSERID`
                             char(32)
                             character set latin1
                             collate latin1_general_ci
                             NOT NULL
                             COMMENT \'User id (oxuser)\',
-                        `OXPS_PAYPAL_OXORDERID`
+                        `OXORDERID`
                             char(32)
                             character set latin1
                             collate latin1_general_ci
                             NOT NULL
                             COMMENT \'Order id (oxorder)\',
-                        `OXPS_PAYPAL_RESPONSE_MSG`
+                        `OXPAYPALRESPONSEMSG`
                             TEXT
                             NOT NULL
                             COMMENT \'Response from PayPal API\',
-                        `OXPS_PAYPAL_STATUS_CODE`
+                        `OXPAYPALSTATUSCODE`
                             VARCHAR(100)
                             NOT NULL
                             COMMENT \'Status code from PayPal API\',
-                        `OXPS_PAYPAL_REQUEST_TYPE`
+                        `OXPAYPALREQUESTTYPE`
                             VARCHAR(100)
                             NOT NULL
                             COMMENT \'Request type\',
@@ -181,13 +181,13 @@ class Events
                             default CURRENT_TIMESTAMP
                             on update CURRENT_TIMESTAMP
                             COMMENT \'Timestamp\',
-                        `OXPS_PAYPAL_IDENTIFIER`
+                        `OXPAYPALIDENTIFIER`
                             char(32)
                             character set latin1
                             collate latin1_general_ci
                             NOT NULL
                             COMMENT \'PayPal index to search by\',
-                        PRIMARY KEY (`OXPS_PAYPAL_PAYLOGID`))
+                        PRIMARY KEY (`OXID`))
                             ENGINE=InnoDB DEFAULT CHARSET=utf8
                             COMMENT \'PayPal Payment transaction log\'',
             LogRepository::TABLE_NAME
@@ -200,31 +200,31 @@ class Events
     {
         $sql = sprintf(
             'CREATE TABLE IF NOT EXISTS %s (
-                        `OXPS_PAYPAL_SUBSCRIPTION_PRODUCT_ID`
+                        `OXID`
                             char(32)
                             character set latin1
                             collate latin1_general_ci
                             NOT NULL
                             COMMENT \'Record id\',
-                        `OXPS_PAYPAL_OXSHOPID`
+                        `OXSHOPID`
                             char(32)
                             character set latin1
                             collate latin1_general_ci
                             NOT NULL
                             COMMENT \'Shop id (oxshops)\',
-                        `OXPS_PAYPAL_OXARTICLE_ID`
+                        `OXARTID`
                             char(32)
                             character set latin1
                             collate latin1_general_ci
                             NOT NULL
                             COMMENT \'OXID product ID\',
-                        `OXPS_PAYPAL_PRODUCT_ID`
+                        `OXPAYPALPRODUCTID`
                             char(32)
                             character set latin1
                             collate latin1_general_ci
                             NOT NULL
                             COMMENT \'PayPal product ID\',
-                        `OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID`
+                        `OXPAYPALSUBSCRIPTIONPLANID`
                             char(32)
                             character set latin1
                             collate latin1_general_ci
@@ -236,7 +236,7 @@ class Events
                             default CURRENT_TIMESTAMP
                             on update CURRENT_TIMESTAMP
                             COMMENT \'Timestamp\',
-                        PRIMARY KEY (`OXPS_PAYPAL_SUBSCRIPTION_PRODUCT_ID`))
+                        PRIMARY KEY (`OXID`))
                             ENGINE=InnoDB  DEFAULT CHARSET=utf8
                             COMMENT \'Primary key\'',
             'oxps_paypal_subscription_product'
@@ -255,13 +255,13 @@ class Events
                             collate latin1_general_ci
                             NOT NULL
                             COMMENT \'Record id\',
-                        `OXPS_PAYPAL_OXSHOPID`
+                        `OXSHOPID`
                             char(32)
                             character set latin1
                             collate latin1_general_ci
                             NOT NULL
                             COMMENT \'Shop id (oxshops)\',
-                        `OXPS_PAYPAL_USER_ID`
+                        `OXUSERID`
                             char(32)
                             character set latin1
                             collate latin1_general_ci
@@ -273,19 +273,19 @@ class Events
                             collate latin1_general_ci
                             NOT NULL
                             COMMENT \'Order id (oxorder)\',
-                        `OXPS_PAYPAL_OXARTICLE_ID`
+                        `OXARTID`
                             char(32)
                             character set latin1
                             collate latin1_general_ci
                             NOT NULL
                             COMMENT \'OXID product ID\',
-                        `OXPS_PAYPAL_PRODUCT_ID`
+                        `OXPAYPALPRODUCTID`
                             char(32)
                             character set latin1
                             collate latin1_general_ci
                             NOT NULL
                             COMMENT \'PayPal product ID\',
-                        `OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID`
+                        `OXPAYPALSUBSCRIPTIONPLANID`
                             char(32)
                             character set latin1
                             collate latin1_general_ci
@@ -322,19 +322,19 @@ class Events
                     collate latin1_general_ci
                     NOT NULL
                     COMMENT \'Record id\',
-                `OXPS_PAYPAL_OXSHOPID`
+                `OXSHOPID`
                     char(32)
                     character set latin1
                     collate latin1_general_ci
                     NOT NULL
                     COMMENT \'Shop id (oxshops)\',
-                `OXPS_PAYPAL_OXORDERID`
+                `OXORDERID`
                     char(32)
                     character set latin1
                     collate latin1_general_ci
                     NOT NULL
                     COMMENT \'oxorder OXID\',
-                `OXPS_PAYPAL_PAYPALORDERID`
+                `OXPAYPALORDERID`
                     char(32)
                     character set latin1
                     collate latin1_general_ci
@@ -347,7 +347,7 @@ class Events
                     on update CURRENT_TIMESTAMP
                     COMMENT \'Timestamp\',
                 PRIMARY KEY (`OXID`),
-                KEY `OXPS_PAYPAL_OXORDERID` (`OXPS_PAYPAL_OXORDERID`)
+                KEY `OXORDERID` (`OXORDERID`)
             )
             ENGINE=InnoDB DEFAULT CHARSET=utf8
             COMMENT \'Primary key\'',

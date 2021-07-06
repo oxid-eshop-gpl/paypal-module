@@ -166,13 +166,13 @@ class PayPalSubscribeController extends AdminController
 
         if (!$SelectSubscriptionPlanId) {
             $result = $this->repository->getSubscriptionIdPlanByProductId($this->linkedObject->id);
-            $subscriptionPlanId = $result[0]['OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID'];
+            $subscriptionPlanId = $result[0]['OXPAYPALSUBSCRIPTIONPLANID'];
         } else {
             $result = $this->repository->getSubscriptionIdPlanByProductIdSubscriptionPlanId(
                 $this->linkedObject->id,
                 $SelectSubscriptionPlanId
             );
-            $subscriptionPlanId = $result['OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID'];
+            $subscriptionPlanId = $result['OXPAYPALSUBSCRIPTIONPLANID'];
         }
 
         if (empty($subscriptionPlanId)) {
@@ -225,7 +225,7 @@ class PayPalSubscribeController extends AdminController
 
         $this->linkedProduct = $this->repository->getLinkedProductByOxid($oxid);
         if ($this->linkedProduct) {
-            if ($linkedObject = $this->getPayPalProductDetail($this->linkedProduct[0]['OXPS_PAYPAL_PRODUCT_ID'])) {
+            if ($linkedObject = $this->getPayPalProductDetail($this->linkedProduct[0]['OXPAYPALPRODUCTID'])) {
                 $this->linkedObject = $linkedObject;
             } else {
                 // We have a linkedProduct, but its does not exists in PayPal-Catalogs, so we delete them
@@ -404,7 +404,7 @@ class PayPalSubscribeController extends AdminController
             foreach ($linkedProducts as $linkedProduct) {
                 $subscriptionPlan = $sf
                     ->getSubscriptionService()
-                    ->showPlanDetails('string', $linkedProduct['OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID'], 1);
+                    ->showPlanDetails('string', $linkedProduct['OXPAYPALSUBSCRIPTIONPLANID'], 1);
                 if ($subscriptionPlan->status == 'ACTIVE') {
                     $subscriptionPlans[] = $subscriptionPlan;
                 }

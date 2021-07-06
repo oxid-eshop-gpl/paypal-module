@@ -127,14 +127,14 @@ class Order extends Order_parent
             $oxId = is_null($oxId) ? $this->getId() : $oxId;
             $table = 'oxps_paypal_order';
             $shopId = $this->getShopId();
-            $params = [$table . '.oxps_paypal_oxorderid' => $oxId, $table . '.oxps_paypal_oxshopid' => $shopId];
+            $params = [$table . '.oxorderid' => $oxId, $table . 'oxshopid' => $shopId];
 
             $paypalOrderObj = oxNew(BaseModel::class);
             $paypalOrderObj->init($table);
             $select = $paypalOrderObj->buildSelectString($params);
 
             if ($data = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getRow($select)) {
-                $this->payPalOrderId = $data['oxps_paypal_paypalorderid'];
+                $this->payPalOrderId = $data['oxpaypalorderid'];
             }
         }
         return $this->payPalOrderId;
@@ -154,14 +154,14 @@ class Order extends Order_parent
             $oxId = is_null($oxId) ? $this->getId() : $oxId;
             $table = 'oxps_paypal_subscription_product_order';
             $shopId = $this->getShopId();
-            $params = [$table . '.oxps_paypal_order_id' => $oxId, $table . '.oxps_paypal_shop_id' => $shopId];
+            $params = [$table . '.oxps_paypal_order_id' => $oxId, $table . '.oxshopid' => $shopId];
 
             $paypalOrderObj = oxNew(BaseModel::class);
             $paypalOrderObj->init($table);
             $select = $paypalOrderObj->buildSelectString($params);
 
             if ($data = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getRow($select)) {
-                $this->payPalSessionId = $data['oxps_paypal_session_id'];
+                $this->payPalSessionId = $data['oxpaypalsessionid'];
             }
         }
         return $this->payPalSessionId;
@@ -181,14 +181,14 @@ class Order extends Order_parent
             $oxId = is_null($oxId) ? $this->getId() : $oxId;
             $table = 'oxps_paypal_subscription_product_order';
             $shopId = $this->getShopId();
-            $params = [$table . '.oxps_paypal_order_id' => $oxId, $table . '.oxps_paypal_shop_id' => $shopId];
+            $params = [$table . '.oxps_paypal_order_id' => $oxId, $table . '.oxshopid' => $shopId];
 
             $paypalOrderObj = oxNew(BaseModel::class);
             $paypalOrderObj->init($table);
             $select = $paypalOrderObj->buildSelectString($params);
 
             if ($data = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getRow($select)) {
-                $this->payPalProductId = $data['oxps_paypal_session_id'];
+                $this->payPalProductId = $data['oxpaypalsessionid'];
             }
         }
         return $this->payPalProductId;

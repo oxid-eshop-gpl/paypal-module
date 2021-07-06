@@ -33,7 +33,7 @@ class ArticleListController extends ArticleListController_Parent
 
         $linkedProduct = $repository->getLinkedProductByOxid($oxid);
         if ($linkedProduct) {
-            $linkedProduct = $linkedProduct[0]['OXPS_PAYPAL_PRODUCT_ID'];
+            $linkedProduct = $linkedProduct[0]['OXPAYPALPRODUCTID'];
 
             try {
                 $linkedObject = Registry::get(ServiceFactory::class)

@@ -52,7 +52,7 @@ trait ArticleDetailsTrait
             foreach ($linkedProducts as $linkedProduct) {
                 $subscriptionPlan = $sf
                     ->getSubscriptionService()
-                    ->showPlanDetails('string', $linkedProduct['OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID'], 1);
+                    ->showPlanDetails('string', $linkedProduct['OXPAYPALSUBSCRIPTIONPLANID'], 1);
                 if ($subscriptionPlan->status == 'ACTIVE') {
                     $subscriptionPlans[] = $subscriptionPlan;
                 }
