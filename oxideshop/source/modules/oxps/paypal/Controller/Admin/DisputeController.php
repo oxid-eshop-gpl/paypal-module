@@ -31,6 +31,11 @@ use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 class DisputeController extends AdminListController
 {
     /**
+     * @inheritDoc
+     */
+    protected $filters = null;
+
+    /**
      * @var ResponseDisputeSearch
      */
     private $response;
@@ -75,6 +80,9 @@ class DisputeController extends AdminListController
             /** @var ServiceFactory $serviceFactory */
             $serviceFactory = Registry::get(ServiceFactory::class);
             $filters = $this->getFilters();
+
+            $filters['startTime'] = strtotime($filters['startTime']);
+
             $disputeService = $serviceFactory->getDisputeService();
             $this->response = $disputeService->listDisputesSummary(
                 //TODO: at this moment combination of page and page_size does not return correctly paginated result.
@@ -82,7 +90,7 @@ class DisputeController extends AdminListController
                 10,
                 $filters['transactionId'],
                 $filters['disputeState'],
-                $filters['startTime'],
+                date('Y-m-d\TH:i:s\.v\Z', $filters['startTime']),
                 Registry::getRequest()->getRequestEscapedParameter('pagetoken')
             );
         }
@@ -112,10 +120,19 @@ class DisputeController extends AdminListController
     }
 
     /**
+     * Get used filter values
+     *
      * @return array
      */
-    protected function getFilters(): array
+    private function getFilters(): array
     {
-        return (array) Registry::getRequest()->getRequestEscapedParameter('filters');
+        if (is_null($this->filters)) {
+            $filters = Registry::getRequest()->getRequestEscapedParameter('filters', []);
+            if (!isset($filters['endTime']) && !isset($filters['startTime'])) {
+                $filters['startTime'] = date('Y-m-d', time() - (60 * 60 * 24 * 30));
+            }
+            $this->filters = $filters;
+        }
+        return (array) $this->filters;
     }
 }

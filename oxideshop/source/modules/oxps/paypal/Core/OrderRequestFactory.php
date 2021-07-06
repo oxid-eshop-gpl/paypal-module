@@ -341,7 +341,7 @@ class OrderRequestFactory
 
             $shipping->address = $address;
         } else {
-            $fullName = $user->getFieldData('oxstreet') . " " . $user->getFieldData('oxstreetnr');
+            $fullName = $user->getFieldData('oxfname') . " " . $user->getFieldData('oxlname');
             $name->full_name = $fullName;
 
             $shipping->address = $this->getBillingAddress();

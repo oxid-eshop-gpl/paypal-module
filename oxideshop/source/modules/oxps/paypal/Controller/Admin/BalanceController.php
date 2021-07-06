@@ -22,7 +22,6 @@
 
 namespace OxidProfessionalServices\PayPal\Controller\Admin;
 
-use DateTime;
 use OxidEsales\Eshop\Application\Controller\Admin\AdminListController;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
@@ -43,7 +42,10 @@ class BalanceController extends AdminListController
      */
     public function getAsOfTime()
     {
-        return (string) Registry::getRequest()->getRequestEscapedParameter('asOfTime');
+        if (!$asOfTime = (string) Registry::getRequest()->getRequestEscapedParameter('asOfTime')) {
+            $asOfTime = date('Y-m-d', time());
+        }
+        return $asOfTime;
     }
 
     /**
@@ -84,8 +86,10 @@ class BalanceController extends AdminListController
         $serviceFactory = Registry::get(ServiceFactory::class);
         $transactionService = $serviceFactory->getTransactionSearchService();
 
+        $asOfTime = strtotime($this->getAsOfTime());
+
         return $transactionService->listAllBalances(
-            (new DateTime($this->getAsOfTime()))->format(DateTime::ISO8601),
+            date('Y-m-d\TH:i:s\.v\Z', $asOfTime),
             $this->getCurrencyCode()
         );
     }

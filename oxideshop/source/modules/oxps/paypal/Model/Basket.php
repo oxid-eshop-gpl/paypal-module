@@ -323,7 +323,11 @@ class Basket extends Basket_parent
     {
         $isSubscriptionBasket = false;
         foreach ($this->_aBasketContents as $oBasketItem) {
-            if ($oBasketItem->getArticle(true)->isPayPalProductLinked()) {
+            $basketArticle = $oBasketItem->getArticle(true);
+            $basketArticle->getId();
+            $article = oxNew(\OxidEsales\Eshop\Application\Model\Article::class);
+            $article->load($basketArticle->getId());
+            if ($article->isPayPalProductLinked()) {
                 $isSubscriptionBasket = true;
                 break;
             }

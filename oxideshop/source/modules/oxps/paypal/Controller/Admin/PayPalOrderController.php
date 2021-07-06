@@ -33,12 +33,15 @@ use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderCaptureRequest;
 use OxidProfessionalServices\PayPal\Api\Model\Payments\RefundRequest;
 use OxidProfessionalServices\PayPal\Api\Service\Payments;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
+use OxidProfessionalServices\PayPal\Traits\AdminOrderFunctionTrait;
 
 /**
  * Order class wrapper for PayPal module
  */
 class PayPalOrderController extends AdminDetailsController
 {
+    use AdminOrderFunctionTrait;
+
     /**
      * @var Order
      */
@@ -72,16 +75,26 @@ class PayPalOrderController extends AdminDetailsController
 
         $lang = Registry::getLang();
 
+        $result = "paypalorder.tpl";
+
         // normal paypal order
         try {
             $order = $this->getOrder();
             $this->addTplParam('oxid', $this->getEditObjectId());
             $this->addTplParam('order', $order);
             $this->addTplParam('payPalOrder', null);
+            $this->addTplParam('payPalSubscriptionOrder', null);
 
-            if ($order->paidWithPayPal()) {
+            if ($order->getPayPalOrderIdForOxOrderId()) {
                 $this->addTplParam('payPalOrder', $order->getPayPalOrder());
                 $this->addTplParam('capture', $order->getOrderPaymentCapture());
+            } elseif ($subscriptionId = $order->getPayPalSubscriptionIdForOxOrderId()) {
+                $paypalSubscription = $this->getPayPalSubscription($subscriptionId);
+                $product = $this->getSubscriptionProduct($paypalSubscription->id);
+                $this->addTplParam('subscription', $this->getSubscription($subscriptionId));
+                $this->addTplParam('payPalSubscription', $paypalSubscription);
+                $this->addTplParam('subscriptionProduct', $product);
+                $result = "paypal_subscription_details.tpl";
             }
         } catch (ApiException $exception) {
             $this->addTplParam('error', $lang->translateString('OXPS_PAYPAL_ERROR_' . $exception->getErrorIssue()));
@@ -91,8 +104,7 @@ class PayPalOrderController extends AdminDetailsController
         if (!$order->paidWithPayPal()) {
             $this->addTplParam('error', $lang->translateString('OXPS_PAYPAL_ERROR_NOT_PAID_WITH_PAYPAL'));
         }
-
-        return "paypalorder.tpl";
+        return $result;
     }
 
     /**

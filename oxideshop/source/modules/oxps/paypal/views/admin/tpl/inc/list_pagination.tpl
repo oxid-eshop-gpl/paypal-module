@@ -33,7 +33,7 @@
                 </a>
             </li>
             <li class="page-item">
-                <a class="page-link" href="[{$oViewConf->getSelfLink()}]&cl=[{$oViewConf->getActiveClassName()}]&amp;oxid=[{$oxid}]&amp;jumppage=[{$pagenavi->pages}]&amp;[{$linkSort}]&amp;actedit=[{$actedit}]&amp;language=[{$actlang}]&amp;editlanguage=[{$actlang}][{$whereparam}]&amp;folder=[{$folder}]&amp;pwrsearchfld=[{$pwrsearchfld}]&amp;art_category=[{$art_category}]"
+                <a class="page-link" href="[{$oViewConf->getSelfLink()}]&cl=[{$oViewConf->getActiveClassName()}]&amp;oxid=[{$oxid}]&amp;jumppage=[{$pagenavi->pages}]&amp;[{$linkSort}]&amp;actedit=[{$actedit}]&amp;language=[{$actlang}]&amp;editlanguage=[{$actlang}][{$whereparam}]&amp;folder=[{$folder}]&amp;pwrsearchfld=[{$pwrsearchfld}]&amp;art_category=[{$art_category}]">
                     &#187;
                 </a>
             </li>

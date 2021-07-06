@@ -2,13 +2,9 @@
 [{assign var="where" value=$oView->getListFilter()}]
 <div class="container-fluid">
     <br />
-    <div class="row">
-        <div class="col-sm-1">
-            <button id="toggleFilter" class="btn btn-info col-sm-12">
-                [{oxmultilang ident="OXPS_PAYPAL_FILTER"}]
-            </button>
-        </div>
-    </div>
+    <button id="toggleFilter" class="btn btn-info">
+        [{oxmultilang ident="OXPS_PAYPAL_FILTER"}]
+    </button>
     [{capture assign="sPayPalDisputsJS"}]
         [{strip}]
             jQuery(document).ready(function(){
@@ -48,7 +44,7 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="startTimeFilter">[{oxmultilang ident="OXPS_PAYPAL_DISPUTE_START_TIME"}]</label>
-                        <input type="datetime-local"
+                        <input type="date"
                                class="form-control"
                                id="startTimeFilter"
                                name="filters[startTime]"
@@ -80,20 +76,20 @@
     </form>
     <div id="results">
     <nav>
-        <ul class="pagination">
-            <li class="page-item">
-                <a class="page-link" href="[{$oViewConf->getSelfLink()}]&cl=[{$oViewConf->getActiveClassName()}]&amp;language=[{$actlang}]&amp;editlanguage=[{$actlang}]">
-                    [{oxmultilang ident="OXPS_PAYPAL_FIRST"}]
-                </a>
-            </li>
-            [{if $nextPageToken}]
+        [{if $nextPageToken}]
+            <ul class="pagination">
                 <li class="page-item">
-                    <a class="page-link" href="[{$oViewConf->getSelfLink()}]&cl=[{$oViewConf->getActiveClassName()}]&amp;language=[{$actlang}]&amp;editlanguage=[{$actlang}]&amp;pagetoken=[{$nextPageToken}]">
-                        [{oxmultilang ident="OXPS_PAYPAL_NEXT"}]
+                    <a class="page-link" href="[{$oViewConf->getSelfLink()}]&cl=[{$oViewConf->getActiveClassName()}]&amp;language=[{$actlang}]&amp;editlanguage=[{$actlang}]">
+                        &#171;
                     </a>
                 </li>
-            [{/if}]
-        </ul>
+                <li class="page-item">
+                    <a class="page-link" href="[{$oViewConf->getSelfLink()}]&cl=[{$oViewConf->getActiveClassName()}]&amp;language=[{$actlang}]&amp;editlanguage=[{$actlang}]&amp;pagetoken=[{$nextPageToken}]">
+                        &#187;
+                    </a>
+                </li>
+            </ul>
+        [{/if}]
     </nav>
     <table class="table table-sm">
         <thead>
@@ -138,21 +134,20 @@
         </tbody>
     </table>
     <nav>
-        <ul class="pagination">
-            <li class="page-item">
-                <a class="page-link" href="[{$oViewConf->getSelfLink()}]&cl=[{$oViewConf->getActiveClassName()}]&amp;language=[{$actlang}]&amp;editlanguage=[{$actlang}]">
-                    [{oxmultilang ident="OXPS_PAYPAL_FIRST"}]
-                </a>
-            </li>
-            [{if $nextPageToken}]
+        [{if $nextPageToken}]
+            <ul class="pagination">
                 <li class="page-item">
-                    <a class="page-link" href="[{$oViewConf->getSelfLink()}]&cl=[{$oViewConf->getActiveClassName()}]&amp;language=[{$actlang}]&amp;editlanguage=[{$actlang}]&amp;pagetoken=[{$nextPageToken}]">
-                        [{oxmultilang ident="OXPS_PAYPAL_NEXT"}]
+                    <a class="page-link" href="[{$oViewConf->getSelfLink()}]&cl=[{$oViewConf->getActiveClassName()}]&amp;language=[{$actlang}]&amp;editlanguage=[{$actlang}]">
+                        &#171;
                     </a>
                 </li>
-            [{/if}]
-        </ul>
+                <li class="page-item">
+                    <a class="page-link" href="[{$oViewConf->getSelfLink()}]&cl=[{$oViewConf->getActiveClassName()}]&amp;language=[{$actlang}]&amp;editlanguage=[{$actlang}]&amp;pagetoken=[{$nextPageToken}]">
+                        &#187;
+                    </a>
+                </li>
+            </ul>
+        [{/if}]
     </nav>
 </div>
-</body>
-</html>
+[{include file="bottomitem.tpl"}]

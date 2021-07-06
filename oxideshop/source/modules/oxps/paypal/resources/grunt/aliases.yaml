@@ -4,11 +4,9 @@ production:
   - "postcss"
   - "cssmin"
   - "uglify:moduleproduction"
-
 development:
   - "jshint:moduleproduction"
   - "sass:moduledevelopment"
   - "concat:moduleproduction"
-
 default:
   - "production"

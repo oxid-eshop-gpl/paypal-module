@@ -22,7 +22,6 @@
 
 namespace OxidProfessionalServices\PayPal\Controller\Admin;
 
-use DateTime;
 use Exception;
 use OxidEsales\Eshop\Application\Controller\Admin\AdminController;
 use OxidEsales\Eshop\Core\Registry;
@@ -32,6 +31,11 @@ use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 
 class SubscriptionTransactionController extends AdminController
 {
+    /**
+     * @inheritDoc
+     */
+    protected $filters = null;
+
     /**
      * @inheritDoc
      */
@@ -82,10 +86,13 @@ class SubscriptionTransactionController extends AdminController
         $serviceFactory = Registry::get(ServiceFactory::class);
         $subscriptionService = $serviceFactory->getSubscriptionService();
 
+        $filters['startTime'] = strtotime($filters['startTime']);
+        $filters['endTime'] = strtotime($filters['endTime']);
+
         return $subscriptionService->listTransactionsForSubscription(
             $subscriptionId,
-            (new DateTime($filters['startTime']))->format('Y-m-d\TH:i:s\.v\Z'),
-            (new DateTime($filters['endTime']))->format('Y-m-d\TH:i:s\.v\Z')
+            date('Y-m-d\TH:i:s\.v\Z', $filters['startTime']),
+            date('Y-m-d\TH:i:s\.v\Z', $filters['endTime'])
         );
     }
 
@@ -96,7 +103,15 @@ class SubscriptionTransactionController extends AdminController
      */
     private function getFilters(): array
     {
-        return Registry::getRequest()->getRequestEscapedParameter('filters', []);
+        if (is_null($this->filters)) {
+            $filters = Registry::getRequest()->getRequestEscapedParameter('filters', []);
+            if (!isset($filters['endTime']) && !isset($filters['startTime'])) {
+                $filters['endTime'] = date('Y-m-d', time());
+                $filters['startTime'] = date('Y-m-d', time() - (60 * 60 * 24 * 30));
+            }
+            $this->filters = $filters;
+        }
+        return (array) $this->filters;
     }
 
     /**
