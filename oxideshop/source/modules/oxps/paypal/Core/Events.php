@@ -154,13 +154,13 @@ class Events
                             collate latin1_general_ci
                             NOT NULL
                             COMMENT \'OXID product ID\',
-                        `OXPAYPALPRODUCTID`
+                        `PAYPALPRODUCTID`
                             char(32)
                             character set latin1
                             collate latin1_general_ci
                             NOT NULL
                             COMMENT \'PayPal product ID\',
-                        `OXPAYPALSUBSCRIPTIONPLANID`
+                        `PAYPALSUBSCRIPTIONPLANID`
                             char(32)
                             character set latin1
                             collate latin1_general_ci
@@ -203,7 +203,7 @@ class Events
                             collate latin1_general_ci
                             NOT NULL
                             COMMENT \'User id (oxuser)\',
-                        `OXPS_PAYPAL_ORDER_ID`
+                        `OXORDERID`
                             char(32)
                             character set latin1
                             collate latin1_general_ci
@@ -215,13 +215,13 @@ class Events
                             collate latin1_general_ci
                             NOT NULL
                             COMMENT \'OXID product ID\',
-                        `OXPAYPALPRODUCTID`
+                        `PAYPALPRODUCTID`
                             char(32)
                             character set latin1
                             collate latin1_general_ci
                             NOT NULL
                             COMMENT \'PayPal product ID\',
-                        `OXPAYPALSUBSCRIPTIONPLANID`
+                        `PAYPALSUBSCRIPTIONPLANID`
                             char(32)
                             character set latin1
                             collate latin1_general_ci
@@ -242,7 +242,7 @@ class Events
                         PRIMARY KEY (`OXID`))
                             ENGINE=InnoDB  DEFAULT CHARSET=utf8
                             COMMENT \'Primary key\'',
-            'oxps_paypal_subscription_product_order'
+            'oxps_paypal_subscription_order'
         );
 
         DatabaseProvider::getDb()->execute($sql);

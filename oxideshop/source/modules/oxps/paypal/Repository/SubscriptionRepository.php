@@ -37,9 +37,9 @@ class SubscriptionRepository
     public function getSubscriptionIdPlanByProductId($productId)
     {
         return DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getAll(
-            'SELECT OXPAYPALSUBSCRIPTIONPLANID
+            'SELECT PAYPALSUBSCRIPTIONPLANID
                 FROM oxps_paypal_subscription_product
-                WHERE OXPAYPALPRODUCTID = ?',
+                WHERE PAYPALPRODUCTID = ?',
             [$productId]
         );
     }
@@ -54,8 +54,8 @@ class SubscriptionRepository
     {
         return DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getAll(
             'SELECT OXUSERID
-                FROM oxps_paypal_subscription_product_order
-                WHERE OXPAYPALSUBSCRIPTIONPLANID = ?',
+                FROM oxps_paypal_subscription_order
+                WHERE PAYPALSUBSCRIPTIONPLANID = ?',
             [$subscriptionPlanId]
         );
     }
@@ -71,7 +71,7 @@ class SubscriptionRepository
         return DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getAll(
             'SELECT OXARTID
                 FROM oxps_paypal_subscription_product
-                WHERE OXPAYPALPRODUCTID = ?',
+                WHERE PAYPALPRODUCTID = ?',
             [$productId]
         );
     }
@@ -91,7 +91,7 @@ class SubscriptionRepository
 
         $sql = 'INSERT INTO oxps_paypal_subscription_product (';
         $sql .= 'OXID, OXSHOPID, OXARTID, ';
-        $sql .= 'OXPAYPALPRODUCTID) VALUES(?,?,?,?)';
+        $sql .= 'PAYPALPRODUCTID) VALUES(?,?,?,?)';
 
         DatabaseProvider::getDb()->execute($sql, [
             UtilsObject::getInstance()->generateUId(),
@@ -106,8 +106,8 @@ class SubscriptionRepository
         return DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getRow(
             'SELECT *
                 FROM oxps_paypal_subscription_product
-                WHERE OXPAYPALPRODUCTID = ?
-                AND OXPAYPALSUBSCRIPTIONPLANID = ?',
+                WHERE PAYPALPRODUCTID = ?
+                AND PAYPALSUBSCRIPTIONPLANID = ?',
             [$productId, $subscriptionPlanId]
         );
     }
@@ -128,11 +128,11 @@ class SubscriptionRepository
 
         $existingProduct = $this->getSubscriptionIdPlanByProductId($productId);
 
-        if (count($existingProduct) == 1  && empty($existingProduct[0]['OXPAYPALSUBSCRIPTIONPLANID'])) {
+        if (count($existingProduct) == 1  && empty($existingProduct[0]['PAYPALSUBSCRIPTIONPLANID'])) {
             $sql = 'UPDATE oxps_paypal_subscription_product SET ';
-            $sql .= 'OXPAYPALSUBSCRIPTIONPLANID = ?,';
+            $sql .= 'PAYPALSUBSCRIPTIONPLANID = ?,';
             $sql .= 'OXARTID = ? ';
-            $sql .= 'WHERE OXPAYPALPRODUCTID = ?';
+            $sql .= 'WHERE PAYPALPRODUCTID = ?';
 
             DatabaseProvider::getDb()->execute($sql, [
                 $subscriptionPlanId,
@@ -142,7 +142,7 @@ class SubscriptionRepository
         } else {
             $sql = 'INSERT INTO oxps_paypal_subscription_product (';
             $sql .= 'OXID, OXSHOPID, OXARTID, ';
-            $sql .= 'OXPAYPALPRODUCTID, OXPAYPALSUBSCRIPTIONPLANID) VALUES(?,?,?,?,?)';
+            $sql .= 'PAYPALPRODUCTID, PAYPALSUBSCRIPTIONPLANID) VALUES(?,?,?,?,?)';
 
             DatabaseProvider::getDb()->execute($sql, [
                 UtilsObject::getInstance()->generateUId(),
@@ -161,7 +161,7 @@ class SubscriptionRepository
      */
     public function deleteLinkedProduct($paypalProductId): void
     {
-        $sql = 'DELETE FROM oxps_paypal_subscription_product WHERE OXPAYPALPRODUCTID = ?';
+        $sql = 'DELETE FROM oxps_paypal_subscription_product WHERE PAYPALPRODUCTID = ?';
 
         DatabaseProvider::getDb()->execute($sql, [
             $paypalProductId
@@ -175,7 +175,7 @@ class SubscriptionRepository
      */
     public function deleteLinkedPlan($planId): void
     {
-        $sql = 'DELETE FROM oxps_paypal_subscription_product WHERE OXPAYPALSUBSCRIPTIONPLANID = ?';
+        $sql = 'DELETE FROM oxps_paypal_subscription_product WHERE PAYPALSUBSCRIPTIONPLANID = ?';
 
         DatabaseProvider::getDb()->execute($sql, [
             $planId
@@ -189,7 +189,7 @@ class SubscriptionRepository
      */
     public function deleteLinkedOrders($paypalProductId): void
     {
-        $sql = 'DELETE FROM oxps_paypal_subscription_product_order WHERE OXPAYPALPRODUCTID = ?';
+        $sql = 'DELETE FROM oxps_paypal_subscription_order WHERE PAYPALPRODUCTID = ?';
 
         DatabaseProvider::getDb()->execute($sql, [
             $paypalProductId

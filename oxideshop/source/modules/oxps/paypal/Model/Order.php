@@ -152,9 +152,9 @@ class Order extends Order_parent
         if (is_null($this->payPalSessionId)) {
             $this->payPalSessionId = '';
             $oxId = is_null($oxId) ? $this->getId() : $oxId;
-            $table = 'oxps_paypal_subscription_product_order';
+            $table = 'oxps_paypal_subscription_order';
             $shopId = $this->getShopId();
-            $params = [$table . '.oxps_paypal_order_id' => $oxId, $table . '.oxshopid' => $shopId];
+            $params = [$table . '.oxorderid' => $oxId, $table . '.oxshopid' => $shopId];
 
             $paypalOrderObj = oxNew(BaseModel::class);
             $paypalOrderObj->init($table);
@@ -179,9 +179,9 @@ class Order extends Order_parent
         if (is_null($this->payPalProductId)) {
             $this->payPalProductId = '';
             $oxId = is_null($oxId) ? $this->getId() : $oxId;
-            $table = 'oxps_paypal_subscription_product_order';
+            $table = 'oxps_paypal_subscription_order';
             $shopId = $this->getShopId();
-            $params = [$table . '.oxps_paypal_order_id' => $oxId, $table . '.oxshopid' => $shopId];
+            $params = [$table . '.oxorderid' => $oxId, $table . '.oxshopid' => $shopId];
 
             $paypalOrderObj = oxNew(BaseModel::class);
             $paypalOrderObj->init($table);

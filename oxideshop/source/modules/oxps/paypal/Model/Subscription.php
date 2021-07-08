@@ -102,9 +102,9 @@ class Subscription extends BaseModel
      */
     public function findSubscriptionProductId(?string $articleId, $subscriptionPlanId): string
     {
-        $sql = "SELECT OXPAYPALPRODUCTID FROM oxps_paypal_subscription_product
+        $sql = "SELECT PAYPALPRODUCTID FROM oxps_paypal_subscription_product
             WHERE OXARTID = ?
-            AND OXPAYPALSUBSCRIPTIONPLANID = ?";
+            AND PAYPALSUBSCRIPTIONPLANID = ?";
 
         $subscriptionProduct = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)
             ->getAll($sql, [
@@ -112,7 +112,7 @@ class Subscription extends BaseModel
                 $subscriptionPlanId
             ]);
 
-        return $subscriptionProduct[0]['OXPAYPALPRODUCTID'];
+        return $subscriptionProduct[0]['PAYPALPRODUCTID'];
     }
 
     /**
@@ -129,13 +129,13 @@ class Subscription extends BaseModel
 
         $subscriptionProductId = $this->findSubscriptionProductId($articleId, $subscriptionPlanId);
 
-        $sql = "INSERT INTO oxps_paypal_subscription_product_order(
+        $sql = "INSERT INTO oxps_paypal_subscription_order(
                     `OXID`,
                     `OXSHOPID`,
                     `OXUSERID`,
                     `OXARTID`,
-                    `OXPAYPALPRODUCTID`,
-                    `OXPAYPALSUBSCRIPTIONPLANID`,
+                    `PAYPALPRODUCTID`,
+                    `PAYPALSUBSCRIPTIONPLANID`,
                     `OXPAYPALSESSIONID`)
                     VALUES (?,?,?,?,?,?,?)";
 

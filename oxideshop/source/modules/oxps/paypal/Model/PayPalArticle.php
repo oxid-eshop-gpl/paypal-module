@@ -37,7 +37,7 @@ class PayPalArticle extends PayPalArticle_parent
         if (is_null($this->_sPayPalProductId)) {
             $this->_sPayPalProductId = '';
 
-            $sql = 'SELECT OXPAYPALPRODUCTID
+            $sql = 'SELECT PAYPALPRODUCTID
                 FROM oxps_paypal_subscription_product
                 WHERE OXARTID = ?';
 

@@ -152,8 +152,8 @@ trait AdminOrderFunctionTrait
 
     private function getSubscriptionProduct(string $paypalSubscriptionId)
     {
-        $sql = 'SELECT OXPAYPALPRODUCTID
-                  FROM oxps_paypal_subscription_product_order
+        $sql = 'SELECT PAYPALPRODUCTID
+                  FROM oxps_paypal_subscription_order
                  WHERE OXPAYPALSESSIONID = ?';
 
         $subscriptionProductId = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)
