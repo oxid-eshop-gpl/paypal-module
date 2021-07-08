@@ -151,11 +151,11 @@ class Order extends Order_parent
                      WHERE PAYPALBILLINGAGREEMENTID = ?';
 
             $subProdId = $db->getOne(
-                    $sql,
-                    [
+                $sql,
+                [
                         $paypalSubscriptionId
                     ]
-                );
+            );
 
             if ($subProdId) {
                 $sql = 'SELECT PAYPALPRODUCTID
@@ -163,11 +163,11 @@ class Order extends Order_parent
                          WHERE OXID = ?';
 
                 $this->payPalProductId = $db->getOne(
-                        $sql,
-                        [
+                    $sql,
+                    [
                             $subProdId
                         ]
-                    );
+                );
             }
         }
         return $this->payPalProductId;

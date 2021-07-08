@@ -37,7 +37,6 @@ use OxidProfessionalServices\PayPal\Core\PayPalSession;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 use OxidProfessionalServices\PayPal\Repository\SubscriptionRepository;
 
-
 /**
  * Server side interface for PayPal smart buttons.
  */

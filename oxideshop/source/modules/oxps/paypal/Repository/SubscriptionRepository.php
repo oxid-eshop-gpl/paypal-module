@@ -84,7 +84,8 @@ class SubscriptionRepository
      * @throws DatabaseConnectionException
      * @throws DatabaseErrorException
      */
-    public function getSubscriptionOrders($filter = [], $page = 0) {
+    public function getSubscriptionOrders($filter = [], $page = 0)
+    {
 
         $limit = 10;
         $from = $page ? $page * $limit : 0;
@@ -103,7 +104,8 @@ class SubscriptionRepository
             {$subscriptionOrderView}.`paypalbillingagreementid`
             from {$subscriptionOrderView}
             left join {$orderView} on ({$orderView}.`oxid` = {$subscriptionOrderView}.`oxorderid`)
-            left join {$subscriptionProductView} on ({$subscriptionProductView}.`oxid` = {$subscriptionOrderView}.`oxpaypalsubprodid`)
+            left join {$subscriptionProductView}
+            on ({$subscriptionProductView}.`oxid` = {$subscriptionOrderView}.`oxpaypalsubprodid`)
             where {$subscriptionOrderView}.`oxshopid` = 1 and {$subscriptionOrderView}.`oxorderid` > ''";
 
         if (count($filter)) {
