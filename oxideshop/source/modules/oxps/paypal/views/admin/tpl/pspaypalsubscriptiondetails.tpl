@@ -180,61 +180,63 @@
             </div>
         </div>
 
-        <div id="products" class="row pptab">
-            <div class="col-sm-12">
-                <table class="table table-sm">
-                    <tr class="ppaltmessages">
-                        <td class="col-sm-2">
-                            <b>[{oxmultilang ident="OXPS_PAYPAL_PRODUCT_ID"}]</b>
-                        </td>
-                        <td>
-                            [{$subscriptionProduct->id}]
-                        </td>
-                    </tr>
-                    <tr class="ppmessages">
-                        <td>
-                            <b>[{oxmultilang ident="OXPS_PAYPAL_PRODUCT_NAME"}]</b>
-                        </td>
-                        <td>
-                            [{$subscriptionProduct->name}]
-                        </td>
-                    </tr>
-                    <tr class="ppaltmessages">
-                        <td>
-                            <b>[{oxmultilang ident="OXPS_PAYPAL_PRODUCT_DESCRIPTION"}]</b>
-                        </td>
-                        <td>
-                            [{$subscriptionProduct->description}]
-                        </td>
-                    </tr>
-                    <tr class="ppmessages">
-                        <td>
-                            <b>[{oxmultilang ident="OXPS_PAYPAL_PRODUCT_TYPE_CATEGORY"}]</b>
-                        </td>
-                        <td>
-                            [{$subscriptionProduct->type}]:[{$subscriptionProduct->category}]
-                        </td>
-                    </tr>
-                    <tr class="ppaltmessages">
-                        <td>
-                            <b>[{oxmultilang ident="OXPS_PAYPAL_PRODUCT_URL"}]</b>
-                        </td>
-                        <td>
-                            <a target="_blank" href="[{$subscriptionProduct->home_url}]">[{$subscriptionProduct->home_url}]</a>
-                        </td>
-                    </tr>
-                    <tr class="ppmessages">
-                        <td>
-                            <b>[{oxmultilang ident="OXPS_PAYPAL_PRODUCT_IMAGE"}]</b>
-                        </td>
-                        <td>
-                            <img style="width: 100px" src="[{$subscriptionProduct->image_url}]" />
-                            <br />[{$subscriptionProduct->image_url}]
-                        </td>
-                    </tr>
-                </table>
+        [{if $subscriptionProduct}]
+            <div id="products" class="row pptab">
+                <div class="col-sm-12">
+                    <table class="table table-sm">
+                        <tr class="ppaltmessages">
+                            <td class="col-sm-2">
+                                <b>[{oxmultilang ident="OXPS_PAYPAL_PRODUCT_ID"}]</b>
+                            </td>
+                            <td>
+                                [{$subscriptionProduct->id}]
+                            </td>
+                        </tr>
+                        <tr class="ppmessages">
+                            <td>
+                                <b>[{oxmultilang ident="OXPS_PAYPAL_PRODUCT_NAME"}]</b>
+                            </td>
+                            <td>
+                                [{$subscriptionProduct->name}]
+                            </td>
+                        </tr>
+                        <tr class="ppaltmessages">
+                            <td>
+                                <b>[{oxmultilang ident="OXPS_PAYPAL_PRODUCT_DESCRIPTION"}]</b>
+                            </td>
+                            <td>
+                                [{$subscriptionProduct->description}]
+                            </td>
+                        </tr>
+                        <tr class="ppmessages">
+                            <td>
+                                <b>[{oxmultilang ident="OXPS_PAYPAL_PRODUCT_TYPE_CATEGORY"}]</b>
+                            </td>
+                            <td>
+                                [{$subscriptionProduct->type}]:[{$subscriptionProduct->category}]
+                            </td>
+                        </tr>
+                        <tr class="ppaltmessages">
+                            <td>
+                                <b>[{oxmultilang ident="OXPS_PAYPAL_PRODUCT_URL"}]</b>
+                            </td>
+                            <td>
+                                <a target="_blank" href="[{$subscriptionProduct->home_url}]">[{$subscriptionProduct->home_url}]</a>
+                            </td>
+                        </tr>
+                        <tr class="ppmessages">
+                            <td>
+                                <b>[{oxmultilang ident="OXPS_PAYPAL_PRODUCT_IMAGE"}]</b>
+                            </td>
+                            <td>
+                                <img style="width: 100px" src="[{$subscriptionProduct->image_url}]" />
+                                <br />[{$subscriptionProduct->image_url}]
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
-        </div>
+        [{/if}]
 
         <div id="shipping" class="row pptab">
             <div id="subscriptionShipping" class="col-sm-6">

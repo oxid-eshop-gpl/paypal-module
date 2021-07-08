@@ -34,7 +34,6 @@ use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\SubscriptionCancelRe
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\SubscriptionCaptureRequest;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\SubscriptionSuspendRequest;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
-use OxidProfessionalServices\PayPal\Model\Subscription;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Subscription as PayPalSubscription;
 
 trait AdminOrderFunctionTrait
@@ -152,11 +151,13 @@ trait AdminOrderFunctionTrait
 
     private function getSubscriptionProduct(string $paypalSubscriptionId)
     {
-        $sql = 'SELECT PAYPALPRODUCTID
-                  FROM oxps_paypal_subscription_order
-                 WHERE OXPAYPALSESSIONID = ?';
+        $subscriptionProduct = null;
 
-        $subscriptionProductId = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)
+        $sql = 'SELECT OXPAYPALSUBPRODID
+                  FROM oxps_paypal_subscription
+                 WHERE PAYPALBILLINGAGREEMENTID = ?';
+
+        $subProdId = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)
             ->getOne(
                 $sql,
                 [
@@ -164,7 +165,26 @@ trait AdminOrderFunctionTrait
                 ]
             );
 
-        return Registry::get(ServiceFactory::class)->getCatalogService()->showProductDetails($subscriptionProductId);
+        if ($subProdId) {
+            $sql = 'SELECT PAYPALPRODUCTID
+                      FROM oxps_paypal_subscription_product
+                     WHERE OXID = ?';
+
+            $subscriptionProductId = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)
+                ->getOne(
+                    $sql,
+                    [
+                        $subProdId
+                    ]
+                );
+
+            if ($subscriptionProductId) {
+                $subscriptionProduct = Registry::get(ServiceFactory::class)
+                    ->getCatalogService()->showProductDetails($subscriptionProductId);
+            }
+        }
+
+        return $subscriptionProduct;
     }
 
     /**
@@ -174,35 +194,12 @@ trait AdminOrderFunctionTrait
      * @throws ApiException
      * @throws StandardException
      */
-    private function getPayPalSubscription(string $subscriptionId = null): PayPalSubscription
+    private function getPayPalSubscription(string $billingAgreementId): PayPalSubscription
     {
-        $subscription = $this->getSubscription($subscriptionId);
-
         /** @var ServiceFactory $serviceFactory */
         $serviceFactory = Registry::get(ServiceFactory::class);
         $subscriptionService = $serviceFactory->getSubscriptionService();
 
-        return $subscriptionService->showSubscriptionDetails($subscription->getPayPalId(), 'last_failed_payment');
-    }
-
-
-    /**
-     * Get active subscription
-     *
-     * @return Subscription
-     * @throws StandardException
-     */
-    private function getSubscription(string $subscriptionId = null): Subscription
-    {
-        if (!$this->subscription) {
-            $subscriptionId = is_null($subscriptionId) ? $this->getEditObjectId() : $subscriptionId;
-            $subscription = oxNew(Subscription::class);
-            if ($subscriptionId === null || !$subscription->load($subscriptionId)) {
-                throw new StandardException('Subscription not found');
-            }
-            $this->subscription = $subscription;
-        }
-
-        return $this->subscription;
+        return $subscriptionService->showSubscriptionDetails($billingAgreementId, 'last_failed_payment');
     }
 }

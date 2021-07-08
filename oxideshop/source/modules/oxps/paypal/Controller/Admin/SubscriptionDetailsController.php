@@ -68,9 +68,10 @@ class SubscriptionDetailsController extends AdminController
     public function render()
     {
         try {
-            $paypalSubscription = $this->getPayPalSubscription();
+            $request = Registry::getRequest();
+            $billingAgreementId = $request->getRequestEscapedParameter('billingagreementid');
+            $paypalSubscription = $this->getPayPalSubscription($billingAgreementId);
             $product = $this->getSubscriptionProduct($paypalSubscription->id);
-            $this->addTplParam('subscription', $this->getSubscription());
             $this->addTplParam('payPalSubscription', $paypalSubscription);
             $this->addTplParam('subscriptionProduct', $product);
         } catch (ApiException $exception) {

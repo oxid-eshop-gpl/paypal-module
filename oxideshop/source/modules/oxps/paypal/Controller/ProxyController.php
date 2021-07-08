@@ -35,7 +35,8 @@ use OxidProfessionalServices\PayPal\Controller\Admin\Service\SubscriptionService
 use OxidProfessionalServices\PayPal\Core\OrderRequestFactory;
 use OxidProfessionalServices\PayPal\Core\PayPalSession;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
-use OxidProfessionalServices\PayPal\Model\Subscription;
+use OxidProfessionalServices\PayPal\Repository\SubscriptionRepository;
+
 
 /**
  * Server side interface for PayPal smart buttons.
@@ -122,27 +123,10 @@ class ProxyController extends FrontendController
     {
         PayPalSession::subscriptionIsProcessing();
 
-        $subscriptionPlanId = Registry::getRequest()->getRequestEscapedParameter('subscriptionPlanId');
-        $subscriptionId = Registry::getRequest()->getRequestEscapedParameter('subscriptionId');
+        $billingAgreementId = Registry::getRequest()->getRequestEscapedParameter('billingAgreementId');
 
-        $subscriptionService = new SubscriptionService();
-        $subscription = $subscriptionService->subscriptionService->showPlanDetails('string', $subscriptionPlanId, 1);
-
-        $time = date('Y-m-d H:i:s');
-
-        $data = [];
-        $data['plan_id'] = $subscriptionPlanId;
-        $data['subscription_id'] = $subscriptionId;
-        $data['email_address'] = Registry::getSession()->getUser()->getFieldData('OXUSERNAME');
-        $data['status'] = $subscription->status;
-        $data['create_time'] = $time;
-        $data['update_time'] = $time;
-        $data['start_time'] = $time;
-        $data['status_update_time'] = $time;
-
-        $model = new Subscription();
-        $model->saveSubscription($data);
-        $model->saveSubscriptionProductOrder($subscriptionPlanId, $subscriptionId);
+        $repository = new SubscriptionRepository();
+        $repository->saveSubscriptionOrder($billingAgreementId);
     }
 
     public function cancelPayPalPayment()

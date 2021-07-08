@@ -88,10 +88,9 @@ class PayPalOrderController extends AdminDetailsController
             if ($order->getPayPalOrderIdForOxOrderId()) {
                 $this->addTplParam('payPalOrder', $order->getPayPalOrder());
                 $this->addTplParam('capture', $order->getOrderPaymentCapture());
-            } elseif ($subscriptionId = $order->getPayPalSubscriptionIdForOxOrderId()) {
-                $paypalSubscription = $this->getPayPalSubscription($subscriptionId);
+            } elseif ($billingAgreementId = $order->getPayPalBillingAgreementIdForOxOrderId()) {
+                $paypalSubscription = $this->getPayPalSubscription($billingAgreementId);
                 $product = $this->getSubscriptionProduct($paypalSubscription->id);
-                $this->addTplParam('subscription', $this->getSubscription($subscriptionId));
                 $this->addTplParam('payPalSubscription', $paypalSubscription);
                 $this->addTplParam('subscriptionProduct', $product);
                 $result = "pspaypalsubscriptiondetails.tpl";

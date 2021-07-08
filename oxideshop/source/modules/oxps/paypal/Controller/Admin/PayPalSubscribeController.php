@@ -230,7 +230,6 @@ class PayPalSubscribeController extends AdminController
             } else {
                 // We have a linkedProduct, but its does not exists in PayPal-Catalogs, so we delete them
                 //$this->$repository->deleteLinkedProduct($linkedProduct);
-                //$this->$repository->deleteLinkedOrders($linkedProduct);
             }
         }
     }

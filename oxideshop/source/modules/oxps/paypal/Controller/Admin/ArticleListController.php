@@ -43,7 +43,6 @@ class ArticleListController extends ArticleListController_Parent
                 // We have a linkedProduct, but its does not exists in PayPal-Catalogs, so we delete them
                 Registry::getLogger()->error($exception);
                 //$repository->deleteLinkedProduct($linkedProduct);
-                //$repository->deleteLinkedOrders($linkedProduct);
             }
         }
 

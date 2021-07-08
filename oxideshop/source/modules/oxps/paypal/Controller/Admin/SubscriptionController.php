@@ -24,16 +24,20 @@ namespace OxidProfessionalServices\PayPal\Controller\Admin;
 
 use OxidEsales\Eshop\Application\Controller\Admin\AdminListController;
 use OxidEsales\Eshop\Core\Registry;
-use OxidProfessionalServices\PayPal\Model\Subscription;
+use OxidProfessionalServices\PayPal\Repository\SubscriptionRepository;
 
 class SubscriptionController extends AdminListController
 {
+    /**
+     * @var subscriptionList
+     */
+    protected $subscriptionList = null;
+
     /**
      * @inheritDoc
      */
     public function __construct()
     {
-        $this->_sListClass = Subscription::class;
         $this->setTemplateName('pspaypalsubscriptions.tpl');
 
         parent::__construct();
@@ -44,7 +48,7 @@ class SubscriptionController extends AdminListController
      */
     public function render()
     {
-        $this->addTplParam('subscriptions', $this->getItemList());
+        $this->addTplParam('subscriptions', $this->getSubscriptionList());
         $this->addTplParam('detailsLink', $this->getDetailsLink());
 
         return parent::render();
@@ -63,17 +67,40 @@ class SubscriptionController extends AdminListController
         $params = [
             'cl' => 'PayPalSubscriptionDetailsController',
             'jumppage' => $request->getRequestEscapedParameter('jumppage'),
-            'filters' => $this->getListFilter() ? json_encode($this->getListFilter()) : null,
+            'filters' => $this->getFilter() ? json_encode($this->getFilter()) : null,
         ];
 
         return $viewConfig->getSelfLink() . http_build_query(array_filter($params));
     }
 
     /**
+     * Get list of subscriptions
+     *
+     * @return string
+     */
+    protected function getSubscriptionList()
+    {
+        if (is_null($this->subscriptionList)) {
+            $this->subscriptionList = [];
+            $from = (int)Registry::getRequest()->getRequestEscapedParameter('jumppage');
+
+            $subscriptionRepo = new SubscriptionRepository();
+            $subscriptionList = $subscriptionRepo->getSubscriptionOrders(
+                $this->getFilter(),
+                $from
+            );
+            if (count($subscriptionList)) {
+                $this->subscriptionList = $subscriptionList;
+            }
+        }
+        return $this->subscriptionList;
+    }
+
+    /**
      * @inheritDoc
      */
-    public function getListFilter()
+    public function getFilter()
     {
-        return Registry::getRequest()->getRequestEscapedParameter('filters') ?? parent::getListFilter();
+        return Registry::getRequest()->getRequestEscapedParameter('filters') ?? [];
     }
 }

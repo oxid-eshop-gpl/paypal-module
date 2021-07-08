@@ -1,6 +1,5 @@
 [{include file="headitem.tpl" title="GENERAL_ADMIN_TITLE"|oxmultilangassign box="list"}]
-[{assign var="where" value=$oView->getListFilter()}]
-
+[{assign var="filters" value=$oView->getFilter()}]
 <div class="container-fluid">
     <br />
     <button id="toggleFilter" class="btn btn-info">[{oxmultilang ident="OXPS_PAYPAL_FILTER"}]</button>
@@ -28,111 +27,49 @@
             [{$error}]
         </div>
         [{/if}]
-        <div class="row ppaltmessages">
-            <div class="col-sm-4">
+        <div class="row">
+            <div class="col-sm-3">
                 <div class="form-group">
                     <label for="subscriptionIdFilter">[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_ID"}]</label>
                     <input type="text"
                            id="subscriptionIdFilter"
                            class="form-control"
-                           name="where[oxps_paypal_subscription][oxpspaypalid]"
-                           value="[{if $where.oxps_paypal_subscription.oxpspaypalid}][{$where.oxps_paypal_subscription.oxpspaypalid}][{/if}]">
+                           name="filters[oxps_paypal_subscription][paypalbillingagreementid]"
+                           value="[{if $filters.oxps_paypal_subscription.paypalbillingagreementid}][{$filters.oxps_paypal_subscription.paypalbillingagreementid}][{/if}]">
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <div class="form-group">
                     <label for="subscriptionPlanIdFilter">[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID"}]</label>
                     <input type="text"
                            id="subscriptionPlanIdFilter"
                            class="form-control"
-                           name="where[oxps_paypal_subscription][oxpspaypalplanid]"
-                           value="[{if $where.oxps_paypal_subscription.oxpspaypalplanid}][{$where.oxps_paypal_subscription.oxpspaypalplanid}][{/if}]">
+                           name="filters[oxps_paypal_subscription_product][paypalsubscriptionplanid]"
+                           value="[{if $filters.oxps_paypal_subscription_product.paypalsubscriptionplanid}][{$filters.oxps_paypal_subscription_product.paypalsubscriptionplanid}][{/if}]">
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <div class="form-group">
                     <label for="subscriptionEmailFilter">[{oxmultilang ident="OXPS_PAYPAL_EMAIL"}]</label>
                     <input type="text"
                            id="subscriptionEmailFilter"
                            class="form-control"
-                           name="where[oxps_paypal_subscription][oxpspaypalemail]"
-                           value="[{if $where.oxps_paypal_subscription.oxpspaypalemail}][{$where.oxps_paypal_subscription.oxpspaypalemail}][{/if}]">
+                           name="filters[oxorder][oxbillemail]"
+                           value="[{if $filters.oxorder.oxbillemail}][{$filters.oxorder.oxbillemail}][{/if}]">
                 </div>
             </div>
-        </div>
-        <div class="row ppmessages">
-            <div class="col-sm-4">
-                <div class="form-group">
-                    <label for="subscriptionStatusFilterFilter">[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS"}]</label>
-                    [{assign var="subscriptionStatusFilter" value=$where.oxps_paypal_subscription.oxpspaypalstatus}]
-                    <select name="where[oxps_paypal_subscription][oxpspaypalstatus]" id="subscriptionStatusFilterFilter" class="form-control">
-                        <option value="" [{if !$subscriptionStatusFilter}]selected[{/if}]>
-                        </option>
-                        <option value="APPROVAL_PENDING" [{if $subscriptionStatusFilter == "APPROVAL_PENDING"}]selected[{/if}]>
-                            [{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_APPROVAL_PENDING"}]
-                        </option>
-                        <option value="APPROVED" [{if $subscriptionStatusFilter == "APPROVED"}]selected[{/if}]>
-                            [{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_APPROVED"}]
-                        </option>
-                        <option value="ACTIVE" [{if $subscriptionStatusFilter == "ACTIVE"}]selected[{/if}]>
-                            [{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_ACTIVE"}]
-                        </option>
-                        <option value="SUSPENDED" [{if $subscriptionStatusFilter == "SUSPENDED"}]selected[{/if}]>
-                            [{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_SUSPENDED"}]
-                        </option>
-                        <option value="CANCELLED" [{if $subscriptionStatusFilter == "CANCELLED"}]selected[{/if}]>
-                            [{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_CANCELLED"}]
-                        </option>
-                        <option value="EXPIRED" [{if $subscriptionStatusFilter == "EXPIRED"}]selected[{/if}]>
-                            [{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_EXPIRED"}]
-                        </option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="form-group">
-                    <label for="subscriptionStatusFilterUpdatedFilter">[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_UPDATED"}]</label>
-                    <input type="date"
-                           id="subscriptionStatusFilterUpdatedFilter"
-                           class="form-control"
-                           name="where[oxps_paypal_subscription][oxpspaypalstatusupdatetime]"
-                           value="[{if $where.oxps_paypal_subscription.oxpspaypalstatusupdatetime}][{$where.oxps_paypal_subscription.oxpspaypalstatusupdatetime}][{/if}]">
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="form-group">
-                    <label for="subscriptionStartsFilter">[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STARTS"}]</label>
-                    <input type="date"
-                           id="subscriptionStartsFilter"
-                           class="form-control"
-                           name="where[oxps_paypal_subscription][oxpspaypalstarttime]"
-                           value="[{if $where.oxps_paypal_subscription.oxpspaypalstarttime}][{$where.oxps_paypal_subscription.oxpspaypalstarttime}][{/if}]">
-                </div>
-            </div>
-        </div>
-            <div class="row ppaltmessages">
-            <div class="col-sm-4">
-                <div class="form-group">
-                    <label for="subscriptionUpdatedFilter">[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_UPDATED"}]</label>
-                    <input type="date"
-                           id="subscriptionUpdatedFilter"
-                           class="form-control"
-                           name="where[oxps_paypal_subscription][oxpspaypalupdatetime]"
-                           value="[{if $where.oxps_paypal_subscription.oxpspaypalupdatetime}][{$where.oxps_paypal_subscription.oxpspaypalupdatetime}][{/if}]">
-                </div>
-            </div>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <div class="form-group">
                     <label for="subscriptionCreatedFilter">[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_CREATED"}]</label>
                     <input type="date"
                            id="subscriptionCreatedFilter"
                            class="form-control"
-                           name="where[oxps_paypal_subscription][oxpspaypalcreatetime]"
-                           value="[{if $where.oxps_paypal_subscription.oxpspaypalcreatetime}][{$where.oxps_paypal_subscription.oxpspaypalcreatetime}][{/if}]">
+                           name="filters[oxorder][oxorderdate]"
+                           value="[{if $filters.oxorder.oxorderdate}][{$filters.oxorder.oxorderdate}][{/if}]">
                 </div>
             </div>
         </div>
-            <div class="row ppmessages">
+        <div class="row ppmessages">
             <button class="btn btn-primary" type="submit">[{oxmultilang ident="OXPS_PAYPAL_APPLY"}]</button>
             </div>
         </form>
@@ -146,10 +83,6 @@
                     <th>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_ID"}]</th>
                     <th>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID"}]</th>
                     <th>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_EMAIL"}]</th>
-                    <th>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS"}]</th>
-                    <th>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_UPDATED"}]</th>
-                    <th>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STARTS"}]</th>
-                    <th>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_UPDATED"}]</th>
                     <th colspan="2">[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_CREATED"}]</th>
                 </tr>
             </thead>
@@ -157,17 +90,12 @@
                 [{foreach from=$subscriptions item="subscription" name="subscriptions"}]
                     [{cycle values='ppmessages,ppaltmessages' assign=cellClass}]
                     <tr class="[{$cellClass}]">
-                        <td>[{$subscription->oxps_paypal_subscription__oxpspaypalid}]</td>
-                        <td>[{$subscription->oxps_paypal_subscription__oxpspaypalplanid}]</td>
-                        <td>[{$subscription->oxps_paypal_subscription__oxpspaypalemail}]</td>
-                        [{assign var="subscriptionStatus" value=$subscription->oxps_paypal_subscription__oxpspaypalstatus}]
-                        <td>[{if $subscriptionStatus}] [{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_STATUS_"|cat:$subscriptionStatus}][{/if}]</td>
-                        <td>[{$subscription->oxps_paypal_subscription__oxpspaypalstatusupdatetime}]</td>
-                        <td>[{$subscription->oxps_paypal_subscription__oxpspaypalstarttime}]</td>
-                        <td>[{$subscription->oxps_paypal_subscription__oxpspaypalupdatetime}]</td>
-                        <td>[{$subscription->oxps_paypal_subscription__oxpspaypalcreatetime}]</td>
+                        <td>[{$subscription->oxps_paypal_subscription__paypalbillingagreementid->value}]</td>
+                        <td>[{$subscription->oxps_paypal_subscription__paypalsubscriptionplanid->value}]</td>
+                        <td>[{$subscription->oxps_paypal_subscription__oxbillemail->value}]</td>
+                        <td>[{$subscription->oxps_paypal_subscription__oxorderdate->value}]</td>
                         <td>
-                            <a href="[{$detailsLink|cat:"&amp;oxid="|cat:$subscription->getId()}]">
+                            <a href="[{$detailsLink|cat:"&amp;billingagreementid="|cat:$subscription->oxps_paypal_subscription__paypalbillingagreementid->value}]">
                                 [{oxmultilang ident="OXPS_PAYPAL_MORE"}]
                             </a>
                         </td>
