@@ -39,7 +39,7 @@ class PayPalConfigController extends AdminController
     {
         parent::__construct();
 
-        $this->_sThisTemplate = 'paypalconfig.tpl';
+        $this->_sThisTemplate = 'pspaypalconfig.tpl';
     }
 
     /**

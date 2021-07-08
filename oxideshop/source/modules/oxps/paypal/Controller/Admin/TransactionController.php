@@ -49,7 +49,7 @@ class TransactionController extends AdminListController
     public function __construct()
     {
         parent::__construct();
-        $this->setTemplateName('paypal_transactions.tpl');
+        $this->setTemplateName('pspaypaltransactions.tpl');
     }
 
     /**

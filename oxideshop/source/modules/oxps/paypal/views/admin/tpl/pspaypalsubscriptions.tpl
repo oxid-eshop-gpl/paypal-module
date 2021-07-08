@@ -138,7 +138,7 @@
         </form>
     </div>
 
-    [{include file="paypal_list_pagination.tpl"}]
+    [{include file="pspaypallistpagination.tpl"}]
     <div id="results">
         <table class="table table-sm">
             <thead>
@@ -176,6 +176,6 @@
             </tbody>
         </table>
     </div>
-    [{include file="paypal_list_pagination.tpl"}]
+    [{include file="pspaypallistpagination.tpl"}]
 </div>
 [{include file="bottomitem.tpl"}]

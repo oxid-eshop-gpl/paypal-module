@@ -44,7 +44,7 @@ class SubscriptionDetailsController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->setTemplateName('paypal_subscription_details.tpl');
+        $this->setTemplateName('pspaypalsubscriptiondetails.tpl');
     }
 
     /**

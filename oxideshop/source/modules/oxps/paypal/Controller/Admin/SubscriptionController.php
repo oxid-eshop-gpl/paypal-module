@@ -34,7 +34,7 @@ class SubscriptionController extends AdminListController
     public function __construct()
     {
         $this->_sListClass = Subscription::class;
-        $this->setTemplateName('paypal_subscriptions.tpl');
+        $this->setTemplateName('pspaypalsubscriptions.tpl');
 
         parent::__construct();
     }
