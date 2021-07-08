@@ -23,7 +23,6 @@
 namespace OxidProfessionalServices\PayPal\Core\Webhook\Handler;
 
 use OxidProfessionalServices\PayPal\Core\Webhook\Event;
-use OxidProfessionalServices\PayPal\Model\Subscription;
 
 class BillingSubscriptionUpdateHandler implements HandlerInterface
 {
@@ -32,22 +31,6 @@ class BillingSubscriptionUpdateHandler implements HandlerInterface
      */
     public function handle(Event $event): void
     {
-        $data = $event->getData()['resource'];
-        $subscription = oxNew(Subscription::class);
-
-        $subscription->loadByPayPalId($data['id']);
-        $fieldValues = array_filter([
-            'id' => $data['id'] ?? '',
-            'planid' => $data['plan_id'] ?? '',
-            'email' => $data['subscriber']['email_address'] ?? '',
-            'status' => $data['status'] ?? '',
-            'createtime' => $data['create_time'] ?? '',
-            'updatetime' => $data['upate_time'] ?? '',
-            'starttime' => $data['start_time'] ?? '',
-            'statusupdatetime' => $data['status_update_time'] ?? '',
-        ]);
-
-        $subscription->assign($fieldValues);
-        $subscription->save();
+        // TODO: Implement handle() method.
     }
 }

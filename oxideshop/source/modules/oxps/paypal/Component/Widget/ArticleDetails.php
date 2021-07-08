@@ -22,7 +22,7 @@
 
 namespace OxidProfessionalServices\PayPal\Component\Widget;
 
-use OxidProfessionalServices\PayPal\Controller\ArticleDetailsTrait;
+use OxidProfessionalServices\PayPal\Traits\ArticleDetailsTrait;
 
 /**
  * Class ArticleDetails

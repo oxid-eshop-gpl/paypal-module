@@ -22,6 +22,8 @@
 
 namespace OxidProfessionalServices\PayPal\Controller;
 
+use OxidProfessionalServices\PayPal\Traits\ArticleDetailsTrait;
+
 /**
  * Class ArticleDetailsController
  * @mixin \OxidEsales\Eshop\Application\Controller\ArticleDetailsController

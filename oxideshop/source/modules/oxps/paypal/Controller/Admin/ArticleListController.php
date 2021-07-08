@@ -33,7 +33,7 @@ class ArticleListController extends ArticleListController_Parent
 
         $linkedProduct = $repository->getLinkedProductByOxid($oxid);
         if ($linkedProduct) {
-            $linkedProduct = $linkedProduct[0]['OXPAYPALPRODUCTID'];
+            $linkedProduct = $linkedProduct[0]['PAYPALPRODUCTID'];
 
             try {
                 $linkedObject = Registry::get(ServiceFactory::class)
@@ -43,7 +43,6 @@ class ArticleListController extends ArticleListController_Parent
                 // We have a linkedProduct, but its does not exists in PayPal-Catalogs, so we delete them
                 Registry::getLogger()->error($exception);
                 //$repository->deleteLinkedProduct($linkedProduct);
-                //$repository->deleteLinkedOrders($linkedProduct);
             }
         }
 

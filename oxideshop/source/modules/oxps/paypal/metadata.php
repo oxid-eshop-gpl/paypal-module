@@ -112,24 +112,23 @@ $aModule = [
         'PayPalDisputeDetailsController' => DisputeDetailsController::class
     ],
     'templates' => [
-        'paypalconfig.tpl' => 'oxps/paypal/views/admin/tpl/paypalconfig.tpl',
-        'paypalbillingplanstemplate.tpl' => 'oxps/paypal/views/admin/tpl/paypalbillingplanstemplate.tpl',
-        'paypal_dispute_details.tpl' => 'oxps/paypal/views/admin/tpl/dispute_details.tpl',
-        'paypal_disputes.tpl' => 'oxps/paypal/views/admin/tpl/disputes.tpl',
-        'paypalorder.tpl' => 'oxps/paypal/views/admin/tpl/paypalorder.tpl',
-        'billing_plan.tpl' => 'oxps/paypal/views/admin/tpl/inc/billing_plan.tpl',
-        'subscription_form.tpl' => 'oxps/paypal/views/admin/tpl/inc/subscription_form.tpl',
-        'billing_plan_data.tpl' => 'oxps/paypal/views/admin/tpl/inc/billing_plan_data.tpl',
-        'paypal_list_pagination.tpl' => 'oxps/paypal/views/admin/tpl/inc/list_pagination.tpl',
-        'paypal_subscriptions.tpl' => 'oxps/paypal/views/admin/tpl/subscriptions.tpl',
-        'paypal_transactions.tpl' => 'oxps/paypal/views/admin/tpl/transactions.tpl',
-        'paypal_balances.tpl' => 'oxps/paypal/views/admin/tpl/balances.tpl',
-        'paypal_subscription_transactions.tpl' => 'oxps/paypal/views/admin/tpl/subscription_transactions.tpl',
-        'paypal_subscription_details.tpl' => 'oxps/paypal/views/admin/tpl/subscription_details.tpl',
-        'subscribe.tpl'    => 'oxps/paypal/views/admin/tpl/subscribe.tpl',
-        'paypal_smart_payment_buttons.tpl' => 'oxps/paypal/views/includes/smart_payment_buttons.tpl',
-        'payment_buttons.tpl' => 'oxps/paypal/views/includes/payment_buttons.tpl',
-        'subscription_buttons.tpl' => 'oxps/paypal/views/includes/subscription_buttons.tpl',
+        'pspaypalconfig.tpl' => 'oxps/paypal/views/admin/tpl/pspaypalconfig.tpl',
+        'pspaypaldisputedetails.tpl' => 'oxps/paypal/views/admin/tpl/pspaypaldisputedetails.tpl',
+        'pspaypaldisputes.tpl' => 'oxps/paypal/views/admin/tpl/pspaypaldisputes.tpl',
+        'pspaypalorder.tpl' => 'oxps/paypal/views/admin/tpl/pspaypalorder.tpl',
+        'pspaypalbillingplan.tpl' => 'oxps/paypal/views/admin/tpl/inc/pspaypalbillingplan.tpl',
+        'pspaypalsubscriptionform.tpl' => 'oxps/paypal/views/admin/tpl/inc/pspaypalsubscriptionform.tpl',
+        'pspaypalbillingplandata.tpl' => 'oxps/paypal/views/admin/tpl/inc/pspaypalbillingplandata.tpl',
+        'pspaypallistpagination.tpl' => 'oxps/paypal/views/admin/tpl/inc/pspaypallistpagination.tpl',
+        'pspaypalsubscriptions.tpl' => 'oxps/paypal/views/admin/tpl/pspaypalsubscriptions.tpl',
+        'pspaypaltransactions.tpl' => 'oxps/paypal/views/admin/tpl/pspaypaltransactions.tpl',
+        'pspaypalbalances.tpl' => 'oxps/paypal/views/admin/tpl/pspaypalbalances.tpl',
+        'pspaypalsubscriptiontransactions.tpl' => 'oxps/paypal/views/admin/tpl/pspaypalsubscriptiontransactions.tpl',
+        'pspaypalsubscriptiondetails.tpl' => 'oxps/paypal/views/admin/tpl/pspaypalsubscriptiondetails.tpl',
+        'pspaypalsubscribe.tpl'    => 'oxps/paypal/views/admin/tpl/pspaypalsubscribe.tpl',
+        'pspaypalsmartpaymentbuttons.tpl' => 'oxps/paypal/views/includes/pspaypalsmartpaymentbuttons.tpl',
+        'pspaypalpaymentbuttons.tpl' => 'oxps/paypal/views/includes/pspaypalpaymentbuttons.tpl',
+        'pspaypalsubscriptionbuttons.tpl' => 'oxps/paypal/views/includes/pspaypalsubscriptionbuttons.tpl',
     ],
     'events' => [
         'onActivate' => '\OxidProfessionalServices\PayPal\Core\Events::onActivate',
@@ -139,22 +138,27 @@ $aModule = [
         [
             'template' => 'article_list.tpl',
             'block' => 'admin_article_list_item',
-            'file' => 'views/admin/tpl/article_list_extended.tpl'
+            'file' => 'views/blocks/admin/article_list_extended.tpl'
         ],
         [
             'template' => 'article_list.tpl',
             'block' => 'admin_article_list_colgroup',
-            'file' => 'views/admin/tpl/article_list_colgroup_extended.tpl'
+            'file' => 'views/blocks/admin/article_list_colgroup_extended.tpl'
         ],
         [
             'template' => 'article_list.tpl',
             'block' => 'admin_article_list_sorting',
-            'file' => 'views/admin/tpl/article_list_sorting_extended.tpl'
+            'file' => 'views/blocks/admin/article_list_sorting_extended.tpl'
         ],
         [
             'template' => 'headitem.tpl',
             'block' => 'admin_headitem_inccss',
             'file' => 'views/blocks/admin/admin_headitem_inccss.tpl'
+        ],
+        [
+            'template' => 'headitem.tpl',
+            'block' => 'admin_headitem_incjs',
+            'file' => 'views/blocks/admin/admin_headitem_incjs.tpl'
         ],
         [
             'theme' => 'flow',
@@ -234,7 +238,7 @@ $aModule = [
             'theme' => 'flow',
             'template' => 'page/checkout/inc/steps.tpl',
             'block' => 'checkout_steps_main',
-            'file' => '/views/blocks/flow/page/checkout/steps.tpl',
+            'file' => '/views/blocks/flow/page/checkout/inc/checkout_steps_main.tpl',
             'position' => '5'
         ],
         [
@@ -299,11 +303,6 @@ $aModule = [
             'block' => 'details_productmain_price_value',
             'file' => '/views/blocks/shared/page/details/inc/details_productmain_price_value.tpl',
             'position' => '5'
-        ],
-        [
-            'template' => 'headitem.tpl',
-            'block' => 'admin_headitem_incjs',
-            'file' => 'views/blocks/admin/admin_headitem_incjs.tpl'
         ]
     ],
     'settings' => [

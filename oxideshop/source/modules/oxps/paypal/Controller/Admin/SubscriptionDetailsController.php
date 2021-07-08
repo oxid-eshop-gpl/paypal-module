@@ -44,7 +44,7 @@ class SubscriptionDetailsController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->setTemplateName('paypal_subscription_details.tpl');
+        $this->setTemplateName('pspaypalsubscriptiondetails.tpl');
     }
 
     /**
@@ -68,9 +68,10 @@ class SubscriptionDetailsController extends AdminController
     public function render()
     {
         try {
-            $paypalSubscription = $this->getPayPalSubscription();
+            $request = Registry::getRequest();
+            $billingAgreementId = $request->getRequestEscapedParameter('billingagreementid');
+            $paypalSubscription = $this->getPayPalSubscription($billingAgreementId);
             $product = $this->getSubscriptionProduct($paypalSubscription->id);
-            $this->addTplParam('subscription', $this->getSubscription());
             $this->addTplParam('payPalSubscription', $paypalSubscription);
             $this->addTplParam('subscriptionProduct', $product);
         } catch (ApiException $exception) {

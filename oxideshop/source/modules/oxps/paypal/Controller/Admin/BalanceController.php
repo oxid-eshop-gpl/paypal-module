@@ -35,7 +35,7 @@ class BalanceController extends AdminListController
      *
      * @var string
      */
-    protected $_sThisTemplate = 'paypal_balances.tpl';
+    protected $_sThisTemplate = 'pspaypalbalances.tpl';
 
     /**
      * @return string

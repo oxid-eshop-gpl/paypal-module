@@ -64,7 +64,7 @@
             },
             onApprove: function(data, actions) {
                 document.getElementById("overlay").style.display = "block";
-                let params = 'cl=PayPalProxyController&fnc=saveSubscriptionOrder&subscriptionId=' + data.subscriptionID;
+                let params = 'cl=PayPalProxyController&fnc=saveSubscriptionOrder&billingAgreementId=' + data.subscriptionID;
                 params += '&subscriptionPlanId=[{/literal}][{$subscriptionPlan->id}][{literal}]';
                 params += '&aid=[{/literal}][{$aid}][{literal}]';
                 params += '&showOverlay=1';

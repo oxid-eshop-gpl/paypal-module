@@ -26,7 +26,7 @@
                         [{oxscript add=$smarty.capture.hide_payment}]
                     [{elseif $config->showPayPalCheckoutButton()}]
                         <div class="text-left">
-                            [{include file="paypal_smart_payment_buttons.tpl" buttonId="PayPalButtonPaymentPage" buttonClass="col-md-4 col-12" paymentStrategy="continue"}]
+                            [{include file="pspaypalsmartpaymentbuttons.tpl" buttonId="PayPalButtonPaymentPage" buttonClass="col-md-4 col-12" paymentStrategy="continue"}]
                         </div>
                     [{/if}]
                 </div>

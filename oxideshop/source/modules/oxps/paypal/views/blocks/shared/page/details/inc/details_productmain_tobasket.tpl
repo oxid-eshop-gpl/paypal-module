@@ -4,5 +4,5 @@
 [{assign var="config" value=$oViewConf->getPayPalConfig()}]
 [{if $config->isActive() && !$oViewConf->isPayPalSessionActive() && $config->showPayPalProductDetailsButton()}]
     [{*todo paymentStrategy="pay_now"*}]
-    [{include file="paypal_smart_payment_buttons.tpl" buttonId="PayPalButtonProductMain" paymentStrategy="continue" buttonClass="paypal-button-wrapper large" aid=$oDetailsProduct->oxarticles__oxid->value}]
+    [{include file="pspaypalsmartpaymentbuttons.tpl" buttonId="PayPalButtonProductMain" paymentStrategy="continue" buttonClass="paypal-button-wrapper large" aid=$oDetailsProduct->oxarticles__oxid->value}]
 [{/if}]

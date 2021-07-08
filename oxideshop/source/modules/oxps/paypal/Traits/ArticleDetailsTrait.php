@@ -20,7 +20,7 @@
  * @copyright (C) OXID eSales AG 2003-2020
  */
 
-namespace OxidProfessionalServices\PayPal\Controller;
+namespace OxidProfessionalServices\PayPal\Traits;
 
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Core\DatabaseProvider;
@@ -52,7 +52,7 @@ trait ArticleDetailsTrait
             foreach ($linkedProducts as $linkedProduct) {
                 $subscriptionPlan = $sf
                     ->getSubscriptionService()
-                    ->showPlanDetails('string', $linkedProduct['OXPAYPALSUBSCRIPTIONPLANID'], 1);
+                    ->showPlanDetails('string', $linkedProduct['PAYPALSUBSCRIPTIONPLANID'], 1);
                 if ($subscriptionPlan->status == 'ACTIVE') {
                     $subscriptionPlans[] = $subscriptionPlan;
                 }
