@@ -58,7 +58,7 @@
                                 })
                         [{/literal}]
                     [{else}]
-                        [{literal}]return window.location.href="[{/literal}][{$sCleanLink|cat:"/mein-konto?return="|cat:$currentUrl}][{literal}]"[{/literal}]
+                        [{literal}]return window.location.href="[{/literal}][{$sSelfLink|cat:"cl=account&return="|cat:$currentUrl}][{literal}]"[{/literal}]
                     [{/if}]
                 [{literal}]
             },

@@ -245,7 +245,7 @@ $aModule = [
             'theme' => 'wave',
             'template' => 'page/checkout/inc/steps.tpl',
             'block' => 'checkout_steps_main',
-            'file' => '/views/blocks/wave/page/checkout/steps.tpl',
+            'file' => '/views/blocks/wave/page/checkout/inc/checkout_steps_main.tpl',
             'position' => '5'
         ],
         [

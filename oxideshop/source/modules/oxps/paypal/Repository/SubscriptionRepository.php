@@ -217,7 +217,7 @@ class SubscriptionRepository
                     `OXSHOPID`,
                     `OXUSERID`,
                     `PAYPALBILLINGAGREEMENTID`)
-                    VALUES (?,?,?,?,?,?,?)";
+                    VALUES (?,?,?,?)";
 
         $userId = $session->getUser()->getId();
 
