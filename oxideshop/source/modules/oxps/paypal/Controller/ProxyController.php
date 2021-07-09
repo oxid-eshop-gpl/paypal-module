@@ -23,6 +23,8 @@
 namespace OxidProfessionalServices\PayPal\Controller;
 
 use Exception;
+use OxidEsales\Eshop\Application\Model\PaymentList;
+use OxidEsales\Eshop\Application\Model\DeliverySetList;
 use OxidEsales\Eshop\Application\Controller\FrontendController;
 use OxidEsales\Eshop\Core\Exception\ArticleInputException;
 use OxidEsales\Eshop\Core\Exception\NoArticleException;
@@ -149,23 +151,52 @@ class ProxyController extends FrontendController
 
     public function addToBasket($qty = 1): void
     {
+        $basket = Registry::getSession()->getBasket();
+        $utilsView = Registry::getUtilsView();
+
         if ($aid = (string)Registry::getRequest()->getRequestEscapedParameter('aid')) {
             try {
-                Registry::getSession()->getBasket()->addToBasket($aid, $qty);
+                $basket->addToBasket($aid, $qty);
             } catch (OutOfStockException $exception) {
-                Registry::getUtilsView()->addErrorToDisplay($exception);
+                $utilsView->addErrorToDisplay($exception);
             } catch (ArticleInputException $exception) {
-                Registry::getUtilsView()->addErrorToDisplay($exception);
+                $utilsView->addErrorToDisplay($exception);
             } catch (NoArticleException $exception) {
-                Registry::getUtilsView()->addErrorToDisplay($exception);
+                $utilsView->addErrorToDisplay($exception);
             }
-            Registry::getSession()->getBasket()->calculateBasket(false);
+            $basket->calculateBasket(false);
         }
     }
 
     public function setPayPalPaymentMethod(): void
     {
-        Registry::getSession()->getBasket()->setPayment('oxidpaypal');
-        Registry::getSession()->setVariable('paymentid', 'oxidpaypal');
+        $session = Registry::getSession();
+        $session->getBasket();
+        if (($payment !== 'oxidpaypal')) {
+            $possibleDeliverySets = [];
+
+            $user = $this->getUser();
+            $deliverySetList = Registry::get(DeliverySetList::class)
+            ->getDeliverySetList(
+                $user,
+                $user->getActiveCountry()
+            );
+            foreach ($deliverySetList as $deliverySet) {
+                $paymentList = Registry::get(PaymentList::class)->getPaymentList(
+                    $deliverySet->getId(),
+                    $basket->getPrice()->getBruttoPrice(),
+                    $user
+                );
+                if (array_key_exists('oxidpaypal', $paymentList)) {
+                    $possibleDeliverySets[] = $deliverySet->getId();
+                }
+            }
+
+            if (count($possibleDeliverySets)) {
+                $basket->setPayment('oxidpaypal');
+                $basket->setShipping(reset($possibleDeliverySets));
+                $session->setVariable('paymentid', 'oxidpaypal');
+            }
+        }
     }
 }

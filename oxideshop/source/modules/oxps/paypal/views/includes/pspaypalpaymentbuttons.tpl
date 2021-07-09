@@ -32,7 +32,9 @@
                 return res.json();
             }).then(function(data) {
             [{/literal}]
-            [{if $oViewConf->getTopActiveClassName()=="details" && $paymentStrategy=="continue"}]
+            [{if $paymentStrategy=="pay_now"}]
+                location.replace('[{$sSelfLink|cat:"cl=order"}]');
+            [{elseif $oViewConf->getTopActiveClassName()=="details" && $paymentStrategy=="continue"}]
                 location.replace('[{$sSelfLink|cat:"cl=basket"}]');
             [{elseif $oViewConf->getTopActiveClassName()=="payment" && $paymentStrategy=="continue"}]
                 if (data.id && data.status == "APPROVED") {
