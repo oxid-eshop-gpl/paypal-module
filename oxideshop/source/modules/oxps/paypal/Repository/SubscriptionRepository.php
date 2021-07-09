@@ -47,17 +47,49 @@ class SubscriptionRepository
 
     /**
      * @param string $subscriptionPlanId
-     * @return array
+     * @return string
      * @throws DatabaseConnectionException
      * @throws DatabaseErrorException
      */
     public function getUserIdFromSubscriptedPlan($subscriptionPlanId)
     {
-        return DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getAll(
+        return DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getOne(
             'SELECT OXUSERID
                 FROM oxps_paypal_subscription
                 WHERE PAYPALSUBSCRIPTIONPLANID = ?',
             [$subscriptionPlanId]
+        );
+    }
+
+    /**
+     * @param string $subscriptionPlanId
+     * @return string
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     */
+    public function getOxIdFromSubscriptedPlan($subscriptionPlanId)
+    {
+        return DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getOne(
+            'SELECT OXID
+                FROM oxps_paypal_subscription
+                WHERE PAYPALSUBSCRIPTIONPLANID = ?',
+            [$subscriptionPlanId]
+        );
+    }
+
+    /**
+     * @param string $billingAgreementId
+     * @return string
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     */
+    public function getOrderIdFromBillingAgreementId($billingAgreementId)
+    {
+        return DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getOne(
+            'SELECT OXORDERID
+                FROM oxps_paypal_subscription
+                WHERE PAYPALBILLINGAGREEMENTID = ?',
+            [$billingAgreementId]
         );
     }
 
@@ -203,29 +235,33 @@ class SubscriptionRepository
     }
 
     /**
-     * @param string $subscriptionId
+     * @param string $billingAgreementId
+     * @param string $subscriptionPlanId
      * @throws DatabaseConnectionException
      * @throws DatabaseErrorException
      */
-    public function saveSubscriptionOrder(string $subscriptionId): void
+    public function saveSubscriptionOrder(string $billingAgreementId, string $subscriptionPlanId): void
     {
         $session = Registry::getSession();
         $oxid = Registry::getUtilsObject()->generateUId();
+        $userId = $session->getUser()->getId();
+
+        $subProdId = $this->getOxIdFromSubscriptedPlan($subscriptionPlanId);
 
         $sql = "INSERT INTO oxps_paypal_subscription(
                     `OXID`,
                     `OXSHOPID`,
                     `OXUSERID`,
+                    `OXPAYPALSUBPRODID`,
                     `PAYPALBILLINGAGREEMENTID`)
-                    VALUES (?,?,?,?)";
-
-        $userId = $session->getUser()->getId();
+                    VALUES (?,?,?,?,?)";
 
         DatabaseProvider::getDb()->execute($sql, [
             $oxid,
             Registry::getConfig()->getShopId(),
             $userId,
-            $subscriptionId
+            $subProdId,
+            $billingAgreementId
         ]);
 
         // save oxid to session
