@@ -71,7 +71,7 @@ class SubscriptionRepository
     {
         return DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getOne(
             'SELECT OXID
-                FROM oxps_paypal_subscription
+                FROM oxps_paypal_subscription_product
                 WHERE PAYPALSUBSCRIPTIONPLANID = ?',
             [$subscriptionPlanId]
         );
