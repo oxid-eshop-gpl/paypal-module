@@ -12,7 +12,7 @@ GeneralShopSettings:
         - b2bserviceproducts
         - b2bservices
         - ddoevisualcms
-        - oxps/paypal
+        - genericimporter
         - psr_logger
     aHomeCountry:
         - 8f241f11096877ac0.98748826
@@ -48,13 +48,16 @@ GeneralShopSettings:
             - OxidEsales\B2BModule\ApprovalProcedure\Controller\CheckoutBasketController
             - OxidProfessionalServices\PayPal\Controller\BasketController
             - OxidEsales\B2BModule\BuyingAgent\Controller\BasketController
+            - payp/paypalplus/controllers/payppaypalplusbasket
         OxidEsales\Eshop\Application\Controller\OrderController:
             - OxidEsales\B2BModule\ApprovalProcedure\Controller\OrderController
             - OxidEsales\B2BModule\Budget\Controller\OrderController
             - OxidProfessionalServices\PayPal\Controller\OrderController
+            - payp/paypalplus/controllers/payppaypalplusorder
         OxidEsales\Eshop\Application\Controller\PaymentController:
             - OxidEsales\B2BModule\ApprovalProcedure\Controller\PaymentController
             - OxidEsales\B2BModule\BuyingAgent\Controller\PaymentController
+            - payp/paypalplus/controllers/payppaypalpluspayment
         OxidEsales\Eshop\Application\Controller\UserController:
             - OxidEsales\B2BModule\ApprovalProcedure\Controller\UserController
             - OxidEsales\B2BModule\BulkOrders\Controller\UserController
@@ -70,16 +73,26 @@ GeneralShopSettings:
             - OxidEsales\B2BModule\BulkOrders\Model\Basket
             - OxidEsales\B2BModule\ScheduledOrders\Model\Basket
             - OxidEsales\B2BModule\ServiceProducts\Model\Basket
+            - payp/paypalplus/models/payppaypalplusoxbasket
+        OxidEsales\Eshop\Application\Model\BasketItem:
+            - OxidEsales\B2BModule\ServiceProducts\Model\BasketItem
+            - OxidProfessionalServices\PayPal\Model\BasketItem
         OxidEsales\Eshop\Application\Model\Order:
             - OxidEsales\B2BModule\ApprovalProcedure\Model\Order
             - OxidProfessionalServices\PayPal\Model\Order
             - OxidEsales\B2BModule\Budget\Model\Order
             - OxidEsales\B2BModule\BulkOrders\Model\Order
             - OxidEsales\B2BModule\ServiceProducts\Model\Order
+            - payp/paypalplus/models/payppaypalplusoxorder
+        OxidEsales\Eshop\Application\Model\PaymentGateway:
+            - OxidProfessionalServices\PayPal\Model\PaymentGateway
+            - payp/paypalplus/models/payppaypalplusoxpaymentgateway
         OxidEsales\Eshop\Application\Model\User:
             - OxidEsales\B2BModule\Basket\Model\User
             - OxidEsales\B2BModule\ApprovalProcedure\Model\User
             - OxidEsales\B2BModule\BuyingAgent\Model\User
+            - OxidProfessionalServices\PayPal\Model\User
+            - payp/paypalplus/models/payppaypalplusoxuser
         OxidEsales\Eshop\Core\Email:
             - OxidEsales\B2BModule\BuyingAgent\Core\Email
             - OxidEsales\B2BModule\Offers\Core\Email
@@ -92,9 +105,13 @@ GeneralShopSettings:
             - OxidEsales\B2BModule\Budget\Core\ViewConfig
             - OxidEsales\B2BModule\BuyingAgent\Core\ViewConfig
             - OxidEsales\VisualCmsModule\Core\ViewConfig
+            - payp/paypalplus/core/payppaypalplusoxviewconfig
     aModuleVersions:
         moduleinternals: '3.0'
         oxps/modulesconfig: 6.1.0
+        oxps/paypal: 0.0.2
+        oxps/paypallocale: 0.0.1
+        payppaypalplus: 3.0.8
     aNrofCatArticles:
         - '10'
         - '20'
@@ -178,6 +195,7 @@ GeneralShopSettings:
     moduleSmartyPluginDirectories:
         legacycompatibility: {  }
         oxps/paypal: {  }
+        oxps/paypallocale: {  }
     sCatIconsize: '168*100'
     sCatPromotionsize: '370*107'
     sCustomTheme: ''
@@ -193,8 +211,15 @@ module:
         iGridsterSize: '6'
     oxps/paypal:
         blPayPalSandboxMode: '1'
-        sPayPalSandboxClientId: AS8_-FoXMPAI16-OHGcNl9jw5oUBfyD6YHlUVoSH5PRP-K7W9cnHaPzSjCJ252NR5wTgO6NJrTPW8SWj
-        sPayPalSandboxClientSecret: ELsJLZpyMCbaV4RzmV3Gf6oTonYN5hUbYzUbviNFz0nt2CI7LMt7T94etzdJZEBfciCF2NOA5D0lTD27
+        sPayPalClientId: mario.lorenz+test@oxid-esales.com
+        sPayPalClientSecret: mario.lorenz+test@oxid-esales.com
+        sPayPalPaymentFailureThreshold: '1'
+        sPayPalSandboxClientId: ASb2XMiob84d6BZlUU1fkvQC2X8z2QZUsAyQq_AMzFqbB5e0seElOTu3ZKsTSyhquCZDt0si2QOo8sUu
+        sPayPalSandboxClientSecret: EFHzO2oiwZNaQspwYOHknVavR12Kq0fMB91ZKJ2VxuQZlZAKKGJ5jeclEKrZXmZMxvPa4_5F4QvS7mHe
+        sPayPalSandboxWebhookId: 8VD9630431440090J
+    payppaypalplus:
+        paypPayPalPlusRetry: '1'
+        paypPayPalPlusTimeout: '60'
 theme: {  }
 oxshops:
     OXPARENTID: '0'
@@ -246,8 +271,8 @@ oxshops:
     OXTAXNUMBER: ''
     OXBICCODE: ''
     OXIBANNUMBER: ''
-    OXFNAME: John
-    OXLNAME: Doe
+    OXFNAME: Mario
+    OXLNAME: Brain
     OXTELEFON: 217-8918712
     OXTELEFAX: 217-8918713
     OXURL: www.myoxideshop.com
