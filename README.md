@@ -12,7 +12,11 @@ This is based on docker and docker-compose.
 
 ## Automated Setup for Linux and Mac
 
-In the docker-compose directory, run `script/setup.sh` and wait until your container is running.
+In the docker-compose directory, run
+```
+scripts/setup.sh
+```
+and wait until your container is running.
 
 ## Set up env manually
 

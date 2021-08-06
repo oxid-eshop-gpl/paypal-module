@@ -8,4 +8,4 @@ oxshops:
     OXORDEREMAIL: reply@myoxideshop.com
     OXOWNEREMAIL: order@myoxideshop.com
     OXSMTP: ''
-    OXSMTPUSER: ''
+    OXSMTPUSER: mario.lorenz+test@oxid-esales.com

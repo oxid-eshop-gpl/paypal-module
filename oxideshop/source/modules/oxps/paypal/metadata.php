@@ -66,7 +66,7 @@ $sMetadataVersion = '2.1';
  * Module information
  */
 $aModule = [
-    'id' => 'oxps/paypal',
+    'id' => 'oxscpaypal',
     'title' => [
         'de' => 'OXPS :: PayPal - Online-Bezahldienst',
         'en' => 'OXPS :: PayPal - Online-Payment'
