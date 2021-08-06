@@ -446,4 +446,6 @@ $aLang = [
 
     'TOOLTIPS_OXPS_PAYPAL_EDITSUBSCRIPTION'        => 'Edit Billing-Plan',
     'TOOLTIPS_OXPS_PAYPAL_DEACTIVATESUBSCRIPTION'  => 'Deactivate Billing-Plan',
+
+    'OXPS_PAYPAL_SUBSCRITION_PART_ARTICLE_TITLE'   => '%s (Partial delivery no. %s from %s)',
 ];

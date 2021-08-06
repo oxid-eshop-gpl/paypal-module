@@ -466,4 +466,6 @@ $aLang = [
 
     'TOOLTIPS_OXPS_PAYPAL_EDITSUBSCRIPTION'        => 'Abrechnungsplan editieren',
     'TOOLTIPS_OXPS_PAYPAL_DEACTIVATESUBSCRIPTION'  => 'Abrechnungsplan deaktivieren',
+
+    'OXPS_PAYPAL_SUBSCRITION_PART_ARTICLE_TITLE'   => '%s (Teillieferung Nr. %s von %s)',
 ];

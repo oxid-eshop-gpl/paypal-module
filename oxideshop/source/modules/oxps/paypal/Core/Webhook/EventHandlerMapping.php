@@ -53,5 +53,6 @@ class EventHandlerMapping
         'BILLING.SUBSCRIPTION.UPDATED' => BillingSubscriptionUpdateHandler::class,
         'PAYMENT.SALE.REFUNDED' => PaymentSaleRefundedHandler::class,
         'PAYMENT.SALE.REVERSED' => PaymentSaleReversedHandler::class,
+        'PAYMENT.SALE.COMPLETED' => PaymentSaleCompletedHandler::class,
     ];
 }

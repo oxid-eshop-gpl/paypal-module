@@ -83,12 +83,13 @@ class SubscriptionRepository
      * @throws DatabaseConnectionException
      * @throws DatabaseErrorException
      */
-    public function getOrderIdFromBillingAgreementId($billingAgreementId)
+    public function getAllIdsFromBillingAgreementId($billingAgreementId)
     {
-        return DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getOne(
-            'SELECT OXORDERID
-                FROM oxps_paypal_subscription
-                WHERE PAYPALBILLINGAGREEMENTID = ?',
+        return DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getRow(
+            'SELECT psp.PAYPALSUBSCRIPTIONPLANID, psp.PAYPALPRODUCTID, psp.OXARTID, ps.OXORDERID
+                FROM oxps_paypal_subscription_product as psp
+                LEFT JOIN oxps_paypal_subscription as ps on (ps.OXPAYPALSUBPRODID = psp.OXID)
+                WHERE ps.PAYPALBILLINGAGREEMENTID = ?',
             [$billingAgreementId]
         );
     }
