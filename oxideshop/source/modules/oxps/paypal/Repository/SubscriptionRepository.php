@@ -86,7 +86,7 @@ class SubscriptionRepository
     public function getAllIdsFromBillingAgreementId($billingAgreementId)
     {
         return DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getRow(
-            'SELECT psp.PAYPALSUBSCRIPTIONPLANID, psp.PAYPALPRODUCTID, psp.OXARTID, ps.OXORDERID
+            'SELECT psp.PAYPALSUBSCRIPTIONPLANID, psp.PAYPALPRODUCTID, psp.OXARTID, ps.OXORDERID, ps.OXUSERID
                 FROM oxps_paypal_subscription_product as psp
                 LEFT JOIN oxps_paypal_subscription as ps on (ps.OXPAYPALSUBPRODID = psp.OXID)
                 WHERE ps.PAYPALBILLINGAGREEMENTID = ?',
@@ -238,14 +238,26 @@ class SubscriptionRepository
     /**
      * @param string $billingAgreementId
      * @param string $subscriptionPlanId
+     * @param string $userId
+     * @param string $orderId
+     * @param string $parentOrderId
+     * @param string $billingCycleType
+     * @param int $billingCycleNumber
      * @throws DatabaseConnectionException
      * @throws DatabaseErrorException
      */
-    public function saveSubscriptionOrder(string $billingAgreementId, string $subscriptionPlanId): void
-    {
+    public function saveSubscriptionOrder(
+        string $billingAgreementId,
+        string $subscriptionPlanId,
+        string $userId = null,
+        string $orderId = null,
+        string $parentOrderId = null,
+        string $billingCycleType = null,
+        int $billingCycleNumber = 0
+    ): void {
         $session = Registry::getSession();
         $oxid = Registry::getUtilsObject()->generateUId();
-        $userId = $session->getUser()->getId();
+        $userId = $userId ?? $session->getUser()->getId();
 
         $subProdId = $this->getOxIdFromSubscriptedPlan($subscriptionPlanId);
 
@@ -253,16 +265,24 @@ class SubscriptionRepository
                     `OXID`,
                     `OXSHOPID`,
                     `OXUSERID`,
+                    `OXORDERID`,
+                    `OXPARENTORDERID`,
                     `OXPAYPALSUBPRODID`,
-                    `PAYPALBILLINGAGREEMENTID`)
-                    VALUES (?,?,?,?,?)";
+                    `PAYPALBILLINGAGREEMENTID`,
+                    `BILLINGCYCLETYPE`,
+                    `BILLINGCYCLENUMBER`)
+                    VALUES (?,?,?,?,?,?,?,?,?)";
 
         DatabaseProvider::getDb()->execute($sql, [
             $oxid,
             Registry::getConfig()->getShopId(),
             $userId,
+            $orderId,
+            $parentOrderId,
             $subProdId,
-            $billingAgreementId
+            $billingAgreementId,
+            $billingCycleType,
+            $billingCycleNumber
         ]);
 
         // save oxid to session

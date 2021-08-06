@@ -186,6 +186,12 @@ class Events
                             collate latin1_general_ci
                             NOT NULL
                             COMMENT \'Order id (oxorder)\',
+                        `OXPARENTORDERID`
+                            char(32)
+                            character set latin1
+                            collate latin1_general_ci
+                            NOT NULL
+                            COMMENT \'Parent Order id (oxorder)\',
                         `OXPAYPALSUBPRODID`
                             char(32)
                             character set latin1
@@ -198,6 +204,17 @@ class Events
                             collate latin1_general_ci
                             NOT NULL
                             COMMENT \'PayPal Billing Agreement ID\',
+                        `PAYPALBILLINGCYCLETYPE`
+                            char(10)
+                            character set latin1
+                            collate latin1_general_ci
+                            NOT NULL
+                            COMMENT \'Billing Cycle Type (TRIAL, REGULAR)\',
+                        `PAYPALBILLINGCYCLENR`
+                            int(10)
+                            unsigned
+                            NOT NULL
+                            COMMENT \'Billing Cycle Number\',
                         `OXTIMESTAMP`
                             timestamp
                             NOT NULL

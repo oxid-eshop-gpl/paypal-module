@@ -41,14 +41,16 @@ class PaymentSaleCompletedHandler implements HandlerInterface
     {
         $lang = Registry::getLang();
         $data = $event->getData()['resource'];
+        $billingAgreementId = $data['billing_agreement_id'];
 
         $subscriptionRepository = new SubscriptionRepository();
 
         // collect relevant IDs
         $ids = $subscriptionRepository->getAllIdsFromBillingAgreementId($data['billing_agreement_id']);
-        $orderId = $ids['OXORDERID'];
+        $parentOrderId = $ids['OXORDERID'];
         $oldArticleId = $ids['OXARTID'];
         $payPalProductId = $ids['PAYPALPRODUCTID'];
+        $userId = $ids['OXUSERID'];
         $payPalSubscriptionPlanId = $ids['PAYPALSUBSCRIPTIONPLANID'];
 
         // collect Paypal-PlanDetails & -ProductDetails
@@ -64,8 +66,9 @@ class PaymentSaleCompletedHandler implements HandlerInterface
 
         // collect cycles
         // todo: Need the source for this information
-        $actualCycle = 1;
-        $totalCycles = 10;
+        $billingCycleNumber = 1;
+        $billingCycleTotal = 10;
+        $billingCycleType = 'REGULAR';
 
         // prepare price
         $vat = $subscriptionPlan->taxes->percentage;
@@ -92,8 +95,8 @@ class PaymentSaleCompletedHandler implements HandlerInterface
             'oxarticles__oxtitle'  => sprintf(
                 $lang->translateString('OXPS_PAYPAL_SUBSCRITION_PART_ARTICLE_TITLE'),
                 $payPalProduct->name,
-                $actualCycle,
-                $totalCycles
+                $billingCycleNumber,
+                $billingCycleTotal
             ),
             'oxarticles__oxprice'  => ($enterNetPrice ? $singlePrice->getNettoPrice() : $singlePrice->getBruttoPrice()),
             'oxarticles__oxvat'    => $vat,
@@ -109,13 +112,26 @@ class PaymentSaleCompletedHandler implements HandlerInterface
         $newOrderArticle->oxorderarticles__oxartnum = new Field($oldArticle->oxarticles__oxartnum->value);
 
         // clone the old order and add the new article
-        $oldOrder = oxNew(Order::class);
-        $oldOrder->load($orderId);
+        $parentOrder = oxNew(Order::class);
+        $parentOrder->load($parentOrderId);
         $newOrder = oxNew(Order::class);
-        $newOrder->oxClone($oldOrder);
+        $newOrder->oxClone($parentOrder);
         $newOrder->oxorder__oxordernr = null;
         $newOrder->setId();
         $newOrder->recalculateOrder([$newOrderArticle]);
+
+        // save the new reference
+        $subscriptionRepository->saveSubscriptionOrder(
+            $billingAgreementId,
+            $payPalSubscriptionPlanId,
+            $userId,
+            $newOrder->getId(),
+            $parentOrderId,
+            $payPalProductId,
+            $billingAgreementId,
+            $billingCycleType,
+            $billingCycleNumber
+        );
 
         // delete the temporary article
         $newArticle->delete();
