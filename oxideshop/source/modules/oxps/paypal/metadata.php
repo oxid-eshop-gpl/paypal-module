@@ -129,6 +129,9 @@ $aModule = [
         'pspaypalsmartpaymentbuttons.tpl' => 'oxps/paypal/views/includes/pspaypalsmartpaymentbuttons.tpl',
         'pspaypalpaymentbuttons.tpl' => 'oxps/paypal/views/includes/pspaypalpaymentbuttons.tpl',
         'pspaypalsubscriptionbuttons.tpl' => 'oxps/paypal/views/includes/pspaypalsubscriptionbuttons.tpl',
+
+        'tpl/layout/base_js.tpl'    =>  'oxps/paypal/views/tpl/shared/layout/base_js.tpl',
+        'tpl/layout/base_style.tpl' =>  'oxps/paypal/views/tpl/shared/layout/base_style.tpl',
     ],
     'events' => [
         'onActivate' => '\OxidProfessionalServices\PayPal\Core\Events::onActivate',
@@ -161,74 +164,31 @@ $aModule = [
             'file' => 'views/blocks/admin/admin_headitem_incjs.tpl'
         ],
         [
-            'theme' => 'flow',
             'template' => 'layout/base.tpl',
             'block' => 'base_js',
             'file' => 'views/blocks/shared/layout/base_js.tpl'
         ],
         [
-            'theme' => 'wave',
-            'template' => 'layout/base.tpl',
-            'block' => 'base_js',
-            'file' => 'views/blocks/shared/layout/base_js.tpl'
-        ],
-        [
-            'theme' => 'flow',
             'template' => 'layout/base.tpl',
             'block' => 'base_style',
             'file' => 'views/blocks/shared/layout/base_style.tpl'
         ],
         [
-            'theme' => 'wave',
-            'template' => 'layout/base.tpl',
-            'block' => 'base_style',
-            'file' => 'views/blocks/shared/layout/base_style.tpl'
-        ],
-        [
-            'theme' => 'flow',
             'template' => 'widget/product/listitem_line.tpl',
             'block' => 'widget_product_listitem_line_price',
             'file' => 'views/blocks/shared/widget/product/widget_product_listitem_line_price.tpl'
         ],
         [
-            'theme' => 'wave',
-            'template' => 'widget/product/listitem_line.tpl',
-            'block' => 'widget_product_listitem_line_price',
-            'file' => 'views/blocks/shared/widget/product/widget_product_listitem_line_price.tpl'
-        ],
-        [
-            'theme' => 'flow',
             'template' => 'widget/product/listitem_infogrid.tpl',
             'block' => 'widget_product_listitem_infogrid_price',
             'file' => 'views/blocks/shared/widget/product/widget_product_listitem_infogrid_price.tpl'
         ],
         [
-            'theme' => 'wave',
-            'template' => 'widget/product/listitem_infogrid.tpl',
-            'block' => 'widget_product_listitem_infogrid_price',
-            'file' => 'views/blocks/shared/widget/product/widget_product_listitem_infogrid_price.tpl'
-        ],
-        [
-            'theme' => 'flow',
             'template' => 'widget/product/listitem_grid.tpl',
             'block' => 'widget_product_listitem_grid_price',
             'file' => 'views/blocks/shared/widget/product/widget_product_listitem_grid_price.tpl'
         ],
         [
-            'theme' => 'wave',
-            'template' => 'widget/product/listitem_grid.tpl',
-            'block' => 'widget_product_listitem_grid_price',
-            'file' => 'views/blocks/shared/widget/product/widget_product_listitem_grid_price.tpl'
-        ],
-        [
-            'theme' => 'flow',
-            'template' => 'page/checkout/basket.tpl',
-            'block' => 'basket_btn_next_bottom',
-            'file' => '/views/blocks/shared/page/checkout/basket_btn_next_bottom.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'wave',
             'template' => 'page/checkout/basket.tpl',
             'block' => 'basket_btn_next_bottom',
             'file' => '/views/blocks/shared/page/checkout/basket_btn_next_bottom.tpl',
@@ -249,14 +209,6 @@ $aModule = [
             'position' => '5'
         ],
         [
-            'theme' => 'flow',
-            'template' => 'page/checkout/payment.tpl',
-            'block' => 'select_payment',
-            'file' => '/views/blocks/shared/page/checkout/select_payment.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'wave',
             'template' => 'page/checkout/payment.tpl',
             'block' => 'select_payment',
             'file' => '/views/blocks/shared/page/checkout/select_payment.tpl',
@@ -277,28 +229,12 @@ $aModule = [
             'position' => '5'
         ],
         [
-            'theme' => 'flow',
             'template' => 'page/details/inc/productmain.tpl',
             'block' => 'details_productmain_tobasket',
             'file' => '/views/blocks/shared/page/details/inc/details_productmain_tobasket.tpl',
             'position' => '5'
         ],
         [
-            'theme' => 'wave',
-            'template' => 'page/details/inc/productmain.tpl',
-            'block' => 'details_productmain_tobasket',
-            'file' => '/views/blocks/shared/page/details/inc/details_productmain_tobasket.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'flow',
-            'template' => 'page/details/inc/productmain.tpl',
-            'block' => 'details_productmain_price_value',
-            'file' => '/views/blocks/shared/page/details/inc/details_productmain_price_value.tpl',
-            'position' => '5'
-        ],
-        [
-            'theme' => 'wave',
             'template' => 'page/details/inc/productmain.tpl',
             'block' => 'details_productmain_price_value',
             'file' => '/views/blocks/shared/page/details/inc/details_productmain_price_value.tpl',
