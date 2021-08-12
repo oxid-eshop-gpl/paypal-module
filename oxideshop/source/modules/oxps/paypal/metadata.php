@@ -130,8 +130,13 @@ $aModule = [
         'pspaypalpaymentbuttons.tpl' => 'oxps/paypal/views/includes/pspaypalpaymentbuttons.tpl',
         'pspaypalsubscriptionbuttons.tpl' => 'oxps/paypal/views/includes/pspaypalsubscriptionbuttons.tpl',
 
-        'tpl/layout/base_js.tpl'    =>  'oxps/paypal/views/tpl/shared/layout/base_js.tpl',
-        'tpl/layout/base_style.tpl' =>  'oxps/paypal/views/tpl/shared/layout/base_style.tpl',
+        // @Todo PAYPAL-486 Register templates for overloading; use theme name in key when theme-specific. Shared templates don't receive a theme-specific key.
+        'tpl/layout/base_js.tpl' => 'oxps/paypal/views/tpl/shared/layout/base_js.tpl',
+        'tpl/layout/base_style.tpl' => 'oxps/paypal/views/tpl/shared/layout/base_style.tpl',
+        'tpl/page/checkout/basket_btn_next_bottom.tpl' => 'oxps/paypal/views/tpl/shared/page/checkout/basket_btn_next_bottom.tpl',
+        'tpl/page/checkout/select_payment.tpl' => 'oxps/paypal/views/tpl/shared/page/checkout/select_payment.tpl',
+        'tpl/page/details/inc/details_productmain_tobasket.tpl' => 'oxps/paypal/views/tpl/shared/page/details/inc/details_productmain_tobasket.tpl',
+
     ],
     'events' => [
         'onActivate' => '\OxidProfessionalServices\PayPal\Core\Events::onActivate',
