@@ -446,4 +446,32 @@ $aLang = [
 
     'TOOLTIPS_OXPS_PAYPAL_EDITSUBSCRIPTION'        => 'Edit Billing-Plan',
     'TOOLTIPS_OXPS_PAYPAL_DEACTIVATESUBSCRIPTION'  => 'Deactivate Billing-Plan',
+
+    // PSPAYPAL-491 -->
+    'SHOP_MODULE_GROUP_oepaypal_banners'                     => 'Banner settings | Offer your customers PayPal installment payment with 0% effective annual interest. Read <a href="https://www.paypal.com/de/webapps/mpp/installments" target="_blank">more</a>.',
+    'SHOP_MODULE_oePayPalClientId'                           => 'Client ID',
+    'SHOP_MODULE_oePayPalBannersHideAll'                     => 'Hide installment banner',
+    'SHOP_MODULE_oePayPalBannersStartPage'                   => 'Show installment banner on start page',
+    'SHOP_MODULE_oePayPalBannersStartPageSelector'           => 'CSS selector of the start page after which the banner is displayed.',
+    'HELP_SHOP_MODULE_oePayPalBannersStartPageSelector'      => 'Default values for Flow and Wave themes are: \'#wrapper .row\' and \'#wrapper .container\'. After these CSS selectors the banner is displayed.',
+    'SHOP_MODULE_oePayPalBannersCategoryPage'                => 'Show installment banner on category pages',
+    'SHOP_MODULE_oePayPalBannersCategoryPageSelector'        => 'CSS selector of the category pages after which the banner is displayed.',
+    'HELP_SHOP_MODULE_oePayPalBannersCategoryPageSelector'   => 'Default values for Flow and Wave themes are: \'.page-header\' and \'.page-header\'. After these CSS selectors the banner is displayed.',
+    'SHOP_MODULE_oePayPalBannersSearchResultsPage'           => 'Show installment banner on search results pages',
+    'SHOP_MODULE_oePayPalBannersSearchResultsPageSelector'   => 'CSS selector of the search results pages after which the banner is displayed.',
+    'HELP_SHOP_MODULE_oePayPalBannersSearchResultsPageSelector' => 'Default values for Flow and Wave themes are: \'#content .page-header .clearfix\' and \'.page-header\'. After these CSS selectors the banner is displayed.',
+    'SHOP_MODULE_oePayPalBannersProductDetailsPage'          => 'Show installment banner on product details pages',
+    'SHOP_MODULE_oePayPalBannersProductDetailsPageSelector'  => 'CSS selector of the product detail pages after which the banner is displayed.',
+    'HELP_SHOP_MODULE_oePayPalBannersProductDetailsPageSelector' => 'Default values for Flow and Wave themes are: \'.detailsParams\' and \'#detailsItemsPager\'. After these CSS selectors the banner is displayed.',
+    'SHOP_MODULE_oePayPalBannersCheckoutPage'                => 'Show installment banner on checkout pages',
+    'SHOP_MODULE_oePayPalBannersCartPageSelector'            => 'CSS selector of the "Cart" page (checkout step 1) after which the banner is displayed.',
+    'HELP_SHOP_MODULE_oePayPalBannersCartPageSelector'       => 'Default values for Flow and Wave themes are: \'.cart-buttons\' and \'.cart-buttons\'. After these CSS selectors the banner is displayed.',
+    'SHOP_MODULE_oePayPalBannersPaymentPageSelector'         => 'CSS selector of the "Pay" page (checkout step 3) after which the banner is displayed.',
+    'HELP_SHOP_MODULE_oePayPalBannersPaymentPageSelector'    => 'Default values for Flow and Wave themes are: \'.checkoutSteps ~ .spacer\' and \'.checkout-steps\'. After these CSS selectors the banner is displayed.',
+    'SHOP_MODULE_oePayPalBannersColorScheme'                 => 'Select installment banner\'s color',
+    'SHOP_MODULE_oePayPalBannersColorScheme_blue'            => 'blue',
+    'SHOP_MODULE_oePayPalBannersColorScheme_black'           => 'black',
+    'SHOP_MODULE_oePayPalBannersColorScheme_white'           => 'white',
+    'SHOP_MODULE_oePayPalBannersColorScheme_white-no-border' => 'white, no border',
+    // <-- PSPAYPAL-491
 ];
