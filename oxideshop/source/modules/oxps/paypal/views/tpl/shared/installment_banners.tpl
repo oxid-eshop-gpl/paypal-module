@@ -1,10 +1,10 @@
-[{if !isset($size) }]
-    [{assign var="size" value="20x1"}]
-[{/if}]
+[{if $oViewConf->enablePayPalBanners() && $oViewConf->getPayPalClientId()}]
+    [{if !isset($size) }]
+        [{assign var="size" value="20x1"}]
+    [{/if}]
 
-[{assign var="currency" value=$oView->getActCurrency()}]
+    [{assign var="currency" value=$oView->getActCurrency()}]
 
-[{if $oViewConf->getPayPalClientId()}]
     [{oxscript include="https://www.paypal.com/sdk/js?client-id="|cat:$oViewConf->getPayPalClientId()|cat:"&components=messages"}]
     [{capture assign="installmentBanners"}]
         // Create installment banner holder

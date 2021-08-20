@@ -28,6 +28,20 @@ class ViewConfigTest extends UnitTestCase
 
     /**
      * PSPAYPAL-491 -->
+     * Banner feature enabled? test
+     */
+    public function testShowPayPalBannerOnStartPage()
+    {
+        $view = oxNew(\OxidEsales\Eshop\Core\ViewConfig::class);
+
+        $this->getConfig()->setConfigParam('oePayPalBannersShowAll', false);
+        $this->assertFalse($view->enablePayPalBanners());
+
+        $this->getConfig()->setConfigParam('oePayPalBannersShowAll', true);
+        $this->assertTrue($view->enablePayPalBanners());
+    }
+
+    /**
      * Test case for ViewConfig::getPayPalClientId()
      */
     public function testGetPayPalClientIdId()

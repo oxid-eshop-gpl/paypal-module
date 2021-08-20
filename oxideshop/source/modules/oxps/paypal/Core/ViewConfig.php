@@ -109,6 +109,17 @@ class ViewConfig extends ViewConfig_parent
 
     /**
      * PSPAYPAL-491 -->
+     * Returns whether PayPal banners should be shown on the start page
+     *
+     * @return bool
+     */
+    public function enablePayPalBanners()
+    {
+        return (boolean) Registry::getConfig()->getConfigParam('oePayPalBannersShowAll');
+    }
+
+    /**
+     * Client ID getter for use with the installment banner feature.
      * @return string
      */
     public function getPayPalClientId(): string
