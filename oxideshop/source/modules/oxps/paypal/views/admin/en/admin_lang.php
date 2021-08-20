@@ -104,8 +104,7 @@ $aLang = [
     'OXPS_PAYPAL_BILLING_PLAN_ACTION_CONTINUE'     => 'Continue',
     'OXPS_PAYPAL_BILLING_PLAN_ACTION_CANCEL'       => 'Cancel',
     'OXPS_PAYPAL_BILLING_PLAN_FAILURE_THRESHOLD'   => 'Payment Failure Threshold',
-    'HELP_OXPS_PAYPAL_BILLING_PLAN_FAILURE_THRESHOLD'                                =>
-        'How often should a payment be tried before it is canceled?',
+    'HELP_OXPS_PAYPAL_BILLING_PLAN_FAILURE_THRESHOLD'=> 'How often should a payment be tried before it is canceled?',
     'OXPS_PAYPAL_BILLING_PLAN_TAX'                 => 'Tax',
     'OXPS_PAYPAL_BILLING_PLAN_TAX_PERCENTAGE'      => 'Tax Percentage',
     'OXPS_PAYPAL_BILLING_PLAN_TAX_INCLUSIVE'       => 'Tax Inclusive',
