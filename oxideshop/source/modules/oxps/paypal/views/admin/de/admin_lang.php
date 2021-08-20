@@ -467,9 +467,8 @@ $aLang = [
     'TOOLTIPS_OXPS_PAYPAL_DEACTIVATESUBSCRIPTION'  => 'Abrechnungsplan deaktivieren',
 
     // PSPAYPAL-491 -->
+    // @Todo Tear these down and use labels with the new settings page
     'SHOP_MODULE_GROUP_oepaypal_banners'                     => 'Banner-Einstellungen | Bieten Sie Ihren Kunden PayPal Ratenzahlung mit 0% effektiven Jahreszins an. Erfahren Sie hier <a href="https://www.paypal.com/de/webapps/mpp/installments" target="_blank">mehr</a>.',
-    'SHOP_MODULE_oePayPalBannersShowAll'                     => 'Ratenzahlung-Banner aktivieren',
-    'HELP_SHOP_MODULE_oePayPalBannersShowAll'                => 'Aktivieren Sie diese Einstellung, um die Bannerfunktion zuzulassen.',
     'SHOP_MODULE_oePayPalClientId'                           => 'Ratenzahlung-Banner-Client-ID',
     'SHOP_MODULE_oePayPalBannersStartPage'                   => 'Ratenzahlung-Banner auf Startseite anzeigen',
     'SHOP_MODULE_oePayPalBannersStartPageSelector'           => 'CSS-Selektor der Startseite hinter dem das Banner angezeigt wird.',
@@ -493,5 +492,11 @@ $aLang = [
     'SHOP_MODULE_oePayPalBannersColorScheme_black'           => 'schwarz',
     'SHOP_MODULE_oePayPalBannersColorScheme_white'           => 'weiß',
     'SHOP_MODULE_oePayPalBannersColorScheme_white-no-border' => 'weiß, ohne Rand',
+
+    // New settings page:
+    'OXPS_PAYPAL_BANNER_CREDENTIALS'                => 'Banner-Einstellungen',
+    'OXPS_PAYPAL_BANNER_INFOTEXT'                   => 'Bieten Sie Ihren Kunden PayPal Ratenzahlung mit 0% effektiven Jahreszins an. Erfahren Sie hier <a href="https://www.paypal.com/de/webapps/mpp/installments" target="_blank">mehr</a>.',
+    'OXPS_PAYPAL_BANNER_SHOW_ALL'                   => 'Ratenzahlung-Banner aktivieren',
+    'HELP_OXPS_PAYPAL_BANNER_SHOP_MODULE_SHOW_ALL'  => 'Aktivieren Sie diese Einstellung, um die Bannerfunktion zuzulassen.',
     // <-- PSPAYPAL-491
 ];

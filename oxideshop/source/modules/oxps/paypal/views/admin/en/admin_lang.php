@@ -447,9 +447,8 @@ $aLang = [
     'TOOLTIPS_OXPS_PAYPAL_DEACTIVATESUBSCRIPTION'  => 'Deactivate Billing-Plan',
 
     // PSPAYPAL-491 -->
+    // @Todo Tear these down and use labels with the new settings page
     'SHOP_MODULE_GROUP_oepaypal_banners'                     => 'Banner settings | Offer your customers PayPal installment payment with 0% effective annual interest. Read <a href="https://www.paypal.com/de/webapps/mpp/installments" target="_blank">more</a>.',
-    'SHOP_MODULE_oePayPalBannersShowAll'                     => 'Enable installment banners',
-    'HELP_SHOP_MODULE_oePayPalBannersShowAll'                => 'Check this option to enable the banner feature.',
     'SHOP_MODULE_oePayPalClientId'                           => 'Installment Banner Client ID',
     'SHOP_MODULE_oePayPalBannersStartPage'                   => 'Show installment banner on start page',
     'SHOP_MODULE_oePayPalBannersStartPageSelector'           => 'CSS selector of the start page after which the banner is displayed.',
@@ -473,5 +472,11 @@ $aLang = [
     'SHOP_MODULE_oePayPalBannersColorScheme_black'           => 'black',
     'SHOP_MODULE_oePayPalBannersColorScheme_white'           => 'white',
     'SHOP_MODULE_oePayPalBannersColorScheme_white-no-border' => 'white, no border',
+
+    // New settings page:
+    'OXPS_PAYPAL_BANNER_CREDENTIALS'                => 'Banner settings',
+    'OXPS_PAYPAL_BANNER_INFOTEXT'                   => 'Offer your customers PayPal installment payment with 0% effective annual interest. Read <a href="https://www.paypal.com/de/webapps/mpp/installments" target="_blank">more</a>.',
+    'OXPS_PAYPAL_BANNER_SHOW_ALL'                   => 'Enable installment banners',
+    'HELP_OXPS_PAYPAL_BANNER_SHOP_MODULE_SHOW_ALL'  => 'Check this option to enable the banner feature.',
     // <-- PSPAYPAL-491
 ];

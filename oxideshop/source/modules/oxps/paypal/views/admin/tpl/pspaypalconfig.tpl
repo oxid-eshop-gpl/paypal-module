@@ -214,6 +214,33 @@
                     </div>
                 </div>
             </div>
+
+            <div class="card">
+                <div class="card-header" id="heading4">
+                    <h4 class="collapsed" data-toggle="collapse" data-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
+                        [{oxmultilang ident="OXPS_PAYPAL_BANNER_CREDENTIALS"}]
+                    </h4>
+                </div>
+                <div id="collapse5" class="collapse" aria-labelledby="heading4" data-parent="#accordion">
+                    <div class="card-body">
+                        <p>[{oxmultilang ident="OXPS_PAYPAL_BANNER_INFOTEXT"}]</p>
+                        <div class="form-group">
+                            <div class="controls">
+                                <div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="conf[oePayPalBannersShowAll]" [{if $config->getPayPalModuleConfigurationValue('oePayPalBannersShowAll')}]checked[{/if}] value="1">
+                                            [{oxmultilang ident="OXPS_PAYPAL_BANNER_SHOW_ALL"}]
+                                        </label>
+                                    </div>
+                                </div>
+                                <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_BANNER_SHOP_MODULE_SHOW_ALL"}]</span>
+                            </div>
+                            [{* @Todo PSPAYPAL-491 Move more settings from the settings tab to this page *}]
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <button type="submit" class="btn btn-primary bottom-space">[{oxmultilang ident="GENERAL_SAVE"}]</button>
     </form>
