@@ -469,8 +469,9 @@ $aLang = [
 
     // PSPAYPAL-491 -->
     'SHOP_MODULE_GROUP_oepaypal_banners'                     => 'Banner-Einstellungen | Bieten Sie Ihren Kunden PayPal Ratenzahlung mit 0% effektiven Jahreszins an. Erfahren Sie hier <a href="https://www.paypal.com/de/webapps/mpp/installments" target="_blank">mehr</a>.',
-    'SHOP_MODULE_oePayPalClientId'                           => 'Client-ID',
-    'SHOP_MODULE_oePayPalBannersHideAll'                     => 'Ratenzahlung-Banner nicht anzeigen',
+    'SHOP_MODULE_oePayPalBannersShowAll'                     => 'Ratenzahlung-Banner aktivieren',
+    'HELP_SHOP_MODULE_oePayPalBannersShowAll'                => 'Aktivieren Sie diese Einstellung, um die Bannerfunktion zuzulassen.',
+    'SHOP_MODULE_oePayPalClientId'                           => 'Ratenzahlung-Banner-Client-ID',
     'SHOP_MODULE_oePayPalBannersStartPage'                   => 'Ratenzahlung-Banner auf Startseite anzeigen',
     'SHOP_MODULE_oePayPalBannersStartPageSelector'           => 'CSS-Selektor der Startseite hinter dem das Banner angezeigt wird.',
     'HELP_SHOP_MODULE_oePayPalBannersStartPageSelector'      => 'Standardwerte für die Themes "Flow" und "Wave": \'#wrapper .row\' und \'#wrapper .container\'. Nach diesen CSS-Selektoren wird das Banner angezeigt.',

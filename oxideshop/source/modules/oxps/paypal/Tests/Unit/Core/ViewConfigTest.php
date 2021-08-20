@@ -45,11 +45,11 @@ class ViewConfigTest extends UnitTestCase
     {
         $view = oxNew(\OxidEsales\Eshop\Core\ViewConfig::class);
 
-        $this->getConfig()->setConfigParam('oePayPalBannersHideAll', false);
+        $this->getConfig()->setConfigParam('oePayPalBannersShowAll', true);
         $this->getConfig()->setConfigParam('oePayPalBannersStartPage', true);
         $this->assertTrue($view->showPayPalBannerOnStartPage());
 
-        $this->getConfig()->setConfigParam('oePayPalBannersHideAll', true);
+        $this->getConfig()->setConfigParam('oePayPalBannersShowAll', false);
         $this->assertFalse($view->showPayPalBannerOnStartPage());
     }
 
@@ -60,11 +60,11 @@ class ViewConfigTest extends UnitTestCase
     {
         $view = oxNew(\OxidEsales\Eshop\Core\ViewConfig::class);
 
-        $this->getConfig()->setConfigParam('oePayPalBannersHideAll', false);
+        $this->getConfig()->setConfigParam('oePayPalBannersShowAll', true);
         $this->getConfig()->setConfigParam('oePayPalBannersCategoryPage', true);
         $this->assertTrue($view->showPayPalBannerOnCategoryPage());
 
-        $this->getConfig()->setConfigParam('oePayPalBannersHideAll', true);
+        $this->getConfig()->setConfigParam('oePayPalBannersShowAll', false);
         $this->assertFalse($view->showPayPalBannerOnCategoryPage());
     }
 
@@ -75,11 +75,11 @@ class ViewConfigTest extends UnitTestCase
     {
         $view = oxNew(\OxidEsales\Eshop\Core\ViewConfig::class);
 
-        $this->getConfig()->setConfigParam('oePayPalBannersHideAll', false);
+        $this->getConfig()->setConfigParam('oePayPalBannersShowAll', true);
         $this->getConfig()->setConfigParam('oePayPalBannersSearchResultsPage', true);
         $this->assertTrue($view->showPayPalBannerOnSearchResultsPage());
 
-        $this->getConfig()->setConfigParam('oePayPalBannersHideAll', true);
+        $this->getConfig()->setConfigParam('oePayPalBannersShowAll', false);
         $this->assertFalse($view->showPayPalBannerOnSearchResultsPage());
     }
 
@@ -90,11 +90,11 @@ class ViewConfigTest extends UnitTestCase
     {
         $view = oxNew(\OxidEsales\Eshop\Core\ViewConfig::class);
 
-        $this->getConfig()->setConfigParam('oePayPalBannersHideAll', false);
+        $this->getConfig()->setConfigParam('oePayPalBannersShowAll', true);
         $this->getConfig()->setConfigParam('oePayPalBannersProductDetailsPage', true);
         $this->assertTrue($view->showPayPalBannerOnProductDetailsPage());
 
-        $this->getConfig()->setConfigParam('oePayPalBannersHideAll', true);
+        $this->getConfig()->setConfigParam('oePayPalBannersShowAll', false);
         $this->assertFalse($view->showPayPalBannerOnProductDetailsPage());
     }
 
@@ -114,14 +114,14 @@ class ViewConfigTest extends UnitTestCase
             ->getMock();
         $viewMock->expects($this->once())->method('getActionClassName')->will($this->returnValue($actionClassName));
 
-        $this->getConfig()->setConfigParam('oePayPalBannersHideAll', false);
+        $this->getConfig()->setConfigParam('oePayPalBannersShowAll', true);
         $this->getConfig()->setConfigParam('oePayPalBannersCheckoutPage', true);
         $this->assertTrue($viewMock->showPayPalBannerOnCheckoutPage());
 
-        $this->getConfig()->setConfigParam('oePayPalBannersHideAll', true);
+        $this->getConfig()->setConfigParam('oePayPalBannersShowAll', false);
         $this->assertFalse($viewMock->showPayPalBannerOnCheckoutPage());
 
-        $this->getConfig()->setConfigParam('oePayPalBannersHideAll', false);
+        $this->getConfig()->setConfigParam('oePayPalBannersShowAll', true);
         $this->getConfig()->setConfigParam($selectorSetting, '');
         $this->assertFalse($viewMock->showPayPalBannerOnCheckoutPage());
     }

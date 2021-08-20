@@ -449,8 +449,9 @@ $aLang = [
 
     // PSPAYPAL-491 -->
     'SHOP_MODULE_GROUP_oepaypal_banners'                     => 'Banner settings | Offer your customers PayPal installment payment with 0% effective annual interest. Read <a href="https://www.paypal.com/de/webapps/mpp/installments" target="_blank">more</a>.',
-    'SHOP_MODULE_oePayPalClientId'                           => 'Client ID',
-    'SHOP_MODULE_oePayPalBannersHideAll'                     => 'Hide installment banner',
+    'SHOP_MODULE_oePayPalBannersShowAll'                     => 'Enable installment banners',
+    'HELP_SHOP_MODULE_oePayPalBannersShowAll'                => 'Check this option to enable the banner feature.',
+    'SHOP_MODULE_oePayPalClientId'                           => 'Installment Banner Client ID',
     'SHOP_MODULE_oePayPalBannersStartPage'                   => 'Show installment banner on start page',
     'SHOP_MODULE_oePayPalBannersStartPageSelector'           => 'CSS selector of the start page after which the banner is displayed.',
     'HELP_SHOP_MODULE_oePayPalBannersStartPageSelector'      => 'Default values for Flow and Wave themes are: \'#wrapper .row\' and \'#wrapper .container\'. After these CSS selectors the banner is displayed.',
