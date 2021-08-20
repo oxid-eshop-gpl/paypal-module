@@ -208,6 +208,21 @@ class Config
     {
         return (string) Registry::getConfig()->getConfigParam('sPayPalPaymentFailureThreshold', '1');
     }
+
+    /**
+     * Config value getter
+     * @Todo PSPAYPAL-491 Work in progress, add tests
+     * @param string oxconfig.OXVARNAME
+     * @return string value
+     */
+    public function getPayPalModuleConfigurationValue($varname)
+    {
+        if ($varname == '')
+            return null;
+
+        return (string) Registry::getConfig()->getConfigParam($varname);
+    }
+
     /**
      * This ClientId is public. The only function is to create
      * a basiclly AccessToken,  Which one is needed to generate

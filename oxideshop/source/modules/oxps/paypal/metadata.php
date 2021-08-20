@@ -293,7 +293,8 @@ $aModule = [
         ['name' => 'sPayPalPaymentFailureThreshold', 'type' => 'str', 'value' => '', 'group' => null],
 
         // PSPAYPAL-491 -->
-        ['group' => 'oepaypal_banners', 'name' => 'oePayPalBannersShowAll',                    'type' => 'bool',   'value' => 'true'],
+        ['name' => 'oePayPalBannersShowAll', 'type' => 'bool', 'value' => 'true'],
+        // @Todo Remove group so the settings won't appear in the settings tab. Will be used in the new settings page in the future.
         ['group' => 'oepaypal_banners', 'name' => 'oePayPalClientId',                          'type' => 'str',    'value' => ''],
         ['group' => 'oepaypal_banners', 'name' => 'oePayPalBannersStartPage',                  'type' => 'bool',   'value' => 'true'],
         ['group' => 'oepaypal_banners', 'name' => 'oePayPalBannersStartPageSelector',          'type' => 'str',    'value' => '#wrapper .row'],
