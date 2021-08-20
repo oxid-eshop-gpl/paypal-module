@@ -125,7 +125,7 @@ class ViewConfig extends ViewConfig_parent
     {
         $config = Registry::getConfig();
         return (
-            !$config->getConfigParam('oePayPalBannersHideAll') &&
+            $config->getConfigParam('oePayPalBannersShowAll') &&
             $config->getConfigParam('oePayPalBannersStartPage') &&
             $config->getConfigParam('oePayPalBannersStartPageSelector') &&
             $config->getConfigParam('bl_perfLoadPrice')
@@ -152,7 +152,7 @@ class ViewConfig extends ViewConfig_parent
     {
         $config = Registry::getConfig();
         return (
-            !$config->getConfigParam('oePayPalBannersHideAll') &&
+            $config->getConfigParam('oePayPalBannersShowAll') &&
             $config->getConfigParam('oePayPalBannersCategoryPage') &&
             $config->getConfigParam('oePayPalBannersCategoryPageSelector') &&
             $config->getConfigParam('bl_perfLoadPrice')
@@ -179,7 +179,7 @@ class ViewConfig extends ViewConfig_parent
     {
         $config = Registry::getConfig();
         return (
-            !$config->getConfigParam('oePayPalBannersHideAll') &&
+            $config->getConfigParam('oePayPalBannersShowAll') &&
             $config->getConfigParam('oePayPalBannersSearchResultsPage') &&
             $config->getConfigParam('oePayPalBannersSearchResultsPageSelector') &&
             $config->getConfigParam('bl_perfLoadPrice')
@@ -206,7 +206,7 @@ class ViewConfig extends ViewConfig_parent
     {
         $config = Registry::getConfig();
         return (
-            !$config->getConfigParam('oePayPalBannersHideAll') &&
+            $config->getConfigParam('oePayPalBannersShowAll') &&
             $config->getConfigParam('oePayPalBannersProductDetailsPage') &&
             $config->getConfigParam('oePayPalBannersProductDetailsPageSelector') &&
             $config->getConfigParam('bl_perfLoadPrice')
@@ -236,14 +236,14 @@ class ViewConfig extends ViewConfig_parent
         $config = Registry::getConfig();
         if ($actionClassName === 'basket') {
             $showBanner = (
-                !$config->getConfigParam('oePayPalBannersHideAll') &&
+                $config->getConfigParam('oePayPalBannersShowAll') &&
                 $config->getConfigParam('oePayPalBannersCheckoutPage') &&
                 $config->getConfigParam('oePayPalBannersCartPageSelector') &&
                 $config->getConfigParam('bl_perfLoadPrice')
             );
         } elseif ($actionClassName === 'payment') {
             $showBanner = (
-                !$config->getConfigParam('oePayPalBannersHideAll') &&
+                $config->getConfigParam('oePayPalBannersShowAll') &&
                 $config->getConfigParam('oePayPalBannersCheckoutPage') &&
                 $config->getConfigParam('oePayPalBannersPaymentPageSelector') &&
                 $config->getConfigParam('bl_perfLoadPrice')
