@@ -32,7 +32,7 @@ use OxidProfessionalServices\PayPal\Core\Config;
  */
 class PayPalConfigController extends AdminController
 {
-    public const MODULE_ID = 'module:oxps/paypal';
+    public const MODULE_ID = 'module:oxscpaypal';
     public const SIGN_UP_HOST = 'https://www.sandbox.paypal.com/bizsignup/partner/entry';
 
     public function __construct()
