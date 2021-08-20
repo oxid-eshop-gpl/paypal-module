@@ -293,7 +293,7 @@ $aModule = [
         ['name' => 'sPayPalPaymentFailureThreshold', 'type' => 'str', 'value' => '', 'group' => null],
 
         // PSPAYPAL-491 -->
-        ['group' => 'oepaypal_banners', 'name' => 'oePayPalBannersShowAll',                    'type' => 'bool',   'value' => 'false'],
+        ['group' => 'oepaypal_banners', 'name' => 'oePayPalBannersShowAll',                    'type' => 'bool',   'value' => 'true'],
         ['group' => 'oepaypal_banners', 'name' => 'oePayPalClientId',                          'type' => 'str',    'value' => ''],
         ['group' => 'oepaypal_banners', 'name' => 'oePayPalBannersStartPage',                  'type' => 'bool',   'value' => 'true'],
         ['group' => 'oepaypal_banners', 'name' => 'oePayPalBannersStartPageSelector',          'type' => 'str',    'value' => '#wrapper .row'],
