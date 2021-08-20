@@ -104,8 +104,7 @@ $aLang = [
     'OXPS_PAYPAL_BILLING_PLAN_ACTION_CONTINUE'     => 'Weiter',
     'OXPS_PAYPAL_BILLING_PLAN_ACTION_CANCEL'       => 'Abbrechen',
     'OXPS_PAYPAL_BILLING_PLAN_FAILURE_THRESHOLD'   => 'Wiederholungen bei Zahlungsfehler',
-    'HELP_OXPS_PAYPAL_BILLING_PLAN_FAILURE_THRESHOLD'                                =>
-        'Wie oft soll versucht eine Zahlung durchzuführen, bis sie abgebrochen wird?',
+    'HELP_OXPS_PAYPAL_BILLING_PLAN_FAILURE_THRESHOLD' => 'Wie oft soll versucht eine Zahlung durchzuführen, bis sie abgebrochen wird?',
     'OXPS_PAYPAL_BILLING_PLAN_TAX'                 => 'Steuern',
     'OXPS_PAYPAL_BILLING_PLAN_TAX_PERCENTAGE'      => 'Steuer Prozentual',
     'OXPS_PAYPAL_BILLING_PLAN_TAX_INCLUSIVE'       => 'Steuer Inklusive',
@@ -132,15 +131,15 @@ $aLang = [
     'OXPS_PAYPAL_TRANSACTIONS'                     => 'Transaktionen',
     'OXPS_PAYPAL_BALANCES'                         => 'Guthaben',
     'OXPS_PAYPAL_GENERAL'                          => 'Allgemein',
-    'OXPS_PAYPAL_WEBHOOK_ID'                       => 'Webhook ID',
+    'OXPS_PAYPAL_WEBHOOK_ID'                       => 'Webhook-ID',
     'OXPS_PAYPAL_OPMODE'                           => 'Betriebsmodus',
     'OXPS_PAYPAL_OPMODE_LIVE'                      => 'Live',
     'OXPS_PAYPAL_OPMODE_SANDBOX'                   => 'Sandbox',
-    'OXPS_PAYPAL_CLIENT_ID'                        => 'Client ID',
+    'OXPS_PAYPAL_CLIENT_ID'                        => 'Client-ID',
     'OXPS_PAYPAL_CLIENT_SECRET'                    => 'Passwort',
-    'OXPS_PAYPAL_CREDENTIALS'                      => 'API Anmeldeinformationen',
-    'OXPS_PAYPAL_LIVE_CREDENTIALS'                 => 'Live API Anmeldeinformationen',
-    'OXPS_PAYPAL_SANDBOX_CREDENTIALS'              => 'Sandbox API Anmeldeinformationen',
+    'OXPS_PAYPAL_CREDENTIALS'                      => 'API-Anmeldeinformationen',
+    'OXPS_PAYPAL_LIVE_CREDENTIALS'                 => 'Live API-Anmeldeinformationen (Live)',
+    'OXPS_PAYPAL_SANDBOX_CREDENTIALS'              => 'API-Anmeldeinformationen (Sandbox)',
     'OXPS_PAYPAL_LIVE_BUTTON_CREDENTIALS'          => 'Anmeldung Händler PayPal-Integration (Live)',
     'OXPS_PAYPAL_SANDBOX_BUTTON_CREDENTIALS'       => 'Anmeldung Händler PayPal-Integration (Sandbox)',
     'OXPS_PAYPAL_ERR_CONF_INVALID'                 =>
@@ -155,12 +154,12 @@ $aLang = [
     'HELP_OXPS_PAYPAL_CHECKOUT_PLACEMENT'          => 'bei gleichzeitiger Nutzung von PayPal PLUS bitte deaktivieren',
     'HELP_OXPS_PAYPAL_BUTTON_PLACEMEMT'            => 'Schalten Sie die Anzeige der PayPal-Schaltflächen um',
     'HELP_OXPS_PAYPAL_CREDENTIALS'                 =>
-        'Wenn Sie die API Anmeldeinformationen (Client ID, Client Passwort, Webhook ID) bereits vorliegen haben, können Sie sie direkt eingeben.<br>
+        'Wenn Sie die API-Anmeldeinformationen (Client-ID, Client Passwort, Webhook-ID) bereits vorliegen haben, können Sie sie direkt eingeben.<br>
         Sollten Sie noch keine API-Daten haben und die Eingafelder noch leer sein, können Sie auch den eingeblendeten
         Button für eine komfortable Verknüpfung nutzen.',
-    'HELP_OXPS_PAYPAL_CLIENT_ID'                   => 'Client ID des Live-Account für live-Modus',
-    'HELP_OXPS_PAYPAL_CLIENT_SECRET'               => 'Secret des Live-Account für live-Modus',
-    'HELP_OXPS_PAYPAL_SANDBOX_CLIENT_ID'           => 'Client ID des Sandbox-Account für Sandbox-Modus',
+    'HELP_OXPS_PAYPAL_CLIENT_ID'                   => 'Client-ID des Live-Account für Live-Modus',
+    'HELP_OXPS_PAYPAL_CLIENT_SECRET'               => 'Secret des Live-Account für Live-Modus',
+    'HELP_OXPS_PAYPAL_SANDBOX_CLIENT_ID'           => 'Client-ID des Sandbox-Account für Sandbox-Modus',
     'HELP_OXPS_PAYPAL_SANDBOX_CLIENT_SECRET'       => 'Secret des Sandbox-Account für Sandbox-Modus. Bitte geben Sie das Passwort zweimal ein.',
     'HELP_OXPS_PAYPAL_SANDBOX_WEBHOOK_ID'          =>
         'Die ID des Sandboox-Webhooks, wie in Ihrem Developer Portal-Konto konfiguriert',
@@ -219,7 +218,7 @@ $aLang = [
     'OXPS_PAYPAL_REFUND_ALL'                       => 'Alle erstatten',
     'OXPS_PAYPAL_SUBSCRIPTION'                     => 'Abonnement',
     'OXPS_PAYPAL_SUBSCRIPTION_ID'                  => 'Abonnement-ID',
-    'OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID'             => 'Plan ID',
+    'OXPS_PAYPAL_SUBSCRIPTION_PLAN_ID'             => 'Plan-ID',
     'OXPS_PAYPAL_SUBSCRIPTION_START_TIME'          => 'Startzeit',
     'OXPS_PAYPAL_SUBSCRIPTION_QUANTITY'            => 'Menge',
     'OXPS_PAYPAL_SUBSCRIPTION_STATUS'              => 'Status',
