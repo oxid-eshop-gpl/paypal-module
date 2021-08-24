@@ -115,7 +115,7 @@ class ViewConfig extends ViewConfig_parent
      */
     public function enablePayPalBanners()
     {
-        return (boolean) Registry::getConfig()->getConfigParam('oePayPalBannersShowAll');
+        return (bool) Registry::getConfig()->getConfigParam('oePayPalBannersShowAll');
     }
 
     /**
