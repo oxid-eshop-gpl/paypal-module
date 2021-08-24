@@ -1,7 +1,7 @@
 {
-  "name": "infrastructure/template-project",
+  "name": "oxid-projects/paypal-apiv2",
   "type": "project",
-  "description": "template-project",
+  "description": "PayPal API V2",
   "license": [
     "GPL-3.0-only",
     "proprietary"
