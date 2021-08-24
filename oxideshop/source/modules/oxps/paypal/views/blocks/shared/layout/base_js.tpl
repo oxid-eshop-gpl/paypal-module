@@ -1,8 +1,2 @@
 [{$smarty.block.parent}]
-[{if $oViewConf->isPayPalActive()}]
-    [{if $submitCart}]
-        <script>
-            document.getElementById('orderConfirmAgbBottom').submit();
-        </script>
-    [{/if}]
-[{/if}]
+[{include file='tpl/layout/base_js.tpl'}]
