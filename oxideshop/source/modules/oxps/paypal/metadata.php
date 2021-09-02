@@ -280,7 +280,7 @@ $aModule = [
     ],
     'settings' => [
         ['name' => 'blPayPalSandboxMode', 'type' => 'bool', 'value' => 'false', 'group' => null],
-        ['name' => 'sPayPalClientId', 'type' => 'str', 'value' => '', 'group' => null],
+        ['name' => 'sPayPalClientId', 'type' => 'str', 'value' => '', 'group' => null], // Main functionality client ID
         ['name' => 'sPayPalClientSecret', 'type' => 'str', 'value' => '', 'group' => null],
         ['name' => 'sPayPalSandboxClientId', 'type' => 'str', 'value' => '', 'group' => null],
         ['name' => 'sPayPalWebhookId', 'type' => 'str', 'value' => '', 'group' => null],
@@ -295,19 +295,19 @@ $aModule = [
 
         // PSPAYPAL-491 -->
         ['name' => 'oePayPalBannersShowAll', 'type' => 'bool', 'value' => 'true'],
+        ['name' => 'oePayPalClientId', 'type' => 'str', 'value' => ''], // Banner feature client ID
+        ['name' => 'oePayPalBannersStartPage', 'type' => 'bool', 'value' => 'true'],
+        ['name' => 'oePayPalBannersStartPageSelector', 'type' => 'str', 'value' => '#wrapper .row'],
+        ['name' => 'oePayPalBannersCategoryPage', 'type' => 'bool', 'value' => 'true'],
+        ['name' => 'oePayPalBannersCategoryPageSelector', 'type' => 'str', 'value' => '.page-header'],
+        ['name' => 'oePayPalBannersSearchResultsPage', 'type' => 'bool', 'value' => 'true'],
+        ['name' => 'oePayPalBannersSearchResultsPageSelector', 'type' => 'str', 'value' => '#content .page-header .clearfix'],
+        ['name' => 'oePayPalBannersProductDetailsPage', 'type' => 'bool', 'value' => 'true'],
+        ['name' => 'oePayPalBannersProductDetailsPageSelector', 'type' => 'str', 'value' => '.detailsParams'],
+        ['name' => 'oePayPalBannersCheckoutPage', 'type' => 'bool', 'value' => 'true'],
+        ['name' => 'oePayPalBannersCartPageSelector', 'type' => 'str', 'value' => '.cart-buttons'],
+        ['name' => 'oePayPalBannersPaymentPageSelector', 'type' => 'str', 'value' => '.checkoutSteps ~ .spacer'],
         // @Todo Remove group so the settings won't appear in the settings tab. Will be used in the new settings page in the future.
-        ['group' => 'oepaypal_banners', 'name' => 'oePayPalClientId',                          'type' => 'str',    'value' => ''],
-        ['group' => 'oepaypal_banners', 'name' => 'oePayPalBannersStartPage',                  'type' => 'bool',   'value' => 'true'],
-        ['group' => 'oepaypal_banners', 'name' => 'oePayPalBannersStartPageSelector',          'type' => 'str',    'value' => '#wrapper .row'],
-        ['group' => 'oepaypal_banners', 'name' => 'oePayPalBannersCategoryPage',               'type' => 'bool',   'value' => 'true'],
-        ['group' => 'oepaypal_banners', 'name' => 'oePayPalBannersCategoryPageSelector',       'type' => 'str',    'value' => '.page-header'],
-        ['group' => 'oepaypal_banners', 'name' => 'oePayPalBannersSearchResultsPage',          'type' => 'bool',   'value' => 'true'],
-        ['group' => 'oepaypal_banners', 'name' => 'oePayPalBannersSearchResultsPageSelector',  'type' => 'str',    'value' => '#content .page-header .clearfix'],
-        ['group' => 'oepaypal_banners', 'name' => 'oePayPalBannersProductDetailsPage',         'type' => 'bool',   'value' => 'true'],
-        ['group' => 'oepaypal_banners', 'name' => 'oePayPalBannersProductDetailsPageSelector', 'type' => 'str',    'value' => '.detailsParams'],
-        ['group' => 'oepaypal_banners', 'name' => 'oePayPalBannersCheckoutPage',               'type' => 'bool',   'value' => 'true'],
-        ['group' => 'oepaypal_banners', 'name' => 'oePayPalBannersCartPageSelector',           'type' => 'str',    'value' => '.cart-buttons'],
-        ['group' => 'oepaypal_banners', 'name' => 'oePayPalBannersPaymentPageSelector',        'type' => 'str',    'value' => '.checkoutSteps ~ .spacer'],
         ['group' => 'oepaypal_banners', 'name' => 'oePayPalBannersColorScheme',                'type' => 'select', 'constraints' => 'blue|black|white|white-no-border', 'value' => 'blue'],
         // <-- PSPAYPAL-491
     ]

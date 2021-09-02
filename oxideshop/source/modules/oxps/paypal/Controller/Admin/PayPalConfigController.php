@@ -204,6 +204,25 @@ class PayPalConfigController extends AdminController
             $conf['blPayPalShowBasketButton'] = 0;
         }
 
+        if (!isset($conf['oePayPalBannersShowAll'])) {
+            $conf['oePayPalBannersShowAll'] = 0;
+        }
+        if (!isset($conf['oePayPalBannersStartPage'])) {
+            $conf['oePayPalBannersStartPage'] = 0;
+        }
+        if (!isset($conf['oePayPalBannersCategoryPage'])) {
+            $conf['oePayPalBannersCategoryPage'] = 0;
+        }
+        if (!isset($conf['oePayPalBannersSearchResultsPage'])) {
+            $conf['oePayPalBannersSearchResultsPage'] = 0;
+        }
+        if (!isset($conf['oePayPalBannersProductDetailsPage'])) {
+            $conf['oePayPalBannersProductDetailsPage'] = 0;
+        }
+        if (!isset($conf['oePayPalBannersCheckoutPage'])) {
+            $conf['oePayPalBannersCheckoutPage'] = 0;
+        }
+
         return $conf;
     }
 
