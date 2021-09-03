@@ -447,14 +447,6 @@ $aLang = [
     'TOOLTIPS_OXPS_PAYPAL_DEACTIVATESUBSCRIPTION'  => 'Deactivate Billing-Plan',
 
     // PSPAYPAL-491 -->
-    // @Todo Tear these down and use labels with the new settings page
-    'SHOP_MODULE_oePayPalBannersColorScheme'                 => 'Select installment banner\'s color',
-    'SHOP_MODULE_oePayPalBannersColorScheme_blue'            => 'blue',
-    'SHOP_MODULE_oePayPalBannersColorScheme_black'           => 'black',
-    'SHOP_MODULE_oePayPalBannersColorScheme_white'           => 'white',
-    'SHOP_MODULE_oePayPalBannersColorScheme_white-no-border' => 'white, no border',
-
-    // New settings page:
     'OXPS_PAYPAL_BANNER_CREDENTIALS'                => 'Banner settings',
     'OXPS_PAYPAL_BANNER_INFOTEXT'                   => 'Offer your customers PayPal installment payment with 0% effective annual interest. Read <a href="https://www.paypal.com/de/webapps/mpp/installments" target="_blank">more</a>.',
     'OXPS_PAYPAL_BANNER_SHOW_ALL'                   => 'Enable installment banners',
@@ -477,5 +469,10 @@ $aLang = [
     'HELP_OSC_PAYPAL_BANNER_CARTPAGESELECTOR'       => 'Default values for Flow and Wave themes are: \'.cart-buttons\' and \'.cart-buttons\' respectively. After these CSS selectors the banner is displayed.',
     'OSC_PAYPAL_BANNER_PAYMENTPAGESELECTOR'         => 'CSS selector of the "Pay" page (checkout step 3) after which the banner is displayed.',
     'HELP_OSC_PAYPAL_BANNER_PAYMENTPAGESELECTOR'    => 'Default values for Flow and Wave themes are: \'.checkoutSteps ~ .spacer\' and \'.checkout-steps\' respectively. After these CSS selectors the banner is displayed.',
+    'OSC_PAYPAL_BANNER_COLORSCHEME'                 => 'Select installment banner\'s color',
+    'OSC_PAYPAL_BANNER_COLORSCHEMEBLUE'             => 'blue',
+    'OSC_PAYPAL_BANNER_COLORSCHEMEBLACK'            => 'black',
+    'OSC_PAYPAL_BANNER_COLORSCHEMEWHITE'            => 'white',
+    'OSC_PAYPAL_BANNER_COLORSCHEMEWHITENOBORDER'    => 'white, no border',
     // <-- PSPAYPAL-491
 ];

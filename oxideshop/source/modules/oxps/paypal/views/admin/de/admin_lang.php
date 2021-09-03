@@ -467,14 +467,6 @@ $aLang = [
     'TOOLTIPS_OXPS_PAYPAL_DEACTIVATESUBSCRIPTION'  => 'Abrechnungsplan deaktivieren',
 
     // PSPAYPAL-491 -->
-    // @Todo Tear these down and use labels with the new settings page
-    'SHOP_MODULE_oePayPalBannersColorScheme'                 => 'Farbe des Ratenzahlung-Banners auswählen',
-    'SHOP_MODULE_oePayPalBannersColorScheme_blue'            => 'blau',
-    'SHOP_MODULE_oePayPalBannersColorScheme_black'           => 'schwarz',
-    'SHOP_MODULE_oePayPalBannersColorScheme_white'           => 'weiß',
-    'SHOP_MODULE_oePayPalBannersColorScheme_white-no-border' => 'weiß, ohne Rand',
-
-    // New settings page:
     'OXPS_PAYPAL_BANNER_CREDENTIALS'                => 'Banner-Einstellungen',
     'OXPS_PAYPAL_BANNER_INFOTEXT'                   => 'Bieten Sie Ihren Kunden PayPal Ratenzahlung mit 0% effektiven Jahreszins an. Erfahren Sie hier <a href="https://www.paypal.com/de/webapps/mpp/installments" target="_blank">mehr</a>.',
     'OXPS_PAYPAL_BANNER_SHOW_ALL'                   => 'Ratenzahlung-Banner aktivieren',
@@ -497,5 +489,10 @@ $aLang = [
     'HELP_OSC_PAYPAL_BANNER_CARTPAGESELECTOR'       => 'Standardwerte für die Themes "Flow" und "Wave": \'.cart-buttons\' und \'.cart-buttons\'. Nach diesen CSS-Selektoren wird das Banner angezeigt.',
     'OSC_PAYPAL_BANNER_PAYMENTPAGESELECTOR'         => 'CSS-Selektor der Seite "Versand & Zahlungsart" (Bestellschritt 3) hinter dem das Banner angezeigt wird.',
     'HELP_OSC_PAYPAL_BANNER_PAYMENTPAGESELECTOR'    => 'Standardwerte für die Themes "Flow" und "Wave": \'.checkoutSteps ~ .spacer\' bzw. \'.checkout-steps\'. Nach diesen CSS-Selektoren wird das Banner angezeigt.',
+    'OSC_PAYPAL_BANNER_COLORSCHEME'                 => 'Farbe des Ratenzahlung-Banners auswählen',
+    'OSC_PAYPAL_BANNER_COLORSCHEMEBLUE'             => 'blau',
+    'OSC_PAYPAL_BANNER_COLORSCHEMEBLACK'            => 'schwarz',
+    'OSC_PAYPAL_BANNER_COLORSCHEMEWHITE'            => 'weiß',
+    'OSC_PAYPAL_BANNER_COLORSCHEMEWHITENOBORDER'    => 'weiß, ohne Rand',
     // <-- PSPAYPAL-491
 ];

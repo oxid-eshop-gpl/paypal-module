@@ -274,7 +274,7 @@
                             <div class="controls">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="conf[oePayPalBannersSearchResultsPage]" [{if $config->getPayPalModuleConfigurationValue('oePayPalBannersSearchResultsPage')}]checked[{/if}] value="1">
+                                        <input type="checkbox" name="conf[oePayPalBannersSearchResultsPage]" custom-data="[{$config->getPayPalModuleConfigurationValue('oePayPalBannersSearchResultsPage')}]" [{if $config->getPayPalModuleConfigurationValue('oePayPalBannersSearchResultsPage')}]checked[{/if}] value="1">
                                         [{oxmultilang ident="OSC_PAYPAL_BANNER_SEARCHRESULTSPAGE"}]
                                     </label>
                                 </div>
@@ -320,7 +320,24 @@
                             </div>
                             <span class="help-block">[{oxmultilang ident="HELP_OSC_PAYPAL_BANNER_PAYMENTPAGESELECTOR"}]</span>
 
-                            [{* @Todo PSPAYPAL-491 Move more settings from the settings tab to this page *}]
+                            <hr>
+                            <label for="color-schema">[{oxmultilang ident="OSC_PAYPAL_BANNER_COLORSCHEME"}]</label>
+                            <div class="controls">
+                                <select name="conf[oePayPalBannersColorScheme]" id="color-schema" class="form-control">
+                                    <option value="blue" [{if $config->getPayPalModuleConfigurationValue('oePayPalBannersColorScheme') == 'blue'}]selected[{/if}]>
+                                        [{oxmultilang ident="OSC_PAYPAL_BANNER_COLORSCHEMEBLUE"}]
+                                    </option>
+                                    <option value="black" [{if $config->getPayPalModuleConfigurationValue('oePayPalBannersColorScheme') == 'black'}]selected[{/if}]>
+                                        [{oxmultilang ident="OSC_PAYPAL_BANNER_COLORSCHEMEBLACK"}]
+                                    </option>
+                                    <option value="white" [{if $config->getPayPalModuleConfigurationValue('oePayPalBannersColorScheme') == 'white'}]selected[{/if}]>
+                                        [{oxmultilang ident="OSC_PAYPAL_BANNER_COLORSCHEMEWHITE"}]
+                                    </option>
+                                    <option value="white-no-border" [{if $config->getPayPalModuleConfigurationValue('oePayPalBannersColorScheme') == 'white-no-border'}]selected[{/if}]>
+                                        [{oxmultilang ident="OSC_PAYPAL_BANNER_COLORSCHEMEWHITENOBORDER"}]
+                                    </option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>

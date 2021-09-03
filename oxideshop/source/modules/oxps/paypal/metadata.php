@@ -316,8 +316,7 @@ $aModule = [
         ['name' => 'oePayPalBannersCheckoutPage', 'type' => 'bool', 'value' => 'true'],
         ['name' => 'oePayPalBannersCartPageSelector', 'type' => 'str', 'value' => '.cart-buttons'],
         ['name' => 'oePayPalBannersPaymentPageSelector', 'type' => 'str', 'value' => '.checkoutSteps ~ .spacer'],
-        // @Todo Remove group so the settings won't appear in the settings tab. Will be used in the new settings page in the future.
-        ['group' => 'oepaypal_banners', 'name' => 'oePayPalBannersColorScheme',                'type' => 'select', 'constraints' => 'blue|black|white|white-no-border', 'value' => 'blue'],
+        ['name' => 'oePayPalBannersColorScheme', 'type' => 'select', 'constraints' => 'blue|black|white|white-no-border', 'value' => 'blue'],
         // <-- PSPAYPAL-491
     ]
 ];
