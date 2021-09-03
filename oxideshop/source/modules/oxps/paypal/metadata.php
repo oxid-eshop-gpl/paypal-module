@@ -312,7 +312,7 @@ $aModule = [
         ['name' => 'oePayPalBannersSearchResultsPage', 'type' => 'bool', 'value' => 'true'],
         ['name' => 'oePayPalBannersSearchResultsPageSelector', 'type' => 'str', 'value' => '#content .page-header .clearfix'],
         ['name' => 'oePayPalBannersProductDetailsPage', 'type' => 'bool', 'value' => 'true'],
-        ['name' => 'oePayPalBannersProductDetailsPageSelector', 'type' => 'str', 'value' => '.detailsParams'],
+        ['name' => 'oePayPalBannersProductDetailsPageSelector', 'type' => 'str', 'value' => '#detailsItemsPager'],
         ['name' => 'oePayPalBannersCheckoutPage', 'type' => 'bool', 'value' => 'true'],
         ['name' => 'oePayPalBannersCartPageSelector', 'type' => 'str', 'value' => '.cart-buttons'],
         ['name' => 'oePayPalBannersPaymentPageSelector', 'type' => 'str', 'value' => '.checkoutSteps ~ .spacer'],
