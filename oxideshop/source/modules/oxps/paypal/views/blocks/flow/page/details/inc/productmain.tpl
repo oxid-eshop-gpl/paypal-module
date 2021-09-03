@@ -4,7 +4,7 @@
     [{if $oxcmp_basket->isPriceViewModeNetto()}]
         [{assign var="bannerAmount" value=$oxcmp_basket->getNettoSum()}]
     [{/if}]
-[{*
+
     [{if ($oxcmp_basket->getArtStockInBasket($oDetailsProduct->getId()) === 0) && !$oxcmp_basket->hasProductVariantInBasket($oDetailsProduct)}]
         [{assign var="oPrice" value=$oDetailsProduct->getPrice()}]
         [{if $oDetailsProduct->isParentNotBuyable()}]
@@ -13,6 +13,6 @@
         [{assign var="productPrice" value=$oPrice->getPrice()}]
         [{assign var="bannerAmount" value=$bannerAmount+$productPrice}]
     [{/if}]
-*}]
+
     [{include file="tpl/installment_banners.tpl" amount=$bannerAmount selector=$oViewConf->getPayPalBannerProductDetailsPageSelector()}]
 [{/if}]
