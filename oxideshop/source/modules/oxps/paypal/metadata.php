@@ -256,9 +256,16 @@ $aModule = [
             'file' => '/views/blocks/shared/page/checkout/basket_installment_banner_before.tpl'
         ],
         [
+            'theme' => 'flow',
             'template' => 'page/details/inc/productmain.tpl',
             'block' => 'details_productmain_price_value',
-            'file' => '/views/blocks/shared/page/details/inc/productmain.tpl'
+            'file' => '/views/blocks/flow/page/details/inc/productmain.tpl'
+        ],
+        [
+            'theme' => 'wave',
+            'template' => 'page/details/inc/productmain.tpl',
+            'block' => 'details_productmain_price_value',
+            'file' => '/views/blocks/wave/page/details/inc/productmain.tpl'
         ],
         [
             'template' => 'page/list/list.tpl',

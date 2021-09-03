@@ -240,6 +240,7 @@
                                 <input type="text" class="form-control" id="banner-client-id" name="conf[oePayPalClientId]" value="[{$config->getPayPalModuleConfigurationValue('oePayPalClientId')}]">
                             </div>
 
+                            <hr>
                             <div class="controls">
                                 <div class="checkbox">
                                     <label>
@@ -248,13 +249,13 @@
                                     </label>
                                 </div>
                             </div>
-
                             <label for="banner-startpage">[{oxmultilang ident="OSC_PAYPAL_BANNER_STARTPAGESELECTOR"}]</label>
                             <div class="controls">
                                 <input type="text" class="form-control" id="banner-startpage" name="conf[oePayPalBannersStartPageSelector]" value="[{$config->getPayPalModuleConfigurationValue('oePayPalBannersStartPageSelector')}]">
                             </div>
                             <span class="help-block">[{oxmultilang ident="HELP_OSC_PAYPAL_BANNER_STARTPAGESELECTOR"}]</span>
 
+                            <hr>
                             <div class="controls">
                                 <div class="checkbox">
                                     <label>
@@ -263,13 +264,13 @@
                                     </label>
                                 </div>
                             </div>
-
                             <label for="banner-categorypage">[{oxmultilang ident="OSC_PAYPAL_BANNER_CATEGORYPAGESELECTOR"}]</label>
                             <div class="controls">
                                 <input type="text" class="form-control" id="banner-categorypage" name="conf[oePayPalBannersCategoryPageSelector]" value="[{$config->getPayPalModuleConfigurationValue('oePayPalBannersCategoryPageSelector')}]">
                             </div>
                             <span class="help-block">[{oxmultilang ident="HELP_OSC_PAYPAL_BANNER_CATEGORYPAGESELECTOR"}]</span>
 
+                            <hr>
                             <div class="controls">
                                 <div class="checkbox">
                                     <label>
@@ -278,13 +279,13 @@
                                     </label>
                                 </div>
                             </div>
-
                             <label for="banner-searchpage">[{oxmultilang ident="OSC_PAYPAL_BANNER_SEARCHRESULTSPAGESELECTOR"}]</label>
                             <div class="controls">
                                 <input type="text" class="form-control" id="banner-searchpage" name="conf[oePayPalBannersSearchResultsPageSelector]" value="[{$config->getPayPalModuleConfigurationValue('oePayPalBannersSearchResultsPageSelector')}]">
                             </div>
                             <span class="help-block">[{oxmultilang ident="HELP_OSC_PAYPAL_BANNER_SEARCHRESULTSPAGESELECTOR"}]</span>
 
+                            <hr>
                             <div class="controls">
                                 <div class="checkbox">
                                     <label>
@@ -293,13 +294,13 @@
                                     </label>
                                 </div>
                             </div>
-
                             <label for="banner-detailspage">[{oxmultilang ident="OSC_PAYPAL_BANNER_DETAILSPAGESELECTOR"}]</label>
                             <div class="controls">
                                 <input type="text" class="form-control" id="banner-detailspage" name="conf[oePayPalBannersProductDetailsPageSelector]" value="[{$config->getPayPalModuleConfigurationValue('oePayPalBannersProductDetailsPageSelector')}]">
                             </div>
                             <span class="help-block">[{oxmultilang ident="HELP_OSC_PAYPAL_BANNER_DETAILSPAGESELECTOR"}]</span>
 
+                            <hr>
                             <div class="controls">
                                 <div class="checkbox">
                                     <label>
@@ -308,28 +309,19 @@
                                     </label>
                                 </div>
                             </div>
-
                             <label for="banner-cart">[{oxmultilang ident="OSC_PAYPAL_BANNER_CARTPAGESELECTOR"}]</label>
                             <div class="controls">
                                 <input type="text" class="form-control" id="banner-cart" name="conf[oePayPalBannersCartPageSelector]" value="[{$config->getPayPalModuleConfigurationValue('oePayPalBannersCartPageSelector')}]">
                             </div>
                             <span class="help-block">[{oxmultilang ident="HELP_OSC_PAYPAL_BANNER_CARTPAGESELECTOR"}]</span>
-
                             <label for="banner-paymentpage">[{oxmultilang ident="OSC_PAYPAL_BANNER_PAYMENTPAGESELECTOR"}]</label>
                             <div class="controls">
                                 <input type="text" class="form-control" id="banner-paymentpage" name="conf[oePayPalBannersPaymentPageSelector]" value="[{$config->getPayPalModuleConfigurationValue('oePayPalBannersPaymentPageSelector')}]">
                             </div>
                             <span class="help-block">[{oxmultilang ident="HELP_OSC_PAYPAL_BANNER_PAYMENTPAGESELECTOR"}]</span>
 
-
                             [{* @Todo PSPAYPAL-491 Move more settings from the settings tab to this page *}]
-
-
                         </div>
-
-
-
-
                     </div>
                 </div>
             </div>
