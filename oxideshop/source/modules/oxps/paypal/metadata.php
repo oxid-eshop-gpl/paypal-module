@@ -302,8 +302,6 @@ $aModule = [
 
         // PSPAYPAL-491 -->
         ['name' => 'oePayPalBannersShowAll', 'type' => 'bool', 'value' => 'true'],
-        // @Todo Remove group so the settings won't appear in the settings tab.
-        // Will be used in the new settings page in the future.
         ['name' => 'oePayPalClientId', 'type' => 'str', 'value' => ''], // Banner feature client ID
         ['name' => 'oePayPalBannersStartPage', 'type' => 'bool', 'value' => 'true'],
         ['name' => 'oePayPalBannersStartPageSelector', 'type' => 'str', 'value' => '#wrapper .row'],
