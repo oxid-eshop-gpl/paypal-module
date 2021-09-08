@@ -1,4 +1,5 @@
 [{assign var="config" value=$oViewConf->getPayPalConfig()}]
 [{if $config->isActive() && !$oViewConf->isPayPalSessionActive() && $config->showPayPalProductDetailsButton()}]
+    [{* PSPAYPAL-492 For more about paymentStrategy, see ViewConfig->getPayPalJsSdkUrl() *}]
     [{include file="pspaypalsmartpaymentbuttons.tpl" buttonId="PayPalButtonProductMain" paymentStrategy="continue" buttonClass="paypal-button-wrapper large" aid=$oDetailsProduct->oxarticles__oxid->value}]
 [{/if}]

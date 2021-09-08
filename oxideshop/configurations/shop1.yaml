@@ -111,6 +111,7 @@ GeneralShopSettings:
         oxps/modulesconfig: 6.1.0
         oxps/paypal: 0.0.2
         oxps/paypallocale: 0.0.1
+        oxscpaypal: 0.0.2
         payppaypalplus: 3.0.8
     aNrofCatArticles:
         - '10'
@@ -209,7 +210,7 @@ module:
         iDefaultWidgetSize: '1'
         iGridSize: '12'
         iGridsterSize: '6'
-    oxps/paypal:
+    oxscpaypal:
         blPayPalSandboxMode: '1'
         sPayPalClientId: mario.lorenz+test@oxid-esales.com
         sPayPalClientSecret: mario.lorenz+test@oxid-esales.com

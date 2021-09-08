@@ -169,6 +169,13 @@ $aLang = [
         echte Transaktionen zu empfangen, wechseln Sie zu Produktion (live).',
     'HELP_OXPS_PAYPAL_WEBHOOK_ID'                  =>
         'Die ID des Webhooks, wie in Ihrem Developer Portal-Konto konfiguriert',
+
+    // PSPAYPAL-492
+    'OXPS_PAYPAL_BUTTON_2NDBUTTON_OPTIONS'         => '&bdquo;Später bezahlen&rdquo;',
+    'OXPS_PAYPAL_BUTTON_2NDBUTTON_DESC'            => 'Hier können Sie über PayPal abgewickelte Zahlungsarten ein- oder ausschalten.',
+    'OXPS_PAYPAL_BUTTON_2NDBUTTON_SOFORT'          => 'Sofort',
+    'OXPS_PAYPAL_BUTTON_2NDBUTTON_GIROPAY'         => 'Giropay',
+
     // PayPal ORDER
     'OXPS_PAYPAL_AMOUNT'                           => 'Betrag',
     'OXPS_PAYPAL_SHOP_PAYMENT_STATUS'              => 'Shop-Zahlungsstatus',

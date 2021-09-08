@@ -130,6 +130,41 @@
             </div>
 
             <div class="card">
+                <div class="card-header" id="headingPayPalter">
+                    <h4 class="collapsed" data-toggle="collapse" data-target="#collapse-paylater" aria-expanded="false" aria-controls="collapse-paylater">
+                        [{oxmultilang ident="OXPS_PAYPAL_BUTTON_2NDBUTTON_OPTIONS"}]
+                    </h4>
+                </div>
+
+                <div id="collapse-paylater" class="collapse" aria-labelledby="heading-paylater" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class="controls">
+                                <span class="help-block">[{oxmultilang ident="OXPS_PAYPAL_BUTTON_2NDBUTTON_DESC"}]</span>
+                                <div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="conf[blPayPalEnableSofort]" [{if $config->getPayPalModuleConfigurationValue('blPayPalEnableSofort')}]checked[{/if}] value="1">
+                                            [{oxmultilang ident="OXPS_PAYPAL_BUTTON_2NDBUTTON_SOFORT"}]
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="conf[blPayPalEnableGiropay]" [{if $config->getPayPalModuleConfigurationValue('blPayPalEnableGiropay')}]checked[{/if}] value="1">
+                                            [{oxmultilang ident="OXPS_PAYPAL_BUTTON_2NDBUTTON_GIROPAY"}]
+                                        </label>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="card">
                 <div class="card-header" id="heading2">
                     <h4 class="collapsed" data-toggle="collapse" data-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
                         [{oxmultilang ident="OXPS_PAYPAL_BUTTON_PLACEMEMT_TITLE"}]

@@ -34,6 +34,7 @@
             [{/literal}]
             [{if $paymentStrategy=="pay_now"}]
                 location.replace('[{$sSelfLink|cat:"cl=order"}]');
+            [{*elseif $paymentStrategy=="pay_later" @Todo PSPAYPAL-492*}]
             [{elseif $oViewConf->getTopActiveClassName()=="details" && $paymentStrategy=="continue"}]
                 location.replace('[{$sSelfLink|cat:"cl=basket"}]');
             [{elseif $oViewConf->getTopActiveClassName()=="payment" && $paymentStrategy=="continue"}]
