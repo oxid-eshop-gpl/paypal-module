@@ -468,10 +468,9 @@ $aLang = [
 
     // PSPAYPAL-491 -->
     'OXPS_PAYPAL_BANNER_CREDENTIALS'                => 'Banner-Einstellungen',
-    'OXPS_PAYPAL_BANNER_INFOTEXT'                   => 'Bieten Sie Ihren Kunden PayPal Ratenzahlung mit 0% effektiven Jahreszins an. Erfahren Sie hier <a href="https://www.paypal.com/de/webapps/mpp/installments" target="_blank">mehr</a>.',
+    'OXPS_PAYPAL_BANNER_INFOTEXT'                   => 'Bieten Sie Ihren Kunden PayPal Ratenzahlung mit 0% effektiven Jahreszins an. <a href="https://www.paypal.com/de/webapps/mpp/installments" target="_blank">Erfahren Sie hier mehr</a>.',
     'OXPS_PAYPAL_BANNER_SHOW_ALL'                   => 'Ratenzahlung-Banner aktivieren',
     'HELP_OXPS_PAYPAL_BANNER_SHOP_MODULE_SHOW_ALL'  => 'Aktivieren Sie diese Einstellung, um die Bannerfunktion zuzulassen.',
-    'OSC_PAYPAL_BANNER_CLIENTID'                    => 'Ratenzahlung-Banner-Client-ID',
     'OSC_PAYPAL_BANNER_STARTPAGE'                   => 'Ratenzahlung-Banner auf Startseite anzeigen',
     'OSC_PAYPAL_BANNER_STARTPAGESELECTOR'           => 'CSS-Selektor der Startseite hinter dem das Banner angezeigt wird.',
     'HELP_OSC_PAYPAL_BANNER_STARTPAGESELECTOR'      => 'Standardwerte für die Themes "Flow" und "Wave": \'#wrapper .row\' bzw. \'#wrapper .container\'. Nach diesen CSS-Selektoren wird das Banner angezeigt.',

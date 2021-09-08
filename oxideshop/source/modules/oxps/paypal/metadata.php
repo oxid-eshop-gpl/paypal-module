@@ -302,7 +302,6 @@ $aModule = [
 
         // PSPAYPAL-491 -->
         ['name' => 'oePayPalBannersShowAll', 'type' => 'bool', 'value' => 'true'],
-        ['name' => 'oePayPalClientId', 'type' => 'str', 'value' => ''], // Banner feature client ID
         ['name' => 'oePayPalBannersStartPage', 'type' => 'bool', 'value' => 'true'],
         ['name' => 'oePayPalBannersStartPageSelector', 'type' => 'str', 'value' => '#wrapper .row'],
         ['name' => 'oePayPalBannersCategoryPage', 'type' => 'bool', 'value' => 'true'],
