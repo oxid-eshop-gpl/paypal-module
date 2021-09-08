@@ -128,7 +128,10 @@ $aModule = [
         'tpl/wave/page/checkout/change_payment.tpl' => 'oxps/paypal/views/tpl/wave/page/checkout/change_payment.tpl',
 
         // PSPAYPAL-491 Installment banners
-        'tpl/installment_banners.tpl' => 'oxps/paypal/views/tpl/shared/installment_banners.tpl'
+        'tpl/installment_banners.tpl' => 'oxps/paypal/views/tpl/shared/installment_banners.tpl',
+
+        // PSPAYPAL-483/PSPAYPAL-484 Subscription basics
+        'tpl/page/account/order_and_subscription_overview.tpl' => 'oxps/paypal/views/tpl/shared/page/account/order_and_subscription_overview.tpl',
     ],
     'events' => [
         'onActivate' => '\OxidProfessionalServices\PayPal\Core\Events::onActivate',
@@ -283,6 +286,12 @@ $aModule = [
             'file' => '/views/blocks/shared/page/shop/start.tpl',
         ],
         // <-- PSPAYPAL-491
+
+        [
+            'template' => 'page/account/order.tpl',
+            'block' => 'account_order_history_cart_items',
+            'file' => '/views/blocks/shared/page/account/order.tpl'
+        ],
 
     ],
     'settings' => [
