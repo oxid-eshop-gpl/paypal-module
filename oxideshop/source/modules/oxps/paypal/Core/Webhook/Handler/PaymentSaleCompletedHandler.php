@@ -43,10 +43,15 @@ class PaymentSaleCompletedHandler implements HandlerInterface
         $data = $event->getData()['resource'];
         $billingAgreementId = $data['billing_agreement_id'];
 
+        // If that's not a billing agrement hook, don't do anything
+        if (!$billingAgreementId) {
+            return;
+        }
+
         $subscriptionRepository = new SubscriptionRepository();
 
         // collect relevant IDs
-        $ids = $subscriptionRepository->getAllIdsFromBillingAgreementId($data['billing_agreement_id']);
+        $ids = $subscriptionRepository->getAllIdsFromBillingAgreementId($billingAgreementId);
         $parentOrderId = $ids['OXORDERID'];
         $oldArticleId = $ids['OXARTID'];
         $payPalProductId = $ids['PAYPALPRODUCTID'];
@@ -64,8 +69,15 @@ class PaymentSaleCompletedHandler implements HandlerInterface
             ->getCatalogService()
             ->showProductDetails($payPalProductId);
 
+        $paypalSubscriptionDetails = $sf
+            ->getSubscriptionService()
+            ->showSubscriptionDetails($billingAgreementId);
+
         // collect cycles
         // todo: Need the source for this information
+        // https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions-get-response
+        $cycleExecutions = $paypalSubscriptionDetails->billing_info->cycle_executions;
+
         $billingCycleNumber = 1;
         $billingCycleTotal = 10;
         $billingCycleType = 'REGULAR';
