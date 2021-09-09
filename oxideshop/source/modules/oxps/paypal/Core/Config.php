@@ -203,7 +203,7 @@ class Config
     public function getPayPalModuleConfigurationValue($varname)
     {
         if ($varname == '') {
-            return (boolean) false;
+            return (bool) false;
         }
 
         return (string) Registry::getConfig()->getConfigParam($varname);
