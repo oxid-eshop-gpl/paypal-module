@@ -104,7 +104,8 @@ $aLang = [
     'OXPS_PAYPAL_BILLING_PLAN_ACTION_CONTINUE'     => 'Weiter',
     'OXPS_PAYPAL_BILLING_PLAN_ACTION_CANCEL'       => 'Abbrechen',
     'OXPS_PAYPAL_BILLING_PLAN_FAILURE_THRESHOLD'   => 'Wiederholungen bei Zahlungsfehler',
-    'HELP_OXPS_PAYPAL_BILLING_PLAN_FAILURE_THRESHOLD' => 'Wie oft soll versucht eine Zahlung durchzuführen, bis sie abgebrochen wird?',
+    'HELP_OXPS_PAYPAL_BILLING_PLAN_FAILURE_THRESHOLD'                                =>
+        'Wie oft soll versucht eine Zahlung durchzuführen, bis sie abgebrochen wird?',
     'OXPS_PAYPAL_BILLING_PLAN_TAX'                 => 'Steuern',
     'OXPS_PAYPAL_BILLING_PLAN_TAX_PERCENTAGE'      => 'Steuer Prozentual',
     'OXPS_PAYPAL_BILLING_PLAN_TAX_INCLUSIVE'       => 'Steuer Inklusive',
@@ -138,7 +139,7 @@ $aLang = [
     'OXPS_PAYPAL_CLIENT_ID'                        => 'Client-ID',
     'OXPS_PAYPAL_CLIENT_SECRET'                    => 'Passwort',
     'OXPS_PAYPAL_CREDENTIALS'                      => 'API-Anmeldeinformationen',
-    'OXPS_PAYPAL_LIVE_CREDENTIALS'                 => 'Live API-Anmeldeinformationen (Live)',
+    'OXPS_PAYPAL_LIVE_CREDENTIALS'                 => 'API-Anmeldeinformationen (Live)',
     'OXPS_PAYPAL_SANDBOX_CREDENTIALS'              => 'API-Anmeldeinformationen (Sandbox)',
     'OXPS_PAYPAL_LIVE_BUTTON_CREDENTIALS'          => 'Anmeldung Händler PayPal-Integration (Live)',
     'OXPS_PAYPAL_SANDBOX_BUTTON_CREDENTIALS'       => 'Anmeldung Händler PayPal-Integration (Sandbox)',
@@ -494,4 +495,6 @@ $aLang = [
     'OSC_PAYPAL_BANNER_COLORSCHEMEWHITE'            => 'weiß',
     'OSC_PAYPAL_BANNER_COLORSCHEMEWHITENOBORDER'    => 'weiß, ohne Rand',
     // <-- PSPAYPAL-491
+
+    'OXPS_PAYPAL_SUBSCRITION_PART_ARTICLE_TITLE'   => '%s (Teillieferung Nr. %s von %s)',
 ];

@@ -81,7 +81,7 @@ class SubscriptionRepository
 
     /**
      * @param string $billingAgreementId
-     * @return string
+     * @return array
      * @throws DatabaseConnectionException
      * @throws DatabaseErrorException
      */
@@ -121,7 +121,6 @@ class SubscriptionRepository
      */
     public function getSubscriptionOrders($filter = [], $page = 0)
     {
-
         $limit = 10;
         $from = $page ? $page * $limit : 0;
 
@@ -261,7 +260,6 @@ class SubscriptionRepository
         $session = Registry::getSession();
         $oxid = Registry::getUtilsObject()->generateUId();
         $userId = $userId ?? $session->getUser()->getId();
-        $orderId = $orderId ?? '';
 
         $subProdId = $this->getOxIdFromSubscriptedPlan($subscriptionPlanId);
 

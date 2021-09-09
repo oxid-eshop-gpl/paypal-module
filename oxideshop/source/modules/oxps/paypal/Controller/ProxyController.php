@@ -125,9 +125,10 @@ class ProxyController extends FrontendController
         PayPalSession::subscriptionIsProcessing();
 
         $billingAgreementId = Registry::getRequest()->getRequestEscapedParameter('billingAgreementId');
+        $subscriptionPlanId = Registry::getRequest()->getRequestEscapedParameter('subscriptionPlanId');
 
         $repository = new SubscriptionRepository();
-        $repository->saveSubscriptionOrder($billingAgreementId);
+        $repository->saveSubscriptionOrder($billingAgreementId, $subscriptionPlanId);
     }
 
     public function cancelPayPalPayment()
@@ -171,7 +172,7 @@ class ProxyController extends FrontendController
     public function setPayPalPaymentMethod(): void
     {
         $session = Registry::getSession();
-        $session->getBasket();
+        $basket = $session->getBasket();
         if (($payment !== 'oxidpaypal')) {
             $possibleDeliverySets = [];
 
