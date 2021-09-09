@@ -119,9 +119,12 @@ $aModule = [
         // use theme name in key when theme-specific. Shared templates don't receive a theme-specific key.
         'tpl/layout/base_js.tpl' => 'oxps/paypal/views/tpl/shared/layout/base_js.tpl',
         'tpl/layout/base_style.tpl' => 'oxps/paypal/views/tpl/shared/layout/base_style.tpl',
+        'tpl/page/checkout/basket_btn_next_bottom.tpl' => 'oxps/paypal/views/tpl/shared/page/checkout/basket_btn_next_bottom.tpl',
         'tpl/page/checkout/basket_btn_next_bottom.tpl' =>
             'oxps/paypal/views/tpl/shared/page/checkout/basket_btn_next_bottom.tpl',
         'tpl/page/checkout/select_payment.tpl' => 'oxps/paypal/views/tpl/shared/page/checkout/select_payment.tpl',
+        'tpl/page/details/inc/details_productmain_tobasket.tpl' => 'oxps/paypal/views/tpl/shared/page/details/inc/details_productmain_tobasket.tpl',
+        'tpl/page/checkout/inc/checkout_steps_main.tpl' => 'oxps/paypal/views/tpl/shared/page/checkout/inc/checkout_steps_main.tpl',
         'tpl/page/details/inc/details_productmain_tobasket.tpl' =>
             'oxps/paypal/views/tpl/shared/page/details/inc/details_productmain_tobasket.tpl',
         'tpl/page/checkout/inc/checkout_steps_main.tpl' =>
@@ -259,9 +262,16 @@ $aModule = [
             'file' => '/views/blocks/shared/page/checkout/basket_installment_banner_before.tpl'
         ],
         [
+            'theme' => 'flow',
             'template' => 'page/details/inc/productmain.tpl',
             'block' => 'details_productmain_price_value',
-            'file' => '/views/blocks/shared/page/details/inc/productmain.tpl'
+            'file' => '/views/blocks/flow/page/details/inc/productmain.tpl'
+        ],
+        [
+            'theme' => 'wave',
+            'template' => 'page/details/inc/productmain.tpl',
+            'block' => 'details_productmain_price_value',
+            'file' => '/views/blocks/wave/page/details/inc/productmain.tpl'
         ],
         [
             'template' => 'page/list/list.tpl',
@@ -283,7 +293,7 @@ $aModule = [
     ],
     'settings' => [
         ['name' => 'blPayPalSandboxMode', 'type' => 'bool', 'value' => 'false', 'group' => null],
-        ['name' => 'sPayPalClientId', 'type' => 'str', 'value' => '', 'group' => null],
+        ['name' => 'sPayPalClientId', 'type' => 'str', 'value' => '', 'group' => null], // Main functionality client ID
         ['name' => 'sPayPalClientSecret', 'type' => 'str', 'value' => '', 'group' => null],
         ['name' => 'sPayPalSandboxClientId', 'type' => 'str', 'value' => '', 'group' => null],
         ['name' => 'sPayPalWebhookId', 'type' => 'str', 'value' => '', 'group' => null],
@@ -298,87 +308,19 @@ $aModule = [
 
         // PSPAYPAL-491 -->
         ['name' => 'oePayPalBannersShowAll', 'type' => 'bool', 'value' => 'true'],
-        // @Todo Remove group so the settings won't appear in the settings tab.
-        // Will be used in the new settings page in the future.
-        [
-            'group' => 'oepaypal_banners',
-            'name' => 'oePayPalClientId',
-            'type' => 'str',
-            'value' => ''
-        ],
-        [
-            'group' => 'oepaypal_banners',
-            'name' => 'oePayPalBannersStartPage',
-            'type' => 'bool',
-            'value' => 'true'
-        ],
-        [
-            'group' => 'oepaypal_banners',
-            'name' => 'oePayPalBannersStartPageSelector',
-            'type' => 'str',
-            'value' => '#wrapper .row'
-        ],
-        [
-            'group' => 'oepaypal_banners',
-            'name' => 'oePayPalBannersCategoryPage',
-            'type' => 'bool',
-            'value' => 'true'
-        ],
-        [
-            'group' => 'oepaypal_banners',
-            'name' => 'oePayPalBannersCategoryPageSelector',
-            'type' => 'str',
-            'value' => '.page-header'
-        ],
-        [
-            'group' => 'oepaypal_banners',
-            'name' => 'oePayPalBannersSearchResultsPage',
-            'type' => 'bool',
-            'value' => 'true'
-        ],
-        [
-            'group' => 'oepaypal_banners',
-            'name' => 'oePayPalBannersSearchResultsPageSelector',
-            'type' => 'str',
-            'value' => '#content .page-header .clearfix'
-        ],
-        [
-            'group' => 'oepaypal_banners',
-            'name' => 'oePayPalBannersProductDetailsPage',
-            'type' => 'bool',
-            'value' => 'true'
-        ],
-        [
-            'group' => 'oepaypal_banners',
-            'name' => 'oePayPalBannersProductDetailsPageSelector',
-            'type' => 'str',
-            'value' => '.detailsParams'
-        ],
-        [
-            'group' => 'oepaypal_banners',
-            'name' => 'oePayPalBannersCheckoutPage',
-            'type' => 'bool',
-            'value' => 'true'
-        ],
-        [
-            'group' => 'oepaypal_banners',
-            'name' => 'oePayPalBannersCartPageSelector',
-            'type' => 'str',
-            'value' => '.cart-buttons'
-        ],
-        [
-            'group' => 'oepaypal_banners',
-            'name' => 'oePayPalBannersPaymentPageSelector',
-            'type' => 'str',
-            'value' => '.checkoutSteps ~ .spacer'
-        ],
-        [
-            'group' => 'oepaypal_banners',
-            'name' => 'oePayPalBannersColorScheme',
-            'type' => 'select',
-            'constraints' => 'blue|black|white|white-no-border',
-            'value' => 'blue'
-        ],
+        ['name' => 'oePayPalClientId', 'type' => 'str', 'value' => ''], // Banner feature client ID
+        ['name' => 'oePayPalBannersStartPage', 'type' => 'bool', 'value' => 'true'],
+        ['name' => 'oePayPalBannersStartPageSelector', 'type' => 'str', 'value' => '#wrapper .row'],
+        ['name' => 'oePayPalBannersCategoryPage', 'type' => 'bool', 'value' => 'true'],
+        ['name' => 'oePayPalBannersCategoryPageSelector', 'type' => 'str', 'value' => '.page-header'],
+        ['name' => 'oePayPalBannersSearchResultsPage', 'type' => 'bool', 'value' => 'true'],
+        ['name' => 'oePayPalBannersSearchResultsPageSelector', 'type' => 'str', 'value' => '#content .page-header .clearfix'],
+        ['name' => 'oePayPalBannersProductDetailsPage', 'type' => 'bool', 'value' => 'true'],
+        ['name' => 'oePayPalBannersProductDetailsPageSelector', 'type' => 'str', 'value' => '#detailsItemsPager'],
+        ['name' => 'oePayPalBannersCheckoutPage', 'type' => 'bool', 'value' => 'true'],
+        ['name' => 'oePayPalBannersCartPageSelector', 'type' => 'str', 'value' => '.cart-buttons'],
+        ['name' => 'oePayPalBannersPaymentPageSelector', 'type' => 'str', 'value' => '.checkoutSteps ~ .spacer'],
+        ['name' => 'oePayPalBannersColorScheme', 'type' => 'select', 'constraints' => 'blue|black|white|white-no-border', 'value' => 'blue'],
         // <-- PSPAYPAL-491
     ]
 ];

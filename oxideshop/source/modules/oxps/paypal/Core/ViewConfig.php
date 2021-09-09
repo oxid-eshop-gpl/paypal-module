@@ -189,6 +189,7 @@ class ViewConfig extends ViewConfig_parent
     public function showPayPalBannerOnSearchResultsPage()
     {
         $config = Registry::getConfig();
+
         return (
             $config->getConfigParam('oePayPalBannersShowAll') &&
             $config->getConfigParam('oePayPalBannersSearchResultsPage') &&
