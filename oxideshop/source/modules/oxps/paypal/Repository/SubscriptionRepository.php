@@ -51,13 +51,48 @@ class SubscriptionRepository
      * @throws DatabaseConnectionException
      * @throws DatabaseErrorException
      */
-    public function getUserIdFromSubscriptedPlan($subscriptionPlanId)
+    public function getSubscriptionsBySubscriptionPlanId($subscriptionPlanId)
     {
         return DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getAll(
-            'SELECT OXUSERID
+            'SELECT oxps_paypal_subscription.*
                 FROM oxps_paypal_subscription
+                LEFT JOIN oxps_paypal_subscription_product
+                    ON (oxps_paypal_subscription_product.OXID = oxps_paypal_subscription.OXPAYPALSUBPRODID)
+                WHERE oxps_paypal_subscription_product.PAYPALSUBSCRIPTIONPLANID = ?',
+            [$subscriptionPlanId]
+        );
+    }
+
+    /**
+     * @param string $subscriptionPlanId
+     * @return string
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     */
+    public function getOxIdFromSubscriptedPlan($subscriptionPlanId)
+    {
+        return DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getOne(
+            'SELECT OXID
+                FROM oxps_paypal_subscription_product
                 WHERE PAYPALSUBSCRIPTIONPLANID = ?',
             [$subscriptionPlanId]
+        );
+    }
+
+    /**
+     * @param string $billingAgreementId
+     * @return string
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     */
+    public function getAllIdsFromBillingAgreementId($billingAgreementId)
+    {
+        return DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getRow(
+            'SELECT psp.PAYPALSUBSCRIPTIONPLANID, psp.PAYPALPRODUCTID, psp.OXARTID, ps.OXORDERID, ps.OXUSERID
+                FROM oxps_paypal_subscription_product as psp
+                LEFT JOIN oxps_paypal_subscription as ps on (ps.OXPAYPALSUBPRODID = psp.OXID)
+                WHERE ps.PAYPALBILLINGAGREEMENTID = ?',
+            [$billingAgreementId]
         );
     }
 
@@ -98,6 +133,7 @@ class SubscriptionRepository
         $orderView = $viewNameGenerator->getViewName('oxorder');
         $subscriptionProductView = $viewNameGenerator->getViewName('oxps_paypal_subscription_product');
         $subscriptionOrderView = $viewNameGenerator->getViewName('oxps_paypal_subscription');
+        $shopId = Registry::getConfig()->getShopId();
 
         $select = "select {$orderView}.`oxbillemail`, {$orderView}.`oxorderdate`,
             {$subscriptionProductView}.`paypalsubscriptionplanid`,
@@ -106,7 +142,7 @@ class SubscriptionRepository
             left join {$orderView} on ({$orderView}.`oxid` = {$subscriptionOrderView}.`oxorderid`)
             left join {$subscriptionProductView}
             on ({$subscriptionProductView}.`oxid` = {$subscriptionOrderView}.`oxpaypalsubprodid`)
-            where {$subscriptionOrderView}.`oxshopid` = 1 and {$subscriptionOrderView}.`oxorderid` > ''";
+            where {$subscriptionOrderView}.`oxshopid` = {$shopId} and {$subscriptionOrderView}.`oxorderid` > ''";
 
         if (count($filter)) {
             foreach ($filter as $table => $cols) {
@@ -203,29 +239,54 @@ class SubscriptionRepository
     }
 
     /**
-     * @param string $subscriptionId
+     * @param string $billingAgreementId
+     * @param string $subscriptionPlanId
+     * @param string $userId
+     * @param string $orderId
+     * @param string $parentOrderId
+     * @param string $billingCycleType
+     * @param int $billingCycleNumber
      * @throws DatabaseConnectionException
      * @throws DatabaseErrorException
      */
-    public function saveSubscriptionOrder(string $subscriptionId): void
-    {
+    public function saveSubscriptionOrder(
+        string $billingAgreementId,
+        string $subscriptionPlanId,
+        string $userId = null,
+        string $orderId = '',
+        string $parentOrderId = '',
+        string $billingCycleType = '',
+        int $billingCycleNumber = 0
+    ): void {
         $session = Registry::getSession();
         $oxid = Registry::getUtilsObject()->generateUId();
+        $userId = $userId ?? $session->getUser()->getId();
+        $orderId = $orderId ?? '';
+
+        $subProdId = $this->getOxIdFromSubscriptedPlan($subscriptionPlanId);
 
         $sql = "INSERT INTO oxps_paypal_subscription(
                     `OXID`,
                     `OXSHOPID`,
                     `OXUSERID`,
-                    `PAYPALBILLINGAGREEMENTID`)
-                    VALUES (?,?,?,?)";
-
-        $userId = $session->getUser()->getId();
+                    `OXORDERID`,
+                    `OXPARENTORDERID`,
+                    `OXPAYPALSUBPRODID`,
+                    `PAYPALBILLINGAGREEMENTID`,
+                    `PAYPALBILLINGCYCLETYPE`,
+                    `PAYPALBILLINGCYCLENR`)
+                    VALUES (?,?,?,?,?,?,?,?,?)";
 
         DatabaseProvider::getDb()->execute($sql, [
             $oxid,
             Registry::getConfig()->getShopId(),
             $userId,
-            $subscriptionId
+            $orderId,
+            $parentOrderId,
+            $subProdId,
+            $billingAgreementId,
+            $billingCycleType,
+            $billingCycleNumber
         ]);
 
         // save oxid to session
