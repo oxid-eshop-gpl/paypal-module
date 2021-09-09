@@ -448,10 +448,9 @@ $aLang = [
 
     // PSPAYPAL-491 -->
     'OXPS_PAYPAL_BANNER_CREDENTIALS'                => 'Banner settings',
-    'OXPS_PAYPAL_BANNER_INFOTEXT'                   => 'Offer your customers PayPal installment payment with 0% effective annual interest. Read <a href="https://www.paypal.com/de/webapps/mpp/installments" target="_blank">more</a>.',
+    'OXPS_PAYPAL_BANNER_INFOTEXT'                   => 'Offer your customers PayPal installment payment with 0% effective annual interest. <a href="https://www.paypal.com/de/webapps/mpp/installments" target="_blank">Read more</a>.',
     'OXPS_PAYPAL_BANNER_SHOW_ALL'                   => 'Enable installment banners',
     'HELP_OXPS_PAYPAL_BANNER_SHOP_MODULE_SHOW_ALL'  => 'Check this option to enable the banner feature.',
-    'OSC_PAYPAL_BANNER_CLIENTID'                    => 'Installment Banner Client ID',
     'OSC_PAYPAL_BANNER_STARTPAGE'                   => 'Show installment banner on start page',
     'OSC_PAYPAL_BANNER_STARTPAGESELECTOR'           => 'CSS selector of the start page after which the banner is displayed.',
     'HELP_OSC_PAYPAL_BANNER_STARTPAGESELECTOR'      => 'Default values for Flow and Wave themes are: \'#wrapper .row\' and \'#wrapper .container\' respectively. After these CSS selectors the banner is displayed.',

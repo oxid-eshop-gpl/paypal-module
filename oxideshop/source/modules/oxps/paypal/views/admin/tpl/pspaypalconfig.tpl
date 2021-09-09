@@ -235,10 +235,6 @@
                                 <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_BANNER_SHOP_MODULE_SHOW_ALL"}]</span>
                             </div>
 
-                            <label for="banner-client-id">[{oxmultilang ident="OSC_PAYPAL_BANNER_CLIENTID"}]</label>
-                            <div class="controls">
-                                <input type="text" class="form-control" id="banner-client-id" name="conf[oePayPalClientId]" value="[{$config->getPayPalModuleConfigurationValue('oePayPalClientId')}]">
-                            </div>
 
                             <hr>
                             <div class="controls">

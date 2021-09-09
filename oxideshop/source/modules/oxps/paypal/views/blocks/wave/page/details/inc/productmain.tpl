@@ -13,6 +13,5 @@
         [{assign var="productPrice" value=$oPrice->getPrice()}]
         [{assign var="bannerAmount" value=$bannerAmount+$productPrice}]
     [{/if}]
-
     [{include file="tpl/installment_banners.tpl" amount=$bannerAmount selector=$oViewConf->getPayPalBannerProductDetailsPageSelector()}]
 [{/if}]
