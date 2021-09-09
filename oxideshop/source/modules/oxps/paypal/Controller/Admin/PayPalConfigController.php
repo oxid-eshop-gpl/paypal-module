@@ -32,7 +32,7 @@ use OxidProfessionalServices\PayPal\Core\Config;
  */
 class PayPalConfigController extends AdminController
 {
-    public const MODULE_ID = 'module:oxps/paypal';
+    public const MODULE_ID = 'module:oxscpaypal';
     public const SIGN_UP_HOST = 'https://www.sandbox.paypal.com/bizsignup/partner/entry';
 
     public function __construct()
@@ -202,6 +202,25 @@ class PayPalConfigController extends AdminController
 
         if (!isset($conf['blPayPalShowBasketButton'])) {
             $conf['blPayPalShowBasketButton'] = 0;
+        }
+
+        if (!isset($conf['oePayPalBannersShowAll'])) {
+            $conf['oePayPalBannersShowAll'] = 0;
+        }
+        if (!isset($conf['oePayPalBannersStartPage'])) {
+            $conf['oePayPalBannersStartPage'] = 0;
+        }
+        if (!isset($conf['oePayPalBannersCategoryPage'])) {
+            $conf['oePayPalBannersCategoryPage'] = 0;
+        }
+        if (!isset($conf['oePayPalBannersSearchResultsPage'])) {
+            $conf['oePayPalBannersSearchResultsPage'] = 0;
+        }
+        if (!isset($conf['oePayPalBannersProductDetailsPage'])) {
+            $conf['oePayPalBannersProductDetailsPage'] = 0;
+        }
+        if (!isset($conf['oePayPalBannersCheckoutPage'])) {
+            $conf['oePayPalBannersCheckoutPage'] = 0;
         }
 
         return $conf;

@@ -1,23 +1,8 @@
 <?php
 
 /**
- * This file is part of OXID eSales PayPal module.
- *
- * OXID eSales PayPal module is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * OXID eSales PayPal module is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with OXID eSales PayPal module.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @link      http://www.oxid-esales.com
- * @copyright (C) OXID eSales AG 2003-2020
+ * Copyright © OXID eSales AG. All rights reserved.
+ * See LICENSE file for license details.
  */
 
 use OxidEsales\Eshop\Application\Component\UserComponent;
@@ -136,14 +121,23 @@ $aModule = [
         'tpl/layout/base_style.tpl' => 'oxps/paypal/views/tpl/shared/layout/base_style.tpl',
         'tpl/page/checkout/basket_btn_next_bottom.tpl' =>
             'oxps/paypal/views/tpl/shared/page/checkout/basket_btn_next_bottom.tpl',
+        'tpl/page/checkout/basket_btn_next_bottom.tpl' =>
+            'oxps/paypal/views/tpl/shared/page/checkout/basket_btn_next_bottom.tpl',
         'tpl/page/checkout/select_payment.tpl' => 'oxps/paypal/views/tpl/shared/page/checkout/select_payment.tpl',
         'tpl/page/details/inc/details_productmain_tobasket.tpl' =>
             'oxps/paypal/views/tpl/shared/page/details/inc/details_productmain_tobasket.tpl',
         'tpl/page/checkout/inc/checkout_steps_main.tpl' =>
             'oxps/paypal/views/tpl/shared/page/checkout/inc/checkout_steps_main.tpl',
-        // #486 Theme-specific
+        'tpl/page/details/inc/details_productmain_tobasket.tpl' =>
+            'oxps/paypal/views/tpl/shared/page/details/inc/details_productmain_tobasket.tpl',
+        'tpl/page/checkout/inc/checkout_steps_main.tpl' =>
+            'oxps/paypal/views/tpl/shared/page/checkout/inc/checkout_steps_main.tpl',
+        // PAYPAL-486 Theme-specific
         'tpl/flow/page/checkout/change_payment.tpl' => 'oxps/paypal/views/tpl/flow/page/checkout/change_payment.tpl',
         'tpl/wave/page/checkout/change_payment.tpl' => 'oxps/paypal/views/tpl/wave/page/checkout/change_payment.tpl',
+
+        // PSPAYPAL-491 Installment banners
+        'tpl/installment_banners.tpl' => 'oxps/paypal/views/tpl/shared/installment_banners.tpl'
     ],
     'events' => [
         'onActivate' => '\OxidProfessionalServices\PayPal\Core\Events::onActivate',
@@ -252,11 +246,57 @@ $aModule = [
             'block' => 'details_productmain_price_value',
             'file' => '/views/blocks/shared/page/details/inc/details_productmain_price_value.tpl',
             'position' => '5'
-        ]
+        ],
+
+        // PSPAYPAL-491 Installment banners -->
+        [
+            'template' => 'page/checkout/basket.tpl',
+            'block' => 'checkout_basket_next_step_top',
+            'file' => '/views/blocks/shared/page/checkout/basket_installment_banner_after.tpl'
+        ],
+        [
+            'template' => 'page/checkout/basket.tpl',
+            'block' => 'checkout_basket_emptyshippingcart',
+            'file' => '/views/blocks/shared/page/checkout/basket_installment_banner_before.tpl'
+        ],
+        [
+            'template' => 'page/checkout/payment.tpl',
+            'block' => 'checkout_payment_main',
+            'file' => '/views/blocks/shared/page/checkout/basket_installment_banner_before.tpl'
+        ],
+        [
+            'theme' => 'flow',
+            'template' => 'page/details/inc/productmain.tpl',
+            'block' => 'details_productmain_price_value',
+            'file' => '/views/blocks/flow/page/details/inc/productmain.tpl'
+        ],
+        [
+            'theme' => 'wave',
+            'template' => 'page/details/inc/productmain.tpl',
+            'block' => 'details_productmain_price_value',
+            'file' => '/views/blocks/wave/page/details/inc/productmain.tpl'
+        ],
+        [
+            'template' => 'page/list/list.tpl',
+            'block' => 'page_list_listhead',
+            'file' => '/views/blocks/shared/page/list/list.tpl'
+        ],
+        [
+            'template' => 'page/search/search.tpl',
+            'block' => 'search_header',
+            'file' => '/views/blocks/shared/page/search/search.tpl'
+        ],
+        [
+            'template' => 'page/shop/start.tpl',
+            'block' => 'start_welcome_text',
+            'file' => '/views/blocks/shared/page/shop/start.tpl',
+        ],
+        // <-- PSPAYPAL-491
+
     ],
     'settings' => [
         ['name' => 'blPayPalSandboxMode', 'type' => 'bool', 'value' => 'false', 'group' => null],
-        ['name' => 'sPayPalClientId', 'type' => 'str', 'value' => '', 'group' => null],
+        ['name' => 'sPayPalClientId', 'type' => 'str', 'value' => '', 'group' => null], // Main functionality client ID
         ['name' => 'sPayPalClientSecret', 'type' => 'str', 'value' => '', 'group' => null],
         ['name' => 'sPayPalSandboxClientId', 'type' => 'str', 'value' => '', 'group' => null],
         ['name' => 'sPayPalWebhookId', 'type' => 'str', 'value' => '', 'group' => null],
@@ -268,5 +308,24 @@ $aModule = [
         ['name' => 'sPayPalSetupFeeFailureAction', 'type' => 'select',
             'value' => 'CONTINUE', 'constraints' => 'CONTINUE|CANCEL', 'group' => null],
         ['name' => 'sPayPalPaymentFailureThreshold', 'type' => 'str', 'value' => '', 'group' => null],
+
+        // PSPAYPAL-491 -->
+        ['name' => 'oePayPalBannersShowAll', 'type' => 'bool', 'value' => 'true'],
+        ['name' => 'oePayPalClientId', 'type' => 'str', 'value' => ''], // Banner feature client ID
+        ['name' => 'oePayPalBannersStartPage', 'type' => 'bool', 'value' => 'true'],
+        ['name' => 'oePayPalBannersStartPageSelector', 'type' => 'str', 'value' => '#wrapper .row'],
+        ['name' => 'oePayPalBannersCategoryPage', 'type' => 'bool', 'value' => 'true'],
+        ['name' => 'oePayPalBannersCategoryPageSelector', 'type' => 'str', 'value' => '.page-header'],
+        ['name' => 'oePayPalBannersSearchResultsPage', 'type' => 'bool', 'value' => 'true'],
+        ['name' => 'oePayPalBannersSearchResultsPageSelector', 'type' => 'str',
+            'value' => '#content .page-header .clearfix'],
+        ['name' => 'oePayPalBannersProductDetailsPage', 'type' => 'bool', 'value' => 'true'],
+        ['name' => 'oePayPalBannersProductDetailsPageSelector', 'type' => 'str', 'value' => '#detailsItemsPager'],
+        ['name' => 'oePayPalBannersCheckoutPage', 'type' => 'bool', 'value' => 'true'],
+        ['name' => 'oePayPalBannersCartPageSelector', 'type' => 'str', 'value' => '.cart-buttons'],
+        ['name' => 'oePayPalBannersPaymentPageSelector', 'type' => 'str', 'value' => '.checkoutSteps ~ .spacer'],
+        ['name' => 'oePayPalBannersColorScheme', 'type' => 'select',
+            'constraints' => 'blue|black|white|white-no-border', 'value' => 'blue'],
+        // <-- PSPAYPAL-491
     ]
 ];

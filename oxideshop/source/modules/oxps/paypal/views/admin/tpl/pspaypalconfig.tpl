@@ -214,6 +214,134 @@
                     </div>
                 </div>
             </div>
+
+            <div class="card">
+                <div class="card-header" id="heading4">
+                    <h4 class="collapsed" data-toggle="collapse" data-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
+                        [{oxmultilang ident="OXPS_PAYPAL_BANNER_CREDENTIALS"}]
+                    </h4>
+                </div>
+                <div id="collapse5" class="collapse" aria-labelledby="heading4" data-parent="#accordion">
+                    <div class="card-body">
+                        <p>[{oxmultilang ident="OXPS_PAYPAL_BANNER_INFOTEXT"}]</p>
+                        <div class="form-group">
+                            <div class="controls">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="conf[oePayPalBannersShowAll]" [{if $config->getPayPalModuleConfigurationValue('oePayPalBannersShowAll')}]checked[{/if}] value="1">
+                                        [{oxmultilang ident="OXPS_PAYPAL_BANNER_SHOW_ALL"}]
+                                    </label>
+                                </div>
+                                <span class="help-block">[{oxmultilang ident="HELP_OXPS_PAYPAL_BANNER_SHOP_MODULE_SHOW_ALL"}]</span>
+                            </div>
+
+                            <label for="banner-client-id">[{oxmultilang ident="OSC_PAYPAL_BANNER_CLIENTID"}]</label>
+                            <div class="controls">
+                                <input type="text" class="form-control" id="banner-client-id" name="conf[oePayPalClientId]" value="[{$config->getPayPalModuleConfigurationValue('oePayPalClientId')}]">
+                            </div>
+
+                            <hr>
+                            <div class="controls">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="conf[oePayPalBannersStartPage]" [{if $config->getPayPalModuleConfigurationValue('oePayPalBannersStartPage')}]checked[{/if}] value="1">
+                                        [{oxmultilang ident="OSC_PAYPAL_BANNER_STARTPAGE"}]
+                                    </label>
+                                </div>
+                            </div>
+                            <label for="banner-startpage">[{oxmultilang ident="OSC_PAYPAL_BANNER_STARTPAGESELECTOR"}]</label>
+                            <div class="controls">
+                                <input type="text" class="form-control" id="banner-startpage" name="conf[oePayPalBannersStartPageSelector]" value="[{$config->getPayPalModuleConfigurationValue('oePayPalBannersStartPageSelector')}]">
+                            </div>
+                            <span class="help-block">[{oxmultilang ident="HELP_OSC_PAYPAL_BANNER_STARTPAGESELECTOR"}]</span>
+
+                            <hr>
+                            <div class="controls">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="conf[oePayPalBannersCategoryPage]" [{if $config->getPayPalModuleConfigurationValue('oePayPalBannersCategoryPage')}]checked[{/if}] value="1">
+                                        [{oxmultilang ident="OSC_PAYPAL_BANNER_CATEGORYPAGE"}]
+                                    </label>
+                                </div>
+                            </div>
+                            <label for="banner-categorypage">[{oxmultilang ident="OSC_PAYPAL_BANNER_CATEGORYPAGESELECTOR"}]</label>
+                            <div class="controls">
+                                <input type="text" class="form-control" id="banner-categorypage" name="conf[oePayPalBannersCategoryPageSelector]" value="[{$config->getPayPalModuleConfigurationValue('oePayPalBannersCategoryPageSelector')}]">
+                            </div>
+                            <span class="help-block">[{oxmultilang ident="HELP_OSC_PAYPAL_BANNER_CATEGORYPAGESELECTOR"}]</span>
+
+                            <hr>
+                            <div class="controls">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="conf[oePayPalBannersSearchResultsPage]" custom-data="[{$config->getPayPalModuleConfigurationValue('oePayPalBannersSearchResultsPage')}]" [{if $config->getPayPalModuleConfigurationValue('oePayPalBannersSearchResultsPage')}]checked[{/if}] value="1">
+                                        [{oxmultilang ident="OSC_PAYPAL_BANNER_SEARCHRESULTSPAGE"}]
+                                    </label>
+                                </div>
+                            </div>
+                            <label for="banner-searchpage">[{oxmultilang ident="OSC_PAYPAL_BANNER_SEARCHRESULTSPAGESELECTOR"}]</label>
+                            <div class="controls">
+                                <input type="text" class="form-control" id="banner-searchpage" name="conf[oePayPalBannersSearchResultsPageSelector]" value="[{$config->getPayPalModuleConfigurationValue('oePayPalBannersSearchResultsPageSelector')}]">
+                            </div>
+                            <span class="help-block">[{oxmultilang ident="HELP_OSC_PAYPAL_BANNER_SEARCHRESULTSPAGESELECTOR"}]</span>
+
+                            <hr>
+                            <div class="controls">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="conf[oePayPalBannersProductDetailsPage]" [{if $config->getPayPalModuleConfigurationValue('oePayPalBannersProductDetailsPage')}]checked[{/if}] value="1">
+                                        [{oxmultilang ident="OSC_PAYPAL_BANNER_DETAILSPAGE"}]
+                                    </label>
+                                </div>
+                            </div>
+                            <label for="banner-detailspage">[{oxmultilang ident="OSC_PAYPAL_BANNER_DETAILSPAGESELECTOR"}]</label>
+                            <div class="controls">
+                                <input type="text" class="form-control" id="banner-detailspage" name="conf[oePayPalBannersProductDetailsPageSelector]" value="[{$config->getPayPalModuleConfigurationValue('oePayPalBannersProductDetailsPageSelector')}]">
+                            </div>
+                            <span class="help-block">[{oxmultilang ident="HELP_OSC_PAYPAL_BANNER_DETAILSPAGESELECTOR"}]</span>
+
+                            <hr>
+                            <div class="controls">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="conf[oePayPalBannersCheckoutPage]" [{if $config->getPayPalModuleConfigurationValue('oePayPalBannersCheckoutPage')}]checked[{/if}] value="1">
+                                        [{oxmultilang ident="OSC_PAYPAL_BANNER_CHECKOUTPAGE"}]
+                                    </label>
+                                </div>
+                            </div>
+                            <label for="banner-cart">[{oxmultilang ident="OSC_PAYPAL_BANNER_CARTPAGESELECTOR"}]</label>
+                            <div class="controls">
+                                <input type="text" class="form-control" id="banner-cart" name="conf[oePayPalBannersCartPageSelector]" value="[{$config->getPayPalModuleConfigurationValue('oePayPalBannersCartPageSelector')}]">
+                            </div>
+                            <span class="help-block">[{oxmultilang ident="HELP_OSC_PAYPAL_BANNER_CARTPAGESELECTOR"}]</span>
+                            <label for="banner-paymentpage">[{oxmultilang ident="OSC_PAYPAL_BANNER_PAYMENTPAGESELECTOR"}]</label>
+                            <div class="controls">
+                                <input type="text" class="form-control" id="banner-paymentpage" name="conf[oePayPalBannersPaymentPageSelector]" value="[{$config->getPayPalModuleConfigurationValue('oePayPalBannersPaymentPageSelector')}]">
+                            </div>
+                            <span class="help-block">[{oxmultilang ident="HELP_OSC_PAYPAL_BANNER_PAYMENTPAGESELECTOR"}]</span>
+
+                            <hr>
+                            <label for="color-schema">[{oxmultilang ident="OSC_PAYPAL_BANNER_COLORSCHEME"}]</label>
+                            <div class="controls">
+                                <select name="conf[oePayPalBannersColorScheme]" id="color-schema" class="form-control">
+                                    <option value="blue" [{if $config->getPayPalModuleConfigurationValue('oePayPalBannersColorScheme') == 'blue'}]selected[{/if}]>
+                                        [{oxmultilang ident="OSC_PAYPAL_BANNER_COLORSCHEMEBLUE"}]
+                                    </option>
+                                    <option value="black" [{if $config->getPayPalModuleConfigurationValue('oePayPalBannersColorScheme') == 'black'}]selected[{/if}]>
+                                        [{oxmultilang ident="OSC_PAYPAL_BANNER_COLORSCHEMEBLACK"}]
+                                    </option>
+                                    <option value="white" [{if $config->getPayPalModuleConfigurationValue('oePayPalBannersColorScheme') == 'white'}]selected[{/if}]>
+                                        [{oxmultilang ident="OSC_PAYPAL_BANNER_COLORSCHEMEWHITE"}]
+                                    </option>
+                                    <option value="white-no-border" [{if $config->getPayPalModuleConfigurationValue('oePayPalBannersColorScheme') == 'white-no-border'}]selected[{/if}]>
+                                        [{oxmultilang ident="OSC_PAYPAL_BANNER_COLORSCHEMEWHITENOBORDER"}]
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <button type="submit" class="btn btn-primary bottom-space">[{oxmultilang ident="GENERAL_SAVE"}]</button>
     </form>
