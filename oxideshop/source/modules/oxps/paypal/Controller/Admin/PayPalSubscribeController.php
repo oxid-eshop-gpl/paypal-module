@@ -416,7 +416,7 @@ class PayPalSubscribeController extends AdminController
     {
         $result = [];
         foreach ($this->getSubscriptionPlans() as $plan) {
-            if ($existingUser = $this->repository->getUserIdFromSubscriptedPlan($plan->id)) {
+            if ($this->repository->getSubscriptionsBySubscriptionPlanId($plan->id)) {
                 $result[] = $plan->id;
             }
         }

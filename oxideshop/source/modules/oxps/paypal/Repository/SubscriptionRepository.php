@@ -47,16 +47,18 @@ class SubscriptionRepository
 
     /**
      * @param string $subscriptionPlanId
-     * @return string
+     * @return array
      * @throws DatabaseConnectionException
      * @throws DatabaseErrorException
      */
-    public function getUserIdFromSubscriptedPlan($subscriptionPlanId)
+    public function getSubscriptionsBySubscriptionPlanId($subscriptionPlanId)
     {
-        return DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getOne(
-            'SELECT OXUSERID
+        return DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getAll(
+            'SELECT oxps_paypal_subscription.*
                 FROM oxps_paypal_subscription
-                WHERE PAYPALSUBSCRIPTIONPLANID = ?',
+                LEFT JOIN oxps_paypal_subscription_product
+                    ON (oxps_paypal_subscription_product.OXID = oxps_paypal_subscription.OXPAYPALSUBPRODID)
+                WHERE oxps_paypal_subscription_product.PAYPALSUBSCRIPTIONPLANID = ?',
             [$subscriptionPlanId]
         );
     }
@@ -79,7 +81,7 @@ class SubscriptionRepository
 
     /**
      * @param string $billingAgreementId
-     * @return string
+     * @return array
      * @throws DatabaseConnectionException
      * @throws DatabaseErrorException
      */
@@ -119,7 +121,6 @@ class SubscriptionRepository
      */
     public function getSubscriptionOrders($filter = [], $page = 0)
     {
-
         $limit = 10;
         $from = $page ? $page * $limit : 0;
 
@@ -131,6 +132,7 @@ class SubscriptionRepository
         $orderView = $viewNameGenerator->getViewName('oxorder');
         $subscriptionProductView = $viewNameGenerator->getViewName('oxps_paypal_subscription_product');
         $subscriptionOrderView = $viewNameGenerator->getViewName('oxps_paypal_subscription');
+        $shopId = Registry::getConfig()->getShopId();
 
         $select = "select {$orderView}.`oxbillemail`, {$orderView}.`oxorderdate`,
             {$subscriptionProductView}.`paypalsubscriptionplanid`,
@@ -139,7 +141,7 @@ class SubscriptionRepository
             left join {$orderView} on ({$orderView}.`oxid` = {$subscriptionOrderView}.`oxorderid`)
             left join {$subscriptionProductView}
             on ({$subscriptionProductView}.`oxid` = {$subscriptionOrderView}.`oxpaypalsubprodid`)
-            where {$subscriptionOrderView}.`oxshopid` = 1 and {$subscriptionOrderView}.`oxorderid` > ''";
+            where {$subscriptionOrderView}.`oxshopid` = {$shopId} and {$subscriptionOrderView}.`oxorderid` > ''";
 
         if (count($filter)) {
             foreach ($filter as $table => $cols) {
@@ -250,9 +252,9 @@ class SubscriptionRepository
         string $billingAgreementId,
         string $subscriptionPlanId,
         string $userId = null,
-        string $orderId = null,
-        string $parentOrderId = null,
-        string $billingCycleType = null,
+        string $orderId = '',
+        string $parentOrderId = '',
+        string $billingCycleType = '',
         int $billingCycleNumber = 0
     ): void {
         $session = Registry::getSession();
@@ -269,8 +271,8 @@ class SubscriptionRepository
                     `OXPARENTORDERID`,
                     `OXPAYPALSUBPRODID`,
                     `PAYPALBILLINGAGREEMENTID`,
-                    `BILLINGCYCLETYPE`,
-                    `BILLINGCYCLENUMBER`)
+                    `PAYPALBILLINGCYCLETYPE`,
+                    `PAYPALBILLINGCYCLENR`)
                     VALUES (?,?,?,?,?,?,?,?,?)";
 
         DatabaseProvider::getDb()->execute($sql, [
