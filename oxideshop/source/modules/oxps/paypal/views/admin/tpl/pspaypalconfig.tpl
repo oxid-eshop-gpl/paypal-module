@@ -144,14 +144,20 @@
                                 <div>
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" name="conf[blPayPalEnableSofort]" [{if $config->getPayPalModuleConfigurationValue('blPayPalEnableSofort')}]checked[{/if}] value="1">
+                                            <input type="checkbox" name="conf[blPayPalEnableOptionSofort]" [{if $config->getPayPalModuleConfigurationValue('blPayPalEnableOptionSofort')}]checked[{/if}] value="1">
                                             [{oxmultilang ident="OXPS_PAYPAL_BUTTON_2NDBUTTON_SOFORT"}]
                                         </label>
                                     </div>
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" name="conf[blPayPalEnableGiropay]" [{if $config->getPayPalModuleConfigurationValue('blPayPalEnableGiropay')}]checked[{/if}] value="1">
+                                            <input type="checkbox" name="conf[blPayPalEnableOptionGiropay]" [{if $config->getPayPalModuleConfigurationValue('blPayPalEnableOptionGiropay')}]checked[{/if}] value="1">
                                             [{oxmultilang ident="OXPS_PAYPAL_BUTTON_2NDBUTTON_GIROPAY"}]
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="conf[blPayPalEnableOptionPayLater]" [{if $config->getPayPalModuleConfigurationValue('blPayPalEnableOptionPayLater')}]checked[{/if}] value="1">
+                                            [{oxmultilang ident="OXPS_PAYPAL_BUTTON_2NDBUTTON_PAYLATER"}]
                                         </label>
                                     </div>
 

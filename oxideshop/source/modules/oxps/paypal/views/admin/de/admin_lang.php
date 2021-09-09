@@ -175,6 +175,7 @@ $aLang = [
     'OXPS_PAYPAL_BUTTON_2NDBUTTON_DESC'            => 'Hier können Sie über PayPal abgewickelte Zahlungsarten ein- oder ausschalten.',
     'OXPS_PAYPAL_BUTTON_2NDBUTTON_SOFORT'          => 'Sofort',
     'OXPS_PAYPAL_BUTTON_2NDBUTTON_GIROPAY'         => 'Giropay',
+    'OXPS_PAYPAL_BUTTON_2NDBUTTON_PAYLATER'        => 'Später bezahlen',
 
     // PayPal ORDER
     'OXPS_PAYPAL_AMOUNT'                           => 'Betrag',

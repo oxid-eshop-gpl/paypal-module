@@ -74,6 +74,130 @@ class ViewConfig extends ViewConfig_parent
     }
 
     /**
+     * See https://developer.paypal.com/docs/checkout/reference/customize-sdk/#enable-funding
+     * and https://developer.paypal.com/docs/checkout/reference/customize-sdk/#disable-funding
+     * @Todo: Not in use yet.
+     * @var array Allowed payment option keys, string type.
+     */
+    public $listOfSelectableOptions = [
+        // payment option keys
+        'card','credit','bancontact','blik','eps','giropay','ideal','mercadopago','mybank','p24','sepa','venmo',
+
+        // deprecated?
+        'paylater'
+    ];
+
+    /**
+     * @var array string[]
+     */
+    protected $enabledPaymentOptions = [];
+
+    /**
+     * @return array List of payment option keys
+     */
+    public function getEnabledPaymentOptions()
+    {
+        if (count($this->enabledPaymentOptions) == 0)
+        {
+            $this->gatherEnableAndDisabledPaymentOptions();
+        }
+
+        return $this->enabledPaymentOptions;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEnabledPaymentOptionsAsString()
+    {
+        $list = $this->getEnabledPaymentOptions();
+        $out = '';
+        foreach ($list as $item)
+        {
+            if ($out != '')
+            {
+                $out .= ',';
+            }
+            $out .= $item;
+        }
+
+        return $out;
+    }
+
+    /**
+     * @var array string[]
+     */
+    protected $disabledPaymentOptions = [];
+
+    /**
+     * @return array List of payment option keys
+     */
+    public function getDisabledPaymentOptions()
+    {
+        if (count($this->disabledPaymentOptions) == 0)
+        {
+            $this->gatherEnableAndDisabledPaymentOptions();
+        }
+
+        return $this->disabledPaymentOptions;
+    }
+
+    /**
+     * @todo merge with getEnabledPaymentOptionsAsString()
+     * @return string
+     */
+    public function getDisabledPaymentOptionsAsString()
+    {
+        $list = $this->getDisabledPaymentOptions();
+        $out = '';
+        foreach ($list as $item)
+        {
+            if ($out != '')
+            {
+                $out .= ',';
+            }
+            $out .= $item;
+        }
+
+        return $out;
+    }
+
+    /**
+     * Internal function to fill the arrays containing enabled and disabled payment options. This function ensures that
+     * an option which was not added to the list of enabled options will be added to the disabled functions instead.
+     */
+    protected function gatherEnableAndDisabledPaymentOptions()
+    {
+        $config = Registry::getConfig();
+
+        // @Todo: break down complexity
+
+        if ($config->getConfigParam('blPayPalEnableOptionGiropay'))
+        {
+            $this->enabledPaymentOptions[] = 'giropay';
+        }
+        else{
+            $this->disabledPaymentOptions[] = 'giropay';
+        }
+
+        if ($config->getConfigParam('blPayPalEnableOptionSofort'))
+        {
+            $this->enabledPaymentOptions[] = 'sofort';
+        }
+        else{
+            $this->disabledPaymentOptions[] = 'sofort';
+        }
+
+        if ($config->getConfigParam('blPayPalEnableOptionPayLater'))
+        {
+            $this->enabledPaymentOptions[] = 'paylater';
+        }
+        else{
+            $this->disabledPaymentOptions[] = 'paylater';
+        }
+    }
+
+    /**
      * Gets PayPal JS SDK url
      *
      * @param bool $paymentStrategy ('continue', 'pay_now') commit the order or Show a Confirmation Page
@@ -99,6 +223,17 @@ class ViewConfig extends ViewConfig_parent
             $params['intent'] = strtolower(Constants::PAYPAL_ORDER_INTENT_CAPTURE);
             $params['commit'] = ($paymentStrategy == 'pay_now' ? 'true' : 'false');
         }
+
+        // card,credit,paylater,giropay,sofort
+        $params['enable-funding'] = $this->getEnabledPaymentOptionsAsString();
+        $params['disable-funding'] = $this->getDisabledPaymentOptionsAsString();
+
+        // Standard-Button: ist nichts gewählt, zeigt PayPal wenigstens 3 Optionen an. Nicht aktive Optionen müssen in disable-funding verschoben werden
+        // https://developer.paypal.com/docs/checkout/reference/customize-sdk/#disable-funding ("gegenläufige Liste")
+
+        // @Todo: Einige Optionen laufen zukünftig über UAPM -> sollen leicht verschiebbar sein
+        //$params['enable-2ndbutton'] = '';
+        //$params['enable-uapm'] = ''; // Löst Teile von enable-funding ab.
 
         if ($currency = $config->getActShopCurrencyObject()) {
             $params['currency'] = strtoupper($currency->name);

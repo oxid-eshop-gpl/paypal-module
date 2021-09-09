@@ -174,6 +174,7 @@ $aLang = [
     'OXPS_PAYPAL_BUTTON_2NDBUTTON_DESC'            => 'Enable or disable payment options that are powered by PayPal',
     'OXPS_PAYPAL_BUTTON_2NDBUTTON_SOFORT'          => 'Sofort',
     'OXPS_PAYPAL_BUTTON_2NDBUTTON_GIROPAY'         => 'Giropay',
+    'OXPS_PAYPAL_BUTTON_2NDBUTTON_PAYLATER'        => 'Pay later',
 
     // PayPal ORDER
     'OXPS_PAYPAL_AMOUNT'                           => 'Amount',

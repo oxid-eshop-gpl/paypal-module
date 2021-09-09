@@ -223,15 +223,19 @@ class PayPalConfigController extends AdminController
             $conf['oePayPalBannersCheckoutPage'] = 0;
         }
 
-        if (!isset($conf['blPayPalPayLater'])) {
-            $conf['blPayPalPayLater'] = 0;
+        // PSPAYPAL-491 -->
+        if (!isset($conf['blPayPalEnableOptionGiropay'])) {
+            $conf['blPayPalEnableOptionGiropay'] = 0;
         }
-        if (!isset($conf['blPayPalEnableGiropay'])) {
-            $conf['blPayPalEnableGiropay'] = 0;
+        if (!isset($conf['blPayPalEnableOptionSofort'])) {
+            $conf['blPayPalEnableOptionSofort'] = 0;
         }
-        if (!isset($conf['blPayPalEnableSofort'])) {
-            $conf['blPayPalEnableSofort'] = 0;
+
+
+        if (!isset($conf['blPayPalEnableOptionPayLater'])) {
+            $conf['blPayPalEnableOptionPayLater'] = 0;
         }
+        // <-- PSPAYPAL-491
 
         return $conf;
     }
