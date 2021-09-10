@@ -106,25 +106,6 @@ class ViewConfig extends ViewConfig_parent
     }
 
     /**
-     * @return string
-     */
-    public function getEnabledPaymentOptionsAsString()
-    {
-        $list = $this->getEnabledPaymentOptions();
-        $out = '';
-        foreach ($list as $item)
-        {
-            if ($out != '')
-            {
-                $out .= ',';
-            }
-            $out .= $item;
-        }
-
-        return $out;
-    }
-
-    /**
      * @var array string[]
      */
     protected $disabledPaymentOptions = [];
@@ -143,12 +124,21 @@ class ViewConfig extends ViewConfig_parent
     }
 
     /**
-     * @todo merge with getEnabledPaymentOptionsAsString()
+     * Return an array as string.
+     * @param int Process enabled (1) or disabled (0) keys.
      * @return string
      */
-    public function getDisabledPaymentOptionsAsString()
+    protected function getEnabledAndDisabledPaymentOptionsAsString($status)
     {
-        $list = $this->getDisabledPaymentOptions();
+        switch($status) {
+            case 0:
+                $list = $this->getDisabledPaymentOptions();
+                break;
+            case 1:
+                $list = $this->getEnabledPaymentOptions();
+                break;
+        }
+
         $out = '';
         foreach ($list as $item)
         {
@@ -224,12 +214,10 @@ class ViewConfig extends ViewConfig_parent
             $params['commit'] = ($paymentStrategy == 'pay_now' ? 'true' : 'false');
         }
 
-        // card,credit,paylater,giropay,sofort
-        $params['enable-funding'] = $this->getEnabledPaymentOptionsAsString();
-        $params['disable-funding'] = $this->getDisabledPaymentOptionsAsString();
-
         // Standard-Button: ist nichts gewählt, zeigt PayPal wenigstens 3 Optionen an. Nicht aktive Optionen müssen in disable-funding verschoben werden
         // https://developer.paypal.com/docs/checkout/reference/customize-sdk/#disable-funding ("gegenläufige Liste")
+        $params['enable-funding'] = $this->getEnabledAndDisabledPaymentOptionsAsString(1);
+        $params['disable-funding'] = $this->getEnabledAndDisabledPaymentOptionsAsString(0);
 
         // @Todo: Einige Optionen laufen zukünftig über UAPM -> sollen leicht verschiebbar sein
         //$params['enable-2ndbutton'] = '';
