@@ -171,11 +171,27 @@ $aLang = [
         'Die ID des Webhooks, wie in Ihrem Developer Portal-Konto konfiguriert',
 
     // PSPAYPAL-492
-    'OXPS_PAYPAL_BUTTON_2NDBUTTON_OPTIONS'         => '&bdquo;Später bezahlen&rdquo;',
-    'OXPS_PAYPAL_BUTTON_2NDBUTTON_DESC'            => 'Hier können Sie über PayPal abgewickelte Zahlungsarten ein- oder ausschalten.',
-    'OXPS_PAYPAL_BUTTON_2NDBUTTON_SOFORT'          => 'Sofort',
-    'OXPS_PAYPAL_BUTTON_2NDBUTTON_GIROPAY'         => 'Giropay',
-    'OXPS_PAYPAL_BUTTON_2NDBUTTON_PAYLATER'        => 'Später bezahlen',
+    'OXPS_PAYPAL_BUTTON_OPTIONS'                   => 'Button-Konfiguration',
+    'OXPS_PAYPAL_BUTTON_DETAILS_DESCRIPTION'       => 'Schalten Sie hier diejenigen Zahlungsarten ein oder aus, die auf
+        der Produktdetailseite angeboten werden sollen.',
+    'OXPS_PAYPAL_BUTTON_BASKET_DESCRIPTION'        => 'Schalten Sie hier diejenigen Zahlungsarten ein oder aus, die im
+        Warenkorb angeboten werden sollen.',
+    'OXPS_PAYPAL_BUTTON_CHECKOUT_DESCRIPTION'      => 'Schalten Sie hier diejenigen Zahlungsarten ein oder aus, die im
+        Bestellprozess angeboten werden sollen.',
+    'OXPS_PAYPAL_BUTTON_card'                      => 'Kredit- oder Debitkarten',
+    'OXPS_PAYPAL_BUTTON_credit'                    => 'PayPal Credit',
+    'OXPS_PAYPAL_BUTTON_bancontact'                => 'Bancontact',
+    'OXPS_PAYPAL_BUTTON_blik'                      => 'BLIK',
+    'OXPS_PAYPAL_BUTTON_eps'                       => 'eps',
+    'OXPS_PAYPAL_BUTTON_giropay'                   => 'giropay',
+    'OXPS_PAYPAL_BUTTON_ideal'                     => 'iDEAL',
+    'OXPS_PAYPAL_BUTTON_mercadopago'               => 'Mercado Pago',
+    'OXPS_PAYPAL_BUTTON_mybank'                    => 'MyBank',
+    'OXPS_PAYPAL_BUTTON_p24'                       => 'Przelewy24',
+    'OXPS_PAYPAL_BUTTON_sepa'                      => 'SEPA-Lastschrift',
+    'OXPS_PAYPAL_BUTTON_sofort'                    => 'Sofort',
+    'OXPS_PAYPAL_BUTTON_paylater'                  => 'Später bezahlen',
+    'OXPS_PAYPAL_BUTTON_venmo'                     => 'Venmo',
 
     // PayPal ORDER
     'OXPS_PAYPAL_AMOUNT'                           => 'Betrag',

@@ -224,17 +224,12 @@ class PayPalConfigController extends AdminController
         }
 
         // PSPAYPAL-491 -->
-        if (!isset($conf['blPayPalEnableOptionGiropay'])) {
-            $conf['blPayPalEnableOptionGiropay'] = 0;
-        }
-        if (!isset($conf['blPayPalEnableOptionSofort'])) {
-            $conf['blPayPalEnableOptionSofort'] = 0;
+        if ($conf['enabledPaymentOptions_Details'])
+        {
+            // @Todo Implement save functionality for elements in enabledPaymentOptions_Details
         }
 
-
-        if (!isset($conf['blPayPalEnableOptionPayLater'])) {
-            $conf['blPayPalEnableOptionPayLater'] = 0;
-        }
+        // @Todo Adopt for enabledPaymentOptions_Basket and enabledPaymentOptions_Checkout
         // <-- PSPAYPAL-491
 
         return $conf;

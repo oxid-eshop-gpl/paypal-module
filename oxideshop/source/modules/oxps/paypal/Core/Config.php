@@ -197,16 +197,32 @@ class Config
     /**
      * Config value getter
      * @Todo PSPAYPAL-491 Work in progress, add tests
+     * @Todo Ensure we fetch this setting from the active subshop.
      * @param string oxconfig.OXVARNAME
      * @return string|boolean value
      */
-    public function getPayPalModuleConfigurationValue($varname)
+    public function getPayPalModuleConfigurationValue($varname): string
     {
         if ($varname == '') {
             return (bool) false;
         }
 
         return (string) Registry::getConfig()->getConfigParam($varname);
+    }
+
+    /**
+     * @param string Identifier to tell configs for PDP, basket or checkout apart.
+     * @return array
+     */
+    public function getEnabledPaymentOptions($type)
+    {
+        if (in_array($type, ['Details','Basket','Checkout'])) {
+            $configKey = 'arrPayPalEnabledOptions_' . $type;
+
+            return Registry::getConfig()->getConfigParam($configKey);
+        }
+
+        return null;
     }
 
     /**

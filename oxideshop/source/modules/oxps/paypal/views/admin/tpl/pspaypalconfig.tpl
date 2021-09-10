@@ -132,7 +132,7 @@
             <div class="card">
                 <div class="card-header" id="headingPayPalter">
                     <h4 class="collapsed" data-toggle="collapse" data-target="#collapse-paylater" aria-expanded="false" aria-controls="collapse-paylater">
-                        [{oxmultilang ident="OXPS_PAYPAL_BUTTON_2NDBUTTON_OPTIONS"}]
+                        [{oxmultilang ident="OXPS_PAYPAL_BUTTON_OPTIONS"}]
                     </h4>
                 </div>
 
@@ -140,27 +140,50 @@
                     <div class="card-body">
                         <div class="form-group">
                             <div class="controls">
-                                <span class="help-block">[{oxmultilang ident="OXPS_PAYPAL_BUTTON_2NDBUTTON_DESC"}]</span>
+                                <span class="help-block">[{oxmultilang ident="OXPS_PAYPAL_BUTTON_DETAILS_DESCRIPTION"}]</span>
                                 <div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="conf[blPayPalEnableOptionSofort]" [{if $config->getPayPalModuleConfigurationValue('blPayPalEnableOptionSofort')}]checked[{/if}] value="1">
-                                            [{oxmultilang ident="OXPS_PAYPAL_BUTTON_2NDBUTTON_SOFORT"}]
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="conf[blPayPalEnableOptionGiropay]" [{if $config->getPayPalModuleConfigurationValue('blPayPalEnableOptionGiropay')}]checked[{/if}] value="1">
-                                            [{oxmultilang ident="OXPS_PAYPAL_BUTTON_2NDBUTTON_GIROPAY"}]
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="conf[blPayPalEnableOptionPayLater]" [{if $config->getPayPalModuleConfigurationValue('blPayPalEnableOptionPayLater')}]checked[{/if}] value="1">
-                                            [{oxmultilang ident="OXPS_PAYPAL_BUTTON_2NDBUTTON_PAYLATER"}]
-                                        </label>
-                                    </div>
+                                    [{assign var='arrPayPalEnabledOptionsDetails' value=$config->getEnabledPaymentOptions('Details')}]
+                                    [{foreach from=$arrPayPalEnabledOptionsDetails item=value key=optionKey}]
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="enabledPaymentOptions_Details[[{$optionKey}]]"[{if $value == 1}] checked[{/if}] value="1">
 
+                                                [{oxmultilang ident="OXPS_PAYPAL_BUTTON_"|cat:$optionKey}] [[{$optionKey}]: [{$value}]]
+                                            </label>
+                                        </div>
+                                    [{/foreach}]
+                                </div>
+                            </div>
+
+                            <div class="controls">
+                                <span class="help-block">[{oxmultilang ident="OXPS_PAYPAL_BUTTON_BASKET_DESCRIPTION"}]</span>
+                                <div>
+                                    [{assign var='arrPayPalEnabledOptionsBasket' value=$config->getEnabledPaymentOptions('Basket')}]
+                                    [{foreach from=$arrPayPalEnabledOptionsBasket item=value key=optionKey}]
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="enabledPaymentOptions_Basket[[{$optionKey}]]"[{if $value == 1}] checked[{/if}] value="1">
+
+                                            [{oxmultilang ident="OXPS_PAYPAL_BUTTON_"|cat:$optionKey}] [[{$optionKey}]: [{$value}]]
+                                        </label>
+                                    </div>
+                                    [{/foreach}]
+                                </div>
+                            </div>
+
+                            <div class="controls">
+                                <span class="help-block">[{oxmultilang ident="OXPS_PAYPAL_BUTTON_CHECKOUT_DESCRIPTION"}]</span>
+                                <div>
+                                    [{assign var='arrPayPalEnabledOptionsCheckout' value=$config->getEnabledPaymentOptions('Checkout')}]
+                                    [{foreach from=$arrPayPalEnabledOptionsCheckout item=value key=optionKey}]
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="enabledPaymentOptions_Checkout[[{$optionKey}]]"[{if $value == 1}] checked[{/if}] value="1">
+
+                                            [{oxmultilang ident="OXPS_PAYPAL_BUTTON_"|cat:$optionKey}] [[{$optionKey}]: [{$value}]]
+                                        </label>
+                                    </div>
+                                    [{/foreach}]
                                 </div>
                             </div>
                         </div>

@@ -170,11 +170,27 @@ $aLang = [
         'The ID of the webhook as configured in your Developer Portal account',
 
     // PSPAYPAL-492
-    'OXPS_PAYPAL_BUTTON_2NDBUTTONOPTIONS'          => '&quot;Pay Later&quot;',
-    'OXPS_PAYPAL_BUTTON_2NDBUTTON_DESC'            => 'Enable or disable payment options that are powered by PayPal',
-    'OXPS_PAYPAL_BUTTON_2NDBUTTON_SOFORT'          => 'Sofort',
-    'OXPS_PAYPAL_BUTTON_2NDBUTTON_GIROPAY'         => 'Giropay',
-    'OXPS_PAYPAL_BUTTON_2NDBUTTON_PAYLATER'        => 'Pay later',
+    'OXPS_PAYPAL_BUTTON_OPTIONS'                   => 'Button configuration',
+    'OXPS_PAYPAL_BUTTON_DETAILS_DESCRIPTION'       => 'Enable or disable payment options here that you want to offer on
+        the product detail page',
+    'OXPS_PAYPAL_BUTTON_BASKET_DESCRIPTION'        => 'Enable or disable payment options here that you want to offer on
+        the basket page',
+    'OXPS_PAYPAL_BUTTON_CHECKOUT_DESCRIPTION'      => 'Enable or disable payment options here that you want to offer on
+        the checkout',
+    'OXPS_PAYPAL_BUTTON_card'                      => 'Credit or debit cards',
+    'OXPS_PAYPAL_BUTTON_credit'                    => 'PayPal Credit',
+    'OXPS_PAYPAL_BUTTON_bancontact'                => 'Bancontact',
+    'OXPS_PAYPAL_BUTTON_blik'                      => 'BLIK',
+    'OXPS_PAYPAL_BUTTON_eps'                       => 'eps',
+    'OXPS_PAYPAL_BUTTON_giropay'                   => 'giropay',
+    'OXPS_PAYPAL_BUTTON_ideal'                     => 'iDEAL',
+    'OXPS_PAYPAL_BUTTON_mercadopago'               => 'Mercado Pago',
+    'OXPS_PAYPAL_BUTTON_mybank'                    => 'MyBank',
+    'OXPS_PAYPAL_BUTTON_p24'                       => 'Przelewy24',
+    'OXPS_PAYPAL_BUTTON_sepa'                      => 'SEPA debit note',
+    'OXPS_PAYPAL_BUTTON_sofort'                    => 'Sofort',
+    'OXPS_PAYPAL_BUTTON_paylater'                  => 'Pay Later',
+    'OXPS_PAYPAL_BUTTON_venmo'                     => 'Venmo',
 
     // PayPal ORDER
     'OXPS_PAYPAL_AMOUNT'                           => 'Amount',

@@ -326,5 +326,70 @@ $aModule = [
         ['name' => 'oePayPalBannersColorScheme', 'type' => 'select',
             'constraints' => 'blue|black|white|white-no-border', 'value' => 'blue'],
         // <-- PSPAYPAL-491
+
+        // PSPAYPAL-492
+        [
+            'group' => 'main',
+            'name' => 'arrPayPalEnabledOptions_Details',
+            'type' => 'aarr',
+            'value' => [
+                'card'          => 1,
+                'credit'        => 1,
+                'bancontact'    => 1,
+                'blik'          => 0,
+                'eps'           => 1,
+                'giropay'       => 1,
+                'ideal'         => 1,
+                'mercadopago'   => 0,
+                'mybank'        => 0,
+                'p24'           => 0,
+                'sepa'          => 1,
+                'sofort'        => 1,
+                'venmo'         => 1,
+                'paylater'      => 1,
+            ]
+        ],
+        [
+            'group' => 'main',
+            'name' => 'arrPayPalEnabledOptions_Basket',
+            'type' => 'aarr',
+            'value' => [
+                'card'          => 1,
+                'credit'        => 1,
+                'bancontact'    => 1,
+                'blik'          => 0,
+                'eps'           => 1,
+                'giropay'       => 1,
+                'ideal'         => 1,
+                'mercadopago'   => 0,
+                'mybank'        => 0,
+                'p24'           => 1,
+                'sepa'          => 1,
+                'sofort'        => 1,
+                'venmo'         => 1,
+                'paylater'      => 1,
+            ]
+        ],
+        [
+            'group' => 'main',
+            'name' => 'arrPayPalEnabledOptions_Checkout',
+            'type' => 'aarr',
+            'value' => [
+                'card'          => 1,
+                'credit'        => 1,
+                'bancontact'    => 1,
+                'blik'          => 1,
+                'eps'           => 1,
+                'giropay'       => 1,
+                'ideal'         => 1,
+                'mercadopago'   => 1,
+                'mybank'        => 1,
+                'p24'           => 1,
+                'sepa'          => 1,
+                'sofort'        => 1,
+                'venmo'         => 1,
+                'paylater'      => 1,
+            ]
+        ],
     ]
 ];
