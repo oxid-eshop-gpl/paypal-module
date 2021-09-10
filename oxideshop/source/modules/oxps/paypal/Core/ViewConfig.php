@@ -81,61 +81,76 @@ class ViewConfig extends ViewConfig_parent
      */
     public $listOfSelectableOptions = [
         // payment option keys
-        'card','credit','bancontact','blik','eps','giropay','ideal','mercadopago','mybank','p24','sepa','venmo',
+        'card','credit','bancontact','blik','eps','giropay','ideal','mercadopago','mybank','p24','sepa','sofort','venmo',
 
-        // deprecated?
-        'paylater'
+        // deprecated, will be moved to "2nd button"
+        'paylater',
     ];
 
     /**
-     * @var array string[]
+     * In the future, some options will be specified as UAPM options. Those will be moved into another array on request
+     * preparation.
+     *
+     * Once, UAPMs are available, they will be removed from the button options
+     * and thus from the "enable-funding" array (and added to disable-funding?).
+     * @Todo specification needed.
+     * https://developer.paypal.com/docs/limited-release/alternative-payment-methods-with-orders/
+     * @var string[]
+     */
+    protected $listOfUapmOptions = [
+        'giropay','sofort','p24'
+    ];
+
+    /**
+     * @var array
      */
     protected $enabledPaymentOptions = [];
 
     /**
      * @return array List of payment option keys
      */
-    public function getEnabledPaymentOptions()
+    public function getEnabledPaymentOptions($context)
     {
-        if (count($this->enabledPaymentOptions) == 0)
+        if (count($this->enabledPaymentOptions[$context]) == 0)
         {
-            $this->gatherEnableAndDisabledPaymentOptions();
+            $this->collectEnableAndDisabledPaymentOptions();
         }
 
-        return $this->enabledPaymentOptions;
+        return $this->enabledPaymentOptions[$context];
     }
 
     /**
-     * @var array string[]
+     * @var array
      */
     protected $disabledPaymentOptions = [];
 
     /**
      * @return array List of payment option keys
      */
-    public function getDisabledPaymentOptions()
+    public function getDisabledPaymentOptions($context)
     {
-        if (count($this->disabledPaymentOptions) == 0)
+        if (count($this->disabledPaymentOptions[$context]) == 0)
         {
-            $this->gatherEnableAndDisabledPaymentOptions();
+            $this->collectEnableAndDisabledPaymentOptions();
         }
 
-        return $this->disabledPaymentOptions;
+        return $this->disabledPaymentOptions[$context];
     }
 
     /**
-     * Return an array as string.
+     * Returns an array as string.
+     * @param string Context, one of (Details, Basket, Checkout)
      * @param int Process enabled (1) or disabled (0) keys.
      * @return string
      */
-    protected function getEnabledAndDisabledPaymentOptionsAsString($status)
+    protected function getEnabledAndDisabledPaymentOptionsAsString($context, $status)
     {
         switch($status) {
             case 0:
-                $list = $this->getDisabledPaymentOptions();
+                $list = $this->getDisabledPaymentOptions($context);
                 break;
             case 1:
-                $list = $this->getEnabledPaymentOptions();
+                $list = $this->getEnabledPaymentOptions($context);
                 break;
         }
 
@@ -153,37 +168,31 @@ class ViewConfig extends ViewConfig_parent
     }
 
     /**
+     * List of contexts in which the button configuration may be used in different combinations.
+     * @var string[]
+     */
+    protected $allowedContexts = ['Details', 'Basket', 'Checkout'];
+
+    /**
      * Internal function to fill the arrays containing enabled and disabled payment options. This function ensures that
      * an option which was not added to the list of enabled options will be added to the disabled functions instead.
      */
-    protected function gatherEnableAndDisabledPaymentOptions()
+    protected function collectEnableAndDisabledPaymentOptions()
     {
         $config = Registry::getConfig();
 
-        // @Todo: break down complexity
-
-        if ($config->getConfigParam('blPayPalEnableOptionGiropay'))
+        foreach ($this->allowedContexts as $context)
         {
-            $this->enabledPaymentOptions[] = 'giropay';
-        }
-        else{
-            $this->disabledPaymentOptions[] = 'giropay';
-        }
-
-        if ($config->getConfigParam('blPayPalEnableOptionSofort'))
-        {
-            $this->enabledPaymentOptions[] = 'sofort';
-        }
-        else{
-            $this->disabledPaymentOptions[] = 'sofort';
-        }
-
-        if ($config->getConfigParam('blPayPalEnableOptionPayLater'))
-        {
-            $this->enabledPaymentOptions[] = 'paylater';
-        }
-        else{
-            $this->disabledPaymentOptions[] = 'paylater';
+            foreach ($config->getConfigParam('arrPayPalEnabledOptions_'.$context) as $optionKey => $optionValue)
+            {
+                if ($optionValue)
+                {
+                    $this->enabledPaymentOptions[$context][] = $optionKey;
+                }
+                else{
+                    $this->disabledPaymentOptions[$context][] = $optionKey;
+                }
+            }
         }
     }
 
@@ -216,8 +225,9 @@ class ViewConfig extends ViewConfig_parent
 
         // Standard-Button: ist nichts gewählt, zeigt PayPal wenigstens 3 Optionen an. Nicht aktive Optionen müssen in disable-funding verschoben werden
         // https://developer.paypal.com/docs/checkout/reference/customize-sdk/#disable-funding ("gegenläufige Liste")
-        $params['enable-funding'] = $this->getEnabledAndDisabledPaymentOptionsAsString(1);
-        $params['disable-funding'] = $this->getEnabledAndDisabledPaymentOptionsAsString(0);
+        // @Todo: 3 contexts: PDP, basket, checkout. Must use different configurations!
+        $params['enable-funding'] = $this->getEnabledAndDisabledPaymentOptionsAsString('Details', 1);
+        $params['disable-funding'] = $this->getEnabledAndDisabledPaymentOptionsAsString('Details', 0);
 
         // @Todo: Einige Optionen laufen zukünftig über UAPM -> sollen leicht verschiebbar sein
         //$params['enable-2ndbutton'] = '';

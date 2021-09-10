@@ -214,10 +214,10 @@ class Config
      * @param string Identifier to tell configs for PDP, basket or checkout apart.
      * @return array
      */
-    public function getEnabledPaymentOptions($type)
+    public function getEnabledPaymentOptions($context)
     {
-        if (in_array($type, ['Details','Basket','Checkout'])) {
-            $configKey = 'arrPayPalEnabledOptions_' . $type;
+        if (in_array($context, ['Details','Basket','Checkout'])) {
+            $configKey = 'arrPayPalEnabledOptions_' . $context;
 
             return Registry::getConfig()->getConfigParam($configKey);
         }
