@@ -26,6 +26,7 @@ use OxidEsales\Eshop\Application\Controller\Admin\AdminController;
 use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidEsales\Eshop\Core\Registry;
 use OxidProfessionalServices\PayPal\Core\Config;
+use OxidProfessionalServices\PayPal\Core\Request;
 
 /**
  * Controller for admin > PayPal/Configuration page
@@ -160,6 +161,17 @@ class PayPalConfigController extends AdminController
         $confArr = $this->handleSpecialFields($confArr);
         $this->saveConfig($confArr, $shopId);
 
+        // PSPAYPAL-492 -->
+        $confArr = Registry::getRequest()->getRequestEscapedParameter('enabledPaymentOptions_Details');
+        Registry::getConfig()->saveShopConfVar('aarr', 'arrPayPalEnabledOptions_Details', $confArr, $shopId, self::MODULE_ID);
+
+        $confArr = Registry::getRequest()->getRequestEscapedParameter('enabledPaymentOptions_Basket');
+        Registry::getConfig()->saveShopConfVar('aarr', 'arrPayPalEnabledOptions_Basket', $confArr, $shopId, self::MODULE_ID);
+
+        $confArr = Registry::getRequest()->getRequestEscapedParameter('enabledPaymentOptions_Checkout');
+        Registry::getConfig()->saveShopConfVar('aarr', 'arrPayPalEnabledOptions_Checkout', $confArr, $shopId, self::MODULE_ID);
+        // <-- PSPAYPAL-492
+
         parent::save();
     }
 
@@ -182,7 +194,7 @@ class PayPalConfigController extends AdminController
     }
 
     /**
-     * Handles cheboxes/dropdowns
+     * Handles checkboxes/dropdowns
      *
      * @param array $conf
      *
@@ -222,15 +234,6 @@ class PayPalConfigController extends AdminController
         if (!isset($conf['oePayPalBannersCheckoutPage'])) {
             $conf['oePayPalBannersCheckoutPage'] = 0;
         }
-
-        // PSPAYPAL-491 -->
-        if ($conf['enabledPaymentOptions_Details'])
-        {
-            // @Todo Implement save functionality for elements in enabledPaymentOptions_Details
-        }
-
-        // @Todo Adopt for enabledPaymentOptions_Basket and enabledPaymentOptions_Checkout
-        // <-- PSPAYPAL-491
 
         return $conf;
     }

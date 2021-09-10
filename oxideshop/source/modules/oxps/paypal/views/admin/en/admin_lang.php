@@ -172,11 +172,11 @@ $aLang = [
     // PSPAYPAL-492
     'OXPS_PAYPAL_BUTTON_OPTIONS'                   => 'Button configuration',
     'OXPS_PAYPAL_BUTTON_DETAILS_DESCRIPTION'       => 'Enable or disable payment options here that you want to offer on
-        the product detail page',
+        the <strong>product detail page</strong>',
     'OXPS_PAYPAL_BUTTON_BASKET_DESCRIPTION'        => 'Enable or disable payment options here that you want to offer on
-        the basket page',
+        the <strong>basket page</strong>',
     'OXPS_PAYPAL_BUTTON_CHECKOUT_DESCRIPTION'      => 'Enable or disable payment options here that you want to offer on
-        the checkout',
+        the <strong>checkout process</strong>',
     'OXPS_PAYPAL_BUTTON_card'                      => 'Credit or debit cards',
     'OXPS_PAYPAL_BUTTON_credit'                    => 'PayPal Credit',
     'OXPS_PAYPAL_BUTTON_bancontact'                => 'Bancontact',
