@@ -171,13 +171,9 @@ $aLang = [
         'Die ID des Webhooks, wie in Ihrem Developer Portal-Konto konfiguriert',
 
     // PSPAYPAL-492
-    'OXPS_PAYPAL_BUTTON_OPTIONS'                   => 'Button-Konfiguration',
-    'OXPS_PAYPAL_BUTTON_DETAILS_DESCRIPTION'       => 'Schalten Sie hier diejenigen Zahlungsarten ein oder aus, die auf
-        der <strong>Produktdetailseite</strong> angeboten werden sollen.',
-    'OXPS_PAYPAL_BUTTON_BASKET_DESCRIPTION'        => 'Schalten Sie hier diejenigen Zahlungsarten ein oder aus, die im
-        <strong>Warenkorb</strong> angeboten werden sollen.',
-    'OXPS_PAYPAL_BUTTON_CHECKOUT_DESCRIPTION'      => 'Schalten Sie hier diejenigen Zahlungsarten ein oder aus, die im
-        <strong>Bestellprozess</strong> angeboten werden sollen.',
+    'OXPS_PAYPAL_BUTTON_OPTIONS'                   => 'Zahlungsarten-Buttons ein- oder ausschalten',
+    'OXPS_PAYPAL_BUTTON_MAIN_DESCRIPTION'          => 'Schalten Sie hier diejenigen Zahlungsarten ein oder aus, die in
+        den nachfolgend aufgelisteten Bereichen angeboten werden sollen.',
     'OXPS_PAYPAL_BUTTON_card'                      => 'Kredit- oder Debitkarten',
     'OXPS_PAYPAL_BUTTON_credit'                    => 'PayPal Credit',
     'OXPS_PAYPAL_BUTTON_bancontact'                => 'Bancontact',

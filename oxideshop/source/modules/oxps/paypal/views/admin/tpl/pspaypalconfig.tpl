@@ -129,6 +129,7 @@
                 </div>
             </div>
 
+            [{* PSPAYPAL-492 --> *}]
             <div class="card">
                 <div class="card-header" id="headingPayPalter">
                     <h4 class="collapsed" data-toggle="collapse" data-target="#collapse-paylater" aria-expanded="false" aria-controls="collapse-paylater">
@@ -139,9 +140,11 @@
                 <div id="collapse-paylater" class="collapse" aria-labelledby="heading-paylater" data-parent="#accordion">
                     <div class="card-body">
                         <div class="form-group">
+                            <span class="help-block">[{oxmultilang ident="OXPS_PAYPAL_BUTTON_MAIN_DESCRIPTION"}]</span>
+
                             <div class="controls">
                                 <fieldset>
-                                    <legend>[{oxmultilang ident="OXPS_PAYPAL_BUTTON_DETAILS_DESCRIPTION"}]</legend>
+                                    <legend>[{oxmultilang ident="OXPS_PAYPAL_PRODUCT_DETAILS_BUTTON_PLACEMENT"}]</legend>
                                     [{assign var='arrPayPalEnabledOptionsDetails' value=$config->getEnabledPaymentOptions('Details')}]
                                     [{foreach from=$arrPayPalEnabledOptionsDetails item=value key=optionKey}]
                                         <div class="checkbox">
@@ -157,7 +160,7 @@
 
                             <div class="controls">
                                 <fieldset>
-                                    <legend>[{oxmultilang ident="OXPS_PAYPAL_BUTTON_BASKET_DESCRIPTION"}]</legend>
+                                    <legend>[{oxmultilang ident="OXPS_PAYPAL_BASKET_BUTTON_PLACEMENT"}]</legend>
                                     [{assign var='arrPayPalEnabledOptionsBasket' value=$config->getEnabledPaymentOptions('Basket')}]
                                     [{foreach from=$arrPayPalEnabledOptionsBasket item=value key=optionKey}]
                                     <div class="checkbox">
@@ -173,7 +176,7 @@
 
                             <div class="controls">
                                 <fieldset>
-                                    <legend>[{oxmultilang ident="OXPS_PAYPAL_BUTTON_CHECKOUT_DESCRIPTION"}]</legend>
+                                    <legend>[{oxmultilang ident="OXPS_PAYPAL_CHECKOUT_PLACEMENT"}]</legend>
                                     [{assign var='arrPayPalEnabledOptionsCheckout' value=$config->getEnabledPaymentOptions('Checkout')}]
                                     [{foreach from=$arrPayPalEnabledOptionsCheckout item=value key=optionKey}]
                                     <div class="checkbox">
@@ -189,9 +192,8 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
+            [{* <-- PSPAYPAL-492 *}]
 
             <div class="card">
                 <div class="card-header" id="heading2">
