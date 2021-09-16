@@ -329,7 +329,11 @@ $aModule = [
 
         // PSPAYPAL-492
         [
-            'group' => 'main',
+            'name' => 'blPayPalNeverUseCredit',
+            'type' => 'bool',
+            'value' => false,
+        ],
+        [
             'name' => 'arrPayPalEnabledOptions_Details',
             'type' => 'aarr',
             'value' => [
@@ -350,7 +354,6 @@ $aModule = [
             ]
         ],
         [
-            'group' => 'main',
             'name' => 'arrPayPalEnabledOptions_Basket',
             'type' => 'aarr',
             'value' => [
@@ -371,7 +374,6 @@ $aModule = [
             ]
         ],
         [
-            'group' => 'main',
             'name' => 'arrPayPalEnabledOptions_Checkout',
             'type' => 'aarr',
             'value' => [

@@ -174,8 +174,11 @@ $aLang = [
     'OXPS_PAYPAL_BUTTON_OPTIONS'                   => 'Zahlungsarten-Buttons ein- oder ausschalten',
     'OXPS_PAYPAL_BUTTON_MAIN_DESCRIPTION'          => 'Schalten Sie hier diejenigen Zahlungsarten ein oder aus, die in
         den nachfolgend aufgelisteten Bereichen angeboten werden sollen.',
+    'OXPS_PAYPAL_BASKET_BUTTON_NOCREDITOPTION'     => 'Dieser Shop wird außerhalb der vereinigten Staaten betrieben und
+        besitzt keine Genehmigung für den Einsatz der Option <em>PayPal Credit</em> oder Kunden könne über diesen Shop
+        Zahlungen in Verbindung mit Online-Spielen tätigen.',
     'OXPS_PAYPAL_BUTTON_card'                      => 'Kredit- oder Debitkarten',
-    'OXPS_PAYPAL_BUTTON_credit'                    => 'PayPal Credit',
+    'OXPS_PAYPAL_BUTTON_credit'                    => 'PayPal Credit (später mit PayPal bezahlen)',
     'OXPS_PAYPAL_BUTTON_bancontact'                => 'Bancontact',
     'OXPS_PAYPAL_BUTTON_blik'                      => 'BLIK',
     'OXPS_PAYPAL_BUTTON_eps'                       => 'eps',
@@ -186,7 +189,7 @@ $aLang = [
     'OXPS_PAYPAL_BUTTON_p24'                       => 'Przelewy24',
     'OXPS_PAYPAL_BUTTON_sepa'                      => 'SEPA-Lastschrift',
     'OXPS_PAYPAL_BUTTON_sofort'                    => 'Sofort',
-    'OXPS_PAYPAL_BUTTON_paylater'                  => 'Später bezahlen',
+    'OXPS_PAYPAL_BUTTON_paylater'                  => 'Später bezahlen (&bdquo;2nd Button&rdquo;)',
     'OXPS_PAYPAL_BUTTON_venmo'                     => 'Venmo',
 
     // PayPal ORDER

@@ -116,6 +116,19 @@ class ViewConfig extends ViewConfig_parent
             $this->collectEnableAndDisabledPaymentOptions();
         }
 
+        // Force-remove credit option if blPayPalNeverUseCredit is on
+        $config = Registry::getConfig();
+        if ($config->getConfigParam('blPayPalNeverUseCredit'))
+        {
+            if (in_array('credit', $this->enabledPaymentOptions[$context]))
+            {
+                $this->enabledPaymentOptions[$context] = array_diff(
+                    $this->enabledPaymentOptions[$context],
+                    ['credit']
+                );
+            }
+        }
+
         return $this->enabledPaymentOptions[$context];
     }
 
@@ -132,6 +145,19 @@ class ViewConfig extends ViewConfig_parent
         if (count($this->disabledPaymentOptions[$context]) == 0)
         {
             $this->collectEnableAndDisabledPaymentOptions();
+        }
+
+        // Force-add credit option if blPayPalNeverUseCredit is on
+        $config = Registry::getConfig();
+        if ($config->getConfigParam('blPayPalNeverUseCredit'))
+        {
+            if (!in_array('credit', $this->disabledPaymentOptions[$context]))
+            {
+                $this->disabledPaymentOptions[$context] = array_merge(
+                    $this->disabledPaymentOptions[$context],
+                    ['credit']
+                );
+            }
         }
 
         return $this->disabledPaymentOptions[$context];

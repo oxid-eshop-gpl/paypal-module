@@ -142,6 +142,13 @@
                         <div class="form-group">
                             <span class="help-block">[{oxmultilang ident="OXPS_PAYPAL_BUTTON_MAIN_DESCRIPTION"}]</span>
 
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="conf[blPayPalNeverUseCredit]" [{if $config->getPayPalModuleConfigurationValue('blPayPalNeverUseCredit')}]checked[{/if}] value="1">
+                                    [{oxmultilang ident="OXPS_PAYPAL_BASKET_BUTTON_NOCREDITOPTION"}]
+                                </label>
+                            </div>
+
                             <div class="controls">
                                 <fieldset>
                                     <legend>[{oxmultilang ident="OXPS_PAYPAL_PRODUCT_DETAILS_BUTTON_PLACEMENT"}]</legend>

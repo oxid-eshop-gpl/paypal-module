@@ -234,6 +234,10 @@ class PayPalConfigController extends AdminController
         if (!isset($conf['oePayPalBannersCheckoutPage'])) {
             $conf['oePayPalBannersCheckoutPage'] = 0;
         }
+        // PSPAYPAL-492
+        if (!isset($conf['blPayPalNeverUseCredit'])) {
+            $conf['blPayPalNeverUseCredit'] = 0;
+        }
 
         return $conf;
     }
