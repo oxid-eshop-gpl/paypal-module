@@ -210,13 +210,59 @@ module:
         iDefaultWidgetSize: '1'
         iGridSize: '12'
         iGridsterSize: '6'
-    oxscpaypal:
+    oxps/paypal:
         blPayPalSandboxMode: '1'
-        sPayPalClientId: mario.lorenz+test@oxid-esales.com
-        sPayPalClientSecret: mario.lorenz+test@oxid-esales.com
         sPayPalPaymentFailureThreshold: '1'
         sPayPalSandboxClientId: ASb2XMiob84d6BZlUU1fkvQC2X8z2QZUsAyQq_AMzFqbB5e0seElOTu3ZKsTSyhquCZDt0si2QOo8sUu
         sPayPalSandboxClientSecret: EFHzO2oiwZNaQspwYOHknVavR12Kq0fMB91ZKJ2VxuQZlZAKKGJ5jeclEKrZXmZMxvPa4_5F4QvS7mHe
+        sPayPalSandboxWebhookId: 8VD9630431440090J
+    oxscpaypal:
+        arrPayPalEnabledOptions_Basket:
+            card: '1'
+            bancontact: '0'
+            blik: '0'
+            eps: '0'
+            giropay: '1'
+            ideal: '0'
+            mercadopago: '0'
+            mybank: '0'
+            p24: '0'
+            sepa: '1'
+            sofort: '1'
+            venmo: '0'
+            paylater: '1'
+        arrPayPalEnabledOptions_Checkout:
+            card: '1'
+            bancontact: '1'
+            blik: '1'
+            eps: '1'
+            giropay: '1'
+            ideal: '1'
+            mercadopago: '1'
+            mybank: '1'
+            p24: '1'
+            sepa: '1'
+            sofort: '1'
+            venmo: '1'
+            paylater: '1'
+        arrPayPalEnabledOptions_Details:
+            card: '1'
+            bancontact: '0'
+            blik: '0'
+            eps: '0'
+            giropay: '0'
+            ideal: '0'
+            mercadopago: '0'
+            mybank: '0'
+            p24: '0'
+            sepa: '1'
+            sofort: '1'
+            venmo: '0'
+            paylater: '1'
+        blPayPalSandboxMode: '1'
+        sPayPalClientSecret: mario.lorenz+test@oxid-esales.com
+        sPayPalPaymentFailureThreshold: '1'
+        sPayPalSandboxClientId: ASb2XMiob84d6BZlUU1fkvQC2X8z2QZUsAyQq_AMzFqbB5e0seElOTu3ZKsTSyhquCZDt0si2QOo8sUu
         sPayPalSandboxWebhookId: 8VD9630431440090J
     payppaypalplus:
         paypPayPalPlusRetry: '1'

@@ -81,10 +81,7 @@ class ViewConfig extends ViewConfig_parent
      */
     public $listOfSelectableOptions = [
         // payment option keys
-        'card','credit','bancontact','blik','eps','giropay','ideal','mercadopago','mybank','p24','sepa','sofort','venmo',
-
-        // deprecated, will be moved to "2nd button"
-        'paylater',
+        'card','bancontact','blik','eps','giropay','ideal','mercadopago','mybank','p24','sepa','sofort','venmo','paylater',
     ];
 
     /**
@@ -120,11 +117,11 @@ class ViewConfig extends ViewConfig_parent
         $config = Registry::getConfig();
         if ($config->getConfigParam('blPayPalNeverUseCredit'))
         {
-            if (in_array('credit', $this->enabledPaymentOptions[$context]))
+            if (in_array('paylater', $this->enabledPaymentOptions[$context]))
             {
                 $this->enabledPaymentOptions[$context] = array_diff(
                     $this->enabledPaymentOptions[$context],
-                    ['credit']
+                    ['paylater']
                 );
             }
         }
@@ -151,11 +148,11 @@ class ViewConfig extends ViewConfig_parent
         $config = Registry::getConfig();
         if ($config->getConfigParam('blPayPalNeverUseCredit'))
         {
-            if (!in_array('credit', $this->disabledPaymentOptions[$context]))
+            if (!in_array('paylater', $this->disabledPaymentOptions[$context]))
             {
                 $this->disabledPaymentOptions[$context] = array_merge(
                     $this->disabledPaymentOptions[$context],
-                    ['credit']
+                    ['paylater']
                 );
             }
         }

@@ -176,7 +176,6 @@ $aLang = [
         licenses and approvals to display the <em>PayPal Credit</em> button or belongs into the category of Real money
         gaming merchants.',
     'OXPS_PAYPAL_BUTTON_card'                      => 'Credit or debit cards',
-    'OXPS_PAYPAL_BUTTON_credit'                    => 'PayPal Credit (pay later with PayPal)',
     'OXPS_PAYPAL_BUTTON_bancontact'                => 'Bancontact',
     'OXPS_PAYPAL_BUTTON_blik'                      => 'BLIK',
     'OXPS_PAYPAL_BUTTON_eps'                       => 'eps',

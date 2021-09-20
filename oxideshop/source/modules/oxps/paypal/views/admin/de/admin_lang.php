@@ -178,7 +178,6 @@ $aLang = [
         besitzt keine Genehmigung für den Einsatz der Option <em>PayPal Credit</em> oder Kunden könne über diesen Shop
         Zahlungen in Verbindung mit Online-Spielen tätigen.',
     'OXPS_PAYPAL_BUTTON_card'                      => 'Kredit- oder Debitkarten',
-    'OXPS_PAYPAL_BUTTON_credit'                    => 'PayPal Credit (später mit PayPal bezahlen)',
     'OXPS_PAYPAL_BUTTON_bancontact'                => 'Bancontact',
     'OXPS_PAYPAL_BUTTON_blik'                      => 'BLIK',
     'OXPS_PAYPAL_BUTTON_eps'                       => 'eps',
