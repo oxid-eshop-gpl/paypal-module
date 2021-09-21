@@ -109,7 +109,6 @@ GeneralShopSettings:
     aModuleVersions:
         moduleinternals: '3.0'
         oxps/modulesconfig: 6.1.0
-        oxps/paypal: 0.0.2
         oxps/paypallocale: 0.0.1
         oxscpaypal: 0.0.2
         payppaypalplus: 3.0.8
@@ -195,7 +194,6 @@ GeneralShopSettings:
     iTopNaviCatCount: '4'
     moduleSmartyPluginDirectories:
         legacycompatibility: {  }
-        oxps/paypal: {  }
         oxps/paypallocale: {  }
     sCatIconsize: '168*100'
     sCatPromotionsize: '370*107'
@@ -210,12 +208,6 @@ module:
         iDefaultWidgetSize: '1'
         iGridSize: '12'
         iGridsterSize: '6'
-    oxps/paypal:
-        blPayPalSandboxMode: '1'
-        sPayPalPaymentFailureThreshold: '1'
-        sPayPalSandboxClientId: ASb2XMiob84d6BZlUU1fkvQC2X8z2QZUsAyQq_AMzFqbB5e0seElOTu3ZKsTSyhquCZDt0si2QOo8sUu
-        sPayPalSandboxClientSecret: EFHzO2oiwZNaQspwYOHknVavR12Kq0fMB91ZKJ2VxuQZlZAKKGJ5jeclEKrZXmZMxvPa4_5F4QvS7mHe
-        sPayPalSandboxWebhookId: 8VD9630431440090J
     oxscpaypal:
         arrPayPalEnabledOptions_Basket:
             card: '1'
