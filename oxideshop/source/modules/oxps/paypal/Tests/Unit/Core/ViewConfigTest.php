@@ -5,14 +5,14 @@
  * See LICENSE file for license details.
  */
 
-namespace PayPal\Tests\Unit\Core;
+namespace OxidProfessionalServices\PayPal\Tests\Unit\Core;
 
 use OxidEsales\TestingLibrary\UnitTestCase;
 use OxidEsales\Eshop\Application\Model\Payment;
 use OxidEsales\Eshop\Core\ViewConfig;
 
 /**
- * Testing \OxidEsales\PayPalModule\Core\ViewConfig class.
+ * Testing \OxidProfessionalServices\PayPal\Core\ViewConfig class.
  */
 class ViewConfigTest extends UnitTestCase
 {
@@ -120,7 +120,7 @@ class ViewConfigTest extends UnitTestCase
     public function showPayPalBannerOnCheckoutPage(string $actionClassName, string $selectorSetting)
     {
         $viewMock = $this
-            ->getMockBuilder(\OxidEsales\PayPalModule\Core\ViewConfig::class)
+            ->getMockBuilder(\OxidProfessionalServices\PayPal\Core\ViewConfig::class)
             ->setMethods(['getActionClassName'])
             ->getMock();
         $viewMock->expects($this->once())->method('getActionClassName')->will($this->returnValue($actionClassName));

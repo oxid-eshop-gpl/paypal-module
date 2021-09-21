@@ -20,7 +20,7 @@
  * @copyright (C) OXID eSales AG 2003-2020
  */
 
-namespace PayPal\Tests\Unit\Core;
+namespace OxidProfessionalServices\PayPal\Tests\Unit\Core;
 
 use OxidEsales\Eshop\Application\Model\Order;
 use OxidEsales\TestingLibrary\UnitTestCase;
