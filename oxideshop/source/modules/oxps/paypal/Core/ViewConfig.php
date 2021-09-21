@@ -246,18 +246,18 @@ class ViewConfig extends ViewConfig_parent
             $params['commit'] = ($paymentStrategy == 'pay_now' ? 'true' : 'false');
         }
 
-        // Standard-Button: ist nichts gewählt, zeigt PayPal wenigstens 3 Optionen an. Nicht aktive Optionen müssen in disable-funding verschoben werden
+        // PSPAYPAL-492
         // https://developer.paypal.com/docs/checkout/reference/customize-sdk/#disable-funding ("gegenläufige Liste")
-        // @Todo: 3 contexts: PDP, basket, checkout. Must use different configurations!
         $params['enable-funding'] = $this->getEnabledAndDisabledPaymentOptionsAsString('Details', 1);
         $params['disable-funding'] = $this->getEnabledAndDisabledPaymentOptionsAsString('Details', 0);
 
-        // @Todo: Einige Optionen laufen zukünftig über UAPM -> sollen leicht verschiebbar sein
-        //$params['enable-2ndbutton'] = '';
-        //$params['enable-uapm'] = ''; // Löst Teile von enable-funding ab.
-
         if ($currency = $config->getActShopCurrencyObject()) {
             $params['currency'] = strtoupper($currency->name);
+        }
+
+        // Available components: enable messages+buttons for PDP
+        if ($this->getActiveClassName('details')) {
+            $params['components'] = 'messages,buttons';
         }
 
         return Constants::PAYPAL_JS_SDK_URL . '?' . http_build_query($params);
@@ -281,6 +281,26 @@ class ViewConfig extends ViewConfig_parent
     public function getPayPalClientId(): string
     {
         return $this->getPayPalConfig()->getClientId();
+    }
+
+    /**
+     * API URL getter for use with the installment banner feature
+     * @return string
+     */
+    public function getPayPalApiBannerUrl(): string
+    {
+        $params['client-id'] = $this->getPayPalClientId();
+
+        $components = 'messages';
+        // enable buttons for PDP
+        if ($this->getActiveClassName('details'))
+        {
+            $components .= ',buttons';
+        }
+
+        $params['components'] = $components;
+
+        return Constants::PAYPAL_JS_SDK_URL . '?' . http_build_query($params);
     }
 
     /**
