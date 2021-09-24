@@ -68,3 +68,4 @@ oxideshop/source/modules/oxps/paypal/resources/node_modules/
 !/oxideshop/source/modules/oxps/paypal/Tests/Acceptance/
 /oxideshop/custom/paypal/resources/node_modules/
 /oxideshop/source/modules/oxps/paypal/
+/oxideshop/source/modules/oxps/paypallocale/

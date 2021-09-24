@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "10e8eade1cff5bf5cc300254e859f671",
+    "content-hash": "743a1840602508e1c9ab526ec5418f67",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -2430,11 +2430,11 @@
         },
         {
             "name": "oxid-professional-services/paypal-client",
-            "version": "dev-develop",
+            "version": "0.0.1",
             "dist": {
                 "type": "path",
                 "url": "custom/paypal-client",
-                "reference": "5554b13d02a5925957f3fae65e9816cbb5b0d7b4"
+                "reference": "b5754cabbd9da97dae63b86e6825c4154387977d"
             },
             "require": {
                 "guzzlehttp/guzzle": "~6 || ~7",
@@ -7919,9 +7919,7 @@
     ],
     "aliases": [],
     "minimum-stability": "RC",
-    "stability-flags": {
-        "oxid-professional-services/paypal-client": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

@@ -28,7 +28,7 @@
   "require": {
     "oxid-esales/oxideshop-metapackage-ee": "v6.2.5",
     "oxid-professional-services/paypal": "^0.0.2",
-    "oxid-professional-services/paypal-client": "dev-develop",
+    "oxid-professional-services/paypal-client": "^0.0.1",
     "oxid-professional-services/paypallocale": "^0.0.1"
   },
   "replace": {
