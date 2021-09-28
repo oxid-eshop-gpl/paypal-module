@@ -2,6 +2,7 @@
     "name": "oxid-professional-services/paypal-client",
     "description": "",
     "type": "library",
+    "version": "0.0.1",
     "require": {
         "php" : ">=7.1",
         "guzzlehttp/guzzle": "~6 || ~7",

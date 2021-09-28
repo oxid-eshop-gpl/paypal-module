@@ -6,13 +6,8 @@
     "GPL-3.0-only",
     "proprietary"
   ],
-  "minimum-stability": "dev",
-  "prefer-stable": true,
+  "minimum-stability": "RC",
   "repositories": [
-    {
-      "type": "path",
-      "url": "source/modules/oxps/*"
-    },
     {
       "type": "path",
       "url": "custom/*"
@@ -31,48 +26,39 @@
     }
   ],
   "require": {
-    "php": ">=7.1",
-    "ext-json": "*",
-    "ddoe/visualcms-module": "3.3.2",
-    "giggsey/libphonenumber-for-php": "^8.12",
-    "oxid-community/moduleinternals": "^3.0@alpha",
-    "oxid-esales/b2b-module": "^3.2",
-    "oxid-esales/flow-theme": "^3.4",
-    "oxid-esales/oxideshop-ce": "6.3.6",
-    "oxid-esales/oxideshop-composer-plugin": "2.0.*",
-    "oxid-esales/oxideshop-db-views-generator": "^1.2",
-    "oxid-esales/oxideshop-demodata-ce": "^6.0",
-    "oxid-esales/oxideshop-demodata-installer": "^1.1",
-    "oxid-esales/oxideshop-doctrine-migration-wrapper": "^2.1",
-    "oxid-esales/oxideshop-ee": "6.2.3",
-    "oxid-esales/oxideshop-pe": "6.2.2",
-    "oxid-esales/oxideshop-unified-namespace-generator": "^2.0.1",
-    "oxid-esales/wave-theme": "^1.3",
-    "oxid-professional-services/oxid-console": "^6.0@beta",
-    "oxid-professional-services/oxid-modules-config": "^6.1@beta",
-    "oxid-professional-services/paypal": "^0.0.1",
-    "oxid-professional-services/paypal-client": "dev-master",
-    "oxid-professional-services/paypallocale": "^0.0.1",
-    "oxid-professional-services/paypalplus-module": "^3.0.8"
+    "oxid-esales/oxideshop-metapackage-ee": "v6.2.5",
+    "oxid-professional-services/paypal": "^0.0.2",
+    "oxid-professional-services/paypal-client": "^0.0.1",
+    "oxid-professional-services/paypallocale": "^0.0.1"
+  },
+  "replace": {
+        "oxid-professional-services/usercentrics": "*",
+        "oxid-esales/paymorrow-module": "*",
+        "oxid-esales/paypal-module": "*",
+        "ddoe/visualcms-module": "*",
+        "ddoe/wysiwyg-editor-module": "*",
+        "payone-gmbh/oxid-6": "*",
+        "topconcepts/oxid-klarna-6": "*",
+        "amzn/amazon-pay-sdk-php": "*",
+        "bestit/amazonpay4oxid": "*"
   },
   "require-dev": {
-    "alfredbez/oxid-dump-autoload": "^0.1.0",
-    "codeception/codeception": "^2.5",
-    "oxid-esales/oxideshop-ide-helper": "^v3.1.2",
-    "oxid-esales/testing-library": "^6",
-    "psr/log": "^1.1",
-    "squizlabs/php_codesniffer": "3.*",
-    "vlucas/phpdotenv": "^3.0",
-    "phpstan/phpstan": "^0.12.33"
-  },
-  "autoload-dev": {
-    "files": [
-      "compatibility.php"
-    ]
+    "oxid-esales/testing-library": "^v7.3.0",
+    "incenteev/composer-parameter-handler": "^v2.0.0",
+    "oxid-esales/oxideshop-ide-helper": "^v4.0.0",
+    "squizlabs/php_codesniffer": "3.*"
   },
   "scripts": {
     "post-install-cmd": [
+      "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
       "@oe:ide-helper:generate"
+    ],
+    "post-update-cmd": [
+      "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+      "@oe:ide-helper:generate"
+    ],
+    "oe:ide-helper:generate": [
+      "if [ -f ./vendor/bin/oe-eshop-ide_helper ]; then oe-eshop-ide_helper; fi"
     ],
     "repositories": {
       "0": {
@@ -85,10 +71,6 @@
       }
     }
   },
-  "autoload": {
-    "psr-4": {
-    }
-  },
   "config": {
     "sort-packages": true,
     "gitlab-domains": [
@@ -97,6 +79,18 @@
     ],
     "preferred-install": {
       "*": "dist"
+    }
+  },
+  "extra": {
+    "incenteev-parameters": {
+      "file": "test_config.yml",
+      "dist-file": "vendor/oxid-esales/testing-library/test_config.yml.dist",
+      "parameter-key": "mandatory_parameters",
+      "env-map": {
+        "shop_path": "SHOP_PATH",
+        "shop_tests_path": "SHOP_TESTS_PATH",
+        "partial_module_paths": "PARTIAL_MODULE_PATHS"
+      }
     }
   }
 }
