@@ -41,14 +41,15 @@ ci_tests:
     - composer config -g cache-dir "$(pwd)/.composer-cache"
   script:
     - cd oxideshop
-    - composer install --no-ansi --no-interaction --no-progress --no-plugins --no-scripts
-    - composer install --no-ansi --no-interaction
-    - vendor/bin/oe-eshop-db_views_generate
-    - vendor/bin/oe-eshop-unified_namespace_generator
-    - vendor/bin/oe-eshop-db_migrate migrations:migrate > /dev/null
-    - vendor/bin/oe-eshop-db_views_generate
-    - vendor/bin/runtests
-    - vendor/bin/phpcs --standard=coding_standard.xml custom/paypal
+    - composer install --no-ansi --no-interaction --no-progress
+    #- composer install --no-ansi --no-interaction --no-progress --no-plugins --no-scripts
+    #- composer install --no-ansi --no-interaction
+    #- vendor/bin/oe-eshop-db_views_generate
+    #- vendor/bin/oe-eshop-unified_namespace_generator
+    #- vendor/bin/oe-eshop-db_migrate migrations:migrate > /dev/null
+    #- vendor/bin/oe-eshop-db_views_generate
+    #- vendor/bin/runtests
+    #- vendor/bin/phpcs --standard=coding_standard.xml custom/paypal
   services:
     - name: mysql:5.7
       alias: db
