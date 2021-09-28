@@ -42,7 +42,6 @@ ci_tests:
   script:
     - cd oxideshop
     - composer install --no-ansi --no-interaction --no-progress
-    - composer install --no-ansi --no-interaction
     - vendor/bin/oe-eshop-db_views_generate
     - vendor/bin/oe-eshop-unified_namespace_generator
     - vendor/bin/oe-eshop-db_migrate migrations:migrate > /dev/null
