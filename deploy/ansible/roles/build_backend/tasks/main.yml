@@ -5,7 +5,7 @@
 - name: Composer install
   local_action:
     module: shell
-    _raw_params: composer install --no-dev
+    _raw_params: composer install --no-interaction
     args:
       chdir: "{{ build_root_path }}/oxideshop/"
   environment:
