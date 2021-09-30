@@ -10,7 +10,7 @@ cache:
 
 .build_and_deploy: &build_and_deploy
   stage: deploy
-  image: mprokopov/oxid-ansible-runner
+  image: oxidprojects/oxid-apache-php:master-php7.4
   before_script:
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )'
     - eval $(ssh-agent -s)
@@ -18,9 +18,6 @@ cache:
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
   script:
-    - export SSH_HOST=85.236.47.78
-    - export SSH_PORT=22
-    - export ANSIBLE_VAULT_PASSWORD=test
     - ANSIBLE_CONFIG=deploy/ansible.cfg ansible-playbook -i deploy/ansible/inventories/hosts.ini -e npm_config_cache=${CI_PROJECT_DIR}/. -e COMPOSER_HOME=${CI_PROJECT_DIR}/.cache/composer deploy/ansible/playbook.yml -l $ANSIBLE_INVENTORY
 
 deploy_stage:
@@ -36,7 +33,7 @@ deploy_stage:
 
 ci_tests:
   stage: test
-  image: oxidprojects/oxid-apache-php:oxid6.2-php7.4
+  image: oxidprojects/oxid-apache-php:master-php7.4
   only:
     - merge_requests
   before_script:
