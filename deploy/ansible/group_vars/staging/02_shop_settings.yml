@@ -8,9 +8,9 @@ oxid:
   admin_ssl_url: "https://{{ shop_domain }}/admin"
   environment_name: "{{ env }}"
   shared_directories:
-  - { path: "oxideshop/source/out/pictures",  src: "pictures" }
-  - { path: "oxideshop/source/out/downloads",  src: "downloads" }
-  - { path: "oxideshop/source/out/media", src: "media" }
+  - { path: "oxideshop/source/out/pictures",  src: "out/pictures" }
+  - { path: "oxideshop/source/out/downloads",  src: "out/downloads" }
+  - { path: "oxideshop/source/out/media", src: "out/media" }
   - { path: "oxideshop/source/log",  src: "log" }
   - { path: "oxideshop/source/tmp",  src: "tmp" }
   - { path: "oxideshop/source/cache",  src: "cache" }
