@@ -11,4 +11,4 @@
   environment:
     COMPOSER_HOME: "{{ lookup('env', 'COMPOSER_HOME') }}"
   run_once: true
-  become: yes
+

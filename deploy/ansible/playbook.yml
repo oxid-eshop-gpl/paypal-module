@@ -6,8 +6,8 @@
     - [~/.personal_ansible_vm.yml, vars/empty.yml]
     - [../personal.yml, vars/empty.yml]
   roles:
-    - build_backend
     - create_shop_config
+    - build_backend
 
 
 - name: "Deploy"
