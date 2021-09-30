@@ -18,6 +18,9 @@ cache:
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
   script:
+    - export SSH_HOST=85.236.47.78
+    - export SSH_PORT=22
+    - export ANSIBLE_VAULT_PASSWORD=test
     - ANSIBLE_CONFIG=deploy/ansible.cfg ansible-playbook -i deploy/ansible/inventories/hosts.ini -e npm_config_cache=${CI_PROJECT_DIR}/. -e COMPOSER_HOME=${CI_PROJECT_DIR}/.cache/composer deploy/ansible/playbook.yml -l $ANSIBLE_INVENTORY
 
 deploy_stage:
