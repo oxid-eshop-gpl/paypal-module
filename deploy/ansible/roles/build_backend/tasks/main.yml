@@ -5,7 +5,7 @@
 - name: Composer install
   local_action:
     module: shell
-    _raw_params: composer install --no-ansi --no-interaction --no-progress
+    _raw_params: composer install --no-ansi --no-interaction --no-progress --no-scripts --no-plugins
     args:
       chdir: "{{ build_root_path }}/oxideshop/"
   environment:
