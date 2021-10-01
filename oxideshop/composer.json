@@ -69,7 +69,15 @@
         "type": "composer",
         "url": "https://enterprise-edition.packages.oxid-esales.com/"
       }
-    }
+    },
+    "ci:archive": [
+      "rm -rf source/Setup",
+      "rm -rf ../vendor/oxid-esales/oxideshop-ce/source/Setup",
+      "rm -rf ../vendor/oxid-esales/oxideshop-pe/Setup",
+      "rm -rf ../vendor/oxid-esales/oxideshop-ee/Setup",
+      "rm -rf ../vendor/oxid-esales/oxideshop-ce/source/out/pictures",
+      "tar -zcf ../$ARTIFACT ./"
+    ]
   },
   "config": {
     "sort-packages": true,

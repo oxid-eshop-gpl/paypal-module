@@ -15,7 +15,7 @@ build_release:
     - cd oxideshop
     - rm -rf vendor
     - php composer-2.0.14.phar install --no-dev --no-scripts --no-plugins
-#    - composer ci:archive
+    - php composer-2.0.14.phar ci:archive
   cache:
     key:
       files:
@@ -36,8 +36,8 @@ build_release:
     ARTIFACT: $CI_BUILD_REF.tar.gz
   script:
     - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@psgit.oxid-esales.com/psprojects/paypal-apiv2-deploy.git
-    - mv $ARTIFACT paypal-api2-deploy
-    - cd paypal-api2-deploy
+    - mv $ARTIFACT paypal-apiv2-deploy
+    - cd paypal-apiv2-deploy
     - /entrypoint.sh deliver.yml --inventory inventories/$CI_ENVIRONMENT_NAME/hosts.ini --extra-vars build_id=$CI_COMMIT_SHA --verbose
     - /entrypoint.sh deploy.yml --inventory inventories/$CI_ENVIRONMENT_NAME/hosts.ini --extra-vars build_id=$CI_COMMIT_SHA  --verbose
 
