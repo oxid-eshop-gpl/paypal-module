@@ -6,7 +6,7 @@ oxid:
     ssl_shop_url: https://pp.oxidps.de/
     shop_base_path: /var/www/oxid/current
     shop_path: /var/www/oxid/current/source
-    shop_tmp_path: /home/oxadm/stage2.eas-y.de/shared/tmp
+    shop_tmp_path: /var/www/oxid/current/shared/tmp
     environment_name: stage
     current_path_name: current
     remove_setup: true
