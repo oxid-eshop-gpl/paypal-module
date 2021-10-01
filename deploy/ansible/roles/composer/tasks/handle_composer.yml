@@ -1,0 +1,42 @@
+---
+- name: (Deprecated - use handle_composer instead) Clean vendors
+  connection: local
+  file: "path={{ build_root_path }}/vendor state=absent"
+  when: eshop.composer.clean_vendors
+  tags: composer
+
+- name: (Deprecated - use handle_composer instead) Download composer cache
+  connection: local
+  get_url: "url={{ eshop.composer.cache_url }} dest=/tmp/composer_cache.tar.gz"
+  when: eshop.composer.cache_url
+  tags: composer
+
+- name: (Deprecated - use handle_composer instead) Extract composer cache
+  connection: local
+  unarchive: src=/tmp/composer_cache.tar.gz dest=~/.composer/ copy=no
+  when: eshop.composer.cache_url
+  tags: composer
+
+- name: (Deprecated - use handle_composer instead) Check if composer.json file exists in shop
+  connection: local
+  stat: "path={{ build_root_path }}/composer.json"
+  register: composer_json_in_shop
+  tags: composer
+
+- name: (Deprecated - use handle_composer instead) Run composer install in oxideshop directory. Check handle_composer.yml if you want to modify this path.
+  local_action: command docker run --user {{deploy.local_user_id}} --rm -v {{ build_root_path }}:/app -v vendor:/.composer -w /app oxidesales/oxideshop-docker-php:7.4 php composer-2.0.6.phar install -v
+  environment: "{{ eshop.composer.env }}"
+  when: composer_json_in_shop
+  tags: composer
+  run_once: true
+
+- name: (Deprecated - use handle_composer instead) Creating test_config.yml
+  local_action: template src="{{ role_path }}/templates/test_config.yml.j2" dest="{{ build_root_path }}/source/test_config.yml"
+  tags: composer
+  run_once: true
+
+- name: (Deprecated - use handle_composer instead) Remove Setup directory
+  connection: local
+  file: "path={{ build_root_path }}/source/Setup state=absent"
+  when: oxid.remove_setup
+  tags: composer

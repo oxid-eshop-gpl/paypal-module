@@ -1,0 +1,24 @@
+---
+- name: Remove build directory
+  connection: local
+  become_user: jenkins
+  file: path={{ checkout_path }} state=absent
+
+- name: Create build directory
+  connection: local
+  file: path={{ checkout_path }} state=directory mode=0775
+
+- name: Checkout repository locally
+  connection: local
+  command: ssh-agent bash -c 'ssh-add {{ ssh_private_key_file }} 2>&1; git clone --recursive {{ deployment_repository }} . ' chdir={{ checkout_path }}
+
+- name: Switch to branch
+  connection: local
+  command: git checkout {{ branch }} chdir={{ checkout_path }}
+
+# we deactivate usage of ansible git module for the moment since bug in it prevents from update with submodules
+# see https://github.com/ansible/ansible-modules-core/issues/4817
+
+#- name: locally check out repository
+#  connection: local
+#  git: repo={{ deployment_repository }} dest={{ checkout_path }} key_file={{ ssh_private_key_file }} accept_hostkey=True force=yes version={{ git.version }}

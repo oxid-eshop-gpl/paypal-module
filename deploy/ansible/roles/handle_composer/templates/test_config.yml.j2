@@ -1,0 +1,24 @@
+# This file is auto-generated during the composer install
+mandatory_parameters:
+    shop_path: "{{ build_root_path }}/source"
+    shop_tests_path: "{{ build_root_path }}/tests"
+    partial_module_paths: 'b2b/b2b_services,b2b/b2b_basket,b2b/approval_procedure,b2b/budget,b2b/bulk_orders,b2b/buying_agent,b2b/custom_prices,b2b/quick_order,b2b/scheduled_orders,b2b/service_products,oe/psrlogger'
+optional_parameters:
+    shop_url: '{{ oxid.shop_url }}'
+    shop_serial: ''
+    enable_varnish: false
+    is_subshop: false
+    install_shop: true
+    remote_server_dir: null
+    shop_setup_path: "{{ build_root_path }}/resources/setup"
+    restore_shop_after_tests_suite: false
+    tmp_path: /tmp/oxid_test_library/
+    database_restoration_class: dbRestore_largeDb
+    activate_all_modules: true
+    run_tests_for_shop: false
+    run_tests_for_modules: true
+    screen_shots_path: null
+    screen_shots_url: null
+    browser_name: firefox
+    selenium_server_ip: 127.0.0.1
+    selenium_server_port: '4444'

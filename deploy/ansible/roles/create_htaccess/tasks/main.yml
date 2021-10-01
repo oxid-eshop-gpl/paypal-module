@@ -1,0 +1,12 @@
+---
+#- name: Check if .htaccess exists
+#  stat: path="{{ build_root_path }}/source/.htaccess"
+#  register: htaccess_file
+#
+#- name: Set permissions for .htaccess file before updating
+#  file: path="{{ build_root_path }}/source/.htaccess" mode=0775
+#  when: htaccess_file.stat.exists == True
+
+- name: Create .htaccess
+  local_action: template src="{{ role_path }}/files/htaccess.j2" dest="{{ build_root_path }}/source/.htaccess" mode=0440
+  tags: configuration

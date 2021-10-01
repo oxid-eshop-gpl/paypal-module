@@ -1,6 +1,20 @@
 ---
-- name: Clear OXID file cache
-  command: vendor/bin/oxid cache:clear
-  args:
-    chdir: "{{ target_vendor_path }}/../"
+#- name: Clear OXID file cache
+#  become: yes
+#  command: php ../vendor/bin/oxid cache:clear
+#  args:
+#    chdir: "{{ oxid.shop_path }}"
 
+- name: Clear OXID file
+  command: php ../vendor/bin/oxid cache:clear
+  args:
+    chdir: "{{ oxid.shop_path }}"
+#files created by apache process so they can not be delete without sudo
+  become_user: www-data
+
+- name: Reset local Opcache storage
+  uri:
+    url: "{{ oxid.shop_url }}modules/oxps/deploymenthelpers/clearopcache.php"
+    url_username: "{{ clearcaches.opcacheuser }}"
+    url_password: "{{ clearcaches.opcachepass }}"
+  when: clearcaches.opcache

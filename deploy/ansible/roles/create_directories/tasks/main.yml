@@ -1,0 +1,15 @@
+---
+- name: Ensure symlinked directories exists
+  local_action: file path='{{ build_root_path }}/{{ item.src }}' state=directory mode=0777
+  with_items: "{{ oxid.shared_directories }}"
+
+- name: Remove folders which are symlinked
+  local_action: file path='{{ build_root_path }}/{{ item.path }}' state=absent 
+  with_items: "{{ oxid.shared_directories }}"
+
+- name: Add symlinks from the new release to the shared folder
+  local_action: file path='{{ build_root_path }}/{{ item.path }}' src='{{ build_root_path }}/{{ item.src }}' state=link force=yes
+  with_items: "{{ oxid.shared_directories }}"
+
+- set_fact:
+    target_root_path: "{{ build_root_path }}"

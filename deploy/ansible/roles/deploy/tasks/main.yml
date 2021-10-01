@@ -1,147 +1,47 @@
-- name: Initialize the deploy root and gather facts
-  deploy_helper: path={{ deployment_root }} state=present current_path={{ release_target_path }}
-  tags: deploy
+- name: (Deprecated. Should be updated to use deliver role.) Initialize the deploy root and gather facts
+  deploy_helper: path={{ webroot_path }} state=present
 
 - name: Create the current release directory
-  file: path={{ deploy_helper.new_release_path }} state=directory mode=0775
-  tags:
-    - deploy
-    - release
+  file: path={{ deploy_helper.new_release_path }} state=directory
 
 - name: Add an unfinished file, to allow cleanup on successful finalize
   file: path={{ deploy_helper.new_release_path }}/{{ deploy_helper.unfinished_filename }} state=touch
-  tags:
-    - deploy
-    - release
 
-- name: Synchronize all files to target
-  synchronize:
-    src: "{{ build_root_path }}/"
-    dest: "{{ deploy_helper.new_release_path }}/"
-    delete: yes
-    recursive: yes
-    rsync_opts:
-      - "--chmod=775"
-      - "--exclude=*/.git"
-      - "--exclude=*/.gitmodules"
-      - "--exclude=*/.gitignore"
-      - "--exclude=*/.gitattributes"
-      - "--exclude=/.git*"
-      - "--exclude=/tests"
-      - "--exclude=/assets"
-      - "--exclude=/codestandard"
-      - "--exclude=/data"
-      - "--exclude=/deploy"
-      - "--exclude=/docker*"
-      - "--exclude=/scripts"
-      - "--exclude=/tmp"
-    use_ssh_args: yes
-  tags:
-    - deploy
-    - release
-    - synchronize
-  become: no  # stops synchronize trying to sudo locally
+- name: Synchronize configuration files to target
+  synchronize: src="{{ build_root_path }}/configurations" dest={{ deploy_helper.shared_path }} recursive=yes
 
+- name: Synchronize resource files to target
+  synchronize: src="{{ build_root_path }}/{{ item.path }}" dest={{ deploy_helper.shared_path }} recursive=yes
+  with_items: "{{ oxid.shared_directories }}"
+
+- name: Synchronize shop source files to target
+  synchronize: src="{{ build_root_path }}/" dest="{{ deploy_helper.new_release_path }}/" delete=yes recursive=yes
 
 - name: Ensure symlinked directories exists
-  file: path='{{ deploy_helper.shared_path }}/{{ item.src }}' state=directory mode=0775
+  file: path='{{ deploy_helper.shared_path }}/{{ item.src }}' state=directory mode=0777
   with_items: "{{ oxid.shared_directories }}"
+
+- name: Ensure symlinked files exists
+  file: path='{{ deploy_helper.shared_path }}/{{ item.src }}' state=file mode=0777
+  with_items: "{{ oxid.shared_files }}"
   tags:
     - deploy
     - release
     - symlink
-
-- name: Ensure symlinked directories exists for local shared
-  file: path='{{ deploy_helper.new_release_path }}/{{ item.path }}'
-        state=directory
-        mode=0775
-  with_items: "{{ oxid.local_shared_directories }}"
-  when: oxid.local_shared_path is defined
-  tags:
-    - deploy
-    - release
-    - symlink
-
-- name: Copy pictures
-  synchronize:
-    src: "{{ build_root_path }}/oxideshop/source/out/pictures"
-    dest: "{{ deploy_helper.shared_path }}/"
-    delete: no
-    recursive: yes
-    times: no
-    owner: no # preserve www-data ownership
-    group: no # preserve www-data ownership
-    rsync_opts:
-      - "--chmod=775"
-      - "--exclude=generated"
-    use_ssh_args: yes
-  run_once: true
-  tags:
-    - deploy
-    - synchronize
-  when: deploy.pictures
 
 - name: Remove folders which are symlinked
   file: path='{{ deploy_helper.new_release_path }}/{{ item.path }}'
         state=absent
   with_items: "{{ oxid.shared_directories }}"
-  tags:
-    - deploy
-    - release
-    - symlink
 
-- name: Remove other folders which are symlinked
-  file: path='{{ deploy_helper.new_release_path }}/{{ item.path }}'
-        state=absent
-  with_items: "{{ oxid.local_shared_directories }}"
-  when: oxid.local_shared_path is defined
-  tags:
-    - deploy
-    - release
-    - symlink
-
-- name: Add symlinks from the shared folder to the new release
+- name: Add symlinks from the new release to the shared folder
   file: path='{{ deploy_helper.new_release_path }}/{{ item.path }}'
         src='{{ deploy_helper.shared_path }}/{{ item.src }}'
         state=link
-        mode=0775
         force=yes
   with_items:
     - "{{ oxid.shared_directories }}"
-  tags:
-    - deploy
-    - release
-    - symlink
-
-- name: Add symlinks from the local shared folder to the new release
-  file: path='{{ deploy_helper.new_release_path }}/{{ item.path }}'
-        src='{{ deploy_helper.project_path }}/{{ oxid.local_shared_path }}/{{ item.src }}'
-        state=link
-        mode=0775
-        force=yes
-  with_items:
-    - "{{ oxid.local_shared_directories }}"
-  when: oxid.local_shared_path is defined
-  tags:
-    - deploy
-    - release
-    - symlink
+    - "{{ oxid.shared_files }}"
 
 - name: Finalize the deploy, removing the unfinished file and switching the symlink
-  deploy_helper: path={{ deployment_root }} release={{ deploy_helper.new_release }} state=finalize current_path={{ release_target_path }} keep_releases=5
-  tags:
-    - deploy
-    - release
-    - finalize
-
-- set_fact:
-    target_vendor_path: "{{ deploy_helper.new_release_path }}/oxideshop/vendor"
-
-# These might break the deployment, allow passwordless sudo for these specific commands
-# Example in sudoers file
-# oxid    ALL=NOPASSWD:/usr/sbin/service apache2 restart
-- name: Restart Apache
-  shell: "sudo service apache2 restart"
-#
-#- name: Restart Php-Fpm
-#  shell: "sudo service php7.1-fpm restart"
+  deploy_helper: path={{ webroot_path }} release="{{ deploy_helper.new_release }}" state=finalize current_path={{ oxid.current_path_name }}

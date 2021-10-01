@@ -1,0 +1,65 @@
+---
+- name: Ensure permissions are properly set for vendor dir
+  file: path="{{ build_root_path }}/vendor" state=directory mode=0775 recurse=yes
+  tags:
+    - handlecomposer
+  when: vagrant_local.host.compatibility.windows is defined and vagrant_local.host.compatibility.windows == true
+
+- name: Clean vendors
+  local_action: file path="{{ build_root_path }}/vendor" state=absent
+  when: eshop.composer.clean_vendors
+  tags:
+  - handlecomposer
+  - composervendordirectory
+  run_once: true
+
+- name: Download composer cache
+  local_action: get_url url={{ eshop.composer.cache_url }} dest=/tmp/composer_cache.tar.gz
+  when: eshop.composer.cache_url
+  tags: handlecomposer
+  run_once: true
+
+- name: Extract composer cache
+  local_action: unarchive src=/tmp/composer_cache.tar.gz dest=~/.composer/ copy=no
+  when: eshop.composer.cache_url
+  tags: handlecomposer
+  run_once: true
+
+- name: Check if composer.json file exists in shop source
+  local_action: stat path="{{ build_root_path }}/composer.json"
+  register: composer_json_in_shop
+  tags: handlecomposer
+  run_once: true
+
+#- name: Run composer install in oxideshop directory. Check handle_composer.yml if you want to modify this path.
+#  local_action: command docker run --user "{{deploy.docker.local_user_id}}" --rm --volume $SSH_AUTH_SOCK:/ssh-agent --env SSH_AUTH_SOCK=/ssh-agent   -v "{{ build_root_path }}":/app -v "{{deploy.docker.composer_path}}":/home/jenkins/.composer -v "{{deploy.docker.ssh_path}}":/home/jenkins/.ssh/ -w /app oxps/php70cli php composer.phar install -v
+#  environment: "{{ eshop.composer.env }}"
+#  when: composer_json_in_shop and deploy.docker_composer == true
+#  tags: handlecomposer
+#  run_once: true
+
+- name: Run composer install in oxideshop directory. Check handle_composer.yml if you want to modify this path.
+  local_action: shell php {{ build_root_path }}/composer-2.0.6.phar --working-dir="{{ build_root_path }}" --prefer-source install {{ deploy.composer_dev_parameter }}
+  environment: "{{ eshop.composer.env }}"
+  when: composer_json_in_shop is defined and deploy.docker_composer == false
+  tags: handlecomposer
+  run_once: true
+
+- name: Run docker-encapsulated composer install in oxideshop directory. Check handle_composer.yml if you want to modify this path.
+  local_action: command docker run --user {{deploy.local_user_id}} --rm -v {{ build_root_path }}:/app -v vendor:/.composer -w /app oxidesales/oxideshop-docker-php:7.4 php composer-2.0.6 install -v
+  environment: "{{ eshop.composer.env }}"
+  when: composer_json_in_shop  is defined and deploy.docker_composer == true
+  tags: composer
+  run_once: true
+
+- name: Creating test_config.yml
+  local_action: template src="{{ role_path }}/templates/test_config.yml.j2" dest="{{ build_root_path }}/test_config.yml"
+  tags: handlecomposer
+  run_once: true
+
+- name: Remove setup dir
+  local_action: file path="{{ build_root_path }}/source/Setup" state=absent
+  when: oxid.testing.keepSetupDir == false
+  tags:
+    - handlecomposer
+  run_once: true

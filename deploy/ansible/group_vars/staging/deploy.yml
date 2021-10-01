@@ -1,0 +1,8 @@
+---
+deploy:
+  docker_composer: true
+  composer_dev_parameter: ''
+clearcaches:
+  opcache: false
+  opcacheuser: tobedefined
+  opcachepass: tobedefined

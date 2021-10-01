@@ -1,0 +1,6 @@
+---
+dependencies:
+  - create_shop_config
+  - handle_composer
+  - create_htaccess
+#  - build_frontend
