@@ -24,7 +24,7 @@
   tags: composer
 
 - name: (Deprecated - use handle_composer instead) Run composer install in oxideshop directory. Check handle_composer.yml if you want to modify this path.
-  local_action: command docker run --user {{deploy.local_user_id}} --rm -v {{ build_root_path }}:/app -v vendor:/.composer -w /app oxidesales/oxideshop-docker-php:7.4 php composer-2.0.6.phar install -v
+  local_action: command docker run --user {{deploy.local_user_id}} --rm -v {{ build_root_path }}:/app -v vendor:/.composer -w /app oxidesales/oxideshop-docker-php:7.4 php composer-2.0.14.phar install -vv
   environment: "{{ eshop.composer.env }}"
   when: composer_json_in_shop
   tags: composer

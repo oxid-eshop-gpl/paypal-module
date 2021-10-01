@@ -1,20 +1,21 @@
 ---
 stages:
   - build
-  - deploy_integration
+#  - deploy_integration
   - promote
 
 build_release:
   stage: build
   image: composer:2.0.8
   before_script:
-    - composer config -g cache-dir "$(pwd)/.composer-cache"
+    - php oxideshop/composer-2.0.14.phar config -g cache-dir "$(pwd)/.composer-cache"
   variables:
     ARTIFACT: $CI_BUILD_REF.tar.gz
   script:
-    - cd oxideshop && rm -rf vendor
-    - composer install --no-dev
-    - composer ci:archive
+    - cd oxideshop
+    - rm -rf vendor
+    - php composer-2.0.14.phar install --no-dev --no-scripts --no-plugins
+#    - composer ci:archive
   cache:
     key:
       files:
@@ -38,7 +39,6 @@ build_release:
     - mv $ARTIFACT paypal-api2-deploy
     - cd paypal-api2-deploy
     - /entrypoint.sh deliver.yml --inventory inventories/$CI_ENVIRONMENT_NAME/hosts.ini --extra-vars build_id=$CI_COMMIT_SHA --verbose
-    # - /entrypoint.sh backup.yml --inventory inventories/$CI_ENVIRONMENT_NAME/hosts.ini --verbose
     - /entrypoint.sh deploy.yml --inventory inventories/$CI_ENVIRONMENT_NAME/hosts.ini --extra-vars build_id=$CI_COMMIT_SHA  --verbose
 
 promote_to_staging:
