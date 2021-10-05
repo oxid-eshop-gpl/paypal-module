@@ -15,6 +15,7 @@ build_release:
     - cd oxideshop
     - rm -rf vendor
     - php composer-2.0.14.phar install --no-dev --no-scripts --no-plugins
+    - php composer-2.0.14.phar install
     - php composer-2.0.14.phar ci:archive
   cache:
     key:
