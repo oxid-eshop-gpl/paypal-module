@@ -1,6 +1,0 @@
----
-- name: Uninstall xDebug
-  become: yes
-  apt: pkg=php{{ php.version }}-xdebug state=absent
-  register: uninstall_xdebug
-  notify: restart apache

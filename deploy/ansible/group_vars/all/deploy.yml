@@ -1,0 +1,10 @@
+deploy:
+  local_user_id: 111
+  pictures: true
+  httpd_service_name: apache2
+  ssh_for_developers: true
+  keep_releases: 5
+oxid:
+  cleanup_directories:
+    - { }
+build_root_path: "{{ checkout_path }}/oxideshop"

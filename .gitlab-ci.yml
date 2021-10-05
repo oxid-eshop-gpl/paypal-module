@@ -1,68 +1,51 @@
+---
 stages:
-  - test
-  - deploy
+  - build
+#  - deploy_integration
+  - promote
 
-cache:
-  # https://docs.gitlab.com/ee/ci/caching/#sharing-caches-across-different-branches
-  key: one-key-to-rule-them-all
-  paths:
-    - .cache/
-
-.build_and_deploy: &build_and_deploy
-  stage: deploy
-  image: psgit.oxid-esales.com:4567/psprojects/tremco-illbruck-tina/oxid-ci-runner:php-7.4
+build_release:
+  stage: build
+  image: composer:2.0.8
   before_script:
-    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )'
-    - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-  script:
-    - ANSIBLE_CONFIG=deploy/ansible.cfg ansible-playbook -i deploy/ansible/inventories/hosts.ini -e npm_config_cache=${CI_PROJECT_DIR}/. -e COMPOSER_HOME=${CI_PROJECT_DIR}/.cache/composer deploy/ansible/playbook.yml -l $ANSIBLE_INVENTORY
-
-deploy_stage:
-  <<: *build_and_deploy
-  when: always
-  environment:
-    name: stage
-    url: https://pp.oxidps.de/
-  only:
-    - develop
+    - php oxideshop/composer-2.0.14.phar config -g cache-dir "$(pwd)/.composer-cache"
   variables:
-    ANSIBLE_INVENTORY: staging
-
-ci_tests:
-  stage: test
-  image: psgit.oxid-esales.com:4567/psprojects/tremco-illbruck-tina/oxid-ci-runner:php-7.4
-  only:
-    - merge_requests
-  before_script:
-    - mysql -u $MYSQL_USER -h db -p$MYSQL_PASSWORD $MYSQL_DATABASE < "docker/db-dump/initial-data.sql"
-    - composer config -g cache-dir "$(pwd)/.composer-cache"
+    ARTIFACT: $CI_BUILD_REF.tar.gz
   script:
     - cd oxideshop
-    - composer install --no-ansi --no-interaction --no-progress
-    - vendor/bin/oe-eshop-db_views_generate
-    - vendor/bin/oe-eshop-unified_namespace_generator
-    - vendor/bin/oe-eshop-db_migrate migrations:migrate > /dev/null
-    - vendor/bin/oe-eshop-db_views_generate
-    - vendor/bin/runtests
-    - vendor/bin/phpcs --standard=coding_standard.xml custom/paypal
-  services:
-    - name: mysql:5.7
-      alias: db
+    - rm -rf vendor
+    - php composer-2.0.14.phar install --no-dev --no-scripts --no-plugins
+    - php composer-2.0.14.phar install
+    - php composer-2.0.14.phar ci:archive
   cache:
     key:
       files:
-        - oxideshop/composer.json
+        - oxideshop/composer.lock
     paths:
       - .composer-cache/
+  artifacts:
+    paths:
+      - "*.tar.gz"
+    expire_in: 1 hour
+
+.template: &template
+  image:
+    name: mprokopov/oxid-ansible-runner
+    entrypoint: [""]
+  needs: [build_release]
   variables:
-    GIT_SUBMODULE_STRATEGY: normal
-    MYSQL_DATABASE: oxid
-    MYSQL_USER: oxid
-    MYSQL_PASSWORD: oxid
-    MYSQL_ROOT_PASSWORD: root
-    MYSQL_HOST: db
-  after_script:
-    - cat source/log/oxideshop.log
+    ARTIFACT: $CI_BUILD_REF.tar.gz
+  script:
+    - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@psgit.oxid-esales.com/psprojects/paypal-apiv2-deploy.git
+    - mv $ARTIFACT paypal-apiv2-deploy
+    - cd paypal-apiv2-deploy
+    - /entrypoint.sh deliver.yml --inventory inventories/$CI_ENVIRONMENT_NAME/hosts.ini --extra-vars build_id=$CI_COMMIT_SHA --verbose
+    - /entrypoint.sh deploy.yml --inventory inventories/$CI_ENVIRONMENT_NAME/hosts.ini --extra-vars build_id=$CI_COMMIT_SHA  --verbose
+
+promote_to_staging:
+  <<: *template
+  stage: promote
+  environment:
+    name: staging
+    url: https://pp.oxidps.de/
+  when: manual

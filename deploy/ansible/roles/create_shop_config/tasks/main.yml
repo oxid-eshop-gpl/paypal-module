@@ -1,18 +1,13 @@
 ---
-- name: Create config.inc.php
-  local_action:
-    module: template
-    src: "{{ role_path }}/files/config.inc.php.j2"
-    dest: "{{ build_root_path }}/oxideshop/source/config.inc.php"
-    mode: 0444
-  run_once: true
-  tags: configuration
 
-- name: Create .htaccess
-  local_action:
-    module: template
-    src: "{{ role_path }}/files/htaccess.j2"
-    dest: "{{ build_root_path }}/oxideshop/source/.htaccess"
-    mode: 0440
-  run_once: true
+- name: Check for config.inc.php
+  stat: path="{{ build_root_path }}/source/config.inc.php"
+  register: configfileexists
+
+- name: Set permissions for config.inc.php file before updating
+  file: path="{{ build_root_path }}/source/config.inc.php" mode=0775
+  when: configfileexists.stat.exists == True
+
+- name: Create config.inc.php
+  local_action: template src="{{ role_path }}/files/config.inc.php.j2" dest="{{ build_root_path }}/source/config.inc.php" mode=0440
   tags: configuration

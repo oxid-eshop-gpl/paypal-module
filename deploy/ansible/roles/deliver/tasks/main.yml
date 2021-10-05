@@ -1,0 +1,164 @@
+- name: Initialize the deploy root and gather facts
+  deploy_helper: path={{ deployment_root }} state=present
+  tags: deploy
+
+- name: Create the current release directory
+  file: path={{ deploy_helper.new_release_path }} state=directory
+  tags:
+  - deploy
+  - release
+
+- name: Add an unfinished file, to allow cleanup on successful finalize
+  file: path={{ deploy_helper.new_release_path }}/{{ deploy_helper.unfinished_filename }} state=touch
+  tags:
+  - deploy
+  - release
+
+- name: Create the SQL dump directory
+  file: path={{ deploy_helper.shared_path }}/sql state=directory
+  tags:
+  - deploy
+  - release
+
+- name: Synchronize sql dump
+  synchronize:
+    src: "{{ checkout_path }}/sql/"
+    dest: "{{ deploy_helper.shared_path }}/sql"
+    delete: yes
+    recursive: yes
+    rsync_opts: []
+  tags:
+  - deploy
+  - release
+  - synchronize
+
+- name: Synchronize all files to target
+  synchronize:
+    src: "{{ build_root_path }}/"
+    dest: "{{ deploy_helper.new_release_path }}/"
+    delete: yes
+    recursive: yes
+    rsync_opts:
+    - "--exclude=.git"
+    - "--exclude=/tests"
+    - "--exclude=/assets"
+    - "--exclude=/tmp"
+  tags:
+  - deploy
+  - release
+  - synchronize
+
+- name: Ensure symlinked directories exists
+  file: path='{{ deploy_helper.shared_path }}/{{ item.src }}' state=directory mode=0777
+  with_items: "{{ oxid.shared_directories }}"
+  tags:
+  - deploy
+  - release
+  - symlink
+
+
+- name: Set permission on tmp directory
+  file: path="{{ deploy_helper.new_release_path }}/source/tmp" state=directory mode=0777
+  tags:
+  - deploy
+  - release
+
+- name: Ensure symlinked files exists
+  file: path='{{ deploy_helper.shared_path }}/{{ item.src }}' state=file mode=0777
+  with_items: "{{ oxid.shared_files }}"
+  tags:
+  - deploy
+  - release
+  - symlink
+
+- name: Remove folders which are symlinked
+  file: path='{{ deploy_helper.new_release_path }}/{{ item.path }}'
+    state=absent
+  with_items: "{{ oxid.shared_directories }}"
+  tags:
+  - deploy
+  - release
+  - symlink
+
+- name: Add symlinks from the shared folder to the new release
+  file: path='{{ deploy_helper.new_release_path }}/{{ item.path }}'
+    src='{{ deploy_helper.shared_path }}/{{ item.src }}'
+    state=link
+    force=yes
+  with_items:
+  - "{{ oxid.shared_directories }}"
+  - "{{ oxid.shared_files }}"
+  tags:
+  - deploy
+  - release
+  - symlink
+
+- name: Copy pictures
+  synchronize: src="{{ build_root_path }}/source/out/pictures" dest="{{ deploy_helper.shared_path }}" delete=no recursive=yes times=no
+  tags:
+  - deploy
+  - synchronize
+  when: deploy.pictures
+
+- name: Copy media
+  synchronize: src="{{ build_root_path }}/source/out/media" dest="{{ deploy_helper.shared_path }}" delete=no recursive=yes times=no
+  tags:
+    - deploy
+    - synchronize
+  when: deploy.pictures
+
+- name: Synchronize configuration files to target
+  synchronize: src="{{ build_root_path }}/configurations/" dest="{{ deploy_helper.new_release_path }}/configurations/" recursive=yes times=no
+  tags:
+  - deploy
+  - release
+  - synchronize
+
+- name: Finalize the deploy, removing the unfinished file and switching the symlink
+  deploy_helper: path={{ deployment_root }} release={{ deploy_helper.new_release }} state=finalize current_path={{ release_target_path }} keep_releases={{ deploy.keep_releases }}
+  notify:
+  # todo og: ERROR! The requested handler 'restart webserver' was not found in either the main handlers list nor in the listening handlers list
+  #- restart webserver
+  tags:
+  - deploy
+  - release
+  - finalize
+
+- name: Update group of generated files if necessary
+  file:
+    path="{{ deploy_helper.new_release_path }}/source/{{ item.filename }}"
+    group="{{ deploy.www_group }}"
+  with_items:
+  # todo og: chgrp failed: failed to look up group apache both files
+  - { filename: '.htaccess' }
+  - { filename: 'config.inc.php' }
+  when: deploy.change_group
+  tags:
+  - deploy
+  - finalize
+
+- name: Update group of some directories
+  file:
+    path="{{ item.filename }}"
+    group="{{ deploy.www_group }}"
+    mode="g+xw"
+    recurse="{{ item.recurse }}"
+    state="directory"
+  with_items:
+  - { filename: "{{ deploy_helper.shared_path }}/downloads", recurse: "yes" }
+  - { filename: "{{ deploy_helper.shared_path }}/pictures", recurse: "no" }
+  - { filename: "{{ deploy_helper.shared_path }}/pictures/vendor", recurse: "yes" }
+  - { filename: "{{ deploy_helper.shared_path }}/pictures/promo", recurse: "yes" }
+  - { filename: "{{ deploy_helper.shared_path }}/pictures/media", recurse: "yes" }
+  - { filename: "{{ deploy_helper.shared_path }}/pictures/generated", recurse: "yes" }
+  - { filename: "{{ deploy_helper.shared_path }}/pictures/master", recurse: "yes" }
+  - { filename: "{{ deploy_helper.shared_path }}/pictures/ddmedia", recurse: "yes" }
+  - { filename: "{{ deploy_helper.shared_path }}/pictures/ddmedia/thumbs", recurse: "yes" }
+  - { filename: "{{ deploy_helper.shared_path }}/pictures/ddmedia/test", recurse: "yes" }
+  when: deploy.change_group
+  tags:
+  - deploy
+  - finalize
+
+- set_fact:
+    target_root_path: "{{ deploy_helper.new_release_path }}"

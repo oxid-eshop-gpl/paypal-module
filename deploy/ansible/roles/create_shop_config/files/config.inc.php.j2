@@ -1,7 +1,17 @@
 <?php
 /**
- * Copyright © OXID eSales AG. All rights reserved.
+ * This Software is the property of OXID eSales and is protected
+ * by copyright law - it is NOT Freeware.
+ *
+ * Any unauthorized use of this software without a valid license key
+ * is a violation of the license agreement and will be prosecuted by
+ * civil and criminal law.
+ *
  * See LICENSE file for license details.
+ *
+ * @link      http://www.oxid-esales.com
+ * @copyright (C) OXID eSales AG 2003-2019
+ * @version   OXID eShop EE
  */
 
     // Database connection information
@@ -10,23 +20,21 @@
     $this->dbPort  = 3306; // tcp port to which the database is bound
     $this->dbName = '{{ mysql.database }}'; // database name
     $this->dbUser = '{{ mysql.user }}'; // database user name
-    $this->dbPwd = '{{ mysql.password }}'; // database user password
-    $this->sShopURL = '{{ oxid.shop_url }}'; // eShop base url, required
-    $this->sSSLShopURL  = '{{ oxid.ssl_shop_url }}';  // eShop SSL url, optional
-    $this->sAdminSSLURL = '{{ oxid.admin_ssl_url }}'; // eShop Admin SSL url, optional
-    $this->sShopDir = '{{ oxid.shop_path }}';
-    $this->sCompileDir = '{{ oxid.shop_tmp_path }}';
-
-
+    $this->dbPwd  = '{{ mysql.password }}'; // database user password
+    $this->sShopURL     = '{{ oxid.shop_url }}'; // eShop base url, required
+    $this->sSSLShopURL  = '{{ oxid.ssl_shop_url }}';            // eShop SSL url, optional
+    $this->sAdminSSLURL = null;            // eShop Admin SSL url, optional
+    $this->sShopDir     = '{{ oxid.shop_path }}';
+    $this->sCompileDir  = '{{ oxid.shop_tmp_path }}';
 
     /**
      * Force shop edition. Even if enterprise or professional packages exists, shop edition can still be forced here.
      * Possible options: CE|PE|EE or left empty (will be determined automatically).
      */
-    $this->edition = 'EE';
+    $this->edition = '';
 
     // File type whitelist for file upload
-    $this->aAllowedUploadTypes = array('jpg', 'jpeg', 'gif', 'png', 'pdf', 'mp3', 'avi', 'mpg', 'mpeg', 'doc', 'xls', 'ppt');
+    $this->aAllowedUploadTypes = array('jpg', 'gif', 'png', 'pdf', 'mp3', 'avi', 'mpg', 'mpeg', 'doc', 'xls', 'ppt');
 
     // Timezone information
     date_default_timezone_set('Europe/Berlin');
@@ -137,11 +145,6 @@
      */
     $this->aUserComponentNames = null;
 
-    /**
-     * saves subshopid in session
-     */
-    $this->blDeprecatedSubshopsInSessions = false;
-
     // Additional multi language tables
     $this->aMultiLangTables = null;
 
@@ -203,4 +206,16 @@
     /**
      * String PSR3 log level Psr\Log\LogLevel
      */
-    $this->sLogLevel = 'debug';
+    $this->sLogLevel = 'error';
+
+    /**
+    * Added additional oxboni default value
+    */
+    $this->iCreditRating = 6;
+
+{% if oxid.testing.keepSetupDir %}
+    /**
+     * Keep setup dir for testing
+     */
+    $this->blDelSetupDir = false;
+{% endif %}
