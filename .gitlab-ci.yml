@@ -50,7 +50,7 @@ codecheck:
     - merge_requests
     - develop
   needs:
-    - job: build_release
+    - build
   image: composer:2.0.8
   variables:
     TZ: Europe/Berlin
@@ -71,7 +71,7 @@ promote_to_staging:
   only:
     - develop
   needs:
-    - job: build_release
+    - build
   environment:
     name: staging
     url: https://pp.oxidps.de/
