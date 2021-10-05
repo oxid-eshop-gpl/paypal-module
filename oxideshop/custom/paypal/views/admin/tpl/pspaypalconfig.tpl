@@ -129,6 +129,79 @@
                 </div>
             </div>
 
+            [{* PSPAYPAL-492 --> *}]
+            <div class="card">
+                <div class="card-header" id="headingPayPalter">
+                    <h4 class="collapsed" data-toggle="collapse" data-target="#collapse-paylater" aria-expanded="false" aria-controls="collapse-paylater">
+                        [{oxmultilang ident="OXPS_PAYPAL_BUTTON_OPTIONS"}]
+                    </h4>
+                </div>
+
+                <div id="collapse-paylater" class="collapse" aria-labelledby="heading-paylater" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <span class="help-block">[{oxmultilang ident="OXPS_PAYPAL_BUTTON_MAIN_DESCRIPTION"}]</span>
+
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="conf[blPayPalNeverUseCredit]" [{if $config->getPayPalModuleConfigurationValue('blPayPalNeverUseCredit')}]checked[{/if}] value="1">
+                                    [{oxmultilang ident="OXPS_PAYPAL_BASKET_BUTTON_NOCREDITOPTION"}]
+                                </label>
+                            </div>
+
+                            <div class="controls">
+                                <fieldset>
+                                    <legend>[{oxmultilang ident="OXPS_PAYPAL_PRODUCT_DETAILS_BUTTON_PLACEMENT"}]</legend>
+                                    [{assign var='arrPayPalEnabledOptionsDetails' value=$config->getEnabledPaymentOptions('Details')}]
+                                    [{foreach from=$arrPayPalEnabledOptionsDetails item=value key=optionKey}]
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="hidden" name="enabledPaymentOptions_Details[[{$optionKey}]]" value="0">
+                                                <input type="checkbox" name="enabledPaymentOptions_Details[[{$optionKey}]]"[{if $value == 1}] checked[{/if}] value="1">
+                                                [{oxmultilang ident="OXPS_PAYPAL_BUTTON_"|cat:$optionKey}]
+                                            </label>
+                                        </div>
+                                    [{/foreach}]
+                                </fieldset>
+                            </div>
+
+                            <div class="controls">
+                                <fieldset>
+                                    <legend>[{oxmultilang ident="OXPS_PAYPAL_BASKET_BUTTON_PLACEMENT"}]</legend>
+                                    [{assign var='arrPayPalEnabledOptionsBasket' value=$config->getEnabledPaymentOptions('Basket')}]
+                                    [{foreach from=$arrPayPalEnabledOptionsBasket item=value key=optionKey}]
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="hidden" name="enabledPaymentOptions_Basket[[{$optionKey}]]" value="0">
+                                            <input type="checkbox" name="enabledPaymentOptions_Basket[[{$optionKey}]]"[{if $value == 1}] checked[{/if}] value="1">
+                                            [{oxmultilang ident="OXPS_PAYPAL_BUTTON_"|cat:$optionKey}]
+                                        </label>
+                                    </div>
+                                    [{/foreach}]
+                                </fieldset>
+                            </div>
+
+                            <div class="controls">
+                                <fieldset>
+                                    <legend>[{oxmultilang ident="OXPS_PAYPAL_CHECKOUT_PLACEMENT"}]</legend>
+                                    [{assign var='arrPayPalEnabledOptionsCheckout' value=$config->getEnabledPaymentOptions('Checkout')}]
+                                    [{foreach from=$arrPayPalEnabledOptionsCheckout item=value key=optionKey}]
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="hidden" name="enabledPaymentOptions_Checkout[[{$optionKey}]]" value="0">
+                                            <input type="checkbox" name="enabledPaymentOptions_Checkout[[{$optionKey}]]"[{if $value == 1}] checked[{/if}] value="1">
+                                            [{oxmultilang ident="OXPS_PAYPAL_BUTTON_"|cat:$optionKey}]
+                                        </label>
+                                    </div>
+                                    [{/foreach}]
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            [{* <-- PSPAYPAL-492 *}]
+
             <div class="card">
                 <div class="card-header" id="heading2">
                     <h4 class="collapsed" data-toggle="collapse" data-target="#collapse2" aria-expanded="false" aria-controls="collapse2">

@@ -168,6 +168,27 @@ $aLang = [
         to receive real transactions, switch to Production (live).',
     'HELP_OXPS_PAYPAL_WEBHOOK_ID'                  =>
         'The ID of the webhook as configured in your Developer Portal account',
+
+    // PSPAYPAL-492
+    'OXPS_PAYPAL_BUTTON_OPTIONS'                   => 'Enable or disable payment buttons',
+    'OXPS_PAYPAL_BUTTON_MAIN_DESCRIPTION'          => 'Enable or disable payment options here for the following subsections',
+    'OXPS_PAYPAL_BASKET_BUTTON_NOCREDITOPTION'     => 'This shop is a non-US merchants who does not have the correct
+        licenses and approvals to display the <em>Pay Later</em> button or belongs into the category of Real money
+        gaming merchants.',
+    'OXPS_PAYPAL_BUTTON_card'                      => 'Credit or debit cards',
+    'OXPS_PAYPAL_BUTTON_bancontact'                => 'Bancontact',
+    'OXPS_PAYPAL_BUTTON_blik'                      => 'BLIK',
+    'OXPS_PAYPAL_BUTTON_eps'                       => 'eps',
+    'OXPS_PAYPAL_BUTTON_giropay'                   => 'giropay',
+    'OXPS_PAYPAL_BUTTON_ideal'                     => 'iDEAL',
+    'OXPS_PAYPAL_BUTTON_mercadopago'               => 'Mercado Pago',
+    'OXPS_PAYPAL_BUTTON_mybank'                    => 'MyBank',
+    'OXPS_PAYPAL_BUTTON_p24'                       => 'Przelewy24',
+    'OXPS_PAYPAL_BUTTON_sepa'                      => 'SEPA debit note',
+    'OXPS_PAYPAL_BUTTON_sofort'                    => 'Sofort',
+    'OXPS_PAYPAL_BUTTON_paylater'                  => 'Pay Later',
+    'OXPS_PAYPAL_BUTTON_venmo'                     => 'Venmo',
+
     // PayPal ORDER
     'OXPS_PAYPAL_AMOUNT'                           => 'Amount',
     'OXPS_PAYPAL_SHOP_PAYMENT_STATUS'              => 'Shop payment status',

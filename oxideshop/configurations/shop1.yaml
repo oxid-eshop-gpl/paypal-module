@@ -12,10 +12,10 @@ GeneralShopSettings:
         - b2bserviceproducts
         - b2bservices
         - ddoevisualcms
-        - genericimporter
+        - oxps/modulesconfig
+        - oxps/paypallocale
+        - payppaypalplus
         - psr_logger
-    aHomeCountry:
-        - 8f241f11096877ac0.98748826
     aLanguageParams:
         de:
             baseId: 0
@@ -23,36 +23,30 @@ GeneralShopSettings:
             sort: '1'
         en:
             baseId: 1
-            active: '1'
+            active: '0'
             sort: '2'
-    aLanguageSSLURLs:
-        - ''
-        - ''
-    aLanguageURLs:
-        - ''
-        - ''
     aModules:
         OxidEsales\B2BModule\ApprovalProcedure\Controller\DetailsController:
-            - OxidEsales\B2BModule\ScheduledOrders\Controller\ApprovalDetailsController
             - OxidEsales\B2BModule\BulkOrders\Controller\ApprovalProcedureDetailsController
+            - OxidEsales\B2BModule\ScheduledOrders\Controller\ApprovalDetailsController
         OxidEsales\B2BModule\Basket\Service\EditService:
             - OxidEsales\B2BModule\ApprovalProcedure\Service\BasketService
             - OxidEsales\B2BModule\ServiceProducts\Service\EditService
         OxidEsales\Eshop\Application\Controller\Admin\NavigationController:
-            - OxidEsales\B2BModule\Services\Controller\Admin\NavigationController
             - OxidCommunity\ModuleInternals\Controller\Admin\NavigationController
+            - OxidEsales\B2BModule\Services\Controller\Admin\NavigationController
         OxidEsales\Eshop\Application\Controller\ArticleDetailsController:
-            - OxidEsales\B2BModule\Offers\Controller\ArticleDetailsController
             - OxidProfessionalServices\PayPal\Controller\ArticleDetailsController
+            - OxidEsales\B2BModule\Offers\Controller\ArticleDetailsController
         OxidEsales\Eshop\Application\Controller\BasketController:
-            - OxidEsales\B2BModule\ApprovalProcedure\Controller\CheckoutBasketController
             - OxidProfessionalServices\PayPal\Controller\BasketController
+            - OxidEsales\B2BModule\ApprovalProcedure\Controller\CheckoutBasketController
             - OxidEsales\B2BModule\BuyingAgent\Controller\BasketController
             - payp/paypalplus/controllers/payppaypalplusbasket
         OxidEsales\Eshop\Application\Controller\OrderController:
+            - OxidProfessionalServices\PayPal\Controller\OrderController
             - OxidEsales\B2BModule\ApprovalProcedure\Controller\OrderController
             - OxidEsales\B2BModule\Budget\Controller\OrderController
-            - OxidProfessionalServices\PayPal\Controller\OrderController
             - payp/paypalplus/controllers/payppaypalplusorder
         OxidEsales\Eshop\Application\Controller\PaymentController:
             - OxidEsales\B2BModule\ApprovalProcedure\Controller\PaymentController
@@ -63,23 +57,23 @@ GeneralShopSettings:
             - OxidEsales\B2BModule\BulkOrders\Controller\UserController
             - OxidEsales\B2BModule\BuyingAgent\Controller\UserController
         OxidEsales\Eshop\Application\Model\Article:
-            - OxidEsales\B2BModule\CustomPrices\Model\Article
             - OxidProfessionalServices\PayPal\Model\PayPalArticle
+            - OxidEsales\B2BModule\CustomPrices\Model\Article
             - OxidEsales\B2BModule\ServiceProducts\Model\Article
         OxidEsales\Eshop\Application\Model\Basket:
-            - OxidEsales\B2BModule\Basket\Model\Basket
             - OxidProfessionalServices\PayPal\Model\Basket
             - OxidEsales\B2BModule\ApprovalProcedure\Model\Basket
+            - OxidEsales\B2BModule\Basket\Model\Basket
             - OxidEsales\B2BModule\BulkOrders\Model\Basket
             - OxidEsales\B2BModule\ScheduledOrders\Model\Basket
             - OxidEsales\B2BModule\ServiceProducts\Model\Basket
             - payp/paypalplus/models/payppaypalplusoxbasket
         OxidEsales\Eshop\Application\Model\BasketItem:
-            - OxidEsales\B2BModule\ServiceProducts\Model\BasketItem
             - OxidProfessionalServices\PayPal\Model\BasketItem
+            - OxidEsales\B2BModule\ServiceProducts\Model\BasketItem
         OxidEsales\Eshop\Application\Model\Order:
-            - OxidEsales\B2BModule\ApprovalProcedure\Model\Order
             - OxidProfessionalServices\PayPal\Model\Order
+            - OxidEsales\B2BModule\ApprovalProcedure\Model\Order
             - OxidEsales\B2BModule\Budget\Model\Order
             - OxidEsales\B2BModule\BulkOrders\Model\Order
             - OxidEsales\B2BModule\ServiceProducts\Model\Order
@@ -88,40 +82,27 @@ GeneralShopSettings:
             - OxidProfessionalServices\PayPal\Model\PaymentGateway
             - payp/paypalplus/models/payppaypalplusoxpaymentgateway
         OxidEsales\Eshop\Application\Model\User:
-            - OxidEsales\B2BModule\Basket\Model\User
-            - OxidEsales\B2BModule\ApprovalProcedure\Model\User
-            - OxidEsales\B2BModule\BuyingAgent\Model\User
             - OxidProfessionalServices\PayPal\Model\User
+            - OxidEsales\B2BModule\ApprovalProcedure\Model\User
+            - OxidEsales\B2BModule\Basket\Model\User
+            - OxidEsales\B2BModule\BuyingAgent\Model\User
             - payp/paypalplus/models/payppaypalplusoxuser
         OxidEsales\Eshop\Core\Email:
             - OxidEsales\B2BModule\BuyingAgent\Core\Email
             - OxidEsales\B2BModule\Offers\Core\Email
             - OxidEsales\B2BModule\ScheduledOrders\Model\Email
         OxidEsales\Eshop\Core\ViewConfig:
-            - OxidEsales\B2BModule\Services\Core\ViewConfig
             - OxidProfessionalServices\PayPal\Core\ViewConfig
             - OxidEsales\B2BModule\ApprovalProcedure\Core\ViewConfig
             - OxidEsales\B2BModule\Basket\Core\ViewConfig
             - OxidEsales\B2BModule\Budget\Core\ViewConfig
             - OxidEsales\B2BModule\BuyingAgent\Core\ViewConfig
+            - OxidEsales\B2BModule\Services\Core\ViewConfig
             - OxidEsales\VisualCmsModule\Core\ViewConfig
             - payp/paypalplus/core/payppaypalplusoxviewconfig
     aModuleVersions:
         moduleinternals: '3.0'
-        oxps/modulesconfig: 6.1.0
-        oxps/paypal: 0.0.2
-        oxps/paypallocale: 0.0.1
-        payppaypalplus: 3.0.8
-    aNrofCatArticles:
-        - '10'
-        - '20'
-        - '50'
-        - '100'
-    aNrofCatArticlesInGrid:
-        - '12'
-        - '16'
-        - '24'
-        - '32'
+        oxscpaypal: 0.0.2
     aSearchCols:
         - oxtitle
         - oxshortdesc
@@ -165,54 +146,75 @@ GeneralShopSettings:
         - you
         - the
     blAllowSuggestArticle: true
-    blAllowUsersToDeleteTheirAccount: false
-    blAllowUsersToManageTheirReviews: false
     blCheckSysReq: true
-    blDisableDublArtOnCopy: false
     blLoadDynContents: true
-    blReverseProxyActive: false
-    blSendTechnicalInformationToOxid: false
-    blShopStopped: false
-    blShowBirthdayFields: true
-    blShowListDisplayType: true
-    blVariantParentBuyable: true
+    blSendTechnicalInformationToOxid: true
     bl_perfLoadSelectLists: true
     bl_perfParseLongDescinSmarty: true
     bl_perfShowActionCatArticleCnt: true
-    bl_showCompareList: true
-    bl_showGiftWrapping: true
-    bl_showListmania: true
-    bl_showVouchers: true
-    bl_showWishlist: true
     contactFormRequiredFields:
-        - ''
         - email
-    iLayoutCacheLifeTime: ''
-    IMS: '19999999999999'
+    IMA: '4000'
+    IMD: '30'
+    IMS: '10'
     includeProductReviewLinksInEmail: false
-    iNewBasketItemMessage: '1'
     iTopNaviCatCount: '4'
     moduleSmartyPluginDirectories:
         legacycompatibility: {  }
         oxps/paypal: {  }
-        oxps/paypallocale: {  }
-    sCatIconsize: '168*100'
-    sCatPromotionsize: '370*107'
-    sCustomTheme: ''
-    sDefaultListDisplayType: infogrid
-    sIconsize: '56*42'
-    sShopVar: false
-    sTagList: '1153227019'
-    sZoomImageSize: '450*450'
+        oxscpaypal: {  }
+    sDefaultLang: de
+    sTagList: '1632225626'
+    sTheme: flow
 module:
     ddoevisualcms:
         iDefaultWidgetSize: '1'
         iGridSize: '12'
         iGridsterSize: '6'
-    oxps/paypal:
+    oxscpaypal:
+        arrPayPalEnabledOptions_Basket:
+            card: '1'
+            bancontact: '0'
+            blik: '0'
+            eps: '0'
+            giropay: '1'
+            ideal: '0'
+            mercadopago: '0'
+            mybank: '0'
+            p24: '0'
+            sepa: '1'
+            sofort: '1'
+            venmo: '0'
+            paylater: '1'
+        arrPayPalEnabledOptions_Checkout:
+            card: '1'
+            bancontact: '1'
+            blik: '1'
+            eps: '1'
+            giropay: '1'
+            ideal: '1'
+            mercadopago: '1'
+            mybank: '1'
+            p24: '1'
+            sepa: '1'
+            sofort: '1'
+            venmo: '1'
+            paylater: '1'
+        arrPayPalEnabledOptions_Details:
+            card: '1'
+            bancontact: '0'
+            blik: '0'
+            eps: '0'
+            giropay: '0'
+            ideal: '0'
+            mercadopago: '0'
+            mybank: '0'
+            p24: '0'
+            sepa: '1'
+            sofort: '1'
+            venmo: '0'
+            paylater: '1'
         blPayPalSandboxMode: '1'
-        sPayPalClientId: mario.lorenz+test@oxid-esales.com
-        sPayPalClientSecret: mario.lorenz+test@oxid-esales.com
         sPayPalPaymentFailureThreshold: '1'
         sPayPalSandboxClientId: ASb2XMiob84d6BZlUU1fkvQC2X8z2QZUsAyQq_AMzFqbB5e0seElOTu3ZKsTSyhquCZDt0si2QOo8sUu
         sPayPalSandboxClientSecret: EFHzO2oiwZNaQspwYOHknVavR12Kq0fMB91ZKJ2VxuQZlZAKKGJ5jeclEKrZXmZMxvPa4_5F4QvS7mHe
@@ -220,7 +222,302 @@ module:
     payppaypalplus:
         paypPayPalPlusRetry: '1'
         paypPayPalPlusTimeout: '60'
-theme: {  }
+theme:
+    flow:
+        aDetailImageSizes:
+            value:
+                oxpic1: '540*340'
+                oxpic2: '540*340'
+                oxpic3: '540*340'
+                oxpic4: '540*340'
+                oxpic5: '540*340'
+                oxpic6: '540*340'
+                oxpic7: '540*340'
+                oxpic8: '540*340'
+                oxpic9: '540*340'
+                oxpic10: '540*340'
+                oxpic11: '540*340'
+                oxpic12: '540*340'
+            grouping: images
+            pos: '5'
+        aNrofCatArticles:
+            value:
+                - '10'
+                - '20'
+                - '50'
+                - '100'
+            grouping: display
+            pos: '23'
+        aNrofCatArticlesInGrid:
+            value:
+                - '12'
+                - '16'
+                - '24'
+                - '32'
+            grouping: display
+            pos: '24'
+        blBackgroundAttachment:
+            value: true
+            grouping: background
+            pos: '8'
+        blEmailsShowProductPictures:
+            value: false
+            grouping: emails
+            pos: '1'
+        blFooterShowHelp:
+            value: true
+            grouping: footer
+            pos: '1'
+        blFooterShowLinks:
+            value: true
+            grouping: footer
+            pos: '2'
+        blFooterShowNews:
+            value: true
+            grouping: footer
+            pos: '6'
+        blFooterShowNewsletter:
+            value: true
+            grouping: footer
+            pos: '4'
+        blFooterShowNewsletterForm:
+            value: true
+            grouping: footer
+            pos: '5'
+        blFullwidthLayout:
+            value: false
+            grouping: display
+            pos: '10'
+        blGAAnonymizeIPs:
+            value: true
+            grouping: googleanalytics
+        blShowBirthdayFields:
+            value: true
+            grouping: display
+            pos: '14'
+        blShowFinalStep:
+            value: true
+            grouping: display
+            pos: '16'
+        blShowListDisplayType:
+            value: true
+            grouping: display
+            pos: '20'
+        blSliderShowImageCaption:
+            value: true
+            grouping: images
+            pos: '9'
+        blUseBackground:
+            value: false
+            grouping: background
+            pos: '1'
+        blUseGAEcommerceTracking:
+            value: true
+            grouping: googleanalytics
+        blUseGAPageTracker:
+            value: true
+            grouping: googleanalytics
+        blUseGoogleTS:
+            value: false
+            grouping: googlets
+            pos: '1'
+        bl_showCompareList:
+            value: true
+            grouping: features
+            pos: '6'
+        bl_showGiftWrapping:
+            value: true
+            grouping: features
+            pos: '10'
+        bl_showListmania:
+            value: true
+            grouping: features
+            pos: '7'
+        bl_showManufacturerSlider:
+            value: true
+            grouping: display
+            pos: '25'
+        bl_showVouchers:
+            value: true
+            grouping: features
+            pos: '9'
+        bl_showWishlist:
+            value: true
+            grouping: features
+            pos: '8'
+        iNewBasketItemMessage:
+            value: '2'
+            constraints: 0|1|2|3
+            grouping: display
+            pos: '17'
+        sBackgroundColor:
+            value: '#CCEBF5'
+            grouping: background
+            pos: '2'
+        sBackgroundPath:
+            value: mein_hintergrundbild.jpg
+            grouping: background
+            pos: '3'
+        sBackgroundPosHorizontal:
+            value: center
+            constraints: left|right|center
+            grouping: background
+            pos: '5'
+        sBackgroundPosVertical:
+            value: top
+            constraints: top|bottom|center
+            grouping: background
+            pos: '6'
+        sBackgroundRepeat:
+            value: no-repeat
+            constraints: no-repeat|repeat-x|repeat-y|repeat
+            grouping: background
+            pos: '4'
+        sBackgroundSize:
+            value: cover
+            constraints: cover|contain|normal
+            grouping: background
+            pos: '7'
+        sBlogUrl:
+            value: 'https://wordpress.org'
+            grouping: footer
+        sCatIconsize:
+            value: '168*100'
+            grouping: images
+            pos: '7'
+        sCatPromotionsize:
+            value: '370*107'
+            grouping: images
+            pos: '8'
+        sCatThumbnailsize:
+            value: '1140*250'
+            grouping: images
+            pos: '3'
+        sDefaultListDisplayType:
+            value: infogrid
+            constraints: infogrid|line|grid
+            grouping: display
+            pos: '21'
+        sDeliveryDaysNotOnStock:
+            value: '14'
+            grouping: googlets
+            pos: '11'
+        sDeliveryDaysOnStock:
+            value: '6'
+            grouping: googlets
+            pos: '10'
+        sEmailLogo:
+            value: logo_email.png
+            grouping: logo
+            pos: '3'
+        sFacebookUrl:
+            value: 'https://www.facebook.com'
+            grouping: footer
+        sFavicon128File:
+            value: favicon_128x128.png
+            grouping: favicons
+            pos: '6'
+        sFavicon16File:
+            value: favicon_16x16.png
+            grouping: favicons
+            pos: '2'
+        sFavicon32File:
+            value: favicon_32x32.png
+            grouping: favicons
+            pos: '3'
+        sFavicon48File:
+            value: favicon_48x48.png
+            grouping: favicons
+            pos: '4'
+        sFavicon512File:
+            value: favicon_512x512.png
+            grouping: favicons
+            pos: '7'
+        sFavicon64File:
+            value: favicon_64x64.png
+            grouping: favicons
+            pos: '5'
+        sFaviconFile:
+            value: favicon.ico
+            grouping: favicons
+            pos: '1'
+        sFaviconMSTileColor:
+            value: '#D83434'
+            grouping: favicons
+            pos: '8'
+        sGATrackingId:
+            value: ''
+            grouping: googleanalytics
+        sGoogleMapsAddr:
+            value: 'OXID eSales AG, Bertoldstraße 48, 79098 Freiburg'
+            grouping: contact
+        sGooglePlusUrl:
+            value: 'https://plus.google.com'
+            grouping: footer
+        sGoogleShoppingAccountId:
+            value: ''
+            grouping: googlets
+            pos: '4'
+        sGoogleVendorId:
+            value: ''
+            grouping: googlets
+            pos: '2'
+        sIconsize:
+            value: '87*87'
+            grouping: images
+            pos: '1'
+        sLogoFile:
+            value: logo_oxid.png
+            grouping: logo
+        sLogoHeight:
+            value: '38'
+            grouping: logo
+        sLogoWidth:
+            value: '200'
+            grouping: logo
+        sManufacturerIconsize:
+            value: '100*100'
+            grouping: images
+            pos: '6'
+        sPageLanguage:
+            value: de_DE
+            grouping: googlets
+            pos: '5'
+        sShippingDaysNotOnStock:
+            value: '5'
+            grouping: googlets
+            pos: '9'
+        sShippingDaysOnStock:
+            value: '3'
+            grouping: googlets
+            pos: '8'
+        sShoppingCountry:
+            value: DE
+            grouping: googlets
+            pos: '6'
+        sShoppingLanguage:
+            value: de
+            grouping: googlets
+            pos: '7'
+        sStartPageListDisplayType:
+            value: grid
+            constraints: infogrid|line|grid
+            grouping: display
+            pos: '22'
+        sThumbnailsize:
+            value: '390*245'
+            grouping: images
+            pos: '2'
+        sTwitterUrl:
+            value: 'https://twitter.com'
+            grouping: footer
+        sYouTubeUrl:
+            value: 'https://www.youtube.com'
+            grouping: footer
+        sZoomImageSize:
+            value: '665*665'
+            grouping: images
+            pos: '4'
 oxshops:
     OXPARENTID: '0'
     OXACTIVE: '1'
@@ -259,7 +556,7 @@ oxshops:
     OXFORGOTPWDSUBJECT_3: ''
     OXSENDEDNOWSUBJECT_3: ''
     OXSMTPPWD: ''
-    OXCOMPANY: Template
+    OXCOMPANY: 'Your Company Name'
     OXSTREET: '2425 Maple Street'
     OXZIP: '9041'
     OXCITY: 'Any City, CA'
@@ -271,8 +568,8 @@ oxshops:
     OXTAXNUMBER: ''
     OXBICCODE: ''
     OXIBANNUMBER: ''
-    OXFNAME: Mario
-    OXLNAME: Brain
+    OXFNAME: John
+    OXLNAME: Doe
     OXTELEFON: 217-8918712
     OXTELEFAX: 217-8918713
     OXURL: www.myoxideshop.com
@@ -290,4 +587,4 @@ oxshops:
     OXSEOACTIVE_1: '1'
     OXSEOACTIVE_2: '0'
     OXSEOACTIVE_3: '0'
-    OXSERIAL: PWB7Q-YJ2RA-CL2QJ-7N93P-R4GND-5KL4G
+    OXSERIAL: EF7FV-B9TA8-3R3SD-MZNU4-7NWM3-AN7AU

@@ -20,7 +20,7 @@
  * @copyright (C) OXID eSales AG 2003-2020
  */
 
-namespace PayPal\Tests\Unit\Controller\Admin;
+namespace OxidProfessionalServices\PayPal\Tests\Unit\Controller\Admin;
 
 use OxidEsales\TestingLibrary\UnitTestCase;
 use OxidProfessionalServices\PayPal\Controller\Admin\PayPalConfigController;
