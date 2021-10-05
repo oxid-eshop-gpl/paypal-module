@@ -48,9 +48,9 @@ codecheck:
   stage: test
   only:
     - merge_requests
-    - master
+    - develop
   needs:
-    - install
+    - build
   image: composer:2.0.8
   variables:
     TZ: Europe/Berlin
@@ -68,9 +68,11 @@ codecheck:
 promote_to_staging:
   <<: *template
   stage: promote
+  only:
+    - develop
+  needs:
+    - build
   environment:
     name: staging
     url: https://pp.oxidps.de/
   interruptible: false
-  only:
-    - develop
