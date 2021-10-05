@@ -2,6 +2,7 @@
 stages:
   - build
 #  - deploy_integration
+  - test
   - promote
 
 build_release:
@@ -14,7 +15,7 @@ build_release:
   script:
     - cd oxideshop
     - rm -rf vendor
-    - php composer-2.0.14.phar install --no-dev --no-scripts --no-plugins
+    - php composer-2.0.14.phar install --no-scripts --no-plugins
     - php composer-2.0.14.phar install
     - php composer-2.0.14.phar ci:archive
   cache:
@@ -27,6 +28,7 @@ build_release:
     paths:
       - "*.tar.gz"
     expire_in: 1 hour
+  interruptible: false
 
 .template: &template
   image:
@@ -42,12 +44,33 @@ build_release:
     - /entrypoint.sh deliver.yml --inventory inventories/$CI_ENVIRONMENT_NAME/hosts.ini --extra-vars build_id=$CI_COMMIT_SHA --verbose
     - /entrypoint.sh deploy.yml --inventory inventories/$CI_ENVIRONMENT_NAME/hosts.ini --extra-vars build_id=$CI_COMMIT_SHA  --verbose
 
+codecheck:
+  stage: test
+  only:
+    - merge_requests
+    - master
+  needs:
+    - install
+  image: composer:2.0.8
+  variables:
+    TZ: Europe/Berlin
+  script:
+    - mkdir generated
+    - cd oxideshop
+    - vendor/bin/phpcs --standard=phpcs.xml --report-junit=../generated/phpcs-junit.xml
+  artifacts:
+    reports:
+      junit:
+        - generated/phpcs-junit.xml
+    expire_in: 2 hours
+  interruptible: true
+
 promote_to_staging:
   <<: *template
   stage: promote
   environment:
     name: staging
     url: https://pp.oxidps.de/
-#  when: manual
+  interruptible: false
   only:
     - develop
