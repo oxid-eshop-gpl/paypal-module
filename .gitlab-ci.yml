@@ -48,4 +48,4 @@ promote_to_staging:
   environment:
     name: staging
     url: https://pp.oxidps.de/
-#  when: manual
+  when: manual
