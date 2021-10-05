@@ -1,0 +1,25 @@
+---
+webroot_path: /var/www/oxid
+releases_path: /var/www/oxid/releases
+oxid:
+    shop_url: https://pp.oxidps.de/
+    ssl_shop_url: https://pp.oxidps.de/
+    shop_base_path: /var/www/oxid/current
+    shop_path: /var/www/oxid/current/source
+    shop_tmp_path: /var/www/oxid/current/shared/tmp
+    environment_name: stage
+    current_path_name: current
+    remove_setup: true
+    shared_directories:
+      - { path: "source/log",  src: "log" }
+      - { path: "source/tmp",  src: "tmp" }
+      - { path: "source/export",  src: "export" }
+      - { path: "source/cache",  src: "cache" }
+      - { path: "source/out/downloads",  src: "out/downloads" }
+      - { path: "source/out/pictures",  src: "out/pictures" }
+      - { path: "source/out/media", src: "out/media" }
+    shared_files:
+      - { }
+    testing:
+      keepSetupDir: false
+target_root_path: "{{ oxid.shop_base_path }}"

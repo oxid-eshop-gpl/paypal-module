@@ -1,0 +1,425 @@
+modules:
+  oegdproptin:
+    id: oegdproptin
+    path: oe/gdproptin
+    version: 2.3.3
+    configured: false
+    title:
+      de: 'GDPR Opt-in'
+      en: 'GDPR Opt-in'
+    description:
+      de: 'Das Modul stellt Opt-in-Funktionalit&auml;t f&uuml;r die Datenschutz-Grundverordnung (DSGVO) bereit'
+      en: 'This module provides the opt-in functionality for the European General Data Protection Regulation (GDPR)'
+    lang: ''
+    thumbnail: logo.png
+    author: 'OXID eSales AG'
+    url: 'https://www.oxid-esales.com/'
+    email: ''
+    classExtensions:
+      OxidEsales\Eshop\Application\Component\Widget\ArticleDetails: OxidEsales\GdprOptinModule\Component\Widget\ArticleDetails
+      OxidEsales\Eshop\Application\Component\Widget\Review: OxidEsales\GdprOptinModule\Component\Widget\Review
+      OxidEsales\Eshop\Application\Component\UserComponent: OxidEsales\GdprOptinModule\Component\UserComponent
+      OxidEsales\Eshop\Application\Controller\ReviewController: OxidEsales\GdprOptinModule\Controller\ReviewController
+      OxidEsales\Eshop\Application\Controller\ArticleDetailsController: OxidEsales\GdprOptinModule\Controller\ArticleDetailsController
+      OxidEsales\Eshop\Application\Controller\ContactController: OxidEsales\GdprOptinModule\Controller\ContactController
+    events:
+      onActivate: '\OxidEsales\GdprOptinModule\Core\GdprOptinModule::onActivate'
+      onDeactivate: '\OxidEsales\GdprOptinModule\Core\GdprOptinModule::onDeactivate'
+    moduleSettings:
+      blOeGdprOptinInvoiceAddress:
+        group: oegdproptin_settings
+        type: bool
+        value: false
+      blOeGdprOptinDeliveryAddress:
+        group: oegdproptin_settings
+        type: bool
+        value: false
+      blOeGdprOptinUserRegistration:
+        group: oegdproptin_settings
+        type: bool
+        value: false
+      blOeGdprOptinProductReviews:
+        group: oegdproptin_settings
+        type: bool
+        value: false
+      OeGdprOptinContactFormMethod:
+        group: oegdproptin_contact_form
+        type: select
+        value: deletion
+        constraints:
+          - deletion
+          - statistical
+    templateBlocks:
+      -
+        template: form/user.tpl
+        block: user_billing_address_form
+        file: Application/views/blocks/user_invoice_address_form.tpl
+      -
+        template: form/user.tpl
+        block: user_shipping_address_form
+        file: Application/views/blocks/user_shipping_address_form.tpl
+      -
+        template: form/user.tpl
+        block: user_form
+        file: Application/views/blocks/user_address.tpl
+      -
+        template: form/user.tpl
+        block: user
+        file: Application/views/blocks/user.tpl
+      -
+        template: form/user_checkout_change.tpl
+        block: user_checkout_change
+        file: Application/views/blocks/user_checkout_change.tpl
+      -
+        template: form/user_checkout_change.tpl
+        block: user_checkout_shipping_feedback
+        file: Application/views/blocks/user_checkout_shipping_feedback.tpl
+      -
+        template: form/user_checkout_change.tpl
+        block: user_checkout_billing_feedback
+        file: Application/views/blocks/user_checkout_billing_feedback.tpl
+      -
+        template: form/fieldset/user_account.tpl
+        block: user_account_newsletter
+        file: Application/views/blocks/user_account_newsletter.tpl
+      -
+        template: form/contact.tpl
+        block: contact_form_fields
+        file: Application/views/blocks/contact_form_fields.tpl
+      -
+        template: widget/reviews/reviews.tpl
+        block: widget_reviews_form_fields
+        file: Application/views/blocks/widget_reviews_form_fields.tpl
+  oxscpaypal:
+    id: oxscpaypal
+    path: oxps/paypal
+    version: 0.0.2
+    configured: true
+    title:
+      de: 'OXPS :: PayPal - Online-Bezahldienst'
+      en: 'OXPS :: PayPal - Online-Payment'
+    description:
+      de: 'Nutzung des Online-Bezahldienstes von PayPal'
+      en: 'Use of the online payment service from PayPal'
+    lang: ''
+    thumbnail: out/img/paypal.png
+    author: 'Oxid Professional Services'
+    url: ''
+    email: ''
+    classExtensions:
+      OxidEsales\Eshop\Core\ViewConfig: OxidProfessionalServices\PayPal\Core\ViewConfig
+      OxidEsales\Eshop\Application\Model\Order: OxidProfessionalServices\PayPal\Model\Order
+      OxidEsales\Eshop\Application\Model\User: OxidProfessionalServices\PayPal\Model\User
+      OxidEsales\Eshop\Application\Model\Basket: OxidProfessionalServices\PayPal\Model\Basket
+      OxidEsales\Eshop\Application\Model\BasketItem: OxidProfessionalServices\PayPal\Model\BasketItem
+      OxidEsales\Eshop\Application\Model\Article: OxidProfessionalServices\PayPal\Model\PayPalArticle
+      OxidEsales\Eshop\Application\Model\PaymentGateway: OxidProfessionalServices\PayPal\Model\PaymentGateway
+      OxidEsales\Eshop\Application\Controller\Admin\ArticleList: OxidProfessionalServices\PayPal\Controller\Admin\ArticleListController
+      OxidEsales\Eshop\Application\Controller\ArticleDetailsController: OxidProfessionalServices\PayPal\Controller\ArticleDetailsController
+      OxidEsales\Eshop\Application\Controller\BasketController: OxidProfessionalServices\PayPal\Controller\BasketController
+      OxidEsales\Eshop\Application\Component\Widget\ArticleDetails: OxidProfessionalServices\PayPal\Component\Widget\ArticleDetails
+      OxidEsales\Eshop\Application\Controller\OrderController: OxidProfessionalServices\PayPal\Controller\OrderController
+      OxidEsales\Eshop\Application\Component\UserComponent: OxidProfessionalServices\PayPal\Component\UserComponent
+    controllers:
+      PayPalConfigController: OxidProfessionalServices\PayPal\Controller\Admin\PayPalConfigController
+      PayPalBalanceController: OxidProfessionalServices\PayPal\Controller\Admin\BalanceController
+      PayPalWebhookController: OxidProfessionalServices\PayPal\Controller\WebhookController
+      PayPalProxyController: OxidProfessionalServices\PayPal\Controller\ProxyController
+      PayPalTransactionController: OxidProfessionalServices\PayPal\Controller\Admin\TransactionController
+      PayPalSubscriptionTransactionController: OxidProfessionalServices\PayPal\Controller\Admin\SubscriptionTransactionController
+      PayPalSubscribeController: OxidProfessionalServices\PayPal\Controller\Admin\PayPalSubscribeController
+      OnboardingController: OxidProfessionalServices\PayPal\Controller\Admin\OnboardingController
+      PayPalOrderController: OxidProfessionalServices\PayPal\Controller\Admin\PayPalOrderController
+      PayPalSubscriptionDetailsController: OxidProfessionalServices\PayPal\Controller\Admin\SubscriptionDetailsController
+      PayPalSubscriptionController: OxidProfessionalServices\PayPal\Controller\Admin\SubscriptionController
+      PayPalAdminArticleListController: OxidProfessionalServices\PayPal\Controller\Admin\ArticleListController
+      PayPalDisputeController: OxidProfessionalServices\PayPal\Controller\Admin\DisputeController
+      PayPalDisputeDetailsController: OxidProfessionalServices\PayPal\Controller\Admin\DisputeDetailsController
+    events:
+      onActivate: '\OxidProfessionalServices\PayPal\Core\Events::onActivate'
+      onDeactivate: '\OxidProfessionalServices\PayPal\Core\Events::onDeactivate'
+    moduleSettings:
+      blPayPalSandboxMode:
+        type: bool
+        value: false
+      sPayPalClientId:
+        type: str
+        value: ''
+      sPayPalClientSecret:
+        type: str
+        value: ''
+      sPayPalSandboxClientId:
+        type: str
+        value: ''
+      sPayPalWebhookId:
+        type: str
+        value: ''
+      sPayPalSandboxWebhookId:
+        type: str
+        value: ''
+      sPayPalSandboxClientSecret:
+        type: str
+        value: ''
+      blPayPalShowProductDetailsButton:
+        type: bool
+        value: true
+      blPayPalShowBasketButton:
+        type: bool
+        value: true
+      blPayPalAutoBillOutstanding:
+        type: bool
+        value: true
+      sPayPalSetupFeeFailureAction:
+        type: select
+        value: CONTINUE
+        constraints:
+          - CONTINUE
+          - CANCEL
+      sPayPalPaymentFailureThreshold:
+        type: str
+        value: ''
+      oePayPalBannersShowAll:
+        type: bool
+        value: true
+      oePayPalBannersStartPage:
+        type: bool
+        value: true
+      oePayPalBannersStartPageSelector:
+        type: str
+        value: '#wrapper .row'
+      oePayPalBannersCategoryPage:
+        type: bool
+        value: true
+      oePayPalBannersCategoryPageSelector:
+        type: str
+        value: .page-header
+      oePayPalBannersSearchResultsPage:
+        type: bool
+        value: true
+      oePayPalBannersSearchResultsPageSelector:
+        type: str
+        value: '#content .page-header .clearfix'
+      oePayPalBannersProductDetailsPage:
+        type: bool
+        value: true
+      oePayPalBannersProductDetailsPageSelector:
+        type: str
+        value: '#detailsItemsPager'
+      oePayPalBannersCheckoutPage:
+        type: bool
+        value: true
+      oePayPalBannersCartPageSelector:
+        type: str
+        value: .cart-buttons
+      oePayPalBannersPaymentPageSelector:
+        type: str
+        value: '.checkoutSteps ~ .spacer'
+      oePayPalBannersColorScheme:
+        type: select
+        value: blue
+        constraints:
+          - blue
+          - black
+          - white
+          - white-no-border
+    templateBlocks:
+      -
+        template: article_list.tpl
+        block: admin_article_list_item
+        file: views/blocks/admin/article_list_extended.tpl
+      -
+        template: article_list.tpl
+        block: admin_article_list_colgroup
+        file: views/blocks/admin/article_list_colgroup_extended.tpl
+      -
+        template: article_list.tpl
+        block: admin_article_list_sorting
+        file: views/blocks/admin/article_list_sorting_extended.tpl
+      -
+        template: headitem.tpl
+        block: admin_headitem_inccss
+        file: views/blocks/admin/admin_headitem_inccss.tpl
+      -
+        template: headitem.tpl
+        block: admin_headitem_incjs
+        file: views/blocks/admin/admin_headitem_incjs.tpl
+      -
+        template: layout/base.tpl
+        block: base_js
+        file: views/blocks/shared/layout/base_js.tpl
+      -
+        template: layout/base.tpl
+        block: base_style
+        file: views/blocks/shared/layout/base_style.tpl
+      -
+        template: widget/product/listitem_line.tpl
+        block: widget_product_listitem_line_price
+        file: views/blocks/shared/widget/product/widget_product_listitem_line_price.tpl
+      -
+        template: widget/product/listitem_infogrid.tpl
+        block: widget_product_listitem_infogrid_price
+        file: views/blocks/shared/widget/product/widget_product_listitem_infogrid_price.tpl
+      -
+        template: widget/product/listitem_grid.tpl
+        block: widget_product_listitem_grid_price
+        file: views/blocks/shared/widget/product/widget_product_listitem_grid_price.tpl
+      -
+        template: page/checkout/basket.tpl
+        block: basket_btn_next_bottom
+        file: /views/blocks/shared/page/checkout/basket_btn_next_bottom.tpl
+        position: 5
+      -
+        template: page/checkout/inc/steps.tpl
+        block: checkout_steps_main
+        file: /views/blocks/shared/page/checkout/inc/checkout_steps_main.tpl
+        position: 5
+        theme: flow
+      -
+        template: page/checkout/inc/steps.tpl
+        block: checkout_steps_main
+        file: /views/blocks/shared/page/checkout/inc/checkout_steps_main.tpl
+        position: 5
+        theme: wave
+      -
+        template: page/checkout/payment.tpl
+        block: select_payment
+        file: /views/blocks/shared/page/checkout/select_payment.tpl
+        position: 5
+      -
+        template: page/checkout/payment.tpl
+        block: change_payment
+        file: /views/blocks/flow/page/checkout/change_payment.tpl
+        position: 5
+        theme: flow
+      -
+        template: page/checkout/payment.tpl
+        block: change_payment
+        file: /views/blocks/wave/page/checkout/change_payment.tpl
+        position: 5
+        theme: wave
+      -
+        template: page/details/inc/productmain.tpl
+        block: details_productmain_tobasket
+        file: /views/blocks/shared/page/details/inc/details_productmain_tobasket.tpl
+        position: 5
+      -
+        template: page/details/inc/productmain.tpl
+        block: details_productmain_price_value
+        file: /views/blocks/shared/page/details/inc/details_productmain_price_value.tpl
+        position: 5
+      -
+        template: page/checkout/basket.tpl
+        block: checkout_basket_next_step_top
+        file: /views/blocks/shared/page/checkout/basket_installment_banner_after.tpl
+      -
+        template: page/checkout/basket.tpl
+        block: checkout_basket_emptyshippingcart
+        file: /views/blocks/shared/page/checkout/basket_installment_banner_before.tpl
+      -
+        template: page/checkout/payment.tpl
+        block: checkout_payment_main
+        file: /views/blocks/shared/page/checkout/basket_installment_banner_before.tpl
+      -
+        template: page/details/inc/productmain.tpl
+        block: details_productmain_price_value
+        file: /views/blocks/flow/page/details/inc/productmain.tpl
+        theme: flow
+      -
+        template: page/details/inc/productmain.tpl
+        block: details_productmain_price_value
+        file: /views/blocks/wave/page/details/inc/productmain.tpl
+        theme: wave
+      -
+        template: page/list/list.tpl
+        block: page_list_listhead
+        file: /views/blocks/shared/page/list/list.tpl
+      -
+        template: page/search/search.tpl
+        block: search_header
+        file: /views/blocks/shared/page/search/search.tpl
+      -
+        template: page/shop/start.tpl
+        block: start_welcome_text
+        file: /views/blocks/shared/page/shop/start.tpl
+    templates:
+      pspaypalconfig.tpl: oxps/paypal/views/admin/tpl/pspaypalconfig.tpl
+      pspaypaldisputedetails.tpl: oxps/paypal/views/admin/tpl/pspaypaldisputedetails.tpl
+      pspaypaldisputes.tpl: oxps/paypal/views/admin/tpl/pspaypaldisputes.tpl
+      pspaypalorder.tpl: oxps/paypal/views/admin/tpl/pspaypalorder.tpl
+      pspaypalbillingplan.tpl: oxps/paypal/views/admin/tpl/inc/pspaypalbillingplan.tpl
+      pspaypalsubscriptionform.tpl: oxps/paypal/views/admin/tpl/inc/pspaypalsubscriptionform.tpl
+      pspaypalbillingplandata.tpl: oxps/paypal/views/admin/tpl/inc/pspaypalbillingplandata.tpl
+      pspaypallistpagination.tpl: oxps/paypal/views/admin/tpl/inc/pspaypallistpagination.tpl
+      pspaypalsubscriptions.tpl: oxps/paypal/views/admin/tpl/pspaypalsubscriptions.tpl
+      pspaypaltransactions.tpl: oxps/paypal/views/admin/tpl/pspaypaltransactions.tpl
+      pspaypalbalances.tpl: oxps/paypal/views/admin/tpl/pspaypalbalances.tpl
+      pspaypalsubscriptiontransactions.tpl: oxps/paypal/views/admin/tpl/pspaypalsubscriptiontransactions.tpl
+      pspaypalsubscriptiondetails.tpl: oxps/paypal/views/admin/tpl/pspaypalsubscriptiondetails.tpl
+      pspaypalsubscribe.tpl: oxps/paypal/views/admin/tpl/pspaypalsubscribe.tpl
+      pspaypalsmartpaymentbuttons.tpl: oxps/paypal/views/includes/pspaypalsmartpaymentbuttons.tpl
+      pspaypalpaymentbuttons.tpl: oxps/paypal/views/includes/pspaypalpaymentbuttons.tpl
+      pspaypalsubscriptionbuttons.tpl: oxps/paypal/views/includes/pspaypalsubscriptionbuttons.tpl
+      tpl/layout/base_js.tpl: oxps/paypal/views/tpl/shared/layout/base_js.tpl
+      tpl/layout/base_style.tpl: oxps/paypal/views/tpl/shared/layout/base_style.tpl
+      tpl/page/checkout/basket_btn_next_bottom.tpl: oxps/paypal/views/tpl/shared/page/checkout/basket_btn_next_bottom.tpl
+      tpl/page/checkout/select_payment.tpl: oxps/paypal/views/tpl/shared/page/checkout/select_payment.tpl
+      tpl/page/details/inc/details_productmain_tobasket.tpl: oxps/paypal/views/tpl/shared/page/details/inc/details_productmain_tobasket.tpl
+      tpl/page/checkout/inc/checkout_steps_main.tpl: oxps/paypal/views/tpl/shared/page/checkout/inc/checkout_steps_main.tpl
+      tpl/flow/page/checkout/change_payment.tpl: oxps/paypal/views/tpl/flow/page/checkout/change_payment.tpl
+      tpl/wave/page/checkout/change_payment.tpl: oxps/paypal/views/tpl/wave/page/checkout/change_payment.tpl
+      tpl/installment_banners.tpl: oxps/paypal/views/tpl/shared/installment_banners.tpl
+  oxps/paypallocale:
+    id: oxps/paypallocale
+    path: oxps/paypallocale
+    version: 0.0.1
+    configured: true
+    title:
+      de: 'OXPS :: PayPal - Online-Bezahldienst - Lokale Entwicklungsumgebung'
+      en: 'OXPS :: PayPal - Online-Payment - Local development environment'
+    description: {  }
+    lang: ''
+    thumbnail: ''
+    author: ''
+    url: ''
+    email: ''
+    classExtensions:
+      OxidProfessionalServices\PayPal\Controller\Admin\PayPalSubscribeController: OxidProfessionalServices\PayPalLocale\Controller\Admin\PayPalSubscribeController
+moduleChains:
+  classExtensions:
+    OxidEsales\Eshop\Core\ViewConfig:
+      - OxidProfessionalServices\PayPal\Core\ViewConfig
+    OxidEsales\Eshop\Application\Component\Widget\ArticleDetails:
+      - OxidEsales\GdprOptinModule\Component\Widget\ArticleDetails
+      - OxidProfessionalServices\PayPal\Component\Widget\ArticleDetails
+    OxidEsales\Eshop\Application\Component\Widget\Review:
+      - OxidEsales\GdprOptinModule\Component\Widget\Review
+    OxidEsales\Eshop\Application\Component\UserComponent:
+      - OxidEsales\GdprOptinModule\Component\UserComponent
+      - OxidProfessionalServices\PayPal\Component\UserComponent
+    OxidEsales\Eshop\Application\Controller\ReviewController:
+      - OxidEsales\GdprOptinModule\Controller\ReviewController
+    OxidEsales\Eshop\Application\Controller\ArticleDetailsController:
+      - OxidEsales\GdprOptinModule\Controller\ArticleDetailsController
+      - OxidProfessionalServices\PayPal\Controller\ArticleDetailsController
+    OxidEsales\Eshop\Application\Controller\ContactController:
+      - OxidEsales\GdprOptinModule\Controller\ContactController
+    OxidEsales\Eshop\Application\Model\Order:
+      - OxidProfessionalServices\PayPal\Model\Order
+    OxidEsales\Eshop\Application\Model\User:
+      - OxidProfessionalServices\PayPal\Model\User
+    OxidEsales\Eshop\Application\Model\Basket:
+      - OxidProfessionalServices\PayPal\Model\Basket
+    OxidEsales\Eshop\Application\Model\BasketItem:
+      - OxidProfessionalServices\PayPal\Model\BasketItem
+    OxidEsales\Eshop\Application\Model\Article:
+      - OxidProfessionalServices\PayPal\Model\PayPalArticle
+    OxidEsales\Eshop\Application\Model\PaymentGateway:
+      - OxidProfessionalServices\PayPal\Model\PaymentGateway
+    OxidEsales\Eshop\Application\Controller\Admin\ArticleList:
+      - OxidProfessionalServices\PayPal\Controller\Admin\ArticleListController
+    OxidEsales\Eshop\Application\Controller\BasketController:
+      - OxidProfessionalServices\PayPal\Controller\BasketController
+    OxidEsales\Eshop\Application\Controller\OrderController:
+      - OxidProfessionalServices\PayPal\Controller\OrderController
+    OxidProfessionalServices\PayPal\Controller\Admin\PayPalSubscribeController:
+      - OxidProfessionalServices\PayPalLocale\Controller\Admin\PayPalSubscribeController

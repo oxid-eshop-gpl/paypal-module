@@ -1,0 +1,6 @@
+authblock: |
+  # To add authentication, modify group_vars/<env>/basicauth_settings.yml
+  # AuthType Basic
+  # AuthName "Please authenticate"
+  # AuthUserFile {{ oxid.shop_path }}/.oxid-auth
+  # Require valid-user

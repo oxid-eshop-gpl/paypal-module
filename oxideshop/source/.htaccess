@@ -3,10 +3,7 @@
     RewriteEngine On
     RewriteBase /
 
-    # RewriteCond %{HTTPS} off
-    # RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
-
-    RewriteRule ^(graphql/)    widget.php?cl=graphql   [NC,L]
+    RewriteRule ^graphql/?$    widget.php?cl=graphql&skipSession=1   [QSA,NC,L]
 
     RewriteCond %{REQUEST_URI}     config\.inc\.php [NC]
     RewriteRule ^config\.inc\.php  index\.php       [R=301,L]

@@ -1,6 +1,16 @@
 ---
-- name: Run database migrations
-  command: "bin/oe-eshop-db_migrate migrations:migrate"
+#- name: Run database migrations (OXID Console)
+#  command: "vendor/bin/oxid migration:run"
+#  args:
+#    chdir: "{{ target_root_path }}"
+#  run_once: true
+#  tags:
+#    - migrate
+
+- name: Run database migrations (OXID Core)
+  command: "vendor/bin/oe-eshop-db_migrate migrations:migrate"
   args:
-    chdir: "{{ target_vendor_path }}"
+    chdir: "{{ target_root_path }}"
   run_once: true
+  tags:
+    - migrate

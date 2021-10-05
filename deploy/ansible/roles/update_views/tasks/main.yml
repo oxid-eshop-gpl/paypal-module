@@ -1,8 +1,7 @@
 ---
 - name: Update database views
-  command: bin/oe-eshop-db_views_generate
+  command: "vendor/bin/oe-eshop-db_views_generate"
   args:
-    chdir: "{{ target_vendor_path }}"
+    chdir: "{{ target_root_path }}"
   run_once: true
-  register: command_result
-  failed_when: '"There was an error" in command_result.stdout'
+  tags: oxidupdatedb

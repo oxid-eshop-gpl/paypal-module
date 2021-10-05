@@ -1,0 +1,4 @@
+---
+dependencies:
+    - handle_composer
+    - create_shop_config

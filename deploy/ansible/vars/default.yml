@@ -1,3 +1,23 @@
-build_root_path: "{{ lookup('env','CI_PROJECT_DIR') }}"
-slack_token: "xoxp-794324434626-807247608757-821459802548-cf9019755e4bd3f71eea685b9ae7b1fa"
-slack_channel: "#oxid_deploy"
+---
+deployment_repository: git@psgit.oxid-esales.com:psprojects/paypal-apiv2-deploy.git
+local_home: "{{ lookup('env','WORKSPACE') }}"
+branch: "{{ lookup('env','BRANCH') }}"
+checkout_path: "{{ local_home }}"
+git:
+  version: HEAD
+php:
+  composer:
+    installer_url: https://getcomposer.org/installer
+    install: '1'
+    github_token: true
+    prestissimo:
+      install: false
+eshop:
+  composer:
+    clean_vendors: true
+    cache_url: ~
+    prefer_dist: yes
+    prefer_source: no
+    env:
+        SHOP_PATH: "{{ build_root_path }}/source"
+    load_dependencies: true

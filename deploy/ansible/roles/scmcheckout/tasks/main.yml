@@ -1,0 +1,25 @@
+---
+
+- name: Remove build directory
+  local_action: file path={{ checkout_path }} state=absent
+  run_once: true
+
+- name: Create build directory
+  local_action: file path={{ checkout_path }} state=directory mode=0775
+  run_once: true
+
+- name: Checkout repository locally
+  local_action: command git clone '''{{ local_home }}''' '''{{ checkout_path }}'''
+  run_once: true
+
+# local home is already on the tested branch - don't need to checkout the branch
+# - name: Switch to branch
+#   local_action: command git checkout -f {{ branch }} chdir={{ checkout_path }}
+#   run_once: true
+
+# we deactivate usage of ansible git module for the moment since bug in it prevents from update with submodules
+# see https://github.com/ansible/ansible-modules-core/issues/4817
+
+#- name: locally check out repository
+#  connection: local
+#  git: repo={{ deployment_repository }} dest={{ checkout_path }} key_file={{ ssh_private_key_file }} accept_hostkey=True force=yes version={{ git.version }}
