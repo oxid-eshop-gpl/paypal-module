@@ -1,12 +1,12 @@
 ---
 stages:
-  - build
+  - build_release
 #  - deploy_integration
   - test
   - promote
 
 build_release:
-  stage: build
+  stage: build_release
   image: composer:2.0.8
   before_script:
     - php oxideshop/composer-2.0.14.phar config -g cache-dir "$(pwd)/.composer-cache"
@@ -49,6 +49,8 @@ codecheck:
   only:
     - merge_requests
     - develop
+  needs:
+    - build_release
   image: composer:2.0.8
   variables:
     TZ: Europe/Berlin
@@ -68,6 +70,8 @@ promote_to_staging:
   stage: promote
   only:
     - develop
+  needs:
+    - build_release
   environment:
     name: staging
     url: https://pp.oxidps.de/
