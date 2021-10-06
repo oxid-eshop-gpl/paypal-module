@@ -1,11 +1,13 @@
 ---
 stages:
-  - build
+  - test
+  - build_release
 #  - deploy_integration
   - promote
 
 build_release:
-  stage: build
+  stage: build_release
+  needs: []
   image: composer:2.0.8
   before_script:
     - php oxideshop/composer-2.0.14.phar config -g cache-dir "$(pwd)/.composer-cache"
@@ -14,9 +16,11 @@ build_release:
   script:
     - cd oxideshop
     - rm -rf vendor
-    - php composer-2.0.14.phar install --no-dev --no-scripts --no-plugins
-    - php composer-2.0.14.phar install
+    - php composer-2.0.14.phar validate
+    - php composer-2.0.14.phar install --no-dev --no-ansi --no-interaction --no-progress
     - php composer-2.0.14.phar ci:archive
+  only:
+    - develop
   cache:
     key:
       files:
@@ -27,12 +31,14 @@ build_release:
     paths:
       - "*.tar.gz"
     expire_in: 1 hour
+  interruptible: false
 
 .template: &template
   image:
     name: mprokopov/oxid-ansible-runner
     entrypoint: [""]
-  needs: [build_release]
+  needs:
+    - job: build_release
   variables:
     ARTIFACT: $CI_BUILD_REF.tar.gz
   script:
@@ -42,12 +48,37 @@ build_release:
     - /entrypoint.sh deliver.yml --inventory inventories/$CI_ENVIRONMENT_NAME/hosts.ini --extra-vars build_id=$CI_COMMIT_SHA --verbose
     - /entrypoint.sh deploy.yml --inventory inventories/$CI_ENVIRONMENT_NAME/hosts.ini --extra-vars build_id=$CI_COMMIT_SHA  --verbose
 
+codecheck:
+  stage: test
+  only:
+    - merge_requests
+  needs: []
+  image: composer:2.0.8
+  variables:
+    TZ: Europe/Berlin
+  script:
+    - mkdir generated
+    - cd oxideshop
+    - rm -rf vendor
+    - php composer-2.0.14.phar validate
+    - php composer-2.0.14.phar install --no-dev --no-plugins --no-scripts --no-ansi --no-interaction --no-progress
+    - php composer-2.0.14.phar install --no-ansi --no-interaction --no-progress
+    - vendor/bin/phpcs --standard=phpcs.xml --report-junit=../generated/phpcs-junit.xml
+  artifacts:
+    reports:
+      junit:
+        - generated/phpcs-junit.xml
+    expire_in: 2 hours
+  interruptible: true
+
 promote_to_staging:
   <<: *template
   stage: promote
+  only:
+    - develop
+  needs:
+    - job: build_release
   environment:
     name: staging
     url: https://pp.oxidps.de/
-#  when: manual
-  only:
-    - develop
+  interruptible: false

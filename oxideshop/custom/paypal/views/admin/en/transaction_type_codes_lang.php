@@ -19,6 +19,7 @@
  * @link      http://www.oxid-esales.com
  * @copyright (C) OXID eSales AG 2003-2020
  */
+
 $sLangName = 'English';
 
 $aLang = [

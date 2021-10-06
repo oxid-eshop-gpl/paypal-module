@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -36,7 +37,7 @@ class BasketTest extends UnitTestCase
                 '_alternate_variant',
                 'assertFalse'
             ],
-            'has_no_variant'=> [
+            'has_no_variant' => [
                 [
                     '_variant'
                 ],
