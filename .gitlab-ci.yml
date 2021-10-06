@@ -16,8 +16,8 @@ build_release:
   script:
     - cd oxideshop
     - rm -rf vendor
-    - php composer-2.0.14.phar install --no-dev --no-scripts --no-plugins
-    - php composer-2.0.14.phar install
+    - php composer-2.0.14.phar validate
+    - php composer-2.0.14.phar install --no-ansi --no-interaction --no-progress
     - php composer-2.0.14.phar ci:archive
   only:
     - merge_requests
@@ -61,7 +61,6 @@ codecheck:
     TZ: Europe/Berlin
   script:
     - mkdir generated
-    - cd oxideshop
     - vendor/bin/phpcs --standard=phpcs.xml --report-junit=../generated/phpcs-junit.xml
   artifacts:
     reports:
