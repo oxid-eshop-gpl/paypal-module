@@ -36,6 +36,7 @@ $aModule = [
     'url' => '',
     'email' => '',
     'extend' => [
-        \OxidProfessionalServices\PayPal\Controller\Admin\PayPalSubscribeController::class => \OxidProfessionalServices\PayPalLocale\Controller\Admin\PayPalSubscribeController::class
+        \OxidProfessionalServices\PayPal\Controller\Admin\PayPalSubscribeController::class =>
+            \OxidProfessionalServices\PayPalLocale\Controller\Admin\PayPalSubscribeController::class
     ],
 ];

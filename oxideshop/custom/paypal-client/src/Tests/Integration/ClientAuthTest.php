@@ -27,7 +27,13 @@ class ClientAuthTest extends TestCase
 
     public function testAuthFailing()
     {
-        $client = ClientFactory::createCustomClient(Client::class, 'wrongClientId', 'wrongClientSecret', 'wrongPayerId', false);
+        $client = ClientFactory::createCustomClient(
+            Client::class,
+            'wrongClientId',
+            'wrongClientSecret',
+            'wrongPayerId',
+            false
+        );
         $this->assertFalse($this->client->isAuthenticated());
         $this->expectExceptionCode(401);
         $client->auth();

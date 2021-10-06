@@ -81,7 +81,8 @@ class ViewConfig extends ViewConfig_parent
      */
     public $listOfSelectableOptions = [
         // payment option keys
-        'card','bancontact','blik','eps','giropay','ideal','mercadopago','mybank','p24','sepa','sofort','venmo','paylater',
+        'card','bancontact','blik','eps','giropay','ideal',
+        'mercadopago','mybank','p24','sepa','sofort','venmo','paylater',
     ];
 
     /**
@@ -108,17 +109,14 @@ class ViewConfig extends ViewConfig_parent
      */
     public function getEnabledPaymentOptions($context)
     {
-        if (count($this->enabledPaymentOptions[$context]) == 0)
-        {
+        if (count($this->enabledPaymentOptions[$context]) == 0) {
             $this->collectEnableAndDisabledPaymentOptions();
         }
 
         // Force-remove credit option if blPayPalNeverUseCredit is on
         $config = Registry::getConfig();
-        if ($config->getConfigParam('blPayPalNeverUseCredit'))
-        {
-            if (in_array('paylater', $this->enabledPaymentOptions[$context]))
-            {
+        if ($config->getConfigParam('blPayPalNeverUseCredit')) {
+            if (in_array('paylater', $this->enabledPaymentOptions[$context])) {
                 $this->enabledPaymentOptions[$context] = array_diff(
                     $this->enabledPaymentOptions[$context],
                     ['paylater']
@@ -139,17 +137,14 @@ class ViewConfig extends ViewConfig_parent
      */
     public function getDisabledPaymentOptions($context)
     {
-        if (count($this->disabledPaymentOptions[$context]) == 0)
-        {
+        if (count($this->disabledPaymentOptions[$context]) == 0) {
             $this->collectEnableAndDisabledPaymentOptions();
         }
 
         // Force-add credit option if blPayPalNeverUseCredit is on
         $config = Registry::getConfig();
-        if ($config->getConfigParam('blPayPalNeverUseCredit'))
-        {
-            if (!in_array('paylater', $this->disabledPaymentOptions[$context]))
-            {
+        if ($config->getConfigParam('blPayPalNeverUseCredit')) {
+            if (!in_array('paylater', $this->disabledPaymentOptions[$context])) {
                 $this->disabledPaymentOptions[$context] = array_merge(
                     $this->disabledPaymentOptions[$context],
                     ['paylater']
@@ -168,7 +163,7 @@ class ViewConfig extends ViewConfig_parent
      */
     protected function getEnabledAndDisabledPaymentOptionsAsString($context, $status)
     {
-        switch($status) {
+        switch ($status) {
             case 0:
                 $list = $this->getDisabledPaymentOptions($context);
                 break;
@@ -178,10 +173,8 @@ class ViewConfig extends ViewConfig_parent
         }
 
         $out = '';
-        foreach ($list as $item)
-        {
-            if ($out != '')
-            {
+        foreach ($list as $item) {
+            if ($out != '') {
                 $out .= ',';
             }
             $out .= $item;
@@ -204,15 +197,11 @@ class ViewConfig extends ViewConfig_parent
     {
         $config = Registry::getConfig();
 
-        foreach ($this->allowedContexts as $context)
-        {
-            foreach ($config->getConfigParam('arrPayPalEnabledOptions_'.$context) as $optionKey => $optionValue)
-            {
-                if ($optionValue)
-                {
+        foreach ($this->allowedContexts as $context) {
+            foreach ($config->getConfigParam('arrPayPalEnabledOptions_' . $context) as $optionKey => $optionValue) {
+                if ($optionValue) {
                     $this->enabledPaymentOptions[$context][] = $optionKey;
-                }
-                else{
+                } else {
                     $this->disabledPaymentOptions[$context][] = $optionKey;
                 }
             }
@@ -293,8 +282,7 @@ class ViewConfig extends ViewConfig_parent
 
         $components = 'messages';
         // enable buttons for PDP
-        if ($this->getActiveClassName('details'))
-        {
+        if ($this->getActiveClassName('details')) {
             $components .= ',buttons';
         }
 
