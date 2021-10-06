@@ -36,7 +36,6 @@ class CatalogTest extends TestCase
         try {
             $res = $this->catalogUnderTest->createProduct($pd);
         } catch (ApiException $e) {
-
         }
         $res = $this->catalogUnderTest->showProductDetails($pd->id);
 
@@ -72,6 +71,6 @@ class CatalogTest extends TestCase
     public function testGetProducts()
     {
         $res = $this->catalogUnderTest->listProducts(true);
-        $this->assertGreaterThan(-1,$res->total_items);
+        $this->assertGreaterThan(-1, $res->total_items);
     }
 }

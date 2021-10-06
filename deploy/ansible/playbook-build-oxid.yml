@@ -1,0 +1,13 @@
+---
+- hosts: development
+  vars_files:
+    - vars/default.yml
+    - ../../ansible/vars/oxideshop.yml
+    - ../../project.yml
+    - [~/.personal_ansible_vm.yml, vars/empty.yml]
+    - [../../personal.yml, vars/empty.yml]
+  roles:
+    - create_htaccess
+    - create_shop_config
+    - handle_composer
+    - deploy_oxid

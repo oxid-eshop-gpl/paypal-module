@@ -1,12 +1,30 @@
 ---
-- name: Activate OXID Module Configuration Im-/Exporter
-  command: vendor/bin/oxid module:activate oxps/modulesconfig
-  args:
-    chdir: "{{ target_vendor_path }}/../"
-  run_once: true
+#- name: Drop old configurations from DB
+#  command: "vendor/bin/oe-console oe:oxideshop-update-component:delete-module-data-from-database"
+#  args:
+#    chdir: "{{ target_root_path }}"
+#  run_once: true
+#  become_user: www-data
 
-- name: Import environment specific configuration
-  command: "vendor/bin/oxid config:import --env={{ oxid.environment_name }}"
+- name: Activate modulesconfig module
+  command: "vendor/bin/oe-console oe:module:activate oxps/oxidshopconfig"
   args:
-    chdir: "{{ target_vendor_path }}/../"
+    chdir: "{{ target_root_path }}"
   run_once: true
+  tags: oxidenablemodcfg
+  become_user: www-data
+
+- name: Import environment-specific configuration
+  command: "vendor/bin/oe-console config:import --env={{ oxid.environment_name }}"
+  args:
+    chdir: "{{ target_root_path }}"
+  run_once: true
+  tags: oxidconfigimport
+  become_user: www-data
+
+- name: Apply configurations
+  command: "vendor/bin/oe-console oe:module:apply-configuration"
+  args:
+    chdir: "{{ target_root_path }}"
+  run_once: true
+  become_user: www-data

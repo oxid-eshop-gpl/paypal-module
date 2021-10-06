@@ -1,0 +1,9 @@
+---
+mysql:
+    host: localhost
+    database: oxid
+#    root_user: root
+#    root_password:
+    user: oxid
+    password: oxid
+#    dump: /dump/file/here.sql

@@ -1,0 +1,28 @@
+{
+  "name": "oxid-professional-services/paypal",
+  "description": "PayPal module for OXID",
+  "type": "oxideshop-module",
+  "keywords": ["oxid", "modules", "paypal", "pay"],
+  "license": "proprietary",
+  "version": "0.0.2",
+  "require": {
+    "giggsey/libphonenumber-for-php": "^8.12"
+  },
+  "archive": {
+    "exclude": ["/resources"]
+  },
+  "extra": {
+    "oxideshop": {
+      "blacklist-filter": [
+        "resources/**/*",
+        "resources/**/*."
+      ],
+      "target-directory": "oxps/paypal"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "OxidProfessionalServices\\PayPal\\": "."
+    }
+  }
+}

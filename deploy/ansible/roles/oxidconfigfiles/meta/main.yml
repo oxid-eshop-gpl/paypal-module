@@ -1,0 +1,6 @@
+---
+dependencies:
+    - composer-local
+    - create_shop_config
+    - create_htaccess
+    - build_frontend

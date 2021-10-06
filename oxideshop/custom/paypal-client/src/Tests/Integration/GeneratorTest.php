@@ -32,35 +32,34 @@ class GeneratorTest extends TestCase
 
         $schemas = scandir($schemaDir);
 
-        foreach($schemas as $schema) {
+        foreach ($schemas as $schema) {
             if ($schema === '..' | $schema === '.') {
                 continue;
             }
 
-            if(is_dir($schema)) {
+            if (is_dir($schema)) {
                 continue;
             }
 
             $apiSchema = json_decode(file_get_contents($schemaDir . '/' . $schema), true);
 
-            if(!$apiSchema) {
+            if (!$apiSchema) {
                 continue;
             }
 
-            if(!array_key_exists('definitions', $apiSchema)) {
+            if (!array_key_exists('definitions', $apiSchema)) {
                 continue;
             }
 
             foreach ($apiSchema['definitions'] as $fileName => $api) {
-
-                if(!array_key_exists('type', $api)) {
+                if (!array_key_exists('type', $api)) {
                     continue;
                 }
 
-                if($api['type'] === 'object') {
+                if ($api['type'] === 'object') {
                     $properties = $api['properties'];
 
-                    if(strstr($fileName, 'CommonComponentsSpecification')) {
+                    if (strstr($fileName, 'CommonComponentsSpecification')) {
                         $fileNameNameArray = explode('/', $fileName);
                         $fileName = end($fileNameNameArray);
                     }
@@ -72,7 +71,7 @@ class GeneratorTest extends TestCase
                         $fileNameComplete .= ucfirst($fileNamePart);
                     }
 
-                    if(empty($fileNameComplete)) {
+                    if (empty($fileNameComplete)) {
                         $fileNameComplete = $fileName;
                     }
 
@@ -81,54 +80,54 @@ class GeneratorTest extends TestCase
                         ucfirst(str_replace('.json', '', $fileNameComplete)) . '.php';
 
                     $fileArray = [];
-                    if(file_exists($filePath)) {
+                    if (file_exists($filePath)) {
                         $fileContentArray = explode(PHP_EOL, file_get_contents($filePath));
 
                         foreach ($fileContentArray as $fileContentLine) {
                             $fileContentLine = trim($fileContentLine);
-                            if(empty($fileContentLine)) {
+                            if (empty($fileContentLine)) {
                                 continue;
                             }
-                            if(strstr($fileContentLine, '/**')) {
+                            if (strstr($fileContentLine, '/**')) {
                                 continue;
                             }
-                            if(strstr($fileContentLine, '*')) {
+                            if (strstr($fileContentLine, '*')) {
                                 continue;
                             }
-                            if(strstr($fileContentLine, 'class')) {
+                            if (strstr($fileContentLine, 'class')) {
                                 continue;
                             }
-                            if(strstr($fileContentLine, 'namespace')) {
+                            if (strstr($fileContentLine, 'namespace')) {
                                 continue;
                             }
-                            if(strstr($fileContentLine, 'function')) {
+                            if (strstr($fileContentLine, 'function')) {
                                 continue;
                             }
-                            if(strstr($fileContentLine, '<?php')) {
+                            if (strstr($fileContentLine, '<?php')) {
                                 continue;
                             }
-                            if(strstr($fileContentLine, 'use ')) {
+                            if (strstr($fileContentLine, 'use ')) {
                                 continue;
                             }
-                            if(strstr($fileContentLine, '{')) {
+                            if (strstr($fileContentLine, '{')) {
                                 continue;
                             }
-                            if(strstr($fileContentLine, '}')) {
+                            if (strstr($fileContentLine, '}')) {
                                 continue;
                             }
-                            if(strstr($fileContentLine, '->')) {
+                            if (strstr($fileContentLine, '->')) {
                                 continue;
                             }
-                            if(strstr($fileContentLine, '$this')) {
+                            if (strstr($fileContentLine, '$this')) {
                                 continue;
                             }
-                            if(strstr($fileContentLine, ');')) {
+                            if (strstr($fileContentLine, ');')) {
                                 continue;
                             }
-                            if(strstr($fileContentLine, '"')) {
+                            if (strstr($fileContentLine, '"')) {
                                 continue;
                             }
-                            if(strstr($fileContentLine, ',')) {
+                            if (strstr($fileContentLine, ',')) {
                                 continue;
                             }
 

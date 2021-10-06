@@ -1,5 +1,4 @@
-FROM oxidprojects/oxid-apache-php:php7.1
-
+FROM oxidprojects/oxid-apache-php:oxid6.2-php7.4
 # We use custom port for docker apache
 COPY ./ports.conf /etc/apache2/ports.conf
 

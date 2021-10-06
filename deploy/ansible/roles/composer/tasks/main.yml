@@ -1,0 +1,4 @@
+---
+- include: handle_composer.yml
+  when: php.composer.install
+

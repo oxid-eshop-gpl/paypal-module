@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="PHP_CodeSniffer" xsi:noNamespaceSchemaLocation="phpcs.xsd">
+    <config name="testVersion" value="7.4-8.0" />
+    <rule ref="PSR12" />
+    <arg name="colors" />
+    <arg name="parallel" value="75" />
+    <arg name="extensions" value="php" />
+    <arg value="p" />
+    <arg value="s" />
+    <file>custom</file>
+    <exclude-pattern>custom/json-php-generator/*</exclude-pattern>
+    <rule ref="Squiz.WhiteSpace.ObjectOperatorSpacing">
+        <properties>
+            <property name="ignoreNewlines" value="true" />
+        </properties>
+    </rule>
+    <rule ref="PSR1.Methods.CamelCapsMethodName.NotCamelCaps">
+        <exclude-pattern>paypal/Component/UserComponent.php</exclude-pattern>
+    </rule>
+    <rule ref="PSR2.Classes.PropertyDeclaration.Underscore">
+        <exclude-pattern>paypal/Controller/Admin/BalanceController.php</exclude-pattern>
+        <exclude-pattern>paypal/Model/PayPalArticle.php</exclude-pattern>
+    </rule>
+    <rule ref="PSR2.Methods.MethodDeclaration.Underscore">
+        <exclude-pattern>paypal/Controller/Admin/TransactionController.php</exclude-pattern>
+        <exclude-pattern>paypal/Model/Mixin/DbNamingConventionsTrait.php</exclude-pattern>
+    </rule>
+    <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
+        <exclude-pattern>*/_support/*</exclude-pattern>
+    </rule>
+    <rule ref="Generic.Files.LineLength.TooLong">
+        <exclude-pattern>*/translations/*</exclude-pattern>
+        <exclude-pattern>*/views/admin/de/*</exclude-pattern>
+        <exclude-pattern>*/views/admin/en/*</exclude-pattern>
+        <exclude-pattern>paypal-client/generated/*</exclude-pattern>
+        <exclude-pattern>paypal-client/src/Tests/Integration/OrderTest.php</exclude-pattern>
+    </rule>
+</ruleset>
