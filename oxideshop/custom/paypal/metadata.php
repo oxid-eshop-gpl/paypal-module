@@ -140,7 +140,8 @@ $aModule = [
         'tpl/installment_banners.tpl' => 'oxps/paypal/views/tpl/shared/installment_banners.tpl',
 
         // PSPAYPAL-483/PSPAYPAL-484 Subscription basics
-        'tpl/page/account/order_and_subscription_overview.tpl' => 'oxps/paypal/views/tpl/shared/page/account/order_and_subscription_overview.tpl',
+        'tpl/page/account/order_and_subscription_overview.tpl' =>
+            'oxps/paypal/views/tpl/shared/page/account/order_and_subscription_overview.tpl',
     ],
     'events' => [
         'onActivate' => '\OxidProfessionalServices\PayPal\Core\Events::onActivate',

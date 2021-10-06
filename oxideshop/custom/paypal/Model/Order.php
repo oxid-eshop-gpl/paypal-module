@@ -226,11 +226,11 @@ class Order extends Order_parent
 
     /**
      * Is the object a subscription?
-     * @return boolean
+     * @return bool
      */
     public function isPayPalSubscription()
     {
-        return (boolean) (
+        return (bool) (
             $this->oxorder__oxpaymenttype->value == 'oxidpaypal'
             && $this->oxorder__oxtotalnetsum->value == 0
         );
