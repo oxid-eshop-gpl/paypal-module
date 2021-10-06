@@ -17,6 +17,7 @@ build_release:
     - cd oxideshop
     - rm -rf vendor
     - php composer-2.0.14.phar validate
+    - php composer-2.0.14.phar install --no-dev --no-plugins --no-scripts --no-ansi --no-interaction --no-progress
     - php composer-2.0.14.phar install --no-dev --no-ansi --no-interaction --no-progress
     - php composer-2.0.14.phar ci:archive
   only:
