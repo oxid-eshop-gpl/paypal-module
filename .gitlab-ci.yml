@@ -21,7 +21,6 @@ build_release:
     - php composer-2.0.14.phar install --no-ansi --no-interaction --no-progress
     - php composer-2.0.14.phar ci:archive
   only:
-    - merge_requests
     - develop
   cache:
     key:
@@ -54,7 +53,6 @@ codecheck:
   stage: test
   only:
     - merge_requests
-    - develop
   needs: []
   image: composer:2.0.8
   variables:
@@ -64,7 +62,7 @@ codecheck:
     - cd oxideshop
     - rm -rf vendor
     - php composer-2.0.14.phar validate
-    - php composer-2.0.14.phar install --no-dev --no-plugins --no-scripts --no-ansi --no-interaction --no-progress
+#    - php composer-2.0.14.phar install --no-dev --no-plugins --no-scripts --no-ansi --no-interaction --no-progress
     - php composer-2.0.14.phar install --no-ansi --no-interaction --no-progress
     - vendor/bin/phpcs --standard=phpcs.xml --report-junit=../generated/phpcs-junit.xml
   artifacts:
