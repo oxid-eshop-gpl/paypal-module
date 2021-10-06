@@ -18,7 +18,6 @@ build_release:
     - rm -rf vendor
     - php composer-2.0.14.phar validate
     - php composer-2.0.14.phar install --no-dev --no-plugins --no-scripts --no-ansi --no-interaction --no-progress
-    - php composer-2.0.14.phar install --no-ansi --no-interaction --no-progress
     - php composer-2.0.14.phar ci:archive
   only:
     - develop
@@ -63,7 +62,7 @@ codecheck:
     - rm -rf vendor
     - php composer-2.0.14.phar validate
     - php composer-2.0.14.phar install --no-dev --no-plugins --no-scripts --no-ansi --no-interaction --no-progress
-#    - php composer-2.0.14.phar install --no-ansi --no-interaction --no-progress
+    - php composer-2.0.14.phar install --no-ansi --no-interaction --no-progress
     - vendor/bin/phpcs --standard=phpcs.xml --report-junit=../generated/phpcs-junit.xml
   artifacts:
     reports:
