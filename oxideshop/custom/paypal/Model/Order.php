@@ -150,11 +150,14 @@ class Order extends Order_parent
                       FROM oxps_paypal_subscription
                      WHERE PAYPALBILLINGAGREEMENTID = ?';
 
+            /** @var $paypalSubscriptionId $subProdId @Todo Specify this!*/
+            $paypalSubscriptionId = null;
+
             $subProdId = $db->getOne(
                 $sql,
                 [
-                        $paypalSubscriptionId
-                    ]
+                    $paypalSubscriptionId
+                ]
             );
 
             if ($subProdId) {
@@ -165,8 +168,8 @@ class Order extends Order_parent
                 $this->payPalProductId = $db->getOne(
                     $sql,
                     [
-                            $subProdId
-                        ]
+                        $subProdId
+                    ]
                 );
             }
         }
@@ -219,5 +222,17 @@ class Order extends Order_parent
     public function getOrderPaymentCapture(): ?Capture
     {
         return $this->getPayPalOrder()->purchase_units[0]->payments->captures[0] ?? null;
+    }
+
+    /**
+     * Is the object a subscription?
+     * @return bool
+     */
+    public function isPayPalSubscription()
+    {
+        return (bool) (
+            $this->oxorder__oxpaymenttype->value == 'oxidpaypal'
+            && $this->oxorder__oxtotalnetsum->value == 0
+        );
     }
 }
