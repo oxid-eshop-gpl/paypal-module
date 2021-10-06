@@ -1,8 +1,8 @@
 ---
 stages:
+  - test
   - build_release
 #  - deploy_integration
-  - test
   - promote
 
 build_release:
@@ -55,12 +55,16 @@ codecheck:
   only:
     - merge_requests
     - develop
-  needs:
-    - job: build_release
+  needs: []
   image: composer:2.0.8
   variables:
     TZ: Europe/Berlin
   script:
+    - cd oxideshop
+    - rm -rf vendor
+    - php composer-2.0.14.phar validate
+    - php composer-2.0.14.phar install --no-dev --no-plugins --no-scripts --no-ansi --no-interaction --no-progress
+    - php composer-2.0.14.phar install --no-ansi --no-interaction --no-progress
     - mkdir generated
     - vendor/bin/phpcs --standard=phpcs.xml --report-junit=../generated/phpcs-junit.xml
   artifacts:
