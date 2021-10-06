@@ -62,7 +62,7 @@ codecheck:
     - rm -rf vendor
     - php composer-2.0.14.phar validate
     - php composer-2.0.14.phar install --no-plugins --no-scripts --no-ansi --no-interaction --no-progress
-    - php composer-2.0.14.phar composer run-script post-install-cmd
+    - php composer-2.0.14.phar run-script post-install-cmd
     - vendor/bin/phpcs --standard=phpcs.xml --report-junit=../generated/phpcs-junit.xml
   artifacts:
     reports:
