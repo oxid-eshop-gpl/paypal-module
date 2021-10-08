@@ -73,14 +73,9 @@ class PaymentSaleCompletedHandler implements HandlerInterface
             ->getSubscriptionService()
             ->showSubscriptionDetails($billingAgreementId);
 
-        // collect cycles
-        // todo: Need the source for this information
-        // https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions-get-response
+        // find the last cycle
         $cycleExecutions = $paypalSubscriptionDetails->billing_info->cycle_executions;
-
-        $billingCycleNumber = 1;
-        $billingCycleTotal = 10;
-        $billingCycleType = 'REGULAR';
+        $lastCycle = $this->findLastCycle($cycleExecutions);
 
         // prepare price
         $vat = $subscriptionPlan->taxes->percentage;
@@ -107,8 +102,8 @@ class PaymentSaleCompletedHandler implements HandlerInterface
             'oxarticles__oxtitle'  => sprintf(
                 $lang->translateString('OXPS_PAYPAL_SUBSCRITION_PART_ARTICLE_TITLE'),
                 $payPalProduct->name,
-                $billingCycleNumber,
-                $billingCycleTotal
+                $lastCycle['cycleNumber'],
+                $lastCycle['cycleTotal']
             ),
             'oxarticles__oxprice'  => ($enterNetPrice ? $singlePrice->getNettoPrice() : $singlePrice->getBruttoPrice()),
             'oxarticles__oxvat'    => $vat,
@@ -141,11 +136,53 @@ class PaymentSaleCompletedHandler implements HandlerInterface
             $parentOrderId,
             $payPalProductId,
             $billingAgreementId,
-            $billingCycleType,
-            $billingCycleNumber
+            $lastCycle['cycleType'],
+            $lastCycle['cycleNumber']
         );
 
         // delete the temporary article
         $newArticle->delete();
     }
+
+    /**
+     * PayPal has no Information about the last cycle, so we must iterate the whole data for cycle-execution
+     * https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions-get-response
+     */
+    protected function findLastCycle($cycleExecutions): array
+    {
+        $result = [
+            'cycleNumber'   => 0,
+            'cycleTotal'    => 0,
+            'cycleSequence' => 0,
+            'cycleType'     => null
+        ];
+
+        $lastCycleExecution = null;
+        foreach ($cycleExecutions as $cycleExecution) {
+            if (is_null($lastCycleExecution)) {
+                $lastCycleExecution = $cycleExecution;
+            }
+            if ($cycleExecution->cycles_completed > 0) {
+                if ($cycleExecution->cycles_remaining > 0) {
+                    $lastCycleExecution = $cycleExecution;
+                    break;
+                }
+                elseif ($cycleExecution->cycles_remaining == 0) {
+                    $lastCycleExecution = $cycleExecution;
+                }
+            }
+        }
+
+        if (!is_null($lastCycleExecution)) {
+            $result = [
+                'cycleNumber'   => $lastCycleExecution->cycles_completed,
+                'cycleTotal'    => $lastCycleExecution->total_cycles,
+                'cycleSequence' => $lastCycleExecution->sequence,
+                'cycleType'     => $lastCycleExecution->tenure_type
+            ];
+        }
+
+        return $result;
+    }
+
 }
