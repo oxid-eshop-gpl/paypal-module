@@ -166,8 +166,7 @@ class PaymentSaleCompletedHandler implements HandlerInterface
                 if ($cycleExecution->cycles_remaining > 0) {
                     $lastCycleExecution = $cycleExecution;
                     break;
-                }
-                elseif ($cycleExecution->cycles_remaining == 0) {
+                } elseif ($cycleExecution->cycles_remaining == 0) {
                     $lastCycleExecution = $cycleExecution;
                 }
             }
@@ -184,5 +183,4 @@ class PaymentSaleCompletedHandler implements HandlerInterface
 
         return $result;
     }
-
 }
