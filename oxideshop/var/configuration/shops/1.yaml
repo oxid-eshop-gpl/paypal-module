@@ -150,16 +150,16 @@ modules:
         value: ''
       sPayPalSandboxClientId:
         type: str
-        value: 'ASb2XMiob84d6BZlUU1fkvQC2X8z2QZUsAyQq_AMzFqbB5e0seElOTu3ZKsTSyhquCZDt0si2QOo8sUu'
+        value: ASb2XMiob84d6BZlUU1fkvQC2X8z2QZUsAyQq_AMzFqbB5e0seElOTu3ZKsTSyhquCZDt0si2QOo8sUu
       sPayPalWebhookId:
         type: str
         value: ''
       sPayPalSandboxWebhookId:
         type: str
-        value: '8VD9630431440090J'
+        value: 8VD9630431440090J
       sPayPalSandboxClientSecret:
         type: str
-        value: 'EFHzO2oiwZNaQspwYOHknVavR12Kq0fMB91ZKJ2VxuQZlZAKKGJ5jeclEKrZXmZMxvPa4_5F4QvS7mHe'
+        value: EFHzO2oiwZNaQspwYOHknVavR12Kq0fMB91ZKJ2VxuQZlZAKKGJ5jeclEKrZXmZMxvPa4_5F4QvS7mHe
       blPayPalShowProductDetailsButton:
         type: bool
         value: true
@@ -392,6 +392,10 @@ modules:
         template: page/shop/start.tpl
         block: start_welcome_text
         file: /views/blocks/shared/page/shop/start.tpl
+      -
+        template: page/account/order.tpl
+        block: account_order_history_cart_items
+        file: /views/blocks/shared/page/account/order.tpl
     templates:
       pspaypalconfig.tpl: oxps/paypal/views/admin/tpl/pspaypalconfig.tpl
       pspaypaldisputedetails.tpl: oxps/paypal/views/admin/tpl/pspaypaldisputedetails.tpl
@@ -419,6 +423,7 @@ modules:
       tpl/flow/page/checkout/change_payment.tpl: oxps/paypal/views/tpl/flow/page/checkout/change_payment.tpl
       tpl/wave/page/checkout/change_payment.tpl: oxps/paypal/views/tpl/wave/page/checkout/change_payment.tpl
       tpl/installment_banners.tpl: oxps/paypal/views/tpl/shared/installment_banners.tpl
+      tpl/page/account/order_and_subscription_overview.tpl: oxps/paypal/views/tpl/shared/page/account/order_and_subscription_overview.tpl
   oxps/paypallocale:
     id: oxps/paypallocale
     path: oxps/paypallocale
