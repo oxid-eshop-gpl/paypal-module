@@ -496,7 +496,7 @@
                     <th>[{oxmultilang ident="OXPS_PAYPAL_SEQUENCE"}]</th>
                     <th>[{oxmultilang ident="OXPS_PAYPAL_CYCLES_COMPLETED"}]</th>
                     <th>[{oxmultilang ident="OXPS_PAYPAL_CYCLES_REMAINING"}]</th>
-                    <th>[{oxmultilang ident="OXPS_PAYPAL_CURRENT_PRICING_SCHEME_VERSION"}]</th>
+                    [{*<th>[{oxmultilang ident="OXPS_PAYPAL_CURRENT_PRICING_SCHEME_VERSION"}]</th>*}]
                     <th>[{oxmultilang ident="OXPS_PAYPAL_TOTAL_CYCLES"}]</th>
                 </tr>
                 [{foreach from=$billingInfo->cycle_executions item="cycleExecution"}]
@@ -506,7 +506,7 @@
                         <td>[{$cycleExecution->sequence}]</td>
                         <td>[{$cycleExecution->cycles_completed}]</td>
                         <td>[{$cycleExecution->cycles_remaining}]</td>
-                        <td>[{$cycleExecution->current_pricing_scheme_version}]</td>
+                        [{*<td>[{$cycleExecution->current_pricing_scheme_version}]</td>*}]
                         <td>[{$cycleExecution->total_cycles}]</td>
                     </tr>
                 [{/foreach}]

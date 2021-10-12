@@ -6,8 +6,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use OxidProfessionalServices\PayPal\Api\Client;
 use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
 use Psr\Http\Message\ResponseInterface;
-
-use function GuzzleHttp\Psr7\build_query;
+use GuzzleHttp\Psr7\Query;
 
 class BaseService
 {
@@ -35,7 +34,7 @@ class BaseService
     {
         $params = array_filter($params);
         if ($params) {
-            $q = build_query($params);
+            $q = Query::build($params);
             $path = "$path?$q";
         }
         $fullPath = $this->basePath . $path;

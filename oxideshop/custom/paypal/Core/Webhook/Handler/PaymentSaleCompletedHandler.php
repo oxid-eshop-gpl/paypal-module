@@ -71,7 +71,7 @@ class PaymentSaleCompletedHandler implements HandlerInterface
 
         $paypalSubscriptionDetails = $sf
             ->getSubscriptionService()
-            ->showSubscriptionDetails($billingAgreementId);
+            ->showSubscriptionDetails($billingAgreementId, 'last_failed_payment');
 
         // find the last cycle
         $cycleExecutions = $paypalSubscriptionDetails->billing_info->cycle_executions;
@@ -134,8 +134,6 @@ class PaymentSaleCompletedHandler implements HandlerInterface
             $userId,
             $newOrder->getId(),
             $parentOrderId,
-            $payPalProductId,
-            $billingAgreementId,
             $lastCycle['cycleType'],
             $lastCycle['cycleNumber']
         );
