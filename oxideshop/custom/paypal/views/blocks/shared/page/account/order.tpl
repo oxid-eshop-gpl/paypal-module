@@ -1,1 +1,5 @@
-[{include file='tpl/page/account/order_and_subscription_overview.tpl'}]
+[{if $order->isPayPalSubscription()}]
+    [{include file='tpl/page/account/order_and_subscription_overview.tpl'}]
+[{else}]
+    [{$smarty.block.parent}]
+[{/if}]

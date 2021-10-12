@@ -33,6 +33,7 @@ use OxidProfessionalServices\PayPal\Api\Model\Catalog\Product as PayPalProduct;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Subscription as PayPalSubscription;
 use OxidProfessionalServices\PayPal\Api\Service\Orders;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
+use OxidProfessionalServices\PayPal\Traits\AdminOrderFunctionTrait;
 
 /**
  * PayPal oxOrder class
@@ -41,6 +42,8 @@ use OxidProfessionalServices\PayPal\Core\ServiceFactory;
  */
 class Order extends Order_parent
 {
+    use AdminOrderFunctionTrait;
+
     /**
      * PayPal order information
      *
@@ -234,5 +237,15 @@ class Order extends Order_parent
             $this->oxorder__oxpaymenttype->value == 'oxidpaypal'
             && $this->oxorder__oxtotalnetsum->value == 0
         );
+    }
+
+    /**
+     * template-getter getPayPalSubscriptionForHistory
+     * @return obj
+     */
+    public function getPayPalSubscriptionForHistory()
+    {
+        $billingAgreementId = $this->getPayPalBillingAgreementIdForOxOrderId();
+        return $this->getPayPalSubscription($billingAgreementId);
     }
 }
