@@ -124,6 +124,7 @@ class PaymentSaleCompletedHandler implements HandlerInterface
         $newOrder = oxNew(Order::class);
         $newOrder->oxClone($parentOrder);
         $newOrder->oxorder__oxordernr = null;
+        $newOrder->oxorder__oxorderdate = null;
         $newOrder->setId();
         $newOrder->recalculateOrder([$newOrderArticle]);
 
