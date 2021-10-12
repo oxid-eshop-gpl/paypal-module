@@ -28,4 +28,6 @@ $aLang = [
     'OXPS_PAYPAL_CURRENT_PRICING_SCHEME_VERSION'   => 'Version des Preisschemas',
     'OXPS_PAYPAL_TOTAL_CYCLES'                     => 'Gesamtzyklen',
     'OXPS_PAYPAL_CYCLES_REMAINING'                 => 'verbleibende Zyklen',
+
+    'OXPS_PAYPAL_SUBSCRITION_PART_ARTICLE_TITLE'   => '%s (Teillieferung Nr. %s von %s)',
 ];

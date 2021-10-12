@@ -28,4 +28,6 @@ $aLang = [
     'OXPS_PAYPAL_CURRENT_PRICING_SCHEME_VERSION'   => 'Pricing scheme version',
     'OXPS_PAYPAL_TOTAL_CYCLES'                     => 'Total cycles',
     'OXPS_PAYPAL_CYCLES_REMAINING'                 => 'Cycles remaining',
+
+    'OXPS_PAYPAL_SUBSCRITION_PART_ARTICLE_TITLE'   => '%s (Partial delivery no. %s from %s)',
 ];
