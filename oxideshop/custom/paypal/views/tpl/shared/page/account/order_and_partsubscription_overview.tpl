@@ -1,6 +1,13 @@
-[{assign var="payPalParentSubscription" value=$order->getPayPalParentSubscription()}]
-[{if $payPalParentSubscription}]
+[{assign var="payPalParentSubscriptionOrder" value=$order->getParentSubscriptionOrder()}]
 <p>
-    [{oxmultilang ident="OXPS_PAYPAL_SUBSCRITION_PART_NOTE" suffix="COLON"}]
-    [{$payPalParentSubscription.oxorder__oxordernr->value}]
+    [{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION" suffix="COLON"}]
+    [{foreach from=$order->getOrderArticles(true) item=orderitem name=testOrderItem}]
+        <strong>[{$orderitem->oxorderarticles__oxtitle->value}]</strong><br>
+    [{/foreach}]
 </p>
+[{if $payPalParentSubscriptionOrder}]
+    <p>
+        [{oxmultilang ident="OXPS_PAYPAL_SUBSCRITION_PART_NOTE" suffix="COLON"}]
+        [{$payPalParentSubscriptionOrder->oxorder__oxordernr->value}]
+    </p>
+[{/if}]

@@ -424,6 +424,7 @@ modules:
       tpl/wave/page/checkout/change_payment.tpl: oxps/paypal/views/tpl/wave/page/checkout/change_payment.tpl
       tpl/installment_banners.tpl: oxps/paypal/views/tpl/shared/installment_banners.tpl
       tpl/page/account/order_and_subscription_overview.tpl: oxps/paypal/views/tpl/shared/page/account/order_and_subscription_overview.tpl
+      tpl/page/account/order_and_partsubscription_overview.tpl: oxps/paypal/views/tpl/shared/page/account/order_and_partsubscription_overview.tpl
   oxps/paypallocale:
     id: oxps/paypallocale
     path: oxps/paypallocale

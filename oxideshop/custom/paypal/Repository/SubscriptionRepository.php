@@ -86,7 +86,7 @@ class SubscriptionRepository
      * @throws DatabaseConnectionException
      * @throws DatabaseErrorException
      */
-    public function getParentSubscriptionByOrderId($orderId)
+    public function getSubscriptionByOrderId($orderId)
     {
         return DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getRow(
             'SELECT *
