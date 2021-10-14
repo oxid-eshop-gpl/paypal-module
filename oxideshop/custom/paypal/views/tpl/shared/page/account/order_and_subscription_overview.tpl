@@ -2,7 +2,9 @@
 [{assign var="billingInfo" value=$payPalSubscription->billing_info}]
 <p>
     [{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION" suffix="COLON"}]
-    <strong>[{$orderitem->oxorderarticles__oxtitle->value}]</strong><br>
+    [{foreach from=$order->getOrderArticles(true) item=orderitem name=testOrderItem}]
+        <strong>[{$orderitem->oxorderarticles__oxtitle->value}]</strong><br>
+    [{/foreach}]
     <strong>[{oxmultilang ident="OXPS_PAYPAL_BILLING_PLAN_MAIN"}]</strong>
 </p>
 <table class="table table-sm">
@@ -27,5 +29,6 @@
     [{/foreach}]
 </table>
 <p>
-
+    [{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_NEXT_BILLING_TIME" suffix="COLON"}]
+    <strong>[{$billingInfo->next_billing_time|date_format:"%d.%m.%Y %H:%M"}]</strong>
 </p>

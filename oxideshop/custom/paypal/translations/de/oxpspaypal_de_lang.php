@@ -30,4 +30,6 @@ $aLang = [
     'OXPS_PAYPAL_CYCLES_REMAINING'                 => 'verbleibende Zyklen',
 
     'OXPS_PAYPAL_SUBSCRITION_PART_ARTICLE_TITLE'   => '%s (Teillieferung Nr. %s von %s)',
+    'OXPS_PAYPAL_SUBSCRITION_PART_NOTE'            => 'Das ist eine Teillieferung eines Abos. Die Informationen zu diesem Abo finden Sie in der Hauptbestellung Nr.',
+    'OXPS_PAYPAL_SUBSCRIPTION_NEXT_BILLING_TIME'   => 'Nächste Abrechnung',
 ];

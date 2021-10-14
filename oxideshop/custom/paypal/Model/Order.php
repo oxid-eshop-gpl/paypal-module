@@ -34,6 +34,7 @@ use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Subscription as PayP
 use OxidProfessionalServices\PayPal\Api\Service\Orders;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 use OxidProfessionalServices\PayPal\Traits\AdminOrderFunctionTrait;
+use OxidProfessionalServices\PayPal\Repository\SubscriptionRepository;
 
 /**
  * PayPal oxOrder class
@@ -71,6 +72,13 @@ class Order extends Order_parent
      * @var string
      */
     protected $payPalProductId;
+
+    /**
+     * PayPal Subscription
+     *
+     * @var obj
+     */
+    protected $payPalSubscription = null;
 
     /**
      * Get PayPal order object for the current active order object
@@ -233,9 +241,24 @@ class Order extends Order_parent
      */
     public function isPayPalSubscription()
     {
+        $repository = new SubscriptionRepository();
+        $subscription = $repository->getSubscriptionByOrderId($this->getId());
         return (bool) (
             $this->oxorder__oxpaymenttype->value == 'oxidpaypal'
-            && $this->oxorder__oxtotalnetsum->value == 0
+            && $subscription
+            && $subscription['OXPARENTORDERID'] == ''
+        );
+    }
+
+    /**
+     * Is the object a subscription?
+     * @return bool
+     */
+    public function isPayPalPartSubscription()
+    {
+        return (bool) (
+            $this->oxorder__oxpaymenttype->value == 'oxidpaypal'
+            && $this->getSubscription()
         );
     }
 
@@ -247,5 +270,34 @@ class Order extends Order_parent
     {
         $billingAgreementId = $this->getPayPalBillingAgreementIdForOxOrderId();
         return $this->getPayPalSubscription($billingAgreementId);
+    }
+
+    /**
+     * template-getter getpayPalSubscription
+     * @return obj
+     */
+    public function getParentSubscriptionOrder()
+    {
+        $result = null;
+        if ($subscription = $this->getSubscription()) {
+            $parentOrder = oxNew(Order::class);
+            if ($parentOrder->load($subscription['OXPARENTORDERID'])) {
+                $result = $parentOrder;
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * Is the object a subscription?
+     * @return bool
+     */
+    protected function getSubscription()
+    {
+        if (is_null($this->payPalSubscription)) {
+            $repository = new SubscriptionRepository();
+            $this->payPalSubscription = $repository->getSubscriptionByOrderId($this->getId());
+        }
+        return $this->payPalSubscription;
     }
 }
