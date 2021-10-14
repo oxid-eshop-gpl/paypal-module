@@ -30,4 +30,6 @@ $aLang = [
     'OXPS_PAYPAL_CYCLES_REMAINING'                 => 'Cycles remaining',
 
     'OXPS_PAYPAL_SUBSCRITION_PART_ARTICLE_TITLE'   => '%s (Partial delivery no. %s from %s)',
+    'OXPS_PAYPAL_SUBSCRITION_PART_NOTE'            => 'This is a partial delivery of a subscription. The information about this subscription can be found in the main order no.',
+    'OXPS_PAYPAL_SUBSCRIPTION_NEXT_BILLING_TIME'   => 'Next billing',
 ];

@@ -29,5 +29,6 @@
     [{/foreach}]
 </table>
 <p>
-
+    [{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_NEXT_BILLING_TIME" suffix="COLON"}]
+    <strong>[{$billingInfo->next_billing_time|date_format:"%d.%m.%Y %H:%M"}]</strong>
 </p>

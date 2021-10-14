@@ -58,8 +58,58 @@ class SubscriptionRepository
                 FROM oxps_paypal_subscription
                 LEFT JOIN oxps_paypal_subscription_product
                     ON (oxps_paypal_subscription_product.OXID = oxps_paypal_subscription.OXPAYPALSUBPRODID)
-                WHERE oxps_paypal_subscription_product.PAYPALSUBSCRIPTIONPLANID = ?',
+                WHERE oxps_paypal_subscription_product.PAYPALSUBSCRIPTIONPLANID = ? AND
+                    oxps_paypal_subscription.OXPARENTORDERID = ""',
             [$subscriptionPlanId]
+        );
+    }
+
+    /**
+     * @param string $orderId
+     * @return array
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     */
+    public function getPartSubscriptionsByOrderId($orderId)
+    {
+        return DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getAll(
+            'SELECT *
+                FROM oxps_paypal_subscription
+                WHERE OXPARENTORDERID = ?',
+            [$orderId]
+        );
+    }
+
+    /**
+     * @param string $orderId
+     * @return array
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     */
+    public function getParentSubscriptionByOrderId($orderId)
+    {
+        return DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getRow(
+            'SELECT *
+                FROM oxps_paypal_subscription
+                WHERE OXORDERID = ?',
+            [$orderId]
+        );
+    }
+
+
+    /**
+     * @param string $subscriptionPlanId
+     * @return string
+     * @throws DatabaseConnectionException
+     * @throws DatabaseErrorException
+     */
+    public function getParentOrderIdFromPartSubscriptionsOrderId($orderId)
+    {
+        return DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getOne(
+            'SELECT OXPARENTORDERID
+                FROM oxps_paypal_subscription
+                WHERE OXORDERID = ?',
+            [$orderId]
         );
     }
 
