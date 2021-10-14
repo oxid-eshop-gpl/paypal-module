@@ -281,8 +281,7 @@ class Order extends Order_parent
         $result = null;
         if ($subscription = $this->getSubscription()) {
             $parentOrder = oxNew(Order::class);
-            if ($parentOrder->load($subscription['OXPARENTORDERID']))
-            {
+            if ($parentOrder->load($subscription['OXPARENTORDERID'])) {
                 $result = $parentOrder;
             }
         }
