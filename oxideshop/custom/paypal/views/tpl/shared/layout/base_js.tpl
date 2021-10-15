@@ -6,9 +6,23 @@
     [{/if}]
     [{if $oViewConf->getTopActiveClassName()|lower == 'account_order'}]
         [{capture assign="stornoButtons"}]
-            // todo set on click to "button with class subscriptionCancelButton"
-            // AJAX-Call by click to ProxyController sendCancelRequest
-            // if success, set button to disabled and the button text to data-successtext="[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_UNSUBSCRIBE_SEND"}]"
+            [{assign var="sSelfLink" value=$oViewConf->getSelfLink()|replace:"&amp;":"&"}]
+            document.addEventListener('click', function (event) {
+                if (!event.target.matches('.subscriptionCancelButton')) return;
+                event.preventDefault();
+                let el = event.target,
+                params = 'cl=PayPalProxyController&fnc=sendCancelRequest&orderId=' + el.getAttribute("data-orderid");
+                params += '&stoken=[{/literal}][{$oViewConf->getSessionChallengeToken()}][{literal}]';
+                fetch('[{/literal}][{$sSelfLink}][{literal}]' + params, {
+                    method: 'post',
+                    headers: {
+                        'content-type': 'application/json'
+                    }
+                }).then(function(data) {
+                    el.innerText = el.getAttribute("data-successtext");
+                    el.disabled = true;
+                });
+            }, false);
         [{/capture}]
         [{oxscript add=$stornoButtons}]
     [{/if}]
