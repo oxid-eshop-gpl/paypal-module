@@ -344,7 +344,7 @@ class SubscriptionRepository
     /**
      * @param string $orderId
      */
-    public function isCancelRequestSended(string $orderId = ''): boolean
+    public function isCancelRequestSended(string $orderId = ''): bool
     {
         $subscription = $this->getSubscriptionByOrderId($orderId);
         return (bool) (

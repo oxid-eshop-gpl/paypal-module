@@ -7,6 +7,7 @@
     [{if $oViewConf->getTopActiveClassName()|lower == 'account_order'}]
         [{capture assign="stornoButtons"}]
             [{assign var="sSelfLink" value=$oViewConf->getSelfLink()|replace:"&amp;":"&"}]
+             [{literal}]
             document.addEventListener('click', function (event) {
                 if (!event.target.matches('.subscriptionCancelButton')) return;
                 event.preventDefault();
@@ -23,6 +24,7 @@
                     el.disabled = true;
                 });
             }, false);
+            [{/literal}]
         [{/capture}]
         [{oxscript add=$stornoButtons}]
     [{/if}]

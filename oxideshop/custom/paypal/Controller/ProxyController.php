@@ -144,7 +144,8 @@ class ProxyController extends FrontendController
     {
         $repository = new SubscriptionRepository();
         $lang = Registry::getLang();
-        $orderId = Registry::getRequest()->getRequestEscapedParameter('orderid');
+        $orderId = Registry::getRequest()->getRequestEscapedParameter('orderId');
+
         if (
             $orderId &&
             !$repository->isCancelRequestSended($orderId)
@@ -153,11 +154,12 @@ class ProxyController extends FrontendController
 
             $order = oxNew(Order::class);
             $order->load($orderId);
+
             $user = oxNew(User::class);
             $user->load($order->oxorder__oxuserid->value);
 
-            $userName = $order->oxuser__oxfname->value . ' ' . $order->oxuser__oxlname->value;
-            $customerNo = $order->oxuser__oxcustnr->value;
+            $userName = $user->oxuser__oxfname->value . ' ' . $user->oxuser__oxlname->value;
+            $customerNo = $user->oxuser__oxcustnr->value;
             $orderNo = $order->oxorder__oxordernr->value;
 
             $message = sprintf(
