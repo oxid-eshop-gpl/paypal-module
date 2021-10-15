@@ -138,6 +138,20 @@ class ProxyController extends FrontendController
         Registry::getUtils()->redirect(Registry::getConfig()->getShopHomeUrl() . 'cl=payment', false, 301);
     }
 
+    public function sendCancelRequest()
+    {
+        if ($orderId = Registry::getRequest()->getRequestEscapedParameter('orderid')) {
+            $repository = new SubscriptionRepository();
+            if ($subscription = $repository->getSubscriptionByOrderId($orderId)) {
+                // todo check if OXCANCELREQUESTSENDED in oxps_paypal_subscription is 0
+                // if not do nothing
+                // todo set OXCANCELREQUESTSENDED in oxps_paypal_subscription to 1
+                // todo send Mail to merchant
+            }
+        }
+        $this->outputJson([true]);
+    }
+
     /**
      * Encodes and sends response as json
      *

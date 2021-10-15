@@ -37,8 +37,14 @@
     <p>
         <small>[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_UNSUBSCRIBE_NOTE"}]</small>
     </p>
-    <button data-successtext="[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_UNSUBSCRIBE_SEND"}]" data-orderid="[{$order->getId()}]" class="btn btn-primary subscriptionCancelButton" type="submit">
-        [{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_UNSUBSCRIBE"}]
-    </button>
+    [{if $order->existsACancelRequestForSubscription($order->getId())}]
+        <button class="btn btn-primary" disabled="disabled">
+            [{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_UNSUBSCRIBE_SEND"}]
+        </button>
+    [{else}]
+        <button data-successtext="[{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_UNSUBSCRIBE_SEND"}]" data-orderid="[{$order->getId()}]" class="btn btn-primary subscriptionCancelButton">
+            [{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_UNSUBSCRIBE"}]
+        </button>
+    [{/if}]
 [{/if}]
 
