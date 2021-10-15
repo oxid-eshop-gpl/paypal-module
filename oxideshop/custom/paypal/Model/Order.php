@@ -34,7 +34,6 @@ use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Subscription as PayP
 use OxidProfessionalServices\PayPal\Api\Service\Orders;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 use OxidProfessionalServices\PayPal\Traits\AdminOrderFunctionTrait;
-use OxidProfessionalServices\PayPal\Repository\SubscriptionRepository;
 
 /**
  * PayPal oxOrder class

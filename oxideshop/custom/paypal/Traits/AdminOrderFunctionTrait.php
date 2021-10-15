@@ -25,6 +25,7 @@ namespace OxidProfessionalServices\PayPal\Traits;
 use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\DatabaseProvider;
+use OxidEsales\Eshop\Application\Model\Order;
 use OxidProfessionalServices\PayPal\Api\Exception\ApiException;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Money;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Patch;
@@ -35,6 +36,7 @@ use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\SubscriptionCaptureR
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\SubscriptionSuspendRequest;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 use OxidProfessionalServices\PayPal\Api\Model\Subscriptions\Subscription as PayPalSubscription;
+use OxidProfessionalServices\PayPal\Repository\SubscriptionRepository;
 
 trait AdminOrderFunctionTrait
 {
@@ -197,8 +199,7 @@ trait AdminOrderFunctionTrait
         $repository = new SubscriptionRepository();
         $subscription = $repository->getSubscriptionByOrderId($orderId);
         return (bool) (
-            $this->oxorder__oxpaymenttype->value == 'oxidpaypal'
-            && $subscription
+            is_array($subscription)
             && $subscription['OXPARENTORDERID'] == ''
         );
     }
@@ -213,8 +214,7 @@ trait AdminOrderFunctionTrait
         $repository = new SubscriptionRepository();
         $subscription = $repository->getSubscriptionByOrderId($orderId);
         return (bool) (
-            $this->oxorder__oxpaymenttype->value == 'oxidpaypal'
-            && $subscription
+            is_array($subscription)
             && $subscription['OXPARENTORDERID'] !== ''
         );
     }
@@ -250,5 +250,6 @@ trait AdminOrderFunctionTrait
                 $result = $parentOrder;
             }
         }
+        return $result;
     }
 }
