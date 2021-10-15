@@ -32,4 +32,7 @@ $aLang = [
     'OXPS_PAYPAL_SUBSCRITION_PART_ARTICLE_TITLE'   => '%s (Teillieferung Nr. %s von %s)',
     'OXPS_PAYPAL_SUBSCRITION_PART_NOTE'            => 'Das ist eine Teillieferung eines Abos. Die Informationen zu diesem Abo finden Sie in der Hauptbestellung Nr.',
     'OXPS_PAYPAL_SUBSCRIPTION_NEXT_BILLING_TIME'   => 'Nächste Abrechnung',
+    'OXPS_PAYPAL_SUBSCRIPTION_UNSUBSCRIBE'         => 'Abo kündigen',
+    'OXPS_PAYPAL_SUBSCRIPTION_UNSUBSCRIBE_NOTE'    => 'Wenn Sie dieses Abo kündigen wollen, klicken Sie bitte folgenden Button. Wir werden uns umgehend mit Ihnen in Verbindung setzen und das Ende des Abos entsprechend des Vertrags einleiten.',
+    'OXPS_PAYPAL_SUBSCRIPTION_UNSUBSCRIBE_SEND'    => 'Abo-Kündigungsanfrage gesendet',
 ];
