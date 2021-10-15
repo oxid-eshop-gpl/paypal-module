@@ -23,14 +23,16 @@
 namespace OxidProfessionalServices\PayPal\Controller;
 
 use Exception;
+use OxidEsales\Eshop\Application\Model\Order;
+use OxidEsales\Eshop\Application\Model\User;
 use OxidEsales\Eshop\Application\Model\PaymentList;
 use OxidEsales\Eshop\Application\Model\DeliverySetList;
 use OxidEsales\Eshop\Application\Controller\FrontendController;
 use OxidEsales\Eshop\Core\Exception\ArticleInputException;
 use OxidEsales\Eshop\Core\Exception\NoArticleException;
 use OxidEsales\Eshop\Core\Exception\OutOfStockException;
+use OxidEsales\Eshop\Core\Email;
 use OxidEsales\Eshop\Core\Registry;
-use OxidProfessionalServices\PayPal\Api\Model\Orders\Order;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderCaptureRequest;
 use OxidProfessionalServices\PayPal\Api\Model\Orders\OrderRequest;
 use OxidProfessionalServices\PayPal\Controller\Admin\Service\SubscriptionService;
@@ -140,14 +142,37 @@ class ProxyController extends FrontendController
 
     public function sendCancelRequest()
     {
-        if ($orderId = Registry::getRequest()->getRequestEscapedParameter('orderid')) {
-            $repository = new SubscriptionRepository();
-            if ($subscription = $repository->getSubscriptionByOrderId($orderId)) {
-                // todo check if OXCANCELREQUESTSENDED in oxps_paypal_subscription is 0
-                // if not do nothing
-                // todo set OXCANCELREQUESTSENDED in oxps_paypal_subscription to 1
-                // todo send Mail to merchant
-            }
+        $repository = new SubscriptionRepository();
+        $lang = Registry::getLang();
+        $orderId = Registry::getRequest()->getRequestEscapedParameter('orderid');
+        if (
+            $orderId &&
+            !$repository->isCancelRequestSended($orderId)
+        ) {
+            $repository->setCancelRequestSended($orderId);
+
+            $order = oxNew(Order::class);
+            $order->load($orderId);
+            $user = oxNew(User::class);
+            $user->load($order->oxorder__oxuserid->value);
+
+            $userName = $order->oxuser__oxfname->value . ' ' . $order->oxuser__oxlname->value;
+            $customerNo = $order->oxuser__oxcustnr->value;
+            $orderNo = $order->oxorder__oxordernr->value;
+
+            $message = sprintf(
+                $lang->translateString('OXPS_PAYPAL_SUBSCRIPTION_UNSUBSCRIBE_MAIL'),
+                $userName,
+                $customerNo,
+                $orderNo
+            );
+
+            $mailer = oxNew(Email::class);
+            $mailer->sendContactMail(
+                '',
+                $lang->translateString('OXPS_PAYPAL_SUBSCRIPTION_UNSUBSCRIBE_HEAD'),
+                $message
+            );
         }
         $this->outputJson([true]);
     }

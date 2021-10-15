@@ -342,6 +342,32 @@ class SubscriptionRepository
     }
 
     /**
+     * @param string $orderId
+     */
+    public function isCancelRequestSended(string $orderId = ''): boolean
+    {
+        $subscription = $this->getSubscriptionByOrderId($orderId);
+        return (bool) (
+            isset($subscription['OXCANCELREQUESTSENDED'])
+            && $subscription['OXCANCELREQUESTSENDED'] == '1'
+        );
+    }
+
+    /**
+     * @param string $orderId
+     */
+    public function setCancelRequestSended(string $orderId = ''): void
+    {
+        $sql = 'UPDATE oxps_paypal_subscription SET
+            OXCANCELREQUESTSENDED = "1"
+            WHERE OXORDERID = ?';
+
+        DatabaseProvider::getDb()->execute($sql, [
+            $orderId
+        ]);
+    }
+
+    /**
      * @param string $paypalProductId
      * @throws DatabaseConnectionException
      * @throws DatabaseErrorException

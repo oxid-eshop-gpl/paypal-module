@@ -35,4 +35,6 @@ $aLang = [
     'OXPS_PAYPAL_SUBSCRIPTION_UNSUBSCRIBE'         => 'Subscriptions unsubscribe',
     'OXPS_PAYPAL_SUBSCRIPTION_UNSUBSCRIBE_NOTE'    => 'If you want to cancel this subscription, please click the following button. We will contact you immediately and initiate the end of the subscription according to the contract.',
     'OXPS_PAYPAL_SUBSCRIPTION_UNSUBSCRIBE_SEND'    => 'Subscription cancellation request sent',
+    'OXPS_PAYPAL_SUBSCRIPTION_UNSUBSCRIBE_HEAD'    => 'Subscription cancellation request',
+    'OXPS_PAYPAL_SUBSCRIPTION_UNSUBSCRIBE_MAIL'    => 'The <strong> customer%s (Kd.Nr: %s)</strong> would like to cancel his subscription from the order <strong>%s</strong>. Please check the subscription and then contact the customer again.',
 ];

@@ -35,4 +35,6 @@ $aLang = [
     'OXPS_PAYPAL_SUBSCRIPTION_UNSUBSCRIBE'         => 'Abo kündigen',
     'OXPS_PAYPAL_SUBSCRIPTION_UNSUBSCRIBE_NOTE'    => 'Wenn Sie dieses Abo kündigen wollen, klicken Sie bitte folgenden Button. Wir werden uns umgehend mit Ihnen in Verbindung setzen und das Ende des Abos entsprechend des Vertrags einleiten.',
     'OXPS_PAYPAL_SUBSCRIPTION_UNSUBSCRIBE_SEND'    => 'Abo-Kündigungsanfrage gesendet',
+    'OXPS_PAYPAL_SUBSCRIPTION_UNSUBSCRIBE_HEAD'    => 'Abo-Kündigungsanfrage',
+    'OXPS_PAYPAL_SUBSCRIPTION_UNSUBSCRIBE_MAIL'    => 'Der <strong>Kunde %s (Kd.Nr: %s)</strong> möchte sein Abo aus der Bestellung <strong>%s</strong> stornieren. Bitte prüfen Sie das Abo und setzen sich mit dem Kunden anschließend wieder in Verbindung.',
 ];

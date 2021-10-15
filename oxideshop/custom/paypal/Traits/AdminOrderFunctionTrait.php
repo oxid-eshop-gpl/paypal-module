@@ -209,14 +209,10 @@ trait AdminOrderFunctionTrait
      * @param string|null $orderId
      * @return bool
      */
-    public function existsACancelRequestForSubscription(string $orderId = null)
+    public function isCancelRequestSended(string $orderId = null)
     {
         $repository = new SubscriptionRepository();
-        $subscription = $repository->getSubscriptionByOrderId($orderId);
-        return (bool) (
-            isset($subscription['OXCANCELREQUESTSENDED'])
-            && $subscription['OXCANCELREQUESTSENDED'] == '1'
-        );
+        return $repository->isCancelRequestSended($orderId);
     }
 
     /**
