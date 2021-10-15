@@ -410,6 +410,7 @@ modules:
       pspaypalbalances.tpl: oxps/paypal/views/admin/tpl/pspaypalbalances.tpl
       pspaypalsubscriptiontransactions.tpl: oxps/paypal/views/admin/tpl/pspaypalsubscriptiontransactions.tpl
       pspaypalsubscriptiondetails.tpl: oxps/paypal/views/admin/tpl/pspaypalsubscriptiondetails.tpl
+      pspaypalpartsubscriptiondetails.tpl: oxps/paypal/views/admin/tpl/pspaypalpartsubscriptiondetails.tpl
       pspaypalsubscribe.tpl: oxps/paypal/views/admin/tpl/pspaypalsubscribe.tpl
       pspaypalsmartpaymentbuttons.tpl: oxps/paypal/views/includes/pspaypalsmartpaymentbuttons.tpl
       pspaypalpaymentbuttons.tpl: oxps/paypal/views/includes/pspaypalpaymentbuttons.tpl

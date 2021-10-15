@@ -80,7 +80,8 @@ class PayPalOrderController extends AdminDetailsController
         // normal paypal order
         try {
             $order = $this->getOrder();
-            $this->addTplParam('oxid', $this->getEditObjectId());
+            $orderId = $this->getEditObjectId();
+            $this->addTplParam('oxid', $orderId);
             $this->addTplParam('order', $order);
             $this->addTplParam('payPalOrder', null);
             $this->addTplParam('payPalSubscriptionOrder', null);
@@ -88,12 +89,16 @@ class PayPalOrderController extends AdminDetailsController
             if ($order->getPayPalOrderIdForOxOrderId()) {
                 $this->addTplParam('payPalOrder', $order->getPayPalOrder());
                 $this->addTplParam('capture', $order->getOrderPaymentCapture());
-            } elseif ($billingAgreementId = $order->getPayPalBillingAgreementIdForOxOrderId()) {
+            } elseif ($this->isPayPalSubscription($orderId)) {
+                $billingAgreementId = $order->getPayPalBillingAgreementIdForOxOrderId();
                 $paypalSubscription = $this->getPayPalSubscription($billingAgreementId);
                 $product = $this->getSubscriptionProduct($paypalSubscription->id);
                 $this->addTplParam('payPalSubscription', $paypalSubscription);
                 $this->addTplParam('subscriptionProduct', $product);
                 $result = "pspaypalsubscriptiondetails.tpl";
+            } elseif ($this->isPayPalPartSubscription($orderId)) {
+                $this->addTplParam('payPalParentSubscriptionOrder', $this->getParentSubscriptionOrder($orderId));
+                $result = "pspaypalpartsubscriptiondetails.tpl";
             }
         } catch (ApiException $exception) {
             $this->addTplParam('error', $lang->translateString('OXPS_PAYPAL_ERROR_' . $exception->getErrorIssue()));

@@ -353,6 +353,8 @@ $aLang = [
     'OXPS_PAYPAL_DISPUTE_REFUND_WITH_RETURN'       => 'Refund with return',
     'OXPS_PAYPAL_DISPUTE_REFUND_WITH_REPLACEMENT'  => 'Refund with replacement',
     'OXPS_PAYPAL_DISPUTE_REPLACEMENT_WITHOUT_REFUND'                                 => 'Replacement without refund',
+    'OXPS_PAYPAL_SUBSCRITION_PART_NOTE'            =>
+        'This is a partial delivery of a subscription. The information about this subscription can be found in the main order no.',
     // Errors
     'OXPS_PAYPAL_ERROR_NOT_PAID_WITH_PAYPAL'       => 'Order not paid using PayPal',
     'OXPS_PAYPAL_ERROR_INVALID_RESOURCE_ID'        => 'Specified resource ID does not exist.',
