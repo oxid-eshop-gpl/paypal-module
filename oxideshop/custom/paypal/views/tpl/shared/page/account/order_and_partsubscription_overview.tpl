@@ -1,4 +1,4 @@
-[{assign var="payPalParentSubscriptionOrder" value=$order->getParentSubscriptionOrder()}]
+[{assign var="payPalParentSubscriptionOrder" value=$order->getParentSubscriptionOrder($order->getId())}]
 <p>
     [{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION" suffix="COLON"}]
     [{foreach from=$order->getOrderArticles(true) item=orderitem name=testOrderItem}]

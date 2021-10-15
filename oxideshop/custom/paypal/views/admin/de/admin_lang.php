@@ -361,6 +361,8 @@ $aLang = [
     'OXPS_PAYPAL_DISPUTE_REFUND_WITH_REPLACEMENT'  => 'Rückerstattung mit Ersatz',
     'OXPS_PAYPAL_DISPUTE_REPLACEMENT_WITHOUT_REFUND'                                 =>
         'Ersatz ohne Rückerstattung',
+    'OXPS_PAYPAL_SUBSCRITION_PART_NOTE'            =>
+        'Das ist eine Teillieferung eines Abos. Die Informationen zu diesem Abo finden Sie in der Hauptbestellung Nr.',
     // Errors
     'OXPS_PAYPAL_ERROR_NOT_PAID_WITH_PAYPAL'       => 'Diese Bestellung wurde nicht mit PayPal bezahlt',
     'OXPS_PAYPAL_ERROR_INVALID_RESOURCE_ID'        =>

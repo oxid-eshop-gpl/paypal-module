@@ -1,6 +1,6 @@
-[{if $order->isPayPalSubscription()}]
+[{if $order->isPayPalSubscription($order->getId())}]
     [{include file='tpl/page/account/order_and_subscription_overview.tpl'}]
-[{elseif $order->isPayPalPartSubscription()}]
+[{elseif $order->isPayPalPartSubscription($order->getId())}]
     [{include file='tpl/page/account/order_and_partsubscription_overview.tpl'}]
 [{else}]
     [{$smarty.block.parent}]

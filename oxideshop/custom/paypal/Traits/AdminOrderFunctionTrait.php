@@ -188,6 +188,38 @@ trait AdminOrderFunctionTrait
     }
 
     /**
+     * Is the object a subscription?
+     * @param string|null $orderId
+     * @return bool
+     */
+    private function isPayPalSubscription(string $orderId = null)
+    {
+        $repository = new SubscriptionRepository();
+        $subscription = $repository->getSubscriptionByOrderId($orderId);
+        return (bool) (
+            $this->oxorder__oxpaymenttype->value == 'oxidpaypal'
+            && $subscription
+            && $subscription['OXPARENTORDERID'] == ''
+        );
+    }
+
+    /**
+     * Is the object a Part-subscription?
+     * @param string|null $orderId
+     * @return bool
+     */
+    private function isPayPalPartSubscription(string $orderId = null)
+    {
+        $repository = new SubscriptionRepository();
+        $subscription = $repository->getSubscriptionByOrderId($orderId);
+        return (bool) (
+            $this->oxorder__oxpaymenttype->value == 'oxidpaypal'
+            && $subscription
+            && $subscription['OXPARENTORDERID'] !== ''
+        );
+    }
+
+    /**
      * Get associated PayPal subscription
      *
      * @return PayPalSubscription
@@ -201,5 +233,22 @@ trait AdminOrderFunctionTrait
         $subscriptionService = $serviceFactory->getSubscriptionService();
 
         return $subscriptionService->showSubscriptionDetails($billingAgreementId, 'last_failed_payment');
+    }
+
+    /**
+     * template-getter getpayPalSubscription
+     * @param string|null $orderId
+     * @return obj
+     */
+    public function getParentSubscriptionOrder(string $orderId = null)
+    {
+        $result = null;
+        $repository = new SubscriptionRepository();
+        if ($subscription = $repository->getSubscriptionByOrderId($orderId)) {
+            $parentOrder = oxNew(Order::class);
+            if ($parentOrder->load($subscription['OXPARENTORDERID'])) {
+                $result = $parentOrder;
+            }
+        }
     }
 }
