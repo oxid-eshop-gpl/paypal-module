@@ -194,12 +194,12 @@ trait AdminOrderFunctionTrait
      * @param string|null $orderId
      * @return bool
      */
-    private function isPayPalSubscription(string $orderId = null)
+    public function isPayPalSubscription(string $orderId = null)
     {
         $repository = new SubscriptionRepository();
         $subscription = $repository->getSubscriptionByOrderId($orderId);
         return (bool) (
-            is_array($subscription)
+            isset($subscription['OXPARENTORDERID'])
             && $subscription['OXPARENTORDERID'] == ''
         );
     }
@@ -209,12 +209,12 @@ trait AdminOrderFunctionTrait
      * @param string|null $orderId
      * @return bool
      */
-    private function isPayPalPartSubscription(string $orderId = null)
+    public function isPayPalPartSubscription(string $orderId = null)
     {
         $repository = new SubscriptionRepository();
         $subscription = $repository->getSubscriptionByOrderId($orderId);
         return (bool) (
-            is_array($subscription)
+            isset($subscription['OXPARENTORDERID'])
             && $subscription['OXPARENTORDERID'] !== ''
         );
     }
