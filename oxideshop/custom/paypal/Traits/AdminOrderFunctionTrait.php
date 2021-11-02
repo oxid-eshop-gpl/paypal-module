@@ -205,6 +205,17 @@ trait AdminOrderFunctionTrait
     }
 
     /**
+     * Is the object a subscription?
+     * @param string|null $orderId
+     * @return bool
+     */
+    public function isCancelRequestSended(string $orderId = null)
+    {
+        $repository = new SubscriptionRepository();
+        return $repository->isCancelRequestSended($orderId);
+    }
+
+    /**
      * Is the object a Part-subscription?
      * @param string|null $orderId
      * @return bool

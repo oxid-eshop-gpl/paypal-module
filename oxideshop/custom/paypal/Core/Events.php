@@ -215,6 +215,11 @@ class Events
                             unsigned
                             NOT NULL
                             COMMENT \'Billing Cycle Number\',
+                        `OXCANCELREQUESTSENDED`
+                            tinyint(1)
+                            unsigned
+                            NOT NULL
+                            COMMENT \'Is there a cancel request send by the customer?\',
                         `OXTIMESTAMP`
                             timestamp
                             NOT NULL
