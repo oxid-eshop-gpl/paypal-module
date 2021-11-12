@@ -1,0 +1,4 @@
+name: PayPal Module Migrations
+migrations_namespace: OxidProfessionalServices\PayPal\Migrations
+table_name: oxmigrations_paypal
+migrations_directory: data
