@@ -23,11 +23,13 @@
 namespace OxidProfessionalServices\PayPal\Controller;
 
 use Exception;
+use OxidEsales\Eshop\Application\Model\Address;
 use OxidEsales\Eshop\Application\Model\Order;
 use OxidEsales\Eshop\Application\Model\User;
 use OxidEsales\Eshop\Application\Model\PaymentList;
 use OxidEsales\Eshop\Application\Model\DeliverySetList;
 use OxidEsales\Eshop\Application\Controller\FrontendController;
+use OxidEsales\Eshop\Application\Component\UserComponent;
 use OxidEsales\Eshop\Core\Exception\ArticleInputException;
 use OxidEsales\Eshop\Core\Exception\NoArticleException;
 use OxidEsales\Eshop\Core\Exception\OutOfStockException;
@@ -62,9 +64,7 @@ class ProxyController extends FrontendController
         $request = $requestFactory->getRequest(
             Registry::getSession()->getBasket(),
             OrderRequest::INTENT_CAPTURE,
-            $context === 'continue' ?
-                OrderRequestFactory::USER_ACTION_CONTINUE :
-                OrderRequestFactory::USER_ACTION_PAY_NOW
+            OrderRequestFactory::USER_ACTION_CONTINUE
         );
 
         try {
@@ -72,8 +72,6 @@ class ProxyController extends FrontendController
         } catch (Exception $exception) {
             Registry::getLogger()->error("Error on order create call.", [$exception]);
         }
-
-        $this->setPayPalPaymentMethod();
 
         if ($response->id) {
             PayPalSession::storePayPalOrderId($response->id);
@@ -93,14 +91,16 @@ class ProxyController extends FrontendController
             $request = new OrderCaptureRequest();
 
             try {
-                /** @var Order $response */
-                if ($context === 'pay_now') {
-                    $response = $service->capturePaymentForOrder('', $orderId, $request, '');
-                } else {
-                    $response = $service->showOrderDetails($orderId);
-                }
+                $response = $service->showOrderDetails($orderId);
             } catch (Exception $exception) {
                 Registry::getLogger()->error("Error on order capture call.", [$exception]);
+            }
+
+            // create user if it is not exists
+            if (!$user = $this->getUser()) {
+                $userComponent = oxNew(UserComponent::class);
+                $userComponent->createPayPalGuestUser($response);
+                $this->setPayPalPaymentMethod();
             }
 
             $this->outputJson($response);
@@ -214,14 +214,20 @@ class ProxyController extends FrontendController
     {
         $session = Registry::getSession();
         $basket = $session->getBasket();
-        if (($payment !== 'oxidpaypal')) {
+        $countryId = $this->getDeliveryCountryId;
+        $user = null;
+
+        if ($activeUser = $this->getUser()) {
+            $user = $activeUser;
+        }
+
+        if ($session->getVariable('paymentid') !== 'oxidpaypal') {
             $possibleDeliverySets = [];
 
-            $user = $this->getUser();
             $deliverySetList = Registry::get(DeliverySetList::class)
             ->getDeliverySetList(
                 $user,
-                $user->getActiveCountry()
+                $countryId
             );
             foreach ($deliverySetList as $deliverySet) {
                 $paymentList = Registry::get(PaymentList::class)->getPaymentList(
@@ -236,9 +242,45 @@ class ProxyController extends FrontendController
 
             if (count($possibleDeliverySets)) {
                 $basket->setPayment('oxidpaypal');
-                $basket->setShipping(reset($possibleDeliverySets));
+                $shippingSetId = reset($possibleDeliverySets);
+                $basket->setShipping($shippingSetId);
+                $session->setVariable('sShipSet', $shippingSetId);
                 $session->setVariable('paymentid', 'oxidpaypal');
             }
         }
+    }
+
+    /**
+     * Tries to fetch user delivery country ID
+     *
+     * @return string
+     */
+    protected function getDeliveryCountryId()
+    {
+        $config = Registry::getConfig();
+        $user = $this->getUser();
+
+        $countryId = null;
+
+        if (!$user) {
+            $homeCountry = $config->getConfigParam('aHomeCountry');
+            if (is_array($homeCountry)) {
+                $countryId = current($homeCountry);
+            }
+        } else {
+            if ($delCountryId = $config->getGlobalParameter('delcountryid')) {
+                $countryId = $delCountryId;
+            } elseif ($addressId = Registry::getSession()->getVariable('deladrid')) {
+                $deliveryAddress = oxNew(Address::class);
+                if ($deliveryAddress->load($addressId)) {
+                    $countryId = $deliveryAddress->oxaddress__oxcountryid->value;
+                }
+            }
+
+            if (!$countryId) {
+                $countryId = $user->oxuser__oxcountryid->value;
+            }
+        }
+        return $countryId;
     }
 }

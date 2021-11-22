@@ -6,7 +6,8 @@
   "license": "proprietary",
   "version": "0.0.2",
   "require": {
-    "giggsey/libphonenumber-for-php": "^8.12"
+    "giggsey/libphonenumber-for-php": "^8.12",
+    "viison/address-splitter": "^0.3.4"
   },
   "archive": {
     "exclude": ["/resources"]
