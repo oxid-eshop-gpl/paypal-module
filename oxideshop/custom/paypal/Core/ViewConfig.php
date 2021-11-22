@@ -211,12 +211,11 @@ class ViewConfig extends ViewConfig_parent
     /**
      * Gets PayPal JS SDK url
      *
-     * @param bool $paymentStrategy ('continue', 'pay_now') commit the order or Show a Confirmation Page
+     * @param bool $subscribe is it a PayPal Subscription
      *
-     * @param bool $subscribe
      * @return string
      */
-    public function getPayPalJsSdkUrl($paymentStrategy = true, $subscribe = false): string
+    public function getPayPalJsSdkUrl($subscribe = false): string
     {
         $payPalConfig = $this->getPayPalConfig();
         $config = Registry::getConfig();
@@ -232,7 +231,7 @@ class ViewConfig extends ViewConfig_parent
         } else {
             $params['integration-date'] = Constants::PAYPAL_INTEGRATION_DATE;
             $params['intent'] = strtolower(Constants::PAYPAL_ORDER_INTENT_CAPTURE);
-            $params['commit'] = ($paymentStrategy == 'pay_now' ? 'true' : 'false');
+            $params['commit'] = 'false';
         }
 
         // PSPAYPAL-492

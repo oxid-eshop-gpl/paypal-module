@@ -59,13 +59,6 @@ class OrderRequestFactory
     public const USER_ACTION_CONTINUE = 'CONTINUE';
 
     /**
-     * After you redirect the customer to the PayPal payment page, a Pay Now button appears. Use this option when the
-     * final amount is known when the checkout is initiated and you want to process the payment immediately when the
-     * customer clicks Pay Now
-     */
-    public const USER_ACTION_PAY_NOW = 'PAY_NOW';
-
-    /**
      * @var OrderRequest
      */
     private $request;
@@ -78,7 +71,7 @@ class OrderRequestFactory
     /**
      * @param Basket $basket
      * @param string $intent Order::INTENT_CAPTURE or Order::INTENT_AUTHORIZE constant values
-     * @param string $userAction USER_ACTION_CONTINUE OR USER_ACTION_PAY_NOW constant values
+     * @param string $userAction USER_ACTION_CONTINUE constant values
      * @param null|string $transactionId transaction id
      * @param null|string $invoiceId custom invoice number
      *
