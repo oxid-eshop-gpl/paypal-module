@@ -6,5 +6,5 @@
         [{oxmultilang ident="OXPS_PAYPAL_SUBSCRIPTION_NEEDSUSER"}]
     [{/if}]
 [{else}]
-    [{include file="pspaypalpaymentbuttons.tpl" buttonId=$buttonId paymentStrategy=$paymentStrategy aid=$aid}]
+    [{include file="pspaypalpaymentbuttons.tpl" buttonId=$buttonId aid=$aid}]
 [{/if}]

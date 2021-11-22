@@ -1,4 +1,4 @@
-[{oxscript include=$oViewConf->getPayPalJsSdkUrl($paymentStrategy, true)}]
+[{oxscript include=$oViewConf->getPayPalJsSdkUrl(true)}]
 [{assign var="sSelfLink" value=$oViewConf->getSelfLink()|replace:"&amp;":"&"}]
 [{assign var="sCleanLink" value=$selfLink|replace:"?":""}]
 [{if !$aid}]
