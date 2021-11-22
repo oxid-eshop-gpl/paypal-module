@@ -98,10 +98,8 @@ class ProxyController extends FrontendController
 
             // create user if it is not exists
             if (!$user = $this->getUser()) {
-
                 $userComponent = oxNew(UserComponent::class);
                 $userComponent->createPayPalGuestUser($response);
-//                Registry::getSession()->setVariable('paymentid', 'oxidpaypal');
                 $this->setPayPalPaymentMethod();
             }
 
