@@ -30,6 +30,109 @@ use OxidEsales\Eshop\Core\Registry;
 
 class Events
 {
+    private static array $payments = [
+
+        //Standard PayPal
+        'oxidpaypal' => [
+            'de_desc' => "PayPal v2",
+            'en_desc' => "PayPal v2",
+            'de_longdesc' => "Bezahlen Sie bequem mit PayPal",
+            'en_longdesc' => "Pay conveniently with PayPal",
+            'countries' => []
+        ],
+        'oxidpaypal_bancontact' => [
+            'de_desc' => "Bancontact (über PayPal)",
+            'en_desc' => "Bancontact (via PayPal)",
+            'de_longdesc' => "Bezahlen Sie bequem mit Bancontact",
+            'en_longdesc' => "Pay conveniently with Bancontact.",
+            'countries' => ['BE']
+        ],
+        'oxidpaypal_boleto' => [
+            'de_desc' => "Boleto Bancário (über PayPal)",
+            'en_desc' => "Boleto Bancário (via PayPal)",
+            'de_longdesc' => "Bezahlen Sie bequem mit Boleto Bancário",
+            'en_longdesc' => "Pay conveniently with Boleto Bancário.",
+            'countries' => ['BR']
+        ],
+        'oxidpaypal_blik' => [
+            'de_desc' => "BLIK (über PayPal)",
+            'en_desc' => "BLIK (via PayPal)",
+            'de_longdesc' => "Bezahlen Sie bequem mit BLIK",
+            'en_longdesc' => "Pay conveniently with BLIK.",
+            'countries' => ['PL']
+        ],
+        'oxidpaypal_eps' => [
+            'de_desc' => "EPS (über PayPal)",
+            'en_desc' => "EPS (via PayPal)",
+            'de_longdesc' => "Bezahlen Sie bequem mit EPS",
+            'en_longdesc' => "Pay conveniently with EPS.",
+            'countries' => ['AT']
+        ],
+        'oxidpaypal_giropay' => [
+            'de_desc' => "GiroPay (über PayPal)",
+            'en_desc' => "GiroPay (via PayPal)",
+            'de_longdesc' => "Bezahlen Sie bequem mit GiroPay",
+            'en_longdesc' => "Pay conveniently with GiroPay.",
+            'countries' => ['DE']
+        ],
+        'oxidpaypal_ideal' => [
+            'de_desc' => "iDEAL (über PayPal)",
+            'en_desc' => "iDEAL (via PayPal)",
+            'de_longdesc' => "Bezahlen Sie bequem mit iDEAL",
+            'en_longdesc' => "Pay conveniently with iDEAL.",
+            'countries' => ['NL']
+        ],
+        'oxidpaypal_multibanco' => [
+            'de_desc' => "Multibanco (über PayPal)",
+            'en_desc' => "Multibanco (via PayPal)",
+            'de_longdesc' => "Bezahlen Sie bequem mit Multibanco",
+            'en_longdesc' => "Pay conveniently with Multibanco.",
+            'countries' => ['PT']
+        ],
+        'oxidpaypal_multibanco' => [
+            'de_desc' => "Multibanco (über PayPal)",
+            'en_desc' => "Multibanco (via PayPal)",
+            'de_longdesc' => "Bezahlen Sie bequem mit Multibanco",
+            'en_longdesc' => "Pay conveniently with Multibanco.",
+            'countries' => ['PT']
+        ],
+        'oxidpaypal_mybank' => [
+            'de_desc' => "MyBank (über PayPal)",
+            'en_desc' => "MyBank (via PayPal)",
+            'de_longdesc' => "Bezahlen Sie bequem mit MyBank",
+            'en_longdesc' => "Pay conveniently with MyBank.",
+            'countries' => ['IT']
+        ],
+        'oxidpaypal_oxxo' => [
+            'de_desc' => "OXXO (über PayPal)",
+            'en_desc' => "OXXO (via PayPal)",
+            'de_longdesc' => "Bezahlen Sie bequem mit OXXO",
+            'en_longdesc' => "Pay conveniently with OXXO.",
+            'countries' => ['MX']
+        ],
+        'oxidpaypal_przelewy24' => [
+            'de_desc' => "Przelewy24 (über PayPal)",
+            'en_desc' => "Przelewy24 (via PayPal)",
+            'de_longdesc' => "Bezahlen Sie bequem mit Przelewy24",
+            'en_longdesc' => "Pay conveniently with Przelewy24.",
+            'countries' => ['PL']
+        ],
+        'oxidpaypal_przelewy24' => [
+            'de_desc' => "Sofort (über PayPal)",
+            'en_desc' => "Sofort (via PayPal)",
+            'de_longdesc' => "Bezahlen Sie bequem mit Sofort",
+            'en_longdesc' => "Pay conveniently with Sofort.",
+            'countries' => ['DE', 'AT', 'BE', 'IT', 'NL', 'UK', 'ES']
+        ],
+        'oxidpaypal_trustly' => [
+            'de_desc' => "Trustly (über PayPal)",
+            'en_desc' => "Trustly (via PayPal)",
+            'de_longdesc' => "Bezahlen Sie bequem mit Trustly",
+            'en_longdesc' => "Pay conveniently with Trustly.",
+            'countries' => ['SE', 'FI', 'NL', 'EE']
+        ],
+
+
     /**
      * Execute action on activate event
      */
