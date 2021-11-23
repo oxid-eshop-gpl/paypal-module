@@ -27,111 +27,11 @@ use OxidEsales\Eshop\Core\DatabaseProvider;
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Model\BaseModel;
 use OxidEsales\Eshop\Core\Registry;
+use OxidProfessionalServices\PayPal\Core\Constants;
 
 class Events
 {
-    private static array $payments = [
-
-        //Standard PayPal
-        'oxidpaypal' => [
-            'de_desc' => "PayPal v2",
-            'en_desc' => "PayPal v2",
-            'de_longdesc' => "Bezahlen Sie bequem mit PayPal",
-            'en_longdesc' => "Pay conveniently with PayPal",
-            'countries' => []
-        ],
-        'oxidpaypal_bancontact' => [
-            'de_desc' => "Bancontact (über PayPal)",
-            'en_desc' => "Bancontact (via PayPal)",
-            'de_longdesc' => "Bezahlen Sie bequem mit Bancontact",
-            'en_longdesc' => "Pay conveniently with Bancontact.",
-            'countries' => ['BE']
-        ],
-        'oxidpaypal_boleto' => [
-            'de_desc' => "Boleto Bancário (über PayPal)",
-            'en_desc' => "Boleto Bancário (via PayPal)",
-            'de_longdesc' => "Bezahlen Sie bequem mit Boleto Bancário",
-            'en_longdesc' => "Pay conveniently with Boleto Bancário.",
-            'countries' => ['BR']
-        ],
-        'oxidpaypal_blik' => [
-            'de_desc' => "BLIK (über PayPal)",
-            'en_desc' => "BLIK (via PayPal)",
-            'de_longdesc' => "Bezahlen Sie bequem mit BLIK",
-            'en_longdesc' => "Pay conveniently with BLIK.",
-            'countries' => ['PL']
-        ],
-        'oxidpaypal_eps' => [
-            'de_desc' => "EPS (über PayPal)",
-            'en_desc' => "EPS (via PayPal)",
-            'de_longdesc' => "Bezahlen Sie bequem mit EPS",
-            'en_longdesc' => "Pay conveniently with EPS.",
-            'countries' => ['AT']
-        ],
-        'oxidpaypal_giropay' => [
-            'de_desc' => "GiroPay (über PayPal)",
-            'en_desc' => "GiroPay (via PayPal)",
-            'de_longdesc' => "Bezahlen Sie bequem mit GiroPay",
-            'en_longdesc' => "Pay conveniently with GiroPay.",
-            'countries' => ['DE']
-        ],
-        'oxidpaypal_ideal' => [
-            'de_desc' => "iDEAL (über PayPal)",
-            'en_desc' => "iDEAL (via PayPal)",
-            'de_longdesc' => "Bezahlen Sie bequem mit iDEAL",
-            'en_longdesc' => "Pay conveniently with iDEAL.",
-            'countries' => ['NL']
-        ],
-        'oxidpaypal_multibanco' => [
-            'de_desc' => "Multibanco (über PayPal)",
-            'en_desc' => "Multibanco (via PayPal)",
-            'de_longdesc' => "Bezahlen Sie bequem mit Multibanco",
-            'en_longdesc' => "Pay conveniently with Multibanco.",
-            'countries' => ['PT']
-        ],
-        'oxidpaypal_multibanco' => [
-            'de_desc' => "Multibanco (über PayPal)",
-            'en_desc' => "Multibanco (via PayPal)",
-            'de_longdesc' => "Bezahlen Sie bequem mit Multibanco",
-            'en_longdesc' => "Pay conveniently with Multibanco.",
-            'countries' => ['PT']
-        ],
-        'oxidpaypal_mybank' => [
-            'de_desc' => "MyBank (über PayPal)",
-            'en_desc' => "MyBank (via PayPal)",
-            'de_longdesc' => "Bezahlen Sie bequem mit MyBank",
-            'en_longdesc' => "Pay conveniently with MyBank.",
-            'countries' => ['IT']
-        ],
-        'oxidpaypal_oxxo' => [
-            'de_desc' => "OXXO (über PayPal)",
-            'en_desc' => "OXXO (via PayPal)",
-            'de_longdesc' => "Bezahlen Sie bequem mit OXXO",
-            'en_longdesc' => "Pay conveniently with OXXO.",
-            'countries' => ['MX']
-        ],
-        'oxidpaypal_przelewy24' => [
-            'de_desc' => "Przelewy24 (über PayPal)",
-            'en_desc' => "Przelewy24 (via PayPal)",
-            'de_longdesc' => "Bezahlen Sie bequem mit Przelewy24",
-            'en_longdesc' => "Pay conveniently with Przelewy24.",
-            'countries' => ['PL']
-        ],
-        'oxidpaypal_przelewy24' => [
-            'de_desc' => "Sofort (über PayPal)",
-            'en_desc' => "Sofort (via PayPal)",
-            'de_longdesc' => "Bezahlen Sie bequem mit Sofort",
-            'en_longdesc' => "Pay conveniently with Sofort.",
-            'countries' => ['DE', 'AT', 'BE', 'IT', 'NL', 'UK', 'ES']
-        ],
-        'oxidpaypal_trustly' => [
-            'de_desc' => "Trustly (über PayPal)",
-            'en_desc' => "Trustly (via PayPal)",
-            'de_longdesc' => "Bezahlen Sie bequem mit Trustly",
-            'en_longdesc' => "Pay conveniently with Trustly.",
-            'countries' => ['SE', 'FI', 'NL', 'EE']
-        ],
-
+    protected static $countryIso2List = null;
 
     /**
      * Execute action on activate event
@@ -139,38 +39,62 @@ class Events
     public static function onActivate()
     {
         self::addPaymentMethod();
-        self::enablePaymentMethod();
         self::configureShippingMethods();
     }
 
     /**
-     * Add PayPal payment method set EN and DE long descriptions
+     * Add PayPal payment method set long descriptions
      */
     public static function addPaymentMethod(): void
     {
-        $paymentDescriptions = array(
-            'en' => '<div>PayPal v2</div>',
-            'de' => '<div>PayPal v2</div>'
-        );
+        $languages = Registry::getLang()->getLanguageIds();
 
-        $payment = oxNew(Payment::class);
-        if (!$payment->load('oxidpaypal')) {
-            $payment->setId('oxidpaypal');
-            $payment->oxpayments__oxactive = new Field(1);
-            $payment->oxpayments__oxdesc = new Field('PayPal');
-            $payment->oxpayments__oxaddsum = new Field(0);
-            $payment->oxpayments__oxaddsumtype = new Field('abs');
-            $payment->oxpayments__oxfromboni = new Field(0);
-            $payment->oxpayments__oxfromamount = new Field(0);
-            $payment->oxpayments__oxtoamount = new Field(10000);
+        foreach (Constants::PAYPAL_PAYMENT_DEFINTIONS as $paymentId => $paymentDefinitions) {
+            $country2Payment = [];
+            $installAllowed = false;
+            if (!count($paymentDefinitions['countries'])) {
+               // all countries allowed
+                $installAllowed = true;
+            } else {
+                // check allowed countries
+                foreach ($paymentDefinitions['countries'] as $isoCode) {
+                    if (isset(self::getCountryIso2List()[$isoCode])) {
+                        $installAllowed = true;
+                        $country2Payment[] = self::getCountryIso2List()[$isoCode];
+                    }
+                }
+            }
 
-            $languages = Registry::getLang()->getLanguageIds();
-            foreach ($paymentDescriptions as $languageAbbreviation => $description) {
-                $languageId = array_search($languageAbbreviation, $languages);
-                if ($languageId !== false) {
-                    $payment->setLanguage($languageId);
-                    $payment->oxpayments__oxlongdesc = new Field($description);
-                    $payment->save();
+            $payment = oxNew(Payment::class);
+            if ($installAllowed && !$payment->load($paymentId)) {
+                $payment->setId($paymentId);
+                $payment->assign([
+                    'oxactive' => 1
+                ]);
+
+                foreach ($paymentDefinitions['descriptions'] as $languageAbbreviation => $description) {
+                    $languageId = array_search($languageAbbreviation, $languages);
+                    if ($languageId !== false) {
+                        $payment->setLanguage($languageId);
+                        $payment->assign([
+                            'oxdesc'     => $description['desc'],
+                            'oxlongdesc' => $description['longdesc']
+                        ]);
+                        $payment->save();
+                    }
+                }
+
+                if (count($country2Payment)) {
+                    foreach ($country2Payment as $objectid) {
+                        $object2Payment = oxNew(BaseModel::class);
+                        $object2Payment->init('oxobject2payment');
+                        $object2Payment->assign([
+                            'oxpaymentid' => $paymentId,
+                            'oxobjectid'  => $objectid,
+                            'oxtype'      => 'oxcountry'
+                        ]);
+                        $object2Payment->save();
+                    }
                 }
             }
         }
@@ -181,22 +105,13 @@ class Events
      */
     public static function disablePaymentMethod(): void
     {
-        $payment = oxNew(Payment::class);
-        if ($payment->load('oxidpaypal')) {
-            $payment->oxpayments__oxactive = new Field(0);
-            $payment->save();
+        foreach (Constants::PAYPAL_PAYMENT_DEFINTIONS as $paymentId => $paymentDefinitions) {
+            $payment = oxNew(Payment::class);
+            if ($payment->load($paymentId)) {
+                $payment->oxpayments__oxactive = new Field(0);
+                $payment->save();
+            }
         }
-    }
-
-    /**
-     * Activates PayPal payment method
-     */
-    public static function enablePaymentMethod(): void
-    {
-        $payment = oxNew(Payment::class);
-        $payment->load('oxidpaypal');
-        $payment->oxpayments__oxactive = new Field(1);
-        $payment->save();
     }
 
     /**
@@ -230,5 +145,22 @@ class Events
             ]);
             $o2d->save();
         }
+    }
+
+    /**
+     * Assigns PayPal to all available shipping methods
+     */
+    protected static function getCountryIso2List()
+    {
+        if (is_null(self::$countryIso2List)) {
+            self::$countryIso2List = [];
+            $countryList = oxNew(CountryList::class);
+            if ($countryList->loadActiveCountries()) {
+                foreach ($countryList as $oxId => $country) {
+                    self::$countryIso2List[$country['oxisoalpha2']] = $oxId;
+                }
+            }
+        }
+        return self::$countryIso2List;
     }
 }
