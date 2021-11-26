@@ -22,96 +22,17 @@
 
 namespace OxidProfessionalServices\PayPal\Core;
 
-use OxidEsales\Eshop\Application\Model\Payment;
-use OxidEsales\Eshop\Core\DatabaseProvider;
-use OxidEsales\Eshop\Core\Field;
-use OxidEsales\Eshop\Core\Model\BaseModel;
-use OxidEsales\Eshop\Core\Registry;
-use OxidProfessionalServices\PayPal\Core\Constants;
+use OxidEsales\DoctrineMigrationWrapper\MigrationsBuilder;
 
 class Events
 {
-    protected static $countryIso2List = null;
-
     /**
      * Execute action on activate event
      */
-    public static function onActivate()
+    public static function onActivate(): void
     {
-        self::addPaymentMethod();
-        self::configureShippingMethods();
-    }
-
-    /**
-     * Add PayPal payment method set long descriptions
-     */
-    public static function addPaymentMethod(): void
-    {
-        $languages = Registry::getLang()->getLanguageIds();
-
-        foreach (Constants::PAYPAL_PAYMENT_DEFINTIONS as $paymentId => $paymentDefinitions) {
-            $country2Payment = [];
-            $installAllowed = false;
-            if (!count($paymentDefinitions['countries'])) {
-               // all countries allowed
-                $installAllowed = true;
-            } else {
-                // check allowed countries
-                foreach ($paymentDefinitions['countries'] as $isoCode) {
-                    if (isset(self::getCountryIso2List()[$isoCode])) {
-                        $installAllowed = true;
-                        $country2Payment[] = self::getCountryIso2List()[$isoCode];
-                    }
-                }
-            }
-
-            $payment = oxNew(Payment::class);
-            if ($installAllowed && !$payment->load($paymentId)) {
-                $payment->setId($paymentId);
-                $payment->assign([
-                    'oxactive' => 1
-                ]);
-
-                foreach ($paymentDefinitions['descriptions'] as $languageAbbreviation => $description) {
-                    $languageId = array_search($languageAbbreviation, $languages);
-                    if ($languageId !== false) {
-                        $payment->setLanguage($languageId);
-                        $payment->assign([
-                            'oxdesc'     => $description['desc'],
-                            'oxlongdesc' => $description['longdesc']
-                        ]);
-                        $payment->save();
-                    }
-                }
-
-                if (count($country2Payment)) {
-                    foreach ($country2Payment as $objectid) {
-                        $object2Payment = oxNew(BaseModel::class);
-                        $object2Payment->init('oxobject2payment');
-                        $object2Payment->assign([
-                            'oxpaymentid' => $paymentId,
-                            'oxobjectid'  => $objectid,
-                            'oxtype'      => 'oxcountry'
-                        ]);
-                        $object2Payment->save();
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Disables payment method
-     */
-    public static function disablePaymentMethod(): void
-    {
-        foreach (Constants::PAYPAL_PAYMENT_DEFINTIONS as $paymentId => $paymentDefinitions) {
-            $payment = oxNew(Payment::class);
-            if ($payment->load($paymentId)) {
-                $payment->oxpayments__oxactive = new Field(0);
-                $payment->save();
-            }
-        }
+        // execute module migrations
+        self::executeModuleMigrations();
     }
 
     /**
@@ -121,46 +42,16 @@ class Events
      */
     public static function onDeactivate(): void
     {
-        self::disablePaymentMethod();
     }
 
     /**
-     * Assigns PayPal to all available shipping methods
+     * Execute necessary module migrations on activate event
+     *
+     * @return void
      */
-    protected static function configureShippingMethods()
+    private static function executeModuleMigrations(): void
     {
-        $db = DatabaseProvider::getDb();
-        $allShippingIds = $db->getCol("SELECT oxid FROM oxdeliveryset");
-        $assignedShippingIds = $db->getCol(
-            "SELECT oxobjectid FROM oxobject2payment WHERE oxpaymentid='oxidpaypal' AND oxtype='oxdelset'"
-        );
-        foreach (array_diff($allShippingIds, $assignedShippingIds) as $shippingId) {
-            /** @var BaseModel $o2d */
-            $o2d = oxNew(BaseModel::class);
-            $o2d->init('oxobject2payment');
-            $o2d->assign([
-                'oxpaymentid' => 'oxidpaypal',
-                'oxtype' => 'oxdelset',
-                'oxobjectid' => $shippingId
-            ]);
-            $o2d->save();
-        }
-    }
-
-    /**
-     * Assigns PayPal to all available shipping methods
-     */
-    protected static function getCountryIso2List()
-    {
-        if (is_null(self::$countryIso2List)) {
-            self::$countryIso2List = [];
-            $countryList = oxNew(CountryList::class);
-            if ($countryList->loadActiveCountries()) {
-                foreach ($countryList as $oxId => $country) {
-                    self::$countryIso2List[$country['oxisoalpha2']] = $oxId;
-                }
-            }
-        }
-        return self::$countryIso2List;
+        $migrations = (new MigrationsBuilder())->build();
+        $migrations->execute('migrations:migrate', 'oxscpaypal');
     }
 }
