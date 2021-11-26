@@ -17,6 +17,9 @@ use OxidEsales\Facts\Facts;
  */
 final class Version20211112091954 extends AbstractMigration
 {
+    protected $activeCountries = null;
+    protected $languageIds = null;
+
     public function __construct($version)
     {
         parent::__construct($version);
@@ -254,7 +257,7 @@ final class Version20211112091954 extends AbstractMigration
             $order->setPrimaryKey(['OXID']);
         }
         if (!$order->hasIndex('OXORDERID')) {
-            $order->addIndex(['OXORDERID', 'OXORDERID']);
+            $order->addindex(['OXORDERID', 'OXORDERID']);
         }
     }
 
@@ -264,9 +267,22 @@ final class Version20211112091954 extends AbstractMigration
     protected function createPayments(Schema $schema): void
     {
         foreach (Constants::PAYPAL_PAYMENT_DEFINTIONS as $paymentId => $paymentDefinitions) {
+            $active = 0;
+            // undefined countries mean everything is allowed
+            if (!count($paymentDefinitions['countries'])) {
+                 $active = 1;
+            } else {
+                foreach ($paymentDefinitions['countries'] as $country) {
+                    if (in_array($country, $this->getActiveCountries())) {
+                        $active = 1;
+                        break;
+                    }
+                }
+            }
+
             $langRows = '';
-            $sqlPlaceHolder = '?, ?';
-            $sqlValues = [$paymentId, 1];
+            $sqlPlaceHolder = '?, ?, ?, ?, ?';
+            $sqlValues = [$paymentId, $active, 0, 10000, 'abs'];
             foreach ($this->getLanguageIds() as $langId => $langAbbr) {
                 if (isset($paymentDefinitions['descriptions'][$langAbbr])) {
                     $descriptions = $paymentDefinitions['descriptions'][$langAbbr];
@@ -279,7 +295,8 @@ final class Version20211112091954 extends AbstractMigration
             }
 
             $this->addSql(
-                "INSERT IGNORE INTO `oxpayments` (`OXID`, `OXACTIVE` " . $langRows . ")
+                "INSERT IGNORE INTO `oxpayments` (`OXID`, `OXACTIVE`, `OXFROMAMOUNT`, `OXTOAMOUNT`, `OXADDSUMTYPE`
+                " . $langRows . ")
                 VALUES (" . $sqlPlaceHolder . ")",
                 $sqlValues
             );
@@ -332,32 +349,55 @@ final class Version20211112091954 extends AbstractMigration
      */
     protected function getLanguageIds()
     {
-        $languageIds = [];
+        if (is_null($this->languageIds)) {
+            $this->languageIds = [];
 
-        $facts = new Facts();
-        $configFile = new ConfigFile($facts->getSourcePath() . '/config.inc.php');
-        $configKey = is_null($configFile->getVar('sConfigKey')) ?
-            Config::DEFAULT_CONFIG_KEY :
-            $configFile->getVar('sConfigKey');
+            $facts = new Facts();
+            $configFile = new ConfigFile($facts->getSourcePath() . '/config.inc.php');
+            $configKey = is_null($configFile->getVar('sConfigKey')) ?
+                Config::DEFAULT_CONFIG_KEY :
+                $configFile->getVar('sConfigKey');
 
-        if (
-            $result = $this->connection->executeQuery(
-                'SELECT DECODE(OXVARVALUE, ?) as confValue FROM `oxconfig` WHERE `OXVARNAME` = ?',
-                [$configKey, 'aLanguages']
-            )->fetchAllAssociative()
-        ) {
-            $rawLanguageIds = unserialize($result[0]['confValue']);
+            if (
+                $results = $this->connection->executeQuery(
+                    'SELECT DECODE(OXVARVALUE, ?) as confValue FROM `oxconfig` WHERE `OXVARNAME` = ?',
+                    [$configKey, 'aLanguages']
+                )->fetchAllAssociative()
+            ) {
+                $rawLanguageIds = unserialize($results[0]['confValue']);
 
-            foreach ($rawLanguageIds as $langAbbr => $langName) {
-                $languageIds[] = $langAbbr;
+                foreach ($rawLanguageIds as $langAbbr => $langName) {
+                    $this->languageIds[] = $langAbbr;
+                }
+            }
+
+            // fallback OXID-Standard
+            if (!count($this->languageIds)) {
+                $this->languageIds = ['de', 'en'];
             }
         }
+        return $this->languageIds;
+    }
 
-        // fallback OXID-Standard
-        if (!count($languageIds)) {
-            $languageIds = ['de', 'en'];
+
+    /**
+     * get active Countries
+     */
+    protected function getActiveCountries()
+    {
+        if (is_null($this->activeCountries)) {
+            $this->activeCountries = [];
+            if (
+                $results = $this->connection->executeQuery(
+                    'SELECT OXISOALPHA2 FROM `oxcountry` WHERE `OXACTIVE` = ?',
+                    [1]
+                )->fetchAllAssociative()
+            ) {
+                foreach ($results as $result) {
+                    $this->activeCountries[] = $result['OXISOALPHA2'];
+                }
+            }
         }
-
-        return $languageIds;
+        return $this->activeCountries;
     }
 }
