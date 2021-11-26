@@ -213,6 +213,4 @@ class Constants
             'countries' => ['SE', 'FI', 'NL', 'EE']
         ]
     ];
-
-
 }
