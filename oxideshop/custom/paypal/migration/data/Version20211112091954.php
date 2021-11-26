@@ -292,11 +292,11 @@ final class Version20211112091954 extends AbstractMigration
     protected function createPayment2Countries(Schema $schema): void
     {
         foreach (Constants::PAYPAL_PAYMENT_DEFINTIONS as $paymentId => $paymentDefinitions) {
+            $this->addSql(
+                "DELETE FROM `oxobject2payment` WHERE `OXPAYMENTID` = ? and `OXTYPE` = 'oxcountry'",
+                [$paymentId]
+            );
             foreach ($paymentDefinitions['countries'] as $country) {
-                $this->addSql(
-                    "DELETE FROM `oxobject2payment` WHERE `OXPAYMENTID` = ? and `OXTYPE` = 'oxcountry'",
-                    [$paymentId]
-                );
                 $this->addSql(
                     "INSERT IGNORE INTO `oxobject2payment` (`OXID`, `OXPAYMENTID`, `OXOBJECTID`, `OXTYPE`)
                     SELECT md5(CONCAT(?, 'oxcountry', ?)), ?, `oxcountry`.`OXID`, 'oxcountry'
@@ -317,9 +317,10 @@ final class Version20211112091954 extends AbstractMigration
                 "DELETE FROM `oxobject2payment` WHERE `OXPAYMENTID` = ? and `OXTYPE` = 'oxdelset'",
                 [$paymentId]
             );
+
             $this->addSql(
                 "INSERT IGNORE INTO `oxobject2payment` (`OXID`, `OXPAYMENTID`, `OXOBJECTID`, `OXTYPE`)
-                SELECT md5(CONCAT(?, 'oxdelset')), ?, `oxdeliveryset`.`OXID`, 'oxdelset'
+                SELECT md5(CONCAT(?, 'oxdelset', `oxdeliveryset`.`OXID`)), ?, `oxdeliveryset`.`OXID`, 'oxdelset'
                 FROM `oxdeliveryset` WHERE `oxdeliveryset`.`OXACTIVE` = 1",
                 [$paymentId, $paymentId]
             );
