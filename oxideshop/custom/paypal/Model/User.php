@@ -22,7 +22,9 @@
 
 namespace OxidProfessionalServices\PayPal\Model;
 
+use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\DatabaseProvider;
+use OxidEsales\Eshop\Application\Model\RequiredAddressFields;
 
 /**
  * PayPal oxOrder class
@@ -53,5 +55,20 @@ class User extends User_parent
         );
 
         return $result ? true : false;
+    }
+
+    /**
+     * get the InvoiceAddress from user with all required fields
+     * @return array
+     */
+    public function getInvoiceAddress()
+    {
+        $result = [];
+        $requiredAddressFields = oxNew(RequiredAddressFields::class);
+        foreach ($requiredAddressFields->getBillingFields() as $requiredAddressField) {
+            $result[$requiredAddressField] = $this->{$requiredAddressField}->value;
+        }
+
+        return $result;
     }
 }
