@@ -42,6 +42,7 @@ use OxidProfessionalServices\PayPal\Core\OrderRequestFactory;
 use OxidProfessionalServices\PayPal\Core\PayPalSession;
 use OxidProfessionalServices\PayPal\Core\ServiceFactory;
 use OxidProfessionalServices\PayPal\Repository\SubscriptionRepository;
+use OxidProfessionalServices\PayPal\Core\Utils\PayPalAddressResponseToOxidAddress;
 
 /**
  * Server side interface for PayPal smart buttons.
@@ -96,11 +97,21 @@ class ProxyController extends FrontendController
                 Registry::getLogger()->error("Error on order capture call.", [$exception]);
             }
 
-            // create user if it is not exists
             if (!$user = $this->getUser()) {
+                // create user if it is not exists
                 $userComponent = oxNew(UserComponent::class);
                 $userComponent->createPayPalGuestUser($response);
                 $this->setPayPalPaymentMethod();
+            } else {
+                // add PayPal-Address as Delivery-Address
+                $deliveryAddress = PayPalAddressResponseToOxidAddress::mapAddress($response, 'oxaddress__');
+                $user->changeUserData(
+                    $user->oxuser__oxusername->value,
+                    null,
+                    null,
+                    $user->getInvoiceAddress(),
+                    $deliveryAddress
+                );
             }
 
             $this->outputJson($response);
