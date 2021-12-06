@@ -34,8 +34,10 @@ class PayPalAddressResponseToOxidAddress
      * @param string $DBTablePrefix
      * @return array
      */
-    public static function mapAddress(\OxidProfessionalServices\PayPal\Api\Model\Orders\Order $response, string $DBTablePrefix): array
-    {
+    public static function mapAddress(
+        \OxidProfessionalServices\PayPal\Api\Model\Orders\Order $response,
+        string $DBTablePrefix
+    ): array {
         $country = oxNew(Country::class);
         $countryId = $country->getIdByCode($response->purchase_units[0]->shipping->address->country_code);
         $country->load($countryId);
