@@ -211,21 +211,6 @@ class Config
     }
 
     /**
-     * @param string Identifier to tell configs for PDP, basket or checkout apart.
-     * @return array
-     */
-    public function getEnabledPaymentOptions($context)
-    {
-        if (in_array($context, ['Details','Basket','Checkout'])) {
-            $configKey = 'arrPayPalEnabledOptions_' . $context;
-
-            return Registry::getConfig()->getConfigParam($configKey);
-        }
-
-        return null;
-    }
-
-    /**
      * This ClientId is public. The only function is to create
      * a basiclly AccessToken,  Which one is needed to generate
      * the request for the merchant ClientId.

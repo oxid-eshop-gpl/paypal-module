@@ -170,27 +170,6 @@ $aLang = [
     'HELP_OXPS_PAYPAL_WEBHOOK_ID'                  =>
         'Die ID des Webhooks, wie in Ihrem Developer Portal-Konto konfiguriert',
 
-    // PSPAYPAL-492
-    'OXPS_PAYPAL_BUTTON_OPTIONS'                   => 'Zahlungsarten-Buttons ein- oder ausschalten',
-    'OXPS_PAYPAL_BUTTON_MAIN_DESCRIPTION'          => 'Schalten Sie hier diejenigen Zahlungsarten ein oder aus, die in
-        den nachfolgend aufgelisteten Bereichen angeboten werden sollen.',
-    'OXPS_PAYPAL_BASKET_BUTTON_NOCREDITOPTION'     => 'Dieser Shop wird außerhalb der vereinigten Staaten betrieben und
-        besitzt keine Genehmigung für den Einsatz der Option <em>Später Bezahlen</em> oder Kunden könne über diesen Shop
-        Zahlungen in Verbindung mit Online-Spielen tätigen.',
-    'OXPS_PAYPAL_BUTTON_card'                      => 'Kredit- oder Debitkarten',
-    'OXPS_PAYPAL_BUTTON_bancontact'                => 'Bancontact',
-    'OXPS_PAYPAL_BUTTON_blik'                      => 'BLIK',
-    'OXPS_PAYPAL_BUTTON_eps'                       => 'eps',
-    'OXPS_PAYPAL_BUTTON_giropay'                   => 'giropay',
-    'OXPS_PAYPAL_BUTTON_ideal'                     => 'iDEAL',
-    'OXPS_PAYPAL_BUTTON_mercadopago'               => 'Mercado Pago',
-    'OXPS_PAYPAL_BUTTON_mybank'                    => 'MyBank',
-    'OXPS_PAYPAL_BUTTON_p24'                       => 'Przelewy24',
-    'OXPS_PAYPAL_BUTTON_sepa'                      => 'SEPA-Lastschrift',
-    'OXPS_PAYPAL_BUTTON_sofort'                    => 'Sofort',
-    'OXPS_PAYPAL_BUTTON_paylater'                  => 'Später Bezahlen',
-    'OXPS_PAYPAL_BUTTON_venmo'                     => 'Venmo',
-
     // PayPal ORDER
     'OXPS_PAYPAL_AMOUNT'                           => 'Betrag',
     'OXPS_PAYPAL_SHOP_PAYMENT_STATUS'              => 'Shop-Zahlungsstatus',
