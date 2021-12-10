@@ -161,35 +161,6 @@ class PayPalConfigController extends AdminController
         $confArr = $this->handleSpecialFields($confArr);
         $this->saveConfig($confArr, $shopId);
 
-        // PSPAYPAL-492 -->
-        $confArr = Registry::getRequest()->getRequestEscapedParameter('enabledPaymentOptions_Details');
-        Registry::getConfig()->saveShopConfVar(
-            'aarr',
-            'arrPayPalEnabledOptions_Details',
-            $confArr,
-            $shopId,
-            self::MODULE_ID
-        );
-
-        $confArr = Registry::getRequest()->getRequestEscapedParameter('enabledPaymentOptions_Basket');
-        Registry::getConfig()->saveShopConfVar(
-            'aarr',
-            'arrPayPalEnabledOptions_Basket',
-            $confArr,
-            $shopId,
-            self::MODULE_ID
-        );
-
-        $confArr = Registry::getRequest()->getRequestEscapedParameter('enabledPaymentOptions_Checkout');
-        Registry::getConfig()->saveShopConfVar(
-            'aarr',
-            'arrPayPalEnabledOptions_Checkout',
-            $confArr,
-            $shopId,
-            self::MODULE_ID
-        );
-        // <-- PSPAYPAL-492
-
         parent::save();
     }
 
@@ -251,10 +222,6 @@ class PayPalConfigController extends AdminController
         }
         if (!isset($conf['oePayPalBannersCheckoutPage'])) {
             $conf['oePayPalBannersCheckoutPage'] = 0;
-        }
-        // PSPAYPAL-492
-        if (!isset($conf['blPayPalNeverUseCredit'])) {
-            $conf['blPayPalNeverUseCredit'] = 0;
         }
 
         return $conf;
