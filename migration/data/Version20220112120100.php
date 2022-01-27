@@ -287,7 +287,7 @@ final class Version20220112120100 extends AbstractMigration
             $subscriptionProduct->setPrimaryKey(['OXID']);
         }
         if (!$subscriptionProduct->hasIndex('OXID')) {
-            $subscriptionProduct->addUniqueIndex(['OXID', 'OXSHOPID', 'OXARTID']);
+            $subscriptionProduct->addUniqueIndex(['OXID', 'OXSHOPID', 'OXARTID', 'PAYPALSUBSCRIPTIONPLANID']);
         }
     }
 

@@ -39,7 +39,7 @@ final class PayPalSubscribeTest extends UnitTestCase
     private const PRODUCT_ID = 'dc5ffdf380e15674b56dd562a7cb6aec';
 
     //TODO: split into unit test for moduel and integration test for repo
-    public function testSaveLoadUpdateDeleteSubscriptionProduct(): void
+    public function testSaveLoadUpdateDelteeSubscriptionProduct(): void
     {
         $data =  [
             'OXID' => '_testoxid',
@@ -56,8 +56,8 @@ final class PayPalSubscribeTest extends UnitTestCase
         //load and check
         $product = oxNew(SubscriptionProduct::class);
         $product->load($data['OXID']);
-        $this->assertEquals($data['PAYPALPRODUCTID'], $product->getFieldData('PAYPALPRODUCTID'));
-        $this->assertEquals($data['PAYPALSUBSCRIPTIONPLANID'], $product->getFieldData('PAYPALSUBSCRIPTIONPLANID'));
+        $this->assertEquals($data['PAYPALPRODUCTID'], $product->getPayPalProductId());
+        $this->assertEquals($data['PAYPALSUBSCRIPTIONPLANID'], $product->getSubscriptionPlanId());
 
         //change
         $product->assign(['PAYPALSUBSCRIPTIONPLANID' => 'updated_data']);
@@ -66,8 +66,8 @@ final class PayPalSubscribeTest extends UnitTestCase
         //search with repo
         $repo = oxNew(SubscriptionRepository::class);
         $product = $repo->loadByProductOxid(self::PRODUCT_ID);
-        $this->assertEquals($data['PAYPALPRODUCTID'], $product->getFieldData('PAYPALPRODUCTID'));
-        $this->assertEquals('updated_data', $product->getFieldData('PAYPALSUBSCRIPTIONPLANID'));
+        $this->assertEquals($data['PAYPALPRODUCTID'], $product->getPayPalProductId());
+        $this->assertEquals('updated_data', $product->getSubscriptionPlanId());
 
         //expect exception because now it was deleted
         $product->delete();

@@ -26,6 +26,7 @@ use OxidSolutionCatalysts\PayPal\Core\Currency;
 use OxidSolutionCatalysts\PayPal\Core\ServiceFactory;
 use OxidSolutionCatalysts\PayPal\Model\Category;
 use OxidSolutionCatalysts\PayPal\Repository\SubscriptionRepository;
+use OxidSolutionCatalysts\PayPal\Repository\Subscription as SubscriptionRepo;
 
 /**
  * Controller for admin > PayPal/Configuration page
@@ -46,7 +47,6 @@ class PayPalSubscribeController extends AdminController
      */
     private $linkedProduct;
 
-
     /**
      * The lined subscription plan called from PayPal API
      * @var Plan
@@ -58,11 +58,17 @@ class PayPalSubscribeController extends AdminController
      */
     private $repository;
 
+    /**
+     * @var SubscriptionRepo
+     */
+    private $subscriptionRepo;
+
     public function __construct()
     {
         parent::__construct();
         $this->_sThisTemplate = 'pspaypalsubscribe.tpl';
         $this->repository = new SubscriptionRepository();
+        $this->subscriptionRepo = new SubscriptionRepo(); //TODO: refactor into one repo
     }
 
     /**
@@ -207,9 +213,10 @@ class PayPalSubscribeController extends AdminController
 
         $article = oxNew(Article::class);
         $oxid = Registry::getRequest()->getRequestParameter('oxid');
-        $article->load($oxid);
+        $article->load($oxid); //TODO: do we need to load the article?
 
-        $this->linkedProduct = $this->repository->getLinkedProductByOxid($oxid);
+       # $this->linkedProduct = $this->repository->getLinkedProductByOxid($oxid);
+        $this->getLinkedProductByOxid();
         if ($this->linkedProduct) {
             if ($linkedObject = $this->getPayPalProductDetail($this->linkedProduct[0]['PAYPALPRODUCTID'])) {
                 $this->linkedObject = $linkedObject;
