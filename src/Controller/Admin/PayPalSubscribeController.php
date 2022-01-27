@@ -20,7 +20,8 @@ use OxidSolutionCatalysts\PayPalApi\Model\Subscriptions\BillingCycle;
 use OxidSolutionCatalysts\PayPalApi\Model\Subscriptions\Frequency;
 use OxidSolutionCatalysts\PayPalApi\Model\Subscriptions\Plan;
 use OxidSolutionCatalysts\PayPal\Core\Api\CatalogService;
-use OxidSolutionCatalysts\PayPal\Core\Api\SubscriptionService;
+use OxidSolutionCatalysts\PayPal\Core\Api\SubscriptionService as PayPalSubscriptionService;
+use OxidSolutionCatalysts\PayPal\Core\Api\CatalogService as PayPalCatalogService;
 use OxidSolutionCatalysts\PayPal\Core\Currency;
 use OxidSolutionCatalysts\PayPal\Core\ServiceFactory;
 use OxidSolutionCatalysts\PayPal\Model\Category;
@@ -342,7 +343,7 @@ class PayPalSubscribeController extends AdminController
      */
     public function saveProduct()
     {
-        $catalogService = new CatalogService($this->linkedObject);
+        $catalogService = $this->getCoreCatalog();
         $productId = Registry::getRequest()->getRequestEscapedParameter('paypalProductId', "");
 
         try {
@@ -359,7 +360,7 @@ class PayPalSubscribeController extends AdminController
 
     public function saveBillingPlans()
     {
-        $subscriptionService = new SubscriptionService();
+        $subscriptionService = $this->getCoreSubscription();
         $productId = Registry::getRequest()->getRequestEscapedParameter('paypalProductId', "");
 
         try {
@@ -428,8 +429,8 @@ class PayPalSubscribeController extends AdminController
         $this->setSubscriptionPlan($editBillingPlanId);
 
         $productId = Registry::getRequest()->getRequestEscapedParameter('paypalProductId', "");
-        $subscriptionService = new SubscriptionService();
-        $catalogService = new CatalogService($this->linkedObject);
+        $subscriptionService = $this->getCoreSubscription();
+        $catalogService = $this->getCoreCatalog();
 
         try {
             if ($this->hasSubscriptionPlan()) {
@@ -458,8 +459,7 @@ class PayPalSubscribeController extends AdminController
         $this->setLinkedObject();
         $this->setSubscriptionPlan($deactivateBillingPlanId);
 
-        $subscriptionService = new SubscriptionService();
-        $catalogService = new CatalogService($this->linkedObject);
+        $subscriptionService = $this->getCoreSubscription();
 
         try {
             if ($this->hasSubscriptionPlan()) {
@@ -482,8 +482,7 @@ class PayPalSubscribeController extends AdminController
         $this->setLinkedObject();
         $this->setSubscriptionPlan($activateBillingPlanId);
 
-        $subscriptionService = new SubscriptionService();
-        $catalogService = new CatalogService($this->linkedObject);
+        $subscriptionService = $this->getCoreSubscription();
 
         try {
             if ($this->hasSubscriptionPlan()) {
@@ -506,5 +505,23 @@ class PayPalSubscribeController extends AdminController
         }
 
         $this->linkedProduct = $this->repository->getLinkedProductByOxid($oxid);
+    }
+
+    //TODO: rename
+    private function getCoreSubscription(): PayPalSubscriptionService
+    {
+        return new PayPalSubscriptionService(
+            Registry::get(ServiceFactory::class)->getSubscriptionService(),
+            Registry::getRequest()
+        );
+    }
+
+    private function getCoreCatalog(): PayPalCatalogService
+    {
+        return new PayPalCatalogService(
+            $this->linkedObject,
+            Registry::get(ServiceFactory::class)->getCatalogService(),
+            (string) Registry::getRequest()->getRequestParameter('oxid')
+        );
     }
 }

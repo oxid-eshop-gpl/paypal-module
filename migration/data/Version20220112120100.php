@@ -286,6 +286,9 @@ final class Version20220112120100 extends AbstractMigration
         if (!$subscriptionProduct->hasPrimaryKey('OXID')) {
             $subscriptionProduct->setPrimaryKey(['OXID']);
         }
+        if (!$subscriptionProduct->hasIndex('OXID')) {
+            $subscriptionProduct->addUniqueIndex(['OXID', 'OXSHOPID', 'OXARTID']);
+        }
     }
 
     /**

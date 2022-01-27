@@ -122,6 +122,30 @@ final class AdminCest extends BaseCest
         $I->amOnUrl(str_replace('oscpaypalconfig', 'oscpaypalonboarding', $adminPanel->grabConfigurationLink()) . '&fnc=autoConfigurationFromCallback');
     }
 
+    /** @group foobla */
+    public function canSavePayPalSubscriptionProduct(AcceptanceTester $I): void
+    {
+        $I->wantToTest('admin can see subscription tab for products');
+
+        $adminPanel = $I->loginAdmin();
+        $products = $adminPanel->openProducts();
+        $products->find("where[oxarticles][oxartnum]", "1506");
+
+        $I->selectListFrame();
+        $I->click(Translator::translate('tbclorder_paypal'));
+        $I->selectEditFrame();
+
+        $I->see(Translator::translate("OSC_PAYPAL_BILLING_PLAN_SUBSCRIPTION_PROD"));
+        $I->click(['name' => 'save']);
+        $I->dontSee('does not conform');
+        //TODO: some issue with urls image_url, home_url //imageUrl, homeUrl
+        //why not use the seo urls??? and why send them in via forms?
+
+        //[{assign var="productUrl" value=$oView->getProductUrl()}]
+
+        $I->seeInDatabase('osc_paypal_subscription_product', ['OXARTID' => 'f33d5bcc7135908fd36fc736c643aa1c']);
+    }
+
     private function checkWeAreStillInAdminPanel(AcceptanceTester $I): void
     {
         //we did not end up on shop start page

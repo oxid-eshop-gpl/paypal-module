@@ -22,8 +22,10 @@ use OxidSolutionCatalysts\PayPalApi\Model\Subscriptions\PlanRequestPOST;
 use OxidSolutionCatalysts\PayPalApi\Model\Subscriptions\PricingScheme;
 use OxidSolutionCatalysts\PayPalApi\Model\Subscriptions\Taxes;
 use OxidSolutionCatalysts\PayPalApi\Service\Subscriptions;
-use OxidSolutionCatalysts\PayPal\Core\ServiceFactory;
+
 use OxidSolutionCatalysts\PayPal\Repository\SubscriptionRepository;
+use OxidSolutionCatalysts\PayPalApi\Service\Subscriptions as PaypalApiSubscriptionService;
+
 
 class SubscriptionService
 {
@@ -37,10 +39,13 @@ class SubscriptionService
      */
     private $request;
 
-    public function __construct()
+    public function __construct(
+        PaypalApiSubscriptionService $subscriptionService,
+        Request $request
+    )
     {
-        $this->subscriptionService = Registry::get(ServiceFactory::class)->getSubscriptionService();
-        $this->request = Registry::getRequest();
+        $this->subscriptionService = $subscriptionService;
+        $this->request = $request;
     }
 
     /**

@@ -18,25 +18,30 @@ use OxidSolutionCatalysts\PayPalApi\Model\Catalog\ProductRequestPOST;
 use OxidSolutionCatalysts\PayPalApi\Service\Catalog;
 use OxidSolutionCatalysts\PayPal\Core\ServiceFactory;
 use OxidSolutionCatalysts\PayPal\Repository\SubscriptionRepository;
+use OxidSolutionCatalysts\PayPalApi\Service\Catalog as PaypalApiCatalog;
 
 class CatalogService
 {
     /**
-     * @var Catalog
+     * @var PaypalApiCatalog
      */
-    public $catalogService;
+    public $apiCatalog;
 
     /**
-     * @var Request
+     * @var string
      */
-    private $request;
+    private $requestOxid;
 
     private $linkedObject;
 
-    public function __construct($linkedObject)
+    public function __construct(
+        Product $linkedObject,
+        PaypalApiCatalog $apiCatalog,
+        string $requestOxid
+    )
     {
-        $this->catalogService = Registry::get(ServiceFactory::class)->getCatalogService();
-        $this->request = Registry::getRequest();
+        $this->apiCatalog = $apiCatalog;
+        $this->requestOxid = $requestOxid;
         $this->linkedObject = $linkedObject;
     }
 
@@ -44,7 +49,7 @@ class CatalogService
      * @param $productId
      * @throws ApiException
      */
-    public function updateProduct($productId)
+    public function updateProduct($productId): void
     {
         $this->updateProductDescription($productId);
         $this->updateProductCategory($productId);
@@ -53,71 +58,61 @@ class CatalogService
     }
 
     /**
-     * @param Request $request
-     * @param Catalog $cs
      * @param $productId
      * @throws ApiException
      */
-    private function updateProductDescription($productId)
+    private function updateProductDescription($productId): void
     {
         if ($this->linkedObject->description !== $this->request->getRequestEscapedParameter('description')) {
             $patchRequest = new Patch();
             $patchRequest->op = Patch::OP_REPLACE;
             $patchRequest->value = $this->request->getRequestEscapedParameter('description');
             $patchRequest->path = '/description';
-            $this->catalogService->updateProduct($productId, [$patchRequest]);
+            $this->apiCatalog->updateProduct($productId, [$patchRequest]);
         }
     }
 
     /**
-     * @param Request $request
-     * @param Catalog $cs
      * @param $productId
-     * @throws ApiException
      */
-    private function updateProductCategory($productId)
+    private function updateProductCategory($productId): void
     {
         if ($this->linkedObject->category !== $this->request->getRequestEscapedParameter('category')) {
             $patchRequest = new Patch();
             $patchRequest->op = Patch::OP_REPLACE;
             $patchRequest->value = $this->request->getRequestEscapedParameter('category');
             $patchRequest->path = '/category';
-            $this->catalogService->updateProduct($productId, [$patchRequest]);
+            $this->apiCatalog->updateProduct($productId, [$patchRequest]);
         }
     }
 
     /**
-     * @param Request $request
-     * @param Catalog $cs
      * @param $productId
-     * @return Patch
      * @throws ApiException
      */
-    private function updateImageUrl($productId)
+    private function updateImageUrl($productId): void
     {
         if ($this->linkedObject->image_url !== $this->request->getRequestEscapedParameter('imageUrl')) {
             $patchRequest = new Patch();
             $patchRequest->op = Patch::OP_REPLACE;
             $patchRequest->value = $this->request->getRequestEscapedParameter('imageUrl');
             $patchRequest->path = '/image_url';
-            $this->catalogService->updateProduct($productId, [$patchRequest]);
+            $this->apiCatalog->updateProduct($productId, [$patchRequest]);
         }
     }
 
     /**
-     * @param Request $request
-     * @param Catalog $cs
      * @param $productId
      * @throws ApiException
      */
-    private function updateHomeUrl($productId)
+    private function updateHomeUrl($productId): void
     {
         if ($this->linkedObject->home_url !== $this->request->getRequestEscapedParameter('homeUrl')) {
             $patchRequest = new Patch();
             $patchRequest->op = Patch::OP_REPLACE;
             $patchRequest->value = $this->request->getRequestEscapedParameter('homeUrl');
             $patchRequest->path = '/home_url';
-            $this->catalogService->updateProduct($productId, [$patchRequest]);
+            $this->apiCatalog->updateProduct($productId, [$patchRequest]);
         }
     }
 
@@ -126,7 +121,7 @@ class CatalogService
      * @throws DatabaseConnectionException
      * @throws DatabaseErrorException
      */
-    public function createProduct()
+    public function createProduct(): void
     {
         $productRequest = [];
         $productRequest['name'] = utf8_encode($this->request->getRequestParameter('title'));
@@ -139,13 +134,13 @@ class CatalogService
         $productRequestPost = new ProductRequestPOST($productRequest);
 
         /** @var Product $response */
-        $response = $this->catalogService->createProduct($productRequestPost);
+        $response = $this->apiCatalog->createProduct($productRequestPost);
 
         $repository = new SubscriptionRepository();
 
         $repository->saveLinkedProduct(
             $response,
-            Registry::getRequest()->getRequestParameter('oxid')
+            $this->requestOxid
         );
     }
 }
