@@ -8,19 +8,16 @@
 namespace OxidSolutionCatalysts\PayPal\Model;
 
 use OxidEsales\Eshop\Core\DatabaseProvider;
-use OxidEsals\Eshop\Core\Model\BaseModel;
-
+use OxidEsales\Eshop\Core\Model\BaseModel;
 
 class SubscriptionProduct extends BaseModel
 {
-
-
     /**
      * Coretable name
      *
      * @var string
      */
-    protected $_sCoreTable = 'b2bscheduledorders';
+    protected $_sCoreTable = 'osc_paypal_subscription_product';
 
     /**
      * Construct initialize class
@@ -30,32 +27,4 @@ class SubscriptionProduct extends BaseModel
         parent::__construct();
         $this->init();
     }
-
-    /**
-     * @param $oxid
-     * @return array
-     * @throws \OxidEsales\Eshop\Core\Exception\DatabaseConnectionException
-     * @throws \OxidEsales\Eshop\Core\Exception\DatabaseErrorException
-     */
-    public function getByProductOxid(string $oxartid): ?self
-    {
-        $queryBuilder = $this->getServiceFromContainer(QueryBuilderFactoryInterface::class)
-            ->create();
-
-        $fromDb = $queryBuilder->select($this->_sCoreTable . '.*')
-            ->from($this->_sCoreTable)
-            ->where('OXARTID = :OXARTID')
-            ->setParameters(
-                [
-                    'OXARTID' => $oxartid,
-                ]
-            )
-            ->execute();
-
-        if () {
-
-        }
-
-    }
-
 }
