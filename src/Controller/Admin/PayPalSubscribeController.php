@@ -14,6 +14,7 @@ use OxidEsales\Eshop\Core\Exception\DatabaseConnectionException;
 use OxidEsales\Eshop\Core\Exception\DatabaseErrorException;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\UtilsObject;
+use OxidSolutionCatalysts\PayPal\Core\Exception\NotFound;
 use OxidSolutionCatalysts\PayPalApi\Exception\ApiException;
 use OxidSolutionCatalysts\PayPalApi\Model\Catalog\Product;
 use OxidSolutionCatalysts\PayPalApi\Model\Subscriptions\BillingCycle;
@@ -215,10 +216,8 @@ class PayPalSubscribeController extends AdminController
         $oxid = Registry::getRequest()->getRequestParameter('oxid');
         $article->load($oxid); //TODO: do we need to load the article?
 
-       # $this->linkedProduct = $this->repository->getLinkedProductByOxid($oxid);
-        $this->getLinkedProductByOxid();
-        if ($this->linkedProduct) {
-            if ($linkedObject = $this->getPayPalProductDetail($this->linkedProduct[0]['PAYPALPRODUCTID'])) {
+        if ($paypalProductId = $this->getLinkedPayPalProductId($oxid)) {
+            if ($linkedObject = $this->getPayPalProductDetail($paypalProductId)) {
                 $this->linkedObject = $linkedObject;
             } else {
                 // We have a linkedProduct, but its does not exists in PayPal-Catalogs, so we delete them
@@ -528,7 +527,12 @@ class PayPalSubscribeController extends AdminController
         return new PayPalCatalogService(
             $this->linkedObject,
             Registry::get(ServiceFactory::class)->getCatalogService(),
-            (string) Registry::getRequest()->getRequestParameter('oxid')
+            Registry::getRequest()
         );
+    }
+
+    private function getLinkedPayPalProductId(string $oxid): string
+    {
+       return $this->subscriptionRepo->getPayPalProductIdByProductOxid($oxid);
     }
 }

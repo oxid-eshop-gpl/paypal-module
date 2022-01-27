@@ -28,20 +28,20 @@ class CatalogService
     public $apiCatalog;
 
     /**
-     * @var string
+     * @var Request
      */
-    private $requestOxid;
+    private $request;
 
     private $linkedObject;
 
     public function __construct(
-        Product $linkedObject,
+        Product $linkedObject = null,
         PaypalApiCatalog $apiCatalog,
-        string $requestOxid
+        string $request
     )
     {
         $this->apiCatalog = $apiCatalog;
-        $this->requestOxid = $requestOxid;
+        $this->request = $request;
         $this->linkedObject = $linkedObject;
     }
 
@@ -140,7 +140,7 @@ class CatalogService
 
         $repository->saveLinkedProduct(
             $response,
-            $this->requestOxid
+            $this->request->getRequestParameter('oxid')
         );
     }
 }

@@ -27,7 +27,7 @@ class Subscription
      * @throws \OxidEsales\Eshop\Core\Exception\DatabaseConnectionException
      * @throws \OxidEsales\Eshop\Core\Exception\DatabaseErrorException
      */
-    public function PayPalProductIdByProductOxid(string $oxartid): string
+    public function getPayPalProductIdByProductOxid(string $oxartid): string
     {
         $queryBuilder = $this->getServiceFromContainer(QueryBuilderFactoryInterface::class)
             ->create();
@@ -38,7 +38,7 @@ class Subscription
             ->andWhere('OXSHOPID = :OXSHOPID')
             ->setParameters(
                 [
-                    'OXSHOPID' => $this->getServiceFromContainer(ContextInterface::class)->getShopId(),
+                    'OXSHOPID' => $this->getServiceFromContainer(ContextInterface::class)->getCurrentShopId(),
                     'OXARTID' => $oxartid,
                 ]
             )
@@ -46,11 +46,7 @@ class Subscription
             ->execute()
             ->fetch(PDO::FETCH_COLUMN);
 
-        if (!$idFromDb) {
-           throw NotFound::notFound();
-        }
-
-        return $idFromDb;
+        return $idFromDb ?: '';
     }
 
     /**
@@ -72,7 +68,7 @@ class Subscription
             ->andWhere('OXSHOPID = :OXSHOPID')
             ->setParameters(
                 [
-                    'OXSHOPID' => $this->getServiceFromContainer(ContextInterface::class)->getShopId(),
+                    'OXSHOPID' => $this->getServiceFromContainer(ContextInterface::class)->getCurrentShopId(),
                     'OXARTID' => $oxartid,
                 ]
             )

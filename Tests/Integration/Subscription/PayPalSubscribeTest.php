@@ -38,8 +38,15 @@ final class PayPalSubscribeTest extends UnitTestCase
 {
     private const PRODUCT_ID = 'dc5ffdf380e15674b56dd562a7cb6aec';
 
-    //TODO: split into unit test for moduel and integration test for repo
-    public function testSaveLoadUpdateDelteeSubscriptionProduct(): void
+    protected function tearDown(): void
+    {
+        $this->addTableForCleanup('osc_paypal_subscription_product');
+
+        parent::tearDown();
+    }
+
+    //TODO: split into unit test for module and integration test for repo
+    public function testSaveLoadUpdateDeleteSubscriptionProduct(): void
     {
         $data =  [
             'OXID' => '_testoxid',
@@ -65,28 +72,63 @@ final class PayPalSubscribeTest extends UnitTestCase
 
         //search with repo
         $repo = oxNew(SubscriptionRepository::class);
-        $product = $repo->loadByProductOxid(self::PRODUCT_ID);
-        $this->assertEquals($data['PAYPALPRODUCTID'], $product->getPayPalProductId());
-        $this->assertEquals('updated_data', $product->getSubscriptionPlanId());
+        $this->assertEquals($data['PAYPALPRODUCTID'], $repo->getPayPalProductIdByProductOxid(self::PRODUCT_ID));
 
-        //expect exception because now it was deleted
         $product->delete();
-
-        $this->expectException(NotFound::class);
-        $repo->loadByProductOxid(self::PRODUCT_ID);
+        $this->assertEquals('', $repo->getPayPalProductIdByProductOxid(self::PRODUCT_ID));
     }
 
+    public function testFetchAllLinkedProducts(): void
+    {
+        $data =  [
+            'OXID' => '_testoxid1',
+            'OXARTID' => self::PRODUCT_ID,
+            'PAYPALPRODUCTID' => 'dummy_id',
+            'PAYPALSUBSCRIPTIONPLANID' => 'dummy_plan_one'
+        ];
 
+        //create
+        $product = oxNew(SubscriptionProduct::class);
+        $product->assign($data);
+        $this->assertEquals($data['OXID'], $product->save());
+
+        $data =  [
+            'OXID' => '_testoxid2',
+            'OXARTID' => self::PRODUCT_ID,
+            'PAYPALPRODUCTID' => 'dummy_id',
+            'PAYPALSUBSCRIPTIONPLANID' => 'dummy_plan_two'
+        ];
+
+        //create
+        $product = oxNew(SubscriptionProduct::class);
+        $product->assign($data);
+        $this->assertEquals($data['OXID'], $product->save());
+
+        $repo = oxNew(SubscriptionRepository::class);
+        $products = $repo->linkedProductsByProductOxid(self::PRODUCT_ID);
+
+        $this->assertCount(2, $products);
+    }
 
     public function _testFullIntegrationCreatePayPalProduct(): void
     {
-        $client = EshopRegistry::get(ServiceFactory::class)
-            ->getSubscriptionService();
+        $requestMock = $this->getMockBuilder(Request::class)
+            ->getMock();
+//hier weiter
 
-        $product = oxNew(EshopModelArticle);
-        $product->load(self::PRODUCT_ID);
+       # $client = EshopRegistry::get(ServiceFactory::class)
+       #     ->getSubscriptionService(null, );
 
-        $service = oxNew(CatalogService::class, $product, $client, self::PRODUCT_ID);
+        /*
+        $productRequest['name'] = utf8_encode($this->request->getRequestParameter('title'));
+        $productRequest['description'] = utf8_encode($this->request->getRequestParameter('description'));
+        $productRequest['type'] = $this->request->getRequestParameter('productType');
+        $productRequest['category'] = $this->request->getRequestParameter('category');
+        $productRequest['image_url'] = $this->request->getRequestParameter('imageUrl');
+        $productRequest['home_url'] = $this->request->getRequestParameter('homeUrl');
+*/
+
+        $service = oxNew(CatalogService::class, null, $client, self::PRODUCT_ID);
     }
 
    /*
