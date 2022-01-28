@@ -37,7 +37,7 @@ class CatalogService
     public function __construct(
         Product $linkedObject = null,
         PaypalApiCatalog $apiCatalog,
-        string $request
+        Request $request
     )
     {
         $this->apiCatalog = $apiCatalog;

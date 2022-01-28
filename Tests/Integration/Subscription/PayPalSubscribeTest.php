@@ -11,7 +11,9 @@ namespace OxidSolutionCatalysts\PayPal\Tests\Integration\Subscrption;
 
 use OxidEsales\TestingLibrary\UnitTestCase;
 use OxidEsales\Eshop\Core\Registry as EshopRegistry;
+
 use OxidEsales\Eshop\Core\Request;
+
 use OxidSolutionCatalysts\PayPal\Core\Exception\NotFound;
 use OxidSolutionCatalysts\PayPal\Model\SubscriptionProduct;
 use OxidSolutionCatalysts\PayPal\Repository\Subscription as SubscriptionRepository;
@@ -46,7 +48,7 @@ final class PayPalSubscribeTest extends UnitTestCase
     }
 
     //TODO: split into unit test for module and integration test for repo
-    public function testSaveLoadUpdateDeleteSubscriptionProduct(): void
+    public function _testSaveLoadUpdateDeleteSubscriptionProduct(): void
     {
         $data =  [
             'OXID' => '_testoxid',
@@ -78,7 +80,7 @@ final class PayPalSubscribeTest extends UnitTestCase
         $this->assertEquals('', $repo->getPayPalProductIdByProductOxid(self::PRODUCT_ID));
     }
 
-    public function testFetchAllLinkedProducts(): void
+    public function _testFetchAllLinkedProducts(): void
     {
         $data =  [
             'OXID' => '_testoxid1',
@@ -110,39 +112,45 @@ final class PayPalSubscribeTest extends UnitTestCase
         $this->assertCount(2, $products);
     }
 
-    public function _testFullIntegrationCreatePayPalProduct(): void
+    public function testFullIntegrationCreatePayPalProduct(): void
     {
-        $requestMock = $this->getMockBuilder(Request::class)
+        $valueMap = [
+            ['oxid', self::PRODUCT_ID],
+            ['title', 'test title'],
+            ['description', 'description'],
+            ['productType', 'PHYSICAL_GOODS'],
+            ['category', 'ARTS_AND_CRAFTS'],
+            ['imageUrl', 'https://localhost.local/image.png'],
+            ['homeUrl', 'https://localhost.local/myproduct']
+        ];
+
+        //NOTE: return map refused ot work with original class mock
+        $requestMock = $this->getMockBuilder(TestRequest::class)
             ->getMock();
-//hier weiter
+        $requestMock->expects($this->any())
+            ->method('getRequestParameter')
+            ->willReturnMap($valueMap);
 
-       # $client = EshopRegistry::get(ServiceFactory::class)
-       #     ->getSubscriptionService(null, );
+        $catalogService= new CatalogService(
+            null,
+            EshopRegistry::get(ServiceFactory::class)->getCatalogService(),
+            $requestMock
+        );
 
-        /*
-        $productRequest['name'] = utf8_encode($this->request->getRequestParameter('title'));
-        $productRequest['description'] = utf8_encode($this->request->getRequestParameter('description'));
-        $productRequest['type'] = $this->request->getRequestParameter('productType');
-        $productRequest['category'] = $this->request->getRequestParameter('category');
-        $productRequest['image_url'] = $this->request->getRequestParameter('imageUrl');
-        $productRequest['home_url'] = $this->request->getRequestParameter('homeUrl');
-*/
+        $repo = oxNew(SubscriptionRepository::class);
+        $this->assertEquals('', $repo->getPayPalProductIdByProductOxid(self::PRODUCT_ID));
 
-        $service = oxNew(CatalogService::class, null, $client, self::PRODUCT_ID);
+        $catalogService->createProduct();
+
+        //TODO: PP complains about the request data, check what's up
+        $this->assertNotEquals('', $repo->getPayPalProductIdByProductOxid(self::PRODUCT_ID));
     }
+}
 
-   /*
-    public function testFullIntegrationCreateProduct(): void
+class TestRequest extends Request
+{
+    public function getRequestParameter(string $key)
     {
-        $this->markTestIncomplete();
-
-        $client = EshopRegistry::get(ServiceFactory::class)
-            ->getSubscriptionService();
-
-        $request = $this->getMockBuild(Request::class)
-            ->getMock();
-
-        $service = oxNew(SubscriptionService::class, $client, $request);
-    } */
-
+        return 'foo';
+    }
 }
