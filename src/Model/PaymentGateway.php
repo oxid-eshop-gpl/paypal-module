@@ -93,7 +93,8 @@ class PaymentGateway extends PaymentGateway_parent
                     /** @var PatchRequestFactory $requestFactory */
                     $requestFactory = Registry::get(PatchRequestFactory::class);
                     $request = $requestFactory->getRequest(
-                        Registry::getSession()->getBasket()
+                        Registry::getSession()->getBasket(),
+                        $order->getDisplayOrderNumber()
                     );
 
                     // Update Order

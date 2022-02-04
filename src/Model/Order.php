@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace OxidSolutionCatalysts\PayPal\Model;
 
+use \OxidEsales\Eshop\Core\Counter as EshopCounter;
 use OxidEsales\Eshop\Core\DatabaseProvider;
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Model\BaseModel;
@@ -59,6 +60,47 @@ class Order extends Order_parent
      * @var string
      */
     protected $payPalProductId;
+
+    public function save()
+    {
+        $saved = parent::save();
+
+        if (!$this->getFieldData('oxordernr')) {
+            $this->ensureOrderNumber();
+        }
+
+        return $saved;
+    }
+
+    public function getDisplayOrderNumber(): string
+    {
+        $result = '';
+        if ($this->getFieldData('oxordernr')) {
+            Registry::getLang()->translateString('ORDER_NUMBER') . ' ' .
+            $this->getFieldData('oxordernr');
+        }
+        
+        return $result;
+    }
+    
+    protected function ensureOrderNumber()
+    {
+        if ($this->getFieldData('oxordernr')) {
+            //nothing to be done
+            return;
+        }
+
+        $done = $this->_setNumber();
+        if ($done) {
+            oxNew(EshopCounter::class)->update($this->_getCounterIdent(), $this->getFieldData('oxordernr'));
+        } else {
+            assign(
+                [
+                    'oxordernr' => null
+                ]
+            );
+        }
+    }
 
     /**
      * Get PayPal order object for the current active order object

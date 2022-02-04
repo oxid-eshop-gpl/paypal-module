@@ -49,7 +49,8 @@ class PatchRequestFactory
      * @return array
      */
     public function getRequest(
-        Basket $basket
+        Basket $basket,
+        string $shopOrderInvoice
     ): array {
         $this->basket = $basket;
         $nettoPrices = $this->basket->isCalculationModeNetto();
@@ -58,6 +59,9 @@ class PatchRequestFactory
         $this->getShippingNamePatch();
         $this->getShippingAddressPatch();
         $this->getAmountPatch();
+        if ($shopOrderInvoice) {
+            $this->getInvoiceIdPatch($shopOrderInvoice);
+        }
 
         /** @var BasketItem $basketItem */
         // PayPal cannot fully patch the items in the shopping cart.
@@ -192,6 +196,17 @@ class PatchRequestFactory
         $item->quantity = $basketItem->getAmount();
 
         $patch->value = $item;
+
+        $this->request[] = $patch;
+    }
+
+
+    protected function getInvoiceIdPatch(string $shopOrderInvoice): void
+    {
+        $patch = new Patch();
+        $patch->op = Patch::OP_ADD;
+        $patch->path = "/purchase_units/@reference_id=='" . Constants::PAYPAL_ORDER_REFERENCE_ID . "'/custom_id";
+        $patch->value = $shopOrderInvoice;
 
         $this->request[] = $patch;
     }
