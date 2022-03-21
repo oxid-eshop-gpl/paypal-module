@@ -66,20 +66,4 @@ final class ButtonPlacementCest extends BaseCest
         $this->fillBasket($I);
         $I->seeElement("#PayPalPayButtonNextCart2");
     }
-
-    public function testCheckoutButtonPlacement(AcceptanceTester $I): void
-    {
-        $I->wantToTest('payment page express button placement. Needs a logged in user.');
-
-        //all buttons disabled
-        $this->enableExpressButtons($I, false);
-        $this->proceedToPaymentStep($I, Fixtures::get('userName'), false);
-        $I->dontSeeElement("#PayPalButtonPaymentPage");
-
-        //switch it on
-        $I->updateModuleConfiguration('oscPayPalShowCheckoutButton', true);
-        $I->clearShopCache();
-        $this->proceedToPaymentStep($I, Fixtures::get('userName'), false);
-        $I->seeElement("#PayPalButtonPaymentPage");
-    }
 }

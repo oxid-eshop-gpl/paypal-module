@@ -26,46 +26,6 @@ use OxidEsales\Codeception\Module\Translation\Translator;
  */
 final class UapmCheckoutCest extends BaseCest
 {
-    public function checkoutWithUapmPayPalDoesNotInterfereWithStandardPayPal(AcceptanceTester $I): void
-    {
-        $I->wantToTest('switching between payment methods');
-
-        $this->proceedToPaymentStep($I, Fixtures::get('userName'));
-
-        //first decide to use sofort via paypal
-        $paymentCheckout = new PaymentCheckout($I);
-        /** @var OrderCheckout $orderCheckout */
-        $orderCheckout = $paymentCheckout->selectPayment('oscpaypal_sofort')
-            ->goToNextStep();
-        $paymentCheckout = $orderCheckout->goToPreviousStep();
-        $I->dontSee(Translator::translate('OSC_PAYPAL_PAY_PROCESSED'));
-
-        //change decision to standard PayPal
-        $token = $this->approvePayPalTransaction($I);
-
-        //pretend we are back in shop after clicking PayPal button and approving the order
-        $I->amOnUrl($this->getShopUrl() . '?cl=payment');
-        $I->see(Translator::translate('OSC_PAYPAL_PAY_PROCESSED'));
-
-        //change decision again to use Sofort via PayPal
-        $paymentCheckout = new PaymentCheckout($I);
-        /** @var OrderCheckout $orderCheckout */
-        $orderCheckout = $paymentCheckout->selectPayment('oscpaypal_sofort')
-            ->goToNextStep();
-        $paymentCheckout = $orderCheckout->goToPreviousStep();
-        $I->dontSee(Translator::translate('OSC_PAYPAL_PAY_PROCESSED'));
-
-        //we now decide for PayPal again
-        //NOTE: there's still a paypal order id in the session but with current implementation it will be replaced by a fresh one
-        $productNavigation = new ProductNavigation($I);
-        $productNavigation->openProductDetailsPage(Fixtures::get('product')['oxid']);
-        $I->seeElement("#PayPalButtonProductMain");
-        $newToken = $this->approvePayPalTransaction($I, '&context=continue&aid=' . Fixtures::get('product')['oxid']);
-
-        //we got a fresh paypal order in the session
-        $I->assertNotEquals($token, $newToken);
-    }
-
     public function checkoutWithSofortViaPayPalCancel(AcceptanceTester $I): void
     {
         $I->wantToTest('logged in user with Sofort via PayPal cancels payment after redirect.');
@@ -89,7 +49,7 @@ final class UapmCheckoutCest extends BaseCest
         $I->click('#cancelSubmit');
 
         $I->switchToWindow();
-        $I->seeElement("#PayPalButtonPaymentPage");
+        $I->seeElement("#payment_oscpaypal_sofort");
         //NOTE: simulation sends us error code on cancel
         $I->see(Translator::translate('MESSAGE_PAYMENT_AUTHORIZATION_FAILED'));
 

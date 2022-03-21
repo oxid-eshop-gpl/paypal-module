@@ -177,12 +177,8 @@ abstract class BaseCest
         );
     }
 
-    protected function proceedToPaymentStep(AcceptanceTester $I, string $userName = null, bool $ensureCheckoutButton = true): void
+    protected function proceedToPaymentStep(AcceptanceTester $I, string $userName = null): void
     {
-        if ($ensureCheckoutButton) {
-            $I->updateModuleConfiguration('oscPayPalShowCheckoutButton', true);
-        }
-
         $userName = $userName ?: Fixtures::get('userName');
 
         $home = $I->openShop()
@@ -192,10 +188,6 @@ abstract class BaseCest
         //add product to basket and start checkout
         $this->fillBasket($I);
         $this->fromBasketToPayment($I);
-
-        if ($ensureCheckoutButton) {
-            $I->seeElement("#PayPalButtonPaymentPage");
-        }
     }
 
     protected function fromBasketToPayment(AcceptanceTester $I): void
@@ -210,8 +202,6 @@ abstract class BaseCest
 
     protected function proceedToBasketStep(AcceptanceTester $I, string $userName = null, bool $logMeIn = true): void
     {
-        $I->updateModuleConfiguration('oscPayPalShowCheckoutButton', true);
-
         $userName = $userName ?: Fixtures::get('userName');
 
         $home = $I->openShop();
@@ -293,7 +283,6 @@ abstract class BaseCest
     {
         $I->updateModuleConfiguration('oscPayPalShowProductDetailsButton', $flag);
         $I->updateModuleConfiguration('oscPayPalShowBasketButton', $flag);
-        $I->updateModuleConfiguration('oscPayPalShowCheckoutButton', $flag);
     }
 
     protected function checkWeAreStillInAdminPanel(AcceptanceTester $I): void

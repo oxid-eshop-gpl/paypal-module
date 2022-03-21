@@ -75,7 +75,7 @@ final class PuiCheckoutCest extends BaseCest
         $orderCheckout->submitOrder();
 
         $I->waitForPageLoad();
-        $I->seeElement("#PayPalButtonPaymentPage");
+        $I->seeElement("#payment_oscpaypal_pui");
         $I->see(Translator::translate('MESSAGE_UNAVAILABLE_SHIPPING_METHOD'));
 
         //nothing changed

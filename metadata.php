@@ -462,12 +462,6 @@ $aModule = [
             'group' => null
         ],
         [
-            'name' => 'oscPayPalShowCheckoutButton',
-            'type' => 'bool',
-            'value' => true,
-            'group' => null
-        ],
-        [
             'name' => 'oscPayPalLoginWithPayPalEMail',
             'type' => 'bool',
             'value' => true,
