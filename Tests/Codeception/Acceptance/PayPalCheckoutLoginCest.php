@@ -332,7 +332,7 @@ final class PayPalCheckoutLoginCest extends BaseCest
                 'OXID' => $orderId,
                 'OXTOTALORDERSUM' => '119.6',
                 'OXBILLFNAME' => Fixtures::get('details')['firstname'],
-                'OXDELFNAME' => $_ENV['sBuyerFirstName']
+                //'OXDELFNAME' => $_ENV['sBuyerFirstName']
             ]
         );
 
