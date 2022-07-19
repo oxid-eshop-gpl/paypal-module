@@ -300,4 +300,29 @@ class Config
     {
         return Client::SANDBOX_URL;
     }
+
+    public function getPayPalTrackingCarrier(): array
+    {
+        return array_merge(
+            PayPalDefinitions::getPayPalDefaultTrackingCarrier(),
+            $this->getExternalPayPalTrackingCarrier()
+        );
+    }
+
+    /**
+     * method for overloading, to add more Tracking-Carrier
+     *
+     * Full list of possible Tracking-Carriers here:
+     * https://developer.paypal.com/docs/tracking/reference/carriers/
+     * Please use the method PayPalDefinitions::getPayPalDefaultTrackingCarrier()
+     * as a guide for the composition.
+     *
+     * @example return [
+     *      'DHL_FR' => 'DHL France',
+     * ];
+     */
+    public function getExternalPayPalTrackingCarrier(): array
+    {
+        return [];
+    }
 }

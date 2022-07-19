@@ -402,6 +402,16 @@ final class PayPalDefinitions
         ]
     ];
 
+    private const PAYPAL_DEFAULT_TRACKING_CARRIER = [
+        'DHL_DEUTSCHE_POST' => 'DHL Deutsche Post',
+        'DPD_DE' => 'DPD Germany',
+        'GLS_DE' => 'GLS Germany',
+        'HERMES_DE' => 'Hermes Germany',
+        'TNT_DE' => 'TNT Germany',
+        'UPS' => 'UPS',
+        'OTHER' => 'Other'
+    ];
+
     public static function getPayPalDefinitions()
     {
         return self::PAYPAL_DEFINTIONS;
@@ -410,6 +420,11 @@ final class PayPalDefinitions
     public static function getPayPalStaticContents()
     {
         return self::PAYPAL_STATIC_CONTENTS;
+    }
+
+    public static function getPayPalDefaultTrackingCarrier()
+    {
+        return self::PAYPAL_DEFAULT_TRACKING_CARRIER;
     }
 
     public static function isUAPMPayment(string $oxid): bool
