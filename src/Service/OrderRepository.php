@@ -76,7 +76,7 @@ class OrderRepository
         return $order;
     }
 
-    public function cleanUpNotFinishedOrders() : void
+    public function cleanUpNotFinishedOrders(): void
     {
         /** @var QueryBuilder $queryBuilder */
         $queryBuilder = $this->queryBuilderFactory->create();
